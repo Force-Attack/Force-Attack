@@ -1,0 +1,208 @@
+﻿add_namespace = r56_eng 
+
+# Some Mosley discourse as substitute for anti German speeches
+country_event = {
+	id = r56_eng.1
+	title = r56_eng.1.t
+	desc = r56_eng.1.desc
+	picture = GFX_report_event_eng_mosley_speech
+
+	is_triggered_only = yes
+	
+	# Ok
+	option = {
+		name = r56_eng.1.a
+	}
+}
+country_event = {
+	id = r56_eng.2
+	title = r56_eng.2.t
+	desc = r56_eng.2.desc
+	picture = GFX_report_event_eng_mosley_speech
+
+	is_triggered_only = yes
+	
+	# Ok
+	option = {
+		name = r56_eng.2.a
+		
+	}
+}
+
+country_event = {
+	id = r56_eng.3
+	title = r56_eng.3.t
+	desc = r56_eng.3.desc
+	picture = GFX_report_event_canadian_soldiers
+
+	trigger = {
+		has_country_flag = has_british_exiled_commander
+	}
+	fire_only_once = yes
+	# Ok
+	option = {
+		name = r56_eng.3.a
+		army_experience = 10
+		navy_experience = 10
+		air_experience = 10
+		
+	}
+}
+#remnant of the royal family arrive somewhere
+country_event = {
+	id = r56_eng.4
+	title = r56_eng.4.t
+	desc = r56_eng.4.desc
+	picture = GFX_report_event_eng_royal_family
+
+	is_triggered_only = yes
+	
+	# Ok
+	option = {
+		name = r56_eng.4.a
+		add_ideas = ENG_royal_family_remnants
+	}
+}
+
+# george_vi dies
+country_event = {
+	id = r56_eng.5
+	title = r56_eng.5.t
+	desc = r56_eng.5.desc
+	picture = GFX_report_event_europe_funeral
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	trigger = {
+		has_idea = ENG_george_vi
+	}
+	
+	immediate = {
+		hidden_effect = {
+			remove_ideas = ENG_george_vi
+			add_ideas = ENG_elisabeth_ii		
+		}
+	}
+
+	option = {
+		name = britain.17.a
+		effect_tooltip = {
+			remove_ideas = ENG_george_vi
+			add_ideas = ENG_elisabeth_ii	
+		}
+	}
+}
+
+country_event = { #return to responsible Government or federation with Canada?
+	id = r56_eng.6
+	title = r56_eng.6.t
+	desc = r56_eng.6.desc
+	picture = GFX_report_event_canadian_soldiers
+
+	trigger = {
+		tag = ENG
+		date > 1947.06.6
+		331 = { is_owned_and_controlled_by = ROOT }
+		NOT = {
+			country_exists = NFL
+		}
+		OR = {
+			has_government = communism
+			has_government = democratic #check for the British Union of Fascists?
+		}
+	}
+	
+	fire_only_once = yes
+
+	mean_time_to_happen = { days = 60 }
+
+	#maybe add Joey Smallwood (but pro unification with Canada-, Peter John Cashin, against unification
+	# send it to Canada
+	option = { 
+		name = r56_eng.6.a
+		ai_chance = {
+			base = 75
+		}
+		trigger = {
+			CAN = {
+				OR = {
+					is_puppet_of = ROOT
+					is_in_faction_with = ROOT
+				}
+				682 = { is_owned_and_controlled_by = ROOT }
+			}
+		}
+		effect_tooltip = {
+			CAN = {
+				transfer_state = 331
+				transfer_state = 332
+			}
+		}
+		hidden_effect = {
+			CAN = { country_event = { id =  r56_canada.10 days = 2 } }
+			news_event = { id = r56.news_event.47 days = 3 }
+		}			
+	}
+	option = { 
+		name = r56_eng.6.b
+		ai_chance = {
+			base = 25
+		}
+		add_political_power = -300
+		release_puppet_on_controlled = NFL
+		NFL = {
+			add_political_power = 500
+		}
+		news_event = { id = r56.news_event.48 days = 3 }
+	}	
+}
+
+#There's a limit to how many events can fit in a namespace.  To play it safe, I'm working with around 100.
+#These events are for various leaders and personalities, so have a gameplay impact (so not just flavour).
+#The idea is to do a bunch down the track, but this first one is a one-off because I just read Gilbertson's
+#biography, and he was a legend and so get's a run.
+
+###########################
+#  Leader events
+###########################
+
+#Gilbertson - recruitment
+country_event = {
+	id = r56_eng.10
+	title = r56_eng.10.t
+	desc = r56_eng.10.d
+	picture = GFX_report_event_ast_navy
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	option = {
+		name = r56_eng.10.a
+		ai_chance = { factor = 85 }
+		set_country_flag = ENG_terror_of_tobermory
+		show_ideas_tooltip = ENG_gilbert_stephenson
+		add_political_power = 25
+	}
+
+	option = {
+		name = r56_eng.10.b
+		ai_chance = { factor = 15 }
+		set_country_flag = ENG_recalled_stephenson_flag
+		#After MtG add anti submarine trait -Waffle
+		effect_tooltip = {
+			create_navy_leader = { 
+				name = "Gilbert Stephenson"
+				portrait_path = "gfx/leaders/r56_generic/r56_portrait_generic_navy_europe_1.dds"
+				traits = { fleet_protector destroyer_leader }
+				skill = 3
+				attack_skill = 3
+				defense_skill = 2
+				maneuvering_skill = 3
+				coordination_skill = 2			
+			}
+		}
+	}
+}
+
+#From navaldesign:
+#Events removed. Events are broken as the ideas do not exist, and would conflict with base game navel designers. If you want to add these navel desginers please use TWAS mod and import all the ideas. Cause I aint doing all that work for flavor. -Spicy  

@@ -1,0 +1,1069 @@
+add_namespace = event_CHI
+add_namespace = event_PRC
+add_namespace = news_sino
+add_namespace = PRC_event
+add_namespace = USA_event
+
+##整合军阀
+country_event = {
+	id = event_CHI.1
+	title = event_CHI.1.t
+	desc = event_CHI.1.desc
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+	
+	#Accept puppet
+	option = {
+		name = event_CHI.1.a
+		ai_chance = { 
+			base = 10 
+			modifier = {
+				has_global_flag = CHI_xian_refused
+				factor = 0
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					tag = PRC
+					tag = MAN
+					tag = MEN
+					tag = GXC
+					tag = CHI
+				}
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { tag = PRC }
+			}
+		}
+		FROM = {
+			puppet = ROOT
+			country_event = { id = event_CHI.2 }
+		}
+	}
+
+	#Never
+	option = {
+		name = event_CHI.1.b
+		ai_chance = { 
+			base = 10 
+		}
+		FROM = {
+			country_event = { id = event_CHI.3 }
+		}
+	}
+}
+
+##整合军阀-同意
+country_event = {
+	id = event_CHI.2
+	title = event_CHI.2.t
+	desc = event_CHI.2.desc
+	picture = GFX_report_event_chinese_japanese_handshake
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_CHI.2.a
+		army_experience = 5
+	}
+}
+
+##整合军阀-拒绝
+country_event = {
+	id = event_CHI.3
+	title = event_CHI.3.t
+	desc = event_CHI.3.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_CHI.3.a
+		create_wargoal = {
+				type = puppet_wargoal_focus
+				target = FROM
+		}
+	}
+}
+#############修改内容
+##中国要求归还藏南
+country_event = {
+	id = event_PRC.1
+	picture = GFX_report_event_chinese_soldiers_01
+	title = event_PRC.1.t
+	desc = event_PRC.1.desc
+	
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.1.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = -100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = 50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = 50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = 100
+			}
+		}
+		FROM = {
+			add_state_core = 434
+			transfer_state = 434
+			country_event = { id = event_PRC.2 days = 1 }
+		}
+	}
+
+	option = {
+		name = event_PRC.1.b
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = 100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = -50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = -50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = -100
+			}
+		}
+		FROM = {
+			add_state_core = 434
+			country_event = { id = event_PRC.3 days = 1 }
+		}
+	}
+}
+
+##麦克马洪线被废除
+country_event = {
+	id = event_PRC.2
+	title = event_PRC.2.t
+	desc = event_PRC.2.desc
+	picture = GFX_report_event_china_ledo_road
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.2.a
+	}
+}
+#############修改内容
+##拒绝归还领土
+country_event = {
+	id = event_PRC.3
+	title = event_PRC.3.t
+	desc = event_PRC.3.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.3.a
+		if = {
+			limit = {
+				FROM = { owns_state = 434 }
+			}
+			create_wargoal = {
+				type = take_core_state
+				target = FROM
+				generator = { 434 }
+			}
+		}
+	}
+}
+
+##中国要求归还广州湾
+country_event = {
+	id = event_PRC.4
+	picture = GFX_report_event_chinese_soldiers_01
+	title = event_PRC.4.t
+	desc = event_PRC.4.desc
+	
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.4.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = -100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = 50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = 50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = 100
+			}
+		}
+		FROM = {
+			transfer_state = 728
+			country_event = { id = event_PRC.5 days = 1 }
+		}
+	}
+
+	option = {
+		name = event_PRC.4.b
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = 100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = -50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = -50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = -100
+			}
+		}
+		FROM = {
+			country_event = { id = event_PRC.6 days = 1 }
+		}
+	}
+}
+
+##愿意归还广州湾
+country_event = {
+	id = event_PRC.5
+	title = event_PRC.5.t
+	desc = event_PRC.5.desc
+	picture = GFX_report_event_china_ledo_road
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.5.a
+	}
+}
+
+##拒绝归还广州湾
+country_event = {
+	id = event_PRC.6
+	title = event_PRC.6.t
+	desc = event_PRC.6.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.6.a
+		if = {
+			limit = {
+				FROM = { owns_state = 728 }
+			}
+			create_wargoal = {
+				type = take_core_state
+				target = FROM
+				generator = { 728 }
+			}
+		}
+	}
+}
+
+##中国要求归还澳门
+country_event = {
+	id = event_PRC.7
+	picture = GFX_report_event_chinese_soldiers_01
+	title = event_PRC.7.t
+	desc = event_PRC.7.desc
+	
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.7.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = -100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = 50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = 50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = 100
+			}
+		}
+		FROM = {
+			transfer_state = 729
+			country_event = { id = event_PRC.8 days = 1 }
+		}
+	}
+
+	option = {
+		name = event_PRC.7.b
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = 100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = -50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = -50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = -100
+			}
+		}
+		FROM = {
+			country_event = { id = event_PRC.9 days = 1 }
+		}
+	}
+}
+
+##愿意归还澳门
+country_event = {
+	id = event_PRC.8
+	title = event_PRC.8.t
+	desc = event_PRC.8.desc
+	picture = GFX_report_event_china_ledo_road
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.8.a
+	}
+}
+
+##拒绝归还澳门
+country_event = {
+	id = event_PRC.9
+	title = event_PRC.9.t
+	desc = event_PRC.9.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.9.a
+		if = {
+			limit = {
+				FROM = { owns_state = 729 }
+			}
+			create_wargoal = {
+				type = take_core_state
+				target = FROM
+				generator = { 729 }
+			}
+		}
+	}
+}
+
+##中国要求归还香港
+country_event = {
+	id = event_PRC.10
+	picture = GFX_report_event_chinese_soldiers_01
+	title = event_PRC.10.t
+	desc = event_PRC.10.desc
+	
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.10.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = -100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = 50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = 50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = 100
+			}
+		}
+		FROM = {
+			transfer_state = 326
+			country_event = { id = event_PRC.11 days = 1 }
+		}
+	}
+
+	option = {
+		name = event_PRC.10.b
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = 100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = -50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = -50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = -100
+			}
+		}
+		FROM = {
+			country_event = { id = event_PRC.12 days = 1 }
+		}
+	}
+}
+
+##愿意归还香港
+country_event = {
+	id = event_PRC.11
+	title = event_PRC.11.t
+	desc = event_PRC.11.desc
+	picture = GFX_report_event_china_ledo_road
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.11.a
+	}
+}
+
+##拒绝归还香港
+country_event = {
+	id = event_PRC.12
+	title = event_PRC.12.t
+	desc = event_PRC.12.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.12.a
+		if = {
+			limit = {
+				FROM = { owns_state = 326 }
+			}
+			create_wargoal = {
+				type = take_core_state
+				target = FROM
+				generator = { 326 }
+			}
+		}
+	}
+}
+
+##要求日本议和
+country_event = {
+	id = event_PRC.13
+	title = event_PRC.13.t
+	desc = event_PRC.13.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.13.a
+		every_owned_state = {
+			limit = {
+				NOT = {
+					is_core_of = ROOT
+					is_controlled_by = ROOT
+				}
+			}
+			FROM = {
+				transfer_state = PREV
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					MAN = {
+						controls_state = 525
+						controls_state = 527
+					}
+				}
+			}
+			release = KOR
+			FROM = { 
+				set_autonomy = {
+					target = KOR
+					autonomy_state = autonomy_puppet
+				}
+			}
+		}
+		if = {
+			limit = {
+				MAN = {
+					is_subject_of = ROOT
+				}
+			}
+			FROM = {
+				annex_country = {
+					target = MAN
+				} 
+			}
+		}
+		if = {
+			limit = {
+				MEN = {
+					is_subject_of = ROOT
+				}
+			}
+			FROM = {
+				annex_country = {
+					target = MEN
+				} 
+			}
+		}
+		FROM = {
+			country_event = { id = event_PRC.14 days = 1 }
+		}
+		white_peace = FROM
+		every_other_country = {
+			limit = {
+				has_war_with = ROOT
+				is_in_faction_with = FROM
+			}
+			white_peace = ROOT
+		}
+		add_ideas = JAP_ide_failed_war_with_China
+	}
+}
+
+##同意日本议和
+country_event = {
+	id = event_PRC.14
+	title = event_PRC.14.t
+	desc = event_PRC.14.desc
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.14.a
+	}
+}
+
+##中国要求西藏归附
+country_event = {
+	id = event_PRC.15
+	picture = GFX_report_event_chinese_soldiers_01
+	title = event_PRC.15.t
+	desc = event_PRC.15.desc
+	
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.15.a
+		FROM = {
+			annex_country = {
+				target = TIB
+			} 
+			country_event = { id = event_PRC.16 days = 1 }
+		}
+	}
+}
+
+##西藏愿意归附
+country_event = {
+	id = event_PRC.16
+	title = event_PRC.16.t
+	desc = event_PRC.16.desc
+	picture = GFX_report_event_china_ledo_road
+
+	is_triggered_only = yes
+
+	option = {
+		name = event_PRC.16.a
+	}
+}
+
+##毛泽东提议结盟
+country_event = {
+	id = event_PRC.17
+	title = event_PRC.17.t
+	desc = event_PRC.17.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+	option = {
+		
+		name = event_PRC.17.a #approve
+		ai_chance = {
+			base = 50
+		}
+		hidden_effect = {
+			news_event = { id = news.288 days = 1 } # United Front forms
+		}
+		if = {
+			limit = {
+				NOT = { is_in_faction_with = FROM }
+				FROM = { is_in_faction = no }
+			}
+			FROM = {
+				set_rule = { can_create_factions = yes }
+				create_faction = PRC_government_of_national_defense
+			}
+		}
+		else_if = {
+			limit = {
+				ROOT = { is_faction_leader  = yes }
+			}
+			ROOT = {
+				add_to_faction = FROM
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = "CHI"
+				value = 200
+			}
+		}
+		if = {
+			limit = {
+				FROM = { is_faction_leader = yes }
+			}
+			FROM = { add_to_faction = ROOT }
+			add_ai_strategy = {
+				type = alliance
+				id = "PRC"
+				value = 200
+			}
+			every_country = {
+				limit = {
+					is_subject_of = ROOT
+				}
+				ROOT = { add_to_faction = PREV }
+			}
+		}
+	}
+
+	option = {
+		name = event_PRC.17.b #disapprove
+		ai_chance = {
+			base = 10
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+		reverse_add_opinion_modifier = { target = FROM modifier = CHI_refused_support }
+		FROM = {
+			country_event = { id = wtt_prc.2 days = 3 }
+		}
+	}
+}
+
+##中共请求加入共产国际
+country_event = {
+	id = event_PRC.18
+	title = event_PRC.18.t
+	desc = event_PRC.18.desc
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_PRC.18.a 
+		ai_chance = {
+			base = 100
+			modifier = {
+				has_government = communism
+				FROM = {
+					has_government = communism
+				}
+				factor = 4
+			}
+			
+		}
+		add_to_faction = FROM
+		FROM = {
+			country_event = { id = event_PRC.19 }
+		}
+			news_event = { id = news_sino.1 days = 3 } 
+	}
+
+	option = {
+		name = event_PRC.18.b 
+		ai_chance = {
+			base = 50
+		}
+		FROM = {
+			country_event = { id = event_PRC.20 }
+		}
+	}
+}
+
+##同意加入
+country_event = {
+	id = event_PRC.19
+	title = event_PRC.19.t
+	desc = event_PRC.19.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_PRC.19.a
+	}
+}
+
+##不同意加入
+country_event = {
+	id = event_PRC.20
+	title = event_PRC.20.t
+	desc = event_PRC.20.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_PRC.20.a
+	}
+}
+
+##中国要求归还南萨哈林
+country_event = {
+	id = event_PRC.21
+	title = event_PRC.21.t
+	desc = event_PRC.21.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_PRC.21.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = -100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = 50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = 50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = 100
+			}
+		}
+		FROM = {
+			transfer_state = 537
+			country_event = { id = event_PRC.22 days = 1 }
+		}
+	}
+	option = {
+		name = event_PRC.21.b
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = 100
+			}
+			modifier = {
+				FROM = { is_in_faction_with = ROOT }
+				add = -50
+			}
+			modifier = {
+				FROM = { is_major = yes }
+				add = -50
+			}
+			modifier = {
+				ROOT = { is_puppet_of = FROM }
+				add = -100
+			}
+		}
+		FROM = {
+			country_event = { id = event_PRC.23 days = 1 }
+		}
+	}
+}
+
+##同意归还南萨哈林
+country_event = {
+	id = event_PRC.22
+	title = event_PRC.22.t
+	desc = event_PRC.22.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_PRC.22.a
+	}
+}
+
+##拒绝归还南萨哈林
+country_event = {
+	id = event_PRC.23
+	title = event_PRC.23.t
+	desc = event_PRC.23.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+	option = {
+		name = event_PRC.23.a
+		if = {
+			limit = {
+				FROM = { owns_state = 537 }
+			}
+			create_wargoal = {
+				type = take_core_state
+				target = FROM
+				generator = { 537 }
+			}
+		}
+	}
+}
+
+##中共加入共产国际
+news_event = {
+	id = news_sino.1
+	title = news_sino.1.t
+	desc = news_sino.1.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = news_sino.1.a
+		trigger = {
+			OR = {
+				tag = PRC
+				is_in_faction_with = PRC
+			}
+		}
+	}
+	option = {
+		name = news_sino.1.b
+		trigger = {
+			OR = {
+				has_war_with = SOV
+				has_war_with = PRC
+			}
+		}
+	}
+	option = {
+		name = news_sino.1.c
+		trigger = {
+			NOT = {
+				tag = PRC
+				is_in_faction_with = PRC
+				has_war_with = SOV
+				has_war_with = PRC
+			}
+		}
+	}
+} 
+
+#开展敌后情报工作
+country_event = {
+	id = event_PRC.24
+	title = event_PRC.24.t
+	desc = event_PRC.24.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	hidden = yes
+	immediate = {
+		random_list = {
+			15 = { PRC = { country_event ={ id = event_PRC.25 } } }
+			70 = { PRC = { country_event ={ id = event_PRC.26 } } }
+			15 = { PRC = { country_event ={ id = event_PRC.27 } } }
+		}
+	}
+}
+
+#敌后情报工作大成功
+country_event = {
+	id = event_PRC.25
+	title = event_PRC.25.t
+	desc = event_PRC.25.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	option = {
+		name = "Well"
+		add_to_variable = { 
+			qbd = 4
+			tooltip = PRC_tip_qbd_add 
+		}
+		add_to_variable = { 
+			qbd_max = 4
+		}
+		add_tech_bonus = {
+			name = "Infantry weapons, support technology and artillery support company"
+			bonus = 1
+			uses = 1
+			category = infantry_weapons
+			category = support_tech
+			category = artillery
+		}
+	}
+}
+
+#敌后情报工作成功
+country_event = {
+	id = event_PRC.26
+	title = event_PRC.26.t
+	desc = event_PRC.26.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	immediate = {
+		
+	}
+	option = {
+		name = "Well"
+		add_to_variable = { 
+			qbd = 2
+			tooltip = PRC_tip_qbd_add 
+		}
+		add_to_variable = { 
+			qbd_max = 2
+		}
+	}
+}
+
+#敌后情报工作没有收获
+country_event = {
+	id = event_PRC.27
+	title = event_PRC.27.t
+	desc = event_PRC.27.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	
+}
+
+#确立对外政策
+country_event = {
+	id = PRC_event.28
+	title = PRC_event.28.t
+	desc = PRC_event.28.desc
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	option = {
+		name = "Attack is the best defense"
+		set_country_flag = PRC_fla_PLF
+	}
+	option = {
+		name = "Steady development"
+		set_country_flag = PRC_fla_TCO
+	}
+}
+
+#美国要求合作
+country_event = {
+	id = USA_event.28
+	title = "The United States demands our cooperation"
+	desc = "The United States demands our cooperation"
+	picture = GFX_report_event_china_chiang_mao
+
+	is_triggered_only = yes
+	option = {
+		name = "Well"
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { is_major = yes }
+				add = 100
+			}
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = -100
+			}
+			modifier = {
+				root = { is_in_faction = yes }
+				add = -50
+			}
+			modifier = {
+				root = { is_subject = yes }
+				add = -100
+			}
+		}
+		from = {
+			add_to_faction = root
+		}
+		
+		add_political_power = 100
+	}
+	option = {
+		name = "Really funny"
+		ai_chance = {
+			base = 50
+			modifier = {
+				FROM = { is_major = yes }
+				add = -100
+			}
+			modifier = {
+				FROM = { has_war_with = ROOT }
+				add = 100
+			}
+			modifier = {
+				root = { is_in_faction = yes }
+				add = 50
+			}
+			modifier = {
+				root = { is_subject = yes }
+				add = 100
+			}
+		}
+		from = {
+			create_wargoal = {
+				target = root
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+}

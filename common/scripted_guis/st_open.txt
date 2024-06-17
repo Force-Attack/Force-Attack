@@ -1,0 +1,66 @@
+scripted_gui = {
+
+	st_open = {
+		context_type = player_context
+
+		window_name = "st_open_container"
+
+		parent_window_token = top_bar
+
+		visible = {
+			NOT = { has_country_flag = hidden_switch }
+			has_game_rule = {
+				rule = use_new_tool 
+				option = NO
+			}
+		}
+
+		effects = {
+			open_ST_click = {
+				if = {
+					limit = { ROOT = { NOT = { has_country_flag = transfer_enabled } } }
+					ROOT = { set_country_flag = transfer_enabled }
+				}
+				else = {
+					ROOT = { clr_country_flag = transfer_enabled }
+				}
+			}
+		}
+		triggers = {
+			open_ST_click_enabled = {
+				always = yes
+			}
+		}
+	}
+	
+	st_hide = {
+		context_type = player_context
+
+		window_name = "st_hide_container"
+
+		visible = {
+			has_game_rule = {
+				rule = use_new_tool 
+				option = NO 
+			}
+		}
+
+		effects = {
+			hide_ST_click = {
+				if = {
+					limit = { NOT = { has_country_flag = hidden_switch } }
+					set_country_flag = hidden_switch
+				}
+				else = {
+					clr_country_flag = hidden_switch
+				}
+			}
+		}
+		triggers = {
+			hide_ST_click_enabled = {
+				always = yes
+			}
+		}
+	}
+
+}

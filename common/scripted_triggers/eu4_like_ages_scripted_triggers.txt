@@ -1,0 +1,1149 @@
+AI_wants_to_select_age_ability = {
+	OR = {
+		any_of = {
+			array = global.current_age_abilities
+			value = v
+			set_temp_variable = { age_ability = v }
+			can_select_current_age_ability = yes
+			can_select_current_unique_age_ability = yes
+		}
+		AND = {
+			NOT = { has_country_flag = had_golden_age }
+			is_fulfilling_3_age_objectives = yes
+			AI_wants_to_select_golden_age = yes
+		}
+	}
+}
+
+AI_wants_to_select_golden_age = {
+	OR = {
+		has_stability < 0.5
+		has_war = yes
+		AND = {
+			NOT = { has_government = fascism }
+			NOT = { has_government = communism }
+			threat > 0.75
+		}
+	}
+}
+
+country_fulfills_current_age_objective = {
+	if = {
+		limit = {
+			check_variable = { age_objective = 1 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_RULING_PARTY_POPULARITY_IS_100
+			check_variable = { party_popularity@ruling_party > 0.85 }
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 2 }
+		}
+		has_stability > 0.9
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 3 }
+		}
+		has_war_support > 0.5
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 4 }
+		}
+		num_of_military_factories > 50
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 5 }
+		}
+		has_army_manpower = {
+			size > 499999
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 6 }
+		}
+		OR = {
+			has_navy_size = {
+				type = capital_ship
+				size > 14
+			}
+			has_navy_size = {
+				type = screen_ship
+				size > 24
+			}
+			has_navy_size = {
+				type = submarine
+				size > 59
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 7 }
+		}
+		OR = {
+			custom_trigger_tooltip = {
+				tooltip = AGE_OBJECTIVE_IS_JUSTIFYING_A_WAR_GOAL
+				any_other_country = {
+					ROOT = {
+						is_justifying_wargoal_against = PREV
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = AGE_OBJECTIVE_HAS_A_WAR_GOAL
+				any_other_country = {
+					ROOT = {
+						has_wargoal_against = PREV
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 8 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_FACTION_CONTROLS_ALL_OF_EUROPE
+			NOT = {
+				any_state = {
+					OR = {
+						region = 41
+						region = 20
+						region = 19
+						region = 23
+						region = 5
+						region = 6
+						region = 7
+						region = 8
+						region = 38
+						region = 22
+						region = 21
+						region = 1
+						region = 2
+						region = 3
+					}
+					NOT = { state = 3 }
+					NOT = { state = 151 }
+					NOT = { is_controlled_by = ROOT }
+					CONTROLLER = {
+						NOT = { is_in_faction_with = ROOT }
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 9 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_AT_WAR_WITH_5_COUNTRIES
+			check_variable = { enemies^num > 4 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_ENEMY_HAS_CAPITAL_IN_EUROPE
+			any_other_country = {
+				has_war_with = ROOT
+				capital_scope = {
+					OR = {
+						is_on_continent = europe
+						is_on_continent = asia
+					}
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_ENEMY_HAS_CAPITAL_IN_AMERICA
+			any_other_country = {
+				has_war_with = ROOT
+				capital_scope = {
+					OR = {
+						is_on_continent = north_america
+						is_on_continent = south_america
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 10 }
+		}
+		has_country_flag = achievement_has_dropped_nuke
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 11 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_ANNEXED_A_STATE
+			any_owned_state = {
+				NOT = { is_core_of = ROOT }
+				NOT = { has_state_flag = owned_by_@ROOT }
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 12 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_HAS_OCCUPIED_MORE_STATES_THAN_OWNED
+			check_variable = { num_occupied_states > num_owned_states }
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 13 }
+		}
+		num_faction_members > 9
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 14 }
+		}
+		any_neighbor_country = {
+			has_non_aggression_pact_with = ROOT
+			NOT = { is_in_faction_with = ROOT }
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 15 }
+		}
+		num_of_nukes > 24
+		hidden_trigger = {
+			set_temp_variable = { num_of_nukes_temp = num_of_nukes }
+			all_country = {
+				set_temp_variable = { num_of_nukes_temp_@THIS = num_of_nukes }
+				if = {
+					limit = {
+						NOT = {
+							any_other_country = {
+								check_variable = { num_of_nukes_temp_@THIS > num_of_nukes_temp_@PREV }
+							}
+						}
+					}
+					set_temp_variable = { most_nukes_target_temp = THIS.id }
+					set_temp_variable = { most_nukes_target_nukes_amount_temp = num_of_nukes_temp_@THIS }
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_HAS_MOST_NUKES
+			NOT = {
+				any_other_country = {
+					check_variable = { var = num_of_nukes_temp_@THIS value = num_of_nukes_temp compare = greater_than_or_equals }
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 16 }
+		}
+		set_temp_variable = { num_of_countries_with_same_ideology = 0 }
+		all_other_country = {
+			if = {
+				limit = {
+					has_government = ROOT
+				}
+				add_to_temp_variable = { num_of_countries_with_same_ideology = 1 }
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_AT_LEAST_15_OTHER_COUNTRIES_WITH_SAME_IDEOLOGY
+			check_variable = { num_of_countries_with_same_ideology > 14 }
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 17 }
+		}
+		num_subjects > 9
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 18 }
+		}
+		any_army_leader = {
+			skill > 7
+			is_assigned = yes
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 19 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_HAS_AT_LEAST_10_VOLUNTEERS_IN_ANOTHER_COUNTRY
+			any_other_country = {
+				meta_trigger = {
+					text = {
+						has_volunteers_amount_from = {
+							tag = [TAG]
+							count > 9
+						}
+					}
+					TAG = "[Root.GetTag]"
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 20 }
+		}
+		has_army_manpower = {
+			size > 6999999
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 21 }
+		}
+		threat < 0.75
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 22 }
+		}
+		threat < 0.15
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 23 }
+		}
+		has_army_manpower = {
+			size > 999999
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 24 }
+		}
+		OR = {
+			has_navy_size = {
+				type = capital_ship
+				size > 29
+			}
+			has_navy_size = {
+				type = screen_ship
+				size > 49
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 25 }
+		}
+		if = {
+			limit = {
+				has_global_flag = eu4_style_ages_ww1_mod_endsieg
+			}
+			has_tech = trench_warfare
+		}
+		else_if = {
+			limit = {
+				has_global_flag = eu4_style_ages_ww1_mod_the_great_war
+			}
+			#has_tech = ww1_fortification2
+		}
+		else = {
+			#has_tech = fortification2
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 26 }
+		}
+		is_in_faction = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 27 }
+		}
+		has_war = yes
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 28 }
+		}
+		num_of_factories > 199
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 29 }
+		}
+		has_war = yes
+		any_other_country = {
+			is_major = yes
+			has_war_with = ROOT
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 30 }
+		}
+		num_occupied_states > 19
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 31 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_CONTROLS_A_STATE_IN_AFRICA
+			any_state = {
+				is_controlled_by = ROOT
+				is_on_continent = africa
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 32 }
+		}
+		if = {
+			limit = {
+				has_global_flag = eu4_style_ages_ww1_mod_endsieg
+			}
+			#has_tech = early_tank
+		}
+		else_if = {
+			limit = {
+				has_global_flag = eu4_style_ages_ww1_mod_the_great_war
+			}
+			if = {
+				limit = {
+					has_dlc = "No Step Back"
+				}
+				OR = {
+					#has_tech = ww1_light_tank__nostepback
+					#has_tech = ww1_heavy_tank__nostepback
+				}
+			}
+			else = {
+				OR = {
+					#has_tech = ww1_light_tank
+					#has_tech = ww1_heavy_tank
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					has_dlc = "No Step Back"
+				}
+				OR = {
+					has_tech = basic_light_tank_chassis
+					has_tech = basic_medium_tank_chassis
+					has_tech = basic_heavy_tank_chassis
+				}
+			}
+			else = {
+				OR = {
+					has_tech = basic_light_tank
+					has_tech = basic_heavy_tank
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 33 }
+		}
+		if = {
+			limit = {
+				has_global_flag = eu4_style_ages_ww1_mod_endsieg
+			}
+			#has_tech = gas_mask2
+		}
+		else_if = {
+			limit = {
+				has_global_flag = eu4_style_ages_ww1_mod_the_great_war
+			}
+			#has_tech = chemical_research2
+		}
+		else = {
+			has_tech = support_weapons4
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 34 }
+		}
+		has_government = communism
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 35 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_TREATY_OF_VERSAILLES_OR_TREATY_OF_FRANKFURT_HAS_HAPPENED
+			if = {
+				limit = {
+					has_global_flag = eu4_style_ages_ww1_mod_endsieg
+				}
+				OR = {
+					has_global_flag = central_powers_victory
+					has_global_flag = versailles
+				}
+			}
+			else_if = {
+				limit = {
+					has_global_flag = eu4_style_ages_ww1_mod_the_great_war
+				}
+				OR = {
+					has_global_flag = kis_treaty_of_versailles
+					has_global_flag = kis_second_treaty_frankfort
+				}
+			}
+			else = {
+				OR = {
+					has_global_flag = versallies_treaty
+					has_global_flag = frankfurt_treaty
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 36 }
+		}
+		is_major = yes
+		is_faction_leader = yes
+		all_other_country = {
+			OR = {
+				is_major = no
+				is_faction_leader = no
+				has_government = ROOT
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 37 }
+		}
+		has_manpower > 4999999
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 38 }
+		}
+		num_faction_members > 9
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 39 }
+		}
+		all_neighbor_country = {
+			NOT = { has_war_with = ROOT }
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 40 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_AT_LEAST_50_RESEARCH_SPEED_BONUS
+			check_variable = { modifier@research_speed_factor > 0.499 }
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 41 }
+		}
+		all_owned_state = {
+			infrastructure > 4
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_objective = 42 }
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_OBJECTIVE_AT_LEAST_15_CONSUMER_GOODS_FACTOR
+			check_variable = { modifier@consumer_goods_factor > 0.199 }
+		}
+	}
+}
+
+can_select_current_age_ability = {
+	hidden_trigger = {
+		NOT = { is_in_array = { currently_selected_age_abilities = age_ability } }
+	}
+	custom_trigger_tooltip = {
+		tooltip = AGE_ABILITY_HAS_AT_LEAST_800_SPLENDOR
+		NOT = { check_variable = { current_splendor < 800 } }
+	}
+	if = {
+		limit = {
+			check_variable = { age_ability = 8 }
+		}
+		threat > 0.1
+	}
+}
+
+can_select_current_unique_age_ability = {
+	if = {
+		limit = {
+			check_variable = { age_ability = 8 }
+		}
+		set_temp_variable = { age_ability_country = GER }
+		original_tag = GER
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 9 }
+		}
+		set_temp_variable = { age_ability_country = CHI }
+		original_tag = CHI
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 10 }
+		}
+		set_temp_variable = { age_ability_country = ENG }
+		original_tag = ENG
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 11 }
+		}
+		set_temp_variable = { age_ability_country = POL }
+		original_tag = POL
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 19 }
+		}
+		set_temp_variable = { age_ability_country = FRA }
+		original_tag = FRA
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 20 }
+		}
+		set_temp_variable = { age_ability_country = JAP }
+		original_tag = JAP
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 21 }
+		}
+		set_temp_variable = { age_ability_country = SOV }
+		original_tag = SOV
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 22 }
+		}
+		set_temp_variable = { age_ability_country = ITA }
+		original_tag = ITA
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 30 }
+		}
+		set_temp_variable = { age_ability_country = USA }
+		original_tag = USA
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 31 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					has_government = democratic
+				}
+				set_temp_variable = { age_ability_country = THIS }
+			}
+			else_if = {
+				limit = {
+					any_country = {
+						has_government = democratic
+					}
+				}
+				any_country = {
+					has_government = democratic
+					set_temp_variable = { age_ability_country = THIS }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = USA }
+			}
+		}
+		has_government = democratic
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 32 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					has_government = communism
+				}
+				set_temp_variable = { age_ability_country = THIS }
+			}
+			else_if = {
+				limit = {
+					any_country = {
+						has_government = communism
+					}
+				}
+				any_country = {
+					has_government = communism
+					set_temp_variable = { age_ability_country = THIS }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = SOV }
+			}
+		}
+		has_government = communism
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 33 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					has_government = neutrality
+				}
+				set_temp_variable = { age_ability_country = THIS }
+			}
+			else_if = {
+				limit = {
+					any_country = {
+						has_government = neutrality
+					}
+				}
+				any_country = {
+					has_government = neutrality
+					set_temp_variable = { age_ability_country = THIS }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = CHI }
+			}
+		}
+		has_government = neutrality
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 41 }
+		}
+		set_temp_variable = { age_ability_country = JAP }
+		original_tag = JAP
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 42 }
+		}
+		set_temp_variable = { age_ability_country = AUH }
+		#original_tag = AUH
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 43 }
+		}
+		set_temp_variable = { age_ability_country = SER }
+		original_tag = SER
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 44 }
+		}
+		set_temp_variable = { age_ability_country = ITA }
+		original_tag = ITA
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 52 }
+		}
+		set_temp_variable = { age_ability_country = FRA }
+		original_tag = FRA
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 53 }
+		}
+		set_temp_variable = { age_ability_country = ENG }
+		original_tag = ENG
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 54 }
+		}
+		set_temp_variable = { age_ability_country = GER }
+		original_tag = GER
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 55 }
+		}
+		set_temp_variable = { age_ability_country = USA }
+		original_tag = USA
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 63 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					has_government = democratic
+				}
+				set_temp_variable = { age_ability_country = THIS }
+			}
+			else_if = {
+				limit = {
+					any_country = {
+						has_government = democratic
+					}
+				}
+				any_country = {
+					has_government = democratic
+					set_temp_variable = { age_ability_country = THIS }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = USA }
+			}
+		}
+		has_government = democratic
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 64 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					capital_scope = {
+						is_on_continent = europe
+					}
+				}
+				set_temp_variable = { age_ability_country = THIS }
+			}
+			else_if = {
+				limit = {
+					any_country = {
+						capital_scope = {
+							is_on_continent = europe
+						}
+					}
+				}
+				any_country = {
+					capital_scope = {
+						is_on_continent = europe
+					}
+					set_temp_variable = { age_ability_country = THIS }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = FRA }
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_ABILITY_HAS_CAPITAL_IN_EUROPE
+			capital_scope = {
+				is_on_continent = europe
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 65 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					capital_scope = {
+						is_on_continent = africa
+					}
+				}
+				set_temp_variable = { age_ability_country = THIS }
+			}
+			else_if = {
+				limit = {
+					any_country = {
+						capital_scope = {
+							is_on_continent = africa
+						}
+					}
+				}
+				any_country = {
+					capital_scope = {
+						is_on_continent = africa
+					}
+					set_temp_variable = { age_ability_country = THIS }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = ETH }
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = AGE_ABILITY_HAS_CAPITAL_IN_AFRICA
+			capital_scope = {
+				is_on_continent = africa
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { age_ability = 66 }
+		}
+		hidden_trigger = {
+			if = {
+				limit = {
+					NOT = { has_start_date > 2000.1.1 }
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = PRC
+							AND = {
+								original_tag = CHI
+								has_government = communism
+							}
+						}
+					}
+					set_temp_variable = { age_ability_country = THIS }
+				}
+				else = {
+					set_temp_variable = { age_ability_country = PRC }
+				}
+			}
+			else = {
+				set_temp_variable = { age_ability_country = CHI }
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_start_date > 2000.1.1 }
+			}
+			OR = {
+				tag = PRC
+				AND = {
+					original_tag = CHI
+					has_government = communism
+				}
+			}
+		}
+		else = {
+			original_tag = CHI
+			has_government = communism
+		}
+	}
+}
+
+is_fulfilling_3_age_objectives = {
+	set_temp_variable = { num_of_fulfilled_age_objectives = 0 }
+	all_of = {
+		array = global.current_age_objectives
+		value = v
+		set_temp_variable = { age_objective = v }
+		if = {
+			limit = {
+				country_fulfills_current_age_objective = yes
+			}
+			add_to_temp_variable = { num_of_fulfilled_age_objectives = 1 }
+		}
+	}
+	check_variable = { num_of_fulfilled_age_objectives > 2 }
+}
+
+are_triggers_met_for_age_1 = {
+	hidden_trigger = {
+		check_variable = { global.current_age < 1 }
+		NOT = { has_global_flag = age_has_begun_1 }
+	}
+	has_start_date > 1890.1.1
+}
+
+are_triggers_met_for_age_2 = {
+	hidden_trigger = {
+		check_variable = { global.current_age < 2 }
+		NOT = { has_global_flag = age_has_begun_2 }
+		has_global_flag = age_has_begun_1
+		set_temp_variable = { current_age_temp = 2 }
+	}
+	OR = {
+		custom_trigger_tooltip = {
+			tooltip = AGE_TRIGGERS_WERE_MET
+			check_variable = { global.next_age = 2 }
+		}
+		has_start_date > 1914.4.30
+		AND = {
+			date > 1914.4.30
+			any_country = {
+				is_major = yes
+				has_war = yes
+				has_civil_war = no
+			}
+		}
+	}
+}
+
+are_triggers_met_for_age_3 = {
+	hidden_trigger = {
+		check_variable = { global.current_age < 3 }
+		NOT = { has_global_flag = age_has_begun_3 }
+		has_global_flag = age_has_begun_2
+	}
+	if = {
+		limit = {
+			has_start_date > 1918.11.11
+		}
+		date > 1918.11.11
+	}
+	else = {
+		set_temp_variable = { current_age_temp = 3 }
+		OR = {
+			custom_trigger_tooltip = {
+				tooltip = AGE_TRIGGERS_WERE_MET
+				check_variable = { global.next_age = 3 }
+			}
+			date > 1925.1.1
+			AND = {
+				date > 1918.11.11
+				all_country = {
+					has_war = no
+				}
+			}
+		}
+	}
+}
+
+are_triggers_met_for_age_4 = {
+	hidden_trigger = {
+		check_variable = { global.current_age < 4 }
+		NOT = { has_global_flag = age_has_begun_4 }
+		has_global_flag = age_has_begun_3
+		set_temp_variable = { current_age_temp = 4 }
+	}
+	OR = {
+		custom_trigger_tooltip = {
+			tooltip = AGE_TRIGGERS_WERE_MET
+			check_variable = { global.next_age = 4 }
+		}
+		AND = {
+			OR = {
+				any_country = {
+					has_war = yes
+					has_civil_war = no
+				}
+				has_start_date > 1939.8.1
+			}
+			OR = {
+				date > 1939.8.1
+				any_country = {
+					is_faction_leader = yes
+					num_faction_members > 4
+					has_civil_war = no
+					custom_trigger_tooltip = {
+						tooltip = AGE_TRIGGER_IS_AT_WAR_WITH_FACTION_LEADER_OF_LARGE_FACTION
+						any_other_country = {
+							is_faction_leader = yes
+							num_faction_members > 4
+							has_war_with = PREV
+							has_civil_war = no
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = AGE_TRIGGER_EUROPEAN_MAJOR_AT_WAR_WITH_EUROPEAN_MAJOR
+					any_country = {
+						is_major = yes
+						capital_scope = {
+							is_on_continent = europe
+						}
+						has_civil_war = no
+						any_other_country = {
+							is_major = yes
+							capital_scope = {
+								is_on_continent = europe
+							}
+							has_war_with = PREV
+							has_civil_war = no
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+are_triggers_met_for_age_5 = {
+	hidden_trigger = {
+		check_variable = { global.current_age < 5 }
+		NOT = { has_global_flag = age_has_begun_5 }
+		has_global_flag = age_has_begun_4
+		set_temp_variable = { current_age_temp = 5 }
+	}
+	OR = {
+		custom_trigger_tooltip = {
+			tooltip = AGE_TRIGGERS_WERE_MET
+			check_variable = { global.next_age = 5 }
+		}
+		has_start_date > 1946.1.1
+		AND = {
+			date > 1946.1.1
+			threat > 0.9
+			OR = {
+				
+				all_country = {
+					has_war = no
+				}
+			}
+		}
+	}
+}
+
+are_triggers_met_for_age_6 = {
+	hidden_trigger = {
+		set_temp_variable = { num_of_major_faction_leaders = 0 }
+		all_other_country = {
+			if = {
+				limit = {
+					is_major = yes
+					is_faction_leader = yes
+					NOT = { has_government = ROOT }
+				}
+				add_to_temp_variable = { num_of_major_faction_leaders = 1 }
+			}
+			always = yes
+		}
+		check_variable = { global.current_age < 6 }
+		NOT = { has_global_flag = age_has_begun_6 }
+		has_global_flag = age_has_begun_5
+		set_temp_variable = { current_age_temp = 6 }
+	}
+	OR = {
+		custom_trigger_tooltip = {
+			tooltip = AGE_TRIGGERS_WERE_MET
+			check_variable = { global.next_age = 6 }
+		}
+		has_start_date > 1990.1.1
+		date > 1990.1.1
+		AND = {
+			date > 1970.1.1
+			custom_trigger_tooltip = {
+				tooltip = AGE_TRIGGER_LESS_THAN_1_MAJOR_FACTION_LEADERS
+				check_variable = { num_of_major_faction_leaders < 1 }
+			}
+		}
+	}
+}

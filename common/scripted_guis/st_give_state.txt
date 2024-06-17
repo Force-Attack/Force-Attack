@@ -1,0 +1,109 @@
+scripted_gui = {
+	
+	st_give_state = {
+	
+		context_type = diplomatic_action
+		
+		window_name = "st_give_state"
+		
+		visible = {
+			ROOT = {
+				is_ai = no  
+			}
+		}
+		
+		dynamic_lists = {
+			# name of the grid box gui element
+			st_state_grid = {
+				array = ROOT.owned_controlled_states
+				change_scope = yes
+				entry_container = "[st_give_state_entry_loc]" 
+			}
+		}
+		
+		effects = {
+			st_mark_click = {
+				THIS = { 
+					set_state_flag = marked_for_transfer 
+				}
+				add_to_variable = { ROOT.marked_states = 1 }
+			}
+			
+			st_unmark_click = {
+				THIS = { 
+					clr_state_flag = marked_for_transfer 
+				}
+				subtract_from_variable = { ROOT.marked_states = 1 }
+			}
+			
+			mark_all_states_click = {
+				ROOT = {
+					every_owned_state = {
+						limit = {
+							NOT = { has_state_flag = marked_for_transfer }
+						}
+						set_state_flag = marked_for_transfer
+						add_to_variable = { ROOT.marked_states = 1 }
+					}
+				}
+			}
+		
+			mark_colonial_states_click  = {
+				ROOT = {
+					every_owned_state = {
+						limit = {
+							NOT = { is_in_home_area = yes }
+							NOT = { is_core_of = PREV }
+							NOT = { has_state_flag = marked_for_transfer }
+						}
+						set_state_flag = marked_for_transfer
+						add_to_variable = { ROOT.marked_states = 1 }
+					}
+				}
+			}
+		
+			clear_all_markings_click = {
+				ROOT = { 
+					set_variable = { marked_states = 0 }
+				}
+				every_state = {
+					limit = {
+						has_state_flag = marked_for_transfer
+						is_owned_and_controlled_by = ROOT
+					}
+					clr_state_flag = marked_for_transfer
+				}
+			}
+			
+		}
+		
+		triggers = {
+			
+			mark_all_states_click_enabled = {
+				ROOT = { 
+					any_owned_state = {
+						NOT = { has_state_flag = marked_for_transfer }
+					}
+				}
+			}
+		
+			mark_colonial_states_click_enabled = {
+				ROOT = { 
+					any_owned_state = {
+						NOT = { is_in_home_area = yes }
+						NOT = { has_state_flag = marked_for_transfer }
+						NOT = { is_core_of = ROOT }
+						is_fully_controlled_by = ROOT
+					}
+				}
+			}
+			
+			clear_all_markings_click_enabled = {
+				check_variable = { ROOT.marked_states > 0 }
+			}
+		
+		}
+        
+	}
+}
+
