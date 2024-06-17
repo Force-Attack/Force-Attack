@@ -822,7 +822,12 @@ focus_tree = {
 
 		available = {
 			congress_high_support_trigger = yes
-			has_idea_with_trait = communist_revolutionary
+			OR = {
+				communism > 0.20
+				has_government = communism
+			}
+			not = { has_completed_focus = USA_limited_intervention }
+			not = { has_completed_focus = USA_neutrality_act }
 		}
 
 		cancel_if_invalid = no
@@ -905,6 +910,10 @@ focus_tree = {
 		}
 
 		available = {
+			OR = {
+				communism > 0.3
+				has_government = communism
+			}
 			congress_high_support_trigger = yes
 		}
 
@@ -975,6 +984,7 @@ focus_tree = {
 			congress_high_support_trigger = yes
 			OR = {
 				has_idea_with_trait = communist_revolutionary
+				has_government = communism
 			}
 		}
 
@@ -1161,6 +1171,12 @@ focus_tree = {
 			}
 		}
 
+		available = {
+			OR = {
+				communism > 0.20
+				has_government = communism
+			}
+		}
 
 
 		completion_reward = {
@@ -2164,7 +2180,7 @@ focus_tree = {
 		y = 2
 		prerequisite = { focus = USA_defense_contractors }
 		relative_position_id = USA_defense_contractors
-		cost = 20
+		cost = 25
 
 		ai_will_do = {
 			factor = 50
@@ -2352,7 +2368,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = r56_USA_over_there
+			add_timed_idea = {
+				idea = r56_USA_over_there
+				days = 90
+			}
 			if = {
 				limit = {
 					NOT = { has_idea = BEL_volunteer_corps }
@@ -2370,7 +2389,7 @@ focus_tree = {
 				limit = {
 					has_war_support < 0.2
 				}
-
+				add_stability = -0.25
 			}
 			USA_congress_small_opposition = yes
 		}
@@ -3279,7 +3298,7 @@ focus_tree = {
 				}
 				add_timed_idea = {
 					idea = rt56_the_gaint_wakes_idea
-					days = 180
+					days = 70
 				}
 			}
 			random_owned_controlled_state = {
@@ -6134,7 +6153,7 @@ focus_tree = {
 		available = {
 			has_government = democratic
 			NOT = {
-			
+				has_country_leader = { ruling_only = yes character = USA_franklin_delano_roosevelt }
 			}
 		}
 
@@ -7003,7 +7022,7 @@ focus_tree = {
 
 		available = {
 			has_completed_focus = USA_war_department
-			date > 1938.01.01
+			date > 1938.06.01
 		}
 
 		cancel_if_invalid = no
@@ -10327,7 +10346,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = tank_destroyer_board
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = tank_destroyer_board
 			
 			if = {
 				limit = {
@@ -10771,7 +10791,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = detroit_arsenal
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = detroit_arsenal
 			
 			if = {
 				limit = {
@@ -11273,10 +11294,10 @@ focus_tree = {
 					has_dlc = "By Blood Alone"
 				}
 				add_tech_bonus = {
-					technology = air_equipment
+					technology = aa_cannon_1
+					technology = aa_cannon_2
 					uses = 1
 					bonus = 1.0
-					category = air_equipment
 				}
 				create_equipment_variant = {
 					name = "A-36 'Apache' " #
@@ -11326,7 +11347,7 @@ focus_tree = {
 					name = USA_TAC
 					uses = 1
 					bonus = 1.0
-					category = air_equipment
+					category = medium_air
 				}
 			}
 			else = {
@@ -11334,7 +11355,7 @@ focus_tree = {
 					name = USA_TAC
 					uses = 1
 					bonus = 1.0
-					category = air_equipment
+					category = tactical_bomber
 				}
 			}
 			air_experience = 25
@@ -11409,7 +11430,7 @@ focus_tree = {
 				name = USA_combined_bomber_offensive
 				bonus = 1.0
 				uses = 1
-				category = air_equipment
+				category = heavy_air
 			}
 			add_ideas = combined_bomber_offensive
 		}
@@ -11504,10 +11525,10 @@ focus_tree = {
 					name = USA_escort_fighters
 					bonus = 1
 					uses = 1
-					category = air_equipment
+					category = light_air
 				}
 				add_tech_bonus = {
-					bonus = 3
+					bonus = 1.0
 					uses = 1
 					category = air_equipment
 				}
@@ -12805,7 +12826,7 @@ focus_tree = {
 		completion_reward = {
 		add_timed_idea = {
 			idea = USA_economic_reform
-			days = 365
+			days = 180
 		}
 		}
 	}
