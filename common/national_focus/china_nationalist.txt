@@ -55,7 +55,7 @@ focus_tree = {
 	focus = {
 		id = CHI_unified_industrial_planning
 		icon = GFX_goal_generic_construction
-		x = 6
+		x = 0
 		y = 0
 
 		cost = 10
@@ -3038,57 +3038,6 @@ focus = {
 
 	}
 
-	focus = {
-		id = CHI_contact_zhang_xueliang
-		icon = GFX_goal_PRC_contact_zhang_xueliang
-
-		relative_position_id = CHI_end_the_regime
-		x = -1
-		y = 1
-
-		mutually_exclusive = {
-		}
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_end_the_regime
-		}
-	
-
-	
-
-		completion_reward = {
-			add_ideas = communist_influence
-			add_popularity = { ideology = communism popularity = 0.25 }
-			set_politics = {
-				ruling_party = communism
-			}
-			add_country_leader_role = {
-					character = CHI_zhang_xueliang
-					promote_leader = yes
-					country_leader = {
-					ideology = communism_ideology
-					expire = "1965.1.1"
-					traits = {
-						communist_sympathiser
-					}
-				}
-			}	
-		}
-	}
 
 	focus = {
 		id = CHI_chang_kai_shek_dies
@@ -3213,15 +3162,35 @@ focus = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
+			hidden_effect = {
+				country_event = CHI.cw
+			division_template = {
+				name = "Chinese Peoples Replblic Army"
+				priority = 2
+				division_names_group = CHI_INF_01
+				is_locked = yes
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
+	
+					militia = { x = 1 y = 0 }
+					militia = { x = 1 y = 1 }
+					militia = { x = 1 y = 2 }
 
-		
-		hidden_effect = {
+					militia = { x = 2 y = 0 }
+					militia = { x = 2 y = 1 }
+					militia = { x = 2 y = 2 }
+
+					militia = { x = 3 y = 0 }
+				}
+			}
+			
 			add_popularity = {
 				ideology = communism
 				popularity = 60
 			}
 
-		
 			recruit_character = CHI_zhu_de 
 			recruit_character = 	CHI_chen_yi
 			recruit_character = 	CHI_peng_dehuai
@@ -3239,13 +3208,25 @@ focus = {
 			start_civil_war = {
 				ruling_party = communism
 				ideology = ROOT
-				size = 0.3
-				
-				states = { 608 614 597 598 743 }
-							
+				size = 0.6
+				states = { 754 752 753 608 614 597 598 743 607 606 613 749 595 596 600 620 602 592 593 594 599 603 602 748 605 325 747 751 601 744 283 }
+						capital = 605
+						
 				
 			}
 			
+			add_country_leader_role = {
+				character = CHI_military_committee_of_prc
+				promote_leader = yes
+				country_leader = {
+				ideology = marxism
+				expire = "1965.1.1"
+				traits = {
+					desperate_gambit
+				}
+			}
+		}	
+		set_country_flag = CHI_communism
 			create_field_marshal = { 
 				name = "Mao Zedong"
 				portrait_path = "GFX_portrait_prc_mao_zedong"
@@ -3256,6 +3237,59 @@ focus = {
 				planning_skill = 4
 				logistics_skill = 2
 			}
+		
+		}
+		
+	}
+	focus = {
+		id = CHI_contact_zhang_xueliang
+		icon = GFX_goal_PRC_contact_zhang_xueliang
+
+		relative_position_id = CHI_end_the_regime
+		x = -1
+		y = 1
+
+		mutually_exclusive = {
+		}
+		
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_end_the_regime
+		}
+	
+
+	
+
+		completion_reward = {
+			add_ideas = communist_influence
+			add_popularity = { ideology = communism popularity = 0.25 }
+			set_politics = {
+				ruling_party = communism
+			}
+			add_country_leader_role = {
+					character = CHI_zhang_xueliang
+					promote_leader = yes
+					country_leader = {
+					ideology = communism_ideology
+					expire = "1965.1.1"
+					traits = {
+						communist_sympathiser
+					}
+				}
+			}	
 		}
 	}
 
@@ -3863,11 +3897,11 @@ focus = {
 	focus = {
 		id = CHI_military_affairs_commission
 		icon = GFX_goal_generic_army_professionalism
-		x = 18
+		x = 11
 		y = 0
 
 		cost = 10
-
+relative_position_id = CHI_unified_industrial_planning
 		ai_will_do = {
 			factor = 4
 		}
@@ -5061,10 +5095,10 @@ focus = {
 focus = {
 	id = CHI_the_big_rear_concept
 	icon = GFX_goal_CHI_big_rear
-	x = 24
+	x = 6
 	y = 0
 	cost = 10
-	
+	relative_position_id = CHI_military_affairs_commission
 	available = {
 		is_ai = no
 		surrender_progress > 0.1
