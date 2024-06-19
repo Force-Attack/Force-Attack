@@ -599,7 +599,7 @@ focus_tree = {
 		id = CHI_escape_from_captivity
 		icon = GFX_goal_generic_election_chaos
 		cost = 7
-		x = -2
+		x = 0
 		y = 1
 
 		mutually_exclusive = {
@@ -686,7 +686,7 @@ focus_tree = {
 		id = CHI_agree_to_the_captors_terms
 		icon = GFX_goal_CHI_focus_on_external_threats
 		cost = 7
-		x = 2
+		x = 4
 		y = 1
 		
 		mutually_exclusive = {
@@ -2028,7 +2028,7 @@ focus_tree = {
 		icon = GFX_goal_CHI_support_pro_japanese_faction
 
 		relative_position_id = CHI_chang_kai_shek_dies
-		x = 2
+		x = 5
 		y = 1
 
 		prerequisite = {
@@ -3786,7 +3786,7 @@ focus = {
 		icon = GFX_focus_generic_soviet_politics
 
 		relative_position_id = CHI_chang_kai_shek_dies
-		x = -5
+		x = -6
 		y = 1
 
 		mutually_exclusive = {
@@ -3813,11 +3813,9 @@ focus = {
 		}
 
 		
-
 		complete_tooltip = {
 
 		}
-
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
 			
@@ -4004,7 +4002,7 @@ focus = {
 
 		relative_position_id = CHI_end_the_regime
 		x = 0
-		y = 2
+		y = 6
 
 		
 		
@@ -4036,11 +4034,11 @@ focus = {
 	}
 	focus = {
 		id = CHI_form_the_peoples_liberation_army
-		icon = GFX_focus_SOV_the_comecon
+		icon = GFX_focus_SOV_builder_of_the_red_army
 
 		relative_position_id = CHI_end_the_regime
 		x = 0
-		y = 3
+		y = 2
 		
 		cost = 10
 
@@ -4049,8 +4047,14 @@ focus = {
 		}
 
 		available = {
-			
+			OR = {
+				date > 1937.1.1 
+			   Has_country_leader = {
+				character = CHI_mao_zedong
+			}
+			}
 		}
+		
 
 		bypass = {
 			is_puppet = yes
@@ -4063,47 +4067,15 @@ focus = {
 	
 
 		completion_reward = {
-
+			add_ideas = CHI_peoples_liberation_army
 		}
 	}
 	focus = {
 		id = CHI_maos_little_red_book
-		icon = GFX_focus_SOV_the_comecon
+		icon = GFX_goal_FRA_social_reforms
 
 		relative_position_id = CHI_end_the_regime
-		x = 0
-		y = 4
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_mao_zedong_civil_war focus = CHI_contact_zhang_xueliang
-		}
-	
-
-	
-
-		completion_reward = {
-
-		}
-	}
-	focus = {
-		id = CHI_cultural_revolution
-		icon = GFX_focus_SOV_the_comecon
-
-		relative_position_id = CHI_end_the_regime
-		x = 0
+		x = 4
 		y = 5
 		
 		cost = 10
@@ -4120,14 +4092,236 @@ focus = {
 			is_puppet = yes
 		}
 		prerequisite = {
-			focus = CHI_mao_zedong_civil_war focus = CHI_contact_zhang_xueliang
+			focus =  CHI_proclaim_the_peoples_republic
 		}
 	
 
 	
 
 		completion_reward = {
+			country_event =CHI.7
+		}
+	}
+	focus = {
+		id = CHI_cultural_revolution
+		icon = GFX_focus_SOV_the_comecon
 
+		relative_position_id = CHI_end_the_regime
+		x = 4
+		y = 6
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			always = false
+		}
+		prerequisite = {
+			focus = CHI_maos_little_red_book
+		}
+	
+
+		completion_reward = {
+			add_stability = -0.25
+		}
+	}
+	focus = {
+		id = CHI_purge_the_traitors
+		icon =  GFX_focus_SOV_the_last_purge
+
+		relative_position_id = CHI_end_the_regime
+		x = 4
+		y = 2
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_mao_zedong_civil_war
+		}
+		completion_reward = {
+			add_stability = -0.15
+
+		}
+	}
+	focus = {
+		id = CHI_purge_the_army
+		icon =  GFX_focus_SOV_military_purge
+
+		relative_position_id = CHI_end_the_regime
+		x = 2
+		y = 3
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_purge_the_traitors
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_timed_idea = {
+				idea = CHI_army_purge
+				days = 180
+			}
+
+		}
+	}
+	focus = {
+		id = CHI_purge_the_bureaucracy
+		icon =  GFX_focus_SWE_socialist_reforms
+
+		relative_position_id = CHI_end_the_regime
+		x = 4
+		y = 3
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_purge_the_traitors
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_timed_idea = {
+				idea = CHI_bureaucracy_purge
+				days = 180
+			}
+
+		}
+	}
+	focus = {
+		id = CHI_purge_the_bureaucracy
+		icon =  GFX_focus_SWE_socialist_reforms
+
+		relative_position_id = CHI_end_the_regime
+		x = 4
+		y = 3
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_purge_the_traitors
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_timed_idea = {
+				idea = CHI_bureaucracy_purge
+				days = 180
+			}
+
+		}
+	}
+	focus = {
+		id = CHI_purge_the_ccp
+		icon =  GFX_focus_spr_class_war
+
+		relative_position_id = CHI_end_the_regime
+		x = 6
+		y = 3
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_purge_the_traitors
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_timed_idea = {
+				idea = CHI_ccp_purge
+				days = 180
+			}
+
+		}
+	}
+	focus = {
+		id = CHI_proclaim_the_peoples_republic
+		icon =  GFX_focus_prc_proclaim_the_peoples_republic
+
+		relative_position_id = CHI_end_the_regime
+		x = 4
+		y = 4
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_purge_the_ccp
+		}
+		prerequisite = {
+			focus = CHI_purge_the_bureaucracy
+		}
+		prerequisite = {
+			focus = CHI_purge_the_army
+		}
+		completion_reward = {
+			add_stability = 0.2
+			set_cosmetic_tag = CHI_CCP
 		}
 	}
 
