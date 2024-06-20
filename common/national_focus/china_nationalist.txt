@@ -576,7 +576,7 @@ focus_tree = {
 		id = CHI_xian_incident
 		icon = GFX_focus_prc_remove_chiang_kai_shek
 		cost = 10
-		x = 40
+		x = 45
 		y = 0
 		mutually_exclusive = {
 			
@@ -599,7 +599,7 @@ focus_tree = {
 		id = CHI_escape_from_captivity
 		icon = GFX_goal_generic_election_chaos
 		cost = 7
-		x = 0
+		x = -2
 		y = 1
 
 		mutually_exclusive = {
@@ -686,7 +686,7 @@ focus_tree = {
 		id = CHI_agree_to_the_captors_terms
 		icon = GFX_goal_CHI_focus_on_external_threats
 		cost = 7
-		x = 4
+		x = 2
 		y = 1
 		
 		mutually_exclusive = {
@@ -956,7 +956,7 @@ focus_tree = {
 	}
 	focus = {
 		id = CHI_one_ruler_of_china
-		icon = GFX_focus_generic_attack_wisconsin
+		icon = GFX_focus_chi_one_china_policy
 		cost = 10
 		x = -1
 		y = 2
@@ -975,7 +975,7 @@ focus_tree = {
 	}
 	focus = {
 		id = CHI_take_out_kansas
-		icon = GFX_focus_generic_attack_wisconsin
+		icon = GFX_goal_sov_soviet_ind_upgrade_shine
 		cost = 10
 		x = 1
 		y = 2
@@ -1008,8 +1008,9 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			add_stability = -0.05
-			add_ideas = CHI_military_control
+			add_stability = 0.10
+			add_war_support = 0.10
+			
 		}
 	}
 	focus = {
@@ -1085,7 +1086,9 @@ focus_tree = {
 		prerequisite = { focus = CHI_secret_police  }
 		relative_position_id = CHI_solidify_military_control
 		available = {
-			
+			NOT = {
+				has_war_with = ger
+			}
 		}
 		completion_reward = {
 			add_ideas = CHI_german_advisors
@@ -1139,16 +1142,6 @@ focus_tree = {
 		}
 
 		available = {
-			MAN = {
-				exists = no
-			}
-			CHI = {
-				AND = {
-					controls_state = 328
-					controls_state = 944
-					controls_state = 745
-				}
-			}
 		}
 
 		bypass = {
@@ -1337,7 +1330,9 @@ focus_tree = {
 		}
 
 		available = {
-			
+			NOT = {
+				has_war_with = ger
+			}
 		}
 
 		bypass = {
@@ -1354,12 +1349,104 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
+			if = {
+				limit = {
+					GER = {
+						has_tech = basic_light_tank
+					}
+					
+				}
+				set_technology = {
+					basic_light_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = improved_light_tank
+					}
+				}
+				set_technology = {
+					improved_light_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = advanced_light_tank
+					}
+				}
+				set_technology = {
+					advanced_light_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = basic_medium_tank
+					}
+				}
+				set_technology = {
+					basic_medium_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = improved_medium_tank
+					}
+				}
+				set_technology = {
+					improved_medium_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = advanced_medium_tank
+					}
+				}
+				set_technology = {
+					advanced_medium_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = basic_heavy_tank
+					}
+				}
+				set_technology = {
+					basic_heavy_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = improved_heavy_tank
+					}
+				}
+				set_technology = {
+					improved_heavy_tank = 1
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = advanced_heavy_tank
+					}
+				}
+				set_technology = {
+					advanced_heavy_tank = 1
+				}
+			}
+			
+
 		}
 	}
 
 	focus = {
-		id = CHI_skibbidy_slicers_2
+		id = CHI_rommel_of_the_east
 		icon = GFX_goal_generic_destruction_civil_war_shine
 
 		relative_position_id = CHI_german_tank_program
@@ -1378,7 +1465,9 @@ focus_tree = {
 		}
 
 		available = {
-			
+			NOT = {
+				has_war_with = ger
+			}
 		}
 
 		bypass = {
@@ -1395,7 +1484,24 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
+			CHI =  {
+				country_event = { id = CHI.9 }
+			}
+			hidden_effect = {
+				add_trait = {
+					character = CHI_sun_li_jen
+					slot = high_command
+					trait = army_armored_3
+				}
+				remove_trait = {
+					character = CHI_sun_li_jen
+					slot = high_command
+					trait = army_commando_3
+				}
+				add_trait = {
+					trait = panzer_leader
+				}
+			}
 		}
 	}
 
@@ -1499,25 +1605,19 @@ focus_tree = {
 			factor = 4
 		}
 
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
 
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
 		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
+			add_ideas = CHI_fire_power
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = artillery
+			}
+			unlock_mio_trait_tooltip = "Chinese Firepower"
 		}
 	}
 
@@ -1533,7 +1633,7 @@ focus_tree = {
 			focus = CHI_firepower
 		}
 		prerequisite = {
-			focus = CHI_skibbidy_slicers_2
+			focus = CHI_rommel_of_the_east
 		}
 		
 
@@ -1659,12 +1759,15 @@ focus_tree = {
 		y = 2
 
 		prerequisite = {
+			focus = CHI_max_aura_ohio_2
+		}
+		prerequisite = {
 			focus = CHI_assimilate_cultures
 		}
 		prerequisite = {
-			focus = CHI_firepower
-			focus = CHI_ohio_rizz
+			focus = CHI_rommel_of_the_east
 		}
+
 
 		cost = 10
 
@@ -3744,7 +3847,7 @@ focus = {
 		icon = GFX_goal_PRC_contact_zhang_xueliang
 
 		relative_position_id = CHI_xian_incident
-		x = -12
+		x = -14
 		y = 1
 
 		mutually_exclusive = {
@@ -4330,7 +4433,7 @@ focus = {
 		icon = GFX_goal_constitution
 
 		relative_position_id = CHI_xian_incident
-		x = 12
+		x = 10
 		y = 1
 
 		mutually_exclusive = {
