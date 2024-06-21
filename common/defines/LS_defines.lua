@@ -42,7 +42,7 @@ NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 50
 NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 5000
-NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = false
+NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = true
 NDefines.NMilitary.TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.DEPLOY_TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.ARMY_EXP_BASE_LEVEL = 5
@@ -52,7 +52,7 @@ NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.03
 NDefines.NMilitary.NUKE_MIN_DAMAGE_PERCENT = 0.9
 NDefines.NMilitary.NUKE_MAX_DAMAGE_PERCENT = 1.2
 NDefines.NMilitary.RETREAT_SPEED_FACTOR = 0.15
-NDefines.NMilitary.DIG_IN_FACTOR = 0.01
+NDefines.NMilitary.DIG_IN_FACTOR = 0.02
 NDefines.Enemy_AIR_SUPERIORITY_IMPACT = -0.45
 ----------------------------------
 NDefines.NAir.AIR_WING_FLIGHT_SPEED_MULT = 0.2
@@ -122,7 +122,7 @@ NDefines.NResistance.GARRISON_MANPOWER_LOST_BY_ATTACK = 0.005 	--WAS 0.018 Ratio
 
 NDefines.NPolitics.ARMY_LEADER_MAX_COST = 75				-- max cost BEFORE modifiers
 NDefines.NPolitics.NAVY_LEADER_MAX_COST = 75
-NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2.25 -- base pp gain per (week)?		
+NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2 -- base pp gain per (week)?		
 
 NDefines.NMilitary.SUPPLY_GRACE = 84 -- 72 3 days as they say and remain hungry for another 12
 
