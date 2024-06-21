@@ -559,7 +559,7 @@ focus_tree = {
 				num_of_factories > 249
 				OR = {
 					has_completed_focus = CHI_final_plan
-					has_completed_focus = CHI_greater_china
+					has_completed_focus = CHI_retake_manchuria
 					has_completed_focus = CHI_integrate_ports
 				}
 			}
@@ -1594,17 +1594,17 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_retake_manchuria
+		id = CHI_some_ting_wong
 		icon = GFX_goal_CHI_retake_manchuria_shine
 		cost = 10
-		x = 0
-		y = 4
+		x = 1
+		y = 1
 		mutually_exclusive = {
 			
 		}
 		prerequisite = { focus = CHI_increase_sino_german_cooperation }
 		prerequisite = { focus = CHI_forced_labor_camps }
-		relative_position_id = CHI_solidify_military_control
+		relative_position_id = CHI_increase_sino_german_cooperation
 		available = {
 
 		}
@@ -1620,61 +1620,108 @@ focus_tree = {
 	}
 
 	focus = {
+		id = CHI_retake_manchuria
+		icon = GFX_goal_CHI_retake_manchuria_shine
+		cost = 10
+		x = -2
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_some_ting_wong }
+		prerequisite = { focus = CHI_one_ruler_of_china focus = CHI_take_out_kansas }
+		relative_position_id = CHI_one_ruler_of_china
+		available = {
+			is_puppet = no
+			any_state = {
+				custom_trigger_tooltip = {
+					tooltip = state_is_manchuria_plus_mengukou_tt
+					OR = {
+						region = 155
+						state = 947
+						state = 610
+						state = 609
+						state = 745
+						state = 612
+						state = 611
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
+					NOT = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+				}
+			}
+		}
+		bypass = {
+			all_state = {
+				OR = {
+					NOT = { 
+						custom_trigger_tooltip = {
+							tooltip = state_is_manchuria_plus_mengukou_tt
+							OR = {
+								region = 155
+								state = 947
+								state = 610
+								state = 609
+								state = 745
+								state = 612
+								state = 611
+							}
+						}
+					}
+					is_controlled_by_ROOT_or_ally = yes
+				}
+			}
+		}
+		completion_reward = {
+			army_experience = 15
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_owned_state = {
+						OR = {
+							region = 155
+							state = 947
+							state = 610
+							state = 609
+							state = 745
+							state = 612
+							state = 611
+						}
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_state_focus
+						expire = 0
+					}
+				}
+			}
+		}
+	}
+
+
+	focus = {
 		id = CHI_greater_china
 		icon = GFX_goal_MAN_restore_the_empire
 
 		relative_position_id = CHI_retake_manchuria
-		x = 3
-		y = 1
-
-		prerequisite = {
-			focus = CHI_retake_manchuria
-			focus = CHI_one_ruler_of_china
-			focus = CHI_take_out_kansas
-		}
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_ideas = CHI_greater_china_1
-		}
-	}
-
-	focus = {
-		id = CHI_jittletyang
-		icon = GFX_goal_MAN_restore_the_empire
-
-		relative_position_id = CHI_greater_china
 		x = -1
 		y = 1
 
 		prerequisite = {
-			focus = CHI_greater_china
+			focus = CHI_some_ting_wong
+		}
+		prerequisite = {
+			focus = CHI_retake_manchuria
 		}
 
 		mutually_exclusive = {
-			focus = CHI_fuhulutugan
+			focus = CHI_one_china
 		}
 		
 
@@ -1711,24 +1758,28 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			add_ideas = CHI_greater_china_1
+			
 		}
 	}
 
 	focus = {
-		id = CHI_fuhulutugan
+		id = CHI_one_china
 		icon = GFX_goal_MAN_restore_the_empire
 
-		relative_position_id = CHI_greater_china
+		relative_position_id = CHI_retake_manchuria
 		x = 1
 		y = 1
 
 		prerequisite = {
-			focus = CHI_greater_china
+			focus = CHI_one_ruler_of_china
+			focus = CHI_take_out_kansas
+		}
+		prerequisite = {
+			focus = CHI_retake_manchuria
 		}
 
 		mutually_exclusive = {
-			focus = CHI_jittletyang
+			focus = CHI_greater_china
 		}
 		
 
@@ -1765,7 +1816,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			add_ideas = CHI_greater_china_1
+			add_ideas = CHI_retake_manchuria_1
 		}
 	}
 
@@ -1774,12 +1825,12 @@ focus_tree = {
 		icon = GFX_goal_generic_destruction_civil_war_shine
 
 		relative_position_id = CHI_greater_china
-		x = 0
-		y = 2
+		x = 1
+		y = 1
 
 		prerequisite = {
-			focus = CHI_jittletyang
-			focus = CHI_fuhulutugan
+			focus = CHI_greater_china
+			focus = CHI_one_china
 		}
 
 		cost = 10
@@ -1806,7 +1857,14 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
+			if = {
+				limit = { has_government = fascism }
+				add_ideas = CHI_assimilated_cultures
+			}
+			else = {
+				add_ideas = CHI_assimilated_cultures_2
+			}
+
 		}
 	}
 
@@ -1815,11 +1873,11 @@ focus_tree = {
 		icon = GFX_goal_generic_heavy_armour_german_shine
 
 		relative_position_id = CHI_greater_china
-		x = -2
-		y = 2
+		x = -1
+		y = 1
 
 		prerequisite = {
-			focus = CHI_jittletyang
+			focus = CHI_greater_china
 		}
 
 		cost = 10
@@ -1946,7 +2004,7 @@ focus_tree = {
 
 	focus = {
 		id = CHI_rommel_of_the_east
-		icon = GFX_goal_generic_destruction_civil_war_shine
+		icon = GFX_goal_continuous_reduce_training_time
 
 		relative_position_id = CHI_german_tank_program
 		x = 1
@@ -1990,12 +2048,12 @@ focus_tree = {
 				add_trait = {
 					character = CHI_sun_li_jen
 					slot = high_command
-					trait = army_armored_3
+					trait = army_armored_2
 				}
 				remove_trait = {
 					character = CHI_sun_li_jen
 					slot = high_command
-					trait = army_commando_3
+					trait = army_commando_2
 				}
 				add_trait = {
 					trait = panzer_leader
@@ -2009,12 +2067,12 @@ focus_tree = {
 		id = CHI_max_aura_ohio
 		icon = GFX_goal_generic_destruction_civil_war_shine
 
-		relative_position_id = CHI_greater_china
-		x = 2
-		y = 2
+		relative_position_id = CHI_one_china
+		x = 1
+		y = 1
 
 		prerequisite = {
-			focus = CHI_fuhulutugan
+			focus = CHI_one_china
 		}
 
 		cost = 10
@@ -2298,7 +2356,7 @@ focus_tree = {
 
 	focus = {
 		id = CHI_super_super_sus_fanum_tax_op_focus
-		icon = GFX_goal_generic_destruction_civil_war_shine
+		icon = GFX_goal_waking_the_tiger_shine
 
 		relative_position_id = CHI_research_what_a_women_is
 		x = 0
