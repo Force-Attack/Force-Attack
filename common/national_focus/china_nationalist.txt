@@ -125,7 +125,7 @@ focus_tree = {
 
 	focus = {
 		id = CHI_chemical_research_institute
-		icon = GFX_goal_generic_military_research
+		icon = GFX_focus_generic_rubber
 		prerequisite = { focus = CHI_expand_the_academica_sinica }
 		x = 0
 		y = 1
@@ -162,7 +162,7 @@ focus_tree = {
 		id = CHI_rural_reconstruction_movement
 		icon = GFX_goal_war_infrastructure
 		prerequisite = { focus = CHI_unified_industrial_planning }
-		x = 1
+		x = 4
 		y = 1
 		relative_position_id = CHI_unified_industrial_planning
 
@@ -233,7 +233,7 @@ focus_tree = {
 		id = CHI_mining_commission
 		icon = GFX_goal_generic_coal_mining
 		prerequisite = { focus = CHI_unified_industrial_planning }
-		x = -1
+		x = 2
 		y = 1
 		relative_position_id = CHI_unified_industrial_planning
 
@@ -381,7 +381,7 @@ focus_tree = {
 		id = CHI_financial_policy
 		icon = GFX_goal_generic_positive_trade_relations
 		prerequisite = { focus = CHI_unified_industrial_planning }
-		x = 3
+		x = 0
 		y = 1
 		relative_position_id = CHI_unified_industrial_planning
 
@@ -415,7 +415,7 @@ focus_tree = {
 		id = CHI_price_controls
 		icon = GFX_goal_generic_deals
 		prerequisite = { focus = CHI_financial_policy }
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = CHI_financial_policy
 
@@ -447,7 +447,7 @@ focus_tree = {
 		id = CHI_grain_tax
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = CHI_price_controls }
-		x = 2
+		x = 0
 		y = 1
 		relative_position_id = CHI_price_controls
 
@@ -478,10 +478,10 @@ focus_tree = {
 	focus = {
 		id = CHI_reform_the_national_bank
 		icon = GFX_goal_generic_banking_legislation
-		prerequisite = { focus = CHI_price_controls }
-		x = 0
+		prerequisite = { focus = CHI_financial_policy }
+		x = 1
 		y = 1
-		relative_position_id = CHI_price_controls
+		relative_position_id = CHI_financial_policy
 
 		cost = 10
 
@@ -543,7 +543,10 @@ focus_tree = {
 		id = CHI_the_great_advance_foward
 		icon = GFX_focus_ARG_develop_the_electricity_sector
 		prerequisite = { focus = CHI_reform_the_national_bank }
-		x = -3
+		prerequisite = {
+			focus = CHI_price_controls
+		}
+		x = -1
 		y = 2
 		relative_position_id = CHI_reform_the_national_bank
 
@@ -555,8 +558,7 @@ focus_tree = {
 
 		available = {
 			AND = {
-				has_hyper_inflation = yes
-				num_of_factories > 249
+				has_idea = CHI_hyper_inflation_none
 				OR = {
 					has_completed_focus = CHI_final_plan
 					has_completed_focus = CHI_greater_china
@@ -802,9 +804,9 @@ focus_tree = {
 	focus = {
 		id = CHI_begin_excavation_of_our_natural_resources
 		icon = GFX_goal_excavation
-		prerequisite = { focus = CHI_one_road_policy }
-		x = 2
-		y = 2
+		prerequisite = { focus = CHI_internal_development focus = CHI_external_development_in_ports }
+		x = 0
+		y = 3
 		relative_position_id = CHI_one_road_policy
 
 		cost = 10
@@ -834,9 +836,12 @@ focus_tree = {
 	focus = {
 		id = CHI_a_new_chinese_production_plan
 		icon = GFX_focus_generic_modernize_industry
-		prerequisite = { focus = CHI_civilian_effort focus = CHI_river_expansion_plan }
+		#prerequisite = { focus = CHI_civilian_effort focus = CHI_river_expansion_plan }
+		prerequisite = {
+			focus = CHI_expand_the_ports_further focus = CHI_internal_industry
+		}
 		x = 0
-		y = 2
+		y = 4
 		relative_position_id = CHI_one_road_policy
 
 		cost = 10
@@ -913,9 +918,9 @@ focus_tree = {
 	focus = {
 		id = CHI_civilian_effort
 		icon = GFX_goal_generic_building_our_industry
-		prerequisite = { focus = CHI_one_road_policy }
+		prerequisite = { focus = CHI_internal_development focus = CHI_external_development_in_ports }
 		x = -1
-		y = 1
+		y = 2
 		relative_position_id = CHI_one_road_policy
 
 		cost = 10
@@ -1024,11 +1029,317 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = CHI_external_development_in_ports
+		icon = GFX_focus_generic_refit_civilian_ships
+		prerequisite = { focus = CHI_one_road_policy }
+		x = -2
+		y = 1
+		relative_position_id = CHI_one_road_policy
+		mutually_exclusive = {
+			focus = CHI_internal_development
+		}
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_full_control_of_state = 745
+			has_full_control_of_state = 743
+			has_full_control_of_state = 326
+			has_full_control_of_state = 729
+			has_full_control_of_state = 728
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_CHI_INFLATION }
+		completion_reward = {
+			every_controlled_state = {
+				limit = {
+					OR = {
+						state = 745
+						state = 743
+						state = 326
+						state = 729
+						state = 728
+					}
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				if = {
+					limit = {
+						free_building_slots = {
+							building = infrastructure
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = CHI_expand_the_ports_further
+		icon = GFX_focus_generic_low_cost_housing
+		prerequisite = { focus = CHI_external_development_in_ports }
+		prerequisite = {
+			focus = CHI_river_expansion_plan focus = CHI_civilian_effort
+		}
+		x = -2
+		y = 3
+		relative_position_id = CHI_one_road_policy
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_full_control_of_state = 745
+			has_full_control_of_state = 743
+			has_full_control_of_state = 326
+			has_full_control_of_state = 729
+			has_full_control_of_state = 728
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_CHI_INFLATION }
+		completion_reward = {
+			every_controlled_state = {
+				limit = {
+					OR = {
+						state = 745
+						state = 743
+						state = 326
+						state = 729
+						state = 728
+					}
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = CHI_internal_development
+		icon = GFX_focus_generic_industry_3
+		prerequisite = { focus = CHI_one_road_policy }
+		x = 2
+		y = 1
+		relative_position_id = CHI_one_road_policy
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_CHI_INFLATION }
+		completion_reward = {
+			add_stability = 0.10
+			if = {
+				limit = {
+					has_idea = CHI_mining_commission
+				}
+				swap_ideas = {
+					remove_idea = CHI_mining_commission
+					add_idea = CHI_mining_commission_2
+				}
+			}
+			else = {
+				add_ideas = CHI_mining_commission_2
+			}
+		}
+	}
+	focus = {
+		id = CHI_internal_industry
+		icon = GFX_focus_generic_industry_2
+		prerequisite = {
+			focus = CHI_river_expansion_plan focus = CHI_civilian_effort
+		}
+		prerequisite = { focus = CHI_internal_development }
+		x = 2
+		y = 3
+		relative_position_id = CHI_one_road_policy
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_CHI_INFLATION }
+		completion_reward = {
+			add_political_power = 100
+			add_stability = 0.05
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = CHI_river_expansion_plan
 		icon = GFX_goal_generic_land_seizure
-		prerequisite = { focus = CHI_one_road_policy }
+		prerequisite = { focus = CHI_internal_development focus = CHI_external_development_in_ports }
 		x = 1
-		y = 1
+		y = 2
 		relative_position_id = CHI_one_road_policy
 
 		cost = 10
@@ -5140,7 +5451,7 @@ focus = {
 	}
 	focus = {
 		id = CHI_spread_democracy_to_the_warlords
-		icon = GFX_goal_generic_internal_democracy
+		icon = GFX_focus_chi_proclaim_rival_government
 		prerequisite = { focus = CHI_call_for_fair_elections }
 		relative_position_id = CHI_call_for_fair_elections
 		x = -3
@@ -7857,5 +8168,81 @@ focus = {
 	}
 }
 
+###NAVY
+focus = {
+	id = CHI_revive_jiangnan_shipyard
+	icon = GFX_goal_generic_expand_the_naval_industry
+	x = 70
+	y = 0
+	cost = 10
+	bypass = {
+		custom_trigger_tooltip =  {
+			tooltip = production_effort_tt
+			all_owned_state = {
+				free_building_slots = {
+					building = dockyard
+					size < 0
+					include_locked = yes
+				}
+			}
+		}
+	}
+	completion_reward = {
+		if = {
+			limit = {
+				613 = {
+					OR = {
+						NOT = {
+							is_owned_and_controlled_by = ROOT
+						}
+						AND = {
+							is_owned_by = ROOT
+							free_building_slots = {
+								building = dockyard
+								size < 1
+								include_locked = yes
+							}
+						}
+					}
+				}
+			}
+			random_owned_controlled_state = {
+				limit = { 
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}							
+			}
+		}
+		613 = {
+			if = {
+				limit = { 
+					is_owned_by = ROOT
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+}
 }
 
