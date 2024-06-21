@@ -151,40 +151,29 @@ ideas = {
 		}
 		
 		civilian_economy = {
-		
+
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
-<<<<<<< HEAD
 				consumer_goods_expected_value = 0.35
 				production_speed_industrial_complex_factor = -0.3
 				production_speed_arms_factory_factor = -0.3
 				conversion_cost_civ_to_mil_factor= 0.3
 				conversion_cost_mil_to_civ_factor = 0.3
 			
-=======
-				stability_factor = 0.15
-				consumer_goods_expected_value
- = 0.35
-				production_speed_industrial_complex_factor = 0.15
-				production_speed_infrastructure_factor = 0.2
-				conversion_cost_civ_to_mil_factor= 0.2
-				production_factory_start_efficiency_factor = -0.05
-				conversion_cost_mil_to_civ_factor = -0.2
->>>>>>> parent of 856e6119 (ECO LAW UPDATE)
 				max_fuel_factor = -0.25
 				fuel_gain_factor = -0.4
-				
-				production_factory_max_efficiency_factor = -0.05
 			}
-			
+
 			default = yes
-			
+
 			cancel_if_invalid = no
 		}
-		
+
 		low_economic_mobilisation = {
+
 			available = {
 				has_war_support > 0.15
 				if = {
@@ -192,8 +181,13 @@ ideas = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
 					}
-					OR = {
-						has_completed_focus = HUN_secret_rearmament
+					if = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						NOT = { has_idea = HUN_treaty_of_triannon_aat }
+					}
+					else = {
 						NOT = { has_idea = HUN_treaty_of_triannon }
 					}
 				}
@@ -229,29 +223,19 @@ ideas = {
 					USA_congress_large_opposition = yes
 				}
 			}
-			
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
-<<<<<<< HEAD
 
 				consumer_goods_expected_value = 0.3
 				production_speed_industrial_complex_factor = -0.1
 				production_speed_arms_factory_factor = -0.1
 
-=======
-				stability_factor = 0.075
-				consumer_goods_expected_value
- = 0.3
-				production_speed_industrial_complex_factor = 0.075
-				production_speed_infrastructure_factor = 0.1
->>>>>>> parent of 856e6119 (ECO LAW UPDATE)
 				fuel_gain_factor = -0.25
-				conversion_cost_civ_to_mil_factor= 0.15
-				conversion_cost_mil_to_civ_factor = -0.15
 			}
-			
+
 			cancel_if_invalid = no
 
 			ai_will_do = {
@@ -259,7 +243,7 @@ ideas = {
 
    				modifier = {
 					factor = 20
-					
+
 					is_major = yes
 				}
 				modifier = {
@@ -274,8 +258,9 @@ ideas = {
 				}
    			}
 		}
-		
+
 		partial_economic_mobilisation = {
+
 			available = {
 				has_war_support > 0.25
 
@@ -284,7 +269,21 @@ ideas = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
 					}
-					NOT = { has_idea = HUN_treaty_of_triannon }
+					if = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						OR = {
+							has_completed_focus = HUN_secret_rearmament
+							NOT = { has_idea = HUN_treaty_of_triannon_aat }
+						}
+					}
+					else = {
+						OR = {
+							has_completed_focus = HUN_secret_rearmament
+							NOT = { has_idea = HUN_treaty_of_triannon }
+						}
+					}
 				}
 				if = {
 					limit = {
@@ -311,23 +310,15 @@ ideas = {
 
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
-				consumer_goods_expected_value
- = 0.25
+				consumer_goods_expected_value = 0.25
 				production_speed_arms_factory_factor = 0.1
-				production_speed_radar_station_factor = 0.035
-				production_speed_air_base_factor = 0.035
-				production_speed_naval_base_factor = 0.035
-				production_speed_anti_air_building_factor = 0.035
-				production_speed_coastal_bunker_factor = 0.035
-				production_speed_bunker_factor = 0.035
-				
 				conversion_cost_civ_to_mil_factor= -0.1
 				conversion_cost_mil_to_civ_factor = -0.1
 				fuel_gain_factor = -0.1
 			}
-			
+
 			cancel_if_invalid = no
 			on_add = {
 				if = {
@@ -344,14 +335,27 @@ ideas = {
 
    				modifier = {
 					factor = 20
-					
+
 					is_major = yes
+				}
+
+				modifier = {
+					factor = 100
+					OR = {
+						original_tag = URG
+						original_tag = PAR
+					}
+					NOT = {
+						has_idea = war_economy
+					}
+					has_completed_focus = GUAY_coup_detat
 				}
    			}
 		}
-		
+
 		war_economy = {
-			
+
+
 			available = {
 				has_war_support > 0.5
 				OR = {
@@ -361,8 +365,8 @@ ideas = {
 					AND = {
 						has_war = yes
 						any_enemy_country = {
-							ic_ratio = { 
-								tag = ROOT 
+							ic_ratio = {
+								tag = ROOT
 								ratio > 0.4
 							}
 						}
@@ -374,7 +378,15 @@ ideas = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
 					}
-					NOT = { has_idea = HUN_treaty_of_triannon }
+					if = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						NOT = { has_idea = HUN_treaty_of_triannon_aat }
+					}
+					else = {
+						NOT = { has_idea = HUN_treaty_of_triannon }
+					}
 				}
 				if = {
 					limit = {
@@ -398,28 +410,17 @@ ideas = {
 					}
 				}
 			}
-		
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
-				stability_factor = -0.10
-				consumer_goods_expected_value
- = 0.2
+				consumer_goods_expected_value = 0.2
 				production_speed_arms_factory_factor = 0.2
-				production_speed_radar_station_factor = 0.05
-				production_speed_air_base_factor = 0.05
-				production_speed_naval_base_factor = 0.05
-				production_speed_dockyard_factor = 0.05
-				production_speed_anti_air_building_factor = 0.05
-				production_speed_coastal_bunker_factor = 0.05
-				production_speed_bunker_factor = 0.05
-				production_speed_synthetic_refinery_factor = 0.05
-				
-				conversion_cost_civ_to_mil_factor = -0.2
-				conversion_cost_mil_to_civ_factor = 0.2
+				conversion_cost_civ_to_mil_factor= -0.2
+				conversion_cost_mil_to_civ_factor = -0.2
 			}
-			
+
 			cancel_if_invalid = no
 			on_add = {
 				if = {
@@ -432,7 +433,7 @@ ideas = {
 				}
 			}
 			ai_will_do = {
-   				factor = 5
+   				factor = 3
 
 				modifier = {
 					#High prio on production
@@ -457,22 +458,23 @@ ideas = {
 
 				modifier = {
 					add = 1800
-					
+
 					# revert from closed_economy if we have large allies
 					has_idea = closed_economy
 					has_large_ally_not_pick_closed_economy = yes
 				}
    			}
 		}
-		
+
 		tot_economic_mobilisation = {
-			
+
+
 			available = {
 				has_war = yes
 				has_war_support > 0.8
 				any_enemy_country = {
-					ic_ratio = { 
-						tag = ROOT 
+					ic_ratio = {
+						tag = ROOT
 						ratio > 0.5
 					}
 				}
@@ -482,7 +484,15 @@ ideas = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
 					}
-					NOT = { has_idea = HUN_treaty_of_triannon }
+					if = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						NOT = { has_idea = HUN_treaty_of_triannon_aat }
+					}
+					else = {
+						NOT = { has_idea = HUN_treaty_of_triannon }
+					}
 				}
 				if = {
 					limit = {
@@ -531,7 +541,7 @@ ideas = {
 					manpower_per_military_factory <  10000
 				}
 
-				
+
 				modifier = {
 					# never take this if we are on low conscription laws for safety
 					factor = 0
@@ -546,7 +556,7 @@ ideas = {
 					factor = 0
 
 					tag = GER
-					NOT = { has_tech = mission_type_tactics }
+					NOT = { has_tech = volkssturm }
 					has_war = yes
 					date < 1944.01.01
 				}
@@ -563,35 +573,23 @@ ideas = {
 								has_idea = service_by_requirement
 							}
 						}
-					}									
+					}
 				}
    			}
-			
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
-				stability_factor = -0.20
-				consumer_goods_expected_value
- = 0.10
+				consumer_goods_expected_value = 0.10
 				conscription = -0.03
 				production_speed_arms_factory_factor = 0.3
-				production_speed_dockyard_factor = 0.075
-				production_speed_radar_station_factor = 0.075
-				production_speed_rocket_site_factor = 0.075
-				production_speed_air_base_factor = 0.075
-				production_speed_naval_base_factor = 0.075
-				production_speed_anti_air_building_factor = 0.075
-				production_speed_coastal_bunker_factor = 0.075
-				production_speed_bunker_factor = 0.075
-				production_speed_nuclear_reactor_factor = 0.1
-				
-				conversion_cost_civ_to_mil_factor = -0.3
-				conversion_cost_mil_to_civ_factor = 0.3
+				conversion_cost_civ_to_mil_factor= -0.3
+				conversion_cost_mil_to_civ_factor = -0.3
 			}
-			
+
 			cancel_if_invalid = no
-		} 
+		}
 
 		japanese_war_economy = {
 
