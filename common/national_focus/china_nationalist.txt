@@ -1386,7 +1386,7 @@ focus_tree = {
 		id = CHI_xian_incident
 		icon = GFX_focus_prc_remove_chiang_kai_shek
 		cost = 10
-		x = 45
+		x = 46
 		y = 0
 		mutually_exclusive = {
 			
@@ -6846,7 +6846,7 @@ relative_position_id = CHI_unified_industrial_planning
 focus = {
 	id = CHI_the_big_rear_concept
 	icon = GFX_goal_CHI_big_rear
-	x = 6
+	x = 7
 	y = 0
 	cost = 10
 	relative_position_id = CHI_military_affairs_commission
@@ -8172,7 +8172,7 @@ focus = {
 focus = {
 	id = CHI_revive_jiangnan_shipyard
 	icon = GFX_goal_generic_expand_the_naval_industry
-	x = 70
+	x = 22
 	y = 0
 	cost = 10
 	bypass = {
@@ -8243,6 +8243,387 @@ focus = {
 		}
 	}
 	search_filters = { FOCUS_FILTER_INDUSTRY }
+}
+focus = {
+	id = CHI_gain_control_of_the_sea 
+	icon = GFX_goal_CHI_coa_navy
+	prerequisite = { focus = CHI_revive_jiangnan_shipyard }
+	relative_position_id = CHI_revive_jiangnan_shipyard
+	x = 0
+	y = 1
+	cost = 10
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			surrender_progress > 0.2
+			factor = 0
+		}
+	}
+
+	available = {
+		any_owned_state = {
+			is_coastal = yes
+			is_controlled_by = ROOT
+		}
+	}
+
+	complete_tooltip = {
+		navy_experience = 25
+		every_state = {
+			limit = { has_state_flag = CHI_navy_focus_2dockyards }
+			add_extra_state_shared_building_slots = 4
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+		}
+	}
+
+	completion_reward = {
+		navy_experience = 25
+		random_owned_controlled_state = {
+			limit = {
+				is_in_home_area = yes
+				free_building_slots = {
+					building = dockyard
+					size > 1
+					include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+			set_state_flag = CHI_navy_focus_2dockyards
+		}
+		random_owned_controlled_state = {
+			limit = {
+				is_in_home_area = yes
+				free_building_slots = {
+					building = dockyard
+					size > 1
+					include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+			set_state_flag = CHI_navy_focus_2dockyards
+		}
+	}
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+}
+focus = {
+	id = CHI_study_foreign_ship
+	icon = GFX_focus_generic_shipbuilding
+	prerequisite = { focus = CHI_gain_control_of_the_sea }
+	relative_position_id = CHI_gain_control_of_the_sea
+	x = -1
+	y = 1
+	cost = 10
+	
+	completion_reward = {
+		navy_experience = 5
+		add_tech_bonus = {
+			name = dd_bonus
+			bonus = 1
+			uses = 1
+			category = dd_tech
+		}
+		add_tech_bonus = {
+			name = dd_bonus
+			bonus = 1
+			uses = 1
+			category = ss_tech
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+
+focus = {
+	id = CHI_taiwan_fleet_hub
+	icon = GFX_goal_generic_construct_naval_dockyard
+	prerequisite = { focus = CHI_gain_control_of_the_sea }
+	relative_position_id = CHI_gain_control_of_the_sea
+	available = {
+		524  = { 
+			is_fully_controlled_by = ROOT
+		}
+	}
+	x = 0
+	y = 2
+	cost = 10
+	bypass = {
+		524 = {
+			free_building_slots = {
+				building = dockyard
+				size < 5
+				include_locked = yes
+			}
+		}
+	}
+	
+	completion_reward = {
+		navy_experience = 10
+
+		add_tech_bonus = {
+			name = SPR_navy_modernization
+			bonus = 1
+			uses = 2
+			category = naval_equipment
+		}
+
+		524 = {
+			add_extra_state_shared_building_slots = 5
+			add_building_construction = {
+				type = dockyard
+				level = 5
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = naval_base
+				level = 10
+				instant_build = yes
+				province = 7186
+			}
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY }
+}
+
+focus = {
+	id = CHI_pacific_fleet
+	icon = GFX_goal_generic_navy_carrier
+	prerequisite = { focus = CHI_taiwan_fleet_hub }
+	relative_position_id = CHI_taiwan_fleet_hub
+	mutually_exclusive = { focus = CHI_sea_fleet }
+	x = 1
+	y = 1
+	cost = 10
+	
+	completion_reward = {
+		navy_experience = 10
+		add_tech_bonus = {
+			name = cv_bonus
+			bonus = 1
+			uses = 1
+			category = cv_tech
+			category = cvl_tech
+		}
+		add_tech_bonus = {
+			name = bb_bonus
+			bonus = 1
+			uses = 1
+			category = bb_tech
+		}
+		add_tech_bonus = {
+			name = cr_bonus
+			bonus = 1
+			uses = 1
+			category = cl_tech
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+focus = {
+	id = CHI_sea_fleet
+	icon = GFX_goal_generic_navy_submarine
+	prerequisite = { focus = CHI_taiwan_fleet_hub }
+	mutually_exclusive = { focus = CHI_pacific_fleet }
+	relative_position_id = CHI_taiwan_fleet_hub
+	x = -1
+	y = 1
+	cost = 10
+	
+	completion_reward = {
+		navy_experience = 10
+		add_tech_bonus = {
+			name = ss_bonus
+			bonus = 1
+			uses = 1
+			category = ss_tech
+		}
+		add_tech_bonus = {
+			name = dd_bonus
+			bonus = 1
+			uses = 1
+			category = dd_tech
+		}
+		add_tech_bonus = {
+			name = cr_bonus
+			bonus = 1
+			uses = 1
+			category = cl_tech
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+focus = {
+	id = CHI_naval_equipment
+	prerequisite = { focus = CHI_sea_fleet focus = CHI_pacific_fleet }
+	icon = GFX_goal_generic_admirality
+	x = 0
+	y = 1
+	relative_position_id = CHI_sea_fleet
+	cost = 10
+	ai_will_do = {
+		factor = 10
+	}
+
+	allow_branch = {
+		has_dlc = "Man the Guns"
+		OR = {
+			NOT = {
+				has_global_flag = spanish_civil_war
+			}
+			AND = {
+				NOT = { has_completed_focus = SPR_the_popular_front }
+				has_global_flag = spanish_civil_war
+			}
+		}			
+	}		
+
+	available_if_capitulated = yes
+
+	available = {
+		
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = SPR_navy_modernization
+			bonus = 1
+			uses = 1
+			category = naval_gunnery_tech
+			category = naval_shell_tech
+		}
+		add_tech_bonus = {
+			name = SPR_navy_modernization
+			bonus = 1
+			uses = 1
+			category = asw_tech
+			category = torpedo_equipment
+		}
+		add_tech_bonus = {
+			name = SPR_navy_modernization
+			bonus = 1
+			uses = 1
+			category = naval_armor_tech
+			category = damage_control_tech
+			
+		}					
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}	
+focus = {
+	id = CHI_pacific_expansion
+	icon = GFX_goal_generic_navy_doctrines_tactics
+	prerequisite = { focus = CHI_pacific_fleet }
+	relative_position_id = CHI_pacific_fleet
+	x = 0
+	y = 1
+	cost = 10
+	available = {
+		is_subject = no
+	}
+	
+	completion_reward = {
+		add_doctrine_cost_reduction = {
+			name = naval_doctrine_tech_bonus_name
+			cost_reduction = 0.5
+			uses = 1
+			category = cat_fleet_in_being
+			category = cat_base_strike
+		}
+		every_other_country = {
+			limit = {
+				NOT = { is_in_faction_with = ROOT }
+				NOT = { is_subject_of = ROOT }
+				any_owned_state = {
+					OR = {
+						region = 78
+						region = 94
+						region = 84
+						region = 83
+						region = 97
+						region = 178
+						region = 179
+						region = 172
+						region = 105
+						region = 176
+					}
+				}
+			}
+			ROOT = {
+				create_wargoal = {
+					target = PREV
+					type = take_state_focus
+					expire = 0
+				}
+			}
+		}			 
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+focus = {
+	id = CHI_sea_expansion
+	icon = GFX_goal_generic_navy_anti_submarine
+	prerequisite = { focus = CHI_sea_fleet }
+	relative_position_id = CHI_sea_fleet
+	x = 0
+	y = 1
+	cost = 10
+	available = {
+		is_subject = no
+	}
+	
+	completion_reward = {
+		add_doctrine_cost_reduction = {
+			name = naval_doctrine_tech_bonus_name
+			cost_reduction = 0.5
+			uses = 1
+			category = cat_trade_interdiction
+		}
+		every_other_country = {
+			limit = {
+				NOT = { is_in_faction_with = ROOT }
+				NOT = { is_subject_of = ROOT }
+				any_owned_state = {
+					OR = {
+						region = 75
+						region = 142
+						region = 188
+						region = 73
+						region = 72
+						region = 159
+						region = 160
+						region = 80
+						region = 187
+						region = 158
+						region = 93
+					}
+				}
+			}
+			ROOT = {
+				create_wargoal = {
+					target = PREV
+					type = take_state_focus
+					expire = 0
+				}
+			}
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_ANNEXATION }
 }
 }
 
