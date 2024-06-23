@@ -5034,451 +5034,358 @@ allow_branch = {
 
 	###ENDSEIG TREE
 	focus = {
-		id = GER_desperate_measures
-		icon = GFX_goal_manpower
-		prerequisite = { focus = GER_captured_heavy_weapons }
-		relative_position_id = GER_captured_heavy_weapons
+		id = GER_endsieg
+		icon = GFX_focus_generic_total_war
+		available = {
+			always = false
+		}
 		x = -2
-		y = 1
-		cost = 5
+		y = 7
+		relative_position_id = GER_denounce_versailles
+		cost = 10
 		ai_will_do = {
-			factor = 10
-		}
-		available = {
-			has_war_with_major = yes
-			OR = {
-				surrender_progress > 0.01
-				casualties_k > 2000
-			}
+			factor = 3
 		}
 		completion_reward = {
-			add_dynamic_modifier = {
-				modifier = r56_GER_desperate_measures
-			}
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			add_ideas = GER_endsieg_idea
 		}
 	}
 	focus = {
-		id = GER_found_the_volkssturm
-		icon = GFX_focus_focus_fra_maquis
-		prerequisite = { focus = GER_desperate_measures }
-		relative_position_id = GER_desperate_measures
-		x = 0
-		y = 1
-		cost = 5
-		available = {
-			has_war_with_major = yes
-			OR = {
-				surrender_progress > 0.35
-				casualties_k > 3000
-			}
+		id = GER_macht_am_rhein
+		icon = GFX_focus_generic_army_tanks2
+		x = -4
+		y = 8
+		prerequisite = {
+			focus = GER_endsieg
 		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
 		ai_will_do = {
-			factor = 5
+			factor = 3
 		}
 		completion_reward = {
-			add_to_variable = { GER_found_the_volkssturm_army_org_regain_army_morale_factor = 0.05 } 
-			add_to_variable = { GER_found_the_volkssturm_conscription_factor = 0.05 }
-			add_to_variable = { GER_werewolves_resistance_growth_on_our_occupied_states = 0.25 }
-			custom_effect_tooltip = GER_found_the_volkssturm_tt
-				add_equipment_to_stockpile = {
-					type = infantry_equipment_1
-					amount = 30000
-				}
-				add_equipment_to_stockpile = {
-					type = support_equipment_1
-					amount = 1000
-				}
-			add_timed_idea = {
-				idea = GER_endsieging
-				days = 250
-			}
-			
-		}
-		search_filters = {
-			FOCUS_FILTER_MILITARY_EQUIPMENT FOCUS_FILTER_MANPOWER
-		}
-	}
-	focus = { 
-		id = GER_front_line_cities
-		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = GER_captured_heavy_weapons }
-		relative_position_id = GER_captured_heavy_weapons
-		x = 2
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 5
-		}
-		available = {
-			has_war_with_major = yes
-			OR = {
-				surrender_progress > 0.05
-				casualties_k > 4000
-			}
-			has_completed_focus = GER_desperate_measures
-		}
-		completion_reward = {
-			add_to_variable = { GER_front_line_cities_production_speed_bunker_factor = 0.50 } 
-			custom_effect_tooltip = GER_front_line_cities_2_tt
-			every_state = {
-				limit = {
-					is_core_of = GER
-					is_fully_controlled_by = GER
-					NOT = {
-						OR = {
-							is_core_of = AUS
-							is_core_of = POL
-							is_core_of = ITA
-							is_core_of = YUG
-							is_core_of = LIT
-							is_core_of = CZE
-							is_core_of = BEL
-							is_core_of = SWI
-							
-							#Wrong side of the Rhine
-							state = 51
-							state = 42
-							state = 28
-							state = 67
-
-							#Wrong side of the Oder
-							state = 5
-							state = 763
-							state = 85
-							state = 965
-							state = 63
-							state = 68
-							state = 66
-
-							#too north
-							state = 998
-						}
-					}
-				}
-				hidden_effect = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = {
-							limit_to_victory_point = yes
-							all_provinces = yes
-						}
-					}
-				}
-				custom_effect_tooltip = GER_front_line_cities_tt
-				add_dynamic_modifier = {
-					modifier = r56_GER_front_line_cities_modifier
-					scope = ROOT
-				}
-			}
-			63 = {
-				if = {
-					limit = {
-						is_controlled_by = GER
-						is_core_of = GER
-					}
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					instant_build = yes
-					province = 6282
-				}
-			}
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			country_event = germany.132
 		}
 	}
 	focus = {
-		id = GER_a_world_in_flames
-		icon = GFX_goal_ussr_revolt
-		prerequisite = { focus = GER_front_line_cities }
-		relative_position_id = GER_front_line_cities
+		id = GER_defence_of_berlin
+		icon = GFX_focus_SWI_fortify_border_with_germany
 		x = 0
-		y = 1
-		cost = 5
-		available = {
-			has_war_with_major = yes
-			surrender_progress > 0.05
+		y = 8
+		prerequisite = {
+			focus = GER_endsieg
 		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
 		ai_will_do = {
-			factor = 10
+			factor = 3
 		}
 		completion_reward = {
-			add_to_variable = { GER_a_world_in_flames_army_core_defence_factor = 0.05 } 
-			custom_effect_tooltip = GER_a_world_in_flames_tt
-			if = {
-				limit = {
-					ROOT = {
-						OR = {
-							controls_province = 9496
-							controls_province = 3207
-							controls_province = 6282
-							controls_province = 3572 
-							controls_province = 3438
-						}
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = GER
-						OR = {
-							state = 64
-							state = 63
-							state = 68
-							state = 66
-						}
-					}
-					custom_effect_tooltip = GER_a_world_in_flames_2_tt
-				}
-			}
-			if = {
-				limit = {
-					ROOT = {
-						OR = {
-							controls_province = 6469
-							controls_province = 6570
-							controls_province = 529
-							controls_province = 6444
-							controls_province = 6488
-						}
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = GER
-						OR = {
-							state = 922
-							state = 989
-						}
-					}
-					custom_effect_tooltip = GER_a_world_in_flames_3_tt
-				}
-			}
-			hidden_effect = {
-				#Oder Forts
-				if = {
-					limit = {
-						ROOT = { controls_province = 9496 }
-					}
-					64 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 9496
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 3207 }
-					}
-					62 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 3207
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 6282 }
-					}
-					63 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 6282
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 3572 }
-					}
-					68 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 3572
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 3438 }
-					}
-					66 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 3438
-							instant_build = yes
-						}
-					}
-				}
-				#Rhine Forts
-				if = {
-					limit = {
-						ROOT = { controls_province = 6469 }
-					}
-					989 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 6469
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 6570 }
-					}
-					989 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 6570
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 529 }
-					}
-					989 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 529
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 6444 }
-					}
-					922 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 6444
-							instant_build = yes
-						}
-					}
-				}
-				if = {
-					limit = {
-						ROOT = { controls_province = 6488 }
-					}
-					922 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 6488
-							instant_build = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					ROOT = { #Need to atleast control Berlin
-						controls_province = 6521
-					}
-				}
-				64 = {
-					custom_effect_tooltip = GER_a_world_in_flames_4_tt
-					custom_effect_tooltip = GER_a_world_in_flames_5_tt
-				}	
-				division_template = {
-					name = "Volkssturm 'Berlin'"
-					priority = 0
-					#division_names_group = GER_MIL_01
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 0 y = 3 }
-						infantry = { x = 0 y = 4 }
-					}
-					support = {
-						engineer = { x = 0 y = 0 }
-					}
-				}
-				hidden_effect = {
-					spawn_volstrum_scripted_effect = yes
-					64 = {
-						if = {
-							limit = {
-								ROOT = { controls_province = 6521 }
-							}
-							add_building_construction = {
-								type = bunker
-								level = 2
-								province = 6521
-								instant_build = yes
-							}
-						}
-						if = {
-							limit = {
-								ROOT = { controls_province = 11444 }
-							}
-							add_building_construction = {
-								type = bunker
-								level = 1
-								province = 11444
-								instant_build = yes
-							}
-						}
-						if = {
-							limit = {
-								ROOT = { controls_province = 11505 }
-							}
-							add_building_construction = {
-								type = bunker
-								level = 1
-								province = 11505
-								instant_build = yes
-							}
-						}
-						if = {
-							limit = {
-								ROOT = { controls_province = 9428 }
-							}
-							add_building_construction = {
-								type = bunker
-								level = 1
-								province = 9428
-								instant_build = yes
-							}
-						}
-					}
-				}
-			}
-			add_timed_idea = {
-				idea = r56_a_world_in_flames_idea
-				days = 250
-			}
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
+			country_event = germany.134
 		}
 	}
-	
+	focus = {
+		id = GER_appoint_spear
+		icon = GFX_goal_generic_production2
+		x = -2
+		y = 8
+		prerequisite = {
+			focus = GER_endsieg
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_ideas = GER_albert_speer_idea
+		}
+	}
+	focus = {
+		id = GER_relocate_berlin
+		icon = GFX_focus_SWI_embrace_panoramaheim
+		x = 1
+		y = 9
+		prerequisite = {
+			focus = GER_defence_of_berlin
+		}
+		available = {
+			64 = {
+				controller = {
+					TAG = GER
+				}
+			}
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 20
+			}
+			add_offsite_building = {
+				type = arms_factory
+				level = 20
+			}
+			64 = {
+				remove_building = {
+					type = industrial_complex
+					level = 20
+				}
+				remove_building = {
+					type = arms_factory
+					level = 20
+				}
+			}
+		}
+	}
+	focus = {
+		id = GER_relocate_rhineland
+		icon = GFX_focus_SOV_merge_plants
+		x = -5
+		y = 9
+		prerequisite = {
+			focus = GER_macht_am_rhein
+		}
+		available = {
+			51 = {
+				controller = {
+					TAG = GER
+				}
+			}
+			989 = {
+				controller = {
+					TAG = GER
+				}
+			}
+			42 = {
+				controller = {
+					TAG = GER
+				}
+			}
+			1053 = {
+				controller = {
+					TAG = GER
+				}
+			}
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 15
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 20
+			}
+			add_offsite_building = {
+				type = arms_factory
+				level = 20
+			}
+			51 = {
+				remove_building = {
+					type = industrial_complex
+					level = 20
+				}
+				remove_building = {
+					type = arms_factory
+					level = 20
+				}
+			}
+			989 = {
+				remove_building = {
+					type = industrial_complex
+					level = 20
+				}
+				remove_building = {
+					type = arms_factory
+					level = 20
+				}
+			}
+			42 = {
+				remove_building = {
+					type = industrial_complex
+					level = 20
+				}
+				remove_building = {
+					type = arms_factory
+					level = 20
+				}
+			}
+			1053 = {
+				remove_building = {
+					type = industrial_complex
+					level = 20
+				}
+				remove_building = {
+					type = arms_factory
+					level = 20
+				}
+			}
+		}
+	}
+	focus = {
+		id = GER_relocate_berlin
+		icon = GFX_focus_SWI_embrace_panoramaheim
+		x = 1
+		y = 9
+		prerequisite = {
+			focus = GER_defence_of_berlin
+		}
+		available = {
+			64 = {
+				controller = {
+					TAG = GER
+				}
+			}
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 15
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 10
+			}
+			add_offsite_building = {
+				type = arms_factory
+				level = 10
+			}
+			64 = {
+				remove_building = {
+					type = industrial_complex
+					level = 20
+				}
+				remove_building = {
+					type = arms_factory
+					level = 20
+				}
+			}
+		}
+	}
+	focus = {
+		id = GER_form_the_volkstrum
+		icon = GFX_focus_generic_limited_social_mobilization
+		x = -1
+		y = 9
+		prerequisite = {
+			focus = GER_defence_of_berlin
+		}
+		available = {
+		
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 50000	
+			}
+		}
+	}
+	focus = {
+		id = GER_redirect_focus_to_the_army
+		icon = GFX_focus_generic_reorient_production
+		x = -3
+		y = 9
+		prerequisite = {
+			focus = GER_macht_am_rhein
+		}
+		available = {
+		
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_ideas = GER_rubber_to_mils
+			modify_building_resources = {
+				building = synthetic_refinery
+				resource = rubber
+				amount = -6
+			 }
+			 modify_building_resources = {
+				building = rubber_refinery
+				resource = rubber
+				amount = -6
+			 }
+		}
+	}
+	focus = {
+		id = GER_last_tigers
+		icon = GFX_focus_ITA_ferrea_mole_ferreo_cuore
+		x = -4
+		y = 10
+		prerequisite = {
+			focus = GER_relocate_rhineland focus = GER_redirect_focus_to_the_army
+		}
+		available = {
+		
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_ideas = GER_last_tiger_ideas
+		}
+	}
+	focus = {
+		id = GER_fix_gun_problem
+		icon = GFX_goal_generic_small_arms
+		x = 0
+		y = 10
+		prerequisite = {
+			focus = GER_form_the_volkstrum focus = GER_relocate_berlin
+		}
+		available = {
+		
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_ideas = GER_fix_ideas
+		}
+	}
+	focus = {
+		id = GER_final_endsieg
+		icon = GFX_focus_spr_the_anti_fascist_workers_revolution
+		x = -2
+		y = 11
+		prerequisite = {
+			focus = GER_last_tigers
+		}
+		prerequisite = {
+			focus = GER_fix_gun_problem
+		}
+		available = {
+			surrender_progress = 0.25
+		}
+		relative_position_id = GER_denounce_versailles
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			add_ideas = GER_final_endsieg_idea
+		}
+	}
+
 
 	focus = {
 		id = GER_war_with_france
@@ -10266,6 +10173,7 @@ focus = {
 			}
 		}
 	}
+
 	focus = {
 		id = GER_help_SOV_revolutionaries_r56_2 #other is democratic side
 		text = GER_help_SOV_revolutionaries
