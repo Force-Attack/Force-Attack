@@ -1448,11 +1448,6 @@ focus_tree = {
 		completion_reward = {
 			#delete stuff thats opponents
 			country_event = { id = CHI.4 }
-			set_party_name = {
-				ideology = fascism
-				long_name = CHI_fascism_kuomintang
-				name = CHI_fascism_kuomintang
-			}
 			add_political_power = -100
 			add_stability = -0.05
 
@@ -1851,97 +1846,71 @@ focus_tree = {
 			}
 		}
 	}
+	
 	focus = {
-		id = CHI_solidify_military_control
-		icon = GFX_goal_control_army
+		id = CHI_continue_the_civil_war
+		icon = GFX_goal_PRC_destroy_the_communists_shine
 		cost = 5
-		x = -3
+		x = -1
 		y = 1
 		mutually_exclusive = {
 			
 		}
 		prerequisite = { focus = CHI_eliminate_political_opponents }
-		relative_position_id = CHI_expand_the_CIBS
+		relative_position_id = CHI_eliminate_political_opponents
 		available = {
 		}
 		completion_reward = {
-			add_stability = 0.10
-			add_war_support = 0.10
-			
 		}
 	}
 	focus = {
-		id = CHI_skirmish_with_the_warlords
-		icon = GFX_goal_CHI_defeat_the_warlords_shine
+		id = CHI_collaboration_with_allied_warlords
+		icon = GFX_goal_MAN_back_to_the_basics_shine
 		cost = 8
 		x = 0
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_solidify_military_control }
-		relative_position_id = CHI_solidify_military_control
+		prerequisite = { focus = CHI_continue_the_civil_war }
+		relative_position_id = CHI_continue_the_civil_war
 		available = {
 
 		}
-
 		completion_reward = {
-			unlock_decision_category_tooltip = CHI_warlord_skirmishes
+
 		}
 	}
 	focus = {
-		id = CHI_secret_police
-		icon = GFX_goal_generic_secret_police_shine
+		id = CHI_learn_from_the_civil_war
+		icon = GFX_goal_generic_army_doctrines
 		cost = 8
 		x = 0
-		y = 2
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_skirmish_with_the_warlords }
-		relative_position_id = CHI_solidify_military_control
+		prerequisite = { focus = CHI_collaboration_with_allied_warlords }
+		relative_position_id = CHI_collaboration_with_allied_warlords
 		available = {
 
 		}
 		completion_reward = {
-			add_ideas = CHI_secret_police
-			add_tech_bonus = {
-				name = mp_focus
-				bonus = 1
-				uses = 1
-				category = military_police_tech
-			}
-		}
-	}
-	focus = {
-		id = CHI_forced_labor_camps
-		icon = GFX_goal_generic_prison_break_shine
-		cost = 8
-		x = 1
-		y = 3
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_secret_police }
-		relative_position_id = CHI_solidify_military_control
-		available = {
 
 		}
-		completion_reward = {
-			add_ideas = CHI_productive_population
-		}
 	}
+	
 	focus = {
 		id = CHI_increase_sino_german_cooperation
 		icon = GFX_focus_chi_mission_to_germany
 		cost = 8
 		x = -1
-		y = 3
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_secret_police  }
-		relative_position_id = CHI_solidify_military_control
+		prerequisite = { focus = CHI_learn_from_the_civil_war  }
+		relative_position_id = CHI_learn_from_the_civil_war
 		available = {
 			NOT = {
 				has_war_with = ger
@@ -1951,31 +1920,75 @@ focus_tree = {
 			add_ideas = CHI_german_advisors
 		}
 	}
+
 	focus = {
-		id = CHI_some_ting_wong
-		icon = GFX_goal_CHI_retake_manchuria_shine
-		cost = 10
+		id = CHI_increase_sino_german_cooperation
+		icon = GFX_focus_chi_mission_to_germany
+		cost = 8
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			focus = CHI_our_own_doctrine
+		}
+		prerequisite = { focus = CHI_learn_from_the_civil_war  }
+		relative_position_id = CHI_learn_from_the_civil_war
+		available = {
+			NOT = {
+				has_war_with = ger
+			}
+		}
+		completion_reward = {
+			add_ideas = CHI_german_advisors
+		}
+	}
+
+	focus = {
+		id = CHI_our_own_doctrine
+		icon = GFX_goal_CHI_coa_army_shine
+		cost = 8
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			focus = CHI_increase_sino_german_cooperation
+		}
+		prerequisite = { focus = CHI_learn_from_the_civil_war  }
+		relative_position_id = CHI_learn_from_the_civil_war
+		available = {
+			NOT = {
+				has_war_with = ger
+			}
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = army_sup_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+
+		}
+	}
+
+	focus = {
+		id = CHI_integrate_warlords
+		icon = GFX_goal_CHI_defeat_the_warlords_shine
+		cost = 8
 		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_increase_sino_german_cooperation }
-		prerequisite = { focus = CHI_forced_labor_camps }
+		prerequisite = { focus = CHI_increase_sino_german_cooperation focus = CHI_our_own_doctrine }
 		relative_position_id = CHI_increase_sino_german_cooperation
 		available = {
 
 		}
+
 		completion_reward = {
-			ROOT = {
-				create_wargoal = {
-					type = puppet_wargoal_focus
-					target = MAN
-					expire = 0
-				}
-			}
+			unlock_decision_category_tooltip = CHI_warlord_skirmishes
 		}
 	}
+	
 
 	focus = {
 		id = CHI_retake_manchuria
@@ -1986,7 +1999,7 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_some_ting_wong }
+		prerequisite = { focus = CHI_integrate_warlords }
 		prerequisite = { focus = CHI_one_ruler_of_china focus = CHI_take_out_kansas }
 		relative_position_id = CHI_one_ruler_of_china
 		available = {
@@ -2062,697 +2075,28 @@ focus_tree = {
 		}
 	}
 
-
 	focus = {
-		id = CHI_greater_china
-		icon = GFX_goal_MAN_restore_the_empire
-
-		relative_position_id = CHI_retake_manchuria
-		x = -1
+		id = CHI_secret_police
+		icon = GFX_goal_generic_secret_police_shine
+		cost = 8
+		x = 0
 		y = 1
-
-		prerequisite = {
-			focus = CHI_some_ting_wong
-		}
-		prerequisite = {
-			focus = CHI_retake_manchuria
-		}
-
 		mutually_exclusive = {
-			focus = CHI_one_china
-		}
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			MAN = {
-				exists = no
-			}
-			CHI = {
-				AND = {
-					controls_state = 328
-					controls_state = 944
-					controls_state = 745
-				}
-			}
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
 			
 		}
-	}
-
-	focus = {
-		id = CHI_one_china
-		icon = GFX_goal_MAN_restore_the_empire
-
-		relative_position_id = CHI_retake_manchuria
-		x = 1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_one_ruler_of_china
-			focus = CHI_take_out_kansas
-		}
-		prerequisite = {
-			focus = CHI_retake_manchuria
-		}
-
-		mutually_exclusive = {
-			focus = CHI_greater_china
-		}
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
+		prerequisite = { focus = CHI_solidify_military_control }
+		relative_position_id = CHI_solidify_military_control
 		available = {
-			MAN = {
-				exists = no
-			}
-			CHI = {
-				AND = {
-					controls_state = 328
-					controls_state = 944
-					controls_state = 745
-				}
-			}
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
 
 		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			add_ideas = CHI_retake_manchuria_1
-		}
-	}
-
-	focus = {
-		id = CHI_assimilate_cultures
-		icon = GFX_goal_generic_destruction_civil_war_shine
-
-		relative_position_id = CHI_greater_china
-		x = 1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_greater_china
-			focus = CHI_one_china
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			if = {
-				limit = { has_government = fascism }
-				add_ideas = CHI_assimilated_cultures
-			}
-			else = {
-				add_ideas = CHI_assimilated_cultures_2
-			}
-
-		}
-	}
-
-	focus = {
-		id = CHI_german_tank_program
-		icon = GFX_goal_generic_heavy_armour_german_shine
-
-		relative_position_id = CHI_greater_china
-		x = -1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_greater_china
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			NOT = {
-				has_war_with = ger
-			}
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			if = {
-				limit = {
-					GER = {
-						has_tech = basic_light_tank
-					}
-					
-				}
-				set_technology = {
-					basic_light_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = improved_light_tank
-					}
-				}
-				set_technology = {
-					improved_light_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = advanced_light_tank
-					}
-				}
-				set_technology = {
-					advanced_light_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = basic_medium_tank
-					}
-				}
-				set_technology = {
-					basic_medium_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = improved_medium_tank
-					}
-				}
-				set_technology = {
-					improved_medium_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = advanced_medium_tank
-					}
-				}
-				set_technology = {
-					advanced_medium_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = basic_heavy_tank
-					}
-				}
-				set_technology = {
-					basic_heavy_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = improved_heavy_tank
-					}
-				}
-				set_technology = {
-					improved_heavy_tank = 1
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						has_tech = advanced_heavy_tank
-					}
-				}
-				set_technology = {
-					advanced_heavy_tank = 1
-				}
-			}
-			
-
-		}
-	}
-
-	focus = {
-		id = CHI_rommel_of_the_east
-		icon = GFX_goal_continuous_reduce_training_time
-
-		relative_position_id = CHI_german_tank_program
-		x = 1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_german_tank_program
-			focus = CHI_assimilate_cultures
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			NOT = {
-				has_war_with = ger
-			}
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			CHI =  {
-				country_event = { id = CHI.9 }
-			}
-			hidden_effect = {
-				add_trait = {
-					character = CHI_sun_li_jen
-					slot = high_command
-					trait = army_armored_2
-				}
-				remove_trait = {
-					character = CHI_sun_li_jen
-					slot = high_command
-					trait = army_commando_2
-				}
-				add_trait = {
-					trait = panzer_leader
-				}
-			}
-		}
-	}
-
-
-	focus = {
-		id = CHI_max_aura_ohio
-		icon = GFX_goal_generic_destruction_civil_war_shine
-
-		relative_position_id = CHI_one_china
-		x = 1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_one_china
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
-		}
-	}
-
-	focus = {
-		id = CHI_max_aura_ohio_2
-		icon = GFX_goal_generic_destruction_civil_war_shine
-
-		relative_position_id = CHI_max_aura_ohio
-		x = -1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_assimilate_cultures
-			focus = CHI_max_aura_ohio
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
-		}
-	}
-
-	focus = {
-		id = CHI_firepower
-		icon = GFX_goal_TUR_dardanelles_cannon_shine
-
-		relative_position_id = CHI_german_tank_program
-		x = -1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_german_tank_program
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
-		completion_reward = {
-			add_ideas = CHI_fire_power
+			add_ideas = CHI_secret_police
 			add_tech_bonus = {
+				name = mp_focus
 				bonus = 1
-				uses = 2
-				category = artillery
+				uses = 1
+				category = military_police_tech
 			}
-			unlock_mio_trait_tooltip = "Chinese Firepower"
-		}
-	}
-
-	focus = {
-		id = CHI_advanced_army_technology
-		icon = GFX_goal_generic_military_research_2_shine
-
-		relative_position_id = CHI_firepower
-		x = 1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_firepower
-		}
-		prerequisite = {
-			focus = CHI_rommel_of_the_east
-		}
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			#add_tech_bonus = {
-			#	name = 
-			#}
-		}
-	}
-
-	focus = {
-		id = CHI_ohio_rizz
-		icon = GFX_goal_generic_destruction_civil_war_shine
-
-		relative_position_id = CHI_max_aura_ohio
-		x = 1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_max_aura_ohio
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
-		}
-	}
-
-	focus = {
-		id = CHI_ohio_rizz_2
-		icon = GFX_goal_generic_destruction_civil_war_shine
-
-		relative_position_id = CHI_ohio_rizz
-		x = -1
-		y = 1
-
-		prerequisite = {
-			focus = CHI_ohio_rizz
-		}
-		prerequisite = {
-			focus = CHI_max_aura_ohio_2
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
-		}
-	}
-
-	focus = {
-		id = CHI_research_what_a_women_is
-		icon = GFX_focus_NORDIC_com_research
-
-		relative_position_id = CHI_assimilate_cultures
-		x = 0
-		y = 2
-
-		prerequisite = {
-			focus = CHI_max_aura_ohio_2
-		}
-		prerequisite = {
-			focus = CHI_assimilate_cultures
-		}
-		prerequisite = {
-			focus = CHI_rommel_of_the_east
-		}
-
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
-
-	focus = {
-		id = CHI_super_super_sus_fanum_tax_op_focus
-		icon = GFX_goal_waking_the_tiger_shine
-
-		relative_position_id = CHI_research_what_a_women_is
-		x = 0
-		y = 1
-
-		prerequisite = {
-			focus = CHI_research_what_a_women_is
-		}
-		prerequisite = {
-			focus = CHI_ohio_rizz_2
-			focus = CHI_advanced_army_technology
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			add_ideas = CHI_assimilated_cultures
 		}
 	}
 
@@ -2796,7 +2140,7 @@ focus_tree = {
 	}
 	focus = {
 		id = CHI_strengthen_the_regime
-		icon = GFX_focus_chi_army_reform
+		icon = GFX_focus_generic_china1
 		cost = 8
 		x = 0
 		y = 2
@@ -2805,33 +2149,6 @@ focus_tree = {
 		prerequisite = { focus = CHI_executive_yuan }
 
 		available = {
-			has_completed_focus = CHI_form_a_united_front
-		}
-		allow_branch = {
-			has_government = neutrality
-		}
-		relative_position_id = CHI_expand_the_CIBS
-
-		completion_reward = {
-			add_ideas = CHI_enlightened_despot
-		}
-	}
-	focus = {
-		id = CHI_strengthen_the_regime_alt
-		icon = GFX_goal_CHI_power_to_the_blueshirts
-		cost = 8
-		x = 0
-		y = 2
-
-		prerequisite = { focus = CHI_institute_nationwide_healthcare }
-		prerequisite = { focus = CHI_executive_yuan }
-
-		allow_branch = {
-			has_government = fascism
-		}
-
-		available = {
-			has_completed_focus = CHI_eliminate_political_opponents
 		}
 
 		relative_position_id = CHI_expand_the_CIBS
@@ -2843,10 +2160,11 @@ focus_tree = {
 			}
 		}
 	}
+	
 
 	focus = {
 		id = CHI_form_an_education_department
-		icon = GFX_goal_supremacy_of_will
+		icon = GFX_goal_CHI_academia_sinica_shine
 		cost = 10
 		x = 0
 		y = 2
@@ -2863,29 +2181,6 @@ focus_tree = {
 		completion_reward = {
 			CHI_decreace_illiteracy = yes
 			add_research_slot = 1
-		}
-	}
-
-	focus = {
-		id = CHI_form_an_education_department_alt
-		icon = GFX_goal_generic_christian_education_shine
-		cost = 10
-		x = 0
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_strengthen_the_regime_alt }
-		relative_position_id = CHI_strengthen_the_regime_alt
-		available = {
-		}
-		bypass = {
-			amount_research_slots > 4
-		}
-		completion_reward = {
-			CHI_decreace_illiteracy = yes
-			add_research_slot = 1
-			add_ideas = CHI_nationalist_education
 		}
 	}
 	
@@ -2916,32 +2211,7 @@ focus_tree = {
 			CHI_increase_inflation = yes
 		}
 	}
-	focus = {
-		id = CHI_coordinate_with_manufactuers_alt
-		icon = GFX_focus_generic_reorient_production
-		cost = 10
-		x = 1
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_strengthen_the_regime_alt }
-		relative_position_id = CHI_strengthen_the_regime_alt
-		available = {
-			no_hyper_inflation = yes
-		}
-		completion_reward = {
-			every_military_industrial_organization = {
-				add_mio_funds = 2000
-			}
-			add_tech_bonus = {
-				name = cordnated_manufactures
-				bonus = 1
-				uses = 1
-				category = infantry_weapons
-			}
-		}
-	}
+
 	focus = {
 		id = CHI_defence_contracts
 		icon = GFX_goal_generic_industrial_plan
@@ -2977,54 +2247,6 @@ focus_tree = {
 					type = arms_factory
 					level = 2
 					instant_build = yes
-				}
-			}
-			CHI_increase_inflation = yes
-		}
-	}
-	focus = {
-		id = CHI_defence_contracts_alt
-		icon = GFX_goal_generic_industrial_plan
-		cost = 10
-		x = -1
-		y = 1
-		allow_branch = {
-			has_government = fascism
-		}
-		prerequisite = { focus = CHI_strengthen_the_regime_alt }
-		relative_position_id = CHI_strengthen_the_regime_alt
-		available = {
-			no_hyper_inflation = yes
-		}
-		completion_reward = {
-			random_controlled_state = {
-				prioritize = {
-					613
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-				}
-			}
-			random_controlled_state = {
-				prioritize = {
-					620
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
 				}
 			}
 			CHI_increase_inflation = yes
