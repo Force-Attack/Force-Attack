@@ -1536,10 +1536,10 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_activate_communist_divisions
-		icon = GFX_goal_small_infantry
+		id = CHI_prepare_for_manchu_confrontation
+		icon = GFX_goal_generic_construct_infrastructure
 		cost = 5
-		x = 1
+		x = 0
 		y = 1
 		mutually_exclusive = {
 			
@@ -1547,8 +1547,8 @@ focus_tree = {
 		bypass = {
 			is_in_faction_with = SMI
 		}
-		prerequisite = { focus = CHI_form_a_united_front }
-		relative_position_id = CHI_form_a_united_front
+		prerequisite = { focus = CHI_give_the_warlords_military_positions }
+		relative_position_id = CHI_give_the_warlords_military_positions
 		available = {
 
 		}
@@ -1636,20 +1636,23 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_allied_warlords
+		id = CHI_Increase_warlord_coperation
 		icon =  GFX_goal_generic_military_deal
 		cost = 8
-		x = 0
+		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_activate_communist_divisions }
-		relative_position_id = CHI_activate_communist_divisions
+		prerequisite = { focus = CHI_form_a_united_front }
+		relative_position_id = CHI_form_a_united_front
 		available = {
 		}
 		completion_reward = {
-			#change warlord debuff
+			swap_ideas = {
+				remove_idea = CHI_warlord_integration_5
+				add_idea = CHI_allied_warlords
+			}
 			every_state = {
 				limit = {
 					has_dynamic_modifier = {
@@ -1674,8 +1677,8 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_allied_warlords }
-		relative_position_id = CHI_allied_warlords
+		prerequisite = { focus = CHI_Increase_warlord_coperation }
+		relative_position_id = CHI_Increase_warlord_coperation
 		available = {
 		}
 		completion_reward = {
@@ -1725,8 +1728,8 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CHI_call_the_communist_reserves
 		}
-		prerequisite = { focus = CHI_give_the_warlords_military_positions }
-		relative_position_id = CHI_give_the_warlords_military_positions
+		prerequisite = { focus = CHI_prepare_for_manchu_confrontation }
+		relative_position_id = CHI_prepare_for_manchu_confrontation
 		available = {
 		}
 		completion_reward = {
@@ -1755,8 +1758,8 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CHI_betray_the_communist
 		}
-		prerequisite = { focus = CHI_give_the_warlords_military_positions }
-		relative_position_id = CHI_give_the_warlords_military_positions
+		prerequisite = { focus = CHI_prepare_for_manchu_confrontation }
+		relative_position_id = CHI_prepare_for_manchu_confrontation
 		available = {
 		}
 
@@ -1807,30 +1810,11 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_one_ruler_of_china
-		icon = GFX_focus_chi_one_china_policy
-		cost = 10
-		x = -1
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_betray_the_communist }
-		relative_position_id = CHI_give_the_warlords_military_positions
-		available = {
-		}
-		completion_reward = {
-			add_political_power = 100
-			add_stability = 0.1
-			add_country_leader_trait = one_ruler_of_china
-		}
-	}
-	focus = {
 		id = CHI_take_out_kansas
 		icon = GFX_goal_sov_soviet_ind_upgrade_shine
 		cost = 10
 		x = 1
-		y = 2
+		y = 3
 		mutually_exclusive = {
 			
 		}
@@ -1861,6 +1845,9 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
+			set_variable = {
+				CHI_prc_strength = 100
+			}
 		}
 	}
 	focus = {
@@ -1994,14 +1981,14 @@ focus_tree = {
 		id = CHI_retake_manchuria
 		icon = GFX_goal_CHI_retake_manchuria
 		cost = 10
-		x = -2
+		x = -4
 		y = 1
 		mutually_exclusive = {
 			
 		}
 		prerequisite = { focus = CHI_integrate_warlords }
-		prerequisite = { focus = CHI_one_ruler_of_china focus = CHI_take_out_kansas }
-		relative_position_id = CHI_one_ruler_of_china
+		prerequisite = { focus = CHI_betray_the_communist focus = CHI_take_out_kansas }
+		relative_position_id = CHI_take_out_kansas
 		available = {
 			is_puppet = no
 			any_state = {
