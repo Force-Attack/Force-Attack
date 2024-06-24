@@ -1846,10 +1846,11 @@ focus_tree = {
 			}
 		}
 	}
+	
 	focus = {
-		id = CHI_skirmish_with_the_warlords
-		icon = GFX_goal_CHI_defeat_the_warlords_shine
-		cost = 8
+		id = CHI_continue_the_civil_war
+		icon = GFX_goal_PRC_destroy_the_communists_shine
+		cost = 5
 		x = -1
 		y = 1
 		mutually_exclusive = {
@@ -1858,85 +1859,58 @@ focus_tree = {
 		prerequisite = { focus = CHI_eliminate_political_opponents }
 		relative_position_id = CHI_eliminate_political_opponents
 		available = {
-
 		}
-
 		completion_reward = {
-			unlock_decision_category_tooltip = CHI_warlord_skirmishes
 		}
 	}
 	focus = {
-		id = CHI_solidify_military_control
-		icon = GFX_goal_control_army
-		cost = 5
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_skirmish_with_the_warlords }
-		relative_position_id = CHI_skirmish_with_the_warlords
-		available = {
-		}
-		completion_reward = {
-			army_experience = 25
-			add_command_power = 50
-			add_war_support = 0.10
-		}
-	}
-	focus = {
-		id = CHI_secret_police
-		icon = GFX_goal_generic_secret_police_shine
+		id = CHI_collaboration_with_allied_warlords
+		icon = GFX_goal_MAN_back_to_the_basics_shine
 		cost = 8
 		x = 0
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_solidify_military_control }
-		relative_position_id = CHI_solidify_military_control
+		prerequisite = { focus = CHI_continue_the_civil_war }
+		relative_position_id = CHI_continue_the_civil_war
 		available = {
 
 		}
 		completion_reward = {
-			add_ideas = CHI_secret_police
-			add_tech_bonus = {
-				name = mp_focus
-				bonus = 1
-				uses = 1
-				category = military_police_tech
-			}
+
 		}
 	}
 	focus = {
-		id = CHI_forced_labor_camps
-		icon = GFX_goal_generic_prison_break_shine
+		id = CHI_learn_from_the_civil_war
+		icon = GFX_goal_generic_army_doctrines
 		cost = 8
-		x = 1
-		y = 2
+		x = 0
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_secret_police }
-		relative_position_id = CHI_solidify_military_control
+		prerequisite = { focus = CHI_collaboration_with_allied_warlords }
+		relative_position_id = CHI_collaboration_with_allied_warlords
 		available = {
 
 		}
 		completion_reward = {
-			add_ideas = CHI_productive_population
+
 		}
 	}
+	
 	focus = {
 		id = CHI_increase_sino_german_cooperation
 		icon = GFX_focus_chi_mission_to_germany
 		cost = 8
 		x = -1
-		y = 2
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_secret_police  }
-		relative_position_id = CHI_solidify_military_control
+		prerequisite = { focus = CHI_learn_from_the_civil_war  }
+		relative_position_id = CHI_learn_from_the_civil_war
 		available = {
 			NOT = {
 				has_war_with = ger
@@ -1946,31 +1920,75 @@ focus_tree = {
 			add_ideas = CHI_german_advisors
 		}
 	}
+
 	focus = {
-		id = CHI_some_ting_wong
-		icon = GFX_goal_CHI_retake_manchuria_shine
-		cost = 10
+		id = CHI_increase_sino_german_cooperation
+		icon = GFX_focus_chi_mission_to_germany
+		cost = 8
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			focus = CHI_our_own_doctrine
+		}
+		prerequisite = { focus = CHI_learn_from_the_civil_war  }
+		relative_position_id = CHI_learn_from_the_civil_war
+		available = {
+			NOT = {
+				has_war_with = ger
+			}
+		}
+		completion_reward = {
+			add_ideas = CHI_german_advisors
+		}
+	}
+
+	focus = {
+		id = CHI_our_own_doctrine
+		icon = GFX_goal_CHI_coa_army_shine
+		cost = 8
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			focus = CHI_increase_sino_german_cooperation
+		}
+		prerequisite = { focus = CHI_learn_from_the_civil_war  }
+		relative_position_id = CHI_learn_from_the_civil_war
+		available = {
+			NOT = {
+				has_war_with = ger
+			}
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = army_sup_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+
+		}
+	}
+
+	focus = {
+		id = CHI_integrate_warlords
+		icon = GFX_goal_CHI_defeat_the_warlords_shine
+		cost = 8
 		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_increase_sino_german_cooperation }
-		prerequisite = { focus = CHI_forced_labor_camps }
+		prerequisite = { focus = CHI_increase_sino_german_cooperation focus = CHI_our_own_doctrine }
 		relative_position_id = CHI_increase_sino_german_cooperation
 		available = {
 
 		}
+
 		completion_reward = {
-			ROOT = {
-				create_wargoal = {
-					type = puppet_wargoal_focus
-					target = MAN
-					expire = 0
-				}
-			}
+			unlock_decision_category_tooltip = CHI_warlord_skirmishes
 		}
 	}
+	
 
 	focus = {
 		id = CHI_retake_manchuria
@@ -1981,7 +1999,7 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_some_ting_wong }
+		prerequisite = { focus = CHI_integrate_warlords }
 		prerequisite = { focus = CHI_one_ruler_of_china focus = CHI_take_out_kansas }
 		relative_position_id = CHI_one_ruler_of_china
 		available = {
@@ -2058,6 +2076,31 @@ focus_tree = {
 	}
 
 	focus = {
+		id = CHI_secret_police
+		icon = GFX_goal_generic_secret_police_shine
+		cost = 8
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_solidify_military_control }
+		relative_position_id = CHI_solidify_military_control
+		available = {
+
+		}
+		completion_reward = {
+			add_ideas = CHI_secret_police
+			add_tech_bonus = {
+				name = mp_focus
+				bonus = 1
+				uses = 1
+				category = military_police_tech
+			}
+		}
+	}
+
+	focus = {
 		id = CHI_executive_yuan
 		icon = GFX_focus_chi_legislative_yuan
 		cost = 10
@@ -2097,39 +2140,13 @@ focus_tree = {
 	}
 	focus = {
 		id = CHI_strengthen_the_regime
-		icon = GFX_focus_chi_army_reform
+		icon = GFX_focus_generic_china1
 		cost = 8
 		x = 0
 		y = 2
 
 		prerequisite = { focus = CHI_institute_nationwide_healthcare }
 		prerequisite = { focus = CHI_executive_yuan }
-
-		available = {
-			has_completed_focus = CHI_form_a_united_front
-		}
-		allow_branch = {
-			has_government = neutrality
-		}
-		relative_position_id = CHI_expand_the_CIBS
-
-		completion_reward = {
-			add_ideas = CHI_enlightened_despot
-		}
-	}
-	focus = {
-		id = CHI_strengthen_the_regime_alt
-		icon = GFX_goal_CHI_power_to_the_blueshirts
-		cost = 8
-		x = 0
-		y = 2
-
-		prerequisite = { focus = CHI_institute_nationwide_healthcare }
-		prerequisite = { focus = CHI_executive_yuan }
-
-		allow_branch = {
-			has_government = fascism
-		}
 
 		available = {
 			has_completed_focus = CHI_eliminate_political_opponents
@@ -2144,10 +2161,11 @@ focus_tree = {
 			}
 		}
 	}
+	
 
 	focus = {
 		id = CHI_form_an_education_department
-		icon = GFX_goal_supremacy_of_will
+		icon = GFX_goal_CHI_academia_sinica_shine
 		cost = 10
 		x = 0
 		y = 2
@@ -2164,29 +2182,6 @@ focus_tree = {
 		completion_reward = {
 			CHI_decreace_illiteracy = yes
 			add_research_slot = 1
-		}
-	}
-
-	focus = {
-		id = CHI_form_an_education_department_alt
-		icon = GFX_goal_generic_christian_education_shine
-		cost = 10
-		x = 0
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_strengthen_the_regime_alt }
-		relative_position_id = CHI_strengthen_the_regime_alt
-		available = {
-		}
-		bypass = {
-			amount_research_slots > 4
-		}
-		completion_reward = {
-			CHI_decreace_illiteracy = yes
-			add_research_slot = 1
-			add_ideas = CHI_nationalist_education
 		}
 	}
 	
@@ -2217,32 +2212,7 @@ focus_tree = {
 			CHI_increase_inflation = yes
 		}
 	}
-	focus = {
-		id = CHI_coordinate_with_manufactuers_alt
-		icon = GFX_focus_generic_reorient_production
-		cost = 10
-		x = 1
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_strengthen_the_regime_alt }
-		relative_position_id = CHI_strengthen_the_regime_alt
-		available = {
-			no_hyper_inflation = yes
-		}
-		completion_reward = {
-			every_military_industrial_organization = {
-				add_mio_funds = 2000
-			}
-			add_tech_bonus = {
-				name = cordnated_manufactures
-				bonus = 1
-				uses = 1
-				category = infantry_weapons
-			}
-		}
-	}
+
 	focus = {
 		id = CHI_defence_contracts
 		icon = GFX_goal_generic_industrial_plan
@@ -2278,54 +2248,6 @@ focus_tree = {
 					type = arms_factory
 					level = 2
 					instant_build = yes
-				}
-			}
-			CHI_increase_inflation = yes
-		}
-	}
-	focus = {
-		id = CHI_defence_contracts_alt
-		icon = GFX_goal_generic_industrial_plan
-		cost = 10
-		x = -1
-		y = 1
-		allow_branch = {
-			has_government = fascism
-		}
-		prerequisite = { focus = CHI_strengthen_the_regime_alt }
-		relative_position_id = CHI_strengthen_the_regime_alt
-		available = {
-			no_hyper_inflation = yes
-		}
-		completion_reward = {
-			random_controlled_state = {
-				prioritize = {
-					613
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-				}
-			}
-			random_controlled_state = {
-				prioritize = {
-					620
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
 				}
 			}
 			CHI_increase_inflation = yes
