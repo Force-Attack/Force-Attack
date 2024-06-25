@@ -10,7 +10,7 @@ focus_tree = {
 		}
 	}
 	
-	continuous_focus_position = { x = 2900 y = 700 }
+	continuous_focus_position = { x = 2900 y = 1000 }
 	default = no
 	reset_on_civilwar = no
 	
@@ -19,8 +19,8 @@ focus_tree = {
 	###
 	
 	focus = {
-		id = SWI_geistige
-		icon = GFX_goal_SWI_pro_helvetia #goal_constitution
+		id = SWI_general_elections
+		icon = GFX_goal_SWI_pro_helvetia 
 		
 		x = 7
 		y = 0
@@ -37,13 +37,13 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = SWI_richtlinienbewegung
-		icon = GFX_focus_generic_the_giant_wakes
+		id = SWI_turn_to_the_workers
+		icon = GFX_focus_por_workers_of_iberia
 		
-		prerequisite = { focus = SWI_geistige }
-		mutually_exclusive = { focus = SWI_burger focus = SWI_rise_of_front }
+		prerequisite = { focus = SWI_general_elections }
+		mutually_exclusive = { focus = SWI_support_the_west focus = SWI_Invite_royals_from_europe }
 		
-		x = 3
+		x = -6
 		y = 1
 		cost = 10
 		
@@ -56,23 +56,20 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_popularity = { ideology = democratic popularity = 0.08 }
-			add_popularity = { ideology = communism popularity = 0.1 }
-			hidden_effect = {
-				add_popularity = { ideology = fascism popularity = 0.02 }
-			}
+			add_popularity = { ideology = communism popularity = 0.2 }
+			add_ideas = communist_influence
 		}
 
 	}
 	
 	focus = {
-		id = SWI_burger
+		id = SWI_support_the_west
 		icon = GFX_focus_SWI_swiss_guiding_principles
 		
-		prerequisite = { focus = SWI_geistige }
-		mutually_exclusive = { focus = SWI_richtlinienbewegung focus = SWI_rise_of_front }
+		prerequisite = { focus = SWI_general_elections }
+		mutually_exclusive = { focus = SWI_turn_to_the_workers focus = SWI_Invite_royals_from_europe }
 		
-		x = 7
+		x = 3
 		y = 1
 		cost = 10
 		
@@ -88,11 +85,11 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = SWI_rise_of_front
-		icon = GFX_goal_swi_irredentism
+		id = SWI_Invite_royals_from_europe
+		icon = GFX_focus_generic_monarchy_2
 		
-		prerequisite = { focus = SWI_geistige }
-		mutually_exclusive = { focus = SWI_richtlinienbewegung focus = SWI_burger }
+		prerequisite = { focus = SWI_general_elections }
+		mutually_exclusive = { focus = SWI_turn_to_the_workers focus = SWI_support_the_west }
 		
 		x = 11
 		y = 1
@@ -109,23 +106,6 @@ focus_tree = {
 		completion_reward = {
 			add_timed_idea = { idea = nationalism days = 1095 }
 		}
-	}
-	
-	focus = {
-		id = SWI_fortifications
-		icon = GFX_goal_SWI_fortress
-		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
-		x = 30
-		y = 0
-		
-		completion_reward = {
-			army_experience = 5
-			add_ideas = SWI_fortifications_idea
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 	focus = {
 		id = SWI_trade
@@ -158,319 +138,50 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_army
-		icon = GFX_goal_SWI_reduit_national
-		cost = 10.00
-		ai_will_do = {
-			factor = 4
-			modifier = {
-				factor = 10
-				threat > 0.15
-			}
-		}
-		x = 36
-		y = 0
-		
-		completion_reward = {
-			army_experience = 10
-			add_doctrine_cost_reduction = {
-				name = SWI_army
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_choose_cons
-		icon = GFX_focus_generic_little_entente
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0.5
-				OR = {
-					has_government = fascism
-					has_government = communism
-				}
-			}
-			modifier = {
-				factor = 0.2
-				has_offensive_war = yes
-			}
-			modifier = {
-				factor = 10
-				NOT = {
-					has_government = fascism
-					has_government = communism
-				}
-				has_offensive_war = no
-				threat > 0.3
-			}
-		}
-		prerequisite = {
-			focus = SWI_update_army
-		}
-		prerequisite = {
-			focus = SWI_modern_arty
-		}
-		mutually_exclusive = {
-			focus = SWI_end_con
-		}
-		
-		available_if_capitulated = yes
-		
-		x = 37
-		y = 2
-		
-		completion_reward = {
-			custom_effect_tooltip = SWI_choose_cons_tt
-			swap_ideas = {
-				remove_idea = SWI_special_conscription_1
-				add_idea = SWI_special_conscription_2
-			}
-			hidden_effect = {
-				add_to_variable = { var = SWI_manpower_pool value = 150000 }
-			}
-		}
-	}
-	focus = {
-		id = SWI_reorganise_af
-		icon = GFX_goal_generic_build_airforce
-		cost = 10.00
-		ai_will_do = {
-			factor = 3
-		}
-		x = 51
-		y = 0
-		
-		completion_reward = {
-			air_experience = 15
-			add_doctrine_cost_reduction = {
-				name = SWI_reorganise_af
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_naval_doc
-		icon = GFX_goal_generic_navy_doctrines_tactics
-		cost = 5.00
-		ai_will_do = {
-			factor = 10
-		}
-		
-		available = {
-			OR = {
-				has_completed_focus = SWI_convoys
-				any_state = {
-					is_controlled_by = ROOT
-					is_coastal = yes
-				}
-			}
-		}
-		
-		
-		x = 48
-		y = 0
-		
-		completion_reward = {
-			navy_experience = 10
-			add_doctrine_cost_reduction = {
-				name = SWI_naval_doc
-				cost_reduction = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_build_docks
-		icon = GFX_goal_generic_construct_naval_dockyard
-		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
-		
-		available = {
-			any_state = {
-				is_owned_and_controlled_by = ROOT
-				is_coastal = yes
-			}
-		}
-		
-		x = 46
-		y = 0
-		
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 2
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = dockyard
-										size > 2
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_go_left
-		icon = GFX_focus_generic_socialist_action
-		cost = 10.00
-		ai_will_do = {
-			factor = 4
-		}
-		prerequisite = {
-			focus = SWI_richtlinienbewegung
-		}
-		mutually_exclusive = {
-			focus = SWI_compromise
-		}
-		
-		available = {
-			communism > 0.1
-		}		
-		
-		x = 1
-		y = 2
-		
-		completion_reward = {
-			add_timed_idea = { idea = internationalism days = 1095 }
-		}
-	}
-	focus = {
-		id = SWI_radical_left
-		icon = GFX_focus_GRE_red_economy
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
-		prerequisite = {
-			focus = SWI_go_left
-		}
-		
-		available = {
-			communism > 0.25
-		}
-		
-		x = 1
-		y = 3
-		
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = internationalism
-				add_idea = SWI_socialization
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL }
-	}
-	focus = {
-		id = SWI_end_neutral_left
-		icon = GFX_focus_generic_join_comintern
-		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
-		prerequisite = {
-			focus = SWI_radical_left
-		}
-		
-		available = {
-			OR = {
-				has_government = communism
-				communism > 0.5
-			}
-		}
-		
-		x = 1
-		y = 4
-		
-		completion_reward = {
-			if = {
-				limit = { has_country_flag = SWI_one_leader_communism }
-				set_politics = {
-					ruling_party = communism
-					elections_allowed = no
-				}
-			}
-			else = {
-				set_politics = {
-					ruling_party = communism
-					elections_allowed = yes
-				}
-			}
-					
-			remove_ideas = SWI_swiss_neutral
-			set_rule = { can_create_factions = yes }
-			every_other_country = {
-				limit = {
-					NOT = { has_war_with = ROOT }
-					has_government = communism
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = SWI_chose_communism
-				}
-			}
-			add_war_support = 0.1
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
-	}
-	focus = {
-		id = SWI_compromise
-		icon = GFX_BEL_union_agreement
+		id = SWI_work_whith_the_workers
+		icon = GFX_focus_generic_workers_and_farmers_rise
 		cost = 10.00
 		ai_will_do = {
 			factor = 8
 		}
 		
 		prerequisite = {
-			focus = SWI_richtlinienbewegung
+			focus = SWI_turn_to_the_workers
 		}
-		mutually_exclusive = {
-			focus = SWI_go_left
-		}
-		
-		x = 3
+		x = -6
 		y = 2
 		
 		completion_reward = {
-			add_ideas = SWI_compromises
+			add_ideas = SWI_socialization
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_pro_allies
-		icon = GFX_goal_generic_military_sphere
+		id = SWI_end_netrality
+		icon = GFX_focus_SOV_stalins_cult_of_personality
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		relative_position_id = SWI_moblize_the_masses
+		prerequisite = {
+			focus = SWI_moblize_the_masses
+		}	
+		x = 0
+		y = 1
+		
+		completion_reward = {
+			remove_ideas = SWI_swiss_neutral
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_communist_in_power
+		icon = GFX_focus_generic_soviet_politics
 		cost = 10.00
 		ai_will_do = {
 			factor = 5
@@ -480,15 +191,347 @@ focus_tree = {
 			}
 		}
 		prerequisite = {
-			focus = SWI_compromise
+			focus = SWI_work_whith_the_workers
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_work_whith_the_workers
+		available = {
+			communism > 0.50
+		}
+		completion_reward = {
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_follow_troksties_ideas
+		icon = GFX_focus_SOV_the_path_of_marxism_leninism
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		mutually_exclusive = { 
+			focus = SWI_go_whith_russia
+		}
+		prerequisite = {
+			focus = SWI_communist_in_power
+		}	
+		x = 3
+		y = 2
+		relative_position_id = SWI_communist_in_power
+		completion_reward = {
+			add_ideas = SWI_western_monopolies
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_follow_stalins_ideas
+		icon = GFX_focus_fra_loyalty_stalin
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
 		}
 		mutually_exclusive = {
-			focus = SWI_continue_neutral
-		}		
+			focus = SWI_follow_troksties_ideas
+		}
+		prerequisite = {
+			focus = SWI_communist_in_power
+		}	
+		x =-3
+		y = 2
+		relative_position_id = SWI_communist_in_power
+		completion_reward = {
+			add_ideas = SOV_under_the_bear
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_moblize_the_masses
+		icon = GFX_focus_generic_limited_social_mobilization
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_fascism_capitlist_pigs
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_fascism_capitlist_pigs
+		completion_reward = {
+			add_ideas = SWI_mobilize_1
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_meat_shields
+		icon = GFX_focus_SOV_mobilization_plan
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_increase_war_readyness
+		}
+		x = 0
+		y = 1
+		relative_position_id = SWI_increase_war_readyness
+		completion_reward = {
+			add_ideas = SWI_meat_shields
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_strenthen_the_central_goverment
+		icon = GFX_focus_NORDIC_com_capstone_research
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_follow_stalins_ideas
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_follow_stalins_ideas
+		completion_reward = {
+			add_political_power = 200
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_keep_berne_stabile
+		icon = GFX_goal_generic_defence
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_strenthen_the_central_goverment
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_strenthen_the_central_goverment
+		completion_reward = {
+			add_stability = 0.20
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_increase_war_readyness
+		icon = GFX_goal_generic_major_war
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_keep_berne_stabile
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_keep_berne_stabile
+		completion_reward = {
+			add_war_support = 0.20
+			add_research_slot = 1
+			add_political_power = 100
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_factories_as_wepons
+		icon = GFX_focus_SWE_let_fly_all_guns
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_incoprate_trotskyism
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_incoprate_trotskyism
+		completion_reward = {
+			add_ideas = SWI_moblize_factories
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_gun_go_boom
+		icon = GFX_focus_generic_railway_gun
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_factories_as_wepons
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_factories_as_wepons
+		completion_reward = {
+			add_tech_bonus = {
+				name = skibdi
+				bonus = 1
+				uses = 2
+				category = artillery
+			}
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_unite_the_cantons
+		icon = GFX_goal_generic_national_unity
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_follow_troksties_ideas
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_follow_troksties_ideas
+		completion_reward = {
+			add_political_power = 150
+			add_stability = 0.1
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_incoprate_trotskyism
+		icon = GFX_focus_fra_loyalty_trotzky
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_unite_the_cantons
+		}	
+		x = 0
+		y = 1
+		relative_position_id = SWI_unite_the_cantons
+		completion_reward = {
+		add_ideas = SWI_trotskyism
+		}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_fascism_capitlist_pigs
+		icon = GFX_focus_ARG_anti_american_propaganda
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 2
+				has_government = democratic
+			}
+		}
+		prerequisite = {
+			focus = SWI_unite_the_cantons
+			focus = SWI_strenthen_the_central_goverment
+		}	
 		x = 3
-		y = 4
+		y = 1
+		relative_position_id = SWI_unite_the_cantons
+		relative_position_id = SWI_strenthen_the_central_goverment
+			completion_reward = {
+				if = {
+					limit = { GER = {has_government = fascism} }
+					add_ideas = SWI_pig
+				}
+				if = {
+					limit = { ITA = {has_government = fascism} }
+					add_ideas = SWI_pig2
+				}
+				if = {
+					limit = { FRA = {has_government = fascism} }
+					add_ideas = SWI_pig3
+				}
+			}
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+	}
+	focus = {
+		id = SWI_pro_company
+		icon = GFX_focus_BRA_pro_business_taxes
+		cost = 10.00
+		ai_will_do = {
+			factor = 8
+		}
+		prerequisite = {
+			focus = SWI_support_the_west
+		}
+		x = 3
+		y = 2
 		
 		completion_reward = {
+			add_ideas = SWI_business_incentives
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	focus = {
+		id = SWI_end_the_status_quo
+		icon = GFX_goal_generic_neutrality_focus
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+		}
+		prerequisite = {
+			focus = SWI_preparing_the_economy
+		}
+		relative_position_id = SWI_preparing_the_economy
+		x = 0
+		y = 1
+		
+		completion_reward = {
+			add_political_power = 200
 			remove_ideas = SWI_swiss_neutral
 			every_other_country = {
 				limit = {
@@ -502,503 +545,151 @@ focus_tree = {
 			}
 			add_war_support = 0.15
 		}
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
-	}
-	focus = {
-		id = SWI_support_friends
-		icon = GFX_focus_generic_anti_fascist_diplomacy
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0
-				any_other_country = {
-					is_in_faction_with = ROOT
-					has_government = fascism
-				}
-			}
-		}
-		prerequisite = {
-			focus = SWI_end_neutral_left
-			focus = SWI_pro_allies
-		}
-		
-		available = {
-			NOT = { has_government = fascism }
-		}
-		
-		x = 2
-		y = 5
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_anti_communism_idea }
-				swap_ideas = {
-					remove_idea = SWI_anti_communism_idea
-					add_idea = SWI_anti_tot
-				}
-			}
-			else_if = {
-				limit = { 
-					NOT = { has_idea = SWI_anti_communism_idea }
-					NOT = { has_idea = SWI_anti_tot }
-				}
-				add_ideas = SWI_anti_fascism_idea
-			}
-			every_other_country = {
-				limit = {
-					has_government = fascism
-					NOT = { is_in_faction_with = ROOT }
-				}
-				send_embargo = ROOT
-				custom_effect_tooltip = embargo_relation_tt
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL }
-	}
-	focus = {
-		id = SWI_anti_communism
-		icon = GFX_goal_soviet_threat
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0
-				any_other_country = {
-					is_in_faction_with = ROOT
-					has_government = communism
-				}
-			}
-		}
-		
-		prerequisite = {
-			focus = SWI_pro_allies
-		}
-		
-		available = {
-			NOT = { has_government = communism }
-		}
-		
-		x = 4
-		y = 5
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_anti_fascism_idea }
-				swap_ideas = {
-					remove_idea = SWI_anti_fascism_idea
-					add_idea = SWI_anti_tot
-				}
-			}
-			else_if = {
-				limit = { 
-					NOT = { has_idea = SWI_anti_fascism_idea }
-					NOT = { has_idea = SWI_anti_tot }
-				}
-				add_ideas = SWI_anti_communism_idea
-			}
-			every_other_country = {
-				limit = {
-					has_government = communism
-					NOT = { is_in_faction_with = ROOT }
-				}
-				send_embargo = ROOT
-				custom_effect_tooltip = embargo_relation_tt
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_POLITICAL }
-	}
-	focus = {
-		id = SWI_intervention_in_liechtenstein_r56
-		text = SWI_intervention_in_liechtenstein
-		icon = GFX_goal_SWI_intervention_in_liechtenstein
-		prerequisite = { focus = SWI_support_friends focus = SWI_anti_communism }
-		relative_position_id = SWI_support_friends
-		x = 1
-		y = 1
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-		allow_branch = {
-			LIE = {
-				num_occupied_states < 2
-			}
-		}
-		available = {
-			owns_state = 151
-			country_exists = LIE
-			is_neighbor_of = LIE
-			NOT = {
-				is_in_faction_with = LIE
-				has_non_aggression_pact_with = LIE
-			}
-			LIE = {
-				custom_trigger_tooltip = {
-					tooltip = lie_popularities_tt
-					set_temp_variable = {
-						lie_pop_calc = party_popularity@fascism
-					}
-					add_to_temp_variable = {
-						lie_pop_calc = party_popularity@communism
-					}
-					check_variable = {
-						lie_pop_calc > 0.4
-					}
-				}
-			}
-		}
-		search_filters = {FOCUS_FILTER_ANNEXATION}
-
-		completion_reward = {
-			unlock_decision_category_tooltip = SWI_border_war_liechtenstein_category
-							
-		}
-	}
-	focus = {
-		id = SWI_pro_company
-		icon = GFX_focus_generic_industry_2
-		cost = 10.00
-		ai_will_do = {
-			factor = 8
-		}
-		prerequisite = {
-			focus = SWI_burger
-		}
-		x = 7
-		y = 2
-		
-		completion_reward = {
-			add_ideas = SWI_business_incentives
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_helvetia
-		icon = GFX_focus_SWI_establish_pro_helvetia
-		cost = 10.00
-		ai_will_do = {
-			factor = 20
-		}
-		prerequisite = {
-			focus = SWI_compromise
-			focus = SWI_pro_company
-		}
-		
-		available = {
-			OR = {
-				democratic > 0.6
-				neutrality > 0.6
-				threat > 0.5
-				has_war = yes
-			}
-		}
-		
-		available_if_capitulated = yes
-		
-		x = 5
-		y = 3
-		
-		completion_reward = {
-			set_rule = { can_create_factions = yes }
-			add_stability = 0.15
-			add_war_support = 0.15
-		}
-		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
-	}
-	focus = {
-		id = SWI_continue_neutral
-		icon = GFX_goal_generic_neutrality_focus
-		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
-		prerequisite = {
-			focus = SWI_compromise
-			focus = SWI_pro_company
-		}
-		mutually_exclusive = {
-			focus = SWI_pro_allies
-		}
-		
-		available = {
-			has_war = no
-		}
-		
-		x = 7
-		y = 4
-		
-		completion_reward = {
-			add_political_power = 200
-		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
 		id = SWI_foreign_trade
-		icon = GFX_goal_generic_positive_trade_relations
+		icon = GFX_goal_generic_trade
 		cost = 10.00
 		ai_will_do = {
 			factor = 1
 		}
 		prerequisite = {
-			focus = SWI_continue_neutral
+			focus = SWI_support_the_west
 		}
-		x = 7
-		y = 5
+		relative_position_id = SWI_support_the_west
+		x = 0
+		y = 1
 		
 		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_trading_idea }
-				swap_ideas = {
-					remove_idea = SWI_trading_idea
-					add_idea = SWI_best_trade
-				}
-			}
-			else_if = {
-				limit = { 
-					NOT = { has_idea = SWI_trading_idea }
-					NOT = { has_idea = SWI_best_trade }
-				}
-				add_ideas = SWI_good_trade
-			}
+			add_ideas = free_trade
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_kill_henne
-		icon = GFX_goal_generic_denazification
+		id = SWI_co_banking
+		icon = GFX_focus_ETH_the_state_bank_of_ethiopia
 		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
-		
-		dynamic = yes
-		
+		relative_position_id = SWI_support_the_west
 		prerequisite = {
-			focus = SWI_rise_of_front
+			focus = SWI_support_the_west
 		}
-		mutually_exclusive = {
-			focus = SWI_corporatism
-		}
-		
-		x = 10
-		y = 2
+		x = 2
+		y = 1
 		
 		completion_reward = {
-			add_popularity = { ideology = fascism popularity = 0.05 }
-			if = {
-				limit = { has_government = fascism }
-				kill_country_leader = yes
-				create_country_leader = {
-					name = "Tagsatzung"
-					picture = "portrait_SWI_federal_building.dds"
-					expire = "1965.1.1"
-					ideology = fascism_ideology
-					
-					traits = { great_council }
-				}
-				if = {
-					limit = { NOT = { has_country_flag = has_henne } }
-					set_party_name = { ideology = fascism long_name = "Nationale Front" name = "NF" }
-				}
-			}
-			else_if = {
-				limit = {  
-					NOT = { has_government = fascism }
-					NOT = { has_country_flag = has_henne }
-				}
-				custom_effect_tooltip = EYE_swiss.1.tt
-				create_country_leader = {
-					name = "Tagsatzung"
-					picture = "portrait_SWI_federal_building.dds"
-					expire = "1965.1.1"
-					ideology = fascism_ideology
-					
-					traits = { great_council }
-				}
-				set_party_name = { ideology = fascism long_name = "Nationale Front" name = "NF" }
-			}
-			else_if = {
-				limit = {  
-					NOT = { has_government = fascism }
-					has_country_flag = has_henne
-				}
-				custom_effect_tooltip = henne_dead_tt
-				create_country_leader = {
-					name = "Tagsatzung"
-					picture = "portrait_SWI_federal_building.dds"
-					expire = "1965.1.1"
-					ideology = fascism_ideology
-					
-					traits = { great_council }
-				}
-				hidden_effect = {
-					clr_country_flag = has_henne
-				}
-			}
+			add_ideas = SWI_co_banking
 		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_old_confederation
-		icon = GFX_focus_renounce_the_treaty_of_trianon
+		id = SWI_open_dipolmency
+		icon = GFX_focus_generic_diplomatic_treaty
 		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
+		relative_position_id = SWI_foreign_trade
 		prerequisite = {
-			focus = SWI_kill_henne
+			focus = SWI_support_the_west
 		}
-		
-		available = {
-			OR = {
-				has_government = fascism
-				fascism > 0.5
-			}
-		}
-		
-		x = 10
-		y = 3
+		x = -2
+		y = 0
 		
 		completion_reward = {
-			add_political_power = 150
-			set_rule = { can_create_factions = yes }
-			set_politics = {
-				ruling_party = fascism
-				elections_allowed = yes
-			}
-			set_cosmetic_tag = SWI_old_confederacy
-			if = {
-				limit = {
-					has_dlc = "La Resistance"
-				}
-				create_operative_leader = {
-					name = "Franz Riedweg"
-					GFX = GFX_portrait_SWI_franz_riedweg
-					traits = { operative_infiltrator  }
-					bypass_recruitment = no
-					available_to_spy_master = yes
-					nationalities = { ENG }
-				}
-
-			}			
+			add_political_power = 200
 		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_corporatism
-		icon = GFX_goal_italy_nationalize_the_banks
+		id = SWI_alied_spy_network
+		icon = GFX_goal_generic_positive_trade_relations
 		cost = 10.00
-		ai_will_do = {
-			factor = 9
-		}
+		relative_position_id = SWI_foreign_trade
 		prerequisite = {
-			focus = SWI_rise_of_front
+			focus = SWI_foreign_trade
+			focus = SWI_open_dipolmency
+			focus = SWI_co_banking
 		}
-		mutually_exclusive = {
-			focus = SWI_kill_henne
-		}
-		
-		x = 12
-		y = 2
+		x = 0
+		y = 1
 		
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = nationalism
-				add_idea = SWI_corporatism_idea
-			}
+			add_ideas = nkvd
 		}
-		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
-	}	
-	focus = {
-		id = SWI_one_man
-		icon = GFX_focus_SWI_helvetic_junta
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
-		prerequisite = {
-			focus = SWI_corporatism
-		}
-		
-		available = {
-			has_government = fascism
-		}
-		
-		x = 12
-		y = 3
-		
-		completion_reward = {
-			set_rule = { can_create_factions = yes }
-			add_political_power = 50
-			#set_cosmetic_tag = SWI_mori_union
-			if = {
-				limit = {
-					has_dlc = "La Resistance"
-				}
-				create_operative_leader = {
-					name = "Franz Riedweg"
-					GFX = GFX_portrait_SWI_franz_riedweg
-					traits = { operative_infiltrator  }
-					bypass_recruitment = no
-					available_to_spy_master = yes
-					nationalities = { ENG }
-				}
-
-			}			
-		}
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_irredentism
-		icon = GFX_focus_SWI_expand_the_federation
+		id = SWI_alied_milatary_training
+		icon = GFX_focus_usa_honor_the_confederacy
 		cost = 10.00
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-		}
+		relative_position_id = SWI_alied_spy_network
 		prerequisite = {
-			focus = SWI_old_confederation
-			focus = SWI_one_man
+			focus = SWI_alied_spy_network
 		}
-		
-		available = {
-			is_subject = no
-			has_government = fascism			
-		}
-		
-		x = 11
-		y = 4
+		x = 0
+		y = 1
 		
 		completion_reward = {
-			remove_ideas = SWI_swiss_neutral
-			add_state_core = 153
-			add_state_claim = 28
-			add_state_claim = 42
-			add_state_claim = 50
-			add_state_claim = 52
-			add_state_claim = 53
-			add_state_claim = 54
-			add_state_claim = 923
-			
-			if = {
-				limit = {
-					NOT = { owns_state = 153 }
-					153 = { CONTROLLER = { NOT = { has_war_with = ROOT } } }
-					153 = { OWNER = { NOT = { has_war_with = ROOT } } }
-				}
-				random_other_country = {
-					limit = { owns_state = 153 }
-					add_opinion_modifier = { target = ROOT modifier = SWI_claimed_our_land }
-					country_event = EYE_swiss.8
-				}
-			}
+			add_ideas = SWI_allied_mil
 		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_preparing_the_economy
+		icon = GFX_focus_SOV_merge_plants
+		cost = 10.00
+		relative_position_id = SWI_alied_milatary_training
+		prerequisite = {
+			focus = SWI_alied_milatary_training
+			focus = SWI_free_enterprise
+			focus = SWI_resource_pig
+		}
+		x = 0
+		y = 1
+		
+		completion_reward = {
+			add_ideas = war_economy
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_free_enterprise
+		icon = GFX_focus_POL_complete_april_constitution
+		cost = 10.00
+		relative_position_id = SWI_alied_spy_network
+		prerequisite = {
+			focus = SWI_alied_spy_network
+		}
+		x = -2
+		y = 1
+		
+		completion_reward = {
+			add_ideas = SWI_free_enterprise
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_resource_pig
+		icon = GFX_focus_generic_steel
+		cost = 10.00
+		relative_position_id = SWI_alied_spy_network
+		prerequisite = {
+			focus = SWI_alied_spy_network
+		}
+		x = 2
+		y = 1
+		
+		completion_reward = {
+			add_resource = {
+				type = steel
+				amount = 20
+				state = 847
+			}
+			add_resource = {
+				type = steel
+				amount = 20
+				state = 845
+				}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
 		id = SWI_banks
@@ -1448,7 +1139,7 @@ focus_tree = {
 			}
 			modifier = {
 				factor = 50
-				has_completed_focus = SWI_compromise
+				has_completed_focus = SWI_work_whith_the_workers
 			}
 		}
 		prerequisite = {
@@ -1771,654 +1462,6 @@ focus_tree = {
 			add_research_slot = 1
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_first_line
-		icon = GFX_goal_generic_fortification
-		cost = 10.00
-		ai_will_do = {
-			factor = 11
-		}
-		prerequisite = {
-			focus = SWI_fortifications
-		}
-		
-		available = {	
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		bypass = {
-			NOT = {
-				3 = {
-					any_province_building_level = {
-						province = {
-							all_provinces = yes
-							limit_to_border = yes
-						}
-						building = bunker
-						level < 3
-					}
-				}
-				151 = {
-					any_province_building_level = {
-						province = {
-							all_provinces = yes
-							limit_to_border = yes
-						}
-						building = bunker
-						level < 3
-					}
-				}
-			}
-		}
-		
-		x = 29
-		y = 1
-		
-		completion_reward = {
-			3 = {
-				set_building_level = {
-					type = bunker
-					level = 3
-					province = {
-						all_provinces = yes
-						limit_to_border = yes
-						level < 3
-					}
-				}
-			}
-			151 = {
-				set_building_level = {
-					type = bunker
-					level = 3
-					province = {
-						all_provinces = yes
-						limit_to_border = yes
-						level < 3
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = SWI_extended_army
-		icon = GFX_goal_generic_construct_military
-		cost = 10.00
-		ai_will_do = {
-			factor = 7
-		}
-		prerequisite = {
-			focus = SWI_first_line
-		}
-		
-		available = {	
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = 29
-		y = 2
-		
-		completion_reward = {
-			3 = {
-				set_building_level = {
-					type = bunker
-					level = 3
-					province = {
-						id = 11590
-						id = 9620
-						id = 11604
-						limit_to_border = no
-						level < 3
-					}
-				}
-			}
-			151 = {
-				set_building_level = {
-					type = bunker
-					level = 3
-					province = {
-						id = 11601
-						id = 661
-						limit_to_border = no
-						level < 3
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = SWI_redoubt
-		icon = GFX_focus_SWI_the_national_redoubt
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 10
-				threat > 0.5
-			}
-		}
-		prerequisite = {
-			focus = SWI_extended_army
-		}
-		
-		available = {	
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = 29
-		y = 3
-		
-		completion_reward = {
-			3 = {
-				set_building_level = {
-					type = bunker
-					level = 6
-					province = {
-						id = 11590
-						id = 3612
-						id = 9618
-						id = 9587
-						id = 636					
-						limit_to_border = no
-						level < 6
-					}
-				}
-			}
-			151 = {
-				set_building_level = {
-					type = bunker
-					level = 6
-					province = {
-						id = 11601
-						id = 661
-						limit_to_border = no
-						level < 6
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = SWI_three_layer
-		icon = GFX_goal_generic_construct_military
-		cost = 10.00
-		ai_will_do = {
-			factor = 3
-		}
-		prerequisite = {
-			focus = SWI_redoubt
-		}
-		mutually_exclusive = {
-			focus = SWI_fortress
-		}
-		
-		available = {	
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = 28
-		y = 4
-		
-		completion_reward = {
-			3 = {
-				add_building_construction = {
-					type = bunker
-					province = {
-						all_provinces = yes
-					}
-					level = 2
-					instant_build = yes
-				}
-			}
-			151 = {
-				add_building_construction = {
-					type = bunker
-					province = {
-						all_provinces = yes
-					}
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_fortress
-		icon = GFX_goal_generic_fortify_city
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
-		prerequisite = {
-			focus = SWI_redoubt
-		}
-		mutually_exclusive = {
-			focus = SWI_three_layer
-		}
-		
-		available = {	
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = 30
-		y = 4
-		
-		completion_reward = {
-			3 = {
-				set_building_level = {
-					type = bunker
-					level = 10
-					province = {
-						id = 11590
-						id = 3612
-						id = 9618
-						id = 9587
-						id = 636					
-						limit_to_border = no
-					}
-				}
-			}
-			151 = {
-				set_building_level = {
-					type = bunker
-					level = 10
-					province = {
-						id = 11601
-						id = 661
-						limit_to_border = no
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = SWI_planning
-		icon = GFX_goal_generic_intelligence_exchange
-		cost = 10.00
-		ai_will_do = {
-			factor = 9
-		}
-		prerequisite = {
-			focus = SWI_fortifications
-		}
-		
-		available = {
-			has_war = no
-			country_exists = FRA
-			country_exists = GER
-		}
-		
-		bypass = {
-			OR = {
-				has_war = yes
-				NOT = { country_exists = FRA }
-				NOT = {	country_exists = GER }
-			}
-		}
-		
-		x = 31
-		y = 1
-		
-		completion_reward = {
-			GER = { country_event = EYE_swiss.15 }
-			FRA = { country_event = EYE_swiss.15 }
-		}
-	}
-	focus = {
-		id = SWI_aa
-		icon = GFX_goal_fortify_city_AA
-		cost = 10.00
-		ai_will_do  = {
-			factor = 2
-			modifier = {
-				factor = 5
-				threat > 0.4
-			}
-		}
-		prerequisite = {
-			focus = SWI_planning
-		}
-		prerequisite = {
-			focus = SWI_first_line
-		}
-		
-		available = {
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = 31
-		y = 2
-		
-		completion_reward = {
-			3 = {
-				add_building_construction = {
-					type = anti_air_building
-					level = 3
-					instant_build = yes
-				}
-			}
-			151 = {
-				add_building_construction = {
-					type = anti_air_building
-					level = 3
-					instant_build = yes
-				}			
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_update_army
-		icon = GFX_focus_chi_army_reform
-		cost = 10.00
-		ai_will_do = {
-			factor = 6
-			modifier = {
-				factor = 10
-				threat > 0.2
-			}
-		}
-		prerequisite = {
-			focus = SWI_army
-		}
-		
-		available_if_capitulated = yes
-		
-		x = 35
-		y = 1
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = SWI_update_army
-				bonus = 1
-				uses = 1
-				category = infantry_weapons
-			}
-			add_doctrine_cost_reduction = {
-				name = SWI_update_army
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_modern_arty
-		icon = GFX_goal_generic_army_artillery2
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
-		prerequisite = {
-			focus = SWI_army
-		}
-		
-		available_if_capitulated = yes
-		
-		x = 37
-		y = 1
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = SWI_modern_arty
-				bonus = 1
-				uses = 2
-				category = artillery
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_heer
-		icon = GFX_goal_manpower
-		cost = 10.00
-		ai_will_do = {
-			factor = 11
-		}
-		prerequisite = {
-			focus = SWI_update_army
-			focus = SWI_modern_arty
-		}
-		prerequisite = {
-			focus = SWI_planning
-		}
-		
-		available = {
-			OR = {
-				has_war = yes
-				has_government = fascism
-				threat > 0.45
-			}
-		}
-		
-		
-		x = 32
-		y = 3
-		
-		completion_reward = {
-			add_ideas = SWI_heer_und_haus
-		}
-	}
-	focus = {
-		id = SWI_a_land_of_mountains
-		icon = GFX_goal_generic_mountain_warfare
-		prerequisite = {
-			focus = SWI_update_army
-			focus = SWI_modern_arty
-		}
-		prerequisite = {
-			focus = SWI_planning
-		}
-		x = -2
-		y = 1
-		relative_position_id = SWI_update_army
-		cost = 10
-		ai_will_do = {
-			base = 1
-		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = special_bonus
-				bonus = 1.0
-				uses = 2
-				category = mountaineers_tech
-			}
-			add_tech_bonus = {
-                name = special_forces_bonus
-                bonus = 1.0
-                uses = 1
-                category = r56_special_forces_training_tech 
-            }			
-			custom_effect_tooltip = GRE_mountain_training_effect
-			hidden_effect = { set_technology = { mountain_warfare = 1 } }
-		}
-	}
-	focus = {
-		id = SWI_mountain_artillery
-		icon = GFX_goal_generic_army_artillery
-		prerequisite = {
-			focus = SWI_a_land_of_mountains
-		}
-		x = 0
-		y = 2
-		relative_position_id = SWI_a_land_of_mountains
-		cost = 10
-		ai_will_do = {
-			base = 5
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = RAJ_revive_the_screw_guns_effect
-			hidden_effect = { set_technology = { mountain_gun = 1 } }
-		}
-	}	
-	focus = {
-		id = SWI_end_con
-		icon = GFX_goal_generic_army
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 10
-				has_government = fascism
-			}
-			modifier = {
-				factor = 5
-				has_government = communism
-			}
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-		}
-		prerequisite = {
-			focus = SWI_update_army
-		}
-		prerequisite = {
-			focus = SWI_modern_arty
-		}
-		mutually_exclusive = {
-			focus = SWI_choose_cons
-		}
-		
-		available = {
-			NOT = { has_government = neutrality }
-		}
-		
-		available_if_capitulated = yes
-		
-		x = 35
-		y = 2
-		
-		completion_reward = {
-			clr_country_flag = SWI_reliance_on_militia
-			swap_ideas = {
-				remove_idea = SWI_special_conscription
-				add_idea = volunteer_only
-			}
-			add_ideas = SWI_standing_army
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-	}
-	focus = {
-		id = SWI_con_to_army
-		icon = GFX_focus_generic_treaty
-		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 10
-				has_war = yes
-			}
-		}
-		prerequisite = {
-			focus = SWI_end_con
-		}
-		
-		available_if_capitulated = yes
-		
-		x = 35
-		y = 3
-		
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = SWI_standing_army
-				add_idea = SWI_standing_army_2
-			}
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-	}
-	focus = {
-		id = SWI_new_mil
-		icon = GFX_focus_generic_little_entente
-		cost = 10.00
-		ai_will_do = {
-			factor = 20
-		}
-		prerequisite = {
-			focus = SWI_con_to_army
-		}
-		x = 35
-		y = 4
-		
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = SWI_standing_army_2
-				add_idea = SWI_standing_army_3
-			}
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-	}
-	focus = {
-		id = SWI_improve_con
-		icon = GFX_focus_generic_military_academy
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 5
-				OR = {
-					has_war = yes
-					threat > 0.5
-				}
-			}
-		}
-		prerequisite = {
-			focus = SWI_choose_cons
-		}		
-		
-		available_if_capitulated = yes
-		
-		x = 37
-		y = 3
-		
-		completion_reward = {
-			custom_effect_tooltip = SWI_choose_cons_2_tt
-			swap_ideas = {
-				remove_idea = SWI_special_conscription_2
-				add_idea = SWI_special_conscription_3
-			}
-		}
-	}
-	focus = {
-		id = SWI_ready_for_all
-		icon = GFX_focus_SWI_patriotic_shooting_clubs
-		cost = 10.00
-		ai_will_do = {
-			factor = 15
-			modifier = {
-				factor = 2
-				threat > 0.99
-			}
-		}
-		prerequisite = {
-			focus = SWI_improve_con
-		}
-		
-		available = {
-			has_tech = interwar_antitank
-			has_tech = tech_signal_company
-		}
-		
-		x = 37
-		y = 4
-		
-		completion_reward = {
-			custom_effect_tooltip = SWI_choose_cons_3_tt
-			swap_ideas = {
-				remove_idea = SWI_special_conscription_3
-				add_idea = SWI_special_conscription_4
-			}
-		}
 	}
 	focus = {
 		id = SWI_renegotiate
@@ -2962,307 +2005,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_ALUMINIUM FOCUS_FILTER_STEEL}
 	}
 	focus = {
-		id = SWI_reform_flotilla
-		icon = GFX_goal_generic_admirality
-		cost = 10.00
-		ai_will_do = {
-			factor = 6
-		}
-		prerequisite = {
-			focus = SWI_build_docks
-		}
-		prerequisite = {
-			focus = SWI_naval_doc
-		}
-		
-		available = {
-			any_state = {
-				is_controlled_by = ROOT
-				is_coastal = yes
-			}
-		}	
-		
-		x = 47
-		y = 1
-		
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = SWI_reform_flotilla
-				cost_reduction = 0.5
-				uses = 2
-				category = naval_doctrine
-			}
-			add_tech_bonus = {
-				name = SWI_reform_flotilla
-				bonus = 3
-				uses = 1
-				category = naval_equipment
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_expand_docks
-		icon = GFX_goal_generic_construct_naval_dockyard
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_reform_flotilla
-		}
-		
-		available = {
-			any_state = {
-				is_controlled_by = ROOT
-				is_coastal = yes
-			}
-		}	
-		
-		x = 46
-		y = 2
-		
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 3
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = dockyard
-										size > 3
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = dockyard
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_naval_catchup
-		icon = GFX_goal_generic_build_navy
-		cost = 10.00
-		ai_will_do = {
-			factor = 2
-		}
-		prerequisite = {
-			focus = SWI_reform_flotilla
-		}
-		
-		available = {
-			any_state = {
-				is_controlled_by = ROOT
-				is_coastal = yes
-			}
-		}	
-		
-		x = 48
-		y = 2
-		
-		completion_reward = {
-			country_event = EYE_swiss.18
-		}
-	}
-	focus = {
-		id = SWI_fast_build_navy
-		icon = GFX_focus_generic_refit_civilian_ships
-		cost = 10.00
-		ai_will_do = {
-			factor = 4
-		}
-		prerequisite = {
-			focus = SWI_naval_catchup
-		}
-		
-		available = {
-			any_state = {
-				is_controlled_by = ROOT
-				is_coastal = yes
-			}
-		}	
-		
-		x = 47
-		y = 3
-		
-		completion_reward = {
-			add_ideas = SWI_naval_prod
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_foreign_air
-		icon = GFX_goal_polish_military_aviation_exports
-		cost = 5.00
-		ai_will_do = {
-			factor = 6
-		}
-		prerequisite = {
-			focus = SWI_reorganise_af
-		}
-		mutually_exclusive = {
-			focus = SWI_home_air
-		}
-		available = {
-			has_dlc = "Death or Dishonor"
-		}
-		x = 50
-		y = 1
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_home_air_prod }
-				swap_ideas = {
-					remove_idea = SWI_home_air_prod
-					add_idea = SWI_home_foreign_air_prod
-				}
-			}
-			if = {
-				limit = { has_idea = SWI_home_air_focus }
-				swap_ideas = {
-					remove_idea = SWI_home_air_focus
-					add_idea = SWI_home_foreign_air_prod_2
-				}
-			}
-			if = {
-				limit = {
-					NOT = { has_idea = SWI_home_air_prod }
-					NOT = { has_idea = SWI_home_air_focus }
-					NOT = { has_idea = SWI_home_foreign_air_prod }
-					NOT = { has_idea = SWI_home_foreign_air_prod_2 }
-				}
-				add_ideas = SWI_foreign_air_prod
-			}
-		}
-	}
-	focus = {
-		id = SWI_home_air
-		icon = GFX_goal_generic_air_production
-		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
-		prerequisite = {
-			focus = SWI_reorganise_af
-		}
-		mutually_exclusive = {
-			focus = SWI_foreign_air
-		}		
-		x = 52
-		y = 1
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_foreign_air_prod }
-				swap_ideas = {
-					remove_idea = SWI_foreign_air_prod
-					add_idea = SWI_home_foreign_air_prod
-				}
-			}
-			if = {
-				limit = { has_idea = SWI_foreign_air_focus }
-				swap_ideas = {
-					remove_idea = SWI_foreign_air_focus
-					add_idea = SWI_home_foreign_air_license
-				}
-			}
-			if = {
-				limit = {
-					NOT = { has_idea = SWI_foreign_air_prod }
-					NOT = { has_idea = SWI_foreign_air_focus }
-					NOT = { has_idea = SWI_home_foreign_air_prod }
-					NOT = { has_idea = SWI_home_foreign_air_license }
-				}
-				add_ideas = SWI_home_air_prod
-			}
-		}
-	}
-	focus = {
-		id = SWI_focus_foreign_air
-		icon = GFX_goal_flying_tiger_neutral
-		cost = 5.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_foreign_air
-		}
-		x = 50
-		y = 3
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_foreign_air_prod }
-				swap_ideas = {
-					remove_idea = SWI_foreign_air_prod
-					add_idea = SWI_foreign_air_focus
-				}
-				else = {
-					swap_ideas = {
-						remove_idea = SWI_home_foreign_air_prod
-						add_idea = SWI_home_foreign_air_license
-					}
-				}
-			}
-		}
-	}	
-	focus = {
-		id = SWI_fighter_focus
-		icon = GFX_goal_generic_air_fighter
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_foreign_air
-			focus = SWI_home_air
-		}
-		x = 51
-		y = 2
-		
-		completion_reward = {
-			if = {
-				limit = {
-					has_dlc = "By Blood Alone"
-				}
-				add_tech_bonus = {
-					name = SWI_fighter_focus
-					bonus = 1
-					uses = 2
-					category = light_air
-				}
-			}
-			else = {
-				add_tech_bonus = {
-					name = SWI_fighter_focus
-					bonus = 1
-					uses = 2
-					category = light_fighter
-				}
-			}
-			
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
 		id = SWI_wahlen
 		icon = GFX_goal_generic_construction2
 		cost = 10.00
@@ -3657,181 +2399,6 @@ focus_tree = {
 				uses = 2
 				ahead_reduction = -1
 				category = artillery
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_focus_home_air
-		icon = GFX_goal_generic_air_production
-		cost = 10.00
-		ai_will_do = {
-			factor = 4
-		}
-		prerequisite = {
-			focus = SWI_home_air
-		}
-		x = 52
-		y = 3
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_home_air_prod }
-				swap_ideas = {
-					remove_idea = SWI_home_air_prod
-					add_idea = SWI_home_air_focus
-				}
-				else = {
-					swap_ideas = {
-						remove_idea = SWI_home_foreign_air_prod
-						add_idea = SWI_home_foreign_air_prod_2
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = SWI_defend_homeskies
-		icon = GFX_goal_generic_air_doctrine
-		cost = 10.00
-		ai_will_do = {
-			factor = 4
-		}
-		prerequisite = {
-			focus = SWI_focus_foreign_air
-			focus = SWI_focus_home_air
-		}		
-		x = 52
-		y = 4
-		
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = SWI_defend_homeskies
-				cost_reduction = 0.5
-				uses = 2
-				category = air_doctrine
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_interceptors
-		icon = GFX_goal_generic_air_jet_new
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_defend_homeskies
-		}
-		prerequisite = {
-			focus = SWI_other_air
-		}
-		x = 51
-		y = 5
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = SWI_interceptors
-				bonus = 1
-				ahead_reduction = -1
-				uses = 2
-				category = jet_technology
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_other_air
-		icon = GFX_goal_generic_air_bomber
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_focus_foreign_air
-			focus = SWI_focus_home_air
-		}
-		x = 50
-		y = 4
-		
-		completion_reward = {
-			if = {
-				limit = {
-					has_dlc = "By Blood Alone"
-				}
-				add_tech_bonus = {
-					name = SWI_other_air
-					bonus = 1
-					uses = 2
-					category = light_air
-					category = medium_air
-					category = heavy_air
-				}
-			}
-			else = {
-				add_tech_bonus = {
-					name = SWI_other_air
-					bonus = 1
-					uses = 2
-					category = cas_bomber
-					category = medium_air
-					category = heavy_air
-				}
-			}
-
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_naval_air
-		icon = GFX_goal_generic_air_naval_bomber
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_naval_catchup
-		}
-		prerequisite = {
-			focus = SWI_other_air
-		}		
-		x = 48
-		y = 5
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = SWI_naval_air
-				bonus = 1
-				uses = 2
-				category = naval_air
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_secret_wunderwaffe
-		icon = GFX_focus_wonderweapons
-		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
-		prerequisite = {
-			focus = SWI_chemical
-		}
-		prerequisite = {
-			focus = SWI_mines
-		}
-		
-		x = 43
-		y = 7
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = SWI_secret_wunderwaffe
-				bonus = 1
-				uses = 2
-				category = nuclear
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
