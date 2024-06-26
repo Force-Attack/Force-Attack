@@ -10,7 +10,7 @@ focus_tree = {
 		}
 	}
 	
-	continuous_focus_position = { x = 2900 y = 1500 }
+	continuous_focus_position = { x = 100 y = 1500 }
 	default = no
 	reset_on_civilwar = no
 	
@@ -22,13 +22,11 @@ focus_tree = {
 		id = SWI_general_elections
 		icon = GFX_goal_SWI_pro_helvetia 
 		
-		x = 3
+		x = 4
 		y = 0
 		cost = 10
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			add_political_power = 150
@@ -41,32 +39,9 @@ focus_tree = {
 		icon = GFX_focus_por_workers_of_iberia
 		
 		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_support_the_west focus = SWI_Invite_royals_from_europe }
-		
-		x = -6
-		y = 1
-		cost = 10
-		
-		ai_will_do = {
-			factor = 6
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
+		mutually_exclusive = {
+			focus = SWI_right_wing_take_over focus = SWI_support_the_west focus = SWI_Invite_royals_from_europe
 		}
-		
-		completion_reward = {
-			add_popularity = { ideology = communism popularity = 0.2 }
-			add_ideas = communist_influence
-		}
-
-	}
-		focus = {
-		id = SWI_turn_to_the_workers
-		icon = GFX_focus_por_workers_of_iberia
-		
-		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_right_wing_take_over focus = SWI_support_the_west focus = SWI_Invite_royals_from_europe }
 		
 		x = -6
 		y = 1
@@ -91,15 +66,18 @@ focus_tree = {
 		icon = GFX_focus_SWI_swiss_guiding_principles
 		
 		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_right_wing_take_over focus = SWI_turn_to_the_workers focus = SWI_Invite_royals_from_europe }
 		
-		x = 3
+		relative_position_id = SWI_general_elections
+
+		mutually_exclusive = {
+			focus = SWI_turn_to_the_workers focus = SWI_right_wing_take_over focus = SWI_Invite_royals_from_europe
+		}
+
+		x = 4
 		y = 1
 		cost = 10
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			add_political_power = 120
@@ -112,15 +90,17 @@ focus_tree = {
 		icon = GFX_focus_ger_reichskommisariats
 		
 		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_turn_to_the_workers focus = SWI_Invite_royals_from_europe }
-		
-		x = -19
+		relative_position_id = SWI_general_elections
+
+		mutually_exclusive = {
+			focus = SWI_turn_to_the_workers focus = SWI_support_the_west focus = SWI_Invite_royals_from_europe
+		}
+
+		x = -4
 		y = 1
 		cost = 10
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			add_political_power = 100
@@ -138,9 +118,7 @@ focus_tree = {
 		y = 1
 		cost = 2
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			add_ideas = fascist_influence
@@ -157,9 +135,7 @@ focus_tree = {
 		y = 1
 		cost = 4
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			army_experience = 100
@@ -178,9 +154,7 @@ focus_tree = {
 		y = 1
 		cost = 4
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			add_popularity = { ideology = communism popularity = -1 }
@@ -202,8 +176,10 @@ focus_tree = {
 		y = 1
 		cost = 4
 		
-		ai_will_do = {
-			factor = 10
+
+		
+		available = {
+			fascism > 0.50
 		}
 		
 		completion_reward = {
@@ -223,9 +199,7 @@ focus_tree = {
 		y = 1
 		cost = 7
 		
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		completion_reward = {
 			3 =  {
@@ -246,80 +220,112 @@ focus_tree = {
 			}
 		}
 	}
-			focus = {
-				id = SWI_german_advisors
-				icon = GFX_focus_ger_oppose_hitler
-				relative_position_id = SWI_german_industrial_base
-				prerequisite = { focus = SWI_german_industrial_base }
-				mutually_exclusive = {
-					focus = SWI_forge_our_way
-				}
-				x = 2
-				y = 1
-				cost = 7
-				ai_will_do = {
-					factor = 10
-				}
-				completion_reward = {
-					add_ideas = german_advisors
+	focus = {
+		id = SWI_german_advisors
+		icon = GFX_focus_ger_oppose_hitler
+		relative_position_id = SWI_german_industrial_base
+		prerequisite = { focus = SWI_german_industrial_base }
+		mutually_exclusive = {
+			focus = SWI_forge_our_way
+		}
+		x = 1
+		y = 1
+		cost = 7
+
+		completion_reward = {
+			add_ideas = german_advisors
+		}
+	}
+	focus = {
+		id = SWI_anti_tank_devlopment
+		icon = GFX_goal_generic_army_artillery
+		relative_position_id = SWI_german_advisors
+		prerequisite = { focus = SWI_german_advisors }
+		x = 0
+		y = 1
+		cost = 7
+
+		completion_reward = {
+			add_ideas = SWI_anti_tank
+		}
+	}
+							
+		focus = {
+			id = SWI_forge_our_way
+			icon = GFX_focus_SWI_complete_siegfried_line
+			relative_position_id = SWI_german_industrial_base
+			prerequisite = { focus = SWI_german_industrial_base }
+			mutually_exclusive = {
+				focus = SWI_german_advisors
+			}
+			x = -1
+			y = 1
+			cost = 7
+			ai_will_do = {
+				factor = 10
+			}
+			completion_reward = {
+				add_ideas = SWI_our_way
+			}
+		}
+		focus = {
+			id = SWI_shield_of_forts
+			icon = GFX_goal_generic_military_sphere
+			relative_position_id = SWI_forge_our_way
+			prerequisite = { focus = SWI_forge_our_way }
+			x = 0
+			y = 1
+			cost = 7
+			ai_will_do = {
+				factor = 10
+			}
+			completion_reward = {
+				845 = {
+					add_dynamic_modifier = {
+						modifier = SWI_wall_of_shields
 					}
-					}
-					focus = {
-						id = SWI_anti_tank_devlopment
-						icon = GFX_goal_generic_army_artillery
-						relative_position_id = SWI_german_advisors
-						prerequisite = { focus = SWI_german_advisors }
-						x = 0
-						y = 1
-						cost = 7
-						ai_will_do = {
-							factor = 10
-						}
-						completion_reward = {
-							add_ideas = SWI_anti_tank
-							}
-							}
-			focus = {
-				id = SWI_forge_our_way
-				icon = GFX_focus_SWI_complete_siegfried_line
-				relative_position_id = SWI_german_industrial_base
-				prerequisite = { focus = SWI_german_industrial_base }
-				mutually_exclusive = {
-					focus = SWI_german_advisors
 				}
-				x = 0
-				y = 1
-				cost = 7
-				ai_will_do = {
-					factor = 10
+				3 = {
+					add_dynamic_modifier = {
+						modifier = SWI_wall_of_shields
+					}
 				}
-				completion_reward = {
-					add_ideas = SWI_our_way
+				151 = {
+					add_dynamic_modifier = {
+						modifier = SWI_wall_of_shields
 					}
+				}
+				846 = {
+					add_dynamic_modifier = {
+						modifier = SWI_wall_of_shields
 					}
-					focus = {
-						id = SWI_shield_of_forts
-						icon = GFX_goal_generic_military_sphere
-						relative_position_id = SWI_forge_our_way
-						prerequisite = { focus = SWI_forge_our_way }
-						x = 0
-						y = 1
-						cost = 7
-						ai_will_do = {
-							factor = 10
-						}
-						completion_reward = {
-							add_ideas = SWI_wall_of_shields
-							}
-							}
+				}
+				847 = {
+					add_dynamic_modifier = {
+						modifier = SWI_wall_of_shields
+					}
+				}
+				997 = {
+					add_dynamic_modifier = {
+						modifier = SWI_wall_of_shields
+					}
+				}
+
+			}
+		}
 	focus = {
 		id = SWI_Invite_royals_from_europe
 		icon = GFX_focus_generic_monarchy_2
 		
 		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_right_wing_take_over focus = SWI_turn_to_the_workers focus = SWI_support_the_west }
 		
-		x = 11
+		relative_position_id = SWI_general_elections
+
+		mutually_exclusive = {
+			focus = SWI_turn_to_the_workers focus = SWI_right_wing_take_over focus = SWI_support_the_west
+		}
+
+		x = 10
 		y = 1
 		cost = 10
 		
@@ -339,9 +345,7 @@ focus_tree = {
 		id = SWI_trade
 		icon = GFX_goal_generic_consumer_goods
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 42
 		y = 0
 		
@@ -354,9 +358,7 @@ focus_tree = {
 		id = SWI_seize_industries
 		icon = GFX_focus_generic_modernize_industry
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = -2
 		y = 1 
 		prerequisite = {
@@ -388,9 +390,7 @@ focus_tree = {
 		id = SWI_oust_the_cantons
 		icon = GFX_focus_ARG_strengthening_the_concordancia
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 1 
 		prerequisite = {
@@ -398,7 +398,7 @@ focus_tree = {
 		}
 		relative_position_id = SWI_Invite_royals_from_europe
 		completion_reward = {
-			add_popularity = { ideology = neutrality popularity = 0.20 }
+			add_popularity = { ideology = neutrality popularity = 0.10 }
 			add_popularity = { ideology = democratic popularity = -0.10 }
 
 		}
@@ -408,9 +408,7 @@ focus_tree = {
 		id = SWI_influence_the_military 
 		icon = GFX_focus_generic_women_in_military
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 2
 		y = 1
 		prerequisite = {
@@ -428,9 +426,7 @@ focus_tree = {
 		id = SWI_coup_the_goverment
 		icon = GFX_focus_SWI_guisans_coup
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 2
 		prerequisite = {
@@ -444,7 +440,7 @@ focus_tree = {
 		}
 		relative_position_id = SWI_Invite_royals_from_europe
 		available = {
-			neutrality > 0.40
+			neutrality > 0.50
 		}
 		completion_reward = {
 			set_politics = {
@@ -460,9 +456,7 @@ focus_tree = {
 		id = SWI_french_claiment
 		icon = GFX_focus_chi_reach_out_to_france
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = -2
 		y = 3
 		prerequisite = {
@@ -475,13 +469,17 @@ focus_tree = {
 		}
 		relative_position_id = SWI_Invite_royals_from_europe
 		completion_reward = { 
+			remove_country_leader_role = {
+				character = SWI_Blump
+				ideology = constitutional_monarchy
+			}
 			add_country_leader_role = {
 				character = SWI_charlotte
 				promote_leader = yes
 				country_leader = {
-					ideology = absolute_monarchism
+					ideology = constitutional_monarchy
 					expire = "1965.1.1.1"
-					traits = { first_lady backed_by_political_coalition }
+					traits = { first_lady }
 				}
 			}
 		}
@@ -493,9 +491,7 @@ focus_tree = {
 		id = SWI_italian_claiment
 		icon = GFX_focus_befriend_italy
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 2
 		y = 3
 		prerequisite = {
@@ -513,9 +509,9 @@ focus_tree = {
 				character = SWI_amedeo
 				promote_leader = yes
 				country_leader = {
-					ideology = absolute_monarchism
+					ideology = constitutional_monarchy
 					expire = "1965.1.1.1"
-					traits = {  the_lion_of_the_rif autocratic_imperialist }
+					traits = { autocratic_imperialist }
 				}
 			}
 		} 
@@ -526,9 +522,7 @@ focus_tree = {
 		id = SWI_german_claiment
 		icon = GFX_focus_chi_mission_to_germany
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 3
 		prerequisite = {
@@ -547,9 +541,9 @@ focus_tree = {
 				character = SWI_wolfgang
 				promote_leader = yes
 				country_leader = {
-					ideology = absolute_monarchism
+					ideology = constitutional_monarchy
 					expire = "1965.1.1.1"
-					traits = { economic_reformer  economist }
+					traits = { economic_reformer}
 				}
 			}
 		} 
@@ -585,9 +579,7 @@ focus_tree = {
 		id = SWI_french_excavation
 		icon = GFX_focus_generic_resource_extraction
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = -2
 		y = 5
 		prerequisite = {
@@ -604,9 +596,7 @@ focus_tree = {
 		id = SWI_import_german_workers
 		icon = GFX_focus_SWI_closer_ties_with_germany
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 4
 		prerequisite = {
@@ -624,9 +614,7 @@ focus_tree = {
 		id = SWI_increase_factory_hours
 		icon = GFX_focus_generic_public_works
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 5
 		prerequisite = {
@@ -644,9 +632,7 @@ focus_tree = {
 		id = SWI_royal_army
 		icon = GFX_focus_rom_royal_dictatorship
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 2
 		y = 4
 		prerequisite = {
@@ -662,9 +648,7 @@ focus_tree = {
 		id = SWI_military_society
 		icon = GFX_focus_ETH_ecole_militaire_haile_selassie_1er
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 2
 		y = 5
 		prerequisite = {
@@ -680,9 +664,7 @@ focus_tree = {
 		id = SWI_royal_guards
 		icon = GFX_focus_generic_little_entente
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 6
 		prerequisite = {
@@ -693,7 +675,7 @@ focus_tree = {
 		relative_position_id = SWI_Invite_royals_from_europe
 	
 		completion_reward = {
-		add_ideas = SWI_royal_guards
+			add_ideas = SWI_royal_guard
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
@@ -701,9 +683,7 @@ focus_tree = {
 		id = SWI_duchy_no_more
 		icon = GFX_focus_SWI_new_eidgenossenschaft
 		cost = 5.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 0
 		y = 7
 		prerequisite = {
@@ -719,9 +699,7 @@ focus_tree = {
 		id = SWI_international
 		icon = GFX_goal_generic_foreign_diplomacy
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		x = 25
 		y = 0
 		
@@ -734,15 +712,13 @@ focus_tree = {
 		id = SWI_work_whith_the_workers
 		icon = GFX_focus_generic_workers_and_farmers_rise
 		cost = 5
-		ai_will_do = {
-			factor = 8
-		}
-		
+
+		relative_position_id = SWI_turn_to_the_workers
 		prerequisite = {
 			focus = SWI_turn_to_the_workers
 		}
-		x = -6
-		y = 2
+		x = 0
+		y = 1
 		
 		completion_reward = {
 			add_ideas = SWI_socialization
@@ -753,13 +729,7 @@ focus_tree = {
 		id = SWI_end_netrality
 		icon = GFX_focus_SOV_stalins_cult_of_personality
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		relative_position_id = SWI_moblize_the_masses
 		prerequisite = {
 			focus = SWI_moblize_the_masses
@@ -776,13 +746,7 @@ focus_tree = {
 		id = SWI_communist_in_power
 		icon = GFX_focus_generic_soviet_politics
 		cost = 8
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_work_whith_the_workers
 		}	
@@ -804,13 +768,7 @@ focus_tree = {
 		id = SWI_follow_troksties_ideas
 		icon = GFX_focus_SOV_the_path_of_marxism_leninism
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		mutually_exclusive = { 
 			focus = SWI_go_whith_russia
 		}
@@ -829,13 +787,7 @@ focus_tree = {
 		id = SWI_follow_stalins_ideas
 		icon = GFX_focus_fra_loyalty_stalin
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		mutually_exclusive = {
 			focus = SWI_follow_troksties_ideas
 		}
@@ -854,13 +806,7 @@ focus_tree = {
 		id = SWI_moblize_the_masses
 		icon = GFX_focus_generic_limited_social_mobilization
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_fascism_capitlist_pigs
 		}	
@@ -876,13 +822,7 @@ focus_tree = {
 		id = SWI_meat_shields
 		icon = GFX_focus_SOV_mobilization_plan
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_increase_war_readyness
 		}
@@ -898,13 +838,7 @@ focus_tree = {
 		id = SWI_strenthen_the_central_goverment
 		icon = GFX_focus_NORDIC_com_capstone_research
 		cost = 4
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_follow_stalins_ideas
 		}	
@@ -920,13 +854,7 @@ focus_tree = {
 		id = SWI_keep_berne_stabile
 		icon = GFX_goal_generic_defence
 		cost = 4
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_strenthen_the_central_goverment
 		}	
@@ -942,13 +870,7 @@ focus_tree = {
 		id = SWI_increase_war_readyness
 		icon = GFX_goal_generic_major_war
 		cost = 8
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_keep_berne_stabile
 		}	
@@ -966,13 +888,7 @@ focus_tree = {
 		id = SWI_factories_as_wepons
 		icon = GFX_focus_SWE_let_fly_all_guns
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_incoprate_trotskyism
 		}	
@@ -988,13 +904,7 @@ focus_tree = {
 		id = SWI_gun_go_boom
 		icon = GFX_focus_generic_railway_gun
 		cost = 3
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_factories_as_wepons
 		}	
@@ -1015,13 +925,7 @@ focus_tree = {
 		id = SWI_unite_the_cantons
 		icon = GFX_goal_generic_national_unity
 		cost = 5
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_follow_troksties_ideas
 		}	
@@ -1038,13 +942,7 @@ focus_tree = {
 		id = SWI_incoprate_trotskyism
 		icon = GFX_focus_fra_loyalty_trotzky
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_unite_the_cantons
 		}	
@@ -1060,13 +958,7 @@ focus_tree = {
 		id = SWI_fascism_capitlist_pigs
 		icon = GFX_focus_ARG_anti_american_propaganda
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 2
-				has_government = democratic
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_unite_the_cantons
 			focus = SWI_strenthen_the_central_goverment
@@ -1095,14 +987,15 @@ focus_tree = {
 		id = SWI_pro_company
 		icon = GFX_focus_BRA_pro_business_taxes
 		cost = 10.00
-		ai_will_do = {
-			factor = 8
-		}
+
+
+		relative_position_id = SWI_support_the_west
 		prerequisite = {
 			focus = SWI_support_the_west
+			focus = SWI_right_wing_take_over
 		}
-		x = 3
-		y = 2
+		x = -4
+		y = 1
 		
 		completion_reward = {
 			add_ideas = SWI_business_incentives
@@ -1113,9 +1006,7 @@ focus_tree = {
 		id = SWI_end_the_status_quo
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		prerequisite = {
 			focus = SWI_preparing_the_economy
 		}
@@ -1144,9 +1035,7 @@ focus_tree = {
 		id = SWI_foreign_trade
 		icon = GFX_goal_generic_trade
 		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
+
 		prerequisite = {
 			focus = SWI_support_the_west
 		}
@@ -1283,9 +1172,7 @@ focus_tree = {
 		id = SWI_banks
 		icon = GFX_goal_generic_banking
 		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
+
 		
 		prerequisite = {
 			focus = SWI_international
@@ -1312,13 +1199,9 @@ focus_tree = {
 		id = SWI_go_ita
 		icon = GFX_focus_generic_italy_first
 		cost = 5.00
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 5
-				is_in_faction_with = ITA
-			}
-		}
+
+
+
 		prerequisite = {
 			focus = SWI_international
 		}
@@ -1348,16 +1231,12 @@ focus_tree = {
 		id = SWI_go_ger
 		icon = GFX_focus_chi_mission_to_germany
 		cost = 5.00
-		ai_will_do = {
-			factor = 2
-			modifier = {
-				factor = 5
-				is_in_faction_with = GER
-			}
-		}
+
 		prerequisite = {
 			focus = SWI_international
 		}
+
+		relative_position_id = SWI_international
 		
 		bypass = {
 			OR = {
@@ -1367,7 +1246,7 @@ focus_tree = {
 
 		}
 		
-		x = 25
+		x = 0
 		y = 1
 		
 		completion_reward = {
@@ -1418,9 +1297,7 @@ focus_tree = {
 		id = SWI_end_neutral
 		icon = GFX_focus_SWI_abandon_neutrality
 		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
+
 		prerequisite = {
 			focus = SWI_go_ita
 			focus = SWI_go_ger
@@ -1648,9 +1525,7 @@ focus_tree = {
 		id = SWI_join_germany
 		icon = GFX_focus_SWI_closer_ties_with_germany
 		cost = 5.00
-		ai_will_do = {
-			factor = 10
-		}
+
 		prerequisite = {
 			focus = SWI_fascist_diplo
 		}
@@ -1787,9 +1662,7 @@ focus_tree = {
 		id = SWI_join_allies
 		icon = GFX_goal_generic_major_alliance
 		cost = 5.00
-		ai_will_do = {
-			factor = 10
-		}
+
 		prerequisite = {
 			focus = SWI_democratic_diplo
 		}
@@ -1987,9 +1860,7 @@ focus_tree = {
 		id = SWI_stay_neutral
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
+
 		prerequisite = {
 			focus = SWI_saty_neutral
 		}
@@ -2037,9 +1908,7 @@ focus_tree = {
 		id = SWI_expand_uni
 		icon = GFX_goal_research_silver
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		prerequisite = {
 			focus = SWI_internal_focus
 		}
@@ -2324,9 +2193,7 @@ focus_tree = {
 		id = SWI_convoys
 		icon = GFX_goal_generic_occupy_states_coastal
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		prerequisite = {
 			focus = SWI_shadow
 		}
@@ -2474,9 +2341,7 @@ focus_tree = {
 		id = SWI_modern_at_weapons
 		icon = GFX_focus_generic_army_tanks2
 		cost = 10.00
-		ai_will_do = {
-			factor = 5
-		}
+		
 		prerequisite = {
 			focus = SWI_modern_mil_facs
 		}
@@ -2568,9 +2433,7 @@ focus_tree = {
 		id = SWI_mines
 		icon = GFX_goal_generic_construction2
 		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
+
 		prerequisite = {
 			focus = SWI_stop_export
 		}
@@ -2682,9 +2545,7 @@ focus_tree = {
 		id = SWI_chemical
 		icon = GFX_goal_generic_oil_refinery
 		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
+
 		prerequisite = {
 			focus = SWI_agri
 		}
@@ -2777,9 +2638,7 @@ focus_tree = {
 		id = SWI_bicycle_infantry
 		icon = GFX_goal_generic_army_elite
 		cost = 10.00
-		ai_will_do = {
-			factor = 1
-		}
+
 		prerequisite = {
 			focus = SWI_fuel_ration
 		}
@@ -2846,9 +2705,7 @@ focus_tree = {
 		id = SWI_sov_tech
 		icon = GFX_focus_generic_socialist_science
 		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
+
 		prerequisite = {
 			focus = SWI_join_cominterm
 		}
@@ -2871,9 +2728,7 @@ focus_tree = {
 		id = SWI_italian_tech
 		icon = GFX_focus_research
 		cost = 10.00
-		ai_will_do = {
-			factor = 10
-		}
+
 		prerequisite = {
 			focus = SWI_join_italy
 		}
