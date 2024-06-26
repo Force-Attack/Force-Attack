@@ -104,7 +104,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_timed_idea = { idea = nationalism days = 1095 }
+			add_ideas = SWI_strenthen_the_monarchists
 		}
 	}
 	focus = {
@@ -123,13 +123,402 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
+		id = SWI_seize_industries
+		icon = GFX_goal_generic_consumer_goods
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = -2
+		y = 1 
+		prerequisite = {
+			focus = SWI_Invite_royals_from_europe
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			3 =  {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			151 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_oust_the_cantons
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 1 
+		prerequisite = {
+			focus = SWI_Invite_royals_from_europe
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_popularity = { ideology = neutrality popularity = 0.20 }
+			add_popularity = { ideology = democratic popularity = -0.10 }
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_influence_the_military 
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 2
+		y = 1
+		prerequisite = {
+			focus = SWI_Invite_royals_from_europe
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			army_experience = 50
+			add_stability = -0.05
+			add_war_support = 0.10
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_coup_the_goverment
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 2
+		prerequisite = {
+			focus = SWI_oust_the_cantons
+		}
+		prerequisite = {
+			focus = SWI_seize_industries
+		}
+		prerequisite = {
+			focus = SWI_influence_the_military
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		available = {
+			neutrality > 0.40
+		}
+		completion_reward = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
+			add_popularity = { ideology = neutrality popularity = 0.20 }
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_french_claiment
+		icon = GFX_goal_generic_consumer_goods
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = -2
+		y = 3
+		prerequisite = {
+			focus = SWI_coup_the_goverment
+		}
+		mutually_exclusive = {
+			focus = SWI_italian_claiment
+			focus = SWI_german_claiment
+
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_country_leader_role = {
+                character = SWI_charlote
+                promote_leader = yes
+                country_leader = {
+                    ideology = absolute_monarchism
+                    expire = "1965.1.1"
+                    traits = {
+						backed_by_political_coalition
+						first_lady
+                    }
+                }
+            }
+		add_war_support = -0.1
+		add_stability = 0.1
+
+		} 
+		
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_italian_claiment
+		icon = GFX_goal_generic_consumer_goods
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 2
+		y = 3
+		prerequisite = {
+			focus = SWI_coup_the_goverment
+		
+		}
+		mutually_exclusive = {
+			focus = SWI_french_claiment
+			focus = SWI_german_claiment
+
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_country_leader_role = {
+                character = SWI_charlote
+                promote_leader = yes
+                country_leader = {
+                    ideology = absolute_monarchism
+                    expire = "1965.1.1"
+                    traits = {
+						backed_by_political_coalition
+						first_lady
+                    }
+                }
+            }
+			add_war_support = 0.1
+			add_stability = -0.1
+
+		} 
+		
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_german_claiment
+		icon = GFX_goal_generic_consumer_goods
+		cost = 10.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 3
+		prerequisite = {
+			focus = SWI_coup_the_goverment
+		}
+
+		mutually_exclusive = {
+			focus = SWI_italian_claiment
+			focus = SWI_french_claiment
+
+		}
+
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_country_leader_role = {
+                character = SWI_charlote
+                promote_leader = yes
+                country_leader = {
+                    ideology = absolute_monarchism
+                    expire = "1965.1.1"
+                    traits = {
+						backed_by_political_coalition
+						first_lady
+                    }
+                }
+            }
+
+		} 
+		
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_import_french_reasources
+		icon = GFX_focus_generic_steel
+		cost = 10.00
+		relative_position_id = SWI_Invite_royals_from_europe
+		prerequisite = {
+			focus = SWI_french_claiment
+		}
+		x = -2
+		y = 4
+		
+		completion_reward = {
+			add_resource = {
+				type = steel
+				amount = 20
+				state = 847
+			}
+			add_resource = {
+				type = steel
+				amount = 20
+				state = 845
+				}
+			add_resource = {
+				type = aluminium
+				amount = 20
+				state = 845
+				}				
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_french_excavation
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = -2
+		y = 5
+		prerequisite = {
+			focus = SWI_import_french_reasources
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_ideas = SWI_french_excavation
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_import_german_workers
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 4
+		prerequisite = {
+			focus = SWI_german_claiment
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_ideas = SWI_german_production_lines
+			add_manpower = 10000
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_increase_factory_hours
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 5
+		prerequisite = {
+			focus = SWI_import_german_workers
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_ideas = SWI_increased_work_hours
+			add_stability = -0.1
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_royal_army
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 2
+		y = 4
+		prerequisite = {
+			focus = SWI_italian_claiment
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_ideas = SWI_royal_army
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_military_society
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 2
+		y = 5
+		prerequisite = {
+			focus = SWI_royal_army
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+			add_ideas = FRA_militarist_society
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_royal_guards
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 6
+		prerequisite = {
+			focus = SWI_french_excavation
+		}
+		prerequisite = {
+			focus = SWI_increase_factory_hours
+		}
+		prerequisite = {
+			focus = SWI_military_society
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+	
+		completion_reward = {
+		add_ideas = SWI_royal_guards
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_duchy_no_more
+		icon = GFX_goal_generic_consumer_goods
+		cost = 5.00
+		ai_will_do = {
+			factor = 5
+		}
+		x = 0
+		y = 7
+		prerequisite = {
+			focus = SWI_royal_guards
+		}
+		relative_position_id = SWI_Invite_royals_from_europe
+		completion_reward = {
+
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
 		id = SWI_international
 		icon = GFX_goal_generic_foreign_diplomacy
 		cost = 10.00
 		ai_will_do = {
 			factor = 5
 		}
-		x = 20
+		x = 25
 		y = 0
 		
 		completion_reward = {
@@ -711,7 +1100,7 @@ focus_tree = {
 			}
 		}
 		
-		x = 16
+		x = 21
 		y = 1
 		
 		completion_reward = {
@@ -743,7 +1132,7 @@ focus_tree = {
 
 		}
 		
-		x = 18
+		x = 23
 		y = 1
 		
 		completion_reward = {
@@ -779,7 +1168,7 @@ focus_tree = {
 
 		}
 		
-		x = 20
+		x = 25
 		y = 1
 		
 		completion_reward = {
@@ -814,7 +1203,7 @@ focus_tree = {
 
 		}
 		
-		x = 22
+		x = 27
 		y = 1
 		
 		completion_reward = {
@@ -850,7 +1239,7 @@ focus_tree = {
 			}
 		}
 		
-		x = 17
+		x = 22
 		y = 2
 		
 		completion_reward = {
@@ -893,7 +1282,7 @@ focus_tree = {
 			}
 		}
 		
-		x = 14
+		x = 19
 		y = 3
 		
 		completion_reward = {
@@ -939,7 +1328,7 @@ focus_tree = {
 			has_war = no
 		}
 		
-		x = 23
+		x = 28
 		y = 2
 		
 		completion_reward = {
@@ -991,7 +1380,7 @@ focus_tree = {
 			}
 		}
 		
-		x = 18
+		x = 23
 		y = 3
 		
 		completion_reward = {
@@ -1048,7 +1437,7 @@ focus_tree = {
 			is_in_faction_with = ITA
 		}
 		
-		x = 17
+		x = 22
 		y = 4
 		
 		completion_reward = {
@@ -1081,7 +1470,7 @@ focus_tree = {
 			is_in_faction_with = GER
 		}			
 		
-		x = 19
+		x = 24
 		y = 4
 		
 		completion_reward = {
@@ -1106,7 +1495,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		x = 19
+		x = 24
 		y = 5
 		
 		completion_reward = {
@@ -1171,7 +1560,7 @@ focus_tree = {
 			}
 		}
 		
-		x = 22
+		x = 27
 		y = 3
 		
 		completion_reward = {
@@ -1224,7 +1613,7 @@ focus_tree = {
 			is_in_faction_with = FRA
 		}
 		
-		x = 22
+		x = 27
 		y = 4
 		
 		completion_reward = {
@@ -1255,7 +1644,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		x = 21
+		x = 26
 		y = 5
 		
 		completion_reward = {
@@ -1283,7 +1672,7 @@ focus_tree = {
 			}
 		}
 		
-		x = 23
+		x = 28
 		y = 5
 		
 		completion_reward = {
@@ -1385,7 +1774,7 @@ focus_tree = {
 			has_offensive_war = no
 		}
 		
-		x = 24
+		x = 29
 		y = 1
 		
 		completion_reward = {
@@ -1415,7 +1804,7 @@ focus_tree = {
 			has_idea = SWI_swiss_neutral
 		}
 		
-		x = 26
+		x = 31
 		y = 3
 		
 		completion_reward = {
@@ -1437,7 +1826,7 @@ focus_tree = {
 			focus = SWI_stay_neutral
 		}
 		
-		x = 26
+		x = 31
 		y = 4
 		
 		completion_reward = {
@@ -1455,7 +1844,7 @@ focus_tree = {
 		prerequisite = {
 			focus = SWI_internal_focus
 		}
-		x = 26
+		x = 31
 		y = 5
 		
 		completion_reward = {
@@ -2246,7 +2635,7 @@ focus_tree = {
 			is_in_faction_with = SOV
 		}
 		
-		x = 14
+		x = 19
 		y = 4
 		
 		completion_reward = {
@@ -2271,7 +2660,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		x = 13
+		x = 18
 		y = 5
 		
 		completion_reward = {
@@ -2296,7 +2685,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		x = 17
+		x = 22
 		y = 5
 		
 		completion_reward = {
@@ -2339,7 +2728,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		x = 18
+		x = 23
 		y = 6
 		
 		completion_reward = {
@@ -2382,7 +2771,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		x = 15
+		x = 20
 		y = 5
 		
 		completion_reward = {
