@@ -10,7 +10,7 @@ focus_tree = {
 		}
 	}
 	
-	continuous_focus_position = { x = 2900 y = 1000 }
+	continuous_focus_position = { x = 2900 y = 1500 }
 	default = no
 	reset_on_civilwar = no
 	
@@ -22,7 +22,7 @@ focus_tree = {
 		id = SWI_general_elections
 		icon = GFX_goal_SWI_pro_helvetia 
 		
-		x = 7
+		x = 3
 		y = 0
 		cost = 10
 		
@@ -61,13 +61,37 @@ focus_tree = {
 		}
 
 	}
-	
+		focus = {
+		id = SWI_turn_to_the_workers
+		icon = GFX_focus_por_workers_of_iberia
+		
+		prerequisite = { focus = SWI_general_elections }
+		mutually_exclusive = { focus = SWI_right_wing_take_over focus = SWI_support_the_west focus = SWI_Invite_royals_from_europe }
+		
+		x = -6
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 6
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		
+		completion_reward = {
+			add_popularity = { ideology = communism popularity = 0.2 }
+			add_ideas = communist_influence
+		}
+
+	}
 	focus = {
 		id = SWI_support_the_west
 		icon = GFX_focus_SWI_swiss_guiding_principles
 		
 		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_turn_to_the_workers focus = SWI_Invite_royals_from_europe }
+		mutually_exclusive = { focus = SWI_right_wing_take_over focus = SWI_turn_to_the_workers focus = SWI_Invite_royals_from_europe }
 		
 		x = 3
 		y = 1
@@ -83,13 +107,202 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
-	
+	focus = {
+		id = SWI_right_wing_take_over
+		icon = GFX_focus_ger_reichskommisariats
+		
+		prerequisite = { focus = SWI_general_elections }
+		mutually_exclusive = { focus = SWI_turn_to_the_workers focus = SWI_Invite_royals_from_europe }
+		
+		x = -19
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_political_power = 100
+			add_popularity = { ideology = fascism popularity = 0.20 }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_strenthen_the_german_minorities
+		icon = GFX_focus_generic_fascist_propaganda
+		relative_position_id = SWI_right_wing_take_over
+		prerequisite = { focus = SWI_right_wing_take_over }
+		
+		x = 0
+		y = 1
+		cost = 2
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_ideas = fascist_influence
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_milatary_propganda
+		icon = GFX_focus_generic_fascist_propaganda
+		relative_position_id = SWI_right_wing_take_over
+		prerequisite = { focus = SWI_right_wing_take_over }
+		
+		x = 2
+		y = 1
+		cost = 4
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			army_experience = 100
+			add_war_support = 0.20
+			add_popularity = { ideology = fascism popularity = 0.10 }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_get_red_of_political_enemys
+		icon = GFX_focus_attack_switzerland
+		relative_position_id = SWI_right_wing_take_over
+		prerequisite = { focus = SWI_right_wing_take_over }
+		
+		x = -2
+		y = 1
+		cost = 4
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_popularity = { ideology = communism popularity = -1 }
+			add_popularity = { ideology = democratic popularity = -1 }
+			add_popularity = { ideology = neutrality popularity = -1 }
+			add_stability = -0.10
+			add_popularity = { ideology = fascism popularity = 1 }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_march_on_bern
+		icon = GFX_focus_ARG_march_to_la_casa_rosada
+		relative_position_id = SWI_strenthen_the_german_minorities
+		prerequisite = { focus = SWI_strenthen_the_german_minorities }
+		prerequisite = { focus = SWI_milatary_propganda }
+		prerequisite = { focus = SWI_get_red_of_political_enemys }
+		x = 0
+		y = 1
+		cost = 4
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			set_politics = {
+				ruling_party = fascism
+			}
+			add_stability = 0.05
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = SWI_german_industrial_base
+		icon = GFX_goal_generic_construct_mil_factory
+		relative_position_id = SWI_march_on_bern
+		prerequisite = { focus = SWI_march_on_bern }
+		x = 0
+		y = 1
+		cost = 7
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			3 =  {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			151 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+			focus = {
+				id = SWI_german_advisors
+				icon = GFX_focus_ger_oppose_hitler
+				relative_position_id = SWI_german_industrial_base
+				prerequisite = { focus = SWI_german_industrial_base }
+				mutually_exclusive = {
+					focus = SWI_forge_our_way
+				}
+				x = 2
+				y = 1
+				cost = 7
+				ai_will_do = {
+					factor = 10
+				}
+				completion_reward = {
+					add_ideas = german_advisors
+					}
+					}
+					focus = {
+						id = SWI_anti_tank_devlopment
+						icon = GFX_focus_ger_oppose_hitler
+						relative_position_id = SWI_german_advisors
+						prerequisite = { focus = SWI_german_advisors }
+						x = 0
+						y = 1
+						cost = 7
+						ai_will_do = {
+							factor = 10
+						}
+						completion_reward = {
+							add_ideas = SWI_anti_tank
+							}
+							}
+			focus = {
+				id = SWI_forge_our_way
+				icon = GFX_focus_SWI_complete_siegfried_line
+				relative_position_id = SWI_german_industrial_base
+				prerequisite = { focus = SWI_german_industrial_base }
+				mutually_exclusive = {
+					focus = SWI_german_advisors
+				}
+				x = 0
+				y = 1
+				cost = 7
+				ai_will_do = {
+					factor = 10
+				}
+				completion_reward = {
+					add_ideas = SWI_our_way
+					}
+					}
 	focus = {
 		id = SWI_Invite_royals_from_europe
 		icon = GFX_focus_generic_monarchy_2
 		
 		prerequisite = { focus = SWI_general_elections }
-		mutually_exclusive = { focus = SWI_turn_to_the_workers focus = SWI_support_the_west }
+		mutually_exclusive = { focus = SWI_right_wing_take_over focus = SWI_turn_to_the_workers focus = SWI_support_the_west }
 		
 		x = 11
 		y = 1
@@ -124,7 +337,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_seize_industries
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_generic_modernize_industry
 		cost = 10.00
 		ai_will_do = {
 			factor = 5
@@ -158,7 +371,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_oust_the_cantons
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_ARG_strengthening_the_concordancia
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -178,7 +391,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_influence_the_military 
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_generic_women_in_military
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -198,7 +411,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_coup_the_goverment
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_SWI_guisans_coup
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -230,7 +443,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_french_claiment
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_chi_reach_out_to_france
 		cost = 10.00
 		ai_will_do = {
 			factor = 5
@@ -268,7 +481,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_italian_claiment
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_befriend_italy
 		cost = 10.00
 		ai_will_do = {
 			factor = 5
@@ -307,7 +520,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_german_claiment
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_chi_mission_to_germany
 		cost = 10.00
 		ai_will_do = {
 			factor = 5
@@ -357,12 +570,7 @@ focus_tree = {
 		completion_reward = {
 			add_resource = {
 				type = steel
-				amount = 20
-				state = 847
-			}
-			add_resource = {
-				type = steel
-				amount = 20
+				amount = 10
 				state = 845
 				}
 			add_resource = {
@@ -375,7 +583,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_french_excavation
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_generic_resource_extraction
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -394,7 +602,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_import_german_workers
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_SWI_closer_ties_with_germany
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -414,7 +622,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_increase_factory_hours
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_generic_public_works
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -434,7 +642,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_royal_army
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_rom_royal_dictatorship
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -452,7 +660,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_military_society
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_ETH_ecole_militaire_haile_selassie_1er
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -470,7 +678,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_royal_guards
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_generic_little_entente
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -479,11 +687,7 @@ focus_tree = {
 		y = 6
 		prerequisite = {
 			focus = SWI_french_excavation
-		}
-		prerequisite = {
 			focus = SWI_increase_factory_hours
-		}
-		prerequisite = {
 			focus = SWI_military_society
 		}
 		relative_position_id = SWI_Invite_royals_from_europe
@@ -495,7 +699,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_duchy_no_more
-		icon = GFX_goal_generic_consumer_goods
+		icon = GFX_focus_SWI_new_eidgenossenschaft
 		cost = 5.00
 		ai_will_do = {
 			factor = 5
@@ -1067,11 +1271,6 @@ focus_tree = {
 		y = 1
 		
 		completion_reward = {
-			add_resource = {
-				type = steel
-				amount = 20
-				state = 847
-			}
 			add_resource = {
 				type = steel
 				amount = 20
