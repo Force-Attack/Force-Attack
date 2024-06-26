@@ -289,11 +289,9 @@ focus_tree = {
 		prerequisite = {
 			focus = MON_communism_focus
 		}
-		mutually_exclusive = {
-			focus = MON_PRC_focus
-		}
+		relative_position_id = MON_communism_focus
 		x = 0
-		y = 2
+		y = 1
 			ai_will_do = {
 					factor = 3
 				}
@@ -324,8 +322,9 @@ focus_tree = {
 		prerequisite = {
 			focus = MON_SOV_focus
 		}
-		x = 0
-		y = 3
+		relative_position_id = MON_SOV_focus
+		x = -1
+		y = 1
 			ai_will_do = {
 					factor = 3
 				}
@@ -350,8 +349,9 @@ focus_tree = {
 		prerequisite = {
 			focus = MON_repressions
 		}
+		relative_position_id = MON_repressions
 		x = 0
-		y = 4
+		y = 1
 			cancel = {
 					custom_trigger_tooltip = {
 							tooltip = soviets_no_more_tt
@@ -369,12 +369,13 @@ focus_tree = {
 	focus = {
 		id = MON_export_revolution
 		icon = GFX_goal_generic_propaganda
-		cost = 10.00
+		cost = 5
 		prerequisite = {
 			focus = MON_soviet_aid
 		}
+		relative_position_id = MON_soviet_aid
 		x = 0
-		y = 5
+		y = 1
 			completion_reward = {
 					set_rule = {
 							can_send_volunteers = yes
@@ -398,74 +399,15 @@ focus_tree = {
 
 	}
 	focus = {
-		id = MON_PRC_focus
-		icon = GFX_focus_chi_cooperation_with_the_communists
-		cost = 10.00
-		prerequisite = {
-			focus = MON_communism_focus
-		}
-		mutually_exclusive = {
-			focus = MON_SOV_focus
-		}
-		x = 2
-		y = 2
-			completion_reward = {
-					hidden_effect = {
-							SOV = {
-									add_opinion_modifier = {
-											modifier = faction_traitor
-											target = ROOT
-											days = 365
-										}
-									add_opinion_modifier = {
-											modifier = faction_traitor_trade
-											target = ROOT
-											days = 365
-										}
-								}
-						}
-					SOV = {
-							remove_from_faction = MON
-						}
-					set_rule = {
-							can_create_factions = yes
-						}
-					PRC = {
-							country_event = {
-									id = MON.19
-									days = 3
-								}
-						}
-					add_tech_bonus = {
-							name = land_doc_bonus
-							bonus = 0.5
-							uses = 1
-							category = land_doctrine
-						}
-				}
-			available = {
-					OR = {
-							is_in_faction = no
-							is_in_faction_with = SOV
-						}
-					PRC = {
-							is_in_faction = no
-						}
-				}
-			bypass = {
-					is_in_faction_with = PRC
-				}
-
-	}
-	focus = {
 		id = MON_ulanhu_expedition
 		icon = GFX_goal_generic_military_sphere
 		cost = 10.00
 		prerequisite = {
-			focus = MON_PRC_focus
+			focus = MON_SOV_focus
 		}
-		x = 2
-		y = 3
+		relative_position_id = MON_SOV_focus
+		x = 1
+		y = 1
 			ai_will_do = {
 					factor = 3
 				}
@@ -649,9 +591,6 @@ focus_tree = {
 		prerequisite = {
 			focus = MON_SOV_break
 		}
-		mutually_exclusive = {
-			focus = KMT_ties
-		}
 		x = 4
 		y = 4
 			completion_reward = {
@@ -668,9 +607,6 @@ focus_tree = {
 		cost = 10.00
 		prerequisite = {
 			focus = MON_SOV_break
-		}
-		mutually_exclusive = {
-			focus = MON_sovereign_democracy
 		}
 		x = 6
 		y = 4
@@ -1381,6 +1317,86 @@ focus_tree = {
 
 	}
 	focus = {
+		id = MON_mining
+		icon = GFX_focus_generic_mining_industry
+		cost = 10.00
+		prerequisite = {
+			focus = MON_oil_effort2
+		}
+		relative_position_id = MON_oil_effort2
+		x = 0
+		y = 1
+			completion_reward = {
+				add_resource = {
+					type = tungsten
+					amount = 2
+					state = 820
+				}
+				add_resource = {
+					type = tungsten
+					amount = 2
+					state = 818
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+					state = 820
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+					state = 818
+				}
+
+				add_resource = {
+					type = aluminum
+					amount = 2
+					state = 819
+				}
+				add_resource = {
+					type = aluminum
+					amount = 2
+					state = 817
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+					state = 819
+				}
+				add_resource = {
+					type = steel
+					amount = 4
+					state = 817
+				}
+
+				}
+			available = {
+}
+	}
+
+	focus = {
+		id = MON_industrial_reform
+		icon = GFX_focus_generic_modernize_industry
+		cost = 10.00
+		prerequisite = {
+			focus = MON_mining
+		}
+		prerequisite = {
+			focus = MON_industry_effort2
+		}
+		relative_position_id = MON_mining
+		x = 0
+		y = 1
+			completion_reward = {
+
+
+				}
+			available = {
+}
+	}
+
+
+	focus = {
 		id = MON_electrification
 		icon = GFX_focus_DEN_limited_regulations
 		cost = 10.00
@@ -1530,7 +1546,7 @@ focus_tree = {
 	focus = {
 		id = MON_mil_industry
 		icon = GFX_goal_generic_construct_mil_factory
-		cost = 10.00
+		cost = 5
 		prerequisite = {
 			focus = MON_industry_effort2
 		}
@@ -1538,10 +1554,10 @@ focus_tree = {
 		y = 4
 			completion_reward = {
 					330 = {
-							add_extra_state_shared_building_slots = 3
+							add_extra_state_shared_building_slots = 2
 							add_building_construction = {
 									type = arms_factory
-									level = 3
+									level = 2
 									instant_build = yes
 								}
 						}
@@ -1561,7 +1577,7 @@ focus_tree = {
 		x = 24
 		y = 1
 			completion_reward = {
-					add_ideas = MON_cavalry
+					add_ideas = MON_cavalry_idea
 				}
 			available = {
 
