@@ -378,6 +378,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 100
+			add_ideas = SWI_planned_econommy
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
@@ -707,7 +708,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
-		id = SWI_duchy_no_more
+		id = SWI_unify_the_alps
 		icon = GFX_focus_SWI_new_eidgenossenschaft
 		cost = 5.00
 		
@@ -718,7 +719,25 @@ focus_tree = {
 		}
 		relative_position_id = SWI_Invite_royals_from_europe
 		completion_reward = {
+			add_state_core = 153
+			add_state_core = 848
+			add_state_core = 152
+			add_state_core = 4
+			add_state_core = 1054
+			add_state_core = 158
+			add_state_core = 159
+			add_state_core = 850
+			add_state_core = 39
+			add_state_core = 735
+			add_state_core = 32
+			add_state_core = 21
+			add_state_core = 851
+			add_state_core = 1012
 
+			add_war_support = .2
+			add_manpower = 20000	
+
+		
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
@@ -1948,8 +1967,102 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 	focus = {
-		id = SWI_renegotiate
-		icon = GFX_goal_generic_positive_trade_relations
+		id = SWI_absoulute_neutrality
+		icon = GFX_focus_SWI_complete_siegfried_line
+		cost = 10.00
+		
+		prerequisite = {
+			focus = SWI_expand_uni
+		}
+		x = 31
+		y = 6
+		
+		completion_reward = {
+			set_rule = { can_join_factions = no }
+			set_rule = { can_create_factions = no }
+			add_ideas = SWI_absoulute_neutrality
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SWI_trench_warfare
+		icon = GFX_focus_secret_rearmament
+		cost = 10.00
+		
+		prerequisite = {
+			focus = SWI_absoulute_neutrality
+		}
+		x = 29
+		y = 7
+		
+		completion_reward = {
+			add_ideas = SWI_no_step_back
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SWI_protect_the_nation 
+		icon = GFX_goal_panzerwaffe
+		cost = 10.00
+		
+		prerequisite = {
+			focus = SWI_absoulute_neutrality
+		}
+		x = 31
+		y = 7
+		
+		completion_reward = {
+			3 =  {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			151 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SWI_defend_the_skies
+		icon = GFX_goal_generic_build_airforce
+		cost = 10.00
+		
+		prerequisite = {
+			focus = SWI_absoulute_neutrality
+		}
+		x = 33
+		y = 7
+		
+		completion_reward = {
+			3 =  {
+				add_building_construction = {
+					type = anti_air_building
+					level = 3
+					instant_build = yes
+				}
+			}
+			151 = {
+				add_building_construction = {
+					type = anti_air_building
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SWI_expand_civilian_industries
+		icon = GFX_focus_generic_industry_3
 		cost = 5.00
 		ai_will_do = {
 			factor = 3
@@ -1961,19 +2074,21 @@ focus_tree = {
 		y = 1
 		
 		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_good_trade }
-				swap_ideas = {
-					remove_idea = SWI_good_trade
-					add_idea = SWI_best_trade
+			3 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
 				}
 			}
-			else_if = {
-				limit = { 
-					NOT = { has_idea = SWI_good_trade }
-					NOT = { has_idea = SWI_best_trade }
+			151 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
 				}
-				add_ideas = SWI_trading_idea
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION  FOCUS_FILTER_POLITICAL }
@@ -2017,6 +2132,7 @@ focus_tree = {
 		
 		completion_reward = {
 			3 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = infrastructure
 					level = 1
@@ -2024,9 +2140,10 @@ focus_tree = {
 				}
 			}
 			151 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = infrastructure
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -2045,8 +2162,10 @@ focus_tree = {
 			}
 		}
 		prerequisite = {
-			focus = SWI_renegotiate
 			focus = SWI_railroads
+		}
+		prerequisite = {
+			focus = SWI_expand_civilian_industries
 		}
 		
 		available = {
@@ -2198,18 +2317,18 @@ focus_tree = {
 		
 		completion_reward = {
 			3 =  {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
 			151 = {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -2287,18 +2406,18 @@ focus_tree = {
 		
 		completion_reward = {
 			3 =  {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
 			151 = {
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -2594,10 +2713,10 @@ focus_tree = {
 		completion_reward = {
 			random_owned_controlled_state = {
 				prioritize = { 151 }
-			add_extra_state_shared_building_slots = 1
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = synthetic_refinery
-				level = 1
+				level = 2
 				instant_build = yes
 				}
 			}			
