@@ -3729,6 +3729,14 @@ focus_tree = {
 				}
 				
 			}
+			605 = {
+				add_building_construction = {
+					type = arms_factory
+					level = -2
+					instant_build = yes
+				}
+				
+			}
 		}
 	}
 
@@ -3850,12 +3858,186 @@ focus_tree = {
 	}
 
 	focus = {
+		id = CHI_coordinate_with_manufactuers_demo
+		icon = GFX_focus_generic_reorient_production
+		cost = 10
+		x = 3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_call_for_fair_elections }
+		relative_position_id = CHI_call_for_fair_elections
+		available = {
+			no_hyper_inflation = yes
+		}
+		completion_reward = {
+			every_military_industrial_organization = {
+				add_mio_funds = 1500
+			}
+			add_tech_bonus = {
+				name = cordnated_manufactures
+				bonus = 0.5
+				uses = 2
+				category = infantry_weapons
+			}
+			CHI_increase_inflation = yes
+		}
+	}
+	focus = {
+		id = CHI_offer_to_buy_ports
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+
+		relative_position_id = CHI_coordinate_with_manufactuers_demo
+		x = 0
+		y = 2
+
+		prerequisite = {
+			focus = CHI_coordinate_with_manufactuers_demo
+		}
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			has_government = democratic
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = kmt_demo_tp_gzw
+					728 = {
+						is_owned_by = FRA
+						FRA = {
+							has_civil_war = no
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = kmt_demo_tp_mc
+					729 = {
+						is_owned_by = POR
+						POR = {
+							has_civil_war = no
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = kmt_demo_tp_hk
+					326 = {
+						is_owned_by = ENG
+						ENG = {
+							has_civil_war = no
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+
+		bypass = {
+			728 = {
+				OR = {
+					NOT = {
+						is_owned_by = FRA
+					}
+					is_owned_by = ROOT
+					owner = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			729 = {
+				OR = {
+					NOT = {
+						is_owned_by = POR
+					}
+					is_owned_by = ROOT
+					owner = {
+						has_war_with = ROOT
+					}
+				}
+			}
+			326 = {
+				OR = {
+					NOT = {
+						is_owned_by = ENG
+					}
+					is_owned_by = ROOT
+					owner = {
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					OR = {
+						728 = {
+							is_owned_by = FRA
+						}
+						728 = {
+							is_owned_by = FRI
+						}
+					}
+				}
+				728 = {
+					owner = {
+						country_event = { id = kmt.109 }
+					}
+				}
+			}
+			if = {
+				limit = {
+					729 = {
+						is_owned_by = POR
+					}
+				}
+				729 = {
+					owner = {
+						country_event = { id = kmt.112 days = 1 }
+					}
+				}
+			}
+			if = {
+				limit = {
+					326 = {
+						is_owned_by = ENG
+					}
+				}
+				326 = {
+					owner = {
+						country_event = { id = kmt.115 days = 2 }
+					}
+				}
+			}
+		}
+	}
+	focus = {
 		id = CHI_rural_schooling
 		icon = GFX_goal_generic_scientific_exchange
-		prerequisite = { focus = CHI_free_hospitals }
-		x = 0
-		y = 3
-		relative_position_id = CHI_welfare
+		prerequisite = { focus = CHI_offer_to_buy_ports }
+		prerequisite = {
+			focus = CHI_land_tax_reform
+		}
+		x = -1
+		y = 1
+		relative_position_id = CHI_offer_to_buy_ports
 
 		cost = 10
 
@@ -3888,73 +4070,6 @@ focus_tree = {
 			CHI_hyper_inflation_level_up = yes
 			add_ideas = CHI_people_knowledge
 			CHI_decreace_illiteracy = yes
-		}
-	}
-	focus = {
-		id = CHI_coordinate_with_manufactuers_demo
-		icon = GFX_focus_generic_reorient_production
-		cost = 10
-		x = 3
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_call_for_fair_elections }
-		relative_position_id = CHI_call_for_fair_elections
-		available = {
-			no_hyper_inflation = yes
-		}
-		completion_reward = {
-			every_military_industrial_organization = {
-				add_mio_funds = 1500
-			}
-			add_tech_bonus = {
-				name = cordnated_manufactures
-				bonus = 0.5
-				uses = 2
-				category = infantry_weapons
-			}
-			CHI_increase_inflation = yes
-		}
-	}
-	focus = {
-		id = CHI_nationalize_military_factories
-		icon = GFX_goal_generic_war_factory
-		cost = 10
-		x = 0
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_coordinate_with_manufactuers_demo }
-		relative_position_id = CHI_coordinate_with_manufactuers_demo
-		available = {
-			no_hyper_inflation = yes
-		}
-		completion_reward = {
-			random_controlled_state = {
-				prioritize = {
-					613
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_controlled_state = {
-				prioritize = {
-					620
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			CHI_increase_inflation = yes
 		}
 	}
 	focus = {
@@ -4149,13 +4264,18 @@ focus_tree = {
 		icon = GFX_goal_chinese_sun
 
 		relative_position_id = CHI_rural_schooling
-		x = 0
+		x = -2
 		y = 1
 
 		prerequisite = {
 			focus = CHI_rural_schooling
 		}
-		
+		prerequisite = {
+			focus = CHI_free_hospitals
+		}
+		prerequisite = {
+			focus = CHI_civilian_spending
+		}
 
 		cost = 10
 
@@ -4191,93 +4311,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
 
-		}
-	}
-	focus = {
-		id = CHI_offer_to_buy_ports
-		icon = GFX_focus_renounce_the_treaty_of_trianon
-
-		relative_position_id = CHI_to_the_world_stage
-		x = -4
-		y = 1
-
-		prerequisite = {
-			focus = CHI_to_the_world_stage
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			MAN = {
-				exists = no
-			}
-			CHI = {
-				AND = {
-					controls_state = 328
-					controls_state = 944
-					controls_state = 745
-				}
-			}
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = CHI_western_investments
-		icon = GFX_goal_generic_intelligence_exchange
-
-		relative_position_id = CHI_to_the_world_stage
-		x = 4
-		y = 1
-
-		prerequisite = {
-			focus = CHI_to_the_world_stage
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			
 		}
 	}
 	focus = {
@@ -4317,7 +4350,9 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			set_rule = {
+				can_create_factions = yes
+			}
 		}
 	}
 	focus = {
@@ -4341,23 +4376,78 @@ focus_tree = {
 		}
 
 		available = {
+			has_government = democratic
+			USA = {
+				OR = {
+					is_faction_leader = yes
+					is_in_faction = no
+					is_in_faction_with = AST
+					is_in_faction_with = CAN
+				}
+				has_government = democratic
+			}
+			is_in_faction = no
+			is_subject = no
+			NOT = { has_war_with = USA }
 		}
 
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			set_rule = {
+				can_create_factions = yes
+			}
+			if = {
+				limit = {
+					USA = {
+						is_faction_leader = yes
+						has_government = democratic
+					}
+				}
+				USA = {
+					country_event = generic.2
+				}
+			}
+			else_if = {
+				limit = {
+					USA = {
+						has_government = democratic
+						is_faction_leader = no
+					}
+				}
+				create_faction = JAP_trans_pacific_faction
+				USA = {
+					country_event = generic.5
+				}
+			}
+			else_if = {
+				limit = {
+					USA = {
+						has_government = democratic
+						is_faction_leader = no
+					}
+					AST = {
+						has_government = democratic
+						is_faction_leader = yes
+					}
+				}
+				AST = {
+					country_event = generic.2
+				}
+			}
+			else_if = {
+				limit = {
+					USA = {
+						has_government = democratic
+						is_faction_leader = no
+					}
+					CAN = {
+						has_government = democratic
+						is_faction_leader = yes
+					}
+				}
+				CAN = {
+					country_event = generic.2
+				}
+			}						
 		}
 	}
 	focus = {
@@ -4376,6 +4466,44 @@ focus_tree = {
 
 		cost = 10
 
+		available = {
+			has_government = democratic
+			is_subject = no
+			JAP = {
+				has_government = democratic
+				is_faction_leader = yes
+			}
+			NOT = { has_war_with = JAP }
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					JAP = {
+						has_government = democratic
+						is_faction_leader = yes
+						has_capitulated = no
+					}
+				}
+				JAP = {
+					country_event = generic.2
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ALLIANCE FOCUS_FILTER_POLITICAL }
+	}
+	focus = {
+		id = CHI_begin_decentralization_of_the_beauracy
+		icon = GFX_goal_generic_major_diplo
+
+		relative_position_id = CHI_a_trans_pacific_alliance
+		x = 6
+		y = 1
+
+		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
+
+		cost = 10
+
 		ai_will_do = {
 			factor = 4
 		}
@@ -4398,22 +4526,28 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = CHI_decentralized_beauracy
 		}
 	}
 	focus = {
 		id = CHI_purge_the_communist_from_education
 		icon = GFX_goal_generic_army_purges
-		prerequisite = { focus = CHI_ally_japan }
+		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
 		relative_position_id = CHI_ally_japan
-		x = -2
+		x = -5
 		y = 1
 		cost = 10
 		available = {
 		}
 		
 		completion_reward = {
-			
+			set_popularities = {
+				democratic = 100
+			}
+			add_timed_idea = {
+				idea = CHI_education_purges
+				days = 180
+			}
 		}	
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -4428,44 +4562,8 @@ focus_tree = {
 		prerequisite = {
 			focus = CHI_purge_the_communist_from_education
 		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = CHI_introduce_50_hour_work_week
-		icon = GFX_focus_eng_concessions_to_the_trade_unions
-
-		relative_position_id = CHI_a_democracy_in_asia
-		x = -2
-		y = 1
-
 		prerequisite = {
-			focus = CHI_a_democracy_in_asia focus = CHI_ally_japan focus = CHI_a_trans_pacific_alliance
+			focus = CHI_begin_decentralization_of_the_beauracy
 		}
 
 		cost = 10
@@ -4475,7 +4573,9 @@ focus_tree = {
 		}
 
 		available = {
-			
+			not = {
+				has_idea = CHI_education_purges
+			}
 		}
 
 		bypass = {
@@ -4492,176 +4592,69 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = CHI_civilian_investment
-		icon = GFX_focus_generic_the_giant_wakes
-
-		relative_position_id = CHI_introduce_50_hour_work_week
-		x = 0
-		y = 1
-
-		prerequisite = {
-			focus = CHI_introduce_50_hour_work_week
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			random_core_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					is_owned_and_controlled_by = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-					}
+			add_research_slot = 1
+			add_stability = 0.03
+			swap_ideas = {
+				remove_idea = CHI_people_knowledge
+				add_idea = CHI_state_funded_higher_education
 			}
-			random_core_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					is_owned_and_controlled_by = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-					}
-			}
-			random_core_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					is_owned_and_controlled_by = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-					}
-			}
-			random_core_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					is_owned_and_controlled_by = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-					}
-			}
-			random_core_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					is_owned_and_controlled_by = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-					}
-			}
-		}
-	}
-	focus = {
-		id = CHI_begin_decentralization_of_the_beauracy
-		icon = GFX_goal_generic_major_diplo
-
-		relative_position_id = CHI_a_trans_pacific_alliance
-		x = 4
-		y = 1
-
-		prerequisite = {
-			focus = CHI_a_trans_pacific_alliance
-		}
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		search_filters = { FOCUS_FILTER_STABILITY }
-		completion_reward = {
-			
 		}
 	}
 	focus = {
 		id = CHI_expand_the_CIBS_demo
 		icon = GFX_goal_CAN_CAMP_X
 
-		relative_position_id = CHI_a_trans_pacific_alliance
-		x = 4
-		y = 2
+		relative_position_id = CHI_purge_the_communist_from_education
+		x = -2
+		y = 1
 
 		prerequisite = {
-			focus = CHI_a_trans_pacific_alliance
+			focus = CHI_purge_the_communist_from_education
+		}
+		prerequisite = {
+			focus = CHI_begin_decentralization_of_the_beauracy
+		}
+
+		cost = 8
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+
+		}
+
+		search_filters = { FOCUS_FILTER_STABILITY }
+		completion_reward = {
+			add_ideas = CHI_expand_the_CIBS_idea
+		}
+	}
+	focus = {
+		id = CHI_introduce_50_hour_work_week
+		icon = GFX_focus_eng_concessions_to_the_trade_unions
+
+		relative_position_id = CHI_begin_decentralization_of_the_beauracy
+		x = -1
+		y = 1
+
+		prerequisite = {
+			focus = CHI_purge_the_communist_from_education
+		}
+		prerequisite = {
+			focus = CHI_begin_decentralization_of_the_beauracy
 		}
 
 		cost = 10
@@ -4688,7 +4681,128 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
+			add_ideas = CHI_50_hour_work_week_idea
+		}
+	}
+	focus = {
+		id = CHI_civilian_investment
+		icon = GFX_focus_generic_the_giant_wakes
+
+		relative_position_id = CHI_begin_decentralization_of_the_beauracy
+		x = 1
+		y = 1
+
+		prerequisite = {
+			focus = CHI_purge_the_communist_from_education
+		}
+		prerequisite = {
+			focus = CHI_begin_decentralization_of_the_beauracy
+		}
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
 			
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+
+		}
+
+		search_filters = { FOCUS_FILTER_STABILITY }
+		completion_reward = {
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+					}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+					}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+					}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+					}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+					}
+			}
 		}
 	}
 	focus = {
@@ -4700,7 +4814,16 @@ focus_tree = {
 		y = 3
 
 		prerequisite = {
-			focus = CHI_expand_the_CIBS_demo focus = CHI_civilian_investment focus = CHI_expand_the_education_system
+			focus = CHI_expand_the_education_system
+		}
+		prerequisite = {
+			focus = CHI_introduce_50_hour_work_week
+		}
+		prerequisite = {
+			focus = CHI_expand_the_CIBS_demo
+		}
+		prerequisite = {
+			focus = CHI_civilian_investment
 		}
 
 		cost = 10
@@ -4727,7 +4850,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = chinese_democracy_economy
 		}
 	}
 	focus = {
@@ -4766,18 +4889,21 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = JAP_bastion_of_democracy
 		}
 	}
 	focus = {
 		id = CHI_introduce_shipbuilding_technology_usa
 		icon = GFX_goal_generic_construct_naval_dockyard
-		prerequisite = { focus = CHI_a_trans_pacific_alliance }
+		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
 		relative_position_id = CHI_a_trans_pacific_alliance
-		x = -2
+		x = 1
 		y = 1
-		cost = 10
+		cost = 3
 		available = {
+			NOT = {
+				has_completed_focus = CHI_introduce_shipbuilding_technology_jap
+			}
 			is_puppet = no
 			NOT = {
 				has_war_with = USA
@@ -4825,28 +4951,27 @@ focus_tree = {
 	focus = {
 		id = CHI_introduce_shipbuilding_technology_jap
 		icon = GFX_goal_generic_construct_naval_dockyard
-		prerequisite = { focus = CHI_ally_japan }
+		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
 		relative_position_id = CHI_ally_japan
-		x = 2
+		x = -1
 		y = 1
-		cost = 10
+		cost = 3
 		available = {
+			NOT = {
+				has_completed_focus = CHI_introduce_shipbuilding_technology_usa
+			}
 			is_puppet = no
 			NOT = {
-				has_war_with = USA
+				has_war_with = JAP
 			}
-			USA = {
-				has_government = democratic
+			JAP = { 
 				exists = yes
-				has_opinion = {
-					target = ROOT
-					value > 9
-				}
+				has_government = democratic
 			}
 		}
 		
 		completion_reward = {
-			USA = {
+			JAP = {
 				country_event = { id = kmt.224 }
 				custom_effect_tooltip = needs_approval
 			}
@@ -4859,19 +4984,54 @@ focus_tree = {
 					bonus = 1
 					category = naval_equipment
 				}
-				if = {
-					limit = {
-						USA = { has_idea = bureau_of_ships_focus }
-					}
-					add_ideas = bureau_of_ships_focus
-				}
-				if = {
-					limit = {
-						USA = { has_idea = liberty_ships_focus }
-					}
-					add_ideas = liberty_ships_focus
-				}
 			}
+			if = {
+				limit = {
+					JAP = { has_idea = the_long_lance }
+				}
+				add_ideas = the_long_lance
+			}
+		}	
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = CHI_qingdao_naval_academy_expansion
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = CHI_introduce_shipbuilding_technology_jap focus = CHI_introduce_shipbuilding_technology_usa }
+		relative_position_id = CHI_introduce_shipbuilding_technology_usa
+		mutually_exclusive = {
+			focus = CHI_establish_koahsiung_naval_academy
+		}
+		x = 0
+		y = 1
+		cost = 3
+		available = {
+			has_full_control_of_state = 743
+		}
+		
+		completion_reward = {
+			add_ideas = CHI_expanded_naval_academy
+		}	
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = CHI_establish_koahsiung_naval_academy
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = CHI_introduce_shipbuilding_technology_jap focus = CHI_introduce_shipbuilding_technology_usa }
+		relative_position_id = CHI_introduce_shipbuilding_technology_usa
+		mutually_exclusive = {
+			focus = CHI_qingdao_naval_academy_expansion
+		}
+		x = 2
+		y = 1
+		cost = 3
+		available = {
+			has_full_control_of_state = 524
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = CHI_taiwan_hold_idea_or_else_tt
+			add_ideas = CHI_taiwan_naval_buff_idea
 		}	
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -4885,7 +5045,7 @@ focus_tree = {
 		y = 0
 
 		cost = 10
-relative_position_id = CHI_unified_industrial_planning
+		relative_position_id = CHI_unified_industrial_planning
 		ai_will_do = {
 			factor = 4
 		}

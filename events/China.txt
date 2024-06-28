@@ -2,6 +2,8 @@
 
 add_namespace = lti
 
+add_namespace = kmt
+
 country_event = {
 	id = CHI.1
 	title = CHI.1.t
@@ -746,4 +748,552 @@ country_event = { #Sun Li Returns From German Training
 		custom_effect_tooltip = available_political_advisor
 		show_ideas_tooltip = chi_sun_li_jen_advisor
     }
+}
+
+#chi request navy industry assisst
+country_event = {
+	id = kmt.224
+	title = kmt.224.t
+	desc = kmt.224.d
+
+	is_triggered_only = yes
+
+	picture = GFX_report_event_usa_destroyers
+
+	option = {
+		name = kmt.224.a
+		ai_chance = { factor = 90 }
+		FROM = {
+			country_event = { id = kmt.225 }
+		}
+	}
+
+	option = {
+		name = kmt.224.b
+		ai_chance = { factor = 10 }
+		FROM = {
+			country_event = { id = kmt.226 }
+		}
+	}
+}
+
+#chi request navy industry assisst - yes
+country_event = {
+	id = kmt.225
+	title = kmt.225.t
+	desc = kmt.225.d
+
+	is_triggered_only = yes
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	immediate = {
+		hidden_effect = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = KMT_jap_navy_indus_assist
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = KMT_jap_navy_indus_assist
+			}
+			add_tech_bonus = {
+				name = dd_bonus
+				ahead_reduction = 1
+				uses = 1
+				bonus = 0.5
+				category = naval_equipment
+			}
+			if = {
+				limit = {
+					FROM = { tag = JAP }
+					JAP = { has_idea = the_long_lance }
+				}
+				add_ideas = the_long_lance
+			}
+			if = {
+				limit = {
+					FROM = { tag = USA }
+					USA = { has_idea = bureau_of_ships_focus }
+				}
+				add_ideas = bureau_of_ships_focus
+			}
+			if = {
+				limit = {
+					FROM = { tag = USA }
+					USA = { has_idea = liberty_ships_focus }
+				}
+				add_ideas = liberty_ships_focus
+			}
+		}
+	}
+
+	option = {
+		name = kmt.225.a
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					has_state_flag = KMT_jap_navy_indus_assist
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = dd_bonus
+				ahead_reduction = 1
+				uses = 1
+				bonus = 0.5
+				category = naval_equipment
+			}
+			if = {
+				limit = {
+					FROM = { tag = JAP }
+					JAP = { has_idea = the_long_lance }
+				}
+				add_ideas = the_long_lance
+			}
+			if = {
+				limit = {
+					FROM = { tag = USA }
+					USA = { has_idea = bureau_of_ships_focus }
+				}
+				add_ideas = bureau_of_ships_focus
+			}
+			if = {
+				limit = {
+					FROM = { tag = USA }
+					USA = { has_idea = liberty_ships_focus }
+				}
+				add_ideas = liberty_ships_focus
+			}
+		}
+	}
+}
+
+#chi request navy industry assisst - no
+country_event = {
+	id = kmt.226
+	title = kmt.226.t
+	desc = kmt.226.d
+
+	is_triggered_only = yes
+
+	picture = GFX_report_event_merchant_ship_01
+
+	option = {
+		name = kmt.226.a
+		add_opinion_modifier = {
+			target = FROM
+			modifier = selfish
+		}
+	}
+}
+#trade port demo - gzw
+country_event = {
+	id = kmt.109
+	title = kmt.109.t
+	desc = kmt.109.d
+
+	picture = GFX_report_event_generic_sign_treaty2
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 10
+			modifier = {
+				ROOT = {
+					has_government = democratic
+				}
+				factor = 75
+			}
+			modifier = {
+				ROOT = {
+					has_government = democratic
+					has_war = yes
+				}
+				factor = 100
+			}
+		}
+		name = kmt.109.a
+		CHI = {
+			transfer_state = 728
+			country_event = { id = kmt.110 }
+		}
+		effect_tooltip = {
+			if = {
+				limit = {
+					CHI = { has_completed_focus = CHI_a_democracy_in_asia }
+				}
+				ROOT = {
+					add_ideas = CHI_chinese_support
+				}
+			}
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 90
+		}
+		name = kmt.109.b
+		effect_tooltip = {
+			CHI = {
+				add_opinion_modifier = {
+					modifier = gzw_demo_kpt
+					target = ROOT
+				}
+			}
+		}
+		CHI = {
+			country_event = { id = kmt.111 }
+		}
+	}
+}
+
+#trade port demo - gzw accepted
+country_event = {
+	id = kmt.110
+	title = kmt.110.t
+	desc = kmt.110.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.110.a
+			custom_effect_tooltip = kmt_manpower_transfer_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						CHI = {
+							has_manpower > 19999
+						}
+					}
+					FROM = {
+						add_manpower = 20000
+					}
+					CHI = {
+						add_manpower = -20000
+					}
+				}
+			}
+		if = {
+			limit = {
+				CHI = { has_completed_focus = CHI_a_democracy_in_asia }
+			}
+			FROM = {
+				add_ideas = CHI_chinese_support
+			}
+		}
+	}
+}
+
+#trade port - gzw refused
+country_event = {
+	id = kmt.111
+	title = kmt.111.t
+	desc = kmt.111.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.111.a
+		add_opinion_modifier = {
+			modifier = gzw_demo_kpt
+			target = FROM
+		}
+	}
+}
+
+#trade port - mc
+country_event = {
+	id = kmt.112
+	title = kmt.109.t
+	desc = kmt.112.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 10
+			modifier = {
+				ROOT = {
+					has_government = democratic
+				}
+				factor = 75
+			}
+			modifier = {
+				ROOT = {
+					has_government = democratic
+					has_war = yes
+				}
+				factor = 100
+			}
+		}
+		name = kmt.109.a
+		CHI = {
+			transfer_state = 729
+			country_event = { id = kmt.113 }
+		}
+		effect_tooltip = {
+
+				custom_effect_tooltip = kmt_manpower_transfer_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							CHI = {
+								has_manpower > 19999
+							}
+						}
+						FROM = {
+							add_manpower = 20000
+						}
+						CHI = {
+							add_manpower = -20000
+						}
+					}
+				}
+			if = {
+				limit = {
+					CHI = { has_completed_focus = CHI_a_democracy_in_asia }
+				}
+				ROOT = {
+					add_ideas = CHI_chinese_support
+				}
+			}
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 90
+		}
+		name = kmt.109.b
+		effect_tooltip = {
+			CHI = {
+				add_opinion_modifier = {
+					modifier = mc_demo_kpt
+					target = ROOT
+				}
+			}
+		}
+		CHI = {
+			country_event = { id = kmt.114 }
+		}
+	}
+}
+
+#trade port - mc accepted
+country_event = {
+	id = kmt.113
+	title = kmt.113.t
+	desc = kmt.113.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.110.a
+			custom_effect_tooltip = kmt_manpower_transfer_tt
+			hidden_effect = {
+				FROM = {
+					add_manpower = 20000
+				}
+				CHI = {
+					add_manpower = -20000
+				}
+			}
+		if = {
+			limit = {
+				CHI = { has_completed_focus = CHI_a_democracy_in_asia }
+			}
+			FROM = {
+				add_ideas = CHI_chinese_support
+			}
+		}
+	}
+}
+
+#trade port - mc refused
+country_event = {
+	id = kmt.114
+	title = kmt.111.t
+	desc = kmt.111.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.111.a
+		add_opinion_modifier = {
+			modifier = mc_demo_kpt
+			target = FROM
+		}
+	}
+}
+
+#trade port - hk
+country_event = {
+	id = kmt.115
+	title = kmt.109.t
+	desc = kmt.115.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 10
+			modifier = {
+				ROOT = {
+					has_government = democratic
+				}
+				factor = 75
+			}
+			modifier = {
+				ROOT = {
+					has_government = democratic
+					has_war = yes
+				}
+				factor = 100
+			}
+		}
+		name = kmt.109.a
+		CHI = {
+			transfer_state = 326
+			country_event = { id = kmt.116 }
+		}
+		effect_tooltip = {
+				custom_effect_tooltip = kmt_manpower_transfer_tt
+				hidden_effect = {
+					if = {
+						limit = {
+							CHI = {
+								has_manpower > 19999
+							}
+						}
+						FROM = {
+							add_manpower = 20000
+						}
+						CHI = {
+							add_manpower = -20000
+						}
+					}
+				}
+			if = {
+				limit = {
+					CHI = { has_completed_focus = CHI_a_democracy_in_asia }
+				}
+				ROOT = {
+					add_ideas = CHI_chinese_support
+				}
+			}
+		}
+	}
+
+	option = {
+		ai_chance = {
+			factor = 90
+		}
+		name = kmt.109.b
+		effect_tooltip = {
+			CHI = {
+				add_opinion_modifier = {
+					modifier = hk_demo_kpt
+					target = ROOT
+				}
+			}
+		}
+		CHI = {
+			country_event = { id = kmt.117 }
+		}
+	}
+}
+
+#trade port - hk accepted
+country_event = {
+	id = kmt.116
+	title = kmt.116.t
+	desc = kmt.116.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.110.a
+			custom_effect_tooltip = kmt_manpower_transfer_tt
+			hidden_effect = {
+				FROM = {
+					add_manpower = 20000
+				}
+				CHI = {
+					add_manpower = -20000
+				}
+			}
+		if = {
+			limit = {
+				CHI = { has_completed_focus = CHI_a_democracy_in_asia }
+			}
+			FROM = {
+				add_ideas = CHI_chinese_support
+			}
+		}
+	}
+}
+
+#trade port - hk refused
+country_event = {
+	id = kmt.117
+	title = kmt.111.t
+	desc = kmt.111.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.111.a
+		add_opinion_modifier = {
+			modifier = hk_demo_kpt
+			target = ROOT
+		}
+	}
 }
