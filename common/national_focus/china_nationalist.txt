@@ -88,12 +88,44 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = CHI_industrial_evacuations
+		icon = GFX_goal_generic_industrial_planning
+		prerequisite = { focus = CHI_unified_industrial_planning }
+		relative_position_id = CHI_unified_industrial_planning
+
+		x = -4
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_war = yes
+			#has_dlc = "Waking the Tiger"
+			any_core_state = { #Mostly here so AI/Player doesn't waste time when they can't do a single decision
+ 				OR = {
+					arms_factory > 0
+					industrial_complex > 0
+				}
+				is_controlled_by = ROOT
+			}
+		}
+
+		completion_reward = {
+			unlock_decision_category_tooltip = CHI_industrial_evacuations			
+			set_variable = { var = CHI_industrial_evacuations_amount_factor value = 0.75 } #Ratio for how many building are moved. Change CHI_industrial_evacuations_add_AF and CHI_industrial_evacuations_add_IC if you change the value
+		}
+	}
 
 	focus = {
 		id = CHI_expand_the_academica_sinica
 		icon = GFX_goal_CHI_academia_sinica
 		prerequisite = { focus = CHI_unified_industrial_planning }
-		x = -3
+		x = 4
 		y = 1
 		relative_position_id = CHI_unified_industrial_planning
 
@@ -104,10 +136,6 @@ focus_tree = {
 		}
 
 		available = {
-			OR = {			
-				has_war = no
-				has_stability > 0.7
-			}
 		}
 
 		bypass = {
@@ -120,51 +148,19 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
+			unlock_decision_tooltip = jewish_scientist_asylum
 			add_research_slot = 1
 			CHI_decreace_illiteracy = yes
 		}
 	}
 
-	focus = {
-		id = CHI_chemical_research_institute
-		icon = GFX_focus_generic_rubber
-		prerequisite = { focus = CHI_expand_the_academica_sinica }
-		x = 0
-		y = 1
-		relative_position_id = CHI_expand_the_academica_sinica
 
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-		}
-
-		bypass = {
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {			
-			add_tech_bonus = {
-				name = CHI_rubber_bonus
-				bonus = 1
-				ahead_reduction = 0.25
-				category = cat_synth_rubber
-			}
-		}
-	}
 
 	focus = {
 		id = CHI_rural_reconstruction_movement
 		icon = GFX_goal_war_infrastructure
 		prerequisite = { focus = CHI_unified_industrial_planning }
-		x = 4
+		x = 2
 		y = 1
 		relative_position_id = CHI_unified_industrial_planning
 
@@ -230,14 +226,50 @@ focus_tree = {
 
 		}
 	}
-
+	focus = {
+		id = CHI_national_resources_commission
+		icon = GFX_goal_italy_establish_the_sme
+		prerequisite = { focus = CHI_unified_industrial_planning  }
+		available = {
+			has_tech = excavation2
+		}
+		relative_position_id = CHI_unified_industrial_planning
+		x = -2
+		y = 1
+		cost = 10
+		completion_reward = {
+			if = {
+				limit = {
+					605 = {
+						is_owned_by = ROOT
+					}
+				}	
+				add_resource = {
+					type = steel
+					amount = 10
+					state = 605
+				}
+				add_resource = {
+					type = tungsten
+					amount = 5
+					state = 605
+				}
+				add_resource = {
+					type = aluminium
+					amount = 3
+					state = 605
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_ALUMINIUM FOCUS_FILTER_STEEL FOCUS_FILTER_TUNGSTEN }
+	}
 	focus = {
 		id = CHI_mining_commission
 		icon = GFX_goal_generic_coal_mining
-		prerequisite = { focus = CHI_unified_industrial_planning }
-		x = 2
+		prerequisite = { focus = CHI_national_resources_commission }
+		x = 0
 		y = 1
-		relative_position_id = CHI_unified_industrial_planning
+		relative_position_id = CHI_national_resources_commission
 
 		cost = 5
 
@@ -261,19 +293,61 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			add_political_power = 40
+			add_political_power = 50
 			custom_effect_tooltip = available_industrial_concern
 			show_ideas_tooltip = CHI_mining_commission			
+		}
+	}
+	focus = {
+		id = CHI_chemical_research_institute
+		icon = GFX_focus_generic_rubber
+		prerequisite = { focus = CHI_national_resources_commission }
+		x = -1
+		y = 2
+		relative_position_id = CHI_national_resources_commission
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+		}
+
+		bypass = {
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			605 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 2
+					instant_build = yes
+				}			
+			}		
+			add_tech_bonus = {
+				name = CHI_rubber_bonus
+				bonus = 1
+				ahead_reduction = 0.25
+				category = cat_synth_rubber
+			}
 		}
 	}
 
 	focus = {
 		id = CHI_taiyuan_arsenal
 		icon = GFX_goal_generic_construct_mil_factory
-		prerequisite = { focus = CHI_develop_the_hanyan_arsenal }
-		x = 0
-		y = 1
-		relative_position_id = CHI_develop_the_hanyan_arsenal
+		prerequisite = { focus = CHI_rural_reconstruction_movement }
+		x = 1
+		y = 2
+		relative_position_id = CHI_rural_reconstruction_movement
 
 		cost = 10
 
@@ -309,17 +383,17 @@ focus_tree = {
 			}
 		}
 	}
+	
 
 	focus = {
 		id = CHI_develop_the_hanyan_arsenal
 		icon = GFX_goal_generic_munitions_factories
-		prerequisite = { focus = CHI_mining_commission }
 		prerequisite = {
 			focus = CHI_rural_reconstruction_movement
 		}
-		x = 1
+		x = 0
 		y = 1
-		relative_position_id = CHI_mining_commission
+		relative_position_id = CHI_rural_reconstruction_movement
 
 		cost = 10
 
@@ -408,23 +482,24 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
+			CHI_hyper_inflation_level_down = yes
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = CHI_t_v_soong_political_advisor
 		}
 	}
 
 	focus = {
-		id = CHI_price_controls
-		icon = GFX_goal_generic_deals
+		id = CHI_reform_the_national_bank
+		icon = GFX_goal_generic_banking_legislation
 		prerequisite = { focus = CHI_financial_policy }
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = CHI_financial_policy
 
 		cost = 10
 
 		ai_will_do = {
-			factor = 4
+			factor = 1
 		}
 
 		available = {
@@ -442,16 +517,17 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_CHI_INFLATION }
 		completion_reward = {
 			CHI_hyper_inflation_level_down = yes
+			unlock_decision_tooltip = CHI_forced_loans
 		}
 	}
 
 	focus = {
 		id = CHI_grain_tax
 		icon = GFX_goal_generic_forceful_treaty
-		prerequisite = { focus = CHI_price_controls }
-		x = 0
+		prerequisite = { focus = CHI_reform_the_national_bank }
+		x = 1
 		y = 1
-		relative_position_id = CHI_price_controls
+		relative_position_id = CHI_reform_the_national_bank
 
 		cost = 10
 
@@ -460,7 +536,10 @@ focus_tree = {
 		}
 
 		available = {
-
+			custom_trigger_tooltip = {
+				tooltip = CHI_HAS_FORCED_LOANS_3_TIMES
+				has_country_flag = { flag = CHI_HAS_FORCED_LOANS_COUNT value > 2 }
+			}
 		}
 
 		bypass = {
@@ -476,44 +555,11 @@ focus_tree = {
 			add_ideas = CHI_grain_tax
 		}
 	}
-
 	focus = {
-		id = CHI_reform_the_national_bank
-		icon = GFX_goal_generic_banking_legislation
-		prerequisite = { focus = CHI_financial_policy }
-		x = 1
-		y = 1
-		relative_position_id = CHI_financial_policy
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			has_hyper_inflation = yes
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		search_filters = { FOCUS_FILTER_CHI_INFLATION }
-		completion_reward = {
-			CHI_hyper_inflation_level_down = yes
-		}
-	}
-
-	focus = {
-		id = CHI_forced_loans
-		icon = GFX_goal_generic_gold_money
+		id = CHI_national_reform
+		icon = GFX_focus_chi_legislative_yuan
 		prerequisite = { focus = CHI_reform_the_national_bank }
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = CHI_reform_the_national_bank
 
@@ -524,7 +570,6 @@ focus_tree = {
 		}
 
 		available = {
-			has_hyper_inflation = yes
 		}
 
 		bypass = {
@@ -535,20 +580,17 @@ focus_tree = {
 		continue_if_invalid = no
 		available_if_capitulated = no
 
-		search_filters = { FOCUS_FILTER_CHI_INFLATION }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 		completion_reward = {
-			unlock_decision_tooltip = CHI_forced_loans
+			CHI_decrease_corrupted_economy = yes
 		}
 	}
 
 	focus = {
 		id = CHI_the_great_advance_foward
 		icon = GFX_focus_ARG_develop_the_electricity_sector
-		prerequisite = { focus = CHI_reform_the_national_bank }
-		prerequisite = {
-			focus = CHI_price_controls
-		}
-		x = -1
+		#prerequisite = { focus = CHI_reform_the_national_bank }
+		x = 0
 		y = 2
 		relative_position_id = CHI_reform_the_national_bank
 
@@ -562,8 +604,7 @@ focus_tree = {
 			AND = {
 				has_idea = CHI_hyper_inflation_none
 				OR = {
-					has_completed_focus = CHI_greater_china
-					has_completed_focus = CHI_one_china
+					has_completed_focus = CHI_enact_martial_law
 					has_completed_focus = CHI_to_the_world_stage
 				}
 			}
@@ -5584,16 +5625,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
 			add_stability = 0.1
-			custom_effect_tooltip = available_political_advisor
-			if = {
-				limit = {
-					has_dlc = "La Resistance"
-				}
-				show_ideas_tooltip = CHI_dai_li_political_advisor
-			}
-			else = {
-				show_ideas_tooltip = CHI_dai_li_wtt_political_advisor
-			}
+			
 		}
 	}
 
@@ -7744,12 +7776,84 @@ focus = {
 		add_offsite_building = { type = arms_factory level = 2 }
 	}
 }
+focus = {
+	id = CHI_utilize_the_corrupted_economy
+	icon = GFX_goal_generic_seize_railway
+	prerequisite = { focus = CHI_the_big_rear_concept }
+	relative_position_id = CHI_the_big_rear_concept
+	x = 0
+	y = 2
+	available = {
+		has_war = yes
+		OR = {
+			surrender_progress > 0.15
+			AND = {
+				613 = {
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				608 = {
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				597 = {
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	bypass = {
+		is_puppet = yes
+	}
+
+	ai_will_do = {
+		factor = 101 #DO ASAP
+	}
+	continue_if_invalid = yes
+	available_if_capitulated = yes
+	cost = 10
+	
+	completion_reward = {
+		add_stability = -0.10
+		add_war_support = -0.10
+		CHI_increase_corrupted_economy = yes
+		add_offsite_building = { type = arms_factory level = 7 }
+	}
+	search_filters = {  FOCUS_FILTER_STABILITY FOCUS_FILTER_MANPOWER }
+}
+focus = {
+	id = CHI_dare_to_die_corps
+	icon = GFX_goal_generic_CAS
+	prerequisite = { focus = CHI_utilize_the_corrupted_economy }
+	available = { has_war = yes }
+	relative_position_id = CHI_utilize_the_corrupted_economy
+	x = 0
+	y = 1
+	cost = 10
+	ai_will_do = {
+		factor = 10
+	}
+	continue_if_invalid = yes		   
+	completion_reward = {
+		add_ideas = CHI_dare_to_die_corps_idea
+		custom_effect_tooltip = kmt_dtdc_tt
+		hidden_effect = {
+			
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH  }
+}
 
 ###NAVY
 focus = {
 	id = CHI_revive_jiangnan_shipyard
 	icon = GFX_goal_generic_expand_the_naval_industry
-	x = 22
+	x = 23
 	y = 0
 	cost = 10
 	bypass = {
