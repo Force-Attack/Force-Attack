@@ -1297,3 +1297,582 @@ country_event = {
 		}
 	}
 }
+#prc want our land
+country_event = {
+	id = chi.84
+	title = chi.84.t
+	desc = chi.84.d
+
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = {
+		name = chi.84.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				is_in_faction = yes
+				add = -45
+			}
+			modifier = {
+				is_faction_leader = yes
+				add = -50
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 0.25
+					}
+				}
+				add = 5
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 0.5
+					}
+				}
+				add = 10
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 0.75
+					}
+				}
+				add = 15
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 1
+					}
+				}
+				add = 20
+			}
+			modifier = {
+				is_major = yes
+				add = -100
+			}
+		}
+		if = { #Omnogovi, capital of Mongolia
+			limit = {
+				ROOT = {
+					owns_state = 330
+				}
+			}
+			set_country_flag = prc_330_owner_return
+			FROM = {
+				transfer_state = 330
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 817
+				}
+			}
+			#set_country_flag = prc_848_owner_return #unused, event assumes all of mongolia is given if their capital is ceded
+			FROM = {
+				transfer_state = 817
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 818
+				}
+			}
+			#set_country_flag = prc_849_owner_return #unused, event assumes all of mongolia is given if their capital is ceded
+			FROM = {
+				transfer_state = 818
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 820
+				}
+			}
+			#set_country_flag = prc_850_owner_return #unused, event assumes all of mongolia is given if their capital is ceded
+			FROM = {
+				transfer_state = 820
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 819
+				}
+			}
+			FROM = {
+				transfer_state = 819
+			}
+		}
+		if = { #Tuva
+			limit = {
+				ROOT = {
+					owns_state = 329
+				}
+			}
+			set_country_flag = prc_329_owner_return
+			FROM = {
+				transfer_state = 329
+			}
+		}
+		FROM = {
+			country_event = { id = prc.85 }
+		}
+	}
+
+	option = {
+		name = chi.84.b
+		ai_chance = {
+			base = 50
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 330
+				}
+			}
+			set_country_flag = prc_330_owner_refuse
+			effect_tooltip = {
+				FROM = {
+					create_wargoal = {
+						target = ROOT
+						type = take_state_focus
+						generator = {330}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 329
+				}
+			}
+			set_country_flag = prc_329_owner_refuse
+			effect_tooltip = {
+				FROM = {
+					create_wargoal = {
+						target = ROOT
+						type = take_state_focus
+						generator = {329}
+					}
+				}
+			}
+
+		}
+		FROM = {
+			country_event = { id = prc.86 }
+		}
+	}
+}
+
+
+#from complies
+country_event = {
+	id = prc.85
+	title = prc.85.t
+	desc = prc.85.d
+
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = {
+		name = prc.85.a
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = prc_330_owner_return
+				}
+			}
+			effect_tooltip = {
+				transfer_state = 330
+				transfer_state = 820
+				transfer_state = 818
+				transfer_state = 817
+				transfer_state = 819
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = prc_329_owner_return
+				}
+			}
+			effect_tooltip = {
+				transfer_state = 329
+			}
+		}
+	}
+}
+
+
+#from refuses
+country_event = {
+	id = prc.86
+	title = prc.86.t
+	desc = prc.86.d
+
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = {
+		name = prc.86.a
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = prc_330_owner_refuse
+				}
+			}
+			create_wargoal = {
+				target = FROM
+				type = take_state_focus
+				generator = {330 921 922 923 }
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = prc_329_owner_refuse
+				}
+			}
+			create_wargoal = {
+				target = FROM
+				type = take_state_focus
+				generator = {329}
+			}
+		}
+	}
+}
+
+
+#great leap start
+country_event = {
+	id = kmt.39
+	title = kmt.39.t
+	desc = kmt.39.d
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	option = {
+		name = kmt.39.a
+		country_event = {
+			id = kmt.40
+			days = 30
+			random_days = 20
+		}
+	}
+}
+
+#great leap furnace auto build
+country_event = {
+	id = kmt.40
+	title = kmt.40.t
+	desc = kmt.40.d
+	picture = GFX_report_event_burma_road
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.40.a
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = PRC
+				NOT = {
+					has_state_flag = KMT_shitty_furnaced
+				}
+			}
+			add_resource = {
+				type = steel
+				amount = 1
+			}
+			set_state_flag = KMT_shitty_furnaced
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_country_flag = KMT_great_leap_started
+					NOT = { has_country_flag = KMT_leap_stop }
+				}
+				country_event = {
+					id = kmt.40
+					days = 30
+					random_days = 20
+				}
+			}
+		}
+	}
+}
+
+#baihua start
+country_event = {
+	id = kmt.32
+	title = kmt.32.t
+	desc = kmt.32.d
+	picture = GFX_report_event_china_politicians_captured
+
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	option = {
+		name = kmt.32.a
+		add_ideas = KMT_baihua_stage_1_idea
+	}
+}
+
+#baihua stage 1
+country_event = {
+	id = kmt.33
+	title = kmt.33.t
+	desc = kmt.33.d
+	picture = GFX_report_event_china_politicians_captured
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 0
+		}
+		name = kmt.33.a
+		custom_effect_tooltip = baihua_end_now
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.05
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.02
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.02
+		}
+		add_timed_idea = {
+			idea = KMT_baihua_stage_1_finished
+			days = 365
+		}
+		set_country_flag = baihua_completed
+	}
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = kmt.33.b
+		swap_ideas = {
+			remove_idea = KMT_baihua_stage_1_idea
+			add_idea = KMT_baihua_stage_2_idea
+		}
+		hidden_effect = {
+			activate_mission = PRC_hundred_flowers_campaign_progress
+		}
+	}
+}
+
+#baihua stage 2
+country_event = {
+	id = kmt.34
+	title = kmt.34.t
+	desc = kmt.34.d
+	picture = GFX_report_event_china_politicians_captured
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 0
+		}
+		name = kmt.34.a
+		custom_effect_tooltip = baihua_end_now
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.1
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.05
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.05
+		}
+		add_timed_idea = {
+			idea = KMT_baihua_stage_2_finished
+			days = 365
+		}
+		add_ideas = KMT_baihua_stage_2_finished_effect
+		set_country_flag = baihua_completed
+	}
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = kmt.34.b
+		custom_effect_tooltip = KMT_baihua_stage_2_tt
+		swap_ideas = {
+			remove_idea = KMT_baihua_stage_2_idea
+			add_idea = KMT_baihua_stage_3_idea
+		}
+		hidden_effect = {
+			activate_mission = PRC_hundred_flowers_campaign_progress
+		}
+	}
+}
+
+#baihua stage 3
+country_event = {
+	id = kmt.35
+	title = kmt.35.t
+	desc = kmt.35.d
+	picture = GFX_report_event_china_politicians_captured
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 0
+		}
+		name = kmt.35.a
+		custom_effect_tooltip = baihua_end_now
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.2
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.1
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
+		}
+		add_timed_idea = {
+			idea = KMT_baihua_stage_3_finished
+			days = 365
+		}
+		add_ideas = KMT_baihua_stage_3_finished_effect
+		set_country_flag = baihua_completed
+	}
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = kmt.35.b
+		custom_effect_tooltip = KMT_baihua_stage_3_tt
+		swap_ideas = {
+			remove_idea = KMT_baihua_stage_3_idea
+			add_idea = KMT_baihua_stage_4_idea
+		}
+		hidden_effect = {
+			activate_mission = PRC_hundred_flowers_campaign_progress
+		}
+	}
+}
+
+#baihua stage 4
+country_event = {
+	id = kmt.36
+	title = kmt.36.t
+	desc = kmt.36.d
+	picture = GFX_report_event_china_politicians_captured
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = {
+			factor = 0
+		}
+		name = kmt.36.a
+		custom_effect_tooltip = baihua_end_now
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.4
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.25
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.25
+		}
+		add_timed_idea = {
+			idea = KMT_baihua_stage_4_finished
+			days = 365
+		}
+		add_ideas = KMT_baihua_stage_4_finished_effect
+		set_country_flag = baihua_completed
+	}
+	option = {
+		ai_chance = {
+			factor = 100
+		}
+		name = kmt.36.b
+		custom_effect_tooltip = KMT_baihua_stage_4_tt
+		swap_ideas = {
+			remove_idea = KMT_baihua_stage_4_idea
+			add_idea = KMT_baihua_stage_5_idea
+		}
+		hidden_effect = {
+			activate_mission = PRC_hundred_flowers_campaign_progress
+		}
+	}
+}
+
+#baihua finished
+country_event = {
+	id = kmt.37
+	title = kmt.37.t
+	desc = kmt.37.d
+	picture = GFX_report_event_china_politicians_captured
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.37.a
+		custom_effect_tooltip = baihua_end_now
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.6
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.6
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.6
+		}
+		add_timed_idea = {
+			idea = KMT_baihua_stage_5_finished
+			days = 365
+		}
+		add_ideas = KMT_baihua_stage_5_finished_effect
+		set_country_flag = baihua_completed
+	}
+
+}
