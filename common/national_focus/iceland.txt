@@ -2624,10 +2624,10 @@ focus_tree = {
 	focus = {
 		id = ICE_reclaiming_the_empire
 		icon = GFX_focus_ICE_reclaiming_the_empire
-		prerequisite = { focus = ICE_the_viking_spirit }
+		prerequisite = { focus = ICE_securing_the_north_sea_passage }
 
-		x = 0
-		y = 1
+		x = 1
+		y = 2
 		relative_position_id = ICE_the_viking_spirit
 		cost = 10
 		available = {
@@ -2683,6 +2683,7 @@ focus_tree = {
 		id = ICE_securing_the_north_sea_passage
 		icon = GFX_focus_ICE_securing_the_north_sea_passage
 		prerequisite = { focus = ICE_the_viking_spirit }
+		prerequisite = { focus = ICE_Join_the_Axis }
 
 		x = 2
 		y = 1
@@ -2720,11 +2721,10 @@ focus_tree = {
 	focus = {
 		id = ICE_vinland
 		icon = GFX_focus_ICE_vinland
-		prerequisite = { focus = ICE_reclaiming_the_empire }
 		prerequisite = { focus = ICE_securing_the_north_sea_passage }
 
-		x = 0
-		y = 1
+		x = 2
+		y = 0
 		relative_position_id = ICE_reclaiming_the_empire
 		cost = 10
 
@@ -2745,6 +2745,225 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = ICE_Join_the_Axis
+		icon = GFX_goal_generic_dangerous_deal
+		prerequisite = { focus = ICE_organize_the_greyshirts focus = ICE_research_cooperation }
+
+		x = 3
+		y = -2
+		relative_position_id = ICE_reclaiming_the_empire
+		cost = 6
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			GER = {
+				country_event = generic.2
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Increase_Production_in_Iceland
+		icon = GFX_goal_generic_gun_purchase
+		prerequisite = { focus = ICE_Join_the_Axis }
+		mutually_exclusive = { focus = ICE_Reichsprotektorat }
+
+		x = 2
+		y = 1
+		relative_position_id = ICE_Join_the_Axis
+		cost = 6
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			add_ideas = { ICE_more_productionnnn }
+		}
+	}
+
+	focus = {
+		id = ICE_Reichsprotektorat
+		icon = GFX_focus_CZE_german_puppet
+		prerequisite = { focus = ICE_Join_the_Axis }
+		mutually_exclusive = { focus = ICE_Increase_Production_in_Iceland }
+
+		x = 4
+		y = 1
+		relative_position_id = ICE_Join_the_Axis
+		cost = 6
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			GER = {
+				country_event = generic.21
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Integrate_our_economys
+		icon = GFX_focus_generic_german_trade
+		prerequisite = { focus = ICE_Reichsprotektorat }
+		mutually_exclusive = { focus = ICE_Total_Mobilization }
+		x = -1 
+		y = 1
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 10
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				prioritize = { 1043 } 
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Total_Mobilization
+		icon = GFX_focus_generic_support_the_left_right
+		prerequisite = { focus = ICE_Reichsprotektorat }
+		mutually_exclusive = { focus = ICE_Integrate_our_economys }
+		x = 1
+		y = 1
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 10
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			add_war_support = 0.05
+			if = {
+				limit = {
+					has_idea = civilian_economy
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = low_economic_mobilisation
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = partial_economic_mobilisation
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = war_economy
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = isolation
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+		}
+	}
+
+
+	focus = {
+		id = ICE_Icelandic_National_Socialism
+		icon = GFX_focus_POL_beck_ribbentrop
+		prerequisite = { focus = ICE_Total_Mobilization focus = ICE_Integrate_our_economys }
+		x = 0
+		y = 2
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 10
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			army_experience = 30
+		}
+	}
+
+	focus = {
+		id = ICE_Stay_with_Germany
+		icon = GFX_focus_generic_fascist_troops
+		prerequisite = { focus = ICE_Icelandic_National_Socialism }
+		mutually_exclusive = { focus = ICE_Declare_our_Independence }
+		x = -1 
+		y = 3
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 10
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_autonomy_score = {
+				value = -300
+			}
+			add_ideas = { ICE_Icelandic_Puppet }
+		}
+	}
+
+	focus = {
+		id = ICE_Declare_our_Independence
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		prerequisite = { focus = ICE_Icelandic_National_Socialism }
+		mutually_exclusive = { focus = ICE_Stay_with_Germany }
+		x = 1 
+		y = 3
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 10
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			GER = {
+				country_event = SCA_iceland.101
+			}
+		}
+	}
+
 
 	#   # ### #   ### ###  ##  ###  #   # 
 	## ##  #  #    #   #  #  # #  #  # #  
