@@ -3587,42 +3587,6 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_Three_Principles_of_the_People
-		icon = GFX_focus_SOV_the_comecon
-
-		relative_position_id = CHI_end_the_regime
-		x = 0
-		y = 3
-
-		
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_mao_zedong_civil_war focus = CHI_contact_zhang_xueliang
-		}
-	
-
-	
-
-		completion_reward = {
-			add_ideas = CHI_Three_Principles_of_the_People_Idea
-
-		}
-	}
-	focus = {
 		id = CHI_form_the_peoples_liberation_army
 		icon = GFX_focus_SOV_builder_of_the_red_army
 
@@ -3661,6 +3625,43 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = CHI_Three_Principles_of_the_People
+		icon = GFX_focus_SOV_the_comecon
+
+		relative_position_id = CHI_end_the_regime
+		x = 0
+		y = 3
+
+		
+		
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_mao_zedong_civil_war focus = CHI_contact_zhang_xueliang
+		}
+	
+
+	
+
+		completion_reward = {
+			add_ideas = CHI_Three_Principles_of_the_People_Idea
+
+		}
+	}
+	
+	focus = {
 		id = CHI_maos_little_red_book
 		icon = GFX_goal_FRA_social_reforms
 
@@ -3696,7 +3697,7 @@ focus_tree = {
 	###### MAO POLITICS ###########
 	focus = {
 		id = PRC_suppress_counterrevolutionaries
-		icon = GFX_goal_crush_resistance2
+		icon = GFX_focus_SWE_lottakoren
 		prerequisite = { focus = PRC_the_new_communism_beacon }
 		x = -7
 		y = 1
@@ -3895,7 +3896,6 @@ focus_tree = {
 		
 		available = {
 			has_global_flag = CR_ended
-			has_country_flag = deng_xiao_ping
 		}
 		cancel_if_invalid = no
 
@@ -4136,7 +4136,7 @@ focus_tree = {
 		x = -1
 		y = 2
 		relative_position_id = PRC_exert_influence_in_sea
-		cost = 5
+		cost = 4
 		
 		available = {
 			has_government = communism
@@ -4167,6 +4167,44 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 	}
+	focus = {
+		id = CHI_conduct_nationwide_inspections
+		icon = GFX_focus_chi_one_china_policy
+		prerequisite = { focus = PRC_exert_influence_in_sea }
+
+		x = 0
+		y = 1
+		relative_position_id = PRC_exert_influence_in_sea
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_political_power = 50
+			add_timed_idea = {
+				idea = SOV_nationwide_inspections_1
+				days = 45
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
 
 	focus = {
 		id = PRC_exert_influence_in_india_and_mongolia
@@ -4175,7 +4213,7 @@ focus_tree = {
 		x = 1
 		y = 2
 		relative_position_id = PRC_exert_influence_in_sea
-		cost = 5
+		cost = 4
 		
 		available = {
 			has_government = communism
@@ -4208,7 +4246,7 @@ focus_tree = {
 
 	focus = {
 		id = PRC_the_permanent_revolution
-		icon = GFX_goal_support_fourth_int
+		icon = GFX_focus_focus_fra_revolution_utmost
 		prerequisite = { focus = PRC_exert_influence_in_central_asia }
 		prerequisite = { focus = PRC_exert_influence_in_india_and_mongolia }
 		x = 0
@@ -4217,49 +4255,96 @@ focus_tree = {
 		cost = 10
 		
 		available = {
-			has_country_flag = cdx_returned
 			has_government = communism
 		}
 		
 		completion_reward = {
-			every_other_country = {
+			
+			if = {
 				limit = {
-					has_idea = PRC_influence
+					has_dlc = "La Resistance"
 					NOT = {
-						has_government = communism
+						has_intelligence_agency = yes
 					}
-					num_of_controlled_states < 2
 				}
-				set_politics = {
-					ruling_party = communism
+				create_intelligence_agency = yes
+			}			
+			if = {
+				limit = {
+					has_dlc = "La Resistance" 
 				}
-				hidden_effect = {
-					add_popularity = {
-						ideology = communism
-						popularity = 0.88
+				add_ideas = SOV_world_revolution_idea_LaR
+			}
+			else = {
+				add_ideas = SOV_world_revolution_idea
+			}
+			hidden_effect = {
+				every_country = {
+					IF = {
+						limit = {
+							NOT = {
+								has_government = communism
+							}
+						}
+						add_timed_idea = { idea = ccp_influence days = 365 }
+						add_opinion_modifier = { target = CHI modifier = medium_decrease }
 					}
-					remove_ideas = PRC_influence
+				}
+				every_other_country = {
+					limit = {
+						exists = yes
+						NOT = {
+							has_government = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+					ROOT = { #Makes MAO MADDDDDDDDDDDDDD
+						add_ai_strategy = {
+							type = antagonize
+							id = PREV
+							value = 250
+						}
+						add_ai_strategy = {
+							type = declare_war
+							id = PREV
+							value = 25
+						}
+						add_ai_strategy = {
+							type = conquer
+							id = PREV
+							value = 10
+						}
+					}
+				}
+				every_other_country = {
+					limit = {
+						exists = yes
+						has_government = ROOT
+						has_war = no
+						is_in_faction = no
+					}
+					ROOT = { #Makes mao want friends....
+						add_ai_strategy = {
+							type = alliance
+							id = PREV
+							value = 250
+						}
+						add_ai_strategy = {
+							type = befriend
+							id = PREV
+							value = 25
+						}
+					}
 				}
 			}
-			every_other_country = {
-				limit = {
-					has_idea = PRC_influence
-					NOT = {
-						has_government = communism
-					}
-				}
-				start_civil_war = {
-					ideology = communism
-					size = 0.65
-				}
-			}
+			custom_effect_tooltip = CHI_world_revolution_tt
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = PRC_aid_the_workers
-		icon = GFX_goal_support_communism
+		icon = GFX_focus_prc_agrarian_socialism
 		prerequisite = { focus = PRC_exert_influence_in_central_asia }
 		prerequisite = { focus = PRC_exert_influence_in_india_and_mongolia }
 		x = 0
@@ -4273,32 +4358,53 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			every_other_country = {
-				limit = {
-					has_idea = PRC_influence
-					is_puppet_of = PRC
-				}
-				country_event = { id = prc.92 }
-			}
-			every_other_country = {
-				limit = {
-					has_idea = PRC_influence
-					NOT = {
-						is_puppet_of = PRC
-					}
-				}
-				PRC = {
-					create_wargoal = {
-						expire = 0
-						target = PREV
-						type = puppet_wargoal_focus
-					}
-				}
+			CHI_hyper_inflation_level_up = yes
+			add_timed_idea = {
+				idea = CHI_aid_workers
+				days = 365
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 	}
+	focus = {
+		id = CHI_ideological_propaganda
+		icon = GFX_focus_propaganda_soviet
+		prerequisite = { focus = PRC_the_permanent_revolution }
+		prerequisite = { focus = PRC_aid_the_workers }
+		x = -1
+		y = 1
+		relative_position_id = PRC_aid_the_workers
 
+		cost = 5
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		allow_branch = { #this check makes it seperate from the other allow_branch checks, that made it appear randomly
+			has_dlc = "La Resistance"
+			NOT = {
+				has_completed_focus = SOV_the_centre
+				has_completed_focus = SOV_the_right_opposition
+				has_completed_focus = SOV_beaten_but_not_defeated
+				has_completed_focus = SOV_form_a_fifth_column
+			}
+		}
+
+		available = {
+			has_intelligence_agency = yes
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+
+
+		completion_reward = {
+			upgrade_intelligence_agency = upgrade_psycho_warfare
+			add_ideas = r56_clandestine_propaganda_techniques
+		}
+		search_filters = { FOCUS_FILTER_ESPIONAGE }
+	}	
 	focus = {
 		id = PRC_mongolia_issue
 		icon = GFX_focus_generic_attack_mongolia
@@ -4341,51 +4447,7 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = PRC_coerce_korea
-		icon = GFX_goal_KOR_the_korean_question
-		prerequisite = { focus = PRC_mongolia_issue }
-		x = 0
-		y = 1
-		relative_position_id = PRC_mongolia_issue
-		cost = 10
-		
-		available = {
-			has_government = communism
-			OR = {
-				country_exists = KOR
-				country_exists = NKR
-			}
-		}
-		bypass = {
-			AND = {
-				KOR = {
-					is_puppet_of = PRC
-				}
-				NKR = {
-					is_puppet_of = PRC
-				}
-			}
-		}
-
-		completion_reward = {
-			KOR = {
-				add_timed_idea = {
-					idea = PRC_influence
-					days = 365
-				}
-				country_event = { id = prc.87 }
-			}
-			NKR = {
-				add_timed_idea = {
-					idea = PRC_influence
-					days = 365
-				}
-				country_event = { id = prc.87 }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
-	}
+	
 
 	#literacy branch
 
