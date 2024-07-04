@@ -1,3 +1,4 @@
+#!gfx:interface\replace\r56_goals.gfx
 ### search_filters = {FOCUS_FILTER_POLITICAL}
 ### search_filters = {FOCUS_FILTER_RESEARCH}
 ### search_filters = {FOCUS_FILTER_INDUSTRY}
@@ -2626,7 +2627,7 @@ focus_tree = {
 		icon = GFX_focus_ICE_reclaiming_the_empire
 		prerequisite = { focus = ICE_securing_the_north_sea_passage }
 
-		x = 1
+		x = 0
 		y = 2
 		relative_position_id = ICE_the_viking_spirit
 		cost = 10
@@ -2683,9 +2684,9 @@ focus_tree = {
 		id = ICE_securing_the_north_sea_passage
 		icon = GFX_focus_ICE_securing_the_north_sea_passage
 		prerequisite = { focus = ICE_the_viking_spirit }
-		prerequisite = { focus = ICE_Join_the_Axis }
+		mutually_exclusive = { focus = ICE_Pro_German_Government }
 
-		x = 2
+		x = 0
 		y = 1
 		relative_position_id = ICE_the_viking_spirit
 		cost = 10
@@ -2749,9 +2750,9 @@ focus_tree = {
 	focus = {
 		id = ICE_Join_the_Axis
 		icon = GFX_goal_generic_dangerous_deal
-		prerequisite = { focus = ICE_organize_the_greyshirts focus = ICE_research_cooperation }
+		prerequisite = { focus = ICE_organize_the_greyshirts }
 
-		x = 3
+		x = 2
 		y = -2
 		relative_position_id = ICE_reclaiming_the_empire
 		cost = 6
@@ -2767,12 +2768,12 @@ focus_tree = {
 
 	focus = {
 		id = ICE_Increase_Production_in_Iceland
-		icon = GFX_goal_generic_gun_purchase
-		prerequisite = { focus = ICE_Join_the_Axis }
-		mutually_exclusive = { focus = ICE_Reichsprotektorat }
+		icon = GFX_goal_generic_expanded_production
+		prerequisite = { focus = ICE_Pro_German_Government }
 
-		x = 0
-		y = 1
+
+		x = 4
+		y = 2
 		relative_position_id = ICE_Join_the_Axis
 		cost = 6
 
@@ -2784,13 +2785,31 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ICE_Reichsprotektorat
-		icon = GFX_focus_CZE_german_puppet
+		id = ICE_Pro_German_Government
+		icon = GFX_goal_generic_fascist_bills
 		prerequisite = { focus = ICE_Join_the_Axis }
-		mutually_exclusive = { focus = ICE_Increase_Production_in_Iceland }
+		mutually_exclusive = { focus = ICE_securing_the_north_sea_passage }
 
 		x = 4
 		y = 1
+		relative_position_id = ICE_Join_the_Axis
+		cost = 6
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = ICE_Reichsprotektorat
+		icon = GFX_focus_CZE_german_puppet
+		prerequisite = { focus = ICE_Pro_German_Government }
+		mutually_exclusive = { focus = ICE_Maintain_Independence }
+
+		x = 6
+		y = 3
 		relative_position_id = ICE_Join_the_Axis
 		cost = 6
 
@@ -2961,6 +2980,27 @@ focus_tree = {
 			GER = {
 				country_event = SCA_iceland.101
 			}
+		}
+	}
+
+	focus = {
+		id = ICE_Cultural_Revolution
+		icon = GFX_GER_black_sun
+		prerequisite = { focus = ICE_Pro_German_Government }
+		mutually_exclusive = { focus = ICE_Reichsprotektorat }
+		x = -2
+		y = 2
+		relative_position_id = ICE_Pro_German_Government
+		cost = 10
+		available = {
+			has_government = fascism
+			GER = { has_completed_focus = GER_the_alternative }
+		}
+	                
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+		
 		}
 	}
 
