@@ -1496,7 +1496,7 @@ focus_tree = {
 
 		mutually_exclusive = {
 			focus = CHI_agree_to_the_captors_terms
-			focus = CHI_chang_kai_shek_dies
+			focus = CHI_jingwei_punitive_expedition
 			focus = CHI_democritization
 		}
 		prerequisite = { focus = CHI_xian_incident }
@@ -1579,7 +1579,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CHI_escape_from_captivity
 			focus = CHI_democritization
-			focus = CHI_chang_kai_shek_dies
+			focus = CHI_jingwei_punitive_expedition
 		}
 		prerequisite = { focus = CHI_xian_incident }
 		relative_position_id = CHI_xian_incident
@@ -2205,7 +2205,7 @@ focus_tree = {
 		prerequisite = { focus = CHI_retake_manchuria }
 		relative_position_id = CHI_retake_manchuria
 		available = {
-			has_completed_focus = CHI_escape_from_captivity
+			
 		}
 		bypass = {
 			
@@ -2572,17 +2572,9 @@ focus_tree = {
 		id = CHI_unite_aginst_imperialist
 		icon = GFX_goal_CHI_support_pro_japanese_faction
 
-		relative_position_id = CHI_chang_kai_shek_dies
+		relative_position_id = CHI_jingwei_punitive_expedition
 		x = 5
-		y = 1
-
-		prerequisite = {
-			focus = CHI_chang_kai_shek_dies
-		}
-
-		mutually_exclusive = {
-			focus = CHI_end_the_regime
-		}
+		y = 20
 
 		cost = 10
 
@@ -2608,22 +2600,6 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			set_politics = {
-				ruling_party = fascism
-			}
-			add_ideas = CHI_chinese_morale_broken
-			
-			add_timed_idea = {
-				idea = CHI_wait_a_year
-				days = 365
-			}
-			hidden_effect = {
-				add_country_leader_trait = puppet_prime_minister_fascism
-				add_popularity = {
-					ideology = fascism
-					popularity = 0.30
-				}
-			}
 			
 		}
 	}
@@ -3294,9 +3270,13 @@ focus_tree = {
 			}
 		}
 	}
+	#####
+	######
+	#####
 
+	####COMMUNIST TREE BEGINS
 	focus = {
-		id = CHI_chang_kai_shek_dies
+		id = CHI_jingwei_punitive_expedition
 		icon = GFX_goal_PRC_contact_zhang_xueliang
 
 		relative_position_id = CHI_xian_incident
@@ -3317,6 +3297,8 @@ focus_tree = {
 		}
 
 		available = {
+			#HAS HIRED WANG JINGWEI
+			has_country_flag = CHI_hired_jingwei_flag
 			custom_trigger_tooltip = {
 				tooltip = CHI_leader_is_captive_tt
 				has_country_leader_with_trait = detained_leader
@@ -3331,6 +3313,11 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			set_politics = {
+				ruling_party = fascism
+			}
+			#promote_leader = CHI_wang_jingwei
+			promote_character = CHI_wang_jingwei
 			#event where the player chooses who will assume control of power durring the power vaccum
 			CHI =  {
 				country_event = { id = CHI.3 }
@@ -3338,16 +3325,12 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_end_the_regime
-		icon = GFX_focus_generic_soviet_politics
+		id = CHI_concede_to_japan
+		icon = GFX_goal_generic_forceful_treaty
 
-		relative_position_id = CHI_chang_kai_shek_dies
-		x = -6
+		relative_position_id = CHI_jingwei_punitive_expedition
+		x = 0
 		y = 1
-
-		mutually_exclusive = {
-			focus = CHI_unite_aginst_imperialist
-		}
 		
 
 		cost = 10
@@ -3356,16 +3339,12 @@ focus_tree = {
 			factor = 4
 		}
 
-		available = {
-			always = no
-		}
-
 		bypass = {
 			
 		}
 
 		prerequisite = {
-			focus = CHI_chang_kai_shek_dies
+			focus = CHI_jingwei_punitive_expedition
 		}
 
 		
@@ -3374,7 +3353,45 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_stability = -0.20
+			custom_effect_tooltip = CHI_may_cause_civil_war
+		}
+	}
+	focus = {
+		id = CHI_begin_jingwei_economic_reforms
+		icon = GFX_goal_stock_exchange
+
+		relative_position_id = CHI_concede_to_japan
+		x = 0
+		y = 1
+		
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		bypass = {
+			has_civil_war = yes
+		}
+
+		prerequisite = {
+			focus = CHI_concede_to_japan
+		}
+		select_effect = {
+			###CIVIL WAR TIME BBY
+			### 10 days in to focus
+		}
+		
+		complete_tooltip = {
+
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		completion_reward = {
+			CHI_remove_corrupted_economy = yes
+			CHI_hyper_inflation_clear_all = yes
+			add_ideas = CHI_chinese_new_production_plan
 		}
 	}
 
@@ -3382,13 +3399,9 @@ focus_tree = {
 		id = CHI_mao_zedong_civil_war
 		icon = GFX_goal_PRC_focus_on_red_army
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 1
 		y = 1
-
-		mutually_exclusive = {
-			focus =  CHI_contact_zhang_xueliang
-		}
 		
 
 		cost = 10
@@ -3406,7 +3419,7 @@ focus_tree = {
 		}
 
 		prerequisite = {
-			focus = CHI_end_the_regime
+			focus = CHI_concede_to_japan
 		}
 
 		
@@ -3658,65 +3671,10 @@ focus_tree = {
 		
 	}
 	focus = {
-		id = CHI_contact_zhang_xueliang
-		icon = GFX_goal_PRC_contact_zhang_xueliang
-
-		relative_position_id = CHI_end_the_regime
-		x = -1
-		y = 1
-
-		mutually_exclusive = {
-			focus = CHI_mao_zedong_civil_war
-		}
-		
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_end_the_regime
-		}
-	
-
-	
-
-		completion_reward = {
-			add_ideas = communist_influence
-			add_popularity = { ideology = communism popularity = 0.25 }
-			set_politics = {
-				ruling_party = communism
-			}
-			hidden_effect = {
-				set_cosmetic_tag = CHI_prc
-			}
-			add_country_leader_role = {
-					character = CHI_zhang_xueliang
-					promote_leader = yes
-					country_leader = {
-					ideology = communism_ideology
-					expire = "1965.1.1"
-					traits = {
-						communist_sympathiser
-					}
-				}
-			}	
-		}
-	}
-	focus = {
 		id = CHI_form_the_peoples_liberation_army
 		icon = GFX_focus_SOV_builder_of_the_red_army
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 0
 		y = 2
 		
@@ -3740,7 +3698,7 @@ focus_tree = {
 			is_puppet = yes
 		}
 		prerequisite = {
-			focus = CHI_mao_zedong_civil_war focus = CHI_contact_zhang_xueliang
+			focus = CHI_mao_zedong_civil_war
 		}
 	
 
@@ -3754,7 +3712,7 @@ focus_tree = {
 		id = CHI_Three_Principles_of_the_People
 		icon = GFX_focus_SOV_the_comecon
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 0
 		y = 3
 
@@ -3791,7 +3749,7 @@ focus_tree = {
 		id = CHI_maos_little_red_book
 		icon = GFX_goal_FRA_social_reforms
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 4
 		y = 5
 		
@@ -4661,7 +4619,7 @@ focus_tree = {
 		id = CHI_purge_the_traitors
 		icon =  GFX_focus_SOV_the_last_purge
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 4
 		y = 2
 		
@@ -4690,7 +4648,7 @@ focus_tree = {
 		id = CHI_purge_the_army
 		icon =  GFX_focus_SOV_military_purge
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 2
 		y = 3
 		
@@ -4723,7 +4681,7 @@ focus_tree = {
 		id = CHI_purge_the_bureaucracy
 		icon =  GFX_focus_SWE_socialist_reforms
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 4
 		y = 3
 		
@@ -4756,7 +4714,7 @@ focus_tree = {
 		id = CHI_purge_the_bureaucracy
 		icon =  GFX_focus_SWE_socialist_reforms
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 4
 		y = 3
 		
@@ -4789,7 +4747,7 @@ focus_tree = {
 		id = CHI_purge_the_ccp
 		icon =  GFX_focus_spr_class_war
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 6
 		y = 3
 		
@@ -4822,7 +4780,7 @@ focus_tree = {
 		id = CHI_proclaim_the_peoples_republic
 		icon =  GFX_focus_prc_proclaim_the_peoples_republic
 
-		relative_position_id = CHI_end_the_regime
+		relative_position_id = CHI_concede_to_japan
 		x = 4
 		y = 4
 		
@@ -4865,7 +4823,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CHI_escape_from_captivity
 			focus = CHI_agree_to_the_captors_terms
-			focus = CHI_chang_kai_shek_dies
+			focus = CHI_jingwei_punitive_expedition
 		}
 		
 
@@ -5025,31 +4983,79 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 		completion_reward = {
 			CHI_hyper_inflation_level_up = yes
-			613 = {
+			random_core_state = {
+				prioritize = {
+					613
+				}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
-				}
-				
+					}
 			}
-			608 = {
+			random_core_state = {
+				prioritize = {
+					608
+				}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
-				}
-				
+					}
 			}
-			605 = {
+			random_core_state = {
+				prioritize = {
+					605
+				}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
 				add_building_construction = {
 					type = arms_factory
 					level = -2
 					instant_build = yes
+					}
+			}
+			random_core_state = {
+				prioritize = {
+					620
 				}
-				
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = -2
+					instant_build = yes
+					}
 			}
 		}
 	}
@@ -5186,7 +5192,18 @@ focus_tree = {
 			no_hyper_inflation = yes
 		}
 		completion_reward = {
-			592 = {
+			random_core_state = {
+				prioritize = {
+					592
+				}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					is_owned_and_controlled_by = ROOT
+				}
 				add_building_construction = {
 					type = arms_factory
 					level = -2
