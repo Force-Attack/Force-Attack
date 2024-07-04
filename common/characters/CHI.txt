@@ -27,6 +27,25 @@ characters={
 			id=-1
 		}
 	}
+	####CHI DEMOCRATIC LEADER
+	CHI_hu_shih={
+		name="Hu Shih"
+		portraits={
+			civilian={
+				large = "gfx/leaders/CHI/r56_portrait_CHI_Hu_Shih.dds"
+			}
+		}
+		country_leader={
+			ideology = socialism
+			expire="1965.1.1"
+			id=-1
+			traits = {
+				gentle_scholar	#or other trait with some research buffs
+			}			
+		}
+	}
+	####FASCIST COLLABORATION GOVERNMENT
+
 	GXC_li_zongren={
 		name=GXC_li_zongren
 		portraits={
@@ -211,9 +230,12 @@ characters={
 			civilian={
 				large = "GFX_portrait_chi_wang_jingwei"
 			}
+			army = {
+				large = "gfx/leaders/CHI/r56_portrait_CHI_Wang_Jingwei.dds"
+			}
 		}
 		country_leader={
-			ideology=fascism_ideology
+			ideology= fascism_ideology
 			traits={ 
 				anti_democrat
 				dictator
@@ -222,28 +244,29 @@ characters={
 			id=-1
 		}
 		advisor={
+			cost = 10
 			slot = political_advisor
 			idea_token = CHI_wang_jingwei
 			allowed = {
 				original_tag = CHI
 			}
 			available = {
-				if = {
-					limit = {
-						has_dlc = "Man the Guns"
-					}
-					is_puppet = no
-					has_completed_focus = CHI_nationalist_rallies
+				is_puppet = NO
+				NOT = {
+					has_completed_focus = CHI_jingwei_punitive_expedition
 				}
 			}
 			visible = {
-				AND = {
-					has_completed_focus = CHI_nationalist_rallies
-					is_puppet = no
+				is_puppet = NO
+				NOT = {
+					has_completed_focus = CHI_jingwei_punitive_expedition
 				}
 			}
 			traits = {
-				fascist_demagogue
+				CHI_minister_of_foreign_affairs
+			}
+			on_add = {
+				set_country_flag = CHI_hired_jingwei_flag
 			}
 		}
 	}
