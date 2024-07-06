@@ -3797,7 +3797,6 @@ focus_tree = {
 		cost = 10
 		
 		completion_reward = {
-			add_political_power = -50
 			add_country_leader_trait = the_great_chairman
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
@@ -4061,7 +4060,7 @@ focus_tree = {
 		x = -3
 		y = 1
 		relative_position_id = PRC_the_new_communism_beacon
-		cost = 10
+		cost = 5
 
 		completion_reward = {
 			add_doctrine_cost_reduction = {
@@ -4070,7 +4069,7 @@ focus_tree = {
 				uses = 1
 				category = land_doctrine
 			}
-			add_ideas = PRC_save_the_soviet_people
+			#add_ideas = PRC_save_the_soviet_people
 			add_opinion_modifier = {
 				target = SOV
 				modifier = revisionist_traitor
@@ -4151,6 +4150,47 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 	}
 	focus = {
+		id = PRC_demand_return_of_trade_ports
+		icon = GFX_goal_naval_treaty
+		prerequisite = { focus = PRC_exert_influence_in_sea }
+		x = 0
+		y = 1
+		relative_position_id = PRC_exert_influence_in_sea
+		cost = 10
+
+		available = {
+			OR = {
+				NOT = {
+					controls_state = 326
+				}
+				NOT = {
+					controls_state = 729
+				}
+				NOT = {
+					controls_state = 728
+				}
+			}
+			has_government = communism
+		}
+		
+		completion_reward = {
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_controlled_state = {
+						OR = {
+							state = 326
+							state = 729
+							state = 728
+						}
+					}
+				}
+				country_event = { id = prc.89 }
+			}
+		}
+	}
+	focus = {
 		id = PRC_exert_influence_in_central_asia
 		icon = GFX_goal_generic_befriend_afghanistan
 		prerequisite = { focus = PRC_exert_influence_in_sea }
@@ -4188,44 +4228,44 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 	}
-	focus = {
-		id = CHI_conduct_nationwide_inspections
-		icon = GFX_focus_chi_one_china_policy
-		prerequisite = { focus = PRC_exert_influence_in_sea }
-
-		x = 0
-		y = 1
-		relative_position_id = PRC_exert_influence_in_sea
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			add_political_power = 50
-			add_timed_idea = {
-				idea = SOV_nationwide_inspections_1
-				days = 45
-			}
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
+	#focus = {
+	#	id = CHI_conduct_nationwide_inspections
+	#	icon = GFX_focus_chi_one_china_policy
+	#	prerequisite = { focus = PRC_exert_influence_in_sea }
+	#
+	#	x = 0
+	#	y = 1
+	#	relative_position_id = PRC_exert_influence_in_sea
+	#	cost = 10
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#
+	#	completion_reward = {
+	#		add_political_power = 50
+	#		add_timed_idea = {
+	#			idea = SOV_nationwide_inspections_1
+	#			days = 45
+	#		}
+	#		random_owned_controlled_state = {
+	#			add_extra_state_shared_building_slots = 2
+	#			add_building_construction = {
+	#				type = industrial_complex
+	#				level = 2
+	#				instant_build = yes
+	#			}
+	#		}
+	#		random_owned_controlled_state = {
+	#			add_extra_state_shared_building_slots = 2
+	#			add_building_construction = {
+	#				type = arms_factory
+	#				level = 2
+	#				instant_build = yes
+	#			}
+	#		}
+	#	}
+	#	search_filters = { FOCUS_FILTER_POLITICAL }
+	#}
 
 	focus = {
 		id = PRC_exert_influence_in_india_and_mongolia
@@ -4379,53 +4419,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			CHI_hyper_inflation_level_up = yes
-			add_timed_idea = {
-				idea = CHI_aid_workers
-				days = 365
+			every_country = {
+				limit = {
+					NOT = {
+						has_government = communism
+					}
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
 			}
+
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 	}
-	focus = {
-		id = CHI_ideological_propaganda
-		icon = GFX_focus_propaganda_soviet
-		prerequisite = { focus = PRC_the_permanent_revolution }
-		prerequisite = { focus = PRC_aid_the_workers }
-		x = -1
-		y = 1
-		relative_position_id = PRC_aid_the_workers
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 2
-		}
-
-		allow_branch = { #this check makes it seperate from the other allow_branch checks, that made it appear randomly
-			has_dlc = "La Resistance"
-			NOT = {
-				has_completed_focus = SOV_the_centre
-				has_completed_focus = SOV_the_right_opposition
-				has_completed_focus = SOV_beaten_but_not_defeated
-				has_completed_focus = SOV_form_a_fifth_column
-			}
-		}
-
-		available = {
-			has_intelligence_agency = yes
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-
-
-		completion_reward = {
-			upgrade_intelligence_agency = upgrade_psycho_warfare
-			add_ideas = r56_clandestine_propaganda_techniques
-		}
-		search_filters = { FOCUS_FILTER_ESPIONAGE }
-	}	
 	focus = {
 		id = PRC_mongolia_issue
 		icon = GFX_focus_generic_attack_mongolia
@@ -4589,11 +4601,21 @@ focus_tree = {
 			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
 		}
 		completion_reward = {
-			add_stability = -0.10
-			add_popularity = {
-				ideology = communism
-				popularity = 1
+			hidden_effect = {
+				set_temp_variable = {
+					var = remove_rivals_var
+					value = party_popularity@neutrality
+				}
+				multiply_temp_variable = {
+					var = remove_rivals_var
+					value = -0.4
+				}
 			}
+			add_stability = remove_rivals_var
+			#add_popularity = {
+			#	ideology = communism
+			#	popularity = 1
+			#}
 		}
 	}
 	focus = {
@@ -4623,6 +4645,20 @@ focus_tree = {
 		completion_reward = {
 			####KILLS ALMOST ALL LEADERS BESIDES COMFIRMED COMMUNISTS
 			add_stability = -0.10
+			retire_character = CHI_he_yingqin
+			retire_character = CHI_zhu_de
+			retire_character = YUN_long_yun
+			retire_character = GXC_li_zongren
+			retire_character = SHX_yan_xishan
+			retire_character = CHI_chen_jitang
+			retire_character = GER_alexander_von_falkenhausen
+			retire_character = CHI_xiao_yisu
+			retire_character = CHI_gao_zhihang
+			retire_character = CHI_chen_cheng
+			retire_character = CHI_yu_hanmou
+			hidden_effect = {
+				retire_character = USA_claire_lee_chennault
+			}
 		}
 	}
 	focus = {
@@ -4655,6 +4691,16 @@ focus_tree = {
 				idea = CHI_bureaucracy_purge
 				days = 180
 			}
+			retire_character = CHI_wang_jingwei
+			retire_character = CHI_dai_li
+			retire_character = CHI_chiang_ching_kuo
+			retire_character = CHI_h_h_kung
+			retire_character = CHI_chen_yi
+			retire_character = CHI_random_prince_of_terror
+			retire_character = CHI_lin_sen
+			retire_character = CHI_chen_guofu
+			retire_character = CHI_soong_mei_ling
+			retire_character = CHI_t_v_soong_political_advisor
 			####GETS RID OF ALL THE ADVISORS FOR NATIONALISTS
 		}
 	}
@@ -4725,6 +4771,8 @@ focus_tree = {
 
 		completion_reward = {
 			#country_event =CHI.7
+			add_political_power = 100
+			add_stability = 0.05
 		}
 	}
 	focus = {
@@ -4931,7 +4979,57 @@ focus_tree = {
 			}
 		}
 	}
-
+	focus = {
+		id = CHI_demand_taiwan
+		icon = GFX_goal_generic_more_territorial_claims
+		cost = 10
+		x = 2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_supply_for_our_invasion }
+		prerequisite = { focus = CHI_military_industries }
+		relative_position_id = CHI_prepare_for_the_inevitable
+		available = {
+			is_puppet = no
+			any_state = {
+				state = 524
+				custom_trigger_tooltip = {
+					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
+					NOT = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+				}
+			}
+		}
+		bypass = {
+			524 = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+		completion_reward = {
+			navy_experience = 100
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_owned_state = {
+						OR = {
+							state = 524
+						}
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_state_focus
+						expire = 0
+					}
+				}
+			}
+		}
+	}
 	###### MAO POLITICS ###########
 	focus = {
 		id = PRC_suppress_counterrevolutionaries
@@ -4950,6 +5048,10 @@ focus_tree = {
 			add_political_power = 75
 			###KILLS SOME COMMUNIST OPPOSITION LEADERS
 			add_country_leader_trait = dictator
+			add_popularity = {
+				ideology = communism
+				popularity = 1
+			}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
