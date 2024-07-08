@@ -334,8 +334,9 @@ focus_tree = {
 			prerequisite = {
 				focus = SWI_air_inno
 				focus = SWI_faction_research
+				focus = SWI_army_advancements
 			}	
-			x = -1
+			x = 0
 			y = 1
 			
 			completion_reward = {
@@ -1031,9 +1032,11 @@ focus_tree = {
 		prerequisite = {
 			focus = SWI_extend_maginot
 			focus = SWI_french_tech
+			focus = SWI_keep_our_system
+			focus = SWI_forts_on_them
 		}
 		relative_position_id = SWI_extend_maginot
-		x = -1
+		x = 1
 		y = 1
 		
 		completion_reward = {
@@ -1205,6 +1208,9 @@ focus_tree = {
 				has_completed_focus = SWI_go_left
 			}
 		}
+		mutually_exclusive = {
+			focus = SWI_our_own_destiny
+		}
 		prerequisite = {
 			focus = SWI_meat_shields
 			focus = SWI_gun_go_boom
@@ -1255,6 +1261,9 @@ focus_tree = {
 			modifier = {
 				factor = 50
 			}
+		}
+		mutually_exclusive = {
+			focus = SWI_recognize_ussr
 		}
 		prerequisite = {
 			focus = SWI_meat_shields
@@ -1362,6 +1371,7 @@ focus_tree = {
 		}
 		mutually_exclusive = {
 			focus = SWI_join_germany
+			focus = SWI_swiss_fascism
 		}
 		available = {
 			is_subject = no
@@ -1373,7 +1383,7 @@ focus_tree = {
 			is_in_faction_with = ITA
 		}
 		
-		x = -1
+		x = -2
 		y = 1
 		
 		completion_reward = {
@@ -1391,6 +1401,7 @@ focus_tree = {
 		}
 		mutually_exclusive = {
 			focus = SWI_join_italy
+			focus = SWI_swiss_fascism
 		}
 		
 		available = {
@@ -1405,11 +1416,72 @@ focus_tree = {
 			is_in_faction_with = GER
 		}			
 		
-		x = 1
+		x = 0
 		y = 1
 		
 		completion_reward = {
 			GER = { country_event = generic.2 }			
+		}
+		search_filters = { FOCUS_FILTER_ALLIANCE }
+	}
+	focus = {
+		id = SWI_swiss_fascism
+		icon = GFX_goal_SWI_pro_helvetia_shine
+		cost = 5.00
+
+		prerequisite = {
+			focus = SWI_fascist_diplo
+		}
+		mutually_exclusive = {
+			focus = SWI_join_italy
+			focus = SWI_join_germany
+		}
+		relative_position_id = SWI_fascist_diplo
+			
+		
+		x = 2
+		y = 1
+		
+		completion_reward = {
+			set_rule = {
+				can_create_factions = yes
+			}	
+		}
+		search_filters = { FOCUS_FILTER_ALLIANCE }
+	}
+	focus = {
+		id = SWI_army_advancements
+		icon = GFX_goal_fascist_factory_shine
+		cost = 5.00
+
+		prerequisite = {
+			focus = SWI_swiss_fascism
+			focus = SWI_join_germany
+			focus = SWI_join_italy
+		}
+		relative_position_id = SWI_swiss_fascism
+			
+		
+		x = 0
+		y = 1
+		
+		completion_reward = {
+			3 =  {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			151 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_ALLIANCE }
 	}
@@ -1423,6 +1495,7 @@ focus_tree = {
 		prerequisite = {
 			focus = SWI_join_germany
 			focus = SWI_join_italy
+			focus = SWI_swiss_fascism
 		}
 
 		relative_position_id = SWI_join_italy
@@ -1543,8 +1616,7 @@ focus_tree = {
 		bypass = {
 			is_in_faction_with = FRA
 		}
-		
-		x = 0
+		x = -2
 		y = 1
 		
 		completion_reward = {
@@ -2240,7 +2312,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_our_own_faction
-		icon = GFX_goal_support_communism
+		icon = GFX_goal_communist_latin_america_shine
 		cost = 5.00
 		ai_will_do = {
 			factor = 11
@@ -2298,7 +2370,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_swiss_universitys
-		icon = GFX_focus_generic_socialist_science
+		icon = GFX_goal_communist_brain_shine
 		cost = 10.00
 
 		prerequisite = {
@@ -2327,6 +2399,8 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = SWI_join_germany
+			focus = SWI_join_italy
+			focus = SWI_swiss_fascism
 		}
 
 		relative_position_id = SWI_join_germany
@@ -2395,7 +2469,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SWI_swiss_wepons
-		icon = GFX_goal_generic_army_artillery
+		icon = GFX_goal_generic_communist_industries_shine
 		cost = 10.00
 		ai_will_do = {
 			factor = 6
@@ -3065,7 +3139,7 @@ focus = {
 
 	completion_reward = {
 		add_political_power = 100
-		SWI_add_suspicious_prep_opinion = yes 
+		add_manpower = 20000
 	}
 }
 
@@ -3850,7 +3924,7 @@ focus = {
 
 	completion_reward = {
 		add_political_power = 50
-		SWI_add_suspicious_prep_opinion = yes 		
+		add_ideas = SWI_prolonged_service
 	}
 }	
 
@@ -3879,8 +3953,8 @@ focus = {
 
 	completion_reward = {
 		add_political_power = 100
-		SWI_upgrade_template_and_divisions = yes 
-		SWI_add_suspicious_prep_opinion = yes 		
+		add_manpower = 10000
+		add_ideas = extensive_conscription	
 	}
 }
 
@@ -4305,8 +4379,110 @@ focus = {
 		SWI_add_suspicious_prep_opinion = yes 		
 	}
 }
+focus = {
+	id = SWI_our_demoacracy
+	icon = GFX_focus_SWI_swiss_guiding_principles
+	cost = 5.00
 
+	prerequisite = {
+		focus = SWI_democratic_diplo
+	}
+	mutually_exclusive = {
+		focus = SWI_join_allies
+	}
+	relative_position_id = SWI_democratic_diplo
+		
+	
+	x = 2
+	y = 1
+	
+	completion_reward = {
+		set_rule = {
+			can_create_factions = yes
+		}	
+	}
+	search_filters = { FOCUS_FILTER_ALLIANCE }
+}
+focus = {
+	id = SWI_keep_our_system
+	icon = GFX_focus_SWI_new_eidgenossenschaft
+	cost = 5.00
 
+	prerequisite = {
+		focus = SWI_our_demoacracy
+	}
+	relative_position_id = SWI_our_demoacracy
+		
+	
+	x = 1
+	y = 1
+	
+	completion_reward = {
+		add_political_power = 150
+		add_stability = 0.10
+	}
+	search_filters = { FOCUS_FILTER_ALLIANCE }
+}
+focus = {
+	id = SWI_forts_on_them
+	icon = GFX_focus_SWI_the_national_redoubt
+	cost = 5.00
+
+	prerequisite = {
+		focus = SWI_our_demoacracy
+	}
+	relative_position_id = SWI_our_demoacracy
+		
+	
+	x = -1
+	y = 1
+	
+	completion_reward = {
+		FRA = { custom_effect_tooltip = SWI_add_forts_bordering }
+		hidden_effect = {
+			every_owned_state = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_border_country = FRA
+					}
+				}
+			}
+		}
+		ITA = { custom_effect_tooltip = SWI_add_forts_bordering }
+		hidden_effect = {	
+			every_owned_state = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_border_country = ITA
+					}
+				}
+			}
+		}
+		GER = { custom_effect_tooltip = SWI_add_forts_bordering }
+		hidden_effect = {
+			every_owned_state = {
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_border_country = GER
+					}
+				}
+			}
+		}
+	}
+	search_filters = { FOCUS_FILTER_ALLIANCE }
+}
 ########################################################################################
 #############                WEAPONS INDUSTRY SUB BRANCH              ##################
 ########################################################################################
