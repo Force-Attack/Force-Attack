@@ -2155,186 +2155,7 @@ focus_tree = {
 			add_timed_idea = { idea = SWI_war_prep days = 540 }
 		}
 	}
-	focus = {
-		id = SWI_stock
-		icon = GFX_goal_generic_consumer_goods
-		cost = 10.00
-		ai_will_do = {
-			factor = 7
-			modifier = {
-				factor = 10
-				threat > 0.35
-			}
-		}
-		prerequisite = {
-			focus = SWI_prepare
-		}
-		
-		available = {
-			threat > 0.25
-		}
-		
-		x = 39
-		y = 3
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_shadow_org }
-				swap_ideas = {
-					remove_idea = SWI_shadow_org
-					add_idea = SWI_shadow_org_5
-				}
-			}
-			else_if = {
-				limit = { has_idea = SWI_shadow_org_2 }
-				swap_ideas = {
-					remove_idea = SWI_shadow_org_2
-					add_idea = SWI_shadow_org_6
-				}
-			}
-			else_if = {
-				limit = { has_idea = SWI_shadow_org_3 }
-				swap_ideas = {
-					remove_idea = SWI_shadow_org_3
-					add_idea = SWI_shadow_org_7
-				}
-			}
-			else_if = {
-				limit = { has_idea = SWI_shadow_org_4 }
-				swap_ideas = {
-					remove_idea = SWI_shadow_org_4
-					add_idea = SWI_shadow_org_8
-				}
-			}
-			else = {
-				add_ideas = SWI_stockpiles
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_shadow
-		icon = GFX_focus_SWI_issue_war_bonds
-		cost = 10.00
-		ai_will_do = {
-			factor = 13
-		}
-		prerequisite = {
-			focus = SWI_prepare
-		}
-		
-		available = {
-			threat > 0.3
-		}
-		
-		x = 42
-		y = 3
-		
-		completion_reward = {
-			if = {
-				limit = { has_idea = SWI_stockpiles }
-				swap_ideas = {
-					remove_idea = SWI_stockpiles
-					add_idea = SWI_shadow_org_5
-				}
-				else = {
-					add_ideas = SWI_shadow_org
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_shadow_seize
-		icon = GFX_goal_generic_state_economy
-		cost = 10.00
-		ai_will_do = {
-			factor = 13
-		}
-		prerequisite = {
-			focus = SWI_shadow
-		}
-		
-		available = {
-			OR = {
-				has_war = yes
-				has_government = fascism
-				has_government = communism
-				threat > 0.33
-			}
-		}
-		
-		bypass = {
-			custom_trigger_tooltip = {
-				tooltip = production_effort_tt
-				3 = {
-					free_building_slots = {
-						building = arms_factory
-						size < 1
-						include_locked = yes
-					}
-				}
-				151 = {
-					free_building_slots = {
-						building = arms_factory
-						size < 1
-						include_locked = yes
-					}
-				}
-			}
-		}
-		
-		x = 41
-		y = 4
-		
-		completion_reward = {
-			3 =  {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			151 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_convoys
-		icon = GFX_goal_generic_occupy_states_coastal
-		cost = 10.00
-		
-		prerequisite = {
-			focus = SWI_shadow
-		}
-		
-		available = {
-			OR = {
-				all_neighbor_country = {
-					has_war = yes
-				}
-				threat > 0.75
-			}				
-		}
-		
-		x = 43
-		y = 4
-		
-		completion_reward = {
-			add_equipment_to_stockpile = { type = convoy_1 amount = 100 }
-		}
-		search_filters = {
-			FOCUS_FILTER_MILITARY_EQUIPMENT
-		}
-	}
+
 	focus = {
 		id = SWI_modern_mil_facs
 		icon = GFX_goal_generic_construct_mil_factory
@@ -2399,9 +2220,9 @@ focus_tree = {
 		id = SWI_light_naval_guns
 		prerequisite = { focus = SWI_modern_mil_facs }
 		icon = GFX_goal_generic_admirality
-		x = -1
-		y = 2
-		relative_position_id = SWI_modern_mil_facs
+		x = 0
+		y = 1
+		relative_position_id = SWI_modern_at_weapons
 		cost = 10
 		ai_will_do = {
 			factor = 2
@@ -2464,7 +2285,7 @@ focus_tree = {
 		}
 		
 		relative_position_id = SWI_modern_mil_facs
-		x = 2
+		x = 1
 		y = 1
 
 		available = {
@@ -2505,9 +2326,11 @@ focus_tree = {
 			threat > 0.5
 			has_capitulated = no
 		}
+
+		relative_position_id = SWI_modern_mil_facs
 		
-		x = 45
-		y = 4
+		x = -1
+		y = 1
 		
 		completion_reward = {
 			if = {
@@ -2555,8 +2378,10 @@ focus_tree = {
 			focus = SWI_stop_export
 		}
 		
-		x = 45
-		y = 6
+		relative_position_id = SWI_stop_export
+
+		x = 0
+		y = 1
 		
 		completion_reward = {
 			151 = {
@@ -2580,19 +2405,19 @@ focus_tree = {
 			factor = 13
 		}
 		prerequisite = {
-			focus = SWI_shadow
+			focus = SWI_prepare
 		}
-		prerequisite = {
-			focus = SWI_stock
-		}
+
+
+		relative_position_id = SWI_prepare
 		
 		available = {
 			controls_state = 3
 			controls_state = 151
 		}
 		
-		x = 39
-		y = 4
+		x = -3
+		y = 1
 		
 		completion_reward = {
 			if = {
@@ -2635,11 +2460,11 @@ focus_tree = {
 		prerequisite = {
 			focus = SWI_wahlen
 		}
-		
+		relative_position_id = SWI_wahlen
 		available_if_capitulated = yes
 		
-		x = 39
-		y = 5
+		x = -1
+		y = 1
 		
 		completion_reward = {
 			custom_effect_tooltip = ICE_no_six
@@ -2678,8 +2503,10 @@ focus_tree = {
 
 		}		
 		
-		x = 40
-		y = 6
+		relative_position_id = SWI_agri
+		
+		x = 1
+		y = 1
 		
 		completion_reward = {
 			random_owned_controlled_state = {
@@ -2705,20 +2532,20 @@ focus_tree = {
 				threat > 0.75
 			}
 		}
-		prerequisite = {
-			focus = SWI_shadow_seize
-		}
+		
 		prerequisite = {
 			focus = SWI_wahlen
 		}
+
+		relative_position_id = SWI_wahlen
 		
 		available = {
 			controls_state = 3
 			controls_state = 151
 		}
 		
-		x = 41
-		y = 5
+		x = 1
+		y = 1
 		
 		completion_reward = {
 			add_tech_bonus = {
@@ -2751,44 +2578,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY FOCUS_FILTER_OIL FOCUS_FILTER_RUBBER}
 	}
-	focus = {
-		id = SWI_bicycle_infantry
-		icon = GFX_goal_generic_army_elite
-		cost = 10.00
 
-		prerequisite = {
-			focus = SWI_fuel_ration
-		}
-		
-		relative_position_id = SWI_fuel_ration
-		x = 1
-		y = 1
-
-		available = {
-	
-		}
-
-		completion_reward = {
-			army_experience = 5		
-			set_technology = { bicycle_infantry = 1 }
-			division_template = {
-				name = "Radfahrtruppen"		# border cycling units....with tank destroyers
-				division_names_group = SWI_INF_01
-				regiments = {
-					bicycle_battalion = { x = 0 y = 0 }
-					bicycle_battalion = { x = 0 y = 1 }
-					bicycle_battalion = { x = 1 y = 1 }
-					bicycle_battalion = { x = 1 y = 0 }
-					bicycle_battalion = { x = 0 y = 2 }
-				}
-				support = {
-					recon = { x = 0 y = 0 }
-					anti_tank = { x = 0 y = 1 }  
-				}
-			}					
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}	
 	focus = {
 		id = SWI_join_cominterm
 		icon = GFX_goal_support_communism
@@ -3005,11 +2795,11 @@ focus = {
 	id = SWI_defense_fund
 	icon = GFX_focus_SWI_issue_war_bonds
 	prerequisite = {
-		focus = SWI_armed_neutrality
+		focus = SWI_prepare
 	}
-	x = -8
+	x = 0
 	y = 1
-	relative_position_id = SWI_armed_neutrality
+	relative_position_id = SWI_prepare
 	cost = 10
 
 	ai_will_do = {
@@ -3050,9 +2840,9 @@ focus = {
 	id = SWI_defense_budget_increased
 	icon = GFX_goal_generic_military_sphere
 	prerequisite = { focus = SWI_defense_fund }
-	x = -10
-	y = 2
-	relative_position_id = SWI_armed_neutrality
+	x = 0
+	y = 1
+	relative_position_id = SWI_defense_fund
 	cost = 10
 
 	ai_will_do = {
@@ -3089,9 +2879,9 @@ focus= {
 	id = SWI_expand_weapons_industry
 	icon = GFX_goal_generic_construct_mil_factory
 	prerequisite = { focus = SWI_defense_budget_increased }
-	x = -13
-	y = 3
-	relative_position_id = SWI_armed_neutrality
+	x = 0
+	y = 1
+	relative_position_id = SWI_defense_budget_increased
 	cost = 10
 
 	ai_will_do = {
@@ -3119,7 +2909,7 @@ focus = {
 	mutually_exclusive = { focus = SWI_alpine_specialization }
 	relative_position_id = SWI_expand_weapons_industry
 	x = -2
-	y = 1
+	y = 2
 
 	cost = 10
 
@@ -3163,7 +2953,7 @@ focus = {
 	mutually_exclusive = { focus = SWI_swiss_armored_divisions }
 	relative_position_id = SWI_expand_weapons_industry
 	x = 2
-	y = 1
+	y = 2
 
 	cost = 10
 
