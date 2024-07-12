@@ -415,11 +415,16 @@ focus_tree = {
 				uses = 1
 				category = synth_resources
 			}
-			 modify_building_resources = {
+			modify_building_resources = {
 				building = synthetic_refinery
 				resource = rubber
 				amount = 2
-			 }
+			}
+			modify_building_resources = {
+				building = rubber_refinery
+				resource = rubber
+				amount = 2
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_OIL FOCUS_FILTER_RUBBER
@@ -518,8 +523,8 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = GER_autarky
-				bonus = 1.0
-				uses = 2
+				bonus = 2.0
+				uses = 3
 				category = excavation_tech
 			}
 			add_ideas = autark_support_I_idea
@@ -4595,6 +4600,7 @@ allow_branch = {
 		cost = 10
 		prerequisite = {
 			focus = GER_mobile_tanks_bonus
+			focus = GER_mobile_arty
 		}
 		prerequisite = {
 			focus = GER_mobile_mechanize_bonus
@@ -4624,6 +4630,7 @@ allow_branch = {
 		cost = 10
 		prerequisite = {
 			focus = GER_mobile_tanks_bonus
+			focus = GER_mobile_arty
 		}
 		prerequisite = {
 			focus = GER_mobile_mechanize_bonus
@@ -17293,31 +17300,7 @@ completion_reward = {
 			}
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 64 }
-				add_manpower = -500000
-				add_extra_state_shared_building_slots = 2
-			}
-			random_owned_controlled_state = {
-				prioritize = { 68 }
-				add_manpower = -500000
-				add_extra_state_shared_building_slots = 2
-			}
-			random_owned_controlled_state = {
-				prioritize = { 86 }
-				add_manpower = -500000
-				add_extra_state_shared_building_slots = 2
-			}
-			random_owned_controlled_state = {
-				prioritize = { 50 }
-				add_manpower = -500000
-				add_extra_state_shared_building_slots = 2
-			}
-			random_owned_controlled_state = {
-				prioritize = { 52 }
-				add_manpower = -500000
-				add_extra_state_shared_building_slots = 2
-			}		
+			add_stability = 0.05
 		}
 
 	}
@@ -17985,7 +17968,7 @@ completion_reward = {
 	focus = {
 		id = GER_beacon_of_purity_and_prosperity
 		icon = GFX_goal_generic_eagle
-		prerequisite = { focus = GER_stabalise_foreign_relations }
+		prerequisite = { focus = GER_imprison_hitler }
 		x = 0
 		y = 1
 		relative_position_id = GER_imprison_hitler
@@ -18028,6 +18011,20 @@ completion_reward = {
 			random_owned_controlled_state = {
 				prioritize = { 64 }
 				add_manpower = -1000000
+			}
+			if = {
+				limit = { has_completed_focus = GER_investments_into_our_economy }
+				swap_ideas = {
+					remove_idea = GER_himmlers_plan
+					add_idea = GER_himmlers_plan2
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GER_investments_into_our_army }
+				swap_ideas = {
+					remove_idea = GER_himmlers_army_plan
+					add_idea = GER_himmlers_army_plan2
+				}
 			}
 		}
 	}
@@ -18241,10 +18238,7 @@ completion_reward = {
 				factor = 10
 			}
 			completion_reward = {
-				add_timed_idea = {
-					idea = GER_himmlers_plan
-					days = 365
-				}
+				add_ideas = GER_himmlers_plan
 			}
 	}
 	focus = {
@@ -18270,10 +18264,7 @@ completion_reward = {
 				factor = 10
 			}
 			completion_reward = {
-				add_timed_idea = {
-					idea = SOV_mass_tank_procution_idea
-					days = 365
-				}
+				add_ideas = GER_himmlers_army_plan
 			}
 	}
 	focus = {
