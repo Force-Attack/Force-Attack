@@ -332,6 +332,14 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			65 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 			add_cic = 1500
 		}
 		search_filters = {
@@ -342,7 +350,7 @@ focus_tree = {
 	focus = {
 		id = GER_steelworks_issues
 		icon = GFX_goal_generic_mining_iron
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = GER_autobahn
 		}
@@ -372,7 +380,7 @@ focus_tree = {
 	focus = {
 		id = GER_nationalize_resource_industries
 		icon = GFX_focus_generic_offshore_oil_rig
-		cost = 10.00
+		cost = 5
 		prerequisite = {
 			focus = GER_steelworks_issues
 		}
@@ -407,11 +415,16 @@ focus_tree = {
 				uses = 1
 				category = synth_resources
 			}
-			 modify_building_resources = {
+			modify_building_resources = {
 				building = synthetic_refinery
 				resource = rubber
 				amount = 2
-			 }
+			}
+			modify_building_resources = {
+				building = rubber_refinery
+				resource = rubber
+				amount = 2
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_OIL FOCUS_FILTER_RUBBER
@@ -510,8 +523,8 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = GER_autarky
-				bonus = 1.0
-				uses = 2
+				bonus = 2.0
+				uses = 3
 				category = excavation_tech
 			}
 			add_ideas = autark_support_I_idea
@@ -586,7 +599,7 @@ focus_tree = {
 	focus = {
 		id = GER_reform_uranprojekt
 		icon = GFX_focus_ARG_develop_the_electricity_sector
-		cost = 10.00
+		cost = 5
 		# prerequisite = {
 		# 	focus = GER_appoint_economic_positions
 		# }
@@ -647,7 +660,7 @@ focus_tree = {
 	focus = {
         id = GER_deutsche_arbeitsfront
         icon = GFX_goal_GER_deutsche_arbeitsfront
-        cost = 10
+        cost = 5
 		prerequisite = {
 			focus = GER_reform_uranprojekt
 		}
@@ -2367,6 +2380,9 @@ allow_branch = {
 			923 = {
 				is_demilitarized_zone = no
 			}
+			1053 = {
+				is_demilitarized_zone = no
+			}
 		}
 		completion_reward = {
 			custom_effect_tooltip = GER_rhineland_ultimatum
@@ -2393,6 +2409,9 @@ allow_branch = {
 			}
 			923 = {
 				set_demilitarized_zone = no
+			}
+			1053 = {
+				is_demilitarized_zone = no
 			}
 			if = {
 				limit = {
@@ -4581,6 +4600,7 @@ allow_branch = {
 		cost = 10
 		prerequisite = {
 			focus = GER_mobile_tanks_bonus
+			focus = GER_mobile_arty
 		}
 		prerequisite = {
 			focus = GER_mobile_mechanize_bonus
@@ -4610,6 +4630,7 @@ allow_branch = {
 		cost = 10
 		prerequisite = {
 			focus = GER_mobile_tanks_bonus
+			focus = GER_mobile_arty
 		}
 		prerequisite = {
 			focus = GER_mobile_mechanize_bonus
@@ -16956,7 +16977,26 @@ completion_reward = {
 				factor = 0
 			}
 		}
-		completion_reward = {
+		completion_reward = {	
+			add_threat = 5
+			effect_tooltip = { 
+				set_party_name = {
+					ideology = fascist
+					long_name = "Schutzstaffel"
+					name = "SS"
+				}
+			}
+			add_country_leader_role = {
+				character = GER_heinrich_himmler
+				promote_leader = yes
+				country_leader = {
+					ideology = fascism_ideology
+					expire = "1965.1.1"
+					traits = {
+						prince_of_terror
+					}
+				}
+			}	
 			add_ideas = GER_hitlers_shadow1
 			random_owned_controlled_state = {
 				prioritize = { 60 }
@@ -16965,14 +17005,6 @@ completion_reward = {
 			random_owned_controlled_state = {
 				prioritize = { 55 }
 				add_manpower = -10000
-			}
-			add_country_leader_role = {
-				character = GER_erwin_rommel
-				promote_leader = yes
-				country_leader = {
-					ideology = fascism_ideology
-					expire = "1965.1.1"
-				}
 			}
 			mark_focus_tree_layout_dirty = yes	
 			hidden_effect = { GER_remove_mefo_bills = yes }
@@ -17003,6 +17035,7 @@ completion_reward = {
 			}
 		}
 		completion_reward = {
+			add_ideas = new_regime2
 			add_political_power = 25
 			add_stability = 0.025
 		}
@@ -17020,9 +17053,9 @@ completion_reward = {
 		
 		relative_position_id = GER_continue_remilitarization_in_the_rhineland
 		x = 0
-		y = 2
+		y = 1
 		prerequisite = {
-			focus = GER_a_new_germany	
+			focus = GER_continue_remilitarization_in_the_rhineland
 		}
 		ai_will_do = {
 			factor = 8
@@ -17089,15 +17122,15 @@ completion_reward = {
 	focus = {
 		id = GER_a_new_germany
 		icon = GFX_GER_black_sun
-		cost = 1
+		cost = 5
 		
 		
 		
-		relative_position_id = GER_the_alternative
-		x = 1
-		y = 3
+		relative_position_id = GER_assert_cultural_dominance
+		x = 0
+		y = 1
 		prerequisite = {
-			focus = GER_continue_remilitarization_in_the_rhineland
+			focus = GER_assert_cultural_dominance
 		}
 		ai_will_do = {
 			factor = 8
@@ -17107,6 +17140,10 @@ completion_reward = {
 			}
 		}
 		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			add_political_power = 50
+
 			custom_effect_tooltip = GER_germania_tt
 			hidden_effect = {
 				set_cosmetic_tag = GER_germania
@@ -17122,13 +17159,13 @@ completion_reward = {
 	focus = {
 		id = GER_continue_remilitarization_in_the_rhineland
 		icon = GFX_goal_ger_rhineland2
-		cost = 5.0 #works oddly so I need to cut an extra day
+		cost = 5
 		prerequisite = {
 			focus = GER_for_the_german_people
 		}
-		relative_position_id = GER_the_alternative
+		relative_position_id = GER_for_the_german_people
 		x = 1
-		y = 2
+		y = 1
 		ai_will_do = {
 			factor = 100
 			modifier = {
@@ -17155,6 +17192,9 @@ completion_reward = {
 			923 = {
 				is_demilitarized_zone = no
 			}
+			1053 = {
+				is_demilitarized_zone = no
+			}
 		}
 		completion_reward = {
 			custom_effect_tooltip = GER_rhineland_ultimatum
@@ -17178,6 +17218,9 @@ completion_reward = {
 			}
 			923 = {
 				set_demilitarized_zone = no
+			}
+			1053 = {
+				is_demilitarized_zone = no
 			}
 			if = {
 				limit = {
@@ -17238,19 +17281,19 @@ completion_reward = {
 	}
 	focus = {
 		id = GER_assert_cultural_dominance
-		icon = GFX_focus_spr_masters_of_our_own_fate
-		cost = 10.00
+		icon = GFX_focus_ger_reichskommisariats
+		cost = 5
 		
 		
 
-		relative_position_id = GER_demand_dominant_germanic_lands
-		x = 0
+		relative_position_id = GER_for_the_german_people
+		x = -1
 		y = 1
 		prerequisite = {
-			focus = GER_demand_dominant_germanic_lands
+			focus = GER_for_the_german_people
 		}
 		ai_will_do = {
-			factor = 8
+			factor = 5
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -17282,17 +17325,6 @@ completion_reward = {
 				add_manpower = -500000
 				add_extra_state_shared_building_slots = 2
 			}		
-			if = {
-				limit = {
-					has_idea = equality_genocide
-					has_idea = equality_segregation
-					has_idea = equality_minority
-				}
-				add_political_power = 150
-			}
-			else = {
-				add_ideas = equality_genocide
-			}
 		}
 
 	}
@@ -17300,10 +17332,10 @@ completion_reward = {
 		id = GER_the_new_father_of_fascism
 		icon = GFX_focus_generic_spread_fascism
 
-		prerequisite = { focus = GER_himmler_takes_lead }
+		prerequisite = { focus = GER_for_the_german_people }
 
 
-		x = 0
+		x = -5
 		y = 1
 
 		cost = 5
@@ -17314,7 +17346,7 @@ completion_reward = {
 
 
 
-		relative_position_id = GER_himmler_takes_lead
+		relative_position_id = GER_for_the_german_people
 
 		completion_reward = {	
 			add_country_leader_trait = dictator
@@ -17331,15 +17363,16 @@ completion_reward = {
 			}		
 		}																																																												
 	}
+
 	focus = {
-		id = GER_himmler_takes_lead
-		icon = GFX_GER_heinrich_himmler
+		id = GER_plunder_the_undesired
+		icon = GFX_goal_hand_taking
 
 		prerequisite = { focus = GER_for_the_german_people }
 
 
-		x = -1
-		y = 2
+		x = 4
+		y = 1
 
 		cost = 5
 
@@ -17347,40 +17380,295 @@ completion_reward = {
 			factor = 1
 		}
 
-
-
-		relative_position_id = GER_the_alternative
-
-		completion_reward = {	
-			effect_tooltip = { 
-			set_party_name = {
-				ideology = fascist
-				long_name = "Schutzstaffel"
-				name = "SS"
+		available = {
+			AND = {
+				GER = { controls_state = 4}
+				GER = { controls_state = 64}
 			}
 		}
-			add_country_leader_role = {
-				character = GER_heinrich_himmler
-				promote_leader = yes
-				country_leader = {
-					ideology = fascism_ideology
-					expire = "1965.1.1"
-					traits = {
-						prince_of_terror
-					}
+
+
+		relative_position_id = GER_for_the_german_people
+
+		completion_reward = {	
+
+			if = {
+				limit = { has_idea = GER_plunder_eco_extreme }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_extreme
+					add_idea = GER_plunder_eco_world_dominance
 				}
-			}	
-		}																																																												
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_high }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_high
+					add_idea = GER_plunder_eco_extreme
+				}
+
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_medium }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_medium
+					add_idea = GER_plunder_eco_high
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_low }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_low
+					add_idea = GER_plunder_eco_medium
+				}
+			}
+			else = {
+				add_ideas = GER_plunder_eco_low
+			}
+		}
 	}
+	focus = {
+		id = GER_plunder_the_west
+		icon = GFX_focus_attack_france
+
+		prerequisite = { focus = GER_plunder_the_undesired }
+
+
+		x = -1
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available = {
+			GER = { controls_state = 16}
+		}
+
+		relative_position_id = GER_plunder_the_undesired
+
+		completion_reward = {	
+			if = {
+				limit = { has_idea = GER_plunder_eco_extreme }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_extreme
+					add_idea = GER_plunder_eco_world_dominance
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_high }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_high
+					add_idea = GER_plunder_eco_extreme
+				}
+
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_medium }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_medium
+					add_idea = GER_plunder_eco_high
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_low }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_low
+					add_idea = GER_plunder_eco_medium
+				}
+			}
+			else = {
+				add_ideas = GER_plunder_eco_low
+			}
+		}
+	}
+	focus = {
+		id = GER_plunder_the_west2
+		icon = GFX_focus_attack_britain
+
+		prerequisite = { focus = GER_plunder_the_west }
+
+
+		x = 0
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			GER = { controls_state = 126}
+		}
+
+		relative_position_id = GER_plunder_the_west
+
+		completion_reward = {	
+			if = {
+				limit = { has_idea = GER_plunder_eco_extreme }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_extreme
+					add_idea = GER_plunder_eco_world_dominance
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_high }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_high
+					add_idea = GER_plunder_eco_extreme
+				}
+
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_medium }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_medium
+					add_idea = GER_plunder_eco_high
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_low }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_low
+					add_idea = GER_plunder_eco_medium
+				}
+			}
+			else = {
+				add_ideas = GER_plunder_eco_low
+			}
+		}
+	}
+	focus = {
+		id = GER_plunder_the_east
+		icon = GFX_goal_generic_attack_poland
+
+		prerequisite = { focus = GER_plunder_the_undesired }
+
+
+		x = 1
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			GER = { controls_state = 10}
+		}
+
+		relative_position_id = GER_plunder_the_undesired
+
+		completion_reward = {	
+			if = {
+				limit = { has_idea = GER_plunder_eco_extreme }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_extreme
+					add_idea = GER_plunder_eco_world_dominance
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_high }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_high
+					add_idea = GER_plunder_eco_extreme
+				}
+
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_medium }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_medium
+					add_idea = GER_plunder_eco_high
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_low }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_low
+					add_idea = GER_plunder_eco_medium
+				}
+			}
+			else = {
+				add_ideas = GER_plunder_eco_low
+			}
+		}
+	}
+	focus = {
+		id = GER_plunder_the_east2
+		icon = GFX_focus_attack_soviet
+
+		prerequisite = { focus = GER_plunder_the_east }
+
+
+		x = 0
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			AND = {
+				GER = { controls_state = 195}
+				GER = { controls_state = 219}
+			}
+		}
+
+		relative_position_id = GER_plunder_the_east
+
+		completion_reward = {	
+			if = {
+				limit = { has_idea = GER_plunder_eco_extreme }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_extreme
+					add_idea = GER_plunder_eco_world_dominance
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_high }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_high
+					add_idea = GER_plunder_eco_extreme
+				}
+
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_medium }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_medium
+					add_idea = GER_plunder_eco_high
+				}
+			}
+			else_if = {
+				limit = { has_idea = GER_plunder_eco_low }
+				swap_ideas = {
+					remove_idea = GER_plunder_eco_low
+					add_idea = GER_plunder_eco_medium
+				}
+			}
+			else = {
+				add_ideas = GER_plunder_eco_low
+			}
+		}
+	}																																																													
+	
+
 	focus = {
 		id = GER_imprison_hitler
 		icon = GFX_GER_imprisoned_hitler
 
 		prerequisite = { focus = GER_formulate_ss_agency } 
+		prerequisite = { focus = GER_stabalise_foreign_relations } 
 
 
-		x = -8
-		y = 3
+		x = 2
+		y = 1
 
 		cost = 5
 
@@ -17390,7 +17678,7 @@ completion_reward = {
 
 
 
-		relative_position_id = GER_himmler_takes_lead
+		relative_position_id = GER_formulate_ss_agency
 
 		completion_reward = {	
 			remove_ideas = GER_hitlers_shadow1
@@ -17403,8 +17691,8 @@ completion_reward = {
 		prerequisite = { focus = GER_formulate_ss_agency } 
 
 
-		x = -9
-		y = 2
+		x = 0
+		y = 1
 
 		cost = 5
 
@@ -17414,7 +17702,7 @@ completion_reward = {
 
 
 
-		relative_position_id = GER_himmler_takes_lead
+		relative_position_id = GER_formulate_ss_agency
 
 		completion_reward = {	
 			add_political_power = 50
@@ -17422,47 +17710,13 @@ completion_reward = {
 		}																																																												
 	}
 	focus = {
-		id = GER_anti_communism
-		icon = GFX_goal_generic_anti_communism
-		relative_position_id = GER_himmler_takes_lead
-		x = -2
-		y = 1
-		
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		cost = 5
-		
-		ai_will_do = {
-			factor = 10
-		}
-		
-		prerequisite = {
-			focus = GER_himmler_takes_lead
-		}
-		
-		available = {
-			has_government = fascism
-			NOT = { has_country_flag = britain_enforced_our_loyalty }
-		}
-		
-
-
-		available_if_capitulated = yes
-
-
-		completion_reward = {
-			add_ideas = r56_CAN_anti_communism
-			add_stability = 0.05
-		}
-	}
-	focus = {
 		id = GER_formulate_ss_agency
 		icon = GFX_goal_generic_espionage
-		relative_position_id = GER_himmler_takes_lead
-		x = -4
+		relative_position_id = GER_the_new_father_of_fascism
+		x = -2
 		y = 1
 
-		cost = 5
+		cost = 3
 		
 		
 		ai_will_do = {
@@ -17470,7 +17724,7 @@ completion_reward = {
 		}
 		
 		prerequisite = {
-			focus = GER_himmler_takes_lead
+			focus = GER_the_new_father_of_fascism
 		}
 		
 
@@ -17515,185 +17769,11 @@ completion_reward = {
 		search_filters = { FOCUS_FILTER_ESPIONAGE }
 	}
 	focus = {
-		id = GER_defense_of_the_fatherland_in_the_east
-		icon = GFX_goal_generic_defense_of_the_lands
-		prerequisite = { focus = GER_demand_dominant_germanic_lands }
-		available = {
-			
-					has_full_control_of_state = 188
-					has_full_control_of_state = 763
-					has_full_control_of_state = 5
-					has_full_control_of_state = 807
-					has_full_control_of_state = 86
-					has_full_control_of_state = 762
-		}
-		x = -1
-		y = 5
-		relative_position_id = GER_the_alternative
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		completion_reward = {
-			188 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 3288
-						instant_build = yes
-					}
-					
-				}
-			}
-			763 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 281
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 3384
-						instant_build = yes
-					}
-				}
-			}
-			5 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 9327
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 11386
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 9372
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 6375
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 9346
-						instant_build = yes
-					}
-				}
-			}
-			807 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 6347
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 3295
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 243
-						instant_build = yes
-					}
-				}
-			}
-			86 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 3381
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 17
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 9532
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 11558
-						instant_build = yes
-					}
-				}
-			}
-			67 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 479
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 9457
-						instant_build = yes
-					}
-				}
-			}
-			762 = {
-				if = {
-					limit = { is_controlled_by = ROOT }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 506
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 6464
-						instant_build = yes
-					}
-				}
-			}
-		}
-	}
-	focus = {
 		id = GER_the_song_of_the_white_woman
 		icon = GFX_GER_woman
-		relative_position_id = GER_demand_dominant_germanic_lands
+		relative_position_id = GER_seize_assets_of_the_political_oppositions
 		x = 0
-		y = 3
+		y = 1
 		
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -17772,17 +17852,20 @@ completion_reward = {
 		id = GER_seize_assets_of_the_political_oppositions
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		icon = GFX_goal_generic_banking_legislation
-		cost = 5.00
+		cost = 5
 		ai_will_do = { factor = 10 }
 		prerequisite = {
-			focus = GER_assert_cultural_dominance
+			focus = GER_a_new_germany
+		}
+		prerequisite = {
+			focus = GER_demand_dominant_germanic_lands
 		}
 		mutually_exclusive = {
 			focus = GER_silence_political_opponents
 		}
-		x = -1
-		y = 2
-		relative_position_id = GER_demand_dominant_germanic_lands
+		x = 0
+		y = 1
+		relative_position_id = GER_a_new_germany
 		completion_reward = {
 			add_ideas = GER_seized_assets
 		}
@@ -17791,17 +17874,20 @@ completion_reward = {
 	focus = {
 		id = GER_silence_political_opponents
 		icon = GFX_focus_generic_conspiracy
-		cost = 5.00
+		cost = 5
 		ai_will_do = { factor = 10 }
 		prerequisite = {
-			focus = GER_assert_cultural_dominance
+			focus = GER_a_new_germany
+		}
+		prerequisite = {
+			focus = GER_demand_dominant_germanic_lands
 		}
 		mutually_exclusive = {
 			focus = GER_seize_assets_of_the_political_oppositions
 		}
-		x = 1
-		y = 2
-		relative_position_id = GER_demand_dominant_germanic_lands
+		x = 2
+		y = 1
+		relative_position_id = GER_a_new_germany
 		completion_reward = {
 			add_stability = 0.15
 			add_popularity = {
@@ -17827,14 +17913,15 @@ completion_reward = {
 		id = GER_encourage_counterurbanisation
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		icon = GFX_goal_generic_promote_ruralism
-		cost = 10
+		cost = 5
 		ai_will_do = { factor = 10 }
 		prerequisite = {
-			focus = GER_the_song_of_the_white_woman
+			focus = GER_seize_assets_of_the_political_oppositions
+			focus = GER_silence_political_opponents
 		}
 		x = 0
 		y = 1
-		relative_position_id = GER_the_song_of_the_white_woman
+		relative_position_id = GER_silence_political_opponents
 		completion_reward = {
 			random_owned_controlled_state = {
 				prioritize = { 64 }
@@ -17854,7 +17941,7 @@ completion_reward = {
 				add_manpower = 10000
 				add_extra_state_shared_building_slots = 6
 			}
-			add_ideas = new_regime2
+
 		}
 
 	}
@@ -17864,112 +17951,25 @@ completion_reward = {
 		cost = 10
 		ai_will_do = { factor = 10 }
 		prerequisite = {
-			focus = GER_imprison_hitler
 			focus = GER_utilize_new_contacts
 		}
-		x = -9
-		y = 4
-		relative_position_id = GER_himmler_takes_lead
+		x = 0
+		y = 1
+		relative_position_id = GER_utilize_new_contacts
 		completion_reward = {
 			add_ideas = GER_intercepted_civilian_intelligience2
 		}
 
 	}
-	focus = {
-		id = GER_himmler_italy_attack
-		icon = GFX_focus_ger_assassinate_mussolini
-		cost = 5
-		prerequisite = {
-			focus = GER_stabalise_foreign_relations
-		}
-		available = {
-			is_subject = no
-			ITA = {
-				exists = yes
-				NOT = {
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-				}
-			}
-		}
-		relative_position_id = GER_himmler_takes_lead
-		x = -2
-		y = 3
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 0
-				NOT = {
-					is_neighbor_of = ITA
-					any_allied_country = {
-						is_neighbor_of = ITA
-					}
-				}
-			}
-		}
-		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = ITA
-			}
-		}
-		search_filters = {
-			FOCUS_FILTER_ANNEXATION
-		}
-	}
-	focus = {
-		id = GER_alliance_with_italy_himmler
-		icon = GFX_goal_generic_befriend_italy
-		cost = 5
-		prerequisite = {
-			focus = GER_stabalise_foreign_relations
-			#focus = GER_anti_comitern_pact	#improves lines
-		}
-		mutually_exclusive = {
-			focus = GER_himmler_italy_attack
-		}
-		relative_position_id = GER_himmler_takes_lead
-		x = -4
-		y = 3
-		ai_will_do = {
-			factor = 9.5
-		}
-		available = {
-			NOT = {
-				has_war_with = ITA
-			}
-			ITA = {
-				exists = yes
-				NOT = {
-					is_in_faction_with = ROOT
-					has_war_with = ROOT
-				}
-			}
-		} 
-		bypass = {
-			ITA = {
-				r56_script_standard_bypass = yes
-			}
-		}
-		completion_reward = {
-			ITA = {
-				add_opinion_modifier = {
-					target = GER
-					modifier = huge_increase
-				}
-			}
-			add_political_power = 75
-		}
-	}
+	
 	focus = {
 		id = GER_stabalise_foreign_relations
 		icon = GFX_goal_generic_interal_instability
-		prerequisite = { focus = GER_formulate_ss_agency }
 		prerequisite = { focus = GER_the_new_father_of_fascism }
 
-		x = -2
-		y = 2
-		relative_position_id = GER_himmler_takes_lead
+		x = 2
+		y = 1
+		relative_position_id = GER_the_new_father_of_fascism
 
 		cost = 3
 
@@ -17992,12 +17992,12 @@ completion_reward = {
 	focus = {
 		id = GER_beacon_of_purity_and_prosperity
 		icon = GFX_goal_generic_eagle
-		prerequisite = { focus = GER_stabalise_foreign_relations }
-		x = -1
-		y = 4
-		relative_position_id = GER_himmler_takes_lead
+		prerequisite = { focus = GER_imprison_hitler }
+		x = 0
+		y = 1
+		relative_position_id = GER_imprison_hitler
 
-		cost = 10	
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -18026,65 +18026,37 @@ completion_reward = {
 		id = GER_the_beginning_of_the_end
 		icon = GFX_focus_generic_annex_country
 		cost = 5
-		prerequisite = { focus = GER_beacon_of_purity_and_prosperity }
-		prerequisite = { focus = GER_himmlers_army}
-		relative_position_id = GER_himmler_takes_lead
-		x = -4
-		y = 5
+		prerequisite = { focus = GER_investments_into_our_army focus = GER_investments_into_our_economy }
+		relative_position_id = GER_investments_into_our_economy
+		x = 1
+		y = 1
 		completion_reward = {
-			add_political_power = 100
+			add_political_power = 200
 			random_owned_controlled_state = {
 				prioritize = { 64 }
 				add_manpower = -1000000
 			}
-		}
-	}
-	focus = {
-		id = GER_women_in_the_army
-		icon = GFX_goal_womens_rights
-		x = -2
-		y = 2
-		
-		search_filters = { FOCUS_FILTER_MANPOWER }
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 10
-				has_manpower < 30000
+			if = {
+				limit = { has_completed_focus = GER_investments_into_our_economy }
+				swap_ideas = {
+					remove_idea = GER_himmlers_plan
+					add_idea = GER_himmlers_plan2
+				}
 			}
-		}
-		
-		prerequisite = {
-			focus = GER_encourage_counterurbanisation
-		}
-		relative_position_id = GER_the_song_of_the_white_woman
-		available = {
-		}
-		
-		
-
-		available_if_capitulated = yes
-
-
-		completion_reward = {
-			add_war_support = 0.1	
-			swap_ideas = {
-				remove_idea = new_regime2
-				add_idea = new_regime3
-			}
-			random_owned_controlled_state = {
-				add_manpower = -500000
+			if = {
+				limit = { has_completed_focus = GER_investments_into_our_army }
+				swap_ideas = {
+					remove_idea = GER_himmlers_army_plan
+					add_idea = GER_himmlers_army_plan2
+				}
 			}
 		}
 	}
 	focus = {
 		id = GER_declare_ethnostate
 		icon = GFX_focus_generic_court
-		x = 0
-		y = 3
+		x = 1
+		y = 2
 		
 
 		cost = 5
@@ -18098,7 +18070,7 @@ completion_reward = {
 		}
 		
 		prerequisite = {
-			focus = GER_encourage_counterurbanisation
+			focus = GER_ensure_generals_allegience
 		}
 		relative_position_id = GER_the_song_of_the_white_woman
 		available = {
@@ -18119,8 +18091,8 @@ completion_reward = {
 	focus = {
 		id = GER_aim_for_total_nationalisation
 		icon = GFX_goal_military_agreement_germany
-		x = 2
-		y = 2
+		x = 1
+		y = 1
 		
 
 		cost = 5
@@ -18134,22 +18106,15 @@ completion_reward = {
 		}
 		
 		prerequisite = {
-			focus = GER_encourage_counterurbanisation
+			focus = GER_declare_ethnostate
 		}
-		relative_position_id = GER_the_song_of_the_white_woman
-		available = {
-		}
-		
-		
-	available = {
-		has_completed_focus = GER_women_in_the_army
-	}
+		relative_position_id = GER_declare_ethnostate
 		available_if_capitulated = yes
 
 
 		completion_reward = {
 			swap_ideas = {
-				remove_idea = new_regime3
+				remove_idea = new_regime2
 				add_idea = new_regime4
 			}
 			random_owned_controlled_state = {
@@ -18160,8 +18125,8 @@ completion_reward = {
 	focus = {
 		id = GER_ensure_generals_allegience
 		icon = GFX_focus_generic_national_security
-		x = -1
-		y = 4
+		x = 1
+		y = 1
 		
 
 		cost = 5
@@ -18175,26 +18140,24 @@ completion_reward = {
 		}
 		
 		prerequisite = {
+			focus = GER_the_song_of_the_white_woman
 			focus = GER_encourage_counterurbanisation
 		}
-		prerequisite = {
-			focus = GER_women_in_the_army
-		}
 		relative_position_id = GER_the_song_of_the_white_woman
-		available = {
-		}
-		
-		
-	available = {
-		has_completed_focus = GER_women_in_the_army
-	}
-		available_if_capitulated = yes
 
+		available_if_capitulated = yes
 
 		completion_reward = {
 			add_ideas = generals_allegience_assured
 			random_owned_controlled_state = {
 				add_manpower = -500000
+			}
+			hidden_effect = {
+				GER_ernsteberhard_hell = {
+					add_trait = {
+						trait = meticulous
+					}
+				}
 			}
 		}
 	}
@@ -18203,7 +18166,27 @@ completion_reward = {
 		icon = GFX_goal_generic_military_sphere
 			cost = 5
 			prerequisite = {
-				focus = GER_encourage_counterurbanisation
+				focus = GER_declare_ethnostate
+			}
+			relative_position_id = GER_the_song_of_the_white_woman
+			x = 0
+			y = 3
+			ai_will_do = {
+				factor = 10
+			}
+			completion_reward = {
+				add_ideas = GER_defense_and_deterence_idea
+				random_owned_controlled_state = {
+					add_manpower = -500000
+				}
+			}
+	}
+	focus = {
+		id = GER_centre_of_the_world
+		icon = GFX_focus_POL_support_global_falangism
+			cost = 15
+			prerequisite = {
+				focus = GER_defense_of_the_fatherland
 			}
 			prerequisite = {
 				focus = GER_aim_for_total_nationalisation
@@ -18215,41 +18198,15 @@ completion_reward = {
 				factor = 10
 			}
 			completion_reward = {
-				add_war_support = 0.15
-				add_ideas = GER_defense_and_deterence_idea
-				random_owned_controlled_state = {
-					add_manpower = -500000
-				}
-			}
-	}
-	focus = {
-		id = GER_centre_of_the_world
-		icon = GFX_focus_POL_support_global_falangism
-			cost = 10
-			prerequisite = {
-				focus = GER_ensure_generals_allegience
-			}
-			prerequisite = {
-				focus = GER_defense_of_the_fatherland
-			}
-			prerequisite = {
-				focus = GER_declare_ethnostate
-			}
-			relative_position_id = GER_the_song_of_the_white_woman
-			x = 0
-			y = 5
-			ai_will_do = {
-				factor = 10
-			}
-			completion_reward = {
 				swap_ideas = {
 					remove_idea = new_regime4
 					add_idea = new_regime5
 				}
-				add_war_support = 0.025
-				add_ideas = limited_exports
 				add_ideas = tot_economic_mobilisation
-				add_ideas = extensive_conscription
+				if = {
+					limit = { has_idea = limited_conscription }
+					add_ideas = extensive_conscription
+				}
 				add_ideas = population_pure
 				add_timed_idea = {
 					idea = SWE_industrial_ramp_up
@@ -18257,10 +18214,10 @@ completion_reward = {
 				}
 				add_timed_idea = {
 					idea = continued_purges
-					days = 365
+					days = 60
 				}
 				random_owned_controlled_state = {
-					prioritize = { 64 }
+					
 					add_manpower = -1000000
 				}
 			}
@@ -18273,15 +18230,14 @@ completion_reward = {
 				focus = GER_military_purges
 			}
 		
-			relative_position_id = GER_himmler_takes_lead
-			x = -6
-			y = 4
+			relative_position_id = GER_military_purges
+			x = 0
+			y = 1
 			ai_will_do = {
 				factor = 10
 			}
 			completion_reward = {
-				add_war_support = 0.15
-				add_ideas = ABC_motorized_effort_idea
+				add_ideas = GER_himmlers_army
 			}
 	}
 	focus = {
@@ -18289,25 +18245,25 @@ completion_reward = {
 		icon = GFX_focus_SOV_merge_plants
 			cost = 5
 			prerequisite = {
-				focus = GER_himmlers_army
+				focus = GER_intercept_civilian_intelligience
 			}
 			prerequisite = {
-				focus = GER_the_beginning_of_the_end
+				focus = GER_beacon_of_purity_and_prosperity
+			}
+			prerequisite = {
+				focus = GER_himmlers_army
 			}
 			mutually_exclusive = {
 				focus = GER_investments_into_our_army
 			}
-			relative_position_id = GER_himmler_takes_lead
-			x = -5
-			y = 6
+			relative_position_id = GER_beacon_of_purity_and_prosperity
+			x = -1
+			y = 1
 			ai_will_do = {
 				factor = 10
 			}
 			completion_reward = {
-				add_timed_idea = {
-					idea = GER_himmlers_plan
-					days = 365
-				}
+				add_ideas = GER_himmlers_plan
 			}
 	}
 	focus = {
@@ -18315,25 +18271,25 @@ completion_reward = {
 		icon = GFX_focus_SOV_organize_wreckers		
 			cost = 5
 			prerequisite = {
+				focus = GER_intercept_civilian_intelligience
+			}
+			prerequisite = {
 				focus = GER_beacon_of_purity_and_prosperity
 			}
 			prerequisite = {
-				focus = GER_the_beginning_of_the_end
+				focus = GER_himmlers_army
 			}
 			mutually_exclusive = {
 				focus = GER_investments_into_our_economy
 			}
-			relative_position_id = GER_himmler_takes_lead
-			x = -3
-			y = 6
+			relative_position_id = GER_beacon_of_purity_and_prosperity
+			x = 1
+			y = 1
 			ai_will_do = {
 				factor = 10
 			}
 			completion_reward = {
-				add_timed_idea = {
-					idea = SOV_mass_tank_procution_idea
-					days = 365
-				}
+				add_ideas = GER_himmlers_army_plan
 			}
 	}
 	focus = {
@@ -18345,10 +18301,10 @@ completion_reward = {
 			focus = GER_formulate_ss_agency
 		}
 		
-		relative_position_id = GER_himmler_takes_lead
+		relative_position_id = GER_stabalise_foreign_relations
 
-		x = -6
-		y = 3
+		x = 0
+		y = 1
 		ai_will_do = {
 			factor = 10
 		}
