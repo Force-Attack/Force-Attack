@@ -4513,9 +4513,213 @@ focus_tree = {
 	}
 
 	
+	focus = {
+		id = CHI_destroy_the_remenants_of_the_traitors
+		icon =  GFX_focus_SOV_the_last_purge
 
+		relative_position_id = CHI_mao_zedong_civil_war
+		x = 0
+		y = 2
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
+		}
+		completion_reward = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = remove_rivals_var
+					value = party_popularity@neutrality
+				}
+				multiply_temp_variable = {
+					var = remove_rivals_var
+					value = -0.4
+				}
+			}
+			add_stability = remove_rivals_var
+			#add_popularity = {
+			#	ideology = communism
+			#	popularity = 1
+			#}
+		}
+	}
+	focus = {
+		id = CHI_purge_the_army
+		icon =  GFX_focus_SOV_military_purge
+
+		relative_position_id = CHI_mao_zedong_civil_war
+		x = 2
+		y = 2
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
+		}
+		completion_reward = {
+			####KILLS ALMOST ALL LEADERS BESIDES COMFIRMED COMMUNISTS
+			#retire_character = CHI_he_yingqin
+			#retire_character = CHI_zhu_de
+			#retire_character = YUN_long_yun
+			#retire_character = GXC_li_zongren
+			#retire_character = SHX_yan_xishan
+			#retire_character = CHI_chen_jitang
+			#retire_character = GER_alexander_von_falkenhausen
+			#retire_character = CHI_xiao_yisu
+			#retire_character = CHI_gao_zhihang
+			#retire_character = CHI_chen_cheng
+			#retire_character = CHI_yu_hanmou
+			hidden_effect = {
+				retire_character = USA_claire_lee_chennault
+			}
+			add_timed_idea = {
+				idea = CHI_purged_army
+				days = 200
+			}
+		}
+	}
+	focus = {
+		id = CHI_purge_the_bureaucracy
+		icon =  GFX_focus_SWE_socialist_reforms
+
+		relative_position_id = CHI_mao_zedong_civil_war
+		x = -2
+		y = 2
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
+		}
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = CHI_bureaucracy_purge
+				days = 200
+			}
+			#retire_character = CHI_wang_jingwei
+			#retire_character = CHI_dai_li
+			#retire_character = CHI_chiang_ching_kuo
+			#retire_character = CHI_h_h_kung
+			#retire_character = CHI_chen_yi
+			#retire_character = CHI_random_prince_of_terror
+			#retire_character = CHI_lin_sen
+			#retire_character = CHI_chen_guofu
+			#retire_character = CHI_soong_mei_ling
+			#retire_character = CHI_t_v_soong_political_advisor
+			####GETS RID OF ALL THE ADVISORS FOR NATIONALISTS
+		}
+	}
+	focus = {
+		id = CHI_proclaim_the_peoples_republic
+		icon =  GFX_focus_prc_proclaim_the_peoples_republic
+
+		relative_position_id = CHI_destroy_the_remenants_of_the_traitors
+		x = 0
+		y = 1
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_destroy_the_remenants_of_the_traitors
+		}
+		prerequisite = {
+			focus = CHI_purge_the_bureaucracy
+		}
+		prerequisite = {
+			focus = CHI_purge_the_army
+		}
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.1
+			set_cosmetic_tag = CHI_CCP_form
+			remove_country_leader_trait = cornered_fox
+		}
+	}
+	focus = {
+		id = CHI_maos_little_red_book
+		icon = GFX_goal_FRA_social_reforms
+
+		relative_position_id = CHI_proclaim_the_peoples_republic
+		x = -4
+		y = 1
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus =  CHI_proclaim_the_peoples_republic
+		}
+	
+
+	
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = CHI_maos_little_red_book_idea
+				days = 270
+			}
+			#country_event =CHI.7
+			#add_political_power = 100
+			#add_stability = 0.05
+		}
+	}
 	#literacy branch
-
 	focus = {
 		id = CHI_instutional_reorganization
 		icon = GFX_goal_communist_brigades
@@ -4528,6 +4732,18 @@ focus_tree = {
 		completion_reward = {
 			#CHI_hyper_inflation_level_up = yes
 			####ADDS ALL CCP ADVISORS
+			if = {
+				limit = {
+					has_idea = CHI_bureaucracy_purge
+				}
+				remove_ideas = CHI_bureaucracy_purge
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = PRC_deng_xiaoping
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_he_yuandang
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_liu_shaoqi
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -4605,207 +4821,18 @@ focus_tree = {
 
 		completion_reward = {
 			####ADDS CCP GENERALS + ARMY STAFF
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = PRC_luo_ruiqing
+			custom_effect_tooltip = available_chief_of_army
+			show_ideas_tooltip = CHI_zhu_de
+			if = {
+				limit = {
+					has_idea = CHI_purged_army
+				}
+				remove_ideas = CHI_purged_army
+			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CHI_destroy_the_remenants_of_the_traitors
-		icon =  GFX_focus_SOV_the_last_purge
-
-		relative_position_id = CHI_mao_zedong_civil_war
-		x = 0
-		y = 2
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_civil_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
-		}
-		completion_reward = {
-			hidden_effect = {
-				set_temp_variable = {
-					var = remove_rivals_var
-					value = party_popularity@neutrality
-				}
-				multiply_temp_variable = {
-					var = remove_rivals_var
-					value = -0.4
-				}
-			}
-			add_stability = remove_rivals_var
-			#add_popularity = {
-			#	ideology = communism
-			#	popularity = 1
-			#}
-		}
-	}
-	focus = {
-		id = CHI_purge_the_army
-		icon =  GFX_focus_SOV_military_purge
-
-		relative_position_id = CHI_mao_zedong_civil_war
-		x = 2
-		y = 2
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_civil_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
-		}
-		completion_reward = {
-			####KILLS ALMOST ALL LEADERS BESIDES COMFIRMED COMMUNISTS
-			add_stability = -0.10
-			retire_character = CHI_he_yingqin
-			retire_character = CHI_zhu_de
-			retire_character = YUN_long_yun
-			retire_character = GXC_li_zongren
-			retire_character = SHX_yan_xishan
-			retire_character = CHI_chen_jitang
-			retire_character = GER_alexander_von_falkenhausen
-			retire_character = CHI_xiao_yisu
-			retire_character = CHI_gao_zhihang
-			retire_character = CHI_chen_cheng
-			retire_character = CHI_yu_hanmou
-			hidden_effect = {
-				retire_character = USA_claire_lee_chennault
-			}
-		}
-	}
-	focus = {
-		id = CHI_purge_the_bureaucracy
-		icon =  GFX_focus_SWE_socialist_reforms
-
-		relative_position_id = CHI_mao_zedong_civil_war
-		x = -2
-		y = 2
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_civil_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_finish_the_fight focus = CHI_call_upon_peasants
-		}
-
-		completion_reward = {
-			add_timed_idea = {
-				idea = CHI_bureaucracy_purge
-				days = 180
-			}
-			retire_character = CHI_wang_jingwei
-			retire_character = CHI_dai_li
-			retire_character = CHI_chiang_ching_kuo
-			retire_character = CHI_h_h_kung
-			retire_character = CHI_chen_yi
-			retire_character = CHI_random_prince_of_terror
-			retire_character = CHI_lin_sen
-			retire_character = CHI_chen_guofu
-			retire_character = CHI_soong_mei_ling
-			retire_character = CHI_t_v_soong_political_advisor
-			####GETS RID OF ALL THE ADVISORS FOR NATIONALISTS
-		}
-	}
-	focus = {
-		id = CHI_proclaim_the_peoples_republic
-		icon =  GFX_focus_prc_proclaim_the_peoples_republic
-
-		relative_position_id = CHI_destroy_the_remenants_of_the_traitors
-		x = 0
-		y = 1
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_destroy_the_remenants_of_the_traitors
-		}
-		prerequisite = {
-			focus = CHI_purge_the_bureaucracy
-		}
-		prerequisite = {
-			focus = CHI_purge_the_army
-		}
-		completion_reward = {
-			add_political_power = 200
-			add_stability = 0.2
-			set_cosmetic_tag = CHI_CCP_form
-			remove_country_leader_trait = cornered_fox
-		}
-	}
-	focus = {
-		id = CHI_maos_little_red_book
-		icon = GFX_goal_FRA_social_reforms
-
-		relative_position_id = CHI_proclaim_the_peoples_republic
-		x = -4
-		y = 1
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus =  CHI_proclaim_the_peoples_republic
-		}
-	
-
-	
-
-		completion_reward = {
-			#country_event =CHI.7
-			add_political_power = 100
-			add_stability = 0.05
-		}
 	}
 	focus = {
 		id = CHI_prepare_for_the_inevitable
@@ -4931,7 +4958,7 @@ focus_tree = {
 		id = CHI_retake_manchuria_CCP
 		icon = GFX_goal_CHI_retake_manchuria
 		cost = 10
-		x = 0
+		x = -1
 		y = 2
 		mutually_exclusive = {
 			
@@ -5015,7 +5042,7 @@ focus_tree = {
 		id = CHI_demand_taiwan
 		icon = GFX_goal_generic_more_territorial_claims
 		cost = 10
-		x = 2
+		x = 1
 		y = 2
 		mutually_exclusive = {
 			
@@ -5073,7 +5100,13 @@ focus_tree = {
 		cost = 10
 
 		available = {
-			has_government = communism
+			NOT = {
+				OR = {
+					has_idea = CHI_bureaucracy_purge
+					has_idea = CHI_purged_army
+				}
+				
+			}
 		}
 
 		completion_reward = {
@@ -7146,11 +7179,15 @@ focus_tree = {
 
 		available = {
 			
-			
 		}
 
 		bypass = {
 
+		}
+		allow_branch = {
+			NOT = {
+				has_completed_focus = CHI_jingwei_punitive_expedition
+			}
 		}
 
 		cancel_if_invalid = yes
@@ -7159,6 +7196,39 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = CHI_chinese_mountaineers
+		}
+	}
+	focus = {
+		id = CHI_peoples_liberation_army
+		icon = GFX_goal_generic_mountain_warfare2
+		prerequisite = { focus = CHI_chinese_military_command }
+		x = 0
+		y = 1
+		relative_position_id = CHI_chinese_military_command
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+
+		}
+		allow_branch = {
+			has_completed_focus = CHI_jingwei_punitive_expedition
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = CHI_peoples_liberation_army_idea
 		}
 	}
 	focus = {
