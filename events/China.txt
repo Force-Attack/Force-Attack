@@ -4,6 +4,8 @@ add_namespace = lti
 
 add_namespace = kmt
 
+add_namespace = prc
+
 country_event = {
 	id = CHI.1
 	title = CHI.1.t
@@ -1968,6 +1970,257 @@ country_event = {
 			swap_ideas = {
 				remove_idea = PRC_socialism_with_chinese_characteristics
 				add_idea = PRC_socialism_with_chinese_characteristics_2
+			}
+		}
+	}
+}
+#from demand tp return
+country_event = {
+	id = prc.89
+	title = prc.89.t
+	desc = prc.84.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = prc.84.a
+		ai_chance = {
+			factor = 40
+			modifier = {
+				is_in_faction = yes
+				add = -35
+			}
+			modifier = {
+				is_faction_leader = yes
+				add = -50
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 0.25
+					}
+				}
+				add = 5
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 0.5
+					}
+				}
+				add = 10
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 0.75
+					}
+				}
+				add = 15
+			}
+			modifier = {
+				FROM = {
+					strength_ratio = {
+						tag = ROOT
+						ratio > 1
+					}
+				}
+				add = 20
+			}
+			modifier = {
+				is_major = yes
+				add = -100
+			}
+		}
+		if = {
+			limit = {
+				controls_state = 728
+			}
+			FROM = { 
+				transfer_state = 728
+			}
+		}
+		if = {
+			limit = {
+				controls_state = 729	
+			}
+			FROM = { 
+				transfer_state = 729
+			}
+		}
+		if = {
+			limit = {
+				controls_state = 326	
+			}
+			FROM = { 
+				transfer_state = 326
+			}
+		}
+		FROM = {
+			country_event = { id = prc.90 }
+		}
+	}
+
+	option = {
+		name = prc.84.b
+		ai_chance = {
+			factor = 60
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 728
+				}
+			}
+			set_country_flag = prc_728_owner_refuse
+			effect_tooltip = {
+				FROM = {
+					create_wargoal = {
+						target = ROOT
+						type = take_state_focus
+						generator = {728}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 729
+				}
+			}
+			set_country_flag = prc_729_owner_refuse
+			effect_tooltip = {
+				FROM = {
+					create_wargoal = {
+						target = ROOT
+						type = take_state_focus
+						generator = {729}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				ROOT = {
+					owns_state = 326
+				}
+			}
+			set_country_flag = prc_326_owner_refuse
+			effect_tooltip = {
+				FROM = {
+					create_wargoal = {
+						target = ROOT
+						type = take_state_focus
+						generator = {326}
+					}
+				}
+			}
+		}
+		FROM = {
+			country_event = { id = prc.91 }
+		}
+	}
+}
+
+
+#from complies
+country_event = {
+	id = prc.90
+	title = prc.85.t
+	desc = prc.85.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = prc.85.a
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 728
+				}
+			}
+			effect_tooltip = {
+				transfer_state = 728
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 729
+				}
+			}
+			effect_tooltip = {
+				transfer_state = 729
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 329
+				}
+			}
+			effect_tooltip = {
+				transfer_state = 326
+			}
+		}
+	}
+}
+
+
+#from refuses
+country_event = {
+	id = prc.91
+	title = prc.86.t
+	desc = prc.86.d
+
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = prc.86.a
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 728
+				}
+			}
+			create_wargoal = {
+				target = FROM
+				type = take_state_focus
+				generator = {728}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 729
+				}
+			}
+			create_wargoal = {
+				target = FROM
+				type = take_state_focus
+				generator = {729}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 329
+				}
+			}
+			create_wargoal = {
+				target = FROM
+				type = take_state_focus
+				generator = {326}
 			}
 		}
 	}
