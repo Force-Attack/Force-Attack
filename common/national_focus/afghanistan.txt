@@ -3536,23 +3536,6 @@ focus_tree = {
 
 		cost = 5
 
-		available = {
-			is_subject = no
-			is_in_faction = no
-			OR = {
-				has_government = democratic
-				has_government = neutrality
-			}
-			ENG = {
-				NOT = { has_war_with = ROOT }
-				OR = {
-					has_government = democratic
-					has_government = neutrality
-				}
-				has_capitulated = no
-				is_faction_leader = yes
-			}
-		}
 
 		prerequisite = {
 			focus = AFG_british_exchange_program focus = AFG_liberal_constitution
@@ -6715,20 +6698,6 @@ focus_tree = {
 		x = 2
 		y = 1
 
-		available = {
-			has_government = communism
-			SOV = {
-				has_government = communism
-				has_civil_war = no
-				NOT = {
-					has_war_with = ROOT
-				}
-			}
-		}
-
-		ai_will_do = {
-			factor = 1
-		}
 
 		bypass = {
 			SOV = {
@@ -9321,21 +9290,6 @@ focus_tree = {
 
 		cost = 5
 
-		available = {
-			has_government = fascism
-			GER = {
-				has_civil_war = no
-				NOT = {
-					has_war_with = ROOT
-				}
-				has_capitulated = no
-				OR = {
-					has_government = fascism
-					has_government = neutrality
-				}
-			}
-		}
-		
 		bypass = {
 			GER = {
 				OR = {
@@ -10840,39 +10794,14 @@ focus_tree = {
 	}
 	focus = {
 		id = AFG_the_ten_lost_tribes
-		icon = GFX_goal_PAL_destroy_israel
+		icon = GFX_focus_chi_mission_to_germany
 		x = -2
 		y = 1
 
 		cost = 5
 
-		available = {
-			is_subject = no
-			OR = {
-				any_neighbor_country = {
-					OR = {
-						TAG = MPL
-						TAG = ISR
-					}
-					NOT = {
-						is_in_faction_with = ROOT
-						is_subject_of = ROOT
-						has_war_with = ROOT
-					}
-				}
-				any_other_country = {
-					is_ally_with = ROOT
-					any_neighbor_country = {
-						TAG = MPL
-						TAG = ISR
-						NOT = {
-							is_in_faction_with = ROOT
-							is_subject_of = ROOT
-							has_war_with = ROOT
-						}
-					}
-				}
-			}
+		mutually_exclusive = {
+			focus = AFG_break_the_six_arrows
 		}
 
 		prerequisite = {
@@ -10886,29 +10815,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			if = {
-				limit = {
-					ISR = {
-						exists = yes
-					}
-				}
-				create_wargoal = {
-					type = take_state_focus
-					target = ISR
-					expire = 0
-				}
-			}
-			if = {
-				limit = {
-					MPL = {
-						exists = yes
-					}
-				}
-				create_wargoal = {
-					type = take_state_focus
-					target = MPL
-					expire = 0
-				}
+			GER = {
+				country_event = { id = afghanistan.104 }
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -10971,40 +10879,15 @@ focus_tree = {
 	}
 	focus = {
 		id = AFG_break_the_six_arrows
-		icon = GFX_goal_generic_attack_turkey
+		icon = GFX_focus_generic_japanese_imperial_glory
 		x = -5
 		y = 1
 
 		cost = 5
-
-		available = {
-			is_subject = no
-			TUR = {
-				has_completed_focus = TUR_democratic_transition_focus
-				has_completed_focus = TUR_ratify_the_six_arrows
-				OR = {
-					has_government = neutrality
-					has_government = democratic
-				}
-				NOT = {
-					is_in_faction_with = ROOT
-					is_subject_of = ROOT
-					has_war_with = ROOT
-				}
-			}
-			OR = {
-				any_neighbor_country = {
-					original_tag = TUR
-				}
-				any_other_country = {
-					is_ally_with = AFG
-					any_neighbor_country = {
-						original_tag = TUR
-					}
-				}
-			}
-		}
 		
+		mutually_exclusive = {
+			focus = AFG_the_ten_lost_tribes
+		}
 
 		prerequisite = {
 			focus = AFG_tunganistan focus = AFG_pillars_of_islam
@@ -11017,10 +10900,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			create_wargoal = {
-				type = topple_government
-				target = TUR
-				expire = 0
+			JAP = {
+				country_event = { id = afghanistan.104 }
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
