@@ -4303,7 +4303,7 @@ allow_branch = {
 	focus = {
 		id = GER_army_start
 		icon = GFX_focus_ger_oppose_hitler
-		x = 13
+		x = 14
 		y = 0
 		cost = 5
 		completion_reward = {
@@ -4326,13 +4326,13 @@ allow_branch = {
 			always = no
 		}
 		relative_position_id = GER_army_start
-		x = -3
+		x = -4
 		y = 1
 		cost = 10
 		completion_reward = {
-			add_ideas = GER_methoodical_approach
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = kurt_student
 
-			
 			add_doctrine_cost_reduction = {
 				name = GER_schwerepunkt_tactics
 				cost_reduction = 0.5
@@ -4361,7 +4361,7 @@ allow_branch = {
 				ahead_reduction = 1
 				bonus = 1
 				uses = 2
-				category = Artillery
+				category = standard_artillery_tech
 			}
 			
 		}
@@ -4407,10 +4407,6 @@ allow_branch = {
 				limit = {
 					has_completed_focus = GER_grand_battle_general
 				}
-				swap_ideas = {
-					remove_idea = GER_methoodical_approach
-					add_idea = GER_methoodical_approach2
-				}
 			}
 			add_tech_bonus = {
 				name = GER_counter_sloped_armor
@@ -4434,27 +4430,14 @@ allow_branch = {
 		id = GER_grand_battle_tanks_bonus
 		icon = GFX_focus_SWE_let_fly_all_guns
 		prerequisite = { focus = GER_general_arty_bonus }
-		prerequisite = { focus = GER_general_infantry_bonus }
 		relative_position_id = GER_grand_battle_general
-		x = 0
+		x = -1
 		y = 2
 		cost = 5
 		available = {
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				name = GER_build_panzer_army
-				bonus = 0.5
-				uses = 2
-				category = support_equipment
-			}
-			add_tech_bonus = {
-				name = GER_build_panzer_army
-				bonus = 0.5
-				uses = 2
-				category = artillery
-			}
-			add_ideas = GER_armored_cars
+			add_ideas = GER_methoodical_approach
 		}
 		search_filters = {
 			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
@@ -4463,10 +4446,10 @@ allow_branch = {
 	focus = {
 		id = GER_general_antitank_bonus
 		icon = GFX_goal_tank_hunt
-		prerequisite = { focus = GER_grand_battle_general focus = GER_mobile_tank_general }
-		relative_position_id = GER_grand_battle_general
-		x = 2
-		y = 2
+		prerequisite = { focus = GER_mobile_tank_general }
+		relative_position_id = GER_mobile_tank_general
+		x = -1
+		y = 1
 		cost = 5
 		available = {
 			
@@ -4491,12 +4474,60 @@ allow_branch = {
 		}
 	}
 	focus = {
-		id = GER_train_planning_to_generals
-		icon = GFX_goal_german_salute
-		prerequisite = { focus = GER_grand_battle_tanks_bonus }
-		relative_position_id = GER_grand_battle_tanks_bonus
+		id = GER_mobile_shocktroopers
+		icon = GFX_goal_mobile_shocktroops_shine
+		prerequisite = { focus = GER_general_antitank_bonus focus = GER_general_infantry_bonus }
+		relative_position_id = GER_general_antitank_bonus
+		mutually_exclusive = {
+			focus = GER_fortbreakers
+		}
 		x = 0
 		y = 1
+		cost = 5
+		available = {
+			
+		}
+		completion_reward = {
+			custom_effect_tooltip = GER_r56rp_mobile_shocktroopers_tt
+			hidden_effect = {
+				set_technology = { GER_r56rp_mobile_shocktroopers = 1 }
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = GER_fortbreakers
+		icon = GFX_goal_fortbreakers_shine
+		prerequisite = { focus = GER_general_antitank_bonus focus = GER_general_infantry_bonus }
+		relative_position_id = GER_general_infantry_bonus
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			focus = GER_mobile_shocktroopers
+		}
+		cost = 5
+		available = {
+			
+		}
+		completion_reward = {
+			custom_effect_tooltip = GER_r56rp_fortbreakers_tt
+			hidden_effect = {
+				set_technology = { GER_r56rp_fortbreakers = 1 }
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = GER_train_planning_to_generals
+		icon = GFX_goal_german_salute
+		prerequisite = { focus = GER_general_arty_bonus focus = GER_general_infantry_bonus }
+		relative_position_id = GER_grand_battle_general
+		x = 0
+		y = 3
 		cost = 5
 		available = {
 		}
@@ -4553,41 +4584,18 @@ allow_branch = {
 		icon = GFX_goal_ger_panzers
 		prerequisite = {  focus = GER_mobile_tank_general }
 		relative_position_id = GER_grand_battle_general
-		x = 3
+		x = 5
 		y = 1
 		cost = 5
 		available = {
 		}
 		completion_reward = {
-			if = {
-				limit = {
-					has_completed_focus = GER_mobile_tank_general
-				}
-				
-				add_tech_bonus = {
-					bonus = 0.5
-					uses = 2
-					technology = armor_tech_1
-					technology = armor_tech_2
-					technology = armor_tech_3
-					technology = armor_tech_4
-				}
-				add_tech_bonus = {
-					name = GER_build_panzer_army
-					bonus = 1.0
-					ahead_reduction = 1
-					uses = 1
-					category = armor
-				}
-			}
-			else = {
-				add_tech_bonus = {
-					name = GER_build_panzer_army
-					bonus = 1
-					ahead_reduction = 0.5
-					uses = 1
-					category = armor
-				}
+			add_tech_bonus = {
+				name = GER_build_panzer_army
+				bonus = 1.0
+				ahead_reduction = 1
+				uses = 2
+				category = armor
 			}
 		}
 		search_filters = {
@@ -4600,15 +4608,12 @@ allow_branch = {
 		cost = 10
 		prerequisite = {
 			focus = GER_mobile_tanks_bonus
-			focus = GER_mobile_arty
-		}
-		prerequisite = {
 			focus = GER_mobile_mechanize_bonus
 		}
 		mutually_exclusive = {
 			focus = GER_build_panzer_quantity
 		}
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = GER_mobile_tanks_bonus
 		ai_will_do = {
@@ -4630,15 +4635,12 @@ allow_branch = {
 		cost = 10
 		prerequisite = {
 			focus = GER_mobile_tanks_bonus
-			focus = GER_mobile_arty
-		}
-		prerequisite = {
 			focus = GER_mobile_mechanize_bonus
 		}
 		mutually_exclusive = {
 			focus = GER_build_panzer_quality
 		}
-		x = 3
+		x = 2
 		y = 1
 		relative_position_id = GER_mobile_tanks_bonus
 		ai_will_do = {
@@ -4664,8 +4666,8 @@ allow_branch = {
 		prerequisite = {
 			focus = GER_mobile_arty_training_breakthrough focus = GER_mobile_train_attack focus = GER_train_planning_to_generals
 		}
-		x = -1
-		y = 2
+		x = -3
+		y = 3
 		relative_position_id = GER_build_panzer_quantity
 		ai_will_do = {
 			factor = 50
@@ -4685,10 +4687,7 @@ allow_branch = {
 		 focus = GER_general_antitank_bonus
 		}
 		relative_position_id = GER_mobile_tanks_bonus
-		mutually_exclusive = {
-			focus = GER_mobile_arty_training_breakthrough
-		}
-		x = 0
+		x = -1
 		y = 2
 		cost = 5
 		available = {
@@ -4713,10 +4712,10 @@ allow_branch = {
 	}
 	focus = {
 		id = GER_mobile_mechanize_bonus
-		icon = GFX_goal_mechanized_army_2
+		icon = GFX_goal_mechanized_army
 		prerequisite = { focus = GER_mobile_arty_general focus = GER_mobile_tank_general }
-		relative_position_id = GER_grand_battle_general
-		x = 5
+		relative_position_id = GER_mobile_arty_general
+		x = -1
 		y = 1
 		cost = 5
 		available = {
@@ -4755,14 +4754,14 @@ allow_branch = {
 	###MOBILE ARTY GENERAL
 	focus = {
 		id = GER_mobile_arty_general
-		icon = GFX_goal_mechanized_army
+		icon = GFX_goal_mechanized_army_2
 		prerequisite = { focus = GER_army_start}
 		mutually_exclusive = {
 			focus = GER_mobile_tank_general
 			focus = GER_grand_battle_general
 		}
 		relative_position_id = GER_army_start
-		x = 5
+		x = 4
 		y = 1
 		cost = 10
 		available = {
@@ -4770,7 +4769,19 @@ allow_branch = {
 		}
 		completion_reward = {
 			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = walther_von_brauchitsch
+			show_ideas_tooltip = maximilian_von_weichs
+			hidden_effect = {
+				add_trait = {		
+					character = GER_maximilian_von_weichs
+					trait = cavalry_leader
+					slot = army_chief
+				}
+				add_trait = {	
+					character = GER_maximilian_von_weichs
+					trait = combined_arms_expert
+					slot = army_chief
+				}
+			}
 			add_doctrine_cost_reduction = {
 				name = GER_schwerepunkt_tactics
 				cost_reduction = 0.5
@@ -4785,9 +4796,9 @@ allow_branch = {
 	focus = {
 		id = GER_mobile_arty
 		icon = GFX_goal_generic_combined_arms_artillery_antiair_antitank
-		prerequisite = { focus = GER_mobile_arty_general focus = GER_mobile_tank_general }
+		prerequisite = { focus = GER_mobile_arty_general}
 		relative_position_id = GER_mobile_arty_general
-		x = -1
+		x = 1
 		y = 1
 		cost = 5
 		completion_reward = {
@@ -4806,12 +4817,10 @@ allow_branch = {
 	focus = {
 		id = GER_mobile_arty_training_breakthrough
 		icon = GFX_goal_german_salute
-		prerequisite = { focus = GER_mobile_arty focus = GER_mobile_mechanize_bonus }
+		prerequisite = { focus = GER_mobile_arty }
+		prerequisite = { focus = GER_mobile_mechanize_bonus }
 		relative_position_id = GER_mobile_arty_general
-		mutually_exclusive = {
-			focus = GER_mobile_train_attack
-		}
-		x = -1
+		x = 0
 		y = 3
 		cost = 5
 		completion_reward = {
@@ -4832,42 +4841,14 @@ allow_branch = {
 			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
 		}
 	}
-	focus = {
-		id = GER_nebelwerfer
-		icon = GFX_goal_nebelwerfer_focus
-		prerequisite = { focus = GER_mobile_arty_general }
-		relative_position_id = GER_mobile_arty_general
-		x = 1
-		y = 1
-		cost = 10
-		completion_reward = {
-			add_tech_bonus = {
-				name = GER_arty_plz
-				ahead_reduction = 1
-				bonus = 1
-				uses = 1
-				category = rocketry
-			}
-			add_tech_bonus = {
-				name = GER_arty_plz
-				bonus = 0.50
-				uses = 2
-				category = rocketry
-			}
-			add_ideas = GER_nebelwerfer2
-		}
-		search_filters = {
-			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
-		}
-	}
 	
 	focus = {
 		id = GER_panzerschokolade
 		icon = GFX_goal_LAT_devaulate_the_currency
-		prerequisite = { focus = GER_mobile_arty_general }
-		relative_position_id = GER_mobile_arty_general
+		prerequisite = { focus = GER_mobile_arty }
+		relative_position_id = GER_mobile_arty
 		x = 0
-		y = 2
+		y = 1
 		cost = 5
 		available = {
 		}
@@ -4884,10 +4865,6 @@ allow_branch = {
 		id = GER_modernize_CAS
 		icon = GFX_goal_GER_luftwaffe
 		cost = 5.00
-		# prerequisite = {
-		# 	focus = 
-		# }
-		#relative_position_id = 
 		relative_position_id = GER_army_start
 		x = 8
 		y = 0
