@@ -1922,14 +1922,14 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			CHI_start_cw_system = yes
 			custom_effect_tooltip = CHI_cw_begin_tt
+			CHI_start_cw_system = yes
 		}
 	}
 	focus = {
-		id = CHI_collaboration_with_allied_warlords
-		icon = GFX_goal_MAN_back_to_the_basics
-		cost = 4
+		id = CHI_raid_communist_strongholds
+		icon = GFX_goal_fortify_the_westwall
+		cost = 3
 		x = 0
 		y = 1
 		mutually_exclusive = {
@@ -1940,25 +1940,16 @@ focus_tree = {
 		available = {
 
 		}
-		completion_reward = {
-			custom_effect_tooltip = CHI_cw_raid_strongholds_tt
-			CHI = {
-				every_controlled_state = {
-					if = {
-						limit = { 
-							has_dynamic_modifier = {
-								modifier = warlord_state
-							}
-						}
-						remove_dynamic_modifier = {
-							modifier = warlord_state
-						}
-						add_dynamic_modifier = {
-							modifier = allied_warlord_state
-						}
-					}
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_comunist_have_been_destroyed_tt
+				NOT = {
+					has_idea = CHI_ongoing_civil_war
 				}
 			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = CHI_cw_raid_strongholds_tt
 		}
 	}
 	focus = {
@@ -1971,10 +1962,15 @@ focus_tree = {
 			
 		}
 		available = {
-			#Communist Strength is Removed
+			custom_trigger_tooltip = {
+				tooltip = CHI_comunist_have_been_destroyed_tt
+				NOT = {
+					has_idea = CHI_ongoing_civil_war
+				}
+			}
 		}
-		prerequisite = { focus = CHI_collaboration_with_allied_warlords }
-		relative_position_id = CHI_collaboration_with_allied_warlords
+		prerequisite = { focus = CHI_raid_communist_strongholds }
+		relative_position_id = CHI_raid_communist_strongholds
 		available = {
 
 		}
@@ -1985,7 +1981,7 @@ focus_tree = {
 				uses = 2
 				category = land_doctrine
 			}
-			army_experience = 100
+			army_experience = 50
 		}
 	}
 	
