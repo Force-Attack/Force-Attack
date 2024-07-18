@@ -1480,7 +1480,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_eliminate_political_opponents
+		id = CHI_send_regards_to_warlords
 		icon = GFX_goal_generic_army_purges
 		cost = 10
 		x = 0
@@ -1495,47 +1495,13 @@ focus_tree = {
 		}
 		completion_reward = {
 			#delete stuff thats opponents
-			country_event = { id = CHI.4 }
-			add_political_power = -100
-			add_stability = -0.05
+			#country_event = { id = CHI.4 }
+			add_political_power = 100
+			retire_character = GXC_li_zongren
+			retire_character = YUN_long_yun
+			retire_character = SHX_yan_xishan
+			#add_stability = -0.05
 
-		}
-	}
-	focus = {
-		id = CHI_expand_the_CIBS
-		icon = GFX_goal_CAN_CAMP_X
-		cost = 7
-		x = 2
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_escape_from_captivity focus = CHI_agree_to_the_captors_terms }
-		relative_position_id = CHI_escape_from_captivity
-		available = {
-		}
-		completion_reward = {
-			if = {
-				limit = {
-					has_intelligence_agency = no
-				}
-				create_intelligence_agency = {
-					name = "C.I.B.S"
-					icon = GFX_intelligence_agency_logo_chi
-				}
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_done_agency_upgrade = upgrade_form_department
-					}
-				}
-				upgrade_intelligence_agency = upgrade_form_department
-			}
-
-			add_ideas = CHI_cibs
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CHI_t_v_soong_political_advisor
 		}
 	}
 	focus = {
@@ -1770,7 +1736,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_betray_the_communist
+		id = CHI_call_on_the_warlords_best
 		icon = GFX_goal_anti_comintern_pact
 		cost = 8
 		x = -1
@@ -1800,40 +1766,13 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_skibbidy_their_rizz
-		icon = GFX_goal_anti_comintern_pact
-		cost = 8
-		x = 0
-		y = 1
-		prerequisite = { focus = CHI_betray_the_communist }
-		relative_position_id = CHI_betray_the_communist
-		available = {
-		}
-		completion_reward = {
-			custom_effect_tooltip = CHI_dai_li_ccp_remove_tt
-			custom_effect_tooltip = CHI_remove_communist_divs_tt
-			hidden_effect = {
-				retire_character = CHI_dai_li
-				delete_units = {
-					division_template = "Chinese Peoples Replblic Army"
-					disband = no
-				}
-			}
-			add_country_leader_trait = anti_communist
-			add_popularity = {
-				ideology = communism
-				popularity = -0.10
-			}
-		}
-	}
-	focus = {
 		id = CHI_call_the_communist_reserves
 		icon = GFX_goal_generic_peasant_army
 		cost = 8
 		x = 1
 		y = 1
 		mutually_exclusive = {
-			focus = CHI_betray_the_communist
+			focus = CHI_call_on_the_warlords_best
 		}
 		prerequisite = { focus = CHI_prepare_for_manchu_confrontation }
 		relative_position_id = CHI_prepare_for_manchu_confrontation
@@ -1890,12 +1829,14 @@ focus_tree = {
 		id = CHI_take_out_kansas
 		icon = GFX_goal_sov_soviet_ind_upgrade
 		cost = 10
-		x = 1
+		x = 0
 		y = 3
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_call_the_communist_reserves }
+		prerequisite = { focus = CHI_call_the_communist_reserves 
+			focus = CHI_call_on_the_warlords_best
+		}
 		relative_position_id = CHI_give_the_warlords_military_positions
 		available = {
 		}
@@ -1917,8 +1858,8 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_eliminate_political_opponents }
-		relative_position_id = CHI_eliminate_political_opponents
+		prerequisite = { focus = CHI_send_regards_to_warlords }
+		relative_position_id = CHI_send_regards_to_warlords
 		available = {
 		}
 		completion_reward = {
@@ -1984,116 +1925,74 @@ focus_tree = {
 			army_experience = 50
 		}
 	}
-	
-	focus = {
-		id = CHI_increase_sino_german_cooperation
-		icon = GFX_focus_chi_mission_to_germany
-		cost = 8
-		x = -1
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_learn_from_the_civil_war  }
-		relative_position_id = CHI_learn_from_the_civil_war
-		available = {
-			NOT = {
-				has_war_with = ger
-			}
-		}
-		completion_reward = {
-			add_ideas = CHI_german_advisors
-		}
-	}
-
-	focus = {
-		id = CHI_increase_sino_german_cooperation
-		icon = GFX_focus_chi_mission_to_germany
-		cost = 8
-		x = -1
-		y = 1
-		mutually_exclusive = {
-			focus = CHI_our_own_doctrine
-		}
-		prerequisite = { focus = CHI_learn_from_the_civil_war  }
-		relative_position_id = CHI_learn_from_the_civil_war
-		available = {
-			NOT = {
-				has_war_with = ger
-			}
-		}
-		completion_reward = {
-			add_ideas = CHI_german_advisors
-		}
-	}
-
-	focus = {
-		id = CHI_our_own_doctrine
-		icon = GFX_goal_CHI_coa_army
-		cost = 8
-		x = 1
-		y = 1
-		mutually_exclusive = {
-			focus = CHI_increase_sino_german_cooperation
-		}
-		prerequisite = { focus = CHI_learn_from_the_civil_war  }
-		relative_position_id = CHI_learn_from_the_civil_war
-		available = {
-			NOT = {
-				has_war_with = ger
-			}
-		}
-		completion_reward = {
-			add_ideas = CHI_resilience_and_endurance
-		}
-	}
 
 	focus = {
 		id = CHI_integrate_allied_warlords
 		icon = GFX_goal_CHI_defeat_the_warlords
 		cost = 8
-		x = 1
+		x = 0
 		y = 1
 		mutually_exclusive = {
 			
 		}
 		prerequisite = { 
-			focus = CHI_increase_sino_german_cooperation 
-			focus = CHI_our_own_doctrine 
+			focus = CHI_learn_from_the_civil_war
 		}
-		relative_position_id = CHI_increase_sino_german_cooperation
+		relative_position_id = CHI_learn_from_the_civil_war
 		available = {
 
 		}
 
 		completion_reward = {
-			CHI = {
-				every_controlled_state = {
-					remove_dynamic_modifier = {
-						modifier = warlord_state
-					}
-					remove_dynamic_modifier = {
-						modifier = allied_warlord_state
-					}
-				}
-			}
+			#CHI = {
+			#	every_controlled_state = {
+			#		remove_dynamic_modifier = {
+			#			modifier = warlord_state
+			#		}
+			#		remove_dynamic_modifier = {
+			#			modifier = allied_warlord_state
+			#		}
+			#	}
+			#}
+			unlock_decision_category_tooltip = CHI_warlord_skirmishes
 		}
 	}
 	
+	focus = {
+		id = CHI_the_blue_shirts
+		icon = GFX_goal_CHI_power_to_the_blueshirts
+		cost = 10
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_integrate_allied_warlords }
+		relative_position_id = CHI_integrate_allied_warlords
+		available = {
+			
+		}
+		bypass = {
+			
+		}
+		completion_reward = {
+			###ADD IDEA FOR ARMY, can only be taken if taken the left side/betrayed the communist??
+			add_ideas = CHI_blue_shirts_idea
+		}
+	}
 
 	focus = {
 		id = CHI_retake_manchuria
 		icon = GFX_goal_CHI_retake_manchuria
 		cost = 10
-		x = -4
+		x = -3
 		y = 1
 
 		mutually_exclusive = {	
 		}
 		prerequisite = {
-			focus = CHI_integrate_allied_warlords
+			focus = CHI_the_blue_shirts
 			focus = CHI_take_out_kansas
-			focus = CHI_skibbidy_their_rizz
 		}
 		relative_position_id = CHI_take_out_kansas
 		available = {
@@ -2172,7 +2071,7 @@ focus_tree = {
 		id = CHI_one_final_push
 		icon = GFX_goal_generic_army_mobilization2
 		cost = 10
-		x = 2
+		x = 4
 		y = 1
 		mutually_exclusive = {
 			
@@ -2198,7 +2097,7 @@ focus_tree = {
 		id = CHI_enact_martial_law
 		icon = GFX_goal_centralize_power
 		cost = 10
-		x = 0
+		x = 1
 		y = 1
 		mutually_exclusive = {
 			
@@ -2219,28 +2118,7 @@ focus_tree = {
 			###GIVES LEADER TRAITS FROM EACH DECISON
 		}
 	}
-	focus = {
-		id = CHI_the_blue_shirts
-		icon = GFX_goal_CHI_power_to_the_blueshirts
-		cost = 10
-		x = -2
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_retake_manchuria }
-		relative_position_id = CHI_retake_manchuria
-		available = {
-			
-		}
-		bypass = {
-			
-		}
-		completion_reward = {
-			###ADD IDEA FOR ARMY, can only be taken if taken the left side/betrayed the communist??
-			add_ideas = CHI_blue_shirts_idea
-		}
-	}
+
 	focus = {
 		id = CHI_land_reform_neutrality
 		icon = GFX_goal_agrarian_reform
@@ -2435,13 +2313,13 @@ focus_tree = {
 		id = CHI_executive_yuan
 		icon = GFX_focus_chi_legislative_yuan
 		cost = 10
-		x = -1
+		x = -3
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_eliminate_political_opponents focus = CHI_form_a_united_front }
-		relative_position_id = CHI_expand_the_CIBS
+		prerequisite = { focus = CHI_send_regards_to_warlords focus = CHI_form_a_united_front }
+		relative_position_id = CHI_form_a_united_front
 		available = {
 		
 		}
@@ -2454,13 +2332,13 @@ focus_tree = {
 		id = CHI_institute_nationwide_healthcare
 		icon = GFX_focus_generic_field_hostpital
 		cost = 5
-		x = 1
+		x = -1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_eliminate_political_opponents focus = CHI_form_a_united_front }
-		relative_position_id = CHI_expand_the_CIBS
+		prerequisite = { focus = CHI_send_regards_to_warlords focus = CHI_form_a_united_front }
+		relative_position_id = CHI_form_a_united_front
 		available = {
 		
 		}
@@ -2473,7 +2351,7 @@ focus_tree = {
 		id = CHI_strengthen_the_regime
 		icon = GFX_focus_generic_china1
 		cost = 8
-		x = 0
+		x = -2
 		y = 2
 
 		prerequisite = { focus = CHI_institute_nationwide_healthcare }
@@ -2482,7 +2360,7 @@ focus_tree = {
 		available = {
 		}
 
-		relative_position_id = CHI_expand_the_CIBS
+		relative_position_id = CHI_form_a_united_front
 
 		completion_reward = {
 			add_timed_idea = {
@@ -4486,7 +4364,7 @@ focus_tree = {
 		}
 		
 
-		cost = 10
+		cost = 7
 
 		ai_will_do = {
 			factor = 4
@@ -5230,7 +5108,7 @@ focus_tree = {
 		x = 4
 		y = 1
 		relative_position_id = CHI_proclaim_the_peoples_republic
-		cost = 10
+		cost = 5
 		
 
 		available = {
@@ -5690,7 +5568,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 4
@@ -5744,7 +5622,7 @@ focus_tree = {
 		x = 1
 		y = 2
 		
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 4
@@ -5790,7 +5668,7 @@ focus_tree = {
 		x = -1
 		y = 2
 		
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 4
@@ -5834,7 +5712,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		
-		cost = 10
+		cost = 7
 
 		ai_will_do = {
 			factor = 4
@@ -5911,7 +5789,7 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = CHI_maos_little_red_book
-		cost = 7
+		cost = 5
 
 		completion_reward = {
 			#CHI_hyper_inflation_level_up = yes
@@ -6001,7 +5879,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = CHI_instutional_reorganization
-		cost = 7
+		cost = 5
 
 		completion_reward = {
 			####ADDS CCP GENERALS + ARMY STAFF
@@ -6085,7 +5963,7 @@ focus_tree = {
 	focus = {
 		id = CHI_supply_for_our_invasion
 		icon = GFX_goal_generic_railroad
-		cost = 10
+		cost = 5
 		x = -1
 		y = 1
 		mutually_exclusive = {
@@ -6281,7 +6159,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id =  CHI_maos_little_red_book 
-		cost = 10
+		cost = 5
 
 		available = {
 			NOT = {
@@ -6296,7 +6174,7 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 75
 			###KILLS SOME COMMUNIST OPPOSITION LEADERS
-			add_country_leader_trait = dictator
+			#add_country_leader_trait = dictator
 			add_popularity = {
 				ideology = communism
 				popularity = 1
