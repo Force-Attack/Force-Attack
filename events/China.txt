@@ -96,7 +96,7 @@ country_event = { #japan said no
 
 }
 
-country_event = { #chang kai shek is dead - who takes controls of the power vaccum
+country_event = { #chang kai shek is dead - completes the focus to concede to japan
 	id = CHI.3
 	title = CHI.3.t
 	desc = CHI.3.d
@@ -104,26 +104,56 @@ country_event = { #chang kai shek is dead - who takes controls of the power vacc
 
 	is_triggered_only = yes
 
-	option = { #communists seizes power
+	option = { #checks for japan went demo or commmie, then checks for manchuria, else it just fires the focus
 		name = CHI.3.a
 		ai_chance = {
 			base = 70
 		}
-		complete_national_focus = CHI_end_the_regime
-	}
-	option = { #japan seizes power
-		name = CHI.3.b
-		ai_chance = {
-			base = 70
+		complete_national_focus = CHI_concede_to_japan
+		if = {
+			limit = {
+				JAP = {
+					OR = {
+						exists = no
+						has_completed_focus = JAP_the_unthinkable_option
+						has_completed_focus = JAP_strengthen_civilian_government
+					}
+				}
+			}
+			MAN = {
+				country_event = CHI.4
+			}
 		}
-		JAP = {
-			country_event = CHI.2
+		else_if = {
+			limit = {
+				JAP = {
+					exists = NO
+				}
+				MAN = {
+					exists = NO
+				}
+			}
+			complete_national_focus = CHI_mao_zedong_civil_war
 		}
+		else_if = {
+			limit = {
+				JAP = {
+					OR = {
+						has_government = fascism
+						has_completed_focus = JAP_support_the_kodoha_faction
+						has_completed_focus = JAP_purge_the_kodoha_faction
+					}
+				}
+			}
+			JAP = {
+				country_event = { id = CHI.4 }
+			}
+		}
+		
 	}
-
 }
 
-country_event = { #Facists Take over
+country_event = { #china concedes over territory for our gain, at the the exchange of a treaty
 	id = CHI.4
 	title = CHI.4.t
 	desc = CHI.4.d
@@ -133,9 +163,29 @@ country_event = { #Facists Take over
 
 	option = { #okay
 		name = CHI.4.a
-		retire_character = CHI_tu_yuming
-		retire_character = CHI_sun_li_jen
-		army_experience = 10
+		ROOT = {
+			transfer_state = 608
+			transfer_state = 621
+			transfer_state = 614
+			transfer_state = 597
+			transfer_state = 743
+			transfer_state = 598
+		}
+		ROOT = {
+			every_controlled_state = {
+				limit = {
+					state_is_fully_controlled_by_ROOT_or_subject = yes
+					is_core_of = CHI
+					#has_resistance = yes
+				}
+				add_compliance = 35
+			}
+		}
+		add_timed_idea = {
+			idea = CHI_payments_from_china
+			days = 200
+		}
+		set_global_flag = CHI_illegitimate_government
 	}
 }
 
@@ -1580,6 +1630,27 @@ country_event = {
 	}
 }
 
+#great leap start
+country_event = {
+	id = kmt.39
+	title = kmt.39.t
+	desc = kmt.39.d
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	option = {
+		name = kmt.39.a
+		country_event = {
+			id = kmt.40
+			days = 30
+			random_days = 20
+		}
+	}
+}
+
 #great leap furnace auto build
 country_event = {
 	id = kmt.40
@@ -1593,7 +1664,7 @@ country_event = {
 		name = kmt.40.a
 		random_owned_controlled_state = {
 			limit = {
-				is_core_of = PRC
+				is_core_of = CHI
 				NOT = {
 					has_state_flag = KMT_shitty_furnaced
 				}
@@ -1607,8 +1678,8 @@ country_event = {
 		hidden_effect = {
 			if = {
 				limit = {
-					has_country_flag = KMT_great_leap_started
-					NOT = { has_country_flag = KMT_leap_stop }
+					has_country_flag = CHI_great_leap_started
+					NOT = { has_country_flag = CHI_leap_stop }
 				}
 				country_event = {
 					id = kmt.40
@@ -1616,6 +1687,107 @@ country_event = {
 					random_days = 20
 				}
 			}
+		}
+	}
+}
+
+
+#mao officialize(?) people's commune
+country_event = {
+	id = kmt.47
+	title = kmt.47.t
+	desc = kmt.47.d
+
+	picture = GFX_report_event_chinese_officers
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.47.a
+		#add_ideas = KMT_peoples_commune
+		hidden_effect = {
+			if = {
+				limit = {
+					has_country_flag = CHI_great_leap_started
+					NOT = { has_country_flag = CHI_leap_stop }
+				}
+				country_event = {
+					id = kmt.43
+					days = 73
+					random_days = 10
+				}
+			}
+		}
+	}
+}
+
+#famine
+country_event = {
+	id = kmt.43
+	title = kmt.43.t
+	desc = kmt.43.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.43.a
+		random_owned_controlled_state = {
+			add_manpower = -120000
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_idea = CHI_great_leap_famine_idea
+					has_country_flag = CHI_leap_stop
+				}
+			}
+			add_ideas = CHI_great_leap_famine_idea
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_country_flag = CHI_great_leap_started
+					NOT = { has_country_flag = CHI_leap_stop }
+				}
+				country_event = {
+					id = kmt.43
+					days = 80
+					random_days = 20
+				}
+			}
+		}
+	}
+}
+
+#great leap stop
+country_event = {
+	id = kmt.46
+	title = kmt.46.t
+	desc = kmt.46.d
+	picture = GFX_report_event_dead_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = kmt.46.a
+		set_country_flag = CHI_leap_stop
+		add_popularity = {
+			ideology = communism
+			popularity = -0.25
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.25
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.25
+		}
+		remove_ideas = CHI_great_leap_famine_idea
+		add_timed_idea = {
+			idea = CHI_recovering_from_famine
+			days = 365
 		}
 	}
 }
@@ -1900,15 +2072,7 @@ country_event = {
 				modifier = PRC_swcc_6
 			}
 		}
-		if = {
-			limit = {
-				has_idea = PRC_socialism_with_chinese_characteristics_6
-			}
-			swap_ideas = {
-				remove_idea = PRC_socialism_with_chinese_characteristics_6
-				add_idea = PRC_socialism_with_chinese_characteristics_7
-			}
-		}
+		add_ideas = PRC_socialism_with_chinese_characteristics_7
 	}
 }
 
@@ -1924,9 +2088,9 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		hidden_effect = {
-			country_event = { id = prc.15 days = 30 }
-		}
+		#hidden_effect = {
+		#	country_event = { id = prc.15 days = 30 }
+		#}
 	}
 
 	option = {
@@ -1952,24 +2116,8 @@ country_event = {
 			}
 			add_building_construction = {
 				type = infrastructure
-				level = 4
+				level = 2
 				instant_build = yes
-			}
-		}
-		custom_effect_tooltip = prc_more_trade_deals_tt
-		every_other_country = {
-			add_opinion_modifier = {
-				target = PRC
-				modifier = PRC_swcc_2
-			}
-		}
-		if = {
-			limit = {
-				has_idea = PRC_socialism_with_chinese_characteristics
-			}
-			swap_ideas = {
-				remove_idea = PRC_socialism_with_chinese_characteristics
-				add_idea = PRC_socialism_with_chinese_characteristics_2
 			}
 		}
 	}
