@@ -410,7 +410,15 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
+			
 			615 = {
 				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
@@ -453,24 +461,16 @@ focus_tree = {
 		continue_if_invalid = no
 		available_if_capitulated = no
 
-		complete_tooltip = {
-			CHI_hyper_inflation_level_up = yes
-			random_state = {
-				limit = {
-					has_state_flag = CHI_develop_the_hanyan_arsenal_AF
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			random_owned_controlled_state = {
 				prioritize = { 620 }
 				limit = {
@@ -644,6 +644,7 @@ focus_tree = {
 				OR = {
 					has_completed_focus = CHI_enact_martial_law
 					has_completed_focus = CHI_to_the_world_stage
+					has_completed_focus = PRC_economic_reform
 				}
 			}
 		}
@@ -1470,6 +1471,19 @@ focus_tree = {
 		cost = 10
 		x = 50
 		y = 0
+		offset = {
+			trigger = {
+				OR = { 
+					has_completed_focus = CHI_democritization
+					has_completed_focus = CHI_agree_to_the_captors_terms
+					has_completed_focus = CHI_escape_from_captivity
+					has_completed_focus = CHI_jingwei_punitive_expedition
+				}
+			}
+			x = -20
+			y = 0
+		}
+		
 		mutually_exclusive = {
 			
 		}
@@ -1493,7 +1507,22 @@ focus_tree = {
 		cost = 7
 		x = -2
 		y = 1
-
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {
+					OR = {
+						has_completed_focus = CHI_jingwei_punitive_expedition
+						has_completed_focus = CHI_democritization
+					}
+				}
+			}
+		}
 		mutually_exclusive = {
 			focus = CHI_agree_to_the_captors_terms
 			focus = CHI_jingwei_punitive_expedition
@@ -1510,6 +1539,7 @@ focus_tree = {
 		completion_reward = {
 			#remove captivity debuff
 			add_war_support = 0.05
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	focus = {
@@ -1543,7 +1573,22 @@ focus_tree = {
 		cost = 7
 		x = 2
 		y = 1
-		
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {
+					OR = {
+						has_completed_focus = CHI_jingwei_punitive_expedition
+						has_completed_focus = CHI_democritization
+					}
+				}
+			}
+		}
 		mutually_exclusive = {
 			focus = CHI_escape_from_captivity
 			focus = CHI_democritization
@@ -1563,6 +1608,7 @@ focus_tree = {
 				activate_advisor = CHI_dai_li_ccp
 			}
 			remove_country_leader_trait = anti_communist
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	focus = {
@@ -4389,13 +4435,36 @@ focus_tree = {
 		relative_position_id = CHI_xian_incident
 		x = -14
 		y = 1
+		offset = {
+			trigger = {
+				has_completed_focus = CHI_jingwei_punitive_expedition
 
+			}
+			x = 14
+			y = 0
+		}
 		mutually_exclusive = {
 			focus = CHI_escape_from_captivity
 			focus = CHI_agree_to_the_captors_terms
 			focus = CHI_democritization
 		}
-		
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {
+					OR = {
+						has_completed_focus = CHI_agree_to_the_captors_terms
+						has_completed_focus = CHI_escape_from_captivity
+						has_completed_focus = CHI_democritization
+					}
+				}
+			}
+		}
 
 		cost = 7
 
@@ -4411,6 +4480,7 @@ focus_tree = {
 				has_country_leader_with_trait = detained_leader
 			}
 			is_puppet = no
+		
 		}
 
 		bypass = {
@@ -4429,6 +4499,7 @@ focus_tree = {
 			CHI =  {
 				country_event = { id = CHI.3 }
 			}
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	focus = {
@@ -4464,7 +4535,7 @@ focus_tree = {
 			custom_effect_tooltip = CHI_may_cause_civil_war
 			set_truce = {
 				target = JAP
-				days = 650
+				days = 760
 			}
 		}
 	}
@@ -4485,7 +4556,7 @@ focus_tree = {
 		}
 
 		available = {
-			
+			has_global_flag = CHI_illegitimate_government
 		}
 
 		bypass = {
@@ -4866,7 +4937,14 @@ focus_tree = {
 
 		completion_reward = {
 			CHI_remove_corrupted_economy = yes
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			every_owned_state = {
 				limit = {
 					is_core_of = ROOT
@@ -4905,6 +4983,11 @@ focus_tree = {
 		
 		completion_reward = {
 			add_country_leader_trait = the_great_chairman
+			CHI_kang_sheng = {
+				set_can_be_fired_in_advisor_role = {
+					value = yes
+				}
+			}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 	}
@@ -4939,12 +5022,7 @@ focus_tree = {
 		completion_reward = {
 			country_event = { id = kmt.32 days = 1 }
 			custom_effect_tooltip = KMT_hundred_flowers_tt
-			activate_mission = PRC_hundred_flowers_campaign_progress
-			CHI_kang_sheng = {
-				set_can_be_fired_in_advisor_role = {
-					value = yes
-				}
-			}
+			#activate_mission = PRC_hundred_flowers_campaign_progress
 		}
 	}
 
@@ -4967,8 +5045,8 @@ focus_tree = {
 
 		completion_reward = {
 			country_event = { id = kmt.39 days = 1 }
-			add_ideas = KMT_three_red_banner
-			set_country_flag = KMT_great_leap_started
+			add_ideas = CHI_three_red_banner
+			set_country_flag = CHI_great_leap_started
 			custom_effect_tooltip = PRC_great_leap_timespan
 			hidden_effect = {
 				country_event = { id = kmt.46 days = 365 }
@@ -4989,7 +5067,7 @@ focus_tree = {
 
 		available = {
 			has_war = no
-			has_country_flag = KMT_leap_stop
+			has_country_flag = CHI_leap_stop
 			SOV = {
 				OR = {
 					NOT = {
@@ -5024,7 +5102,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = PRC_begin_cultural_revolution
-		cost = 50
+		cost = 10
 		
 		available = {
 			has_global_flag = CR_ended
@@ -6006,9 +6084,7 @@ focus_tree = {
 		relative_position_id = CHI_prepare_for_the_inevitable
 		available = {
 			has_full_control_of_state = 746
-			has_full_control_of_state = 615
-			has_full_control_of_state = 607
-			has_full_control_of_state = 598
+			has_full_control_of_state = 606
 		}
 		bypass = {
 			is_puppet = yes
@@ -6017,13 +6093,13 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
-					has_full_control_of_state = 598
+					has_full_control_of_state = 606
 				}
-				598 = {
+				606 = {
 					add_building_construction = {
 						type = supply_node
 						level = 1
-						province = 1121
+						province = 10040
 					}
 					add_building_construction = {
 						type = air_base
@@ -6058,8 +6134,7 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_supply_for_our_invasion }
-		prerequisite = { focus = CHI_military_industries }
+		prerequisite = { focus = CHI_supply_for_our_invasion  focus = CHI_military_industries }
 		relative_position_id = CHI_prepare_for_the_inevitable
 		available = {
 			is_puppet = no
@@ -6142,8 +6217,7 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_supply_for_our_invasion }
-		prerequisite = { focus = CHI_military_industries }
+		prerequisite = { focus = CHI_supply_for_our_invasion  focus = CHI_military_industries }
 		relative_position_id = CHI_prepare_for_the_inevitable
 		available = {
 			is_puppet = no
@@ -6222,7 +6296,31 @@ focus_tree = {
 		relative_position_id = CHI_xian_incident
 		x = 10
 		y = 1
+		offset = {
+			trigger = {
+				has_completed_focus = CHI_democritization
 
+			}
+			x = -10
+			y = 0
+		}
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {
+					OR = {
+						has_completed_focus = CHI_agree_to_the_captors_terms
+						has_completed_focus = CHI_jingwei_punitive_expedition
+						has_completed_focus = CHI_escape_from_captivity
+					}
+				}
+			}
+		}
 		mutually_exclusive = {
 			focus = CHI_escape_from_captivity
 			focus = CHI_agree_to_the_captors_terms
@@ -6257,6 +6355,7 @@ focus_tree = {
 				popularity = -0.25
 			}
 			add_political_power = 25
+			mark_focus_tree_layout_dirty = yes
 			add_ideas = CHI_political_discourse
 		}
 	}
@@ -6385,7 +6484,14 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 		completion_reward = {
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			random_core_state = {
 				prioritize = {
 					613
@@ -6536,7 +6642,14 @@ focus_tree = {
 		completion_reward = {			
 			add_stability = 0.1
 			add_political_power = 100
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 		}
 	}
 
@@ -6621,7 +6734,14 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
 			add_research_slot = 1
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			add_ideas = CHI_people_knowledge
 			CHI_decreace_illiteracy = yes
 		}
@@ -6866,7 +6986,14 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 		completion_reward = {
 			add_war_support = 0.05
-			CHI_hyper_inflation_level_up = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 		}
 	}
 
