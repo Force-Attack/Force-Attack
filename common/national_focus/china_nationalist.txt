@@ -1627,27 +1627,6 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 120
 			add_stability = 0.05
-			#mby idea -10% pp, 2% manpower, 20% compaowr+, 
-		}
-	}
-	focus = {
-		id = CHI_prepare_for_manchu_confrontation
-		icon = GFX_goal_generic_construct_infrastructure
-		cost = 5
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		bypass = {
-			is_in_faction_with = SMI
-		}
-		prerequisite = { focus = CHI_give_the_warlords_military_positions }
-		relative_position_id = CHI_give_the_warlords_military_positions
-		available = {
-
-		}
-		completion_reward = {
 			custom_effect_tooltip = CHI_12_commi_divs_tt
 			hidden_effect = {	
 				division_template = {
@@ -1724,9 +1703,34 @@ focus_tree = {
 					}	
 				}
 			}
-			add_popularity = {
-				ideology = communism
-				popularity = 0.05
+		}
+	}
+	focus = {
+		id = CHI_cordinate_with_comunist_industry
+		icon = GFX_goal_sov_soviet_ind_upgrade
+		cost = 5
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		bypass = {
+			is_in_faction_with = SMI
+		}
+		prerequisite = { focus = CHI_give_the_warlords_military_positions }
+		relative_position_id = CHI_give_the_warlords_military_positions
+		available = {
+
+		}
+		completion_reward = {
+			add_offsite_building = {
+				type = arms_factory
+				level = 1
+			}
+			CHI_dai_li = {
+				add_trait = {
+					trait = collective_industry_architect
+				}
 			}
 		}
 	}
@@ -1823,24 +1827,71 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CHI_call_the_communist_reserves
 		}
-		prerequisite = { focus = CHI_prepare_for_manchu_confrontation }
-		relative_position_id = CHI_prepare_for_manchu_confrontation
+		prerequisite = { focus = CHI_cordinate_with_comunist_industry }
+		relative_position_id = CHI_cordinate_with_comunist_industry
 		available = {
 		}
 		completion_reward = {
-			custom_effect_tooltip = CHI_dai_li_ccp_remove_tt
-			custom_effect_tooltip = CHI_remove_communist_divs_tt
+			custom_effect_tooltip = CHI_5_warlord_divs_tt
 			hidden_effect = {
-				retire_character = CHI_dai_li
-				delete_units = {
-					division_template = "Chinese Peoples Replblic Army"
-					disband = no
+				division_template = {
+					name = "Chinese First Army"
+					priority = 2
+					division_names_group = CHI_INF_01
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+		
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+
+						infantry = { x = 2 y = 0 }
+						infantry = { x = 2 y = 1 }
+						infantry = { x = 2 y = 2 }
+						infantry = { x = 2 y = 3 }
+
+						infantry = { x = 3 y = 0 }
+						infantry = { x = 3 y = 1 }
+						infantry = { x = 3 y = 2 }
+						infantry = { x = 3 y = 3 }
+
+						infantry = { x = 4 y = 0 }
+						artillery_brigade = { x = 4 y = 1 }
+						artillery_brigade = { x = 4 y = 2 }
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+						artillery = {x = 0 y = 1 }
+						anti_air = {x = 0 y = 2 }
+					}
 				}
-			}
-			add_country_leader_trait = anti_communist
-			add_popularity = {
-				ideology = communism
-				popularity = -0.10
+				random_owned_controlled_state = {
+					prioritize = { 594 }
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese First Army\" start_experience_factor = 0.8 start_equipment_factor = 1.0" 
+						owner = CHI
+					}	
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese First Army\" start_experience_factor = 0.8 start_equipment_factor = 1.0" 
+						owner = CHI
+					}	
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese First Army\" start_experience_factor = 0.8 start_equipment_factor = 1.0" 
+						owner = CHI
+					}	
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese First Army\" start_experience_factor = 0.8 start_equipment_factor = 1.0" 
+						owner = CHI
+					}	
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese First Army\" start_experience_factor = 0.8 start_equipment_factor = 1.0" 
+						owner = CHI
+					}
+				}
 			}
 		}
 	}
@@ -1853,13 +1904,13 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = CHI_call_on_the_warlords_best
 		}
-		prerequisite = { focus = CHI_prepare_for_manchu_confrontation }
-		relative_position_id = CHI_prepare_for_manchu_confrontation
+		prerequisite = { focus = CHI_cordinate_with_comunist_industry }
+		relative_position_id = CHI_cordinate_with_comunist_industry
 		available = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = CHI_8_commi_divs_tt
+			custom_effect_tooltip = CHI_10_commi_divs_tt
 			hidden_effect = {	
 				random_owned_controlled_state = {
 					prioritize = { 622 }
@@ -1895,9 +1946,16 @@ focus_tree = {
 						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese Peoples Replblic Army\" start_experience_factor = 0.6 start_equipment_factor = 1.0" 
 						owner = CHI
 					}
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese Peoples Replblic Army\" start_experience_factor = 0.6 start_equipment_factor = 1.0" 
+						owner = CHI
+					}
+					create_unit = {
+						division = "name = \"Chinese Peoples Replblic Army\" division_template = \"Chinese Peoples Replblic Army\" start_experience_factor = 0.6 start_equipment_factor = 1.0" 
+						owner = CHI
+					}
 				}
 			}
-			add_stability = -0.05
 			add_popularity = {
 				ideology = communism
 				popularity = 0.05
@@ -1906,7 +1964,7 @@ focus_tree = {
 	}
 	focus = {
 		id = CHI_take_out_kansas
-		icon = GFX_goal_sov_soviet_ind_upgrade
+		icon = GFX_goal_generic_construct_infrastructure
 		cost = 10
 		x = 0
 		y = 3
@@ -1920,10 +1978,25 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			CHI_dai_li = {
-				add_trait = {
-					trait = collective_industry_architect
+			every_owned_state = {
+				limit = {
+					any_neighbor_state = { owner = { OR = { original_tag = JAP is_in_faction_with = JAP is_puppet_of = JAP } } }
 				}
+				add_building_construction = {
+					type = bunker
+					level = 2
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_border = yes
+					}
+				}
+			}
+			build_railway = {
+				level = 2
+				build_only_on_allied = yes
+				start_state = 613
+				target_state = 608
 			}
 		}
 	}
@@ -2064,16 +2137,15 @@ focus_tree = {
 		id = CHI_retake_manchuria
 		icon = GFX_goal_CHI_retake_manchuria
 		cost = 10
-		x = -3
+		x = 0
 		y = 1
 
 		mutually_exclusive = {	
 		}
 		prerequisite = {
 			focus = CHI_the_blue_shirts
-			focus = CHI_take_out_kansas
 		}
-		relative_position_id = CHI_take_out_kansas
+		relative_position_id = CHI_the_blue_shirts
 		available = {
 			is_puppet = no
 			any_state = {
@@ -6294,7 +6366,7 @@ focus_tree = {
 		icon = GFX_goal_constitution
 
 		relative_position_id = CHI_xian_incident
-		x = 10
+		x = 15
 		y = 1
 		offset = {
 			trigger = {
