@@ -174,6 +174,8 @@ technologies = {
 		category_mountaineers = {
 			initiative = 0.01
 		}
+		unit_mountaineers_design_cost_factor = -0.50
+		unit_rangers_support_design_cost_factor = -0.50
 		
 		force_use_small_tech_layout = yes
 		
@@ -217,9 +219,9 @@ technologies = {
 		
 		force_use_small_tech_layout = yes
 		
-		#category_mountaineers = {
-		#	defense = 0.10
-		#}
+		category_mountaineers = {
+			defense = 0.10
+		}
 		mountaineers = {
 			combat_width = -0.2
 		}
@@ -461,7 +463,7 @@ technologies = {
 		
 		marines_special_forces_contribution_factor = -0.25
 		naval_invasion_capacity = 5
-		category_marines = {
+		category_special_forces = {
 			max_organisation = 5
 			soft_attack = 0.05
 		}
@@ -487,6 +489,15 @@ technologies = {
 		
 		ai_will_do = {
 			factor = 20
+			modifier = {
+				factor = 0
+				tag = USA
+				NOT = { has_tech = special_forces_paratroopers }
+			}
+			modifier = {
+				factor = 0
+				NOT = { ai_has_completed_naval_doctrine = yes }
+			}
 		}
 		
 		ai_research_weights = {
@@ -589,7 +600,7 @@ technologies = {
 	marines_recon = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 80
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 		
@@ -603,6 +614,7 @@ technologies = {
 			research_cost_coeff = 1
 		}
 		
+		unit_marine_design_cost_factor = -0.50
 
 		marine = {
 			max_organisation = 5
@@ -635,7 +647,7 @@ technologies = {
 	marines_commandoes = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 80
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 		
@@ -684,7 +696,7 @@ technologies = {
 	marines_expeditionary = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 80
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 
@@ -695,7 +707,7 @@ technologies = {
 		
 		xor = { marines_commandoes }
 
-		special_forces_cap = 0.10
+		special_forces_cap = 0.06
 		naval_invasion_planning_bonus_speed = 0.2
 		
 		army_bonus_air_superiority_factor = 0.10
@@ -727,7 +739,7 @@ technologies = {
 	marines_commandos_demolition = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 100
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 
@@ -775,7 +787,7 @@ technologies = {
 	marines_expeditionary_blowtorch = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 100
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 		
@@ -785,7 +797,7 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
-
+		
 		pioneer_support = {
 			battalion_mult = {
 				category = category_line_artillery
@@ -834,7 +846,7 @@ technologies = {
 			 breakthrough = 0.1
 			 max_organisation = 5
 		}
-
+		
 		pioneer_support = {
 			battalion_mult = {
 				category = category_amphibious_tanks
@@ -842,7 +854,7 @@ technologies = {
 				breakthrough = 0.15
 			}
 		}
-
+		
 		
 		on_research_complete = {
 			add_ideas = GEN_cheaper_amphib
@@ -875,12 +887,12 @@ technologies = {
 	marines_commandoes_mechanised_non_mtg = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 100
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 		allow_branch = { not = { has_dlc = "Man the Guns" } }
 		
-		special_forces_attack_factor = 0.10
+		special_forces_attack_factor = 0.15
 		
 		doctrine = yes	
 		research_cost = 2.25
@@ -909,26 +921,33 @@ technologies = {
 	marines_expeditionary_support = {
 		
 		xp_research_type = navy
-		xp_unlock_cost = 100
+		xp_unlock_cost = 60
 		
 		force_use_small_tech_layout = yes
 		
 		artillery = {
 			 battalion_mult = {
 				category = category_marines
-				breakthrough = 0.1
+				defense = 0.05
 			}
 		}
-
-		artillery = {
+		
+		anti_air = {
 			 battalion_mult = {
-				category = category_amphibious_tanks
-				breakthrough = 0.1
+				category = category_marines
+				defense = 0.05
+			}
+		}
+		
+		anti_tank = {
+			 battalion_mult = {
+				category = category_marines
+				defense = 0.05
 			}
 		}
 
 		extra_marine_supply_grace = 24
-		naval_invasion_capacity = 15
+		naval_invasion_capacity = 10
 			
 		doctrine = yes	
 		research_cost = 2.25
