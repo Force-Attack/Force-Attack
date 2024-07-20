@@ -429,15 +429,9 @@ NDefines.NAI.GENERATE_WARGOAL_ANTAGONIZE_SCALE = 0.25 -- (Original value: 0.35) 
 --------------------------------------------------------------------------------------------------------------
 
 NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {				-- buildings in order of pirority when considering building targets strategies. First has the greatest priority omitted has the lowest. NOTE: not all buildings are supported by building targets strategies.
-    'synthetic_refinery',
-    'fuel_silo',
-    'industrial_complex',
-    'arms_factory',
-    'infrastructure',
-    'dockyard',
-    'air_base',
-    'radar_station',
-    'nuclear_reactor',
+'infrastructure',
+'industrial_complex',
+'arms_factory',
 }
 
 --------------------------------------------------------------------------------------------------------------
