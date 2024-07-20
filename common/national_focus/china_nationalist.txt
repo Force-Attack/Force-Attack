@@ -5810,7 +5810,7 @@ focus_tree = {
 		id = CHI_prepare_for_the_inevitable
 		icon = GFX_goal_generic_war_factory
 		cost = 10
-		x = -3
+		x = -2
 		y = 1
 		mutually_exclusive = {
 			
@@ -6116,7 +6116,7 @@ focus_tree = {
 		id = CHI_mongolia_issue
 		icon = GFX_focus_generic_attack_mongolia
 		prerequisite = { focus = CHI_anti_soviet_revisionist_aim }
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = CHI_anti_soviet_revisionist_aim
 		cost = 5
@@ -6150,6 +6150,47 @@ focus_tree = {
 					}
 				}
 				country_event = { id = chi.84 }
+			}
+		}
+	}
+	focus = {
+		id = CHI_demand_return_of_trade_ports
+		icon = GFX_goal_naval_treaty
+		prerequisite = { focus = CHI_assistance_from_our_brethern  focus = CHI_the_new_communism_beacon }
+		x = 0
+		y = 1
+		relative_position_id = CHI_assistance_from_our_brethern
+		cost = 10
+
+		available = {
+			OR = {
+				NOT = {
+					controls_state = 326
+				}
+				NOT = {
+					controls_state = 729
+				}
+				NOT = {
+					controls_state = 728
+				}
+			}
+			has_government = communism
+		}
+		
+		completion_reward = {
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_controlled_state = {
+						OR = {
+							state = 326
+							state = 729
+							state = 728
+						}
+					}
+				}
+				country_event = { id = prc.89 }
 			}
 		}
 	}
@@ -6230,47 +6271,7 @@ focus_tree = {
 	#	}
 	#	search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 	#}
-	focus = {
-		id = CHI_demand_return_of_trade_ports
-		icon = GFX_goal_naval_treaty
-		prerequisite = { focus = CHI_exert_influence_in_sea  }
-		x = 0
-		y = 1
-		relative_position_id = CHI_exert_influence_in_sea
-		cost = 10
-
-		available = {
-			OR = {
-				NOT = {
-					controls_state = 326
-				}
-				NOT = {
-					controls_state = 729
-				}
-				NOT = {
-					controls_state = 728
-				}
-			}
-			has_government = communism
-		}
-		
-		completion_reward = {
-			every_other_country = {
-				limit = {
-					NOT = { is_in_faction_with = ROOT }
-					NOT = { is_subject_of = ROOT }
-					any_controlled_state = {
-						OR = {
-							state = 326
-							state = 729
-							state = 728
-						}
-					}
-				}
-				country_event = { id = prc.89 }
-			}
-		}
-	}
+	
 	#focus = {
 	#	id = CHI_conduct_nationwide_inspections
 	#	icon = GFX_focus_chi_one_china_policy
@@ -6351,10 +6352,11 @@ focus_tree = {
 	focus = {
 		id = CHI_the_permanent_revolution
 		icon = GFX_focus_focus_fra_revolution_utmost
-		prerequisite = { focus = CHI_demand_return_of_trade_ports }
-		x = 0
-		y = 2
-		relative_position_id = CHI_exert_influence_in_sea
+		#prerequisite = { focus = CHI_demand_return_of_trade_ports }
+				prerequisite = { focus = CHI_retake_manchuria_CCP focus = CHI_demand_taiwan }
+		x = 1
+		y = 1
+		relative_position_id = CHI_retake_manchuria_CCP
 		cost = 10
 		
 		available = {
@@ -6449,10 +6451,10 @@ focus_tree = {
 		id = CHI_aid_the_workers
 		icon = GFX_focus_prc_agrarian_socialism
 		prerequisite = { focus = CHI_the_permanent_revolution }
-		prerequisite = { focus = CHI_retake_manchuria_CCP focus = CHI_demand_taiwan }
-		x = -2
-		y = 3
-		relative_position_id = CHI_exert_influence_in_sea
+
+		x = 0
+		y = 1
+		relative_position_id = CHI_the_permanent_revolution
 		cost = 10
 		
 		available = {
