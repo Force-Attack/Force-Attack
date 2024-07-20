@@ -4535,7 +4535,7 @@ focus_tree = {
 	######
 	#####
 
-	####COMMUNIST TREE BEGINS
+####COMMUNIST TREE BEGINS
 	focus = {
 		id = CHI_jingwei_punitive_expedition
 		icon = GFX_goal_PRC_contact_zhang_xueliang
@@ -5029,57 +5029,347 @@ focus_tree = {
 		}
 	}
 	
+	##### MAO INDEPENDENT PRC (ANTI-SOVIET) #######
 
+	
 	focus = {
-		id = CHI_land_reform
-		icon = GFX_goal_agrarian_reform
-		prerequisite = { focus = CHI_maos_little_red_book }
-		x = 2
+		id = CHI_destroy_the_remenants_of_the_traitors
+		icon =  GFX_focus_SOV_the_last_purge
+
+		relative_position_id = CHI_mao_zedong_civil_war
+		x = 0
 		y = 1
-		relative_position_id = CHI_maos_little_red_book
-		cost = 10
 		
+		cost = 5
+
+		ai_will_do = {
+			factor = 4
+		}
+
 		available = {
-			has_government = communism
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_mao_zedong_civil_war
+		}
+		completion_reward = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = remove_rivals_var
+					value = party_popularity@neutrality
+				}
+				multiply_temp_variable = {
+					var = remove_rivals_var
+					value = -0.4
+				}
+			}
+			add_political_power = 50
+			add_stability = remove_rivals_var
+			#add_popularity = {
+			#	ideology = communism
+			#	popularity = 1
+			#}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_kang_sheng
+			custom_effect_tooltip = CHI_kang_sheng_will_be_hired_tt
+			hidden_effect = {
+				activate_advisor = CHI_kang_sheng
+				CHI_kang_sheng = {
+					set_can_be_fired_in_advisor_role = {
+						value = no
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = CHI_purge_the_army
+		icon =  GFX_focus_SOV_military_purge
+
+		relative_position_id = CHI_mao_zedong_civil_war
+		x = 1
+		y = 2
+		
+		cost = 5
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_destroy_the_remenants_of_the_traitors
+		}
+		completion_reward = {
+			####KILLS ALMOST ALL LEADERS BESIDES COMFIRMED COMMUNISTS
+			retire_character = CHI_he_yingqin
+			retire_character = CHI_gao_zhihang
+			retire_character = CHI_chen_cheng
+			retire_character = CHI_yu_hanmou
+			retire_character = CHI_wang_shuming
+			#retire_character = CHI_zhou_zhirou KEEP FOR COMMIE CUZ THEY SHOULD AT LEAST ONE
+			retire_character = USA_claire_lee_chennault
+			retire_character = CHI_bai_chongxi
+			retire_character = CHI_chen_shaokuan
+			retire_character = GXC_li_zongren
+			retire_character = YUN_long_yun
+			retire_character = SHX_yan_xishan
+			retire_character = CHI_chen_jitang
+			retire_character = GER_alexander_von_falkenhausen
+			add_timed_idea = {
+				idea = CHI_purged_army
+				days = 200
+			}
+		}
+	}
+	focus = {
+		id = CHI_purge_the_bureaucracy
+		icon =  GFX_focus_SWE_socialist_reforms
+
+		relative_position_id = CHI_mao_zedong_civil_war
+		x = -1
+		y = 2
+		
+		cost = 5
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_civil_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus = CHI_destroy_the_remenants_of_the_traitors
 		}
 
 		completion_reward = {
-			CHI_remove_corrupted_economy = yes
+			add_timed_idea = {
+				idea = CHI_bureaucracy_purge
+				days = 200
+			}
+			retire_character = CHI_wang_jingwei
+			retire_character = CHI_dai_li
+			retire_character = CHI_chiang_ching_kuo
+			retire_character = CHI_h_h_kung
+			retire_character = CHI_chen_yi
+			#retire_character = CHI_random_prince_of_terror
+			retire_character = CHI_lin_sen
+			retire_character = CHI_chen_guofu
+			retire_character = CHI_soong_mei_ling
+			retire_character = CHI_t_v_soong
+			retire_character = CHI_kwong_jiang
+			####GETS RID OF ALL THE ADVISORS FOR NATIONALISTS
+		}
+	}
+	focus = {
+		id = CHI_proclaim_the_peoples_republic
+		icon =  GFX_focus_prc_proclaim_the_peoples_republic
+
+		relative_position_id = CHI_destroy_the_remenants_of_the_traitors
+		x = 0
+		y = 2
+		
+		cost = 7
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		   has_war = no
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		#prerequisite = {
+		#	focus = CHI_destroy_the_remenants_of_the_traitors
+		#}
+		prerequisite = {
+			focus = CHI_purge_the_bureaucracy
+		}
+		prerequisite = {
+			focus = CHI_purge_the_army
+		}
+		
+		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
+			add_political_power = 50
+			add_stability = 0.1
+			set_cosmetic_tag = CHI_CCP_form
+			remove_country_leader_trait = cornered_fox
+		}
+	}
+	focus = {
+		id = CHI_maos_little_red_book
+		icon = GFX_goal_FRA_social_reforms
+
+		relative_position_id = CHI_proclaim_the_peoples_republic
+		x = -4
+		y = 1
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+			is_puppet = yes
+		}
+		prerequisite = {
+			focus =  CHI_proclaim_the_peoples_republic
+		}
+	
+
+	
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = CHI_maos_little_red_book_idea
+				days = 270
+			}
+			#country_event =CHI.7
+			#add_political_power = 100
+			#add_stability = 0.05
+		}
+	}
+	#literacy branch
+	focus = {
+		id = CHI_instutional_reorganization
+		icon = GFX_goal_communist_brigades
+		prerequisite = { focus = CHI_maos_little_red_book }
+		x = -2
+		y = 1
+		relative_position_id = CHI_maos_little_red_book
+		cost = 5
+
+		completion_reward = {
+			#CHI_hyper_inflation_level_up = yes
+			####ADDS ALL CCP ADVISORS
 			if = {
 				limit = {
-					NOT = {
-						has_completed_focus = CHI_the_great_advance_foward
-					}
+					has_idea = CHI_bureaucracy_purge
 				}
-				CHI_hyper_inflation_level_up = yes
+				remove_ideas = CHI_bureaucracy_purge
 			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 1
-			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_deng_xiaoping
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_he_yuandang
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_liu_shaoqi
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = CHI_state_controlled_education
+		icon = GFX_goal_communist_brain
+		prerequisite = { focus = CHI_instutional_reorganization }
+		x = 0
+		y = 2
+		relative_position_id = CHI_instutional_reorganization
+		cost = 5
+
+		completion_reward = {
+			add_ideas = PRC_good_good_study_idea
+			CHI_decreace_illiteracy = yes
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_POLITICAL }
+	}
+
+	focus = {
+		id = CHI_the_peoples_educations
+		icon = GFX_focus_generic_university_1
+		prerequisite = { focus = CHI_state_controlled_education}
+		#prerequisite = { focus = PRC_adopt_soviet_education_system }
+		x = 0
+		y = 1
+		relative_position_id = CHI_state_controlled_education
+		cost = 10
+
+		completion_reward = {
+			add_research_slot = 1
+			CHI_decreace_illiteracy = yes
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = CHI_restaff_the_military
+		icon = GFX_goal_generic_communist_officer
+		prerequisite = { focus = CHI_instutional_reorganization }
+		x = -1
+		y = 1
+		relative_position_id = CHI_instutional_reorganization
+		cost = 5
+
+		completion_reward = {
+			####ADDS CCP GENERALS + ARMY STAFF
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_luo_ruiqing
+			custom_effect_tooltip = available_chief_of_army
+			show_ideas_tooltip = CHI_zhu_de
 			if = {
 				limit = {
-					CHI = {
-						exists = yes
-					}
+					has_idea = CHI_purged_army
 				}
-				CHI = {
-					add_popularity = {
-						ideology = communism
-						popularity = 0.1
-					}
-					add_timed_idea = {
-						idea = PRC_land_reform_stimulated_our_farmers
-						days = 1850
-					}
+				remove_ideas = CHI_purged_army
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	
+	###### MAO POLITICS ###########
+	focus = {
+		id = CHI_suppress_counterrevolutionaries
+		icon = GFX_focus_SWE_lottakoren
+		prerequisite = { focus = CHI_maos_little_red_book }
+		x = 0
+		y = 1
+		relative_position_id =  CHI_maos_little_red_book 
+		cost = 5
+
+		available = {
+			NOT = {
+				OR = {
+					has_idea = CHI_bureaucracy_purge
+					has_idea = CHI_purged_army
 				}
+				
+			}
+		}
+
+		completion_reward = {
+			add_political_power = 75
+			###KILLS SOME COMMUNIST OPPOSITION LEADERS
+			#add_country_leader_trait = dictator
+			add_popularity = {
+				ideology = communism
+				popularity = 1
 			}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
-
 	focus = {
 		id = CHI_cult_of_personality
 		icon = GFX_focus_propaganda_soviet
@@ -5133,7 +5423,55 @@ focus_tree = {
 			#activate_mission = PRC_hundred_flowers_campaign_progress
 		}
 	}
+	focus = {
+		id = CHI_land_reform
+		icon = GFX_goal_agrarian_reform
+		prerequisite = { focus = CHI_maos_little_red_book }
+		x = 2
+		y = 1
+		relative_position_id = CHI_maos_little_red_book
+		cost = 10
+		
+		available = {
+			has_government = communism
+		}
 
+		completion_reward = {
+			CHI_remove_corrupted_economy = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			if = {
+				limit = {
+					CHI = {
+						exists = yes
+					}
+				}
+				CHI = {
+					add_popularity = {
+						ideology = communism
+						popularity = 0.1
+					}
+					add_timed_idea = {
+						idea = PRC_land_reform_stimulated_our_farmers
+						days = 1850
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+	}
 	focus = {
 		id = CHI_great_leap_forawrd
 		icon = GFX_goal_generic_commie_investments
@@ -5317,9 +5655,6 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 	}
-	##### MAO INDEPENDENT PRC (ANTI-SOVIET) #######
-
-
 	focus = {
 		id = CHI_the_new_communism_beacon
 		icon = GFX_focus_prc_maoism
@@ -5350,7 +5685,257 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
-
+	focus = {
+		id = CHI_prepare_for_the_inevitable
+		icon = GFX_goal_generic_war_factory
+		cost = 10
+		x = 3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_the_new_communism_beacon }
+		relative_position_id = CHI_the_new_communism_beacon
+		available = {
+			
+		}
+		bypass = {
+			is_puppet = yes
+		}
+		completion_reward = {
+			add_ideas = ENG_prepare_for_the_inevitable_idea
+		}
+	}
+	focus = {
+		id = CHI_military_industries
+		icon = GFX_goal_communist_factory
+		cost = 10
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_prepare_for_the_inevitable }
+		relative_position_id = CHI_prepare_for_the_inevitable
+		available = {
+			
+		}
+		bypass = {
+			is_puppet = yes
+		}
+		completion_reward = {
+			random_controlled_state = {
+				prioritize = {
+					613
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_controlled_state = {
+				prioritize = {
+					620
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			CHI_increase_inflation = yes
+		}
+	}
+	focus = {
+		id = CHI_supply_for_our_invasion
+		icon = GFX_goal_generic_railroad
+		cost = 5
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_prepare_for_the_inevitable }
+		relative_position_id = CHI_prepare_for_the_inevitable
+		available = {
+			has_full_control_of_state = 746
+			has_full_control_of_state = 606
+		}
+		bypass = {
+			is_puppet = yes
+			
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_full_control_of_state = 606
+				}
+				606 = {
+					add_building_construction = {
+						type = supply_node
+						level = 1
+						province = 10040
+					}
+					add_building_construction = {
+						type = air_base
+						level = 3
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_full_control_of_state = 746
+				}
+				746 = {
+					add_building_construction = {
+						type = supply_node
+						level = 1
+						province = 10451
+					}
+					add_building_construction = {
+						type = air_base
+						level = 3
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = CHI_retake_manchuria_CCP
+		icon = GFX_goal_CHI_retake_manchuria
+		cost = 10
+		x = -1
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_supply_for_our_invasion  focus = CHI_military_industries }
+		relative_position_id = CHI_prepare_for_the_inevitable
+		available = {
+			is_puppet = no
+			any_state = {
+				custom_trigger_tooltip = {
+					tooltip = state_is_manchuria_plus_mengukou_tt
+					OR = {
+						region = 155
+						state = 947
+						state = 610
+						state = 609
+						state = 745
+						state = 612
+						state = 611
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
+					NOT = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+				}
+			}
+		}
+		bypass = {
+			all_state = {
+				OR = {
+					NOT = { 
+						custom_trigger_tooltip = {
+							tooltip = state_is_manchuria_plus_mengukou_tt
+							OR = {
+								region = 155
+								state = 947
+								state = 610
+								state = 609
+								state = 745
+								state = 612
+								state = 611
+							}
+						}
+					}
+					is_controlled_by_ROOT_or_ally = yes
+				}
+			}
+		}
+		completion_reward = {
+			army_experience = 15
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_owned_state = {
+						OR = {
+							region = 155
+							state = 947
+							state = 610
+							state = 609
+							state = 745
+							state = 612
+							state = 611
+						}
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_state_focus
+						expire = 0
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = CHI_demand_taiwan
+		icon = GFX_goal_generic_more_territorial_claims
+		cost = 10
+		x = 1
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_supply_for_our_invasion  focus = CHI_military_industries }
+		relative_position_id = CHI_prepare_for_the_inevitable
+		available = {
+			is_puppet = no
+			any_state = {
+				state = 524
+				custom_trigger_tooltip = {
+					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
+					NOT = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+				}
+			}
+		}
+		bypass = {
+			524 = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+		completion_reward = {
+			navy_experience = 100
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_owned_state = {
+						OR = {
+							state = 524
+						}
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_state_focus
+						expire = 0
+					}
+				}
+			}
+		}
+	}
 	focus = {
 		id = CHI_anti_soviet_revisionist_aim
 		icon = GFX_focus_SOV_socialism_in_one_country	
@@ -5777,626 +6362,10 @@ focus_tree = {
 			}
 		}
 	}
-
-	
-	focus = {
-		id = CHI_destroy_the_remenants_of_the_traitors
-		icon =  GFX_focus_SOV_the_last_purge
-
-		relative_position_id = CHI_mao_zedong_civil_war
-		x = 0
-		y = 1
-		
-		cost = 5
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_civil_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_mao_zedong_civil_war
-		}
-		completion_reward = {
-			hidden_effect = {
-				set_temp_variable = {
-					var = remove_rivals_var
-					value = party_popularity@neutrality
-				}
-				multiply_temp_variable = {
-					var = remove_rivals_var
-					value = -0.4
-				}
-			}
-			add_political_power = 50
-			add_stability = remove_rivals_var
-			#add_popularity = {
-			#	ideology = communism
-			#	popularity = 1
-			#}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CHI_kang_sheng
-			custom_effect_tooltip = CHI_kang_sheng_will_be_hired_tt
-			hidden_effect = {
-				activate_advisor = CHI_kang_sheng
-				CHI_kang_sheng = {
-					set_can_be_fired_in_advisor_role = {
-						value = no
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = CHI_purge_the_army
-		icon =  GFX_focus_SOV_military_purge
-
-		relative_position_id = CHI_mao_zedong_civil_war
-		x = 1
-		y = 2
-		
-		cost = 5
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_civil_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_destroy_the_remenants_of_the_traitors
-		}
-		completion_reward = {
-			####KILLS ALMOST ALL LEADERS BESIDES COMFIRMED COMMUNISTS
-			retire_character = CHI_he_yingqin
-			retire_character = CHI_gao_zhihang
-			retire_character = CHI_chen_cheng
-			retire_character = CHI_yu_hanmou
-			retire_character = CHI_wang_shuming
-			#retire_character = CHI_zhou_zhirou KEEP FOR COMMIE CUZ THEY SHOULD AT LEAST ONE
-			retire_character = USA_claire_lee_chennault
-			retire_character = CHI_bai_chongxi
-			retire_character = CHI_chen_shaokuan
-			retire_character = GXC_li_zongren
-			retire_character = YUN_long_yun
-			retire_character = SHX_yan_xishan
-			retire_character = CHI_chen_jitang
-			retire_character = GER_alexander_von_falkenhausen
-			add_timed_idea = {
-				idea = CHI_purged_army
-				days = 200
-			}
-		}
-	}
-	focus = {
-		id = CHI_purge_the_bureaucracy
-		icon =  GFX_focus_SWE_socialist_reforms
-
-		relative_position_id = CHI_mao_zedong_civil_war
-		x = -1
-		y = 2
-		
-		cost = 5
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_civil_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus = CHI_destroy_the_remenants_of_the_traitors
-		}
-
-		completion_reward = {
-			add_timed_idea = {
-				idea = CHI_bureaucracy_purge
-				days = 200
-			}
-			retire_character = CHI_wang_jingwei
-			retire_character = CHI_dai_li
-			retire_character = CHI_chiang_ching_kuo
-			retire_character = CHI_h_h_kung
-			retire_character = CHI_chen_yi
-			#retire_character = CHI_random_prince_of_terror
-			retire_character = CHI_lin_sen
-			retire_character = CHI_chen_guofu
-			retire_character = CHI_soong_mei_ling
-			retire_character = CHI_t_v_soong
-			retire_character = CHI_kwong_jiang
-			####GETS RID OF ALL THE ADVISORS FOR NATIONALISTS
-		}
-	}
-	focus = {
-		id = CHI_proclaim_the_peoples_republic
-		icon =  GFX_focus_prc_proclaim_the_peoples_republic
-
-		relative_position_id = CHI_destroy_the_remenants_of_the_traitors
-		x = 0
-		y = 2
-		
-		cost = 7
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		   has_war = no
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		#prerequisite = {
-		#	focus = CHI_destroy_the_remenants_of_the_traitors
-		#}
-		prerequisite = {
-			focus = CHI_purge_the_bureaucracy
-		}
-		prerequisite = {
-			focus = CHI_purge_the_army
-		}
-		
-		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
-			add_political_power = 50
-			add_stability = 0.1
-			set_cosmetic_tag = CHI_CCP_form
-			remove_country_leader_trait = cornered_fox
-		}
-	}
-	focus = {
-		id = CHI_maos_little_red_book
-		icon = GFX_goal_FRA_social_reforms
-
-		relative_position_id = CHI_proclaim_the_peoples_republic
-		x = -4
-		y = 1
-		
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			
-		}
-
-		bypass = {
-			is_puppet = yes
-		}
-		prerequisite = {
-			focus =  CHI_proclaim_the_peoples_republic
-		}
-	
-
-	
-
-		completion_reward = {
-			add_timed_idea = {
-				idea = CHI_maos_little_red_book_idea
-				days = 270
-			}
-			#country_event =CHI.7
-			#add_political_power = 100
-			#add_stability = 0.05
-		}
-	}
-	#literacy branch
-	focus = {
-		id = CHI_instutional_reorganization
-		icon = GFX_goal_communist_brigades
-		prerequisite = { focus = CHI_maos_little_red_book }
-		x = -2
-		y = 1
-		relative_position_id = CHI_maos_little_red_book
-		cost = 5
-
-		completion_reward = {
-			#CHI_hyper_inflation_level_up = yes
-			####ADDS ALL CCP ADVISORS
-			if = {
-				limit = {
-					has_idea = CHI_bureaucracy_purge
-				}
-				remove_ideas = CHI_bureaucracy_purge
-			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CHI_deng_xiaoping
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CHI_he_yuandang
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CHI_liu_shaoqi
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CHI_state_controlled_education
-		icon = GFX_goal_communist_brain
-		prerequisite = { focus = CHI_instutional_reorganization }
-		x = 0
-		y = 2
-		relative_position_id = CHI_instutional_reorganization
-		cost = 5
-
-		completion_reward = {
-			add_ideas = PRC_good_good_study_idea
-			CHI_decreace_illiteracy = yes
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_POLITICAL }
-	}
-
-	
-	#focus = {
-	
-	#	id = PRC_adopt_soviet_education_system
-	
-	#	icon = GFX_goal_SOV_education_initiative
-	
-	#	prerequisite = { focus = CHI_instutional_reorganization}
-	
-	#	prerequisite = { focus = PRC_sov_cooperation }
-	
-	#	x = 1
-	
-	#	y = 2
-	
-	#	relative_position_id = CHI_instutional_reorganization
-	
-	#	cost = 5
-
-		#
-	
-	#	completion_reward = {
-	
-	#		add_ideas = PRC_soviet_style_education
-	
-	#	}
-	
-	#	search_filters = { FOCUS_FILTER_RESEARCH }
-	
-	#}
-	focus = {
-		id = CHI_the_peoples_educations
-		icon = GFX_focus_generic_university_1
-		prerequisite = { focus = CHI_state_controlled_education}
-		#prerequisite = { focus = PRC_adopt_soviet_education_system }
-		x = 0
-		y = 1
-		relative_position_id = CHI_state_controlled_education
-		cost = 10
-
-		completion_reward = {
-			add_research_slot = 1
-			CHI_decreace_illiteracy = yes
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CHI_restaff_the_military
-		icon = GFX_goal_generic_communist_officer
-		prerequisite = { focus = CHI_instutional_reorganization }
-		x = -1
-		y = 1
-		relative_position_id = CHI_instutional_reorganization
-		cost = 5
-
-		completion_reward = {
-			####ADDS CCP GENERALS + ARMY STAFF
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CHI_luo_ruiqing
-			custom_effect_tooltip = available_chief_of_army
-			show_ideas_tooltip = CHI_zhu_de
-			if = {
-				limit = {
-					has_idea = CHI_purged_army
-				}
-				remove_ideas = CHI_purged_army
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CHI_prepare_for_the_inevitable
-		icon = GFX_goal_generic_war_factory
-		cost = 10
-		x = 3
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_the_new_communism_beacon }
-		relative_position_id = CHI_the_new_communism_beacon
-		available = {
-			
-		}
-		bypass = {
-			is_puppet = yes
-		}
-		completion_reward = {
-			add_ideas = ENG_prepare_for_the_inevitable_idea
-		}
-	}
-	focus = {
-		id = CHI_military_industries
-		icon = GFX_goal_communist_factory
-		cost = 10
-		x = 1
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_prepare_for_the_inevitable }
-		relative_position_id = CHI_prepare_for_the_inevitable
-		available = {
-			
-		}
-		bypass = {
-			is_puppet = yes
-		}
-		completion_reward = {
-			random_controlled_state = {
-				prioritize = {
-					613
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_controlled_state = {
-				prioritize = {
-					620
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			CHI_increase_inflation = yes
-		}
-	}
-	focus = {
-		id = CHI_supply_for_our_invasion
-		icon = GFX_goal_generic_railroad
-		cost = 5
-		x = -1
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_prepare_for_the_inevitable }
-		relative_position_id = CHI_prepare_for_the_inevitable
-		available = {
-			has_full_control_of_state = 746
-			has_full_control_of_state = 606
-		}
-		bypass = {
-			is_puppet = yes
-			
-		}
-		completion_reward = {
-			if = {
-				limit = {
-					has_full_control_of_state = 606
-				}
-				606 = {
-					add_building_construction = {
-						type = supply_node
-						level = 1
-						province = 10040
-					}
-					add_building_construction = {
-						type = air_base
-						level = 3
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 746
-				}
-				746 = {
-					add_building_construction = {
-						type = supply_node
-						level = 1
-						province = 10451
-					}
-					add_building_construction = {
-						type = air_base
-						level = 3
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = CHI_retake_manchuria_CCP
-		icon = GFX_goal_CHI_retake_manchuria
-		cost = 10
-		x = -1
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_supply_for_our_invasion  focus = CHI_military_industries }
-		relative_position_id = CHI_prepare_for_the_inevitable
-		available = {
-			is_puppet = no
-			any_state = {
-				custom_trigger_tooltip = {
-					tooltip = state_is_manchuria_plus_mengukou_tt
-					OR = {
-						region = 155
-						state = 947
-						state = 610
-						state = 609
-						state = 745
-						state = 612
-						state = 611
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
-					NOT = {
-						is_controlled_by_ROOT_or_ally = yes
-					}
-				}
-			}
-		}
-		bypass = {
-			all_state = {
-				OR = {
-					NOT = { 
-						custom_trigger_tooltip = {
-							tooltip = state_is_manchuria_plus_mengukou_tt
-							OR = {
-								region = 155
-								state = 947
-								state = 610
-								state = 609
-								state = 745
-								state = 612
-								state = 611
-							}
-						}
-					}
-					is_controlled_by_ROOT_or_ally = yes
-				}
-			}
-		}
-		completion_reward = {
-			army_experience = 15
-			every_other_country = {
-				limit = {
-					NOT = { is_in_faction_with = ROOT }
-					NOT = { is_subject_of = ROOT }
-					any_owned_state = {
-						OR = {
-							region = 155
-							state = 947
-							state = 610
-							state = 609
-							state = 745
-							state = 612
-							state = 611
-						}
-					}
-				}
-				ROOT = {
-					create_wargoal = {
-						target = PREV
-						type = take_state_focus
-						expire = 0
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = CHI_demand_taiwan
-		icon = GFX_goal_generic_more_territorial_claims
-		cost = 10
-		x = 1
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_supply_for_our_invasion  focus = CHI_military_industries }
-		relative_position_id = CHI_prepare_for_the_inevitable
-		available = {
-			is_puppet = no
-			any_state = {
-				state = 524
-				custom_trigger_tooltip = {
-					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
-					NOT = {
-						is_controlled_by_ROOT_or_ally = yes
-					}
-				}
-			}
-		}
-		bypass = {
-			524 = {
-				is_fully_controlled_by = ROOT
-			}
-		}
-		completion_reward = {
-			navy_experience = 100
-			every_other_country = {
-				limit = {
-					NOT = { is_in_faction_with = ROOT }
-					NOT = { is_subject_of = ROOT }
-					any_owned_state = {
-						OR = {
-							state = 524
-						}
-					}
-				}
-				ROOT = {
-					create_wargoal = {
-						target = PREV
-						type = take_state_focus
-						expire = 0
-					}
-				}
-			}
-		}
-	}
-	###### MAO POLITICS ###########
-	focus = {
-		id = CHI_suppress_counterrevolutionaries
-		icon = GFX_focus_SWE_lottakoren
-		prerequisite = { focus = CHI_maos_little_red_book }
-		x = 0
-		y = 1
-		relative_position_id =  CHI_maos_little_red_book 
-		cost = 5
-
-		available = {
-			NOT = {
-				OR = {
-					has_idea = CHI_bureaucracy_purge
-					has_idea = CHI_purged_army
-				}
-				
-			}
-		}
-
-		completion_reward = {
-			add_political_power = 75
-			###KILLS SOME COMMUNIST OPPOSITION LEADERS
-			#add_country_leader_trait = dictator
-			add_popularity = {
-				ideology = communism
-				popularity = 1
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
+#######
+#########DEMO PATH
+#######
+#########
 	focus = {
 		id = CHI_democritization
 		icon = GFX_goal_constitution
