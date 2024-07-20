@@ -15553,3 +15553,88 @@ country_event = {
 		###THE PATH OF ARTY ARMY
 	}
 }
+country_event = {
+	id = germany.132
+	title = "Final Push"
+	desc = "Germany is on the brink of collapse, we must do something to save the Reich."
+	picture = GFX_report_event_soldiers_marching
+
+	is_triggered_only = yes
+
+	
+	option = {
+		name = "Wacht am Rhein!"
+		add_timed_idea = {
+			idea = GER_macht_am_rhein_idea
+			days = 60
+		}
+	}
+
+}
+country_event = {
+	id = germany.133
+	title = "German exhaustion"
+	desc = "Germany has spend their final strength it's now up to God to save the reich."
+	picture = GFX_report_event_lithuania_army
+
+	trigger = {
+		has_completed_focus = GER_macht_am_rhein
+		NOT = {
+			has_idea = GER_macht_am_rhein_idea
+		}
+		tag = GER
+	}
+	fire_only_once = yes
+
+	
+	option = {
+		name = "We are on our last legs"
+		add_ideas = GER_exhaustion 
+	}
+
+}
+country_event = {
+	id = germany.134
+	title = "Defence of Berlin"
+	desc = "The capital is under attack we need to defend it no matter the cost."
+	picture = GFX_report_event_bul_troops_dobrudja
+
+	is_triggered_only = yes
+
+	
+	option = {
+		name = "Für das vaterland"
+		64 = {
+			add_dynamic_modifier = {
+				modifier = GER_defend_berlin 
+			} 
+		}
+
+	}
+
+}
+country_event = {
+	id = germany.135
+	title = "Endsieg"
+	desc = "The enemy has reached Germany we need to defend our country!"
+	picture = GFX_report_event_military_planning
+
+	trigger = {
+		surrender_progress = 0.1
+		tag = GER
+		has_completed_focus = GER_rhineland
+		date > 1941.1.1
+	}
+
+	
+	option = {
+		hidden_effect = {
+			news_event = germany.135
+		}
+		name = "End of the thousand week reich?"
+		complete_national_focus = GER_endsieg
+		add_country_leader_trait = desperate_gambit
+	}
+
+}
+

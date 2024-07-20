@@ -1,0 +1,163 @@
+scripted_gui = {
+	ranker = {
+		window_name = "nation_ranker"
+		context_type = player_context
+
+		visible = {
+			has_country_flag = open_ranker
+			has_global_flag = rt56rp_gr_dr_gflag
+		}
+
+		dynamic_lists = {
+			charters_gridbox_X = {
+				array = global.charters_X
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_S = {
+				array = global.charters_S
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_A = {
+				array = global.charters_A
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_B = {
+				array = global.charters_B
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_C = {
+				array = global.charters_C
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_D = {
+				array = global.charters_D
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_E = {
+				array = global.charters_E
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_F = {
+				array = global.charters_F
+				entry_container = charters_list_entry
+				change_scope = yes
+			}
+			charters_gridbox_factions = {
+				array = global.charters_factions
+				entry_container = charters_list_entry_factions
+				change_scope = yes
+			}
+		}
+
+		properties = {
+			member_country_flag = { image = [THIS.GetFlag] }
+		}
+	}
+
+	ranker_prompt = {
+		window_name = "ranker_startup"
+		context_type = player_context
+
+		visible = {
+			is_ai = no
+			has_global_flag = rt56rp_gr_dr_gflag
+		}
+
+		effects = {
+			open_ranker_click = {
+				set_country_flag = open_ranker
+				clear_array = global.charters_X
+				clear_array = global.charters_S
+				clear_array = global.charters_A
+				clear_array = global.charters_B
+				clear_array = global.charters_C
+				clear_array = global.charters_D
+				clear_array = global.charters_E
+				clear_array = global.charters_F
+				clear_array = global.charters_factions
+
+				every_country = {
+					#limit = { check_variable = { rank > 0 } }
+					#limit = {
+						#OR = { is_ai = no   is_faction_leader = yes   tag = GER   tag = SOV   tag = ENG   tag = FRA   tag = ITA   tag = USA   tag = JAP   tag = CHI }
+					#}
+					if = {
+						limit = { check_variable = { rank = 8 } }
+						add_to_array = { array = global.charters_X     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 7 } }
+						add_to_array = { array = global.charters_S     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 6 } }
+						add_to_array = { array = global.charters_A     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 5 } }
+						add_to_array = { array = global.charters_B     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 4 } }
+						add_to_array = { array = global.charters_C     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 3 } }
+						add_to_array = { array = global.charters_D     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 2 } }
+						add_to_array = { array = global.charters_E     value = THIS.id }
+					}
+					else_if = {
+						limit = { check_variable = { rank = 1 } }
+						add_to_array = { array = global.charters_F     value = THIS.id }
+					}
+
+					if = {
+						limit = { check_variable = { THIS.faction_leader = THIS.id } }
+						add_to_array = { array = global.charters_factions     value = THIS.id }
+						set_variable = { fac_score = 0 }
+						set_variable = { dr_faction_space_avail_var = dr_faction_limit_var }
+						for_each_loop = {
+							array = THIS.faction_members
+							value = v
+							add_to_variable = { fac_score = v:dr_country_score_var }
+						}
+						subtract_from_variable = { dr_faction_space_avail_var = fac_score }
+					}
+				}
+
+				every_country = {
+					limit = {
+						is_in_faction = yes
+						is_faction_leader = no
+					}
+					faction_leader = { set_variable = { PREV.dr_faction_space_avail_var = THIS.dr_faction_space_avail_var } }
+				}
+				
+			}
+
+			close_ranker_click = {
+				clr_country_flag = open_ranker
+			}
+		}
+
+		triggers = {
+			open_ranker_visible = {
+				NOT = { has_country_flag = open_ranker }
+			}
+			close_ranker_visible = {
+				has_country_flag = open_ranker
+			}
+		}
+
+	}
+}

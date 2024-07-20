@@ -8,8 +8,9 @@ NDefines.NDiplomacy.BASE_SEND_ATTACHE_COST = 0				-- Political power cost to sen
 NDefines.NDiplomacy.BASE_SEND_ATTACHE_CP_COST = 50.0				-- Command Power sent attache usage cost
 NDefines.NDiplomacy.MIN_WARGOAL_JUSTIFY_COST = 7.0					-- It always takes atleast 10 days to justify a wargoal
 NDefines.NDiplomacy.PEACE_SCORE_PER_PASS = 100.0
+NDefines.NDiplomacy.IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0
 ----------------------------------
-NDefines.NCountry.EVENT_PROCESS_OFFSET = 30						-- Events are checked every X day per country or state (1 is ideal, but CPU heavy)
+NDefines.NCountry.EVENT_PROCESS_OFFSET = 30				-- Events are checked every X day per country or state (1 is ideal, but CPU heavy)
 ----------------------------------
 NDefines.NTrade.BASE_TRADE_FACTOR = 50
 NDefines.NTrade.PARTY_SUPPORT_TRADE_FACTOR = 20
@@ -26,7 +27,7 @@ NDefines.NProduction.CONVOY_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.RAILWAY_GUN_MAX_MIL_FACTORIES_PER_LINE = 30
-NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 3.0
+NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 3.5
 NDefines.NProduction.MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0.01
 NDefines.NProduction.CAPITULATE_STOCKPILES_RATIO = 0
 ----------------------------------
@@ -35,14 +36,14 @@ NDefines.NTechnology.BASE_RESEARCH_POINTS_SAVED = 50.0 --#base game 30 changed t
 NDefines.NTechnology.BASE_YEAR_AHEAD_PENALTY_FACTOR = 3.0		-- Base year ahead penalty
 NDefines.NTechnology.BASE_TECH_COST = 80					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties
 ----------------------------------
-NDefines.NCountry.SPECIAL_FORCES_CAP_BASE = 0.25
-NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 100
+NDefines.NCountry.SPECIAL_FORCES_CAP_BASE = 0.05
+NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 24
 NDefines.NMilitary.CORPS_COMMANDER_DIVISIONS_CAP = 50
 NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 50
 NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 5000
-NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = false
+NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = true
 NDefines.NMilitary.TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.DEPLOY_TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.ARMY_EXP_BASE_LEVEL = 5
@@ -52,7 +53,7 @@ NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.03
 NDefines.NMilitary.NUKE_MIN_DAMAGE_PERCENT = 0.9
 NDefines.NMilitary.NUKE_MAX_DAMAGE_PERCENT = 1.2
 NDefines.NMilitary.RETREAT_SPEED_FACTOR = 0.15
-NDefines.NMilitary.DIG_IN_FACTOR = 0.01
+NDefines.NMilitary.DIG_IN_FACTOR = 0.02
 NDefines.Enemy_AIR_SUPERIORITY_IMPACT = -0.45
 ----------------------------------
 NDefines.NAir.AIR_WING_FLIGHT_SPEED_MULT = 0.2
@@ -122,7 +123,7 @@ NDefines.NResistance.GARRISON_MANPOWER_LOST_BY_ATTACK = 0.005 	--WAS 0.018 Ratio
 
 NDefines.NPolitics.ARMY_LEADER_MAX_COST = 75				-- max cost BEFORE modifiers
 NDefines.NPolitics.NAVY_LEADER_MAX_COST = 75
-NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2.25 -- base pp gain per (week)?		
+NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2 -- base pp gain per (week)?		
 
 NDefines.NMilitary.SUPPLY_GRACE = 84 -- 72 3 days as they say and remain hungry for another 12
 
@@ -410,8 +411,8 @@ NDefines.NAI.DIPLO_PREFER_OTHER_FACTION = -200			-- The country has yet to ask s
 NDefines.NAI.GENERATE_WARGOAL_THREAT_BASELINE = 0.6
 NDefines.NAI.LENDLEASE_FRACTION_OF_PRODUCTION = 0.25 --0.5
 NDefines.NAI.LENDLEASE_FRACTION_OF_STOCKPILE = 0.125 --0.25
-NDefines.NProduction.EQUIPMENT_LEND_LEASE_WEIGHT_FACTOR = 0.005
-NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.0001
+NDefines.NProduction.EQUIPMENT_LEND_LEASE_WEIGHT_FACTOR = 0.002
+NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.00007
 
 NDefines.NAI.FASCISTS_ALLY_DEMOCRACIES = -150
 NDefines.NAI.FASCISTS_ALLY_COMMUNISTS = -150
@@ -428,15 +429,9 @@ NDefines.NAI.GENERATE_WARGOAL_ANTAGONIZE_SCALE = 0.25 -- (Original value: 0.35) 
 --------------------------------------------------------------------------------------------------------------
 
 NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {				-- buildings in order of pirority when considering building targets strategies. First has the greatest priority omitted has the lowest. NOTE: not all buildings are supported by building targets strategies.
-    'synthetic_refinery',
-    'fuel_silo',
-    'industrial_complex',
-    'arms_factory',
-    'infrastructure',
-    'dockyard',
-    'air_base',
-    'radar_station',
-    'nuclear_reactor',
+'infrastructure',
+'industrial_complex',
+'arms_factory',
 }
 
 --------------------------------------------------------------------------------------------------------------

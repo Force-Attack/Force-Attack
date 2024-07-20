@@ -1,0 +1,888 @@
+on_actions = {
+
+	on_subject_free = {
+		effect = {
+		# update game start subjects if freed
+			if = {
+				limit = { ROOT = { has_country_flag = classified_game_start_puppet_cflag } }
+				ROOT = { clr_country_flag = classified_game_start_puppet_cflag }
+			}
+		}
+	}
+
+	on_monthly = {
+	#on_daily = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = rt56rp_gr_dr_gflag
+					NOT = { has_global_flag = rt56rp_gr_historical_gflag }
+				}
+				add_to_variable = { dr_calculate_fac_timer_var = -1 }
+				if = {
+					limit = { check_variable = { dr_calculate_fac_timer_var = 0 } }
+					add_to_variable = { dr_faction_limit_var = 3 }
+					set_variable = { dr_calculate_fac_timer_var = 12 }
+				}
+			}
+		}
+	}
+
+	on_daily = {
+		effect = {
+			if = {
+				limit = {
+					date < 1936.01.03
+					has_global_flag = rt56rp_gr_dr_gflag
+				}
+
+				set_variable = { dr_faction_limit_var = 12 }
+				set_variable = { dr_calculate_ranks_timer_var = 3 }
+				set_variable = { dr_calculate_fac_timer_var = 12 }
+				
+				every_country = {
+					limit = { is_subject = yes }
+					set_country_flag = classified_game_start_puppet_cflag
+				}
+
+				if = {
+					limit = { AND = { is_ai = yes   NOT = { has_idea = classified_rank_AI } } }
+					add_ideas = classified_rank_AI
+					remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+				}
+
+				if = {
+					limit = { AND = { is_ai = no   has_idea = classified_rank_AI } }
+					remove_ideas = classified_rank_AI
+				}
+
+				if = {
+					limit = { OR = { is_ai = no } }
+
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# SUBJECT SCALING (0.05 per 0.10 freedom level)
+
+					if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_protected_government } } # 0.90
+						set_temp_variable = { temp_autonomy = 1.000 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_protectorate } } # 0.85
+						set_temp_variable = { temp_autonomy = 0.975 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_wtt_imperial_subject } } # 0.80
+						set_temp_variable = { temp_autonomy = 0.950 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_satellite } } # 0.80
+						set_temp_variable = { temp_autonomy = 0.950 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_dominion } } # 0.80
+						set_temp_variable = { temp_autonomy = 0.950 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_wtt_imperial_associate } } # 0.70
+						set_temp_variable = { temp_autonomy = 0.900 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_colony } } # 0.60
+						set_temp_variable = { temp_autonomy = 0.850 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_free_city } } # 0.60
+						set_temp_variable = { temp_autonomy = 0.850 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_reichsprotectorate } } # 0.50
+						set_temp_variable = { temp_autonomy = 0.800 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_puppet } } # 0.40
+						set_temp_variable = { temp_autonomy = 0.750 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_reichskommissariat } } # 0.20
+						set_temp_variable = { temp_autonomy = 0.650 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_wtt_imperial_protectorate } } # 0.20
+						set_temp_variable = { temp_autonomy = 0.650 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_collaboration_government } } # 0.00
+						set_temp_variable = { temp_autonomy = 0.450 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_mandate_city } } # 0.0
+						set_temp_variable = { temp_autonomy = 0.450 }
+					}
+					else = {
+						set_temp_variable = { temp_autonomy = 1.000 }
+					}
+
+				# game start subjects
+					if = {
+						limit = { AND = { is_subject = yes   has_country_flag = classified_game_start_puppet_cflag } }
+						set_temp_variable = { temp_gamestart_subject = 0.250 }
+					}
+					else = {
+						set_temp_variable = { temp_gamestart_subject = 1.000 }
+					}
+
+
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# RESOURCES PRODUCED
+					
+				#calculate total resources
+					set_temp_variable = { temp_total_oil_resource = 0 }
+					set_temp_variable = { temp_total_aluminium_resource = 0 }
+					set_temp_variable = { temp_total_rubber_resource = 0 }
+					set_temp_variable = { temp_total_tungsten_resource = 0 }
+					set_temp_variable = { temp_total_steel_resource = 0 }
+					set_temp_variable = { temp_total_chromium_resource = 0 }
+					every_country = {
+						add_to_temp_variable = { temp_total_oil_resource = resource_produced@oil }
+						add_to_temp_variable = { temp_total_aluminium_resource = resource_produced@aluminium }
+						add_to_temp_variable = { temp_total_rubber_resource = resource_produced@rubber }
+						add_to_temp_variable = { temp_total_tungsten_resource = resource_produced@tungsten }
+						add_to_temp_variable = { temp_total_steel_resource = resource_produced@steel }
+						add_to_temp_variable = { temp_total_chromium_resource = resource_produced@chromium }
+					}
+					
+				#calculate resource share, weighted 0-25 points
+					set_temp_variable = { temp_share_oil_resource = resource_produced@oil }
+					set_temp_variable = { temp_share_aluminium_resource = resource_produced@aluminium }
+					set_temp_variable = { temp_share_rubber_resource = resource_produced@rubber }
+					set_temp_variable = { temp_share_tungsten_resource = resource_produced@tungsten }
+					set_temp_variable = { temp_share_steel_resource = resource_produced@steel }
+					set_temp_variable = { temp_share_chromium_resource = resource_produced@chromium }
+					divide_temp_variable = { temp_share_oil_resource = temp_total_oil_resource }
+					divide_temp_variable = { temp_share_aluminium_resource = temp_total_aluminium_resource }
+					divide_temp_variable = { temp_share_rubber_resource = temp_total_rubber_resource }
+					divide_temp_variable = { temp_share_tungsten_resource = temp_total_steel_resource }
+					divide_temp_variable = { temp_share_steel_resource = temp_total_steel_resource }
+					divide_temp_variable = { temp_share_chromium_resource = temp_total_chromium_resource }
+					multiply_temp_variable = { temp_share_oil_resource = 17.5 }
+					multiply_temp_variable = { temp_share_aluminium_resource = 12.5 }
+					multiply_temp_variable = { temp_share_rubber_resource = 20 }
+					multiply_temp_variable = { temp_share_tungsten_resource = 12.5 }
+					multiply_temp_variable = { temp_share_steel_resource = 7.5 }
+					multiply_temp_variable = { temp_share_chromium_resource = 5 }
+					set_temp_variable = { temp_share_resources = temp_share_oil_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_aluminium_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_rubber_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_tungsten_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_steel_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_chromium_resource }
+					multiply_temp_variable = { temp_share_resources = 1.0 } #weighting
+					
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# MILITARY STRENGTH
+
+				#calculate manpower / strength of armed forces
+					set_temp_variable = { temp_avail_manpower_k = max_available_manpower_k }
+					set_temp_variable = { temp_recruit_manpower_k = amount_manpower_in_deployment_queue }
+					divide_temp_variable = { temp_recruit_manpower_k = 1000 } #so it's in thousands
+					set_temp_variable = { temp_total_avail_manpower_k = temp_avail_manpower_k }
+					add_to_temp_variable = { temp_total_avail_manpower_k = temp_recruit_manpower_k }
+					divide_temp_variable = { temp_total_avail_manpower_k = 200 } # / (10*20)    <- 10 = so its in ten thousands (roughly equal to one 20width army; / ~10 battalions); each 10000 manpower is weighted as 5% (1/20) of a 20width army (i.e. 95% equipment)
+					divide_temp_variable = { temp_total_avail_manpower_k = 4 } # manpower 4x less contribution to strength
+					set_temp_variable = { temp_num_of_battalions = num_battalions }
+					set_temp_variable = { temp_num_of_armies = num_armies } #used to find % equipped
+					set_temp_variable = { temp_num_of_ships = num_ships }
+					divide_temp_variable = { temp_num_of_battalions = 10 } # weighted as one 20width army (10 battalions)
+					divide_temp_variable = { temp_num_of_armies = temp_num_of_battalions }
+					clamp_temp_variable = { var = temp_num_of_armies min = 0 max = 1 }
+					divide_temp_variable = { temp_num_of_ships = 50 } #weighted fifth the value of one 20width army (10 battalions)
+					set_temp_variable = { temp_strength = temp_num_of_battalions }
+					multiply_temp_variable = { temp_strength = temp_num_of_armies }
+					set_temp_variable = { temp_total_battalions = 0 }
+					every_country = {
+						add_to_temp_variable = { temp_total_battalions = num_battalions }
+					}
+					divide_temp_variable = { temp_total_battalions = 10 } # weighted as one 20width army (10 battalions)
+					set_temp_variable = { temp_share_battalions = temp_num_of_battalions }
+					divide_temp_variable = { temp_share_battalions = temp_total_battalions }
+					multiply_temp_variable = { temp_strength = temp_share_battalions }
+					multiply_temp_variable = { temp_strength = 2 } #batallions weighted twice
+					add_to_temp_variable = { temp_strength = temp_total_avail_manpower_k }
+					add_to_temp_variable = { temp_strength = temp_num_of_ships }
+					multiply_temp_variable = { temp_strength = 0.5 } #weighting
+
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# OTHER
+
+				#calculate total factories
+					set_temp_variable = { temp_total_civ_count = 0 }
+					set_temp_variable = { temp_total_mil_count = 0 }
+					set_temp_variable = { temp_total_dock_count = 0 }
+					every_country = {
+						add_to_temp_variable = { temp_total_civ_count = num_of_civilian_factories }
+						add_to_temp_variable = { temp_total_mil_count = num_of_military_factories }
+						add_to_temp_variable = { temp_total_dock_count = num_of_naval_factories }
+					}
+					
+				#calculate resources imported, divided by 8 (1 civ = 8 resources)
+					set_temp_variable = { temp_import_oil_resource = resource_imported@oil }
+					set_temp_variable = { temp_import_aluminium_resource = resource_imported@aluminium }
+					set_temp_variable = { temp_import_rubber_resource = resource_imported@rubber }
+					set_temp_variable = { temp_import_tungsten_resource = resource_imported@tungsten }
+					set_temp_variable = { temp_import_steel_resource = resource_imported@steel }
+					set_temp_variable = { temp_import_chromium_resource = resource_imported@chromium }
+					divide_temp_variable = { temp_import_oil_resource = 8 }
+					divide_temp_variable = { temp_import_aluminium_resource = 8 }
+					divide_temp_variable = { temp_import_rubber_resource = 8 }
+					divide_temp_variable = { temp_import_tungsten_resource = 8 }
+					divide_temp_variable = { temp_import_steel_resource = 8 }
+					divide_temp_variable = { temp_import_chromium_resource = 8 }
+					set_temp_variable = { temp_import_resources = temp_import_oil_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_aluminium_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_rubber_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_tungsten_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_steel_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_chromium_resource }
+					multiply_temp_variable = { temp_import_resources = 0.80 } #weighting
+
+				#calculate economy, rounded total to the nearest integer
+					set_temp_variable = { temp_share_civ_count = num_of_civilian_factories }
+					add_to_temp_variable = { temp_share_civ_count = temp_import_resources }
+					set_temp_variable = { temp_share_mil_count = num_of_military_factories }
+					set_temp_variable = { temp_share_dock_count = num_of_naval_factories }
+					divide_temp_variable = { temp_share_civ_count = temp_total_civ_count }
+					divide_temp_variable = { temp_share_mil_count = temp_total_mil_count }
+					divide_temp_variable = { temp_share_dock_count = temp_total_dock_count }
+					multiply_temp_variable = { temp_share_civ_count = 25 }
+					multiply_temp_variable = { temp_share_mil_count = 30 }
+					multiply_temp_variable = { temp_share_dock_count = 25 }
+					set_temp_variable = { temp_economy = temp_civ_count }
+					set_temp_variable = { temp_consumer_goods_factor = modifier@consumer_goods_factor }
+					multiply_temp_variable = { temp_consumer_goods_factor = -1 }
+					add_to_temp_variable = { temp_consumer_goods_factor = 1 }
+					multiply_temp_variable = { temp_economy = temp_consumer_goods_factor }
+					add_to_temp_variable = { temp_economy = temp_share_mil_count }
+					add_to_temp_variable = { temp_economy = temp_share_dock_count }
+					multiply_temp_variable = { temp_economy = 2.25 } #weighting
+
+				#calculate other misc., rounded total to the nearest integer
+					set_temp_variable = { temp_nuke_count = num_of_nukes }
+					if = {
+						limit = { check_variable = { temp_nuke_count > 0 } }
+						set_temp_variable = { temp_nuke = 50 }
+					}
+
+					set_temp_variable = { temp_total = temp_share_resources }
+					add_to_temp_variable = { temp_total = temp_strength }
+					add_to_temp_variable = { temp_total = temp_economy }
+					add_to_temp_variable = { temp_total = temp_research }
+					add_to_temp_variable = { temp_total = temp_spies }
+					add_to_temp_variable = { temp_total = temp_nuke }
+					multiply_temp_variable = { temp_total = temp_autonomy }
+					multiply_temp_variable = { temp_total = temp_gamestart_subject }
+
+					if = {
+						limit = { AND = { date < 1938.12.31   tag = CHI } }
+						multiply_temp_variable = { temp_total = 0.5 }
+					}
+					else_if = { 
+						limit = { AND = { date < 1939.12.31   tag = CHI } }
+						multiply_temp_variable = { temp_total = 0.75 }
+					}
+
+					if = {
+						limit = { AND = { date < 1937.12.31   tag = FRA } }
+						multiply_temp_variable = { temp_total = 0.80 }
+					}
+					else_if = { 
+						limit = { AND = { date < 1938.12.31   tag = FRA } }
+						multiply_temp_variable = { temp_total = 0.90 }
+					}
+
+					if = {
+						limit = { AND = { date < 1937.12.31   tag = JAP } }
+						multiply_temp_variable = { temp_total = 0.60 }
+					}
+					else_if = {
+						limit = { AND = { date < 1938.12.31   tag = JAP } }
+						multiply_temp_variable = { temp_total = 0.80 }
+					}
+
+					if = {
+						limit = { AND = { date < 1937.12.31   tag = USA } }
+						multiply_temp_variable = { temp_total = 0.90 }
+					}
+					else_if = {
+						limit = { AND = { date < 1938.12.31   tag = USA } }
+						multiply_temp_variable = { temp_total = 0.95 }
+					}
+
+					set_temp_variable = { calculus = temp_total }
+
+
+
+					if = {
+						limit = { check_variable = { calculus < 2 } }
+						set_variable = { rank = 1 }
+						set_variable = { dr_country_score_var = 1 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_F } }
+								country_event = { id = class.1   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_F
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 4 } }
+						set_variable = { rank = 2 }
+						set_variable = { dr_country_score_var = 3 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_E } }
+								country_event = { id = class.2   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_E
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 8 } }
+						set_variable = { rank = 3 }
+						set_variable = { dr_country_score_var = 5 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_D } }
+								country_event = { id = class.3   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_D
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 16 } }
+						set_variable = { rank = 4 }
+						set_variable = { dr_country_score_var = 7 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_C } }
+								country_event = { id = class.4   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_C
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 32 } }
+						set_variable = { rank = 5 }
+						set_variable = { dr_country_score_var = 9 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_B } }
+								country_event = { id = class.5   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_B
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 64 } }
+						set_variable = { rank = 6 }
+						set_variable = { dr_country_score_var = 11 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_A } }
+								country_event = { id = class.6   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_A
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 128 } }
+						set_variable = { rank = 7 }
+						set_variable = { dr_country_score_var = 13 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_S } }
+								country_event = { id = class.7   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_S
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 256 } }
+						set_variable = { rank = 8 }
+						set_variable = { dr_country_score_var = 15 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_X } }
+								country_event = { id = class.8   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_X
+						}
+					}
+				}
+				else = {
+					set_variable = { rank = 0 }
+					if = {
+						limit = { is_ai = yes   NOT = { has_country_flag = classified_game_start_puppet_cflag } }
+						set_variable = { dr_country_score_var = 1 } # AI are worth 1 point
+					}
+				}
+			}
+		}
+	}
+
+	#on_daily = {
+	on_monthly = {
+		effect = {
+			if = {
+				limit = {
+					check_variable = { dr_calculate_ranks_var = 2 }
+					has_global_flag = rt56rp_gr_dr_gflag
+				}
+
+				set_variable = { dr_calculate_ranks_timer_var = 3 }
+
+				if = {
+					limit = { AND = { is_ai = yes   NOT = { has_idea = classified_rank_AI } } }
+					add_ideas = classified_rank_AI
+					remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+				}
+
+				if = {
+					limit = { AND = { is_ai = no   has_idea = classified_rank_AI } }
+					remove_ideas = classified_rank_AI
+				}
+
+				if = {
+					limit = { OR = { is_ai = no } }
+
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# SUBJECT SCALING (0.05 per 0.10 freedom level)
+
+					if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_protected_government } } # 0.90
+						set_temp_variable = { temp_autonomy = 1.000 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_protectorate } } # 0.85
+						set_temp_variable = { temp_autonomy = 0.975 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_wtt_imperial_subject } } # 0.80
+						set_temp_variable = { temp_autonomy = 0.950 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_satellite } } # 0.80
+						set_temp_variable = { temp_autonomy = 0.950 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_dominion } } # 0.80
+						set_temp_variable = { temp_autonomy = 0.950 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_wtt_imperial_associate } } # 0.70
+						set_temp_variable = { temp_autonomy = 0.900 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_colony } } # 0.60
+						set_temp_variable = { temp_autonomy = 0.850 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_free_city } } # 0.60
+						set_temp_variable = { temp_autonomy = 0.850 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_reichsprotectorate } } # 0.50
+						set_temp_variable = { temp_autonomy = 0.800 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_puppet } } # 0.40
+						set_temp_variable = { temp_autonomy = 0.750 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_reichskommissariat } } # 0.20
+						set_temp_variable = { temp_autonomy = 0.650 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_wtt_imperial_protectorate } } # 0.20
+						set_temp_variable = { temp_autonomy = 0.650 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_collaboration_government } } # 0.00
+						set_temp_variable = { temp_autonomy = 0.450 }
+					}
+					else_if = {
+						limit = { AND = { is_subject = yes has_autonomy_state = autonomy_mandate_city } } # 0.0
+						set_temp_variable = { temp_autonomy = 0.450 }
+					}
+					else = {
+						set_temp_variable = { temp_autonomy = 1.000 }
+					}
+
+				# game start subjects
+					if = {
+						limit = { AND = { is_subject = yes   has_country_flag = classified_game_start_puppet_cflag } }
+						set_temp_variable = { temp_gamestart_subject = 0.250 }
+					}
+					else = {
+						set_temp_variable = { temp_gamestart_subject = 1.000 }
+					}
+
+
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# RESOURCES PRODUCED
+					
+				#calculate total resources
+					set_temp_variable = { temp_total_oil_resource = 0 }
+					set_temp_variable = { temp_total_aluminium_resource = 0 }
+					set_temp_variable = { temp_total_rubber_resource = 0 }
+					set_temp_variable = { temp_total_tungsten_resource = 0 }
+					set_temp_variable = { temp_total_steel_resource = 0 }
+					set_temp_variable = { temp_total_chromium_resource = 0 }
+					every_country = {
+						add_to_temp_variable = { temp_total_oil_resource = resource_produced@oil }
+						add_to_temp_variable = { temp_total_aluminium_resource = resource_produced@aluminium }
+						add_to_temp_variable = { temp_total_rubber_resource = resource_produced@rubber }
+						add_to_temp_variable = { temp_total_tungsten_resource = resource_produced@tungsten }
+						add_to_temp_variable = { temp_total_steel_resource = resource_produced@steel }
+						add_to_temp_variable = { temp_total_chromium_resource = resource_produced@chromium }
+					}
+					
+				#calculate resource share, weighted 0-25 points
+					set_temp_variable = { temp_share_oil_resource = resource_produced@oil }
+					set_temp_variable = { temp_share_aluminium_resource = resource_produced@aluminium }
+					set_temp_variable = { temp_share_rubber_resource = resource_produced@rubber }
+					set_temp_variable = { temp_share_tungsten_resource = resource_produced@tungsten }
+					set_temp_variable = { temp_share_steel_resource = resource_produced@steel }
+					set_temp_variable = { temp_share_chromium_resource = resource_produced@chromium }
+					divide_temp_variable = { temp_share_oil_resource = temp_total_oil_resource }
+					divide_temp_variable = { temp_share_aluminium_resource = temp_total_aluminium_resource }
+					divide_temp_variable = { temp_share_rubber_resource = temp_total_rubber_resource }
+					divide_temp_variable = { temp_share_tungsten_resource = temp_total_steel_resource }
+					divide_temp_variable = { temp_share_steel_resource = temp_total_steel_resource }
+					divide_temp_variable = { temp_share_chromium_resource = temp_total_chromium_resource }
+					multiply_temp_variable = { temp_share_oil_resource = 17.5 }
+					multiply_temp_variable = { temp_share_aluminium_resource = 12.5 }
+					multiply_temp_variable = { temp_share_rubber_resource = 20 }
+					multiply_temp_variable = { temp_share_tungsten_resource = 12.5 }
+					multiply_temp_variable = { temp_share_steel_resource = 7.5 }
+					multiply_temp_variable = { temp_share_chromium_resource = 5 }
+					set_temp_variable = { temp_share_resources = temp_share_oil_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_aluminium_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_rubber_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_tungsten_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_steel_resource }
+					add_to_temp_variable = { temp_share_resources = temp_share_chromium_resource }
+					multiply_temp_variable = { temp_share_resources = 1.5 } #weighting
+					
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# MILITARY STRENGTH
+
+				#calculate manpower / strength of armed forces
+					set_temp_variable = { temp_avail_manpower_k = max_available_manpower_k }
+					set_temp_variable = { temp_recruit_manpower_k = amount_manpower_in_deployment_queue }
+					divide_temp_variable = { temp_recruit_manpower_k = 1000 } #so it's in thousands
+					set_temp_variable = { temp_total_avail_manpower_k = temp_avail_manpower_k }
+					add_to_temp_variable = { temp_total_avail_manpower_k = temp_recruit_manpower_k }
+					divide_temp_variable = { temp_total_avail_manpower_k = 200 } # / (10*20)    <- 10 = so its in ten thousands (roughly equal to one 20width army; / ~10 battalions); each 10000 manpower is weighted as 5% (1/20) of a 20width army (i.e. 95% equipment)
+					divide_temp_variable = { temp_total_avail_manpower_k = 4 } # manpower 4x less contribution to strength
+					set_temp_variable = { temp_num_of_battalions = num_battalions }
+					set_temp_variable = { temp_num_of_armies = num_armies } #used to find % equipped
+					set_temp_variable = { temp_num_of_ships = num_ships }
+					divide_temp_variable = { temp_num_of_battalions = 10 } # weighted as one 20width army (10 battalions)
+					divide_temp_variable = { temp_num_of_armies = temp_num_of_battalions }
+					clamp_temp_variable = { var = temp_num_of_armies min = 0 max = 1 }
+					divide_temp_variable = { temp_num_of_ships = 50 } #weighted fifth the value of one 20width army (10 battalions)
+					set_temp_variable = { temp_strength = temp_num_of_battalions }
+					multiply_temp_variable = { temp_strength = temp_num_of_armies }
+					set_temp_variable = { temp_total_battalions = 0 }
+					every_country = {
+						add_to_temp_variable = { temp_total_battalions = num_battalions }
+					}
+					divide_temp_variable = { temp_total_battalions = 10 } # weighted as one 20width army (10 battalions)
+					set_temp_variable = { temp_share_battalions = temp_num_of_battalions }
+					divide_temp_variable = { temp_share_battalions = temp_total_battalions }
+					multiply_temp_variable = { temp_strength = temp_share_battalions }
+					multiply_temp_variable = { temp_strength = 2 } #batallions weighted twice
+					add_to_temp_variable = { temp_strength = temp_total_avail_manpower_k }
+					add_to_temp_variable = { temp_strength = temp_num_of_ships }
+					multiply_temp_variable = { temp_strength = 0.5 } #weighting
+
+				###########################################################################################
+				###########################################################################################
+				###########################################################################################
+				# OTHER
+
+				#calculate total factories
+					set_temp_variable = { temp_total_civ_count = 0 }
+					set_temp_variable = { temp_total_mil_count = 0 }
+					set_temp_variable = { temp_total_dock_count = 0 }
+					every_country = {
+						add_to_temp_variable = { temp_total_civ_count = num_of_civilian_factories }
+						add_to_temp_variable = { temp_total_mil_count = num_of_military_factories }
+						add_to_temp_variable = { temp_total_dock_count = num_of_naval_factories }
+					}
+					
+				#calculate resources imported, divided by 8 (1 civ = 8 resources)
+					set_temp_variable = { temp_import_oil_resource = resource_imported@oil }
+					set_temp_variable = { temp_import_aluminium_resource = resource_imported@aluminium }
+					set_temp_variable = { temp_import_rubber_resource = resource_imported@rubber }
+					set_temp_variable = { temp_import_tungsten_resource = resource_imported@tungsten }
+					set_temp_variable = { temp_import_steel_resource = resource_imported@steel }
+					set_temp_variable = { temp_import_chromium_resource = resource_imported@chromium }
+					divide_temp_variable = { temp_import_oil_resource = 8 }
+					divide_temp_variable = { temp_import_aluminium_resource = 8 }
+					divide_temp_variable = { temp_import_rubber_resource = 8 }
+					divide_temp_variable = { temp_import_tungsten_resource = 8 }
+					divide_temp_variable = { temp_import_steel_resource = 8 }
+					divide_temp_variable = { temp_import_chromium_resource = 8 }
+					set_temp_variable = { temp_import_resources = temp_import_oil_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_aluminium_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_rubber_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_tungsten_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_steel_resource }
+					add_to_temp_variable = { temp_import_resources = temp_import_chromium_resource }
+					multiply_temp_variable = { temp_import_resources = 0.80 } #weighting
+
+				#calculate economy, rounded total to the nearest integer
+					set_temp_variable = { temp_share_civ_count = num_of_civilian_factories }
+					add_to_temp_variable = { temp_share_civ_count = temp_import_resources }
+					set_temp_variable = { temp_share_mil_count = num_of_military_factories }
+					set_temp_variable = { temp_share_dock_count = num_of_naval_factories }
+					divide_temp_variable = { temp_share_civ_count = temp_total_civ_count }
+					divide_temp_variable = { temp_share_mil_count = temp_total_mil_count }
+					divide_temp_variable = { temp_share_dock_count = temp_total_dock_count }
+					multiply_temp_variable = { temp_share_civ_count = 25 }
+					multiply_temp_variable = { temp_share_mil_count = 30 }
+					multiply_temp_variable = { temp_share_dock_count = 25 }
+					set_temp_variable = { temp_economy = temp_civ_count }
+					set_temp_variable = { temp_consumer_goods_factor = modifier@consumer_goods_factor }
+					multiply_temp_variable = { temp_consumer_goods_factor = -1 }
+					add_to_temp_variable = { temp_consumer_goods_factor = 1 }
+					multiply_temp_variable = { temp_economy = temp_consumer_goods_factor }
+					add_to_temp_variable = { temp_economy = temp_share_mil_count }
+					add_to_temp_variable = { temp_economy = temp_share_dock_count }
+					multiply_temp_variable = { temp_economy = 3 } #weighting
+
+				#calculate other misc., rounded total to the nearest integer
+					set_temp_variable = { temp_nuke_count = num_of_nukes }
+					if = {
+						limit = { check_variable = { temp_nuke_count > 0 } }
+						set_temp_variable = { temp_nuke = 50 }
+					}
+
+					set_temp_variable = { temp_total = temp_share_resources }
+					add_to_temp_variable = { temp_total = temp_strength }
+					add_to_temp_variable = { temp_total = temp_economy }
+					add_to_temp_variable = { temp_total = temp_research }
+					add_to_temp_variable = { temp_total = temp_spies }
+					add_to_temp_variable = { temp_total = temp_nuke }
+					multiply_temp_variable = { temp_total = temp_autonomy }
+					multiply_temp_variable = { temp_total = temp_gamestart_subject }
+
+					if = {
+						limit = { AND = { date < 1938.12.31   tag = CHI } }
+						multiply_temp_variable = { temp_total = 0.5 }
+					}
+					else_if = { 
+						limit = { AND = { date < 1939.12.31   tag = CHI } }
+						multiply_temp_variable = { temp_total = 0.75 }
+					}
+
+					if = {
+						limit = { AND = { date < 1937.12.31   tag = FRA } }
+						multiply_temp_variable = { temp_total = 0.80 }
+					}
+					else_if = { 
+						limit = { AND = { date < 1938.12.31   tag = FRA } }
+						multiply_temp_variable = { temp_total = 0.90 }
+					}
+
+					if = {
+						limit = { AND = { date < 1937.12.31   tag = JAP } }
+						multiply_temp_variable = { temp_total = 0.60 }
+					}
+					else_if = {
+						limit = { AND = { date < 1938.12.31   tag = JAP } }
+						multiply_temp_variable = { temp_total = 0.80 }
+					}
+
+					if = {
+						limit = { AND = { date < 1937.12.31   tag = USA } }
+						multiply_temp_variable = { temp_total = 0.90 }
+					}
+					else_if = {
+						limit = { AND = { date < 1938.12.31   tag = USA } }
+						multiply_temp_variable = { temp_total = 0.95 }
+					}
+
+					set_temp_variable = { calculus = temp_total }
+
+
+					
+					if = {
+						limit = { check_variable = { calculus < 2 } }
+						set_variable = { rank = 1 }
+						set_variable = { dr_country_score_var = 1 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_F } }
+								country_event = { id = class.1   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_F
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 4 } }
+						set_variable = { rank = 2 }
+						set_variable = { dr_country_score_var = 3 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_E } }
+								country_event = { id = class.2   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_E
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 8 } }
+						set_variable = { rank = 3 }
+						set_variable = { dr_country_score_var = 5 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_D } }
+								country_event = { id = class.3   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_D
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 16 } }
+						set_variable = { rank = 4 }
+						set_variable = { dr_country_score_var = 7 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_C } }
+								country_event = { id = class.4   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_C
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 32 } }
+						set_variable = { rank = 5 }
+						set_variable = { dr_country_score_var = 9 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_B } }
+								country_event = { id = class.5   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_B
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 64 } }
+						set_variable = { rank = 6 }
+						set_variable = { dr_country_score_var = 11 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_A } }
+								country_event = { id = class.6   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_A
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 128 } }
+						set_variable = { rank = 7 }
+						set_variable = { dr_country_score_var = 13 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_S } }
+								country_event = { id = class.7   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_S
+						}
+					}
+					else_if = {
+						limit = { check_variable = { calculus < 256 } }
+						set_variable = { rank = 8 }
+						set_variable = { dr_country_score_var = 15 }
+						if = {
+							limit = { is_ai = no }
+							if = {
+								limit = { NOT = { has_idea = classified_rank_X } }
+								country_event = { id = class.8   days = 1 }
+							}
+							remove_ideas = { classified_rank_X classified_rank_S  classified_rank_A  classified_rank_B  classified_rank_C  classified_rank_D  classified_rank_E classified_rank_F }
+							add_ideas = classified_rank_X
+						}
+					}
+				}
+				else = {
+					set_variable = { rank = 0 }
+					if = {
+						limit = { is_ai = yes   NOT = { has_country_flag = classified_game_start_puppet_cflag } }
+						set_variable = { dr_country_score_var = 1 } # AI are worth 1 point
+					}
+				}
+
+				set_variable = { dr_calculate_ranks_var = 0 }
+			}
+			else_if = {
+				limit = {
+					has_global_flag = rt56rp_gr_dr_gflag
+				}
+
+				add_to_variable = { dr_calculate_ranks_var = 1 }
+
+				if = {
+					limit = { check_variable = { dr_calculate_ranks_timer_var > 0 } }
+					add_to_variable = { dr_calculate_ranks_timer_var = -1 }
+				}
+			}
+		}
+	}
+}

@@ -69,7 +69,7 @@ country_event = {
 			hidden_effect = {
 				division_template = { 
 			name = "Saudi Korps"
-			is_locked = no
+			is_locked = yes
 			regiments = { 
 				infantry = { x = 0 y = 0 }
 				infantry = { x = 1 y = 0 }
@@ -134,191 +134,60 @@ country_event = {
 	id = arabia.1
 	title = arabia.1.t
 	desc = arabia.1.d
-	picture = GFX_report_event_polish_cult
+	picture = GFX_report_event_sau_agreement
 
 	is_triggered_only = yes
 
 	option = { # Accept
 		name = arabia.1.a
-		ai_chance = {
-			factor = 80
-			modifier = {	#dont let the player be annexed
-				factor = 0
-				MPL = {
-					exists = yes
-					is_subject_of = ROOT
-					is_ai = no
-				}
-			}
-			modifier = {	#Saudi Arabia not a threat? Don't bother
-				factor = 0
-				has_war = no
-				NOT = {
-					is_in_faction_with = FROM
-				}
-				strength_ratio = {
-					tag = FROM
-					ratio < 6	#Since its colonies, even just matching 17% of the countries army will be sufficient
-				}
-			}
-			modifier = {	#Saudi Arabia not a threat? Don't just cave so often
-				factor = 0.5
-				has_war = no
-				NOT = {
-					is_in_faction_with = FROM
-				}
-				has_war_support > 0.5
-				strength_ratio = {
-					tag = FROM
-					ratio < 4	#25% of army means war might not be desirable, but we won't just cede to demands
-				}
-			}
-		}
+		ai_chance = { factor = 80 }
 		SAU = {
 			country_event = { id = arabia.2 }
-		}
-		effect_tooltip = {
-			every_owned_state = {
-				limit = {
-					NOT = {
-						is_core_of = ROOT
-					}
-					OR = {
-						#Jordan
-						state = 455
-						state = 1021
-						state = 1022
-
-						#Mandate
-						state = 454		#Coastal Plain
-						state = 966		#West Bank
-						state = 949		#Ghaza
-						state = 1016	#Jerusalem
-						state = 1017	#Beersheba
-
-						state = 656		#Kuwait
-						state = 658		#Abu Dhabi
-						state = 765		#Qatar
-						state = 1007	#Bahrain
-						state = 659		#Aden
-					}
-				}
-				transfer_state_to = FROM
-			}
-			every_subject_country = {
-				every_owned_state = {
-					limit = {
-						NOT = {
-							is_core_of = PREV
-						}
-						OR = {
-							#Jordan
-							state = 455
-							state = 1021
-							state = 1022
-
-							#Mandate
-							state = 454		#Coastal Plain
-							state = 966		#West Bank
-							state = 949		#Ghaza
-							state = 1016	#Jerusalem
-							state = 1017	#Beersheba
-
-							state = 656		#Kuwait
-							state = 658		#Abu Dhabi
-							state = 765		#Qatar
-							state = 1007	#Bahrain
-							state = 659		#Aden
-						}
-					}
-					transfer_state_to = FROM
-				}
-			}
 		}
 	}
 	option = { # Refuse
 		name = arabia.1.b
-	  	ai_chance = { factor = 20 }
+	  ai_chance = { factor = 20 }
 		SAU = {
 			country_event = { id = arabia.3 }
-		}
-		effect_tooltip = {
-			FROM = {
-				create_wargoal = {
-					type = take_state
-					target = ROOT
-					generator = { 656 658 659 765 }
-				}
-			}
 		}
 	}
 }
 
-# Owner Accepts
+# ENG Accepts
 country_event = {
 	id = arabia.2
 	title = arabia.2.t
 	desc = arabia.2.d
-	picture = GFX_report_event_April_Constitution
+	picture = GFX_report_event_sau_agreement
 
 	is_triggered_only = yes
 
 	option = {
 		name = arabia.2.a
-		add_opinion_modifier = { target = FROM modifier =  accepted_our_demands }
-		every_other_country = {
-			limit = {
-				OR = {
-					is_subject_of = FROM
-					tag = FROM
-				}
-			}
-			every_owned_state = {
-				limit = {
-					NOT = {
-						is_core_of = PREV
-					}
-					OR = {
-						#Jordan
-						state = 455
-						state = 1021
-						state = 1022
-
-						#Mandate
-						state = 454		#Coastal Plain
-						state = 966		#West Bank
-						state = 949		#Ghaza
-						state = 1016	#Jerusalem
-						state = 1017	#Beersheba
-
-						state = 656		#Kuwait
-						state = 658		#Abu Dhabi
-						state = 765		#Qatar
-						state = 1007	#Bahrain
-						state = 659		#Aden
-					}
-				}
-				transfer_state_to = ROOT
+		add_opinion_modifier = { target = ENG modifier =  accepted_our_demands }
+		transfer_state = 656
+		transfer_state = 658
+		transfer_state = 659
+		transfer_state = 765
 			}
 		}
-	}
-}
 
-# Owner declines
+# ENG declines
 country_event = {
 	id = arabia.3
 	title = arabia.3.t
 	desc = arabia.3.d
-	picture = GFX_report_event_polish_cult
+	picture = GFX_report_event_war1
 
 	is_triggered_only = yes
 
 	option = {
 		name = arabia.3.a
-		add_opinion_modifier = { target = FROM modifier = sau_trade_broken }
+		add_opinion_modifier = { target = ENG modifier = sau_trade_broken }
 		create_wargoal = {
 			type = take_state
-			target = FROM
+			target = ENG
 			generator = { 656 658 659 765 }
 		}
 	}
@@ -333,7 +202,7 @@ news_event = {
 	
 	fire_only_once = yes
 	trigger = {
-		date > 1938.1.3
+		date > 1938.3.3
 		SAU = {
 			exists = yes
 			has_war = no
@@ -341,7 +210,7 @@ news_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 60
+		days = 7
 	}
 	
 	option = {
@@ -354,14 +223,206 @@ news_event = {
 		name = arabia.4.b
 		trigger = { TAG = SAU }
 	}
+}	
+
+# Take core (Oman&Jemen)
+country_event = {
+	id = arabia.5
+	title = arabia.5.t
+	desc = arabia.5.d
+	picture = GFX_report_event_war3
+
+	fire_only_once = yes
+	trigger = {
+		tag = SAU
+		controls_state = 294
+		controls_state = 293
+		 	has_political_power > 50 
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = arabia.5.a
+		add_political_power = -50
+		294 = {
+			if = {
+				limit = { is_owned_by = SAU }
+				add_core_of = SAU
+			}
+		}
+		293 = {
+			if = {
+				limit = { is_owned_by = SAU }
+				add_core_of = SAU
+			}
+		}
+	}
+	option = {
+		name = arabia.5.b
+	}
 }
 
+
+# Take core (British Colonies)
+country_event = {
+	id = arabia.10
+	title = arabia.10.t
+	desc = arabia.10.d
+	picture = GFX_report_event_war2
+
+	fire_only_once = yes
+	trigger = {
+		tag = SAU
+		controls_state = 659
+		controls_state = 658
+		controls_state = 656
+		 	has_political_power > 10 
+	}
+	
+	option = {
+		name = arabia.10.a
+		add_political_power = -50
+		659 = {
+			if = {
+				limit = { is_owned_by = SAU }
+				add_core_of = SAU
+			}
+		}
+		658 = {
+			if = {
+				limit = { is_owned_by = SAU }
+				add_core_of = SAU
+			}
+		}
+		656 = {
+			if = {
+				limit = { is_owned_by = SAU }
+				add_core_of = SAU
+			}
+		}
+	}
+	option = {
+		name = arabia.10.b
+	}
+}
+
+
+# The Fall of Cairo (Arabia)
+news_event = {
+	id = arabia.14
+	title = arabia.14.t
+	desc = arabia.14.d
+	picture = GFX_news_event_042
+	
+	major = yes
+
+	fire_only_once = yes
+	
+	trigger = {
+		446 = { is_controlled_by = SAU }
+		446 = { is_owned_by = ENG }
+		SAU = { has_war_with = ENG }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = news.145.a
+		trigger = {
+			NOT = {
+				TAG = SAU
+			}
+		}
+	}
+	
+	option = {
+		name = arabia.14.a
+		trigger = { TAG = SAU }
+	}
+}
+
+# The Fall of Ankara (Arabia)
+news_event = {
+	id = arabia.15
+	title = arabia.15.t
+	desc = arabia.15.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+
+	fire_only_once = yes
+	
+	trigger = {
+		49 = { is_controlled_by = SAU }
+		49 = { is_owned_by = TUR }
+		SAU = { has_war_with = TUR }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = news.145.a
+		trigger = {
+			NOT = {
+				TAG = PER
+			}
+		}
+	}
+	
+	option = {
+		name = arabia.15.a
+		trigger = { TAG = PER }
+	}
+}
+
+# The Fall of Baghdaad (Arabia)
+news_event = {
+	id = arabia.16
+	title = arabia.16.t
+	desc = arabia.16.d
+	picture = GFX_news_event_kiev_ruins
+	
+	major = yes
+
+	fire_only_once = yes
+	
+	trigger = {
+		291 = { is_controlled_by = SAU }
+		291 = { is_owned_by = IRQ }
+		SAU = { has_war_with = IRQ }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = news.145.a
+		trigger = {
+			NOT = {
+				TAG = SAU
+			}
+		}
+	}
+	
+	option = {
+		name = arabia.16.a
+		trigger = { TAG = SAU }
+	}
+}
 #Demand Sinai
 country_event = {
 	id = arabia.17
 	title = arabia.17.t
 	desc = arabia.17.d
-	picture = GFX_report_event_MON_diplomats_table_discussion
+	picture = GFX_report_event_sau_agreement
 
 	is_triggered_only = yes
 
@@ -386,7 +447,7 @@ country_event = {
 	id = arabia.18
 	title = arabia.18.t
 	desc = arabia.18.d
-	picture = GFX_report_event_MON_diplomats_table_discussion
+	picture = GFX_report_event_sau_agreement
 
 	is_triggered_only = yes
 
@@ -406,7 +467,7 @@ country_event = {
 	id = arabia.19
 	title = arabia.19.t
 	desc = arabia.19.d
-	picture = GFX_report_event_polish_politics
+	picture = GFX_report_event_war1
 
 	is_triggered_only = yes
 

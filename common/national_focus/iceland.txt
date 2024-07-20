@@ -1,3 +1,4 @@
+#!gfx:interface\replace\r56_goals.gfx
 ### search_filters = {FOCUS_FILTER_POLITICAL}
 ### search_filters = {FOCUS_FILTER_RESEARCH}
 ### search_filters = {FOCUS_FILTER_INDUSTRY}
@@ -2216,12 +2217,11 @@ focus_tree = {
 		relative_position_id = ICE_general_strike
 		cost = 10
 		available = {
-			has_stability < 0.5
-			OR = {
-				fascism > 0.3
-				communism > 0.3
+				OR = {
+				 communism > 0.3
+				 fascism > 0.3
+				}
 			}
-		}
 		bypass = {
 			is_subject = no
 		}
@@ -2624,10 +2624,10 @@ focus_tree = {
 	focus = {
 		id = ICE_reclaiming_the_empire
 		icon = GFX_focus_ICE_reclaiming_the_empire
-		prerequisite = { focus = ICE_the_viking_spirit }
+		prerequisite = { focus = ICE_securing_the_north_sea_passage }
 
 		x = 0
-		y = 1
+		y = 3
 		relative_position_id = ICE_the_viking_spirit
 		cost = 10
 		available = {
@@ -2679,13 +2679,36 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = ICE_Nationalist_Government
+		icon = GFX_focus_ICE_hrafninn_flygur
+		prerequisite = { focus = ICE_the_viking_spirit }
+		mutually_exclusive = { focus = ICE_Pro_German_Government }
+		available = {
+			is_independent = yes 
+		}
+
+
+		x = 0
+		y = 1
+		relative_position_id = ICE_the_viking_spirit
+		cost = 10
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			add_ideas = ICE_Nationalist_Government
+		}
+	}
+
 	focus = {
 		id = ICE_securing_the_north_sea_passage
 		icon = GFX_focus_ICE_securing_the_north_sea_passage
-		prerequisite = { focus = ICE_the_viking_spirit }
+		prerequisite = { focus = ICE_Nationalist_Government }
 
-		x = 2
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = ICE_the_viking_spirit
 		cost = 10
 
@@ -2720,11 +2743,10 @@ focus_tree = {
 	focus = {
 		id = ICE_vinland
 		icon = GFX_focus_ICE_vinland
-		prerequisite = { focus = ICE_reclaiming_the_empire }
 		prerequisite = { focus = ICE_securing_the_north_sea_passage }
 
-		x = 0
-		y = 1
+		x = 2
+		y = 0
 		relative_position_id = ICE_reclaiming_the_empire
 		cost = 10
 
@@ -2742,6 +2764,408 @@ focus_tree = {
 			}
 			860 = {
 				add_claim_by = ROOT
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Join_the_Axis
+		icon = GFX_goal_generic_dangerous_deal
+		prerequisite = { focus = ICE_organize_the_greyshirts }
+
+		available = {
+			is_subject = no
+			is_in_faction = no
+		}
+
+		x = 2
+		y = -1
+		relative_position_id = ICE_Nationalist_Government
+		cost = 4
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			GER = {
+				country_event = generic.2
+			}
+		}
+
+		bypass = {
+			is_in_faction_with = GER
+		}
+	}
+
+	focus = {
+		id = ICE_Increase_Production_in_Iceland
+		icon = GFX_goal_generic_expanded_production
+		prerequisite = { focus = ICE_Purity focus = ICE_Purge_the_Communists focus = ICE_Militia_State }
+
+		x = 0
+		y = 3
+		relative_position_id = ICE_Cultural_Revolution
+		cost = 4
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			add_ideas = { ICE_more_productionnnn }
+		}
+	}
+
+	focus = {
+		id = ICE_Pro_German_Government
+		icon = GFX_goal_generic_fascist_bills
+		prerequisite = { focus = ICE_Join_the_Axis }
+		mutually_exclusive = { focus = ICE_Nationalist_Government }
+		available = {
+			GER = {
+				has_government = fascism
+			}
+		}
+
+		x = 4
+		y = 1
+		relative_position_id = ICE_Join_the_Axis
+		cost = 5
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+				add_political_power = 100
+		}
+	}
+
+	focus = {
+		id = ICE_Reichsprotektorat
+		icon = GFX_focus_CZE_german_puppet
+		prerequisite = { focus = ICE_Pro_German_Government }
+
+		x = 4
+		y = 2
+		relative_position_id = ICE_Join_the_Axis
+		cost = 5
+
+		search_filters = {FOCUS_FILTER_POLITICAL}
+
+		completion_reward = {
+			GER = {
+				country_event = SCA_iceland.102
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Integrate_our_economys
+		icon = GFX_focus_generic_german_trade
+		prerequisite = { focus = ICE_Reichsprotektorat }
+		x = -1 
+		y = 1
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+				}
+				prioritize = { 1043 } 
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Total_Mobilization
+		icon = GFX_focus_generic_support_the_left_right
+		prerequisite = { focus = ICE_Reichsprotektorat }
+		x = 1
+		y = 1
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			add_war_support = 0.05
+			if = {
+				limit = {
+					has_idea = civilian_economy
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = low_economic_mobilisation
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = partial_economic_mobilisation
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = war_economy
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = isolation
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+		}
+	}
+
+
+	focus = {
+		id = ICE_Icelandic_National_Socialism
+		icon = GFX_focus_POL_beck_ribbentrop
+		prerequisite = { focus = ICE_Total_Mobilization }
+		prerequisite = { focus = ICE_Integrate_our_economys }
+		x = 0
+		y = 2
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			army_experience = 50
+			add_ideas = { ICE_Fascism_1Nationalist_Party }
+		}
+	}
+
+	focus = {
+		id = ICE_Stay_with_Germany
+		icon = GFX_focus_generic_fascist_troops
+		prerequisite = { focus = ICE_Icelandic_National_Socialism }
+		mutually_exclusive = { focus = ICE_Declare_our_Independence }
+		x = -2
+		y = 3
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 6
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_autonomy_score = {
+				value = -300
+			}
+			add_ideas = { ICE_Icelandic_Puppet }
+		}
+	}
+
+	focus = {
+		id = ICE_Declare_our_Independence
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		prerequisite = { focus = ICE_Icelandic_National_Socialism }
+		mutually_exclusive = { focus = ICE_Stay_with_Germany }
+		x = 2
+		y = 3
+		relative_position_id = ICE_Reichsprotektorat
+		cost = 6
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			GER = {
+				country_event = SCA_iceland.101
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Cultural_Revolution
+		icon = GFX_goal_NOR_iceland
+		prerequisite = { focus = ICE_Stay_with_Germany }
+		x = -2
+		y = 5
+		relative_position_id = ICE_Pro_German_Government
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+				set_party_name = {
+					ideology = fascism
+					long_name = "Iceland National Socialist Movement"
+					name = "National Socialist Party"
+				}
+			}
+		
+	}
+
+	focus = {
+		id = ICE_Heydrich_takes_power
+		icon = GFX_focus_chi_mission_to_germany
+		prerequisite = { focus = ICE_Cultural_Revolution }
+		x = 1
+		y = 1
+		relative_position_id = ICE_Cultural_Revolution
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_country_leader_role = {
+				character = ICE_Reinhard_Heydrich
+				promote_leader = yes
+				country_leader = {
+					ideology = nazism
+					expire = "1965.1.1"
+					traits = {
+						prince_of_terror
+					}
+				}
+			}	
+		}
+
+	}
+
+	focus = {
+		id = ICE_A_new_Iceland
+		icon = GFX_goal_morale_bonus
+		prerequisite = { focus = ICE_Cultural_Revolution }
+		x = -1
+		y = 1
+		relative_position_id = ICE_Cultural_Revolution
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			custom_effect_tooltip = ICE_Island_tt
+			hidden_effect = {
+				set_cosmetic_tag = ICE_Island
+			}
+		}
+	}
+
+	focus = {
+		id = ICE_Purity
+		icon = GFX_goal_generic_army_purges
+		prerequisite = { focus = ICE_A_new_Iceland }
+		prerequisite = { focus = ICE_Heydrich_takes_power }
+		x = -2
+		y = 1
+		relative_position_id = ICE_A_new_Iceland
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			100 = {
+				add_manpower = -5000
+			}
+			1043 = {
+				add_manpower = -5000
+			}
+			add_ideas = ICE_Pure_State
+		}
+	}
+
+	focus = {
+		id = ICE_Militia_State
+		icon = GFX_goal_rhineland
+		prerequisite = { focus = ICE_Heydrich_takes_power }
+		prerequisite = { focus = ICE_A_new_Iceland }
+		x = 4
+		y = 1
+		relative_position_id = ICE_A_new_Iceland
+		cost = 5
+		available = {
+			is_subject_of = GER
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_ideas = ICE_SS_State
+		}
+	}
+
+	focus = {
+		id = ICE_Purge_the_Communists
+		icon = GFX_goal_generic_anti_communism
+		prerequisite = { focus = ICE_A_new_Iceland }
+		prerequisite = { focus = ICE_Heydrich_takes_power }
+		x = 1
+		y = 1
+		relative_position_id = ICE_A_new_Iceland
+		cost = 5
+		available = {
+			has_government = fascism
+		}
+	                
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = ICE_Purged_the_communists
+				days = 200
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.3
 			}
 		}
 	}
