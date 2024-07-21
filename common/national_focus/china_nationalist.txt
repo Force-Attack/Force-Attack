@@ -2462,7 +2462,14 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_stability = 0.1
-			CHI_increase_inflation = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 		}
 	}
 	focus = {
@@ -2535,7 +2542,14 @@ focus_tree = {
 				uses = 2
 				category = infantry_weapons
 			}
-			CHI_increase_inflation = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 		}
 	}
 
@@ -2576,7 +2590,14 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			CHI_increase_inflation = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 		}
 	}
 
@@ -3862,7 +3883,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = CHI_small_arms_production_idea
 		}
 	}
 	focus = {
@@ -3894,7 +3915,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = CHI_naval_production_idea
 		}
 	}
 	focus = {
@@ -3926,7 +3947,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = CHI_air_production_idea
 		}
 	}
 	focus = {
@@ -3958,7 +3979,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			add_ideas = CHI_tank_production_idea
 		}
 	}
 	focus = {
@@ -4484,7 +4505,18 @@ focus_tree = {
 		ai_will_do = {
 			factor = 4
 		}
-
+		available = {
+			MAN = {
+				exists = no
+			}
+			CHI = {
+				AND = {
+					controls_state = 328
+					controls_state = 944
+					controls_state = 745
+				}
+			}
+		}
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
@@ -4495,7 +4527,12 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
-			
+			OVERLORD = {
+				set_autonomy = {
+					target = CHI
+					autonomy_state = autonomy_free
+				}
+			}
 		}
 	}
 	#####
@@ -4863,7 +4900,7 @@ focus_tree = {
 					}	
 				}
 			}
-			
+			promote_character = CHI_military_committee_of_prc
 			add_country_leader_role = {
 				character = CHI_military_committee_of_prc
 				promote_leader = yes
@@ -5024,6 +5061,7 @@ focus_tree = {
 			focus = CHI_mao_zedong_civil_war
 		}
 		completion_reward = {
+			promote_character = CHI_mao_zedong
 			hidden_effect = {
 				set_temp_variable = {
 					var = remove_rivals_var
@@ -5093,6 +5131,7 @@ focus_tree = {
 			retire_character = SHX_yan_xishan
 			retire_character = CHI_chen_jitang
 			retire_character = GER_alexander_von_falkenhausen
+			retire_character = CHI_sun_li_jen
 			add_timed_idea = {
 				idea = CHI_purged_army
 				days = 200
@@ -5280,6 +5319,14 @@ focus_tree = {
 		cost = 5
 
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			add_ideas = PRC_good_good_study_idea
 			CHI_decreace_illiteracy = yes
 		}
@@ -5427,14 +5474,7 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.05
 			CHI_remove_corrupted_economy = yes
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = CHI_the_great_advance_foward
-					}
-				}
-				CHI_hyper_inflation_level_up = yes
-			}
+			CHI_hyper_inflation_level_down = yes
 			every_owned_state = {
 				limit = {
 					is_core_of = ROOT
@@ -5666,6 +5706,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			add_opinion_modifier = {
 				modifier = political_rivalry
 				target = SOV
@@ -5709,6 +5757,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 			add_opinion_modifier = {
 				modifier = SOV_complied_with_our_demands
 				target = SOV
@@ -5721,12 +5777,12 @@ focus_tree = {
 			}
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_0
-				amount = 8000
+				amount = 7000
 				producer = SOV
 			}
 			add_equipment_to_stockpile = {
 				type = support_equipment
-				amount = 350
+				amount = 250
 				producer = SOV
 			}
 			add_equipment_to_stockpile = {
@@ -5738,6 +5794,12 @@ focus_tree = {
 				type = motorized_equipment_1
 				amount = 200
 				producer = SOV
+			}
+			add_equipment_to_stockpile = {
+				type = small_plane_airframe_0
+				amount = 125
+				producer = SOV
+				variant_name = "I-15"
 			}
 			add_war_support = 0.05
 			add_stability = 0.05
@@ -5824,7 +5886,7 @@ focus_tree = {
 			is_puppet = yes
 		}
 		completion_reward = {
-			add_ideas = ENG_prepare_for_the_inevitable_idea
+			add_ideas = CHI_prepare_for_the_inevitable_idea
 		}
 	}
 	focus = {
@@ -5867,7 +5929,14 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			CHI_increase_inflation = yes
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = CHI_the_great_advance_foward
+					}
+				}
+				CHI_hyper_inflation_level_up = yes
+			}
 		}
 	}
 	focus = {
@@ -8627,6 +8696,42 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = CHI_peoples_liberation_army_idea
+		}
+	}
+	focus = {
+		id = CHI_call_on_sun_li_jen
+		icon = GFX_goal_generic_officers
+		prerequisite = { focus = CHI_chinese_military_command }
+		x = 0
+		y = 1
+		relative_position_id = CHI_chinese_military_command
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+
+		}
+		allow_branch = {
+			NOT = {
+				has_completed_focus = CHI_jingwei_punitive_expedition
+			}
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = chi_sun_li_jen_advisor
 		}
 	}
 	focus = {
