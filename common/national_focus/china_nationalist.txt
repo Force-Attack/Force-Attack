@@ -612,6 +612,7 @@ focus_tree = {
 					has_completed_focus = CHI_enact_martial_law
 					has_completed_focus = CHI_to_the_world_stage
 					has_completed_focus = CHI_economic_reform
+					has_completed_focus = CHI_the_new_empire
 				}
 			}
 		}
@@ -1436,7 +1437,7 @@ focus_tree = {
 		id = CHI_xian_incident
 		icon = GFX_focus_prc_remove_chiang_kai_shek
 		cost = 10
-		x = 50
+		x = 45
 		y = 0
 		offset = {
 			trigger = {
@@ -1447,7 +1448,7 @@ focus_tree = {
 					has_completed_focus = CHI_jingwei_punitive_expedition
 				}
 			}
-			x = -20
+			x = -15
 			y = 0
 		}
 		
@@ -2076,43 +2077,47 @@ focus_tree = {
 			unlock_decision_category_tooltip = CHI_warlord_skirmishes
 		}
 	}
-	
 	focus = {
-		id = CHI_the_blue_shirts
-		icon = GFX_goal_CHI_power_to_the_blueshirts
+		id = CHI_one_final_push
+		icon = GFX_goal_generic_army_mobilization2
 		cost = 10
-		x = 0
+		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_integrate_allied_warlords }
-		relative_position_id = CHI_integrate_allied_warlords
+		prerequisite = { focus = CHI_take_out_kansas focus = CHI_increase_sino_german_cooperation focus = CHI_invite_german_advisors }
+		relative_position_id = CHI_take_out_kansas
 		available = {
-			
+			surrender_progress < 0
+			has_defensive_war = yes
 		}
 		bypass = {
 			
 		}
 		completion_reward = {
-			###ADD IDEA FOR ARMY, can only be taken if taken the left side/betrayed the communist??
-			add_ideas = CHI_blue_shirts_idea
+			####ADDS TIMED IDEA TO PUSH OUT JAPAN
+			add_timed_idea = {
+				idea = CHI_one_final_push_idea
+				days = 270
+			}
 		}
 	}
-
 	focus = {
 		id = CHI_retake_manchuria
 		icon = GFX_goal_CHI_retake_manchuria
 		cost = 10
-		x = 0
+		x = -3
 		y = 1
 
 		mutually_exclusive = {	
 		}
 		prerequisite = {
-			focus = CHI_the_blue_shirts
+			focus = CHI_invite_german_advisors
+			focus = CHI_increase_sino_german_cooperation
+			focus = CHI_take_out_kansas
 		}
-		relative_position_id = CHI_the_blue_shirts
+		relative_position_id = CHI_take_out_kansas
 		available = {
 			is_puppet = no
 			any_state = {
@@ -2186,16 +2191,205 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_invite_german_advisors
-		icon = GFX_goal_soviet_military_advisors
+		id = CHI_the_new_empire
+		icon = GFX_focus_generic_china1
+		cost = 10
+		x = -3
+		y = 1
+		mutually_exclusive = {
+			focus = CHI_enact_martial_law
+		}
+		prerequisite = { focus = CHI_retake_manchuria }
+		relative_position_id = CHI_retake_manchuria
+		available = {
+			has_completed_focus = CHI_escape_from_captivity
+			MAN = {
+				exists = no
+			}
+			custom_trigger_tooltip = {
+				tooltip = own_china_proper_tt
+				own_china_proper = yes
+			}
+		}
+		
+		bypass = {
+			
+		}
+		completion_reward = {
+			custom_effect_tooltip = CHI_unlocks_late_game_eco_tree_tt
+			add_ideas = CHI_a_new_chinese_empire
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_controlled_state = {
+						OR = {
+							state = 326
+							state = 729
+							state = 728
+						}
+					}
+				}
+				country_event = { id = prc.89 }
+			}
+		}
+	}
+	focus = {
+		id = CHI_join_axis
+		icon = GFX_goal_generic_join_axis
+		prerequisite = { focus = CHI_the_new_empire }
+		relative_position_id = CHI_the_new_empire
+		x = -2
+		y = 2
+		cost = 10
+	 	available = {
+	 		is_puppet = no
+			is_in_faction = no
+	 		NOT = { has_war_with = GER }
+	 		OR = {
+	 			has_government = fascism
+	 			fascism > 0.4
+	 		}
+	 		
+	 		GER = {
+	 			exists = yes
+	 			has_government = fascism
+ 				is_faction_leader = yes
+	 		}
+		}
+		bypass = {
+			is_in_faction_with = GER
+		}
+		
+		completion_reward = {
+			GER = { country_event = { id = generic.2 days = 1 } }	
+		}
+	}
+	focus = {
+		id = CHI_pincer_soviet
+		icon = GFX_goal_generic_war_with_comintern
+		
+		available = {
+			r56_script_i_am_sane = yes
+			SOV = {
+				r56_script_target_is_sane = yes
+				has_war = yes
+			}
+		}
+		
+		bypass = {
+			SOV = {
+				r56_script_standard_bypass = yes
+			}
+		}
+		
+		prerequisite = { focus = CHI_join_axis }
+		relative_position_id = CHI_join_axis
+		x = 0
+		y = 1
+		cost = 10
+		will_lead_to_war_with = SOV
+		completion_reward = {
+			create_wargoal = {
+				target = SOV
+				expire = 0
+				type = take_state_focus
+				generator = { 408 409 657 560 561 742 732 586 589 }
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+	}	
+	focus = {
+		id = CHI_the_blue_shirts
+		icon = GFX_goal_CHI_power_to_the_blueshirts
+		cost = 10
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_the_new_empire }
+		relative_position_id = CHI_the_new_empire
+		available = {
+			
+		}
+		bypass = {
+			
+		}
+		completion_reward = {
+			###ADD IDEA FOR ARMY, can only be taken if taken the left side/betrayed the communist??
+			add_ideas = CHI_blue_shirts_idea
+		}
+	}
+	focus = {
+		id = CHI_ideological_education
+		icon = GFX_goal_generic_military_research_2
 		cost = 10
 		x = -1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_retake_manchuria }
-		relative_position_id = CHI_retake_manchuria
+		prerequisite = { focus = CHI_the_new_empire }
+		relative_position_id = CHI_the_new_empire
+		available = {
+			
+		}
+		bypass = {
+			
+		}
+		completion_reward = {
+			###ADD IDEA FOR ARMY, can only be taken if taken the left side/betrayed the communist??
+			add_research_slot = 1
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.10
+			}
+			add_timed_idea = {
+				idea = CHI_education_purges
+				days = 180
+			}
+		}
+	}
+	focus = {
+		id = CHI_war_fanaticism
+		icon = GFX_goal_generic_major_war
+		cost = 10
+		x = 0
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_the_blue_shirts focus = CHI_ideological_education }
+		relative_position_id = CHI_the_new_empire
+		available = {
+			
+		}
+		bypass = {
+			
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.25
+			}
+			custom_effect_tooltip = kamikaze_focus_tooltip
+			hidden_effect = {
+				set_rule = { can_use_kamikaze_pilots = yes }
+			}
+		}
+	}
+	focus = {
+		id = CHI_invite_german_advisors
+		icon = GFX_goal_generic_german_advisor
+		cost = 10
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_integrate_allied_warlords }
+		relative_position_id = CHI_integrate_allied_warlords
 		available = {
 		}
 		bypass = {
@@ -2206,49 +2400,89 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_one_final_push
-		icon = GFX_goal_generic_army_mobilization2
-		cost = 10
-		x = 4
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_retake_manchuria }
-		relative_position_id = CHI_retake_manchuria
+		id = CHI_increase_sino_german_cooperation
+		icon = GFX_goal_HUN_trade_deal_with_germany
 		available = {
-			surrender_progress < 0
-			has_war = yes
-		}
-		bypass = {
-			
-		}
-		completion_reward = {
-			####ADDS TIMED IDEA TO PUSH OUT JAPAN
-			add_timed_idea = {
-				idea = CHI_one_final_push_idea
-				days = 270
+			GER = {
+				is_puppet = no
+				has_opinion = {
+					target = ROOT
+					value > 9
+				}
+				has_government = fascism
+				custom_trigger_tooltip = {
+					tooltip = KMT_alone_or_peace_faction_tt
+					is_alone_or_in_faction_at_peace_with_CHI = yes
+				}
 			}
+			NOT = {
+				has_war_with = GER
+			}
+			is_puppet = no
 		}
+		prerequisite = { focus = CHI_integrate_allied_warlords }
+		relative_position_id = CHI_integrate_allied_warlords
+		x = -1
+		y = 1
+		cost = 10
+		
+		completion_reward = {
+			GER = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = more_sino_german_coop
+				}
+			}
+			add_opinion_modifier = {
+				target = GER
+				modifier = more_sino_german_coop
+			}
+			add_ideas = CHI_sino_german_joint_research_ger_adv								 
+		}	
 	}
+	
+
 	focus = {
 		id = CHI_enact_martial_law
 		icon = GFX_goal_centralize_power
 		cost = 10
-		x = 1
+		x = 3
 		y = 1
 		mutually_exclusive = {
-			
+			focus = CHI_the_new_empire
 		}
 		prerequisite = { focus = CHI_retake_manchuria }
 		relative_position_id = CHI_retake_manchuria
 		available = {
-			
+			has_completed_focus = CHI_agree_to_the_captors_terms
+			MAN = {
+				exists = no
+			}
+			custom_trigger_tooltip = {
+				tooltip = own_china_proper_tt
+				own_china_proper = yes
+			}
 		}
 		bypass = {
 			
 		}
 		completion_reward = {
+			custom_effect_tooltip = CHI_unlocks_late_game_eco_tree_tt
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_controlled_state = {
+						OR = {
+							state = 326
+							state = 729
+							state = 728
+						}
+					}
+				}
+				country_event = { id = prc.89 }
+			}
+			unlock_decision_category_tooltip = CHI_martial_law
 			####UNLOCKS DEICSONS TO DESTROY COMMUNIST
 			####UNLOCKS DECSIOINS TO DESTORY WARLORDS
 			####UNLOCKS DECISIONS TO DESTROY ADVISORS
@@ -2256,12 +2490,11 @@ focus_tree = {
 			###GIVES LEADER TRAITS FROM EACH DECISON
 		}
 	}
-
 	focus = {
 		id = CHI_land_reform_neutrality
 		icon = GFX_goal_agrarian_reform
 		cost = 10
-		x = 1
+		x = 0
 		y = 1
 		mutually_exclusive = {
 			
@@ -2291,7 +2524,7 @@ focus_tree = {
 		id = CHI_education_reform
 		icon = GFX_goal_generic_education
 		cost = 10
-		x = 1
+		x = 0
 		y = 1
 		mutually_exclusive = {
 			
@@ -2309,40 +2542,17 @@ focus_tree = {
 			add_research_slot = 1
 		}
 	}
-	focus = {
-		id = CHI_chang_hai_sheks_china
-		icon = GFX_goal_waking_the_tiger
-		cost = 10
-		x = 0
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = CHI_land_reform_neutrality }
-		prerequisite = { focus = CHI_sieze_business_assets }
-		relative_position_id = CHI_enact_martial_law
-		available = {
-			
-		}
-		bypass = {
-			
-		}
-		completion_reward = {
-			###GIVES LEADER TRAIT
-			add_country_leader_trait = united_people_of_china
-			###EVENTS FOR GETTING THE PORTS
-		}
-	}
+
 	focus = {
 		id = CHI_sieze_business_assets
 		icon = GFX_goal_generic_land_seizure
 		cost = 10
-		x = -1
+		x = -3
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = CHI_enact_martial_law }
+		prerequisite = { focus = CHI_enact_martial_law focus = CHI_the_new_empire }
 		relative_position_id = CHI_enact_martial_law
 		available = {
 			
@@ -2428,7 +2638,7 @@ focus_tree = {
 		id = CHI_cement_control_over_the_economy
 		icon = GFX_goal_generic_state_economy
 		cost = 10
-		x = -1
+		x = 0
 		y = 1
 		mutually_exclusive = {
 			
@@ -2446,7 +2656,36 @@ focus_tree = {
 			CHI_remove_corrupted_economy = yes
 		}
 	}
-
+	focus = {
+		id = CHI_chang_hai_sheks_china
+		icon = GFX_goal_waking_the_tiger
+		cost = 10
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = CHI_cement_control_over_the_economy }
+		prerequisite = {
+			focus = CHI_war_fanaticism focus = CHI_education_reform
+		}
+		relative_position_id = CHI_cement_control_over_the_economy
+		available = {
+			if = {
+				limit = {
+					has_completed_focus = CHI_enact_martial_law
+				}
+				#has_country_flag = 
+			}
+		}
+		bypass = {
+			
+		}
+		completion_reward = {
+			###GIVES LEADER TRAIT
+			add_country_leader_trait = united_people_of_china
+		}
+	}
 	focus = {
 		id = CHI_executive_yuan
 		icon = GFX_focus_chi_legislative_yuan
@@ -2636,8 +2875,8 @@ focus_tree = {
 		allow_branch = {
 			
 		}
-		x = 38
-		y = 20
+		x = 35
+		y = 15
 		offset = {
 			trigger = {
 				has_global_flag = CHI_puppeted_flag
@@ -5536,6 +5775,13 @@ focus_tree = {
 		available = {
 			has_war = no
 			has_government = communism
+			MAN = {
+				exists = no
+			}
+			custom_trigger_tooltip = {
+				tooltip = own_china_proper_tt
+				own_china_proper = yes
+			}
 		}
 
 		completion_reward = {
@@ -5614,6 +5860,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = CHI_unlocks_late_game_eco_tree_tt
 			add_stability = 0.2
 			country_event = { id = chi.77 }
 			add_research_slot = 1
@@ -6580,14 +6827,14 @@ focus_tree = {
 		icon = GFX_goal_constitution
 
 		relative_position_id = CHI_xian_incident
-		x = 15
+		x = 11
 		y = 1
 		offset = {
 			trigger = {
 				has_completed_focus = CHI_democritization
 
 			}
-			x = -10
+			x = -11
 			y = 0
 		}
 		allow_branch = {
@@ -7441,12 +7688,9 @@ focus_tree = {
 			MAN = {
 				exists = no
 			}
-			CHI = {
-				AND = {
-					controls_state = 328
-					controls_state = 944
-					controls_state = 745
-				}
+			custom_trigger_tooltip = {
+				tooltip = own_china_proper_tt
+				own_china_proper = yes
 			}
 		}
 
@@ -7464,6 +7708,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_STABILITY }
 		completion_reward = {
+			custom_effect_tooltip = CHI_unlocks_late_game_eco_tree_tt
 			remove_ideas = CHI_warlord_integration_3
 			add_stability = 0.05
 			add_political_power = 100
@@ -10813,11 +11058,11 @@ focus = {
 focus = {
 	id = CHI_dare_to_die_corps
 	icon = GFX_goal_generic_CAS
-	prerequisite = { focus = CHI_utilize_the_corrupted_economy }
+	prerequisite = { focus = CHI_the_big_rear_concept }
 	available = { has_war = yes }
-	relative_position_id = CHI_utilize_the_corrupted_economy
-	x = 0
-	y = 1
+	relative_position_id = CHI_the_big_rear_concept
+	x = 2
+	y = 2
 	cost = 10
 	ai_will_do = {
 		factor = 10
