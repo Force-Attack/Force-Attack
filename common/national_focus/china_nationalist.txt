@@ -256,9 +256,20 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
-			add_political_power = 50
-			custom_effect_tooltip = available_industrial_concern
-			show_ideas_tooltip = CHI_mining_commission
+			
+			if = {
+				limit = {
+					or = {
+						has_idea = CHI_mining_commission
+						has_idea = generic_electronics_concern
+					}
+					add_political_power = 100
+				}
+			}
+			else = {
+				custom_effect_tooltip = add_industrial_concern
+				add_ideas = CHI_mining_commission
+			}
 			add_tech_bonus = {
 				name = CHI_EXCAV
 				category = excavation_tech
@@ -521,6 +532,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
 			CHI_hyper_inflation_level_down = yes
+
+			add_ideas = export_focus
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = CHI_chen_guofu
 		}
@@ -1538,6 +1551,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			remove_country_leader_trait = detained_leader
 			#remove captivity debuff
 			add_war_support = 0.05
 			mark_focus_tree_layout_dirty = yes
@@ -1604,6 +1618,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			remove_country_leader_trait = detained_leader
 			custom_effect_tooltip = CHI_dai_li_ccp_add_tt
 			hidden_effect = {
 				activate_advisor = CHI_dai_li_ccp
@@ -1629,6 +1644,7 @@ focus_tree = {
 			add_political_power = 120
 			add_stability = 0.05
 			custom_effect_tooltip = CHI_12_commi_divs_tt
+			custom_effect_tooltip = CHI_war_of_resistance_tt
 			hidden_effect = {	
 				division_template = {
 					name = "Chinese Peoples Replblic Army"
@@ -1715,9 +1731,6 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		bypass = {
-			is_in_faction_with = SMI
-		}
 		prerequisite = { focus = CHI_give_the_warlords_military_positions }
 		relative_position_id = CHI_give_the_warlords_military_positions
 		available = {
@@ -1728,10 +1741,10 @@ focus_tree = {
 				type = arms_factory
 				level = 1
 			}
-			CHI_dai_li = {
-				add_trait = {
-					trait = collective_industry_architect
-				}
+			add_trait = {
+				character = CHI_dai_li
+				slot = political_advisor
+				trait = collective_industry_architect
 			}
 		}
 	}
@@ -2842,6 +2855,8 @@ focus_tree = {
 				}
 				CHI_hyper_inflation_level_up = yes
 			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = CHI_t_v_soong
 		}
 	}
 
@@ -2912,7 +2927,7 @@ focus_tree = {
 		y = 15
 		offset = {
 			trigger = {
-				has_global_flag = CHI_puppeted_flag
+				has_global_flag = CHI_puppeted_flag 
 			}
 			y = -15
 			x = 0
@@ -2922,9 +2937,14 @@ focus_tree = {
 		ai_will_do = {
 			factor = 4
 		}
-		bypass = {
-			always = yes
-		}
+
+		# available = {
+		# 	is_puppet = yes
+		# }
+		# bypass_if_unavailable = yes
+		# bypass = {
+		# 	always = yes   fix this Juddy UWU
+		# }
 
 		cancel_if_invalid = yes
 		continue_if_invalid = no
@@ -4894,6 +4914,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			remove_country_leader_trait = detained_leader
 			set_politics = {
 				ruling_party = fascism
 			}
@@ -5237,7 +5258,7 @@ focus_tree = {
 			has_civil_war = yes
 		}
 		
-
+		bypass_if_unavailable = yes
 		bypass = {
 			has_civil_war = no
 		}
@@ -5273,7 +5294,7 @@ focus_tree = {
 		available = {
 			has_civil_war = yes
 		}
-
+		bypass_if_unavailable = yes
 		bypass = {
 			has_civil_war = no
 		}
@@ -6915,6 +6936,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			remove_country_leader_trait = detained_leader
 			###WITH NO ONE TO RULE, students take power
 			add_popularity = {
 				ideology = neutrality
@@ -9155,17 +9177,20 @@ focus_tree = {
 	
 		completion_reward = {
 			custom_effect_tooltip = CHI_purchase_fighters_tt
-			create_equipment_variant = {
-				name = "P-36A"
-				type = small_plane_airframe_0
-				modules = {
-					fixed_main_weapon_slot = light_mg_4x
-					fixed_auxiliary_weapon_slot_1 = light_mg_2x
-					engine_type_slot = engine_2_1x
-					special_type_slot_1 = empty
+			hidden_effect = {
+				create_equipment_variant = {
+					name = "P-36A"
+					type = small_plane_airframe_0
+					modules = {
+						fixed_main_weapon_slot = light_mg_4x
+						fixed_auxiliary_weapon_slot_1 = light_mg_2x
+						engine_type_slot = engine_2_1x
+						special_type_slot_1 = empty
+					}
+					icon = "GFX_USA_fighter1_medium"
 				}
-				icon = "GFX_USA_fighter1_medium"
 			}
+			
 			add_equipment_to_stockpile = {
 				type = small_plane_airframe_0
 				amount = 50
@@ -10891,10 +10916,7 @@ focus = {
 	}
 
 	bypass = {
-		is_puppet = no
-		NOT = {
-			has_war_with = JAP
-		}
+		is_puppet = yes
 	}
 
 	ai_will_do = {
