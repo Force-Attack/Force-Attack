@@ -35,7 +35,7 @@ focus_tree = {
 				has_country_flag = GRE_king_arrested
 			}
 		}
-		x = 8
+		x = 12
 		y = 0
 		cost = 10
 		ai_will_do = {
@@ -1708,7 +1708,7 @@ focus_tree = {
 		available = {
 			NOT = {	has_country_flag = GRE_king_arrested }
 		}
-		x = 22
+		x = 27
 		y = 0
 		cost = 5
 		ai_will_do = {
@@ -3182,7 +3182,7 @@ focus_tree = {
 	focus = {
 		id = GRE_reevaluating_the_drachma
 		icon = GFX_focus_GRE_reevaluating_the_drachma
-		x = 32
+		x = 36
 		y = 0
 		cost = 5
 		ai_will_do = {
@@ -4657,7 +4657,7 @@ focus_tree = {
 	focus = {
 		id = GRE_hellenic_armed_forces
 		icon = GFX_focus_GRE_hellenic_armed_forces
-		x = 44
+		x = 50
 		y = 0
 		cost = 10
 		ai_will_do = {
@@ -5573,12 +5573,12 @@ focus_tree = {
 
 	focus = {
 		id = GRE_Macedonian_Nationalism
-		icon = GFX_goal_generic_amphibious_assault
+		icon = GFX_focus_generic_monarchy_1
 		available = {
-
+			NOT = {	has_country_flag = GRE_king_arrested }
 		 }
 		mutually_exclusive = { focus = GRE_bring_home_the_exiled_republicans } 
-		x = -6
+		x = -8
 		y = 0
 		relative_position_id = GRE_bring_home_the_exiled_republicans
 		cost = 6
@@ -5587,45 +5587,50 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			start_civil_war = {
-				ruling_party = neutrality
-				ideology = ROOT
-				size = 0.8
-				capital = 2
-				states = {
-					2
-				}
-				keep_political_leader = yes
-				keep_political_party_members = yes
+			set_party_name = {
+				ideology = neutrality
+				long_name = "Macedonian Movement"
+				name = "Macedonian National Movement"
 			}
 		}
 	}		
 
 	focus = {
 		id = GRE_Consolidade_the_state
-		icon = GFX_goal_generic_amphibious_assault
+		icon = GFX_focus_GRE_an_orthodox_state
 		available = {
 			has_civil_war = no
 		 } 
-		x = -6
+		x = -8
 		y = 1
 		relative_position_id = GRE_bring_home_the_exiled_republicans
+		prerequisite = { focus = GRE_Macedonian_Nationalism }
 		cost = 6
 		ai_will_do = {
 			base = 0
 		}
 
 		completion_reward = {
-			
+			set_province_name = { id = 11818 name = "Pella"}
+			set_capital = { state = 731 }
+
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
 		}
 	}		
 
 	focus = {
 		id = GRE_Royal_Dictatorship
-		icon = GFX_goal_generic_amphibious_assault
+		icon = GFX_focus_generic_military_dictatorship
 		available = {
-			fascism > 0.3
-			neutrality > 0.3
+			neutrality > 0.4
+			has_government = neutrality
 		 } 
 		 prerequisite = { focus = GRE_Consolidade_the_state}
 		 mutually_exclusive = {
@@ -5640,21 +5645,29 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			set_party_name = {
+				ideology = neutrality
+				long_name = "Macedonian Monarchy"
+				name = "Macedonian Monarchy"
+			}
+			promote_character = {
+				character = GRE_george_two
+				ideology = neutrality
+			}
 		}
 	}		
 
 	focus = {
 		id = GRE_Fascist_State
-		icon = GFX_goal_generic_amphibious_assault
+		icon = GFX_focus_generic_spread_fascism
 		mutually_exclusive = {
 			focus = GRE_Royal_Dictatorship
 		}
 		available = {
-
+			fascism > 0.4
 		 } 
 		 prerequisite = { focus = GRE_Consolidade_the_state }
-		x = 3
+		x = 5
 		y = 2
 		relative_position_id = GRE_Proclaim_our_kingdom
 		cost = 6
@@ -5663,7 +5676,359 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_party_name = {
+				ideology = fascism
+				long_name = "Macedonian National Socialist Party"
+				name = "MNSP"
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			set_politics = {
+				ruling_party = fascism
+			}
+
+		}
+	}		
+
+	focus = {
+		id = GRE_Proclaim_Macedonia
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			OR = {
+				has_government = fascism
+				has_government = neutrality
+			}
+		 } 
+		 prerequisite = { focus = GRE_Fascist_State focus = GRE_Royal_Dictatorship }
+		x = -2
+		y = 1
+		relative_position_id = GRE_Fascist_State
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+				set_cosmetic_tag = Macedonian_GRE
 			
+		}
+	}		
+
+	focus = {
+		id = GRE_Align_Turkey
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			
+		 } 
+		 prerequisite = { focus = GRE_Proclaim_Macedonia }
+		x = -2
+		y = 2
+		relative_position_id = GRE_Fascist_State
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+				TUR = {
+					country_event = generic.20
+				}
+			
+		}
+	}		
+
+	focus = {
+		id = GRE_Conquer_Persia
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			341 = { is_owned_and_controlled_by = GRE }
+			797 = { is_owned_and_controlled_by = GRE }
+			340 = { is_owned_and_controlled_by = GRE }
+			343 = { is_owned_and_controlled_by = GRE }
+			339 = { is_owned_and_controlled_by = GRE }
+			342 = { is_owned_and_controlled_by = GRE }
+			345 = { is_owned_and_controlled_by = GRE }
+			49 = { is_owned_and_controlled_by = GRE }
+			356 = { is_owned_and_controlled_by = GRE }
+			798 = { is_owned_and_controlled_by = GRE }
+			348 = { is_owned_and_controlled_by = GRE }
+			344 = { is_owned_and_controlled_by = GRE }
+			350 = { is_owned_and_controlled_by = GRE }
+			352 = { is_owned_and_controlled_by = GRE }
+			800 = { is_owned_and_controlled_by = GRE }
+			353 = { is_owned_and_controlled_by = GRE }
+		 } 
+		 prerequisite = { focus = GRE_Align_Turkey }
+		x = -2
+		y = 1
+		relative_position_id = GRE_Align_Turkey
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+				PER = {
+					country_event = generic.20
+				}
+			
+		}
+	}		
+
+	focus = {
+		id = GRE_Recover_Babylon
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			341 = { is_owned_and_controlled_by = GRE }
+			797 = { is_owned_and_controlled_by = GRE }
+			340 = { is_owned_and_controlled_by = GRE }
+			343 = { is_owned_and_controlled_by = GRE }
+			339 = { is_owned_and_controlled_by = GRE }
+			342 = { is_owned_and_controlled_by = GRE }
+			345 = { is_owned_and_controlled_by = GRE }
+			49 = { is_owned_and_controlled_by = GRE }
+			356 = { is_owned_and_controlled_by = GRE }
+			798 = { is_owned_and_controlled_by = GRE }
+			348 = { is_owned_and_controlled_by = GRE }
+			344 = { is_owned_and_controlled_by = GRE }
+			350 = { is_owned_and_controlled_by = GRE }
+			352 = { is_owned_and_controlled_by = GRE }
+			800 = { is_owned_and_controlled_by = GRE }
+			353 = { is_owned_and_controlled_by = GRE }
+		 } 
+		 prerequisite = { focus = GRE_Align_Turkey }
+		x = 0
+		y = 1
+		relative_position_id = GRE_Align_Turkey
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+				IRQ = {
+					country_event = generic.20
+				}
+			
+		}
+	}		
+
+	focus = {
+		id = GRE_Demand_Bactria
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			341 = { is_owned_and_controlled_by = GRE }
+			797 = { is_owned_and_controlled_by = GRE }
+			340 = { is_owned_and_controlled_by = GRE }
+			343 = { is_owned_and_controlled_by = GRE }
+			339 = { is_owned_and_controlled_by = GRE }
+			342 = { is_owned_and_controlled_by = GRE }
+			345 = { is_owned_and_controlled_by = GRE }
+			49 = { is_owned_and_controlled_by = GRE }
+			356 = { is_owned_and_controlled_by = GRE }
+			798 = { is_owned_and_controlled_by = GRE }
+			348 = { is_owned_and_controlled_by = GRE }
+			344 = { is_owned_and_controlled_by = GRE }
+			350 = { is_owned_and_controlled_by = GRE }
+			352 = { is_owned_and_controlled_by = GRE }
+			800 = { is_owned_and_controlled_by = GRE }
+			353 = { is_owned_and_controlled_by = GRE }
+		 } 
+		 prerequisite = { focus = GRE_Align_Turkey }
+		x = 2
+		y = 1
+		relative_position_id = GRE_Align_Turkey
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+				AFG = {
+					country_event = generic.20
+				}
+			
+		}
+	}		
+
+	focus = {
+		id = GRE_Integrate_our_empire
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			ROOT = {
+				controls_state = 797 
+				controls_state = 341
+				controls_state = 340
+				controls_state = 339
+				controls_state = 291 
+				controls_state = 1045
+				controls_state = 1048
+				controls_state = 1049
+				controls_state = 1047
+				controls_state = 676
+				controls_state = 266
+				controls_state = 986
+				controls_state = 420
+				controls_state = 987
+				controls_state = 419
+				controls_state = 988
+				controls_state = 421
+				controls_state = 417
+				controls_state = 413
+				controls_state = 411
+				controls_state = 412
+				controls_state = 981
+				controls_state = 980
+				controls_state = 414
+				controls_state = 410
+				controls_state = 982
+				controls_state = 416
+				controls_state = 983
+				controls_state = 418
+				controls_state = 983
+				controls_state = 267
+				controls_state = 1009
+				controls_state = 1010
+				controls_state = 1008
+				controls_state = 1011
+				controls_state = 415
+			}
+			TUR = { 
+				OR = { 
+					exists = no
+					has_capitulated = yes
+					is_puppet = yes
+				}
+			}
+			IRQ = { 
+				OR = { 
+					exists = no
+					has_capitulated = yes
+					is_puppet = yes
+				}
+			}
+			PER = { 
+				OR = { 
+					exists = no
+					has_capitulated = yes
+					is_puppet = yes
+				}
+			}
+			AFG = { 
+				OR = { 
+					exists = no
+					has_capitulated = yes
+					is_puppet = yes
+				}
+			}
+		}
+		 prerequisite = { focus = GRE_Conquer_Persia }
+		 prerequisite = { focus = GRE_Recover_Babylon }
+		 prerequisite = { focus = GRE_Demand_Bactria }
+		x = 0
+		y = 2
+		relative_position_id = GRE_Align_Turkey
+		cost = 5
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+			every_state = {
+				limit = { is_core_of = TUR }
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = { is_core_of = PER }
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = { is_core_of = IRQ }
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = { is_core_of = AFG }
+				add_core_of = ROOT
+			}
+		}
+	}	
+
+	focus = {
+		id = GRE_Retake_land_took_by_colonialists
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			
+		 } 
+		 prerequisite = { focus = GRE_Integrate_our_empire }
+		x = 0
+		y = 1
+		relative_position_id = GRE_Integrate_our_empire
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = EGY
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = ENG
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = RAJ
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SOV
+			}
+		}
+	}		
+
+	focus = {
+		id = GRE_Alexander_Legacy
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			
+		 } 
+		 prerequisite = { focus = GRE_Royal_Dictatorship }
+		x = -2
+		y = 1
+		relative_position_id = GRE_Royal_Dictatorship
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+			add_ideas = GRE_Alexander_Legacy
+		}
+	}		
+
+	focus = {
+		id = GRE_Join_the_Axis
+		icon = GFX_goal_generic_amphibious_assault
+		available = {
+			
+		 } 
+		 prerequisite = { focus = GRE_Fascist_State }
+		x = 2
+		y = 1
+		relative_position_id = GRE_Fascist_State
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+			GER = {
+				country_event = generic.2
+			}
 		}
 	}		
 
