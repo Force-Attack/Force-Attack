@@ -2688,7 +2688,7 @@ focus_tree = {
 							name = capital_ships_bonus
 							bonus = 1.0
 							ahead_reduction = 2
-							uses = 1
+							uses = 2
 							category = bc_tech
 							category = bb_tech
 							category = cv_tech
@@ -2701,7 +2701,7 @@ focus_tree = {
 	focus = {
 		id = SIA_quality_over_quantity
 		icon = GFX_goal_generic_production
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = SIA_reform_our_tactics
 		}
@@ -2716,7 +2716,7 @@ focus_tree = {
 
 	focus = {
 		id = SIA_destroyers_effort
-		icon = GFX_goal_generic_navy_anti_submarine
+		icon = GFX_focus_generic_destroyer
 		cost = 10
 		prerequisite = {
 			focus = SIA_quality_over_quantity
@@ -2732,7 +2732,7 @@ focus_tree = {
 							name = dd_bonus
 							bonus = 1.0
 							ahead_reduction = 2
-							uses = 1
+							uses = 2
 							category = dd_tech
 						}
 				}
@@ -2784,7 +2784,7 @@ focus_tree = {
 							name = ss_bonus
 							bonus = 1.0
 							ahead_reduction = 2
-							uses = 1
+							uses = 2
 							category = ss_tech
 						}
 				}
@@ -2794,8 +2794,8 @@ focus_tree = {
 
 	focus = {
 		id = SIA_naval_mass_production
-		icon = GFX_focus_generic_shipbuilding
-		cost = 5
+		icon = GFX_goal_generic_multiple_ships
+		cost = 10
 		prerequisite = {
 			focus = SIA_adopt_new_tactics
 		}
@@ -2811,7 +2811,7 @@ focus_tree = {
 
 	focus = {
 		id = SIA_develop_cruisers
-		icon = GFX_goal_generic_navy_cruiser
+		icon = GFX_focus_generic_cruiser2
 		cost = 10
 		prerequisite = {
 			focus = SIA_naval_mass_production
@@ -2827,7 +2827,7 @@ focus_tree = {
 							name = cr_bonus
 							bonus = 1.0
 							ahead_reduction = 2
-							uses = 1
+							uses = 2
 							category = cl_tech
 							category = ca_tech
 						}
@@ -2861,7 +2861,7 @@ focus_tree = {
 													dockyard > 0
 													free_building_slots = {
 															building = dockyard
-															size > 1
+															size > 2
 															include_locked = yes
 														}
 												}
@@ -2875,14 +2875,14 @@ focus_tree = {
 											is_coastal = yes
 											free_building_slots = {
 													building = dockyard
-													size > 1
+													size > 2
 													include_locked = yes
 												}
 										}
-									add_extra_state_shared_building_slots = 3
+									add_extra_state_shared_building_slots = 6
 									add_building_construction = {
 											type = dockyard
-											level = 3
+											level = 6
 											instant_build = yes
 										}
 								}
@@ -3090,18 +3090,175 @@ focus_tree = {
 		y = 2
 		relative_position_id = SIA_increase_the_naval_production
 			completion_reward = {
-					navy_experience = 50
+					navy_experience = 100
 					add_doctrine_cost_reduction = {
 						name = land_doc_bonus
-						cost_reduction = 0.5
+						cost_reduction = 1
 						uses = 2
 						category = naval_doctrine
 					}
 				}
 				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SIA_expand_land_for_docks_in_south
+		icon = GFX_focus_generic_land_reclamation
+		cost = 10
+		prerequisite = {
+			focus = SIA_establish_a_naval_college
+		}
+		relative_position_id = SIA_establish_a_naval_college
+		x = 1
+		y = 1
+			completion_reward = {
+					724 = {
+						set_state_category = city
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+						}
+					}
 
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 
+	focus = {
+		id = SIA_expand_land_for_docks_in_the_capital
+		icon = GFX_focus_generic_refit_civilian_ships
+		cost = 10
+		prerequisite = {
+			focus = SIA_establish_a_naval_college
+		}
+		relative_position_id = SIA_establish_a_naval_college
+		x = -1
+		y = 1
+			completion_reward = {
+					289 = {
+						set_state_category = megalopolis
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+						}
+					}
+
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = SIA_expand_land_for_docks_in_the_cambodia
+		icon = GFX_goal_generic_land_seizure
+		cost = 10
+		available = {
+			has_full_control_of_state = 741
+		}
+		prerequisite = {
+			focus = SIA_establish_a_naval_college
+		}
+		relative_position_id = SIA_establish_a_naval_college
+		x = -3
+		y = 1
+			completion_reward = {
+					741 = {
+						set_state_category = city
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+						}
+					}
+
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SIA_expand_land_for_docks_in_burma
+		icon = GFX_goal_italy_expand_libyan_manufactures
+		cost = 10
+		available = {
+			has_full_control_of_state = 1020
+		}
+		prerequisite = {
+			focus = SIA_establish_a_naval_college
+		}
+		relative_position_id = SIA_establish_a_naval_college
+		x = 3
+		y = 1
+			completion_reward = {
+					1020 = {
+						set_state_category = city
+						add_building_construction = {
+							type = infrastructure
+							level = 5
+						}
+					}
+
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SIA_increase_funds
+		icon = GFX_focus_naval_defense_fund
+		cost = 6
+		prerequisite = {
+			focus = SIA_expand_land_for_docks_in_south
+		}
+		prerequisite = {
+			focus = SIA_expand_land_for_docks_in_the_capital
+		}
+		relative_position_id = SIA_expand_land_for_docks_in_south
+		x = -1
+		y = 1
+			completion_reward = {
+					add_ideas = SIA_funding_the_naval_indusry
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SIA_invite_admrials_into_the_capital
+		icon = GFX_goal_FRA_castex_book
+		cost = 6
+		prerequisite = {
+			focus = SIA_increase_funds
+		}
+		relative_position_id = SIA_increase_funds
+		x = 0
+		y = 1
+			completion_reward = {
+					activate_advisor = SIA_naval_council
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SIA_jap_mio
+		icon = GFX_goal_JAP_new_naval_estimates
+		cost = 6
+		prerequisite = {
+			focus = SIA_invite_admrials_into_the_capital
+		}
+		relative_position_id = SIA_invite_admrials_into_the_capital
+		x = 1
+		y = 1
+			completion_reward = {
+					
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = SIA_americian_mio
+		icon = GFX_goal_USA_coa_navy
+		cost = 6
+		prerequisite = {
+			focus = SIA_invite_admrials_into_the_capital
+		}
+		relative_position_id = SIA_invite_admrials_into_the_capital
+		x = -1
+		y = 1
+			completion_reward = {
+					
+				}
+				search_filters = { FOCUS_FILTER_RESEARCH }
+	}
 	# END OF SHARED NAVY FOCUSES
 
 	# END OF NAVY TREE
