@@ -2246,7 +2246,6 @@ focus_tree = {
 					OR = {
 					has_completed_focus = GER_kill_hitler
 					has_completed_focus = GER_rally_the_monarchists
-					has_completed_focus = GER_the_alternative
 				}
 				}
 			}
@@ -2257,7 +2256,6 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = GER_kill_hitler
 			focus = GER_rally_the_monarchists
-			focus = GER_the_alternative
 		}
 		x = 58
 		y = 0
@@ -4513,7 +4511,7 @@ focus_tree = {
 				name = GER_build_panzer_army
 				bonus = 1.0
 				ahead_reduction = 1
-				uses = 2
+				uses = 1
 				category = armor
 			}
 		}
@@ -9616,7 +9614,6 @@ focus = {
 				NOT = {
 					has_completed_focus = GER_denounce_versailles
 					has_completed_focus = GER_rally_the_monarchists
-					has_completed_focus = GER_the_alternative
 				}
 			}
 		}
@@ -9630,7 +9627,6 @@ focus = {
 		mutually_exclusive = {
 			focus = GER_denounce_versailles
 			focus = GER_rally_the_monarchists
-			focus = GER_the_alternative
 		}
 		#relative_position_id = GER_political_sphere
 		x = 72
@@ -10184,7 +10180,6 @@ focus = {
 				NOT = {
 					has_completed_focus = GER_kill_hitler
 					has_completed_focus = GER_denounce_versailles
-					has_completed_focus = GER_the_alternative
 				}
 			}
 		}
@@ -10205,7 +10200,6 @@ focus = {
 		mutually_exclusive = {
 			focus = GER_kill_hitler
 			focus = GER_denounce_versailles
-			focus = GER_the_alternative
 		}
 		x = 44
 		y = 0
@@ -14017,42 +14011,16 @@ focus = {
 		available = {
 			is_subject = no
 			has_war = no
-		}
-		allow_branch = {
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				NOT = {
-					has_completed_focus = GER_kill_hitler
-					has_completed_focus = GER_denounce_versailles
-					has_completed_focus = GER_rally_the_monarchists
-				}
-			}
-		}
-		mutually_exclusive = {
-			focus = GER_denounce_versailles
-			focus = GER_rally_the_monarchists
-			focus = GER_kill_hitler
-		}
-
-		offset = {
-			x = -43
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = GER_the_alternative
+			has_country_leader = { 
+				character = GER_heinrich_himmler
+				ruling_only = yes
 			}
 		}
 
-		x = 88
-		y = 0
+		relative_position_id = GER_political_turmoil
+
+		x = 20
+		y = 1
 		
 		ai_will_do = {
 			factor = 8
@@ -14061,27 +14029,17 @@ focus = {
 				factor = 0
 			}
 		}
+
+		prerequisite = {
+			focus = GER_political_turmoil
+		}
+
+		mutually_exclusive = {
+			focus = GER_repeal_reichstag_fire_decree
+			focus = GER_restore_weimar
+		}
 		completion_reward = {	
 			add_threat = 5
-			effect_tooltip = { 
-				set_party_name = {
-					ideology = fascist
-					long_name = "Schutzstaffel"
-					name = "SS"
-				}
-			}
-			add_country_leader_role = {
-				character = GER_heinrich_himmler
-				promote_leader = yes
-				country_leader = {
-					ideology = fascism_ideology
-					expire = "1965.1.1"
-					traits = {
-						prince_of_terror
-					}
-				}
-			}	
-			add_ideas = GER_hitlers_shadow1
 			random_owned_controlled_state = {
 				prioritize = { 60 }
 				add_manpower = -10000
@@ -14090,10 +14048,777 @@ focus = {
 				prioritize = { 55 }
 				add_manpower = -10000
 			}
-			mark_focus_tree_layout_dirty = yes	
-			hidden_effect = { GER_remove_mefo_bills = yes }
-			custom_effect_tooltip = mefo_bills_removed_tt
+			set_party_name = {
+				ideology = fascism
+				long_name = "Schutzstaffel"
+				name = "SS"
+			}
 		}
+	}
+	focus = {
+		id = GER_declare_the_ethnostate
+		icon = GFX_focus_generic_court
+		x = 0
+		y = 1
+		
+		cost = 5
+
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				factor = 10
+				has_manpower < 30000
+			}
+		}
+		
+		prerequisite = {
+			focus = GER_the_alternative
+		}
+		relative_position_id = GER_the_alternative
+		available = {
+		}
+		
+		
+
+		available_if_capitulated = yes
+
+
+		completion_reward = {
+			add_ideas = declared_ethnostate
+			random_owned_controlled_state = {
+				add_manpower = -500000
+			}
+		}
+	}
+	focus = {
+		id = GER_eagles_rebirth
+		icon = GFX_focus_ger_reichskommisariats
+		cost = 5
+		
+		
+
+		relative_position_id = GER_purge_political_opponents
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = GER_purge_political_opponents
+		}
+		prerequisite = {
+			focus = GER_whermacht_purges
+		}
+		ai_will_do = {
+			factor = 5
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+		completion_reward = {
+			
+		}
+
+	}
+	focus = {
+		id = GER_break_our_shackles
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_declare_the_ethnostate
+
+		x = 3
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_declare_the_ethnostate
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_break_our_shackles
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_declare_the_ethnostate
+
+		x = 3
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_declare_the_ethnostate
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_break_our_shackles
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_declare_the_ethnostate
+
+		x = 3
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_declare_the_ethnostate
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_revenge_for_versallies
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_break_our_shackles
+
+		x = 1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_break_our_shackles
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_the_new_world_leader
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_revenge_for_versallies
+
+		x = 1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_revenge_for_versallies
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_gurantee_italian_cooperation
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_the_new_world_leader
+
+		x = 0
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_the_new_world_leader
+		}
+
+		completion_reward = {	
+			#events asking italy to become more radical
+		}
+	}
+	focus = {
+		id = GER_polish_lebensraum
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_break_our_shackles
+
+		x = -1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_break_our_shackles
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_russian_lebensraum
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_polish_lebensraum
+
+		x = -1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_polish_lebensraum
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_one_race_one_nation
+		icon = GFX_goal_GER_european_reich
+		cost = 10
+		available = {
+			is_subject = no
+			has_war = no
+		}
+		
+		prerequisite = {
+			focus = GER_break_our_shackles
+		}
+		
+		relative_position_id = GER_break_our_shackles
+		x = 0
+		y = 2
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = GER_establish_the_czech_ss_state
+		icon = GFX_focus_CZE_german_puppet
+		cost = 10
+		available = {
+			is_subject = no
+			has_war = no
+		}
+		
+		prerequisite = {
+			focus = GER_one_race_one_nation
+		}
+		
+		relative_position_id = GER_one_race_one_nation
+		x = 0
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = GER_center_of_the_world
+		icon = GFX_focus_POL_support_global_falangism
+			cost = 10
+			prerequisite = {
+				focus = GER_establish_the_czech_ss_state
+			}
+			prerequisite = {
+				focus = GER_resettle_lebensraum
+			}
+			prerequisite = {
+				focus = GER_gurantee_italian_cooperation
+			}
+			relative_position_id = GER_establish_the_czech_ss_state
+			x = 0
+			y = 1
+			ai_will_do = {
+				factor = 10
+			}
+			completion_reward = {
+				swap_ideas = {
+					remove_idea = new_regime4
+					add_idea = new_regime5
+				}
+				if = {
+					limit = { has_idea = limited_conscription }
+					add_ideas = extensive_conscription
+				}
+				add_ideas = population_pure
+				add_timed_idea = {
+					idea = SWE_industrial_ramp_up
+					days = 60
+				}
+				add_timed_idea = {
+					idea = continued_purges
+					days = 60
+				}
+				random_owned_controlled_state = {
+					
+					add_manpower = -1000000
+				}
+			}
+	}
+	focus = {
+		id = GER_purge_political_opponents
+		icon = GFX_focus_generic_conspiracy
+		cost = 5
+		ai_will_do = { factor = 10 }
+		prerequisite = {
+			focus = GER_declare_the_ethnostate
+		}
+		x = -1
+		y = 1
+
+		relative_position_id = GER_declare_the_ethnostate
+		completion_reward = {
+			
+		}
+
+	}
+	focus = {
+		id = GER_whermacht_purges
+		icon = GFX_focus_generic_conspiracy
+		cost = 5
+		ai_will_do = { factor = 10 }
+		prerequisite = {
+			focus = GER_declare_the_ethnostate
+		}
+		x = 1
+		y = 1
+
+		relative_position_id = GER_declare_the_ethnostate
+		completion_reward = {
+			
+		}
+
+	}
+	focus = {
+		id = GER_germanic_aristocracy
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_puritanical_state
+
+		x = -1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_puritanical_state
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_germanic_aristocracy
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_puritanical_state
+
+		x = -1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_puritanical_state
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_destroy_liberal_judeo_chrstian_moral
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_puritanical_state
+
+		x = 0
+		y = 2
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_puritanical_state
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_the_gestapo
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_destroy_liberal_judeo_chrstian_moral
+
+		x = 0
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_destroy_liberal_judeo_chrstian_moral
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_german_culture_reborn
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_the_gestapo
+
+		x = 0
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_the_gestapo
+		}
+		prerequisite = {
+			focus = GER_align_sweden
+		}
+		prerequisite = {
+			focus = GER_resettle_lebensraum
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_Weltanschauungskrieg
+		icon = GFX_focus_POL_support_global_falangism
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_german_culture_reborn
+
+		x = 3
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_german_culture_reborn
+		}
+		prerequisite = {
+			focus = GER_center_of_the_world
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_appoint_reinhard_heydrich
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_germanic_aristocracy
+
+		x = -1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_germanic_aristocracy
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_align_sweden
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_appoint_reinhard_heydrich
+
+		x = 0
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_appoint_reinhard_heydrich
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_puritanical_state
+		icon = GFX_GER_black_sun
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_declare_the_ethnostate
+
+		x = -3
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_declare_the_ethnostate
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_state_approved_marrige
+		icon = GFX_GER_aryan_germany
+		cost = 5
+		available = {
+
+		}
+
+		relative_position_id = GER_puritanical_state
+
+		x = 1
+		y = 1
+		
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+
+		prerequisite = {
+			focus = GER_puritanical_state
+		}
+
+		completion_reward = {	
+
+		}
+	}
+	focus = {
+		id = GER_encourage_counterurbanization
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		icon = GFX_goal_generic_promote_ruralism
+		cost = 5
+		ai_will_do = { factor = 10 }
+		prerequisite = {
+			focus = GER_state_approved_marrige
+		}
+		x = 1
+		y = 1
+		relative_position_id = GER_state_approved_marrige
+		completion_reward = {
+
+		}
+
+	}
+	focus = {
+		id = GER_resettle_lebensraum
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		icon = GFX_goal_generic_promote_ruralism
+		cost = 5
+		ai_will_do = { factor = 10 }
+		prerequisite = {
+			focus = GER_encourage_counterurbanization
+		}
+		prerequisite = {
+			focus = GER_russian_lebensraum
+		}
+		prerequisite = {
+			focus = GER_eagles_rebirth
+		}
+		x = 1
+		y = 1
+		relative_position_id = GER_encourage_counterurbanization
+		completion_reward = {
+
+		}
+
 	}
 	focus = {
 		id = GER_for_the_german_people
@@ -14107,10 +14832,8 @@ focus = {
 		
 		relative_position_id = GER_the_alternative
 		x = 0
-		y = 1
-		prerequisite = {
-			focus = GER_the_alternative
-		}
+		y = 20
+		
 		ai_will_do = {
 			factor = 8
 			modifier = {
@@ -15279,7 +16002,6 @@ focus = {
 					remove_idea = new_regime4
 					add_idea = new_regime5
 				}
-				add_ideas = tot_economic_mobilisation
 				if = {
 					limit = { has_idea = limited_conscription }
 					add_ideas = extensive_conscription
