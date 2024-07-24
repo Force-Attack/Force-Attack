@@ -6678,10 +6678,12 @@ GER_labor_camps_category = {
 		}
 
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_has_opened_camps
 			}
 		}
+
+		cost = 100
 
 		fire_only_once = yes
 
@@ -6690,7 +6692,14 @@ GER_labor_camps_category = {
 				id = GER_national_purity
 				value = 0.20
 			}
-			add_ideas = GER_labor_camps
+			if = { limit = { GER = { has_idea = GER_closed_labor_camps}}
+				swap_ideas = {
+					remove_idea = GER_closed_labor_camps
+					add_idea = GER_labor_camps
+				}
+			} else = {
+				add_ideas = GER_labor_camps
+			}
 			set_country_flag = ger_has_opened_camps
 		}
 
@@ -6715,802 +6724,246 @@ GER_labor_camps_category = {
 		}
 
 		fire_only_once = yes
-        cost = 50
+
+        cost = 100
 
 		complete_effect = {
 			add_power_balance_value = {
 				id = GER_national_purity
 				value = -0.20
 			}
-			add_ideas = GER_closed_labor_camps
+			if = { limit = { GER = { has_idea = GER_labor_camps}}
+				swap_ideas = {
+					remove_idea = GER_labor_camps
+					add_idea = GER_closed_labor_camps
+				}
+			} else = {
+				add_ideas = GER_closed_labor_camps
+			}
 		}
 
 		ai_will_do = {
 			base = 1
 		}
 	}
-	GER_relocate_non_germans_56 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
+	GER_hunt_non_germans = {
+		icon = GFX_decision_generic_electricity
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+		target_root_trigger = { tag = GER }
+		state_target = yes
+		on_map_mode = map_only
+		fire_only_once = yes
+		available = {
+			NOT = { has_country_flag = GER_hunt_in_progress }
+			has_completed_focus = GER_the_gestapo
 		}
 
 		visible = {
-			original_tag = GER
+			has_completed_focus = GER_the_gestapo
 		}
 
-		available = {
-			GER = {
-				owns_state = 86
-			}
+		cancel_trigger = {
+			NOT = { FROM = { is_fully_controlled_by = ROOT } }
 		}
 
-		fire_only_once = yes
-        cost = 50
+		cancel_effect = {
+			clr_country_flag = GER_hunt_in_progress
+		}
+
+		days_remove = 30
+
+		cost = 25
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
 
 		complete_effect = {
-			GER_increase_labor_camps = yes
+			set_country_flag = GER_hunt_in_progress
 		}
 
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = GER_hunt_in_progress
+			FROM = {
+				add_manpower = -100000
+			}
+			add_power_balance_value = {
+				id = POL_power_balance
+				value = 0.10
+			}
 		}
 	}
-	GER_relocate_non_germans_57 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
+}
+GER_himmler_propaganda_category = {
+	GER_focus_on_extraction = {
 		allowed = {
 			original_tag = GER
 		}
-
-		visible = {
-			original_tag = GER
-		}
-
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_proganda_running
+			}
+			is_power_balance_in_range = {
+				id = GER_national_purity
+				range = GER_medium_purity
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_989 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_51 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
 		cost = 50
-
+		days_remove = 180
 		complete_effect = {
-			GER_increase_labor_camps = yes
+			set_country_flag = ger_proganda_running
+			add_timed_idea = {
+				idea = GER_resource_extraction
+				days = 180
+			}
 		}
-
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = ger_proganda_running
 		}
 	}
-	GER_relocate_non_germans_42 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
+	GER_focus_on_construction = {
 		allowed = {
 			original_tag = GER
 		}
-
-		visible = {
-			original_tag = GER
-		}
-
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_proganda_running
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
+		cost = 50
+		days_remove = 180
 		complete_effect = {
-			GER_increase_labor_camps = yes
+			set_country_flag = ger_proganda_running
+			add_timed_idea = {
+				idea = GER_resource_construction
+				days = 180
+			}
 		}
-
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = ger_proganda_running
 		}
 	}
-	GER_relocate_non_germans_1053 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
+	GER_focus_on_production = {
 		allowed = {
 			original_tag = GER
 		}
-
-		visible = {
-			original_tag = GER
-		}
-
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_proganda_running
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
+		cost = 50
+		days_remove = 180
 		complete_effect = {
-			GER_increase_labor_camps = yes
+			set_country_flag = ger_proganda_running
+			add_timed_idea = {
+				idea = GER_resource_production
+				days = 180
+			}
 		}
-
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = ger_proganda_running
 		}
 	}
-	GER_relocate_non_germans_922 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
+	GER_destroy_the_west = {
 		allowed = {
 			original_tag = GER
 		}
-
-		visible = {
-			original_tag = GER
-		}
-
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_proganda_running
+			}
+			OR = {
+				is_power_balance_in_range = {
+					id = GER_national_purity
+					range = GER_complete_purity
+				}
+				is_power_balance_in_range = {
+					id = GER_national_purity
+					range = GER_high_purity
+				}
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
+		cost = 50
+		days_remove = 180
 		complete_effect = {
-			GER_increase_labor_camps = yes
+			set_country_flag = ger_proganda_running
+			add_timed_idea = {
+				idea = GER_destroy_the_west
+				days = 180
+			}
 		}
-
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = ger_proganda_running
 		}
 	}
-	GER_relocate_non_germans_923 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
+	GER_destroy_the_east = {
 		allowed = {
 			original_tag = GER
 		}
-
-		visible = {
-			original_tag = GER
-		}
-
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_proganda_running
+			}
+			OR = {
+				is_power_balance_in_range = {
+					id = GER_national_purity
+					range = GER_complete_purity
+				}
+				is_power_balance_in_range = {
+					id = GER_national_purity
+					range = GER_high_purity
+				}
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
+		cost = 50
+		days_remove = 180
 		complete_effect = {
-			GER_increase_labor_camps = yes
+			set_country_flag = ger_proganda_running
+			add_timed_idea = {
+				idea = GER_destroy_the_east
+				days = 180
+			}
 		}
-
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = ger_proganda_running
 		}
 	}
-	GER_relocate_non_germans_50 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
+	GER_recruitment_drive = {
 		allowed = {
 			original_tag = GER
 		}
-
-		visible = {
-			original_tag = GER
-		}
-
 		available = {
-			GER = {
-				owns_state = 86
+			NOT = {
+				has_country_flag = ger_proganda_running
+			}
+			OR = {
+				is_power_balance_in_range = {
+					id = GER_national_purity
+					range = GER_low_purity
+				}
+				is_power_balance_in_range = {
+					id = GER_national_purity
+					range = GER_crippling_purity
+				}
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
+		cost = 50
+		days_remove = 180
 		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_52 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
+			set_country_flag = ger_proganda_running
+			add_timed_idea = {
+				idea = GER_recruitment_drive
+				days = 180
 			}
 		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
+		remove_effect = {
+			clr_country_flag = ger_proganda_running
 		}
 	}
-	GER_relocate_non_germans_53 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_54 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_55 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_59 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_60 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_65 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_64 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_61 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_58 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_998 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_62 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_66 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_68 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_63 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_67 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_5 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-	GER_relocate_non_germans_763 = {
-		priority = 119
-		icon = GFX_decision_generic_monarchy
-
-		allowed = {
-			original_tag = GER
-		}
-
-		visible = {
-			original_tag = GER
-		}
-
-		available = {
-			GER = {
-				owns_state = 86
-			}
-		}
-
-		fire_only_once = yes
-        cost = 50
-
-		complete_effect = {
-			GER_increase_labor_camps = yes
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
 
 }
