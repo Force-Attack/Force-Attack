@@ -5712,9 +5712,9 @@ focus_tree = {
 
 		completion_reward = {
 				set_cosmetic_tag = Macedonian_GRE
-			hidden_effect = {
-				
-			}
+				add_political_power = 100
+				remove_ideas = GRE_schachtplan
+				remove_ideas= GRE_political_instability
 		}
 	}		
 
@@ -5722,9 +5722,12 @@ focus_tree = {
 		id = GRE_Align_Turkey
 		icon = GFX_goal_generic_amphibious_assault
 		available = {
-			date > 1937.06.01
+			date > 1937.01.01
 			NOT = {
 				is_in_faction_with = TUR
+			}
+			TUR = {
+				has_war = no
 			}
 		 } 
 		 prerequisite = { focus = GRE_Proclaim_Macedonia }
@@ -5771,9 +5774,6 @@ focus_tree = {
 			NOT = {
 				is_in_faction_with = PER
 			}
-			PER = {
-				has_war = no
-			}
 		 } 
 		 prerequisite = { focus = GRE_Align_Turkey }
 		x = -2
@@ -5785,13 +5785,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-				PER = {
-					country_event = generic.20
-				}
-				every_state = {
-				limit = { is_core_of = PER }
-				add_core_of = ROOT
-			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = PER
+			    }
 			
 		}
 	}		
@@ -5820,9 +5817,6 @@ focus_tree = {
 			NOT = {
 				is_in_faction_with = IRQ
 			}
-			IRQ = {
-				has_war = no
-			}
 		 } 
 		 prerequisite = { focus = GRE_Align_Turkey }
 		x = 0
@@ -5834,13 +5828,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-				IRQ = {
-					country_event = generic.20
-				}
-				every_state = {
-				limit = { is_core_of = IRQ }
-				add_core_of = ROOT
-			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = IRQ
+			    }
 			
 		}
 	}		
@@ -5869,9 +5860,6 @@ focus_tree = {
 			NOT = {
 				is_in_faction_with = AFG
 			}
-			AFG = {
-				has_war = no
-			}
 
 		 } 
 		 prerequisite = { focus = GRE_Align_Turkey }
@@ -5884,12 +5872,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
-				AFG = {
-					country_event = generic.20
-				}
-				every_state = {
-				limit = { is_core_of = AFG }
-				add_core_of = ROOT
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = AFG
 			}
 			
 		}
@@ -5917,6 +5902,7 @@ focus_tree = {
 			353 = { is_owned_and_controlled_by = GRE }
 			291 = { is_owned_and_controlled_by = GRE }
 			266 = { is_owned_and_controlled_by = GRE }
+			267 = { is_owned_and_controlled_by = GRE }
 			date > 1939.01.01
 
 		 } 
@@ -5962,6 +5948,18 @@ focus_tree = {
 				target = ALB
 			}
 			set_province_name = { id = 2097 name = "Babylon"}
+			every_state = {
+				limit = { is_core_of = AFG }
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = { is_core_of = IRQ }
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = { is_core_of = PER }
+				add_core_of = ROOT
+			}
 		}
 	}		
 
@@ -6069,6 +6067,50 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = GRE_Money_achieved_from_the_east
+		}
+	}		
+
+	focus = {
+		id = GRE_War_Economy
+		icon = GFX_goal_generic_freedom
+		available = {
+			
+		 } 
+		 prerequisite = { focus = GRE_Fascist_State }
+		x = 0
+		y = 1
+		relative_position_id = GRE_Fascist_State
+		cost = 6
+		ai_will_do = {
+			base = 0
+		}
+
+		completion_reward = {
+			add_war_support = 0.05
+			if = {
+				limit = {
+					has_idea = civilian_economy
+				}
+				add_ideas = Macedonian_economy
+			}
+			else_if = {
+				limit = {
+					has_idea = low_economic_mobilisation
+				}
+				add_ideas = Macedonian_economy
+			}
+			else_if = {
+				limit = {
+					has_idea = partial_economic_mobilisation
+				}
+				add_ideas = Macedonian_economy
+			}
+			else_if = {
+				limit = {
+					has_idea = war_economy
+				}
+				add_ideas = Macedonian_economy
+			}
 		}
 	}		
 
