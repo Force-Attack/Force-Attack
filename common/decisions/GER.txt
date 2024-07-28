@@ -6791,7 +6791,7 @@ GER_labor_camps_category = {
 		icon = GFX_decision_generic_electricity
 		target_trigger = {
 			FROM = {
-				is_fully_controlled_by = ROOT
+				is_core_of = GER
 			}
 		}
 		target_root_trigger = { tag = GER }
@@ -6804,7 +6804,12 @@ GER_labor_camps_category = {
 		}
 
 		visible = {
-			has_completed_focus = GER_the_gestapo
+			NOT = {
+				power_balance_value = {
+					id = GER_national_purity
+					value = 1
+				}
+			}
 		}
 
 		cancel_trigger = {
@@ -6833,29 +6838,30 @@ GER_labor_camps_category = {
 				add_manpower = -100000
 			}
 			add_power_balance_value = {
-				id = POL_power_balance
+				id = GER_national_purity
 				value = 0.10
 			}
 		}
 	}
 	GER_resettle_lebensraum = {
 		icon = GFX_decision_generic_electricity
+		target_root_trigger = { has_completed_focus = GER_resettle_lebensraum }
 		target_trigger = {
-			87 = {
+			FROM = {
 				is_controlled_by = GER
+				NOT = {
+					is_core_of = GER
+				}
 			}
 		}
-		target_root_trigger = { tag = GER }
 		state_target = yes
 		on_map_mode = map_only
 		fire_only_once = yes
 		available = {
 			NOT = { has_country_flag = GER_hunt_in_progress }
-			has_completed_focus = GER_resettle_lebensraum
 		}
 
 		visible = {
-			has_completed_focus = GER_resettle_lebensraum
 		}
 
 		cancel_trigger = {
@@ -6880,12 +6886,14 @@ GER_labor_camps_category = {
 
 		remove_effect = {
 			clr_country_flag = GER_hunt_in_progress
-			FROM = {
-				add_manpower = -100000
+			#remove percentage of state population
+			GER = {
+				add_state_core = from
 			}
-			add_power_balance_value = {
-				id = POL_power_balance
-				value = 0.10
+			from = {
+				add_manpower = -1000000
+				add_manpower = 200000
+				add_extra_state_shared_building_slots = 2
 			}
 		}
 	}
