@@ -2547,9 +2547,19 @@ focus_tree = {
 		prerequisite = {
 			focus = HUN_honor_our_past
 		}
+		bypass = {
+			NOT = { has_war_with = AUS }
+			is_subject = no
+			AUS = {
+				OR = {
+					exists = yes
+					is_subject = no
+				}
+			}
+		}
 		relative_position_id = HUN_solidify_control
 		completion_reward = {
-		
+			AUS = { country_event = { id = DOD_hungary.1 } }
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
@@ -2569,9 +2579,18 @@ focus_tree = {
 		prerequisite = {
 			focus = HUN_solidify_control
 		}
+		bypass = {
+			CZE = {
+				OR = {
+					exists = no
+					is_subject = yes
+					has_war_with = ROOT
+				}
+			}
+		}
 		relative_position_id = HUN_honor_our_past
 		completion_reward = {
-		
+			CZE = { country_event = { id = DOD_hungary.10 } }
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
@@ -2593,7 +2612,39 @@ focus_tree = {
 		}
 		relative_position_id = HUN_oust_the_past_goverment
 		completion_reward = {
-		
+			76 = {add_claim_by = ROOT}
+			83 = {add_claim_by = ROOT}
+			84 = {add_claim_by = ROOT}
+			82 = {add_claim_by = ROOT}
+			if = {
+				limit = {
+					ROM = { 
+						exists = yes 
+						owns_state = 76
+					}
+				}
+				ROM = { country_event = DOD_hungary.50 }
+			}
+			if = {
+				limit = {
+					any_other_country = {
+						owns_state = 76
+						NOT = { original_tag = ROM }
+					}
+				}
+				76 = {
+					OWNER = {
+						ROOT = {
+							create_wargoal = {
+								target = PREV
+								expire = 0
+								type = take_claimed_state
+								generator = { 76 83 84 82 }
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	
