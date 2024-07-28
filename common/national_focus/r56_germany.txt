@@ -4258,8 +4258,11 @@ focus_tree = {
 		y = 1
 		cost = 10
 		completion_reward = {
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = kurt_student
+			if = {
+				limit = { NOT = { has_completed_focus = GER_himmler_seizes_power } }
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = kurt_student
+			}
 
 			add_doctrine_cost_reduction = {
 				name = GER_schwerepunkt_tactics
@@ -4483,8 +4486,11 @@ focus_tree = {
 			always = no
 		}
 		completion_reward = {
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = erwin_rommel
+			if = {
+				limit = { NOT = { has_completed_focus = GER_himmler_seizes_power } }
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = kurt_student
+			}
 			add_doctrine_cost_reduction = {
 				name = GER_schwerepunkt_tactics
 				cost_reduction = 0.5
@@ -4685,8 +4691,11 @@ focus_tree = {
 			always = no
 		}
 		completion_reward = {
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = maximilian_von_weichs
+			if = {
+				limit = { NOT = { has_completed_focus = GER_himmler_seizes_power } }
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = kurt_student
+			}
 			hidden_effect = {
 				add_trait = {		
 					character = GER_maximilian_von_weichs
@@ -13996,10 +14005,6 @@ focus = {
 
 		ai_will_do = {
 			factor = 5
-			modifier = {
-				factor = 10
-				has_manpower < 30000
-			}
 		}
 		
 		prerequisite = {
@@ -14007,7 +14012,10 @@ focus = {
 		}
 		relative_position_id = GER_political_turmoil
 		available = {
-			has_country_leader = GER_heinrich_himmler
+			has_country_leader = {
+				character = GER_heinrich_himmler
+				ruling_only = yes
+			}
 		}
 		
 		mutually_exclusive = {
@@ -14023,6 +14031,15 @@ focus = {
 				ideology = fascism
 				long_name = "Schutzstaffel"
 				name = "SS"
+			}
+			hidden_effect = {
+				remove_advisor_role = {
+					character = GER_heinrich_himmler
+					slot = political_advisor
+				}
+				set_cosmetic_tag = GER_germania
+				set_province_name = { id = 6521 name = "Germania" }
+				set_global_flag = form_greater_german_reich_flag
 			}
 		}
 	}
@@ -14099,7 +14116,7 @@ focus = {
 			}
 		}
 		completion_reward = {
-			unlock_decision_category_tooltip = GER_himmler_propaganda_category
+			add_country_leader_trait = ss_reichsfuhrer #Reichsführer-SS
 		}
 
 	}
@@ -14133,7 +14150,7 @@ focus = {
 				}
 				upgrade_intelligence_agency = upgrade_form_department            
 			}
-			#add_ideas = #skibbidy absorbed
+			add_ideas = GER_intercepted_civilian_intelligience
 		}
 
 	}
@@ -14640,16 +14657,16 @@ focus = {
 		}
 
 		completion_reward = {	
-
+			create_wargoal = {
+				target = POL
+				type = annex_everything
+			}
 		}
 	}
 	focus = {
 		id = GER_russian_lebensraum
 		icon = GFX_goal_generic_comm_purge_shine
 		cost = 5
-		available = {
-
-		}
 
 		relative_position_id = GER_polish_lebensraum
 
@@ -14668,8 +14685,31 @@ focus = {
 			focus = GER_polish_lebensraum
 		}
 
-		completion_reward = {	
-
+		available = {
+			r56_script_i_am_sane = yes
+			is_neighbor_of = SOV
+			SOV = {
+				exists = yes
+				NOT = {
+					is_subject_of = ROOT
+					is_in_faction_with = ROOT
+				}
+			}
+		}
+		bypass = {
+			SOV = {
+				r56_script_standard_bypass = yes
+			}
+		}
+		will_lead_to_war_with = SOV
+		completion_reward = {
+			declare_war_on = {
+				target = SOV
+			}
+			add_timed_idea = {
+				idea = GER_barbarossa
+				days = 120
+			} 
 		}
 	}
 	focus = {
@@ -14806,7 +14846,34 @@ focus = {
 
 		relative_position_id = GER_himmler_seizes_power
 		completion_reward = {
-			
+			remove_advisor_role = { 
+				character = GER_hermann_goring
+				slot = air_chief
+			}
+			remove_advisor_role = { 
+				character = GER_albert_speer
+				slot = political_advisor
+			}
+			remove_advisor_role = { 
+				character = GER_joseph_goebbels
+				slot = political_advisor
+			}
+			remove_advisor_role = { 
+				character = GER_martin_bormann
+				slot = political_advisor
+			}
+			remove_advisor_role = { 
+				character = GER_hjalmar_schacht
+				slot = political_advisor
+			}
+			remove_advisor_role = { 
+				character = GER_walther_funk
+				slot = political_advisor
+			}
+			remove_advisor_role = { 
+				character = GER_rudolf_hess
+				slot = political_advisor
+			}
 		}
 
 	}
@@ -14823,7 +14890,66 @@ focus = {
 
 		relative_position_id = GER_himmler_seizes_power
 		completion_reward = {
-			#kill everyone EVERYONE (thats wehrmacht)
+			remove_advisor_role = {
+				character = GER_gerd_von_rundstedt
+				slot = army_chief
+			}
+			remove_advisor_role = {
+				character = GER_wilhelm_keitel
+				slot = army_chief
+			}
+			remove_advisor_role = {
+				character = GER_franz_halder
+				slot = army_chief
+			}
+			remove_advisor_role = {
+				character = GER_ludwig_beck
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_gerd_von_rundstedt
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_viktor_schutze
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_erwin_rommel
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_maximilian_von_weichs
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_kurt_student
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_wilhelm_fahrmbacher
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_erich_brandenberger
+				slot = high_command
+			}
+			remove_advisor_role = {
+				character = GER_werner_von_fritsch
+				slot = high_command
+			}
+			GER = {
+				every_army_leader = {
+					if = {
+						limit = {NOT = { 
+							is_character = GER_paul_hausser
+							is_character = GER_sepp_dietrich
+							is_character = GER_felix_steiner
+						}}
+						retire = yes
+					}
+				}
+			}
 		}
 
 	}
@@ -14853,7 +14979,20 @@ focus = {
 		}
 
 		completion_reward = {	
-
+			add_ideas = talented_new_officers
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = felix_steiner
+			show_ideas_tooltip = walther_darre
+			show_ideas_tooltip = owswald_pohl
+			show_ideas_tooltip = reinhard_heydrich
+			show_ideas_tooltip = sepp_dietrich
+			show_ideas_tooltip = paul_hausser
+			hidden_effect = {
+				remove_trait = {
+					character = GER_felix_steiner
+					trait = unpopular
+				}
+			}
 		}
 	}
 	focus = {
@@ -15010,7 +15149,7 @@ focus = {
 			focus = GER_encourage_counterurbanization
 		}
 		completion_reward = {
-
+			unlock_decision_tooltip = GER_resettle_lebensraum
 		}
 	}
 	focus = {
@@ -15957,7 +16096,7 @@ focus = {
 		y = 1
 		relative_position_id = GER_utilize_new_contacts
 		completion_reward = {
-			add_ideas = GER_intercepted_civilian_intelligience2
+			add_ideas = GER_intercepted_civilian_intelligience
 		}
 
 	}
