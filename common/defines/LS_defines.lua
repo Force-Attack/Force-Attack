@@ -428,12 +428,6 @@ NDefines.NAI.GENERATE_WARGOAL_ANTAGONIZE_SCALE = 0.25 -- (Original value: 0.35) 
 -- ECONOMY
 --------------------------------------------------------------------------------------------------------------
 
-NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {				-- buildings in order of pirority when considering building targets strategies. First has the greatest priority omitted has the lowest. NOTE: not all buildings are supported by building targets strategies.
-'infrastructure',
-'industrial_complex',
-'arms_factory',
-}
-
 --------------------------------------------------------------------------------------------------------------
 -- FRONT CONTROL/ARMY
 --------------------------------------------------------------------------------------------------------------	
