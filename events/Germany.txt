@@ -15290,6 +15290,52 @@ country_event = { #
 	}
 }
 
+country_event = {
+	id = germany.30
+	title = germany.30.t
+	desc = germany.30.d
+	picture = GFX_report_event_hitler_parade
+
+	is_triggered_only = yes
+
+	option = { # Accept
+		name = germany.30.a
+		ai_chance = {
+			base = 100
+			modifier = {
+				add = -25
+				GER = { has_army_size = { size < 40 } }
+			}
+		}
+		if = {
+			limit = {FROM = {tag = POL}}
+			GER = {country_event = { hours = 2 id = germany.31 }}
+		} else_if = {
+			limit = {FROM = {tag = CZE}}
+			GER = {country_event = { hours = 2 id = germany.32 }}
+		} else_if = {
+			limit = {FROM = {tag = AUS}}
+			GER = {country_event = { hours = 2 id = germany.33 }}
+		} else_if = {
+			limit = {FROM = {tag = BEL}}
+			GER = {country_event = { hours = 2 id = germany.34 }}
+		} else_if = {
+			limit = {FROM = {tag = BEL}}
+			GER = {country_event = { hours = 2 id = germany.36 }}
+		} else_if = {
+			limit = {FROM = {tag = LIT}}
+			GER = {country_event = { hours = 2 id = germany.37 }}
+		}
+	}
+	option = { # Decline
+		name = germany.30.b
+		ai_chance = {base = 0 }
+		GER = {
+			country_event = { hours = 2 id = germany.39 }
+		}
+	}
+}
+
 # Poland accepts claims
 country_event = {
 	id = germany.31
@@ -15378,24 +15424,6 @@ country_event = {
 	}
 }
 
-# Liechtenstein accepts claims
-country_event = {
-	id = germany.35
-	title = germany.35.t
-	desc = germany.35.d
-	picture = GFX_report_event_german_troops
-
-	is_triggered_only = yes
-
-	option = {
-		name = germany.35.a
-		GER = {
-			transfer_state = 997
-			add_state_core = 997
-		}
-	}
-}
-
 # Denmark accepts claims
 country_event = {
 	id = germany.36
@@ -15474,35 +15502,35 @@ country_event = {
 		18 = {
 			add_building_construction = {
 				type = bunker
-					province = 5291
+				province = 5291
 				level = 2
 			}
 		}
-			18 = {
-				add_building_construction = {
-					type = bunker
-						province = 11516
-					level = 2
-				}
+		18 = {
+			add_building_construction = {
+				type = bunker
+				province = 11516
+				level = 2
 			}
-			18 = {
-				add_building_construction = {
-					type = bunker
-						province = 521
-					level = 2
-				}
+		}
+		18 = {
+			add_building_construction = {
+				type = bunker
+				province = 521
+				level = 2
 			}
-			18 = {
-				add_building_construction = {
-					type = bunker
-						province = 698
-					level = 2
-				}
+		}
+		18 = {
+			add_building_construction = {
+				type = bunker
+				province = 698
+				level = 2
 			}
-		} 
-	}
+		}
+	} 
+}
 
-# France denies claims
+# Someone Declines
 country_event = {
 	id = germany.39
 	title = germany.39.t
@@ -15515,9 +15543,8 @@ country_event = {
 		name = germany.39.b
 		GER = {
 			create_wargoal = {
-				type = take_state
-				target = FRA
-				generator = {28}
+				type = annex_everything
+				target = root
 			}
 		}
 	}
