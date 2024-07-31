@@ -1,0 +1,143 @@
+MON_JAP_alliance = {
+	enable = {
+		tag = MON
+		country_exists = JAP
+	}
+	abort = {
+		NOT = {
+			country_exists = JAP
+		}
+	}
+	ai_strategy = {
+		type = befriend
+		id = "JAP"			
+		value = 200
+	}
+	ai_strategy = {
+		type = alliance
+		id = "JAP"			
+		value = 200
+	}	
+}
+JAP_MON_alliance = {
+	enable = {
+		tag = JAP
+		country_exists = MON
+	}
+	abort = {
+		NOT = {
+			country_exists = MON
+		}
+	}
+	ai_strategy = {
+		type = befriend
+		id = "MON"			
+		value = 200
+	}
+	ai_strategy = {
+		type = alliance
+		id = "MON"		
+		value = 200
+	}	
+}
+
+MON_prefer_JAP = {
+	enable = {
+		tag = MON
+		has_government = fascism
+		is_in_faction = no
+	}
+	abort = {
+		OR = {
+			JAP = { is_in_faction_with = GER }
+			is_in_faction = yes
+		}
+	}
+	ai_strategy = {
+		type = alliance
+		id = "GER"		
+		value = -200
+	}
+}
+MON_TIB_alliance = {
+	enable = {
+		tag = TIB
+		has_government = neutrality
+		is_in_faction_with = MON
+	}
+	abort = {
+		NOT = { has_government = neutrality }
+	}
+	ai_strategy = {
+		type = alliance
+		id = "MON"		
+		value = 200
+	}
+}
+buddhist_sangha_preference = {
+	enable = {
+		OR = {
+			tag = TIB
+			tag = BHU
+			tag = SIA
+			tag = TAN
+			tag = NEP
+			tag = VIE
+			tag = LAO
+		}
+		OR = {
+			has_government = neutrality
+			has_government = fascism
+		}
+		MON = {
+			has_completed_focus = MON_monasteries
+			is_faction_leader = yes
+			OR = {
+				has_government = neutrality
+				has_government = fascism
+			}
+		}
+	}
+	abort = {
+	}
+	ai_strategy = {
+		type = alliance
+		id = "MON"		
+		value = 200
+	}
+	ai_strategy = {
+		type = befriend
+		id = "MON"			
+		value = 200
+	}
+}
+no_comintern_again = { 
+	enable = {
+		tag = MON 
+		NOT = { is_in_faction_with = SOV }
+	}
+	abort = {
+		SOV = {
+			NOT = { has_government = communism }
+		}
+	}
+	ai_strategy = {
+		type = alliance
+		id = "SOV"		
+		value = -200
+	}
+}
+#Prevent SIK joining Comintern too early
+SIK_no_comintern = { 
+	enable = {
+		tag = SIK
+	}
+	abort = {
+		date > 1940.1.1
+	}
+	ai_strategy = {
+		type = alliance
+		id = "SOV"		
+		value = -200
+	}
+}

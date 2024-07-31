@@ -8997,75 +8997,6 @@ focus = {
 	}
 
 	focus = {
-		id = GER_mol_rib_pact
-		icon = GFX_goal_molotov_ribbentrop_pact
-		cost = 5.00
-		prerequisite = { focus = GER_anti_comitern_pact }
-		relative_position_id = GER_anti_comitern_pact
-		x = 0
-		y = 1
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 4
-				is_historical_focus_on = yes
-			}
-		}
-		cancel_if_invalid = no
-		bypass = {
-			has_completed_focus = GER_poland_friend
-		}
-		available = {
-			is_puppet = no
-			SOV = {
-				NOT = {
-					has_war_with = GER
-				}
-				exists = yes
-				is_subject = no
-			}
-			ROOT = {
-				OR = {
-					AND = {	#the trigger tooltip is a condition that is always true, so it cant be inside the OR directly
-						has_country_flag = {
-							flag = r56_GER_anti_comitern_pact
-							days > 210
-						}
-						custom_trigger_tooltip = {
-							tooltip = r56_GER_anti_comitern_pact_days_tt
-						}
-					}
-					NOT = {
-						has_completed_focus = GER_anti_comitern_pact
-					}
-				}
-			}
-		}
-		cancel = {
-			OR = {
-				has_war_with = SOV
-				NOT = {
-					country_exists = SOV
-				}
-			}
-		}
-		completion_reward = {
-			SOV = {
-				country_event = {
-					id = germany.11
-					days = 1
-				}
-				custom_effect_tooltip = GER_mol_rib_pact_tt
-				custom_effect_tooltip = needs_approval
-			}
-			swap_ideas = {
-				remove_idea = general_staff
-				add_idea = general_staff_3
-			}
-		}
-
-	}
-	focus = {
 		id = GER_appoint_speer
 		icon = GFX_goal_GER_summon_fritz_todt_shine
 		cost = 10
@@ -9149,156 +9080,12 @@ focus = {
 		completion_reward = {
 			declare_war_on = {
 				target = SOV
+				type = annex_everything
 			}
 			add_timed_idea = {
-				idea = GER_eastern_campaign
+				idea = GER_barbarossa
 				days = 60
 			} 
-			
-			SOV = { #declare war on civil war's so it doesnt become on big mess
-				if = {
-					limit = {
-						has_civil_war = yes
-					}
-					every_other_country = {
-						limit = {
-							original_tag = SOV
-						}
-						ROOT = {
-							create_wargoal = {
-								type = annex_everything
-								target = PREV
-								expire = 0
-							}
-						}
-					}
-				}
-			}
-			hidden_effect = {#Filling some of the supply gaps the ai will have at this point
-				if = {
-					limit = {
-						difficulty > 1
-						GER = {
-							is_ai = yes
-						}
-						NOT = {
-							has_dlc = "No Step Back"
-						}
-					}
-					add_fuel = 3000 #yes the ai needs all this shit
-					add_manpower = 25000
-					add_offsite_building = {
-						type = arms_factory level = 3
-					}
-					add_offsite_building = {
-						type = arms_factory level = 3
-					}
-					add_offsite_building = {
-						type = arms_factory level = 3
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 1000
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = light_tank_equipment_1
-						amount = 125
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = medium_tank_chassis
-						amount = 750
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = anti_air_equipment
-						amount = 500
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = anti_tank_equipment
-						amount = 500
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 500
-						producer = GER
-					}
-					add_equipment_to_stockpile = {#always biggest gap
-						type = support_equipment
-						amount = 1750 #not a typo
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = motorized_equipment
-						amount = 750
-						producer = GER
-					}
-				}
-
-				if = {
-					limit = {
-						difficulty > 1
-						GER = {
-							is_ai = yes
-						}
-						has_dlc = "No Step Back"
-					}
-					add_fuel = 3000 #yes the ai needs all this shit
-					add_manpower = 25000
-					add_offsite_building = {
-						type = arms_factory level = 3
-					}
-					add_offsite_building = {
-						type = arms_factory level = 3
-					}
-					add_offsite_building = {
-						type = arms_factory level = 3
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 4750
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = light_tank_chassis_1
-						amount = 275
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = medium_tank_chassis
-						amount = 250
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = anti_air_equipment
-						amount = 175
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = anti_tank_equipment
-						amount = 250
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 225
-						producer = GER
-					}
-					add_equipment_to_stockpile = {#always biggest gap
-						type = support_equipment
-						amount = 1500 #not a typo
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = motorized_equipment
-						amount = 750
-						producer = GER
-					}
-				}
-			}
 		}
 		search_filters = {
 			FOCUS_FILTER_ANNEXATION FOCUS_FILTER_MILITARY_EQUIPMENT
@@ -9698,6 +9485,7 @@ focus = {
 		}
 
 		completion_reward = {
+			GER_remove_mefo_bills = yes
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = ernst_thalmann
 			add_timed_idea = {
@@ -9842,6 +9630,7 @@ focus = {
 		}
 
 		completion_reward = {
+			GER_remove_mefo_bills = yes
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = kurt_schumacher
 			if = {
@@ -10869,7 +10658,7 @@ focus = {
 		icon = GFX_goal_generic_commie_investments
 		cost = 10.00
 		prerequisite = {
-			focus = GER_world_revolution
+			focus = GER_rehabilitate_military
 		}
 		relative_position_id = GER_world_revolution
 		x = 2
@@ -10878,7 +10667,7 @@ focus = {
 			factor = 10
 		}
 		completion_reward = {
-			add_ideas = GER_collectivize_industry_idea
+			add_ideas = GER_new_mefos
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = GER_Walter_Ulbricht
 		}
@@ -11319,42 +11108,18 @@ focus = {
 			factor = 3
 		}
 		completion_reward = {
-			add_named_threat = { threat = 1 name = GER_spread_the_revolution }
-			#add_country_leader_trait = r56_trait_opposed_to_democracy
-			if = {
-				limit = { 
-					has_dlc = "La Resistance"
-				}
-				add_country_leader_trait = triumphant_revolutionary_LaR
-			}			
-			else = {
-				add_country_leader_trait = triumphant_revolutionary
-			}
+			add_ideas = GER_spread_the_revo
 		}
 	}
 
 	focus = {
-		id = GER_increase_influence_over_balkans_r56
-		text = GER_increase_influence_over_balkans
-		icon = GFX_focus_BUL_free_balkan_states
+		id = GER_buy_the_bank
+		text = GER_buy_the_bank
+		icon = GFX_goal_generic_bankruptcy
 		prerequisite = { focus = GER_spread_the_revolution_r56 }
 		available = {
 			is_subject = no
 			has_government = communism
-		}
-		bypass = {
-			all_country = {
-				OR = {
-					original_tag = YUG
-					original_tag = ROM
-					original_tag = BUL
-					original_tag = GRE
-				}
-				OR = {
-					exists = no
-					is_in_faction_with = ROOT
-				}
-			}
 		}
 		x = -1
 		y = 1
@@ -11365,88 +11130,18 @@ focus = {
 		}
 		search_filters = { FOCUS_FILTER_ALLIANCE }
 		completion_reward = {
-			add_named_threat = { threat = 1 name = GER_increase_influence_over_balkans }
-			every_other_country = {
-				limit = {
-					has_government = communism
-					is_in_faction = no
-					OR = {
-						#original_tag = CZE	#those are not Balkans
-						#original_tag = SLO
-						#original_tag = AUS
-						#original_tag = HUN
-						original_tag = YUG
-						original_tag = ROM
-						original_tag = BUL
-						original_tag = GRE
-					}
-				}
-                country_event = { hours = 8 id = generic.5 }
-			}
-			every_other_country = {
-				limit = {
-					exists = yes
-					is_in_faction_with = ROOT
-					OR = {
-						#original_tag = CZE #those are not Balkans
-						#original_tag = SLO
-						#original_tag = AUS
-						#original_tag = HUN
-						original_tag = YUG
-						original_tag = ROM
-						original_tag = BUL
-						original_tag = GRE
-					}
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = medium_increase
-				}
-			}
-			every_other_country = {
-				limit = {
-					exists = yes
-					OR = {
-						#original_tag = CZE #those are not Balkans
-						#original_tag = SLO
-						#original_tag = AUS
-						#original_tag = HUN
-						original_tag = YUG
-						original_tag = ROM
-						original_tag = BUL
-						original_tag = GRE
-					}
-				}
-				add_timed_idea = {
-					idea = GER_communist_german_influence
-					days = 720
-				}
-			}
+			add_ideas = GER_buy_the_banks
 		}
 	}
 
 	focus = {
-		id = GER_increase_influence_over_eastern_europe_r56
-		text = GER_increase_influence_over_eastern_europe
-		icon = GFX_focus_SOV_baltic_security
+		id = GER_expand_industrial_complexes
+		text = GER_expand_industrial_complexes
+		icon = GFX_goal_generic_construct_civ_factory
 		prerequisite = { focus = GER_spread_the_revolution_r56 }
 		available = {
 			is_subject = no
 			has_government = communism
-		}
-		bypass = {
-			all_country = {
-				OR = {
-					original_tag = POL
-					original_tag = LIT
-					original_tag = LAT
-					original_tag = EST
-				}
-				OR = {
-					exists = no
-					is_in_faction_with = ROOT
-				}
-			}
 		}
 		x = 1
 		y = 1
@@ -11457,79 +11152,30 @@ focus = {
 		}
 		search_filters = { FOCUS_FILTER_ALLIANCE }
 		completion_reward = {
-			add_named_threat = { threat = 1 name = GER_increase_influence_over_eastern_europe }
-			every_other_country = {
-				limit = {
-					has_government = communism
-					is_in_faction = no
-					OR = {
-						original_tag = POL
-						original_tag = LIT
-						original_tag = LAT
-						original_tag = EST
-					}
-				}
-                country_event = { hours = 8 id = generic.5 }
-			}
-			every_other_country = {
-				limit = {
-					exists = yes
-					is_in_faction_with = ROOT
-					OR = {
-						original_tag = POL
-						original_tag = LIT
-						original_tag = LAT
-						original_tag = EST
-					}
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = medium_increase
+			60 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
 				}
 			}
-			every_other_country = {
-				limit = {
-					exists = yes
-					OR = {
-						original_tag = POL
-						original_tag = LIT
-						original_tag = LAT
-						original_tag = EST
-					}
-				}
-				add_timed_idea = {
-					idea = GER_communist_german_influence
-					days = 720
+			54 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
 				}
 			}
 		}
 	}
 	focus = {
-		id = GER_increase_influence_over_benelux_r56
-		text = GER_increase_influence_over_benelux
-		icon = GFX_postive_heroism
-		prerequisite = { focus = GER_increase_influence_over_balkans_r56 focus = GER_increase_influence_over_eastern_europe_r56 }
+		id = GER_libarate_workers_in_benulux
+		text = GER_libarate_workers_in_benulux
+		icon = GFX_goal_benelux
+		prerequisite = { focus = GER_buy_the_bank focus = GER_expand_industrial_complexes }
 		available = {
 			is_subject = no
 			has_government = communism
-		}
-		mutually_exclusive = {
-			focus = GER_deal_with_the_devil_r56
-		}
-		bypass = {
-			all_country = {
-				OR = {
-					original_tag = HOL
-					original_tag = BEL
-					original_tag = LUX
-					original_tag = VLA
-					original_tag = WLL
-				}
-				OR = {
-					exists = no
-					is_in_faction_with = ROOT
-				}
-			}
 		}
 		x = 0
 		y = 2
@@ -11538,109 +11184,16 @@ focus = {
 		ai_will_do = {
 			factor = 3
 		}
-		search_filters = { FOCUS_FILTER_ALLIANCE }
-		completion_reward = {
-			every_other_country = {
-				limit = {
-					has_government = communism
-					is_in_faction = no
-					OR = {
-						original_tag = HOL
-						original_tag = BEL
-						original_tag = LUX
-						original_tag = VLA
-						original_tag = WLL
-					}
-				}
-                country_event = { hours = 8 id = generic.5 }
-			}
-			every_other_country = {
-				limit = {
-					exists = yes
-					is_in_faction_with = ROOT
-					OR = {
-						original_tag = HOL
-						original_tag = BEL
-						original_tag = LUX
-						original_tag = VLA
-						original_tag = WLL
-					}
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = medium_increase
-				}
-			}
-			every_other_country = {
-				limit = {
-					exists = yes
-					OR = {
-						original_tag = HOL
-						original_tag = BEL
-						original_tag = LUX
-						original_tag = VLA
-						original_tag = WLL
-					}
-				}
-				add_timed_idea = {
-					idea = GER_communist_german_influence
-					days = 720
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = GER_old_nemensis_r56
-		text = GER_old_nemensis
-		icon = GFX_focus_attack_france
-		prerequisite = { focus = GER_increase_influence_over_benelux_r56 }
-		available = {
-			is_subject = no
-			NOT = {
-				is_in_faction_with = FRA
-			}
-		}
-		x = -1
-		y = 3
-		relative_position_id = GER_spread_the_revolution_r56
-		cost = 10
-		ai_will_do = {
-			factor = 3
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-		completion_reward = {
-			add_state_claim = 28
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = FRA
-			}
-		}
-	}
-
-	focus = {
-		id = GER_end_british_imperial_hegemony_r56
-		text = GER_end_british_imperial_hegemony
-		icon = GFX_focus_attack_britain
-		prerequisite = { focus = GER_increase_influence_over_benelux_r56 }
-		available = {
-			is_subject = no
-			NOT = {
-				is_in_faction_with = ENG
-			}
-		}
-		x = 1
-		y = 3
-		relative_position_id = GER_spread_the_revolution_r56
-		cost = 10
-		ai_will_do = {
-			factor = 3
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
 			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = ENG
+				type = annex_everything
+				target = LUX
+				expire = 0
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = BEL
+				expire = 0
 			}
 		}
 	}
@@ -11648,11 +11201,8 @@ focus = {
 	focus = {
 		id = GER_focus_on_fascist_threat_r56
 		text = GER_focus_on_fascist_threat
-		icon = GFX_goal_fascism_banned
+		icon = GFX_focus_generic_strike_at_democracy2
 		prerequisite = { focus = GER_establish_NVA }
-		# mutually_exclusive = {
-		# 	focus = GER_spread_the_revolution_r56
-		# }
 		available = {
 			is_puppet = no
 		}
@@ -11664,9 +11214,19 @@ focus = {
 			factor = 3
 		}
 		completion_reward = {
-			#add_named_threat = { threat = -2 name = GER_focus_on_fascist_threat }
-			add_country_leader_trait = r56_trait_opposed_to_fascism
-			
+			add_country_leader_trait = r56_trait_opposed_to_democracy
+			if = {
+				limit = { ENG = {has_government = democratic} }
+				add_ideas = GER_pig
+			}
+			if = {
+				limit = { ITA = {has_government = democratic} }
+				add_ideas = GER_pig2
+			}
+			if = {
+				limit = { FRA = {has_government = democratic} }
+				add_ideas = GER_pig3
+			}
 		}
 	}
 
@@ -11710,7 +11270,7 @@ focus = {
 	focus = {
 		id = GER_decrease_fascist_influence_r56
 		text = GER_decrease_fascist_influence
-		icon = GFX_focus_generic_support_the_left_right
+		icon = GFX_goal_generic_banking_legislation
 		prerequisite = { focus = GER_focus_on_fascist_threat_r56 }
 		available = {
 			is_puppet = no
@@ -11723,32 +11283,19 @@ focus = {
 			factor = 3
 		}
 		completion_reward = {
-			every_other_country = {
-				limit = {
-					capital_scope = {
-						is_on_continent = europe
-					}
-					NOT = {
-						has_government = fascism
-					}
-				}
-				add_timed_idea = {
-                    idea = GER_decrease_fascist_influence
-                    days = 730
-                }
+			swap_ideas = {
+				remove_idea = GER_new_mefos
+				add_idea = GER_new_mefos1
 			}
 		}
 	}
 
 	focus = {
-		id = GER_deal_with_the_devil_r56
-		text = GER_deal_with_the_devil
-		icon = GFX_focus_chi_reach_out_to_france
+		id = GER_libarate_danzig
+		text = GER_libarate_danzig
+		icon = GFX_focus_POL_clamp_down_on_danzig
 		prerequisite = { focus = GER_pressure_austria_r56 }
 		prerequisite = { focus = GER_decrease_fascist_influence_r56 }
-		mutually_exclusive = {
-			focus = GER_increase_influence_over_benelux_r56
-		}
 		available = {
 			is_puppet = no
 			NOT = {
@@ -11763,44 +11310,28 @@ focus = {
 			factor = 3
 		}
 		completion_reward = {
-			FRA = {
-				country_event = {
-					id = r56.ger.6
-					hours = 12
-				}
+			create_wargoal = {
+				target = POL
+				type = annex_everything
 			}
 		}
 	}
 
 	focus = {
-		id = GER_the_source_of_fascism_r56
-		text = GER_the_source_of_fascism
-		icon = GFX_focus_attack_italy
-		prerequisite = { focus = GER_deal_with_the_devil_r56 }
-		available = {
-			is_puppet = no
-			ITA = {
-				OR = {
-					has_government = fascism
-					has_government = neutrality
-				}
-			}
-			NOT = {
-				is_in_faction_with = ITA
-			}
-		}
-		x = 0
-		y = 3
-		relative_position_id = GER_focus_on_fascist_threat_r56
+		id = GER_total_mob
+		text = GER_total_mob
+		icon = GFX_goal_polish_wartime_industry
+		prerequisite = { focus = GER_libarate_danzig }
+		prerequisite = { focus = GER_libarate_workers_in_benulux}
+		x =-2
+		y = 1
+		relative_position_id = GER_libarate_danzig
 		cost = 10
 		ai_will_do = {
 			factor = 3
 		}
 		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = ITA
-			}
+			add_ideas = war_economy
 		}
 	}
 	focus = {
@@ -12745,7 +12276,6 @@ focus = {
 			is_subject = no
 			has_war = no
 			has_idea = GER_treaty_of_versailles_2
-			has_completed_focus = GER_western_science_funding
 		}
 		x = 0
 		y = 1
