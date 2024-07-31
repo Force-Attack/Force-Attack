@@ -4503,26 +4503,40 @@ country_event = { #Germany Demands Czech SS State
 
 	is_triggered_only = yes
 
-	option = { # Accept
+	option = { # Accept Low Autonomy
 		name = czke.448.a
 		ai_chance = {
 			base = 100
-			modifier = {
-				add = -25
-				GER = { has_army_size = { size < 40 } }
-			}
 		}
 		GER = {
-			country_event = { hours = 2 id = germany.32 }
+			puppet = {
+				target = CZE
+				end_wars = yes
+			}
+			set_autonomy = {
+				target = CZE
+				autonomy_state = autonomy_reichskommissariat
+			}
+		}
+	}
+	option = { # Accept High Autonomy
+		name = czke.448.b
+		ai_chance = {
+			base = 0
+		}
+		GER = {
+			puppet = {
+				target = CZE
+				end_wars = yes
+			}
 		}
 	}
 	option = { # Decline
-		name = czke.448.a
+		name = czke.448.c
 		GER = {
-			country_event = { hours = 2 id = germany.32 }
 			create_wargoal = {
-				target = cze
-				type = puppet
+				target = CZE
+				type = annex_everything
 			}
 		}
 	}
