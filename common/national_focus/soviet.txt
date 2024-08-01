@@ -329,7 +329,7 @@ focus_tree = {
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_1_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_1 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_1 }
 			}
 		}
 		
@@ -468,7 +468,7 @@ focus_tree = {
 			SOV_third_five_year_plan_available = yes
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_2_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_2 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_2 }
 			}
 			NOT = { has_completed_focus = SOV_curtailment_of_the_collective_farms }
 		}
@@ -532,7 +532,7 @@ focus_tree = {
 			SOV_third_five_year_plan_available = yes
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_3_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_3 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_3 }
 			}
 			NOT = { has_completed_focus = SOV_curtailment_of_the_collective_farms }
 		}
@@ -594,7 +594,7 @@ focus_tree = {
 			SOV_third_five_year_plan_available = yes
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_4_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_4 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_4 }
 			}
 			NOT = { has_completed_focus = SOV_curtailment_of_the_collective_farms }
 		}
@@ -730,7 +730,7 @@ focus_tree = {
 			SOV_third_five_year_plan_available = yes
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_3_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_3 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_3 }
 			}
 			NOT = { has_completed_focus = SOV_curtailment_of_the_collective_farms }
 		}
@@ -783,7 +783,7 @@ focus_tree = {
 			SOV_third_five_year_plan_available = yes
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_4_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_4 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_4 }
 			}
 			NOT = { has_completed_focus = SOV_curtailment_of_the_collective_farms }
 		}
@@ -1109,7 +1109,7 @@ focus_tree = {
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = SOV_fyp_controlled_factories_tier_5_tt
-				NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_5 }
+				NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_5 }
 			}
 			NOT = { has_completed_focus = SOV_curtailment_of_the_collective_farms }
 		}
@@ -4674,7 +4674,7 @@ focus = {
 	available = {
 		custom_trigger_tooltip = {
 			tooltip = SOV_fyp_controlled_factories_tier_4_tt
-			NOT = { num_of_owned_factories < SOV_fyp_factory_requirement_tier_4 }
+			NOT = { num_of_controlled_factories < SOV_fyp_factory_requirement_tier_4 }
 		}
 		#TODO_Manu: This could require X num of factories to have been relocated
 	}
@@ -13672,7 +13672,7 @@ focus = {
 		x = 1
 		y = 1
 		relative_position_id = SOV_baltic_security
-		cost = 10
+		cost = 8
 
 		ai_will_do = {
 			factor = 1
@@ -13706,48 +13706,28 @@ focus = {
 		search_filters = {FOCUS_FILTER_ANNEXATION}
 
 		completion_reward = {
-			# Estonia
-			custom_effect_tooltip = SOV_estonian_claimed_states_tt
-			hidden_effect = {
-				EST = {
-					every_owned_state = {
-						limit = {
-							is_core_of = PREV
-						}
-						ROOT = { add_state_claim = PREV }
-					}
+			# Estonia + Latvia + Lithuania except Memel
+			EST = {
+				country_event = {
+					id = baltic.1
+					days = 5
+					random_days = 1	#a bit randomness
 				}
 			}
-			# Latvia
-			custom_effect_tooltip = SOV_latvian_claimed_states_tt
-			hidden_effect = {
-				LAT = {
-					every_owned_state = {
-						limit = {
-							is_core_of = PREV
-						}
-						ROOT = { add_state_claim = PREV }
-					}
+			LAT = {
+				country_event = {
+					id = baltic.2
+					days = 5
+					random_days = 1	#a bit randomness
 				}
 			}
-			# Lithuania
-			custom_effect_tooltip = SOV_lithuanian_claimed_states_tt
-			hidden_effect = {
-				LIT = {
-					every_owned_state = {
-						limit = {
-							is_core_of = PREV
-						}
-						ROOT = { add_state_claim = PREV }
-					}
+			LIT = {
+				country_event = {
+					id = baltic.3
+					days = 5
+					random_days = 1	#a bit randomness
 				}
-			}
-			#Activate targeted decisions
-			activate_targeted_decision = { target = EST decision = SOV_send_ultimatum_to_country_baltic }
-			activate_targeted_decision = { target = LAT decision = SOV_send_ultimatum_to_country_baltic }
-			activate_targeted_decision = { target = LIT decision = SOV_send_ultimatum_to_country_baltic }
-
-			add_named_threat = { threat = 1 name = SOV_claims_in_baltic }
+			}	
 		}
 	}
 
@@ -13759,7 +13739,7 @@ focus = {
 		x = -1
 		y = 2
 		relative_position_id = SOV_baltic_security
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 1
@@ -13884,7 +13864,7 @@ focus = {
 		x = 0
 		y = 1
 		relative_position_id = SOV_claims_in_baltic
-		cost = 10
+		cost = 5
 		
 		ai_will_do = {
 			factor = 10
