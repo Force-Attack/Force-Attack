@@ -31,6 +31,7 @@ NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 3.5
 NDefines.NProduction.MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0.01
 NDefines.NProduction.CAPITULATE_STOCKPILES_RATIO = 0
 ----------------------------------
+NDefines.NTechnology.BASE_RESEARCH_SLOTS = 3
 NDefines.NTechnology.MAX_SUBTECHS = 4						-- Max number of sub technologies a technology can have.
 NDefines.NTechnology.BASE_RESEARCH_POINTS_SAVED = 50.0 --#base game 30 changed to 50 and then why not 56?
 NDefines.NTechnology.BASE_YEAR_AHEAD_PENALTY_FACTOR = 3.0		-- Base year ahead penalty
@@ -427,11 +428,6 @@ NDefines.NAI.GENERATE_WARGOAL_ANTAGONIZE_SCALE = 0.25 -- (Original value: 0.35) 
 --------------------------------------------------------------------------------------------------------------
 -- ECONOMY
 --------------------------------------------------------------------------------------------------------------
-NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {				-- buildings in order of pirority when considering building targets strategies. First has the greatest priority omitted has the lowest. NOTE: not all buildings are supported by building targets strategies.
-'infrastructure',
-'industrial_complex',
-'arms_factory',
-}
 
 --------------------------------------------------------------------------------------------------------------
 -- FRONT CONTROL/ARMY

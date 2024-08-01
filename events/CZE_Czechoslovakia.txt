@@ -4495,28 +4495,49 @@ country_event = {
 	}
 }
 
-#LAST STAND
-#Germania demands polish land - LAST STAND
-# Poland asked about territories
-country_event = {
-	id = czke.447
-	title = czke.447.t
-	desc = czke.447.d
+country_event = { #Germany Demands Czech SS State
+	id = czke.448
+	title = czke.448.t
+	desc = czke.448.d
 	picture = GFX_report_event_hitler_parade
 
 	is_triggered_only = yes
 
-	option = { # Accept
-		name = czke.447.a
+	option = { # Accept Low Autonomy
+		name = czke.448.a
 		ai_chance = {
 			base = 100
-			modifier = {
-				add = -25
-				GER = { has_army_size = { size < 40 } }
-			}
 		}
 		GER = {
-			country_event = { hours = 2 id = germany.32 }
+			puppet = {
+				target = CZE
+				end_wars = yes
+			}
+			set_autonomy = {
+				target = CZE
+				autonomy_state = autonomy_reichskommissariat
+			}
+		}
+	}
+	option = { # Accept High Autonomy
+		name = czke.448.b
+		ai_chance = {
+			base = 0
+		}
+		GER = {
+			puppet = {
+				target = CZE
+				end_wars = yes
+			}
+		}
+	}
+	option = { # Decline
+		name = czke.448.c
+		GER = {
+			create_wargoal = {
+				target = CZE
+				type = annex_everything
+			}
 		}
 	}
 }

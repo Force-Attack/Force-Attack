@@ -308,7 +308,48 @@ GER_mefo_bills_category = {
 }
 
 operations = {
+	GER_barbarossa_mission = {
 
+		icon = generic_operation
+
+		allowed = {
+			always = no
+			#added through on_action
+		}
+
+		available = {
+			219 = { is_controlled_by_ROOT_or_ally = yes }
+			195 = { is_controlled_by_ROOT_or_ally = yes }
+			202 = { is_controlled_by_ROOT_or_ally = yes }
+			217 = { is_controlled_by_ROOT_or_ally = yes }
+		}
+
+		days_mission_timeout = 180
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			add_war_support = 0.1
+			custom_effect_tooltip = barbarossa_mission_tt
+		}
+
+		timeout_effect = {
+			add_stability = -0.05
+			add_war_support = -0.15
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
+
+operations = {
 	GER_barbarossa_mission = {
 
 		icon = generic_operation
@@ -6753,7 +6794,8 @@ GER_monarchist_balance_of_power_category = {
 
 		available = {}
 
-		cost = 50
+		fire_only_once = yes
+        cost = 50
 
 		custom_cost_trigger = {
 			has_political_power > 49
@@ -6807,6 +6849,231 @@ GER_monarchist_balance_of_power_category = {
 
 		ai_will_do = {
 			base = 1
+		}
+	}
+}
+
+GER_labor_camps_category = {
+	GER_open_the_labor_camps = {
+		priority = 119
+		icon = GFX_decision_generic_factory
+
+		allowed = {
+			original_tag = GER
+		}
+
+		visible = {
+			original_tag = GER
+		}
+
+		available = {
+			has_idea = GER_closed_labor_camps
+		}
+
+		cost = 100
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = GER_national_purity
+				value = 0.20
+			}
+			if = { limit = { GER = { has_idea = GER_closed_labor_camps}}
+				swap_ideas = {
+					remove_idea = GER_closed_labor_camps
+					add_idea = GER_labor_camps
+				}
+			} else = {
+				add_ideas = GER_labor_camps
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	GER_close_the_labor_camps = {
+		priority = 119
+		icon = GFX_decision_hol_war_on_pacifism
+
+		allowed = {
+			original_tag = GER
+		}
+
+		visible = {
+			original_tag = GER
+		}
+
+		available = {
+			has_idea = GER_labor_camps
+		}
+
+        cost = 100
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = GER_national_purity
+				value = -0.20
+			}
+			if = { limit = { GER = { has_idea = GER_labor_camps}}
+				swap_ideas = {
+					remove_idea = GER_labor_camps
+					add_idea = GER_closed_labor_camps
+				}
+			} else = {
+				add_ideas = GER_closed_labor_camps
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	GER_repeal_race_laws = {
+		priority = 119
+		icon = GFX_decision_eng_trade_unions_support
+
+		allowed = {
+			original_tag = GER
+		}
+
+		visible = {
+			original_tag = GER
+		}
+
+		available = {
+			has_idea = GER_closed_labor_camps
+		}
+
+		fire_only_once = yes
+
+        cost = 100
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = GER_national_purity
+				value = -0.40
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	GER_hunt_non_germans = {
+		icon = GFX_decision_generic_army_support
+		target_trigger = {
+			FROM = {
+				is_core_of = GER
+			}
+		}
+		target_root_trigger = { tag = GER }
+		state_target = yes
+		on_map_mode = map_only
+		fire_only_once = yes
+		available = {
+			NOT = { has_country_flag = GER_hunt_in_progress }
+			has_completed_focus = GER_the_gestapo
+		}
+
+		visible = {
+			NOT = {
+				power_balance_value = {
+					id = GER_national_purity
+					value = 1
+				}
+			}
+		}
+
+		cancel_trigger = {
+			NOT = { FROM = { is_fully_controlled_by = ROOT } }
+		}
+
+		cancel_effect = {
+			clr_country_flag = GER_hunt_in_progress
+		}
+
+		days_remove = 30
+
+		cost = 25
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			set_country_flag = GER_hunt_in_progress
+		}
+
+		remove_effect = {
+			clr_country_flag = GER_hunt_in_progress
+			FROM = {
+				add_manpower = -100000
+			}
+			add_power_balance_value = {
+				id = GER_national_purity
+				value = 0.10
+			}
+		}
+	}
+	GER_resettle_lebensraum = {
+		icon = decision_icon_take_state
+		target_root_trigger = { has_completed_focus = GER_resettle_lebensraum }
+		target_trigger = {
+			FROM = {
+				is_controlled_by = GER
+				OR = {
+					is_core_of = POL
+					is_core_of = SOV
+					is_core_of = LIT
+					is_core_of = LAT
+					is_core_of = EST
+				}
+				NOT = {
+					is_core_of = GER
+				}
+			}
+		}
+		state_target = yes
+		on_map_mode = map_only
+		fire_only_once = yes
+		available = {
+			NOT = { has_country_flag = GER_pop_in_progress }
+		}
+
+		visible = {
+		}
+
+		cancel_trigger = {
+			NOT = { FROM = { is_fully_controlled_by = ROOT } }
+		}
+
+		cancel_effect = {
+			clr_country_flag = GER_pop_in_progress
+		}
+
+		days_remove = 30
+
+		cost = 25
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			set_country_flag = GER_pop_in_progress
+		}
+
+		remove_effect = {
+			clr_country_flag = GER_pop_in_progress
+			#remove percentage of state population
+			GER = {
+				add_state_core = from
+			}
+			from = {
+				add_manpower = -1000000
+				add_manpower = 200000
+				add_extra_state_shared_building_slots = 2
+			}
 		}
 	}
 }
