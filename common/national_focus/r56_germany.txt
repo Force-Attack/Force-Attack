@@ -73,39 +73,6 @@ focus_tree = {
 			country_event = {
 				id = erwache.1
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						difficulty > 1
-						GER = {
-							is_ai = yes
-						}
-					}
-					add_offsite_building = {
-						type = industrial_complex level = 1
-					}
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 1000
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = artillery_equipment
-						amount = 25
-						producer = GER
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 75
-						producer = GER
-					}
-				}
-			}
-			
-			swap_ideas = {
-				remove_idea = GER_effects_of_the_depression
-				add_idea = GER_effects_of_the_depression_2
-			}
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY 
@@ -183,7 +150,7 @@ focus_tree = {
 		prerequisite = {
 			focus = GER_autobahn
 		}
-		x = -2
+		x = -3
 		y = 1
 		relative_position_id = GER_autobahn
 		ai_will_do = {
@@ -302,7 +269,7 @@ focus_tree = {
 		prerequisite = {
 			focus = GER_privatize_reichsbahn
 		}
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = GER_privatize_reichsbahn
 		ai_will_do = {
@@ -357,7 +324,7 @@ focus_tree = {
 		available = {
 			has_full_control_of_state = 60
 		}
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = GER_autobahn
 		ai_will_do = {
@@ -384,7 +351,7 @@ focus_tree = {
 		prerequisite = {
 			focus = GER_steelworks_issues
 		}
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = GER_steelworks_issues
 		ai_will_do = {
@@ -443,18 +410,17 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = steel_mill
-					level = 2
-					instant_build = yes
+			66 = {
+				add_resource = {
+					type = tungsten
+					amount = 50
 				}
 			}
-			modify_building_resources = {
-				building = steel_mill
-				resource = tungsten
-				amount = 2
+			67 = {
+				add_resource = {
+					type = tungsten
+					amount = 50
+				}
 			}
 		}
 		search_filters = {
@@ -550,10 +516,6 @@ focus_tree = {
 				remove_idea = autark_support_I_idea
 				add_idea = autark_support_II_idea
 			}
-			swap_ideas = {
-				remove_idea = GER_effects_of_the_depression_2
-				add_idea = GER_effects_of_the_depression_3
-			}
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH
@@ -582,64 +544,120 @@ focus_tree = {
 				add_idea = technocrat_support_II_idea
 				
 			}
-			swap_ideas = {
-				remove_idea = GER_effects_of_the_depression_2
-				add_idea = GER_effects_of_the_depression_3
-			}
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY
 		}
 	}
 	focus = {
-		id = GER_reform_uranprojekt
-		icon = GFX_focus_ARG_develop_the_electricity_sector
-		cost = 10
+		id = GER_support_technocrats_III
+		icon = GFX_goal_generic_nuclear_energy
+		cost = 5.00
 		prerequisite = {
-			focus = GER_volkswagen
-		}
-		prerequisite = {
-			focus = GER_support_autarks_II
 			focus = GER_support_technocrats_II
 		}
 		prerequisite = {
-			focus = GER_import_iberian_deposits
+			focus = GER_volkswagen
 		}
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = GER_support_technocrats_II
 		ai_will_do = {
 			factor = 10
 		}
 		completion_reward = {
-			add_research_slot = 1
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = siemens
 		}
 		search_filters = {
-			FOCUS_FILTER_RESEARCH
+			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY
 		}
 	}
 	focus = {
-		id = GER_wunderwaffe
-		icon = GFX_focus_wonderweapons
-		cost = 10.00
+		id = GER_support_technocrats_IV
+		icon = GFX_goal_ISR_religious_education
+		cost = 5.00
 		prerequisite = {
-			focus = GER_reform_uranprojekt
+			focus = GER_support_technocrats_III
 		}
 		x = 0
 		y = 1
-		relative_position_id = GER_reform_uranprojekt
+		relative_position_id = GER_support_technocrats_III
 		ai_will_do = {
-			factor = 8
-			modifier = {
-				factor = 0
-				date < 1940.01.01
-			}
+			factor = 10
 		}
-
-		available = {
-		}
-		available_if_capitulated = yes
 		completion_reward = {
+			add_ideas = GER_invest_in_engineering
+			add_nuclear_bombs = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY
+		}
+	}
+	focus = {
+		id = GER_support_autarks_III
+		icon = GFX_goal_german_sythetics_shine
+		cost = 5.00
+		prerequisite = {
+			focus = GER_support_autarks_II
+		}
+		prerequisite = {
+			focus = GER_import_iberian_deposits
+		}
+		x = 1
+		y = 1
+		relative_position_id = GER_support_autarks_II
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = ig_faben
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH
+		}
+	}
+	focus = {
+		id = GER_support_autarks_IV
+		icon = GFX_goal_german_defence_ministry
+		cost = 10
+		prerequisite = {
+			focus = GER_support_autarks_III
+		}
+		x = 0
+		y = 1
+		relative_position_id = GER_support_autarks_III
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_ideas = GER_invest_into_the_wehrmacht
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH
+		}
+	}
+	
+	focus = {
+		id = GER_reform_uranprojekt
+		icon = GFX_focus_ARG_develop_the_electricity_sector
+		cost = 10
+
+		x = 0
+		y = 6
+		relative_position_id = GER_autobahn
+		ai_will_do = {
+			factor = 10
+		}
+		prerequisite = {
+			focus = GER_support_autarks_IV
+		}
+		prerequisite = {
+			focus = GER_support_technocrats_IV
+		}
+		completion_reward = {
+			add_research_slot = 1
 			add_tech_bonus = {
 				name = secret_bonus
 				bonus = 1
