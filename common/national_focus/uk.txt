@@ -12015,26 +12015,7 @@ mutually_exclusive = {
 				set_faction_name = "Union International"
 			}
 			custom_effect_tooltip = ENG_state_owned_press_tt
-			if = {
-				limit = {
-					has_country_leader = {
-						character = ENG_harry_pollitt
-						ruling_only = yes
-					}
-				}
-				retire_country_leader = yes
-				create_country_leader = {
-					name = "Rajani Palme Dutt"
-					desc = "POLITICS_PALME_DUTT_DESC"
-					picture = "Portrait_Britain_Palme_Dutt.dds"
-					expire = "1965.1.1"
-					ideology = leninism
-					traits = {
-						r56_trait_anti_fascist	#Author of "Fascism and Social Revolution" which heavily criticized fascism
-						editor					#Editor of "Daily Worker" in 1936-1938
-					}
-				}
-			}
+			
 			add_ai_strategy = {
 				type = alliance
 				id = SOV
@@ -12216,7 +12197,64 @@ mutually_exclusive = {
 		}
 		search_filters = { FOCUS_FILTER_ESPIONAGE }
 	}	
+	focus = {
+		id = ENG_embrace_autarky
+		icon = GFX_focus_generic_rubber
+		prerequisite = { 
+			focus = ENG_agents_of_the_revolution
+			focus = ENG_tackle_fascism
+		}
+		
+		relative_position_id = ENG_agents_of_the_revolution
+		x = 1
+		y = 2
+		cost = 10
 
+		ai_will_do = {
+		
+		}
+
+		
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {				
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {			
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 3
+					instant_build = yes
+				}
+			}	
+			add_tech_bonus = {
+				name = GER_synth_oil_research
+				bonus = 1
+				uses = 1
+				category = synth_resources
+			}
+			 modify_building_resources = {
+				building = synthetic_refinery
+				resource = rubber
+				amount = 3
+			 }
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+	}
 
 	focus = {
 		id = ENG_reach_out_across_the_channel
@@ -12276,7 +12314,54 @@ mutually_exclusive = {
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 	}
-
+	focus = {
+		id = ENG_the_peoples_leader
+		prerequisite = { focus = ENG_the_one_true_revolution }
+		prerequisite = {
+			focus = ENG_Increase_the_Budget_for_Intel_Agencies
+		}
+		
+		available = {
+			has_country_leader = {
+				character = ENG_harry_pollitt
+				ruling_only = yes
+			}
+			
+		}
+		
+		
+		icon = GFX_focus_generic_workers_and_farmers_rise
+		x = 2
+		y = 3
+		relative_position_id = ENG_the_british_communist_alternative
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}	
+		completion_reward = {
+		hidden_effect = {
+			retire_country_leader = yes
+		}
+				
+				create_country_leader = {
+					name = "Rajani Palme Dutt"
+					desc = "POLITICS_PALME_DUTT_DESC"
+					picture = "Portrait_Britain_Palme_Dutt.dds"
+					expire = "1965.1.1"
+					ideology = leninism
+					traits = {
+						r56_trait_anti_fascist	#Author of "Fascism and Social Revolution" which heavily criticized fascism
+						editor	
+						marxist_reformer
+						a_way_with_the_people			#Editor of "Daily Worker" in 1936-1938
+					}
+				}
+			
+			
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+	}
+	
 	### GO COMMUNIST WITH SOVIET UNION BRANCH ###
 
 	focus = {
