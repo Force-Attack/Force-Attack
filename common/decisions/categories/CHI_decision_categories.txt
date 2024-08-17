@@ -1,97 +1,21 @@
-
-r56_chinese_gui_category = {
-	icon = generic_independence
-	allowed = {
+CHI_warlord_skirmishes = {
+	icon = power_struggle
+	priority = 20
+	visible = {
+		tag = CHI
 		OR = {
-			original_tag = TIB
-			original_tag = CHI
-			original_tag = PRC
-			original_tag = GXC
-			original_tag = YUN
-			original_tag = SHX
-			original_tag = XSM
-			original_tag = SIK
-			original_tag = TNG
-			original_tag = MEN
-			original_tag = MAN
-			original_tag = JAP
-			original_tag = KOR
-			original_tag = NKR
-			original_tag = SOV
+			has_completed_focus = CHI_integrate_allied_warlords
 		}
-	}
-	priority = {
-		base = 250
-		modifier = {
-			factor = -1
-			has_country_flag = r56_chinese_gui_flag
-		}
-		modifier = {
-			add = -245
-			original_tag = SOV
-		}
-		modifier = {
-			add = -247
-			original_tag = JAP
-		}
-	}
-	scripted_gui = r56_scripted_chinese_gui
-	visible_when_empty = yes
-	visible = {
-		r56_chinese_gui_enabled = yes
-		NOT = {
-			has_country_flag = r56_chinese_gui_flag
-		}
-		is_ai = no
-	}
-}
-
-r56_chinese_gui_mock_category = {
-	icon = generic_independence
-	allowed = {
 		OR = {
-			original_tag = TIB
-			original_tag = CHI
-			original_tag = PRC
-			original_tag = GXC
-			original_tag = YUN
-			original_tag = SHX
-			original_tag = XSM
-			original_tag = SIK
-			original_tag = TNG
-			original_tag = MEN
-			original_tag = MAN
-			original_tag = JAP
-			original_tag = KOR
-			original_tag = NKR
-			original_tag = SOV
+			has_idea = CHI_warlord_integration_1
+			has_idea = CHI_warlord_integration_2
+			has_idea = CHI_warlord_integration_3
+			has_idea = CHI_warlord_integration_4
+			has_idea = CHI_warlord_integration_5
 		}
 	}
-	priority = 0
-	visible = {
-		r56_chinese_gui_enabled = yes
-		has_country_flag = r56_chinese_gui_flag
-		is_ai = no
-	}
-}
-CHI_anti_imperialism = {
-	icon = generic_independence
-	allowed = {
-		is_literally_china = yes
-	}
-	visible = {
-		always = yes
-	}
 }
 
-CHI_army_reform = {
-	icon = army_reform
-	allowed = {
-		is_literally_china = yes
-	}
-}
-
-#Category for war against the Japan
 CHI_war_of_resistance = {
 	icon = army_reform
 	allowed = {
@@ -109,6 +33,7 @@ CHI_war_of_resistance = {
 				has_offensive_war_with = ROOT #only if offensive war!
 			}
 		}
+		has_completed_focus = CHI_form_a_united_front
 	}
 
 	priority = {
@@ -132,101 +57,68 @@ CHI_war_of_resistance = {
 	}
 }
 
-#Category for demanding/requesting ports
-CHI_unequal_treaties = {
-	icon = eng_concessions_to_the_trade_unions
-	allowed = {
-		is_literally_china = yes
-	}
-	picture = GFX_decision_cat_picture_concessions_to_the_trade_unions
-	visible = {
-		has_completed_focus = KMT_trade_port_fascism
-	}
-
-	priority = {
-		base = 35
-	}
-}
-
-#Category for liberating countries if doing anti-colonialist crusade
-CHI_liberation_of_asia = {
-	icon = generic_independence
-	allowed = {
-		is_literally_china = yes
-	}
-	picture = GFX_decision_cat_TIB_army_reform
-	visible = {
-		has_completed_focus = KMT_oust_the_colonizers
-	}
-
-	priority = {
-		base = 40
-	}
-
-	on_map_area = {
-		name = CHI_liberation_of_asia_here_tt
-		target_array = controlled_states
-		target_trigger = {
-			FROM = {
-				is_fully_controlled_by = ROOT
-				OR = {
-					region = 190
-					region = 153
-					region = 31
-					region = 141
-					region = 189
-					region = 142
-					region = 188
-					region = 187
-					region = 158
-					region = 159
-					region = 93
-					AND = {
-						region = 167
-						NOT = { state = 523} #leave Papua out
-					}
-				}
-			}
-		}
-		zoom = 800
-	}
-}
-
-CHI_improve_the_army_situation = {
-	priority = {
-		base = 15
-	}
+CHI_army_reform = {
 	icon = army_reform
 	allowed = {
 		is_literally_china = yes
 	}
-	picture = GFX_decision_cat_adressing_army_incompetence
+
+	visible = {
+	}
 }
 
-CHI_integrate_the_warlords = {
 
-	allowed = {
+CHI_democratization_reforms = {
+	icon = army_reform
+	available = {
 		is_literally_china = yes
+		has_completed_focus = CHI_legislative_yuan
+		NOT = {
+			has_completed_focus = CHI_call_for_fair_elections
+		}
 	}
-	icon = generic_political_actions
+
 	visible = {
-		tag = event_target:WTT_current_china_leader
-		OR = {
-			any_allied_country = {
-				OR = {
-					tag = GXC
-					tag = YUN
-					tag = SHX
-					tag = XSM
-					tag = SIK
-					tag = TNG
-				}
-				is_subject_of = ROOT
-			}
+		has_completed_focus = CHI_legislative_yuan
+		NOT = {
+			has_completed_focus = CHI_call_for_fair_elections
 		}
 	}
 }
 
+CHI_chinese_civil_war = {
+	icon = GFX_decision_category_border_conflicts
+	available = {
+		# has_completed_focus = CHI_continue_the_civil_war
+		# controls_state = 622
+	}
+	priority = 2
+
+	visible = {
+		original_tag = CHI
+		has_completed_focus = CHI_continue_the_civil_war
+		hidden_trigger = {
+			has_idea = CHI_ongoing_civil_war
+		}
+	}
+}
+
+#CHI_call_up_communist_reserves = {
+#	icon = GFX_decision_category_eng_organize_the_blackshirts
+#	available = {
+#		original_tag = CHI
+#		has_completed_focus = CHI_form_a_united_front
+#		NOT = {
+#			has_completed_focus = CHI_betray_the_communist
+#		}
+#	}
+#	visible = {
+#		has_completed_focus = CHI_form_a_united_front
+#		NOT = {
+#			has_completed_focus = CHI_betray_the_communist
+#		}
+#	}
+#}
 CHI_industrial_evacuations = {
 	priority = {
 		base = 20
@@ -239,191 +131,13 @@ CHI_industrial_evacuations = {
 		has_completed_focus = CHI_industrial_evacuations
 	}
 }
-
-CHI_xian_incident = {
-	icon = power_struggle
+CHI_martial_law = {
+	priority = 20
 	allowed = {
-		is_independent_china_or_warlord = yes
-		NOT = {
-			OR = {
-				tag = CHI
-				tag = PRC
-			}
-		}
+		is_literally_china = yes
 	}
-}
-
-CHI_weapons_purchases_category = {
-	icon = generic_arms_trade
-	allowed = {
-		original_tag = CHI
-	}
+	icon = X
 	visible = {
-		has_country_flag = FRA_arms_purchases_permitted
-		NOT = {
-			has_war_with = USA
-		}
-	}
-}
-
-CHI_communist_infiltration = {
-	allowed = {
-		is_literally_china = yes
-	}
-	icon = infiltration
-	visible = {
-		tag = event_target:WTT_current_china_leader
-		NOT = { has_government = communism }
-		any_other_country = {
-			has_completed_focus = PRC_infiltration
-		}
-	}
-}
-
-PRC_provoke_japan = {
-	allowed = {
-		is_literally_china = yes
-	}
-	icon = revolt
-	visible = {
-		has_completed_focus = PRC_anti_japanese_aim
-	}
-}
-
-CHI_seek_japanese_support = {
-	icon = jap_pacific_guardian
-	allowed = {
-		OR = {
-			tag = GXC
-			tag = YUN
-			tag = SHX
-			tag = XSM
-			tag = TNG
-		}
-	}
-}
-
-CHI_border_clashes = {
-	picture = generic_border_conflicts
-	icon = border_conflicts
-	allowed = {
-		is_literally_china = yes
-	}	
-}
-
-CHI_warlord_in_opposition = {
-	allowed = {
-		is_literally_china = yes
-	}	
-}
-
-CHI_partisan_organization = {
-	priority = 16
-	allowed = {
-		is_literally_china = yes
-	}
-	icon = revolt
-	visible = {
-		has_completed_focus = KMT_organize_the_partisans
-	}
-}
-
-
-CHI_political_power_struggle = {
-	allowed = {
-		has_dlc = "Waking the Tiger"
-		is_literally_china = yes
-	}
-
-	icon = power_struggle
-	picture = GFX_decision_cat_picture_chi_political_support
-	priority = {
-		base = 0
-		modifier = {
-			add = 10
-			has_country_flag = wtt_political_struggle
-			any_other_country = {
-				has_country_flag = wtt_political_struggle
-			}
-		}
-	}
-	
-	custom_icon = {
-		tag = CHI
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_CHI
-		}
-	}
-	
-	custom_icon = {
-		tag = PRC
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_PRC
-		}
-	}
-	
-	custom_icon = {
-		tag = GXC
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_GXC
-		}
-	}
-	
-	custom_icon = {
-		tag = YUN
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_YUN
-		}
-	}
-	
-	custom_icon = {
-		tag = SHX
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_SHX
-		}
-	}
-	
-	custom_icon = {
-		tag = XSM
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_XSM
-		}
-	}
-	
-	custom_icon = {
-		tag = SIK
-		value = china_struggle_icon_value
-		desc = china_struggle_full_support_breakdown
-
-		visible = {
-			has_event_target = scope_SIK
-		}
-	}
-
-	visible = {
-		event_target:WTT_current_china_leader = { NOT = { has_war_with = ROOT } }
-		NOT = { has_completed_focus = CHI_opposition }
-		OR = {	#if you are a warlord, you can see it OR if you are a central government
-			original_tag = event_target:WTT_current_china_leader
-			is_ai = no
-		}
+		has_completed_focus = CHI_enact_martial_law
 	}
 }
