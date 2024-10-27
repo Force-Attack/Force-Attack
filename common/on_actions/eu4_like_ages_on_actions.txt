@@ -1,0 +1,81 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			random_country = {
+				clear_variable = global.current_age
+				set_current_age = yes
+				# Historical Age Start and End Years for Tooltip:
+				set_variable = { global.age_1_start_year = 1890 }
+				set_variable = { global.age_2_start_year = 1914 }
+				set_variable = { global.age_3_start_year = 1918 }
+				set_variable = { global.age_4_start_year = 1939 }
+				set_variable = { global.age_5_start_year = 1946 }
+				set_variable = { global.age_6_start_year = 1990 }
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = rule_eu4_style_ages_ww1_mod
+							option = endsieg
+						}
+					}
+					set_global_flag = eu4_style_ages_ww1_mod_endsieg
+				}
+				else_if = {
+					limit = {
+						has_game_rule = {
+							rule = rule_eu4_style_ages_ww1_mod
+							option = the_great_war
+						}
+					}
+					set_global_flag = eu4_style_ages_ww1_mod_the_great_war
+				}
+				else = {
+					set_global_flag = eu4_style_ages_ww1_mod_the_great_war_redux
+				}
+			}
+		}
+	}
+
+	on_daily = {
+		effect = {
+			add_to_variable = { current_splendor = 1 }
+			for_each_loop = {
+				array = global.current_age_objectives
+				value = v
+				set_temp_variable = { age_objective = v }
+				if = {
+					limit = {
+						country_fulfills_current_age_objective = yes
+					}
+					add_to_variable = { current_splendor = 1 }
+				}
+			}
+			clamp_variable = {
+				var = current_splendor
+				min = 0
+				max = 10000
+			}
+			if = {
+				limit = {
+					owns_state = 1
+				}
+				if = {
+					limit = {
+						has_variable = global.days_til_next_age
+					}
+					if = {
+						limit = {
+							check_variable = { global.days_til_next_age > 1 }
+						}
+						subtract_from_variable = { global.days_til_next_age = 1 }
+					}
+					else = {
+						set_current_age = yes
+						clear_variable = global.days_til_next_age
+						clear_variable = global.next_age
+					}
+				}
+			}
+		}
+	}
+}
