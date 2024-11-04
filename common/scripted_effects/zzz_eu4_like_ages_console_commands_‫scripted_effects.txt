@@ -1,0 +1,221 @@
+d_eu4_style_ages_console_commands = {
+	log = D_EU4_STYLE_AGES_CONSOLE_COMMANDS_TT_1
+	log = "   - eu4_style_ages_console_commands"
+	log = "   - add_splendor"
+	log = "   - start_next_age"
+	log = "   - unlock_age_ability"
+	log = "   - start_golden_age"
+	log = D_EU4_STYLE_AGES_CONSOLE_COMMANDS_TT_2
+}
+
+d_add_splendor = {
+	log = D_ADD_SPLENDOR_TT
+	FROM = {
+		add_to_variable = { current_splendor = args^0?100 }
+		clamp_variable = {
+			var = current_splendor
+			min = 0
+			max = 10000
+		}
+	}
+}
+
+d_start_next_age = {
+	set_temp_variable = { current_age_temp = global.current_age }
+	add_to_temp_variable = { current_age_temp = 1 }
+	if = {
+		limit = {
+			check_variable = { global.current_age < 6 }
+		}
+		log = D_START_NEXT_AGE_TT
+		set_temp_variable = { current_age_temp_temp = global.current_age }
+		clear_variable = global.current_age
+		if = {
+			limit = {
+				check_variable = { current_age_temp = 6 }
+			}
+			set_variable = { global.current_age = 6 }
+			set_global_flag = age_has_begun_6
+			meta_effect = {
+				text = {
+					set_variable = { global.age_6_start_year = [YEAR] }
+				}
+				YEAR = "[GetYear]"
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = { current_age_temp = 5 }
+			}
+			set_variable = { global.current_age = 5 }
+			set_global_flag = age_has_begun_5
+			meta_effect = {
+				text = {
+					set_variable = { global.age_5_start_year = [YEAR] }
+				}
+				YEAR = "[GetYear]"
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = { current_age_temp = 4 }
+			}
+			set_variable = { global.current_age = 4 }
+			set_global_flag = age_has_begun_4
+			meta_effect = {
+				text = {
+					set_variable = { global.age_4_start_year = [YEAR] }
+				}
+				YEAR = "[GetYear]"
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = { current_age_temp = 3 }
+			}
+			set_variable = { global.current_age = 3 }
+			set_global_flag = age_has_begun_3
+			meta_effect = {
+				text = {
+					set_variable = { global.age_3_start_year = [YEAR] }
+				}
+				YEAR = "[GetYear]"
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = { current_age_temp = 2 }
+			}
+			set_variable = { global.current_age = 2 }
+			set_global_flag = age_has_begun_2
+			meta_effect = {
+				text = {
+					set_variable = { global.age_2_start_year = [YEAR] }
+				}
+				YEAR = "[GetYear]"
+			}
+			hidden_effect = {
+				every_country = {
+					every_owned_state = {
+						set_state_flag = owned_by_@PREV
+					}
+				}
+			}
+		}
+		else = {
+			set_variable = { global.current_age = 1 }
+			set_global_flag = age_has_begun_1
+			meta_effect = {
+				text = {
+					set_variable = { global.age_1_start_year = [YEAR] }
+				}
+				YEAR = "[GetYear]"
+			}
+		}
+		if = {
+			limit = {
+				has_variable = global.current_age
+				NOT = { check_variable = { current_age_temp_temp = global.current_age } }
+			}
+			hidden_effect = {
+				every_country = {
+					country_event = { id = eu4_like_ages_events.1000 }
+				}
+			}
+		}
+		set_age_abilities = yes
+		set_age_objectives = yes
+		if = {
+			limit = {
+				has_variable = global.current_age
+				NOT = { check_variable = { current_age_temp_temp = global.current_age } }
+			}
+			every_country = {
+				limit = {
+					is_ai = no
+				}
+				set_variable = { show_eu4_like_ages_new_age_popup_alert_window = 1 }
+			}
+		}
+	}
+	else = {
+		log = D_START_NEXT_AGE_TT_LAST_AGE_REACHED
+	}
+}
+
+d_unlock_age_ability = {
+	if = {
+		limit = {
+			check_variable = { args^num = 1 }
+		}
+		set_temp_variable = { age_ability = args^0 }
+		if = {
+			limit = {
+				is_in_array = { global.current_age_abilities = age_ability }
+			}
+			log = D_UNLOCK_AGE_ABILITY_TT
+			FROM = {
+				enact_age_ability_effect = yes
+				add_to_variable = { current_splendor = 800 }
+				clamp_variable = {
+					var = current_splendor
+					min = 0
+					max = 10000
+				}
+			}
+		}
+		else = {
+			log = D_UNLOCK_AGE_ABILITY_TT_ABILITY_IS_INVALID_FOR_CURRENT_AGE
+		}
+	}
+	else = {
+		log = D_UNLOCK_AGE_ABILITY_TT_INVALID_ARGUMENTS
+	}
+}
+
+d_start_golden_age = {
+	FROM = {
+		if = {
+			limit = {
+				NOT = { has_country_flag = had_golden_age }
+			}
+			add_timed_idea = {
+				idea = golden_age_idea
+				days = 730
+			}
+			hidden_effect = {
+				set_country_flag = had_golden_age
+				set_variable = { golden_age_start_date = global.date }
+				meta_effect = {
+					text = {
+						set_variable = { golden_age_start_year = [YEAR] }
+						set_variable = { golden_age_end_year = [YEAR] }
+						add_to_variable = { golden_age_end_year = 2 }
+					}
+					YEAR = "[GetYear]"
+				}
+				set_variable = { golden_age_end_date = global.date }
+				add_to_variable = { golden_age_end_date = 17.52 }
+				every_other_country = {
+					limit = {
+						is_ai = no
+						NOT = { has_country_flag = disabled_other_country_golden_age_alert }
+					}
+					add_to_array = { eu4_like_ages_other_country_golden_age_alert_array = ROOT.id }
+				}
+			}
+			log = "The [This.GetAdjective] Golden Age was started."
+			log = "It will last until [?golden_age_end_date.GetDateStringNoHourLong]."
+		}
+		else_if = {
+			limit = {
+				has_idea = golden_age_idea
+			}
+			log = "[This.GetName] currently is in their Golden Age."
+			log = "It will last until [?golden_age_end_date.GetDateStringNoHourLong]."
+		}
+		else = {
+			log = "The [This.GetAdjective] Golden Age has ended in [?golden_age_end_date.GetDateStringNoHourLong]."
+		}
+	}
+}
