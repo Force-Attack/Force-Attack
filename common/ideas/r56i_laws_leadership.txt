@@ -8,35 +8,119 @@ ideas = {
 
 		use_list_view = yes
 		
+		# Power and Politics 
+		# r56i_laws_leadership_politics = {
+			
+		# 	available = {
+		# 		NOT = {
+		# 			has_global_flag = NATIONAL_CHARACTERS_BLOCKED
+		# 		}
+		# 	}
+		
+		# 	modifier = {
+		# 		political_power_gain = 0.
+		# 		stability_factor = -0.02
+		# 	}
+		
+		# 	cost = 150
+			
+		# 	cancel_if_invalid = no
+			
+		# 	ai_will_do = {
+		# 		   factor = 1.5
+
+		# 		# Always good to pic IMO
+		# 			modifier = {
+		# 				has_government = fascism
+		# 				factor = 2
+		# 			}
+		# 	   }
+			
+		# 	}
+		
 		#Personality Cult
 		r56i_laws_leadership_cult = {
 
+			cost = 100
+
 			available = {
-				OR = {
-					is_subject = no
-					OVERLORD = {
-						has_government = fascism
-					}
-				}
-				NOT = {
-					hidden_trigger = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
+				NOT = {	
+					has_global_flag = NATIONAL_CHARACTERS_BLOCKED
 				}
 			}
 
+
 			modifier = {
-				democratic_drift = -0.05		#present also in communist countries, surely won't contribute to liberalization of society 
-				justify_war_goal_time = -0.25
-				political_power_cost = 0.05
+				fascism_drift = 0.05
+				justify_war_goal_time = -0.10
 			}
 
 			
 			cancel_if_invalid = no
 
 			ai_will_do = {
-				factor = 0
+				factor = 0.2
+
+				modifier = {
+					OR = {
+						fascism > 0.5
+						has_idea_with_trait = fascist_demagogue						
+						has_government = fascism
+						AND = {
+							has_idea = nationalism
+							NOT = {
+								is_puppet = yes
+								if = {
+									limit = {
+										is_puppet = yes
+									}
+									ROOT = {
+										OVERLORD = {
+											NOT = {	
+												has_government = fascism
+											}
+										}
+									}									
+								}
+						 	}
+					 	}
+					}
+					factor = 5
+				}
 			}
+		}
+		
+		#Secular Institutions
+		r56i_laws_leadership_secular = {
+
+			available = {
+				NOT = {
+					has_global_flag = NATIONAL_CHARACTERS_BLOCKED
+				}
+			}
+			
+			modifier = {
+				democratic_drift = 0.05
+				research_speed_factor = 0.08
+			}
+
+			cost = 100
+			
+			cancel_if_invalid = no
+
+			ai_will_do = {
+   				factor = 0.2
+
+   				modifier = {
+					OR = {
+						has_government = democratic
+						democratic > 0.5
+						has_idea_with_trait = democratic_reformer						
+					}
+					
+					factor = 5
+				}
+   			}
 		}
 		
 		#Divine Inspiration
@@ -44,83 +128,48 @@ ideas = {
 		
 			available = {
 				NOT = {
-					has_government = communism
+						has_country_leader = {
+							name = "Anarchist Commune"
+							ruling_only = yes
+						}					
 				}
-				OR = {
-					is_subject = no
-					OVERLORD = {
-						NOT = {
-							has_government = communism
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = not_has_government_anarchism_tt
-					NOT = {
-						has_country_leader_ideology = anarchism
-						has_country_leader_ideology = anarchist_communism
-					}
-				}
-				if = {
-					limit = { #Was a way to bypass war support limits in content
-						has_government = democratic	
-					}
-					has_war = no
-				}
-				hidden_trigger = {
-					NOT = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
-				}
+				NOT = {has_global_flag = NATIONAL_CHARACTERS_BLOCKED}
+				NOT = {tag = USA}
+
 			}
 			
 			modifier = {
-				communism_drift = -0.05			#stalinists and trotskyist and their stance on religion
+				neutrality_drift = 0.05
 				war_support_factor = 0.10
-				political_power_cost = 0.05
 			}
 
-			cost = 150
+			cost = 100
+			
+			cancel_if_invalid = yes
 
 			ai_will_do = {
-				factor = 0
-			}
-		}
+				   factor = 0.5
 
-		#Secular Institutions
-		r56i_laws_leadership_secular = {
-
-			available = {
-				NOT = {
+				modifier = {
 					has_government = neutrality
-				}
-				OR = {
-					is_subject = no
-					OVERLORD = {
-						NOT = {
-							has_government = neutrality
+					NOT = {
+						OR = {
+							tag = TUR
+							fascism > 0.3
+							communism > 0.3
 						}
 					}
+					factor = 2
 				}
-				hidden_trigger = {
-					NOT = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
+				modifier = {
+					has_war_support > 0.9	
+					factor = 0					
 				}
-			}
-			
-			modifier = {
-				neutrality_drift = -0.05		#to represent an absolute power + theocratic states VS civilian authorities
-				research_speed_factor = 0.05
-				political_power_cost = 0.05
-			}
-
-			cost = 150
-			
-			cancel_if_invalid = no
-
-			ai_will_do = {
-   				factor = 0			
+					
+				modifier = {
+					has_war = no
+					factor = 0					
+				}					
    			}
 		}
 		
@@ -129,71 +178,69 @@ ideas = {
 
 			available = {
 				NOT = {
-					has_government = fascism
-				}
-				OR = {
-					is_subject = no
-					OVERLORD = {
-						NOT = {
-							has_government = fascism
-						}
-					}
-				}
-				hidden_trigger = {
-					NOT = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
+					has_global_flag = NATIONAL_CHARACTERS_BLOCKED
 				}
 			}
 			
 			modifier = {
-				fascism_drift = -0.05				#Sounds very pro-communist, historically some people might've applied to it too though
-				supply_consumption_factor = -0.05
-				political_power_cost = 0.05
+				communism_drift = 0.05
+				supply_consumption_factor = -0.10
 			}
 
-			cost = 150
+			cost = 100
 			
 			cancel_if_invalid = no
 
 			ai_will_do = {
-				factor = 0
-			}
+   				factor = 0.2
+
+   				modifier = {
+					OR = {
+						has_government = communism
+						communism > 0.5
+						has_idea_with_trait = communist_revolutionary
+						AND = {
+							has_idea = internationalism
+							NOT = {
+								is_puppet = yes
+								if = {
+									limit = {
+										is_puppet = yes
+									}
+									ROOT = {
+										OVERLORD = {
+											NOT = {	
+												has_government = communism
+											}
+										}
+									}									
+								}
+							}
+						}
+					}
+					factor = 5
+				}
+   			}
 		}
-		#Communal Decision Making
+		#Divine Inspiration
 		r56i_laws_leadership_communal_decision_making = {
 			picture = SPR_collectivized_society
 			available = {
-				OR = {
-					custom_trigger_tooltip = {
-						tooltip = has_government_anarchism_tt
-						OR = {
-							has_country_leader_ideology = anarchism
-							has_country_leader_ideology = anarchist_communism
-						}
-					}
-					has_idea = SPR_collectivized_society
-				}
-				hidden_trigger = {
-					NOT = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
-				}
 			}
 			
 			modifier = {
-				democratic_drift = -0.02		#more communes, a bit more communism too on top
-				fascism_drift = -0.02
-				conscription_factor = 0.05
-				research_speed_factor = 0.05
-				political_power_cost = 0.05	
+				neutrality_drift = 0.05
+				weekly_manpower = 200
+				conscription = 0.005
 			}
 
-			cost = 150
+			cost = 100
+			
+			cancel_if_invalid = yes
 
 			ai_will_do = {
-				factor = 0 
-			}
+				   factor = 2					
+   			}
 		}		
 	}
 }

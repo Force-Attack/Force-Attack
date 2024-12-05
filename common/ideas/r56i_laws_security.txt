@@ -6,7 +6,44 @@ ideas = {
 	r56i_laws_category_security = { 
 	
 		law = yes
+
 		use_list_view = yes
+		
+
+		# Balanced Approach
+		r56i_laws_security_balanced = {
+			
+			available = {
+				NOT = {
+					has_global_flag = NATIONAL_CHARACTERS_BLOCKED
+					has_country_leader = {
+						name = "Anarchist Commune"
+						ruling_only = yes
+					}					
+				}
+			}
+
+			modifier = {
+				stability_factor = 0.07
+				resistance_damage_to_garrison = 0.05
+				drift_defence_factor = 0.05
+			}
+	
+			cost = 75
+			
+			cancel_if_invalid = no
+			
+			ai_will_do = {
+				factor = 0.5	
+				   	
+				modifier = {
+					has_government = neutrality
+					factor = 1.5
+				}
+			}
+			
+		}
+		
 		
 		# Order Above All
 		r56i_laws_security_order = {
@@ -14,72 +51,37 @@ ideas = {
 			available = {
 				NOT = {
 					has_government = democratic
-				}
-				custom_trigger_tooltip = {
-					tooltip = not_has_government_anarchism_tt
-					NOT = {
-						has_country_leader_ideology = anarchism
-						has_country_leader_ideology = anarchist_communism
-					}
-				}
-				hidden_trigger = {
-					NOT = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
+					has_country_leader = {
+						name = "Anarchist Commune"
+						ruling_only = yes
+					}					
+					has_global_flag = NATIONAL_CHARACTERS_BLOCKED
 				}
 			}
 			
 			modifier = {
 				stability_factor = -0.05
-				resistance_damage_to_garrison = -0.10
-				drift_defence_factor = 0.10
+				resistance_damage_to_garrison = -0.20
+			#	compliance_gain = 0.05
 			}
 			
 			on_add = {
-				custom_effect_tooltip = r56i_laws_security_order_tt
-			}
+					custom_effect_tooltip = r56i_laws_security_order_tt
+				}
 
-			cost = 150
+				cost = 100
 
 			
 			cancel_if_invalid = no
 
 			ai_will_do = {
-   				factor = 0
+   				factor = 0.5
+
+				modifier = {
+					has_government = fascism
+					factor = 2
+				}
    			}
-		}
-
-		# Balanced Approach
-		r56i_laws_security_balanced = {
-			
-			available = {
-				custom_trigger_tooltip = {
-					tooltip = not_has_government_anarchism_tt
-					NOT = {
-						has_country_leader_ideology = anarchism
-						has_country_leader_ideology = anarchist_communism
-					}
-				}
-				hidden_trigger = {
-					NOT = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
-				}
-			}
-
-			modifier = {
-				stability_factor = 0.05
-				resistance_damage_to_garrison = 0.05
-				drift_defence_factor = 0.05
-			}
-	
-			cost = 150
-			
-			cancel_if_invalid = no
-			
-			ai_will_do = {
-				factor = 0
-			}
 		}
 		
 		# Individual Rights
@@ -88,25 +90,21 @@ ideas = {
 			available = {
 				OR = {
 					has_government = democratic
-					custom_trigger_tooltip = {
-						tooltip = individual_rights_trigger_tt
-						OR = {
-							has_country_leader_ideology = anarchism
-							has_country_leader_ideology = anarchist_communism
-							has_country_leader_ideology = democratic_socialism
-						}
-					}
+					has_country_leader = {
+						name = "Anarchist Commune"
+						ruling_only = yes
+					}						
 				}
+				
 				NOT = {					
-					hidden_trigger = {
-						has_global_flag = NATIONAL_CHARACTERS_BLOCKED
-					}
+					has_global_flag = NATIONAL_CHARACTERS_BLOCKED
 				}
 			}
 			
-			#Cost = 125
+			Cost = 125
 
 			modifier = {
+			#	compliance_gain = 0.03
 				stability_factor = 0.10
 				resistance_damage_to_garrison = 0.10
 				drift_defence_factor = -0.10
@@ -114,7 +112,12 @@ ideas = {
 			cancel_if_invalid = no
 
 			ai_will_do = {
-   				factor = 0
+   				factor = 0.5
+
+   				modifier = {
+					has_government = democratic
+					factor = 2
+				}
    			}
 		}	
 	}
