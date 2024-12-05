@@ -205,7 +205,7 @@ focus_tree = {
 				desc = ""
 				picture = "gfx/leaders/PER/Portrait_Persia_Fazlollah_Zahedi.dds"
 				expire = "1965.1.1"
-				ideology = despotism
+				ideology = conservatism_n
 				traits = { fascist_sympathies  anti_communist }
 			}
 			mark_focus_tree_layout_dirty = yes
@@ -292,8 +292,14 @@ focus_tree = {
 			factor = 20
 		}
 		completion_reward = {
-			411 = {
-
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -318,12 +324,18 @@ focus_tree = {
 		x = 1
 		y = 3
 		completion_reward = {
-			419 = {
-
-				add_extra_state_shared_building_slots = 2
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -355,26 +367,17 @@ focus_tree = {
 				266 = {
 					add_building_construction = {
 						type = infrastructure
-						level = 2
-						instant_build = yes
-					}
-				}		
-				266 = {
-
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = industrial_complex
 						level = 1
 						instant_build = yes
 					}
-				}							
+				}									
 			}
 			if = {
 				limit = {
 					controls_state = 417
 				}
 				build_railway = { 
-					path = { 2065 1982 1922 10922 }
+					path = { 2065 1982 10922 }
 				}
 			}
 			if = {
@@ -420,14 +423,9 @@ focus_tree = {
 			factor = 17
 		}
 		completion_reward = {
-			419 = {
-
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
+			add_offsite_building = {
+				type = arms_factory
+				level = 1
 			}
 			add_tech_bonus = {
 				name = PER_secure_weapon_deals
@@ -441,7 +439,7 @@ focus_tree = {
 
 	focus = {
 		id = PER_electronic_development
-		icon = GFX_focus_generic_steel
+		icon = GFX_goal_generic_production2
 		cost = 10
 		prerequisite = {
 			focus = PER_secure_weapon_deals
@@ -455,33 +453,11 @@ focus_tree = {
 			factor = 16
 		}
 		completion_reward = {
-			modify_building_resources = {
-				building = steel_mill
-				resource = steel
-				amount = 2
-			 }
-			 modify_building_resources = {
-				building = aluminum_mill
-				resource = aluminium
-				amount = 2
-			 }
-			random_owned_controlled_state = {
-				prioritize = { 535 }
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = steel_mill
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				prioritize = { 1008 }
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = aluminum_mill
-					level = 2
-					instant_build = yes
-				}
+			add_tech_bonus = {
+				name = UK_secret_focus
+				bonus = 1
+				uses = 2
+				category = electronics
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -510,9 +486,9 @@ focus_tree = {
 	}
 
 	focus = {
-		id = PER_public_work_projects
-		icon = GFX_goal_generic_construct_infrastructure
-		cost = 10
+		id = PER_study_nuclear_power
+		icon = GFX_focus_wonderweapons
+		cost = 5
 		prerequisite = {
 			focus = PER_electronic_development
 		}
@@ -522,43 +498,30 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward = {
-			413 = {
-
-
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
+			IF = {
+				limit = {
+					NOT = {
+						has_tech = atomic_research
+					}
+				}
+				add_tech_bonus = {
+					name = PER_study_nuclear_power
+					bonus = 0.50
+					uses = 1
+					category = nuclear
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.25
 				}
 			}
-			412 = {
-
-	
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
+			ELSE = {
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.5
 				}
 			}
-			411 = {
-
-			
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			419 = {
-
-				
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			} 
-			
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -576,8 +539,14 @@ focus_tree = {
 			factor = 25
 		}
 		completion_reward = {
-			413 = {
-
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -827,6 +796,12 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 125
 			add_stability = 0.15
+			if = {
+				limit = {
+					has_government = communism
+				}
+				set_country_leader_ideology = islamic_socialism
+			}
 		}
 		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
 	}
@@ -1570,7 +1545,7 @@ focus_tree = {
 				}
 				remove_ideas = PER_anglo_iranian_oil_company
 				ENG = { remove_resource_rights = 413 }
-				give_resource_rights = { receiver = GER state = 412 }
+				give_resource_rights = { receiver = GER state = 981 }
 			}
 			random_owned_controlled_state = {
 				prioritize = { 676 }
@@ -3268,47 +3243,71 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			r56_script_i_am_sane = yes
-			SAU = {
-				r56_script_target_is_sane = yes
-			}
-			OMA = {
-				r56_script_target_is_sane = yes
-			}
-			IRQ = {
-				r56_script_target_is_sane = yes
+			any_state = {
+				custom_trigger_tooltip = {
+					tooltip = state_is_in_iraq_or_arabian_peninula_tt
+					OR = {
+						AND = {
+							region = 236
+							NOT = {
+								state = 906		#Socotra
+							}
+						}
+						region = 238
+						region = 196
+						region = 237
+						AND = {
+							region = 28
+							NOT = {
+								state = 680		#Deir Az-Zur
+							}
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = ROOT_is_not_controlled_by_root_or_ally_tt
+					NOT = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+				}
 			}						
 		}
-		bypass = {
-			SAU = {
-				r56_script_standard_bypass = yes
-			}
-			IRQ = {
-				r56_script_standard_bypass = yes
-			}
-			OMA = {
-				r56_script_standard_bypass = yes
-			}						
-		}		
-		completion_reward = {
-					create_wargoal = {
-							type = puppet_wargoal_focus
-							target = SAU
-							expire = 0
-						}
-					create_wargoal = {
-							type = puppet_wargoal_focus
-							target = IRQ
-							expire = 0
-						}
-					create_wargoal = {
-							type = puppet_wargoal_focus
-							target = OMA
-							expire = 0
-						}
-				}
-				search_filters = { FOCUS_FILTER_ANNEXATION }
 
+		completion_reward = {
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_controlled_state = {
+						OR = {
+							AND = {
+								region = 236
+								NOT = {
+									state = 906		#Socotra
+								}
+							}
+							region = 238
+							region = 196
+							region = 237
+							AND = {
+								region = 28
+								NOT = {
+									state = 680		#Deir Az-Zur
+								}
+							}
+						}
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = liberate_wargoal
+						expire = 0
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ANNEXATION }
 	}
 	focus = {
 		id = PER_soviet_economic_help

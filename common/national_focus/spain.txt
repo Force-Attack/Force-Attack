@@ -701,10 +701,6 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR}
 		completion_reward = {
 			add_political_power = 200
-			add_timed_idea = { 
-				idea = SPA_anti_major_cuck_idea
-				days = 730
-			}
 			set_country_flag = SPR_disband_the_army_flag
 			custom_effect_tooltip = SPR_disband_the_army_tt
 			hidden_effect = { country_event = lar_spain.2 }
@@ -740,10 +736,6 @@ focus_tree = {
 			    popularity = 0.1
 			}
 			activate_mission = SPA_carlist_uprising_mission
-			add_timed_idea = { 
-				idea = SPA_anti_major_cuck_idea
-				days = 730
-			}
 		}
 	}
 
@@ -867,7 +859,7 @@ focus_tree = {
 				template_counter = 33
 				priority = 1
 				division_names_group = SPR_INF_01
-				is_locked = no
+				is_locked = yes
 				regiments = {
 					infantry = { x = 0 y = 0 }
 					infantry = { x = 0 y = 1 }
@@ -1220,11 +1212,12 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = SPA_secure_the_national_defense_council
-		cost = 10
+		cost = 5
 
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_war_support = 0.05
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = SPA_jose_antonio_primo_de_rivera
 		}
@@ -1288,6 +1281,12 @@ focus_tree = {
 
 	focus = {
 		id = SPA_establish_the_directory
+		available = {
+			OR = {
+				has_government = fascism
+				has_government = neutrality
+			}
+		}
 		bypass = {
 			has_global_flag = scw_over
 		}
@@ -1309,94 +1308,41 @@ focus_tree = {
 				drop_cosmetic_tag = yes
 				set_cosmetic_tag = SPA_directory
 			}
-			if = {
-				limit = {
-					NOT = { has_global_flag = spanish_civil_war }
-				}
-				effect_tooltip = {
-					create_country_leader = {
-						name = "Emilio Mola"
-						desc = "POLITICS_EMILIO_MOLA_DESC"
-						picture = "GFX_portrait_emilio_mola"
-						expire = "1965.1.1"
-						ideology = despotism
-						traits = {
-							the_director
-							r56_trait_opposed_to_communism
-							r56_trait_opposed_to_democracy
-						}
+			generate_character = {					#he stops to exist after SCW begins, hence have to o it this way
+				token_base = SPA_emilio_mola
+				name=SPA_emilio_mola
+				portraits={
+					army={
+						large="GFX_portrait_SPA_emilio_mola"
+						small="gfx/interface/ideas/idea_SPA_emilio_mola.dds"
 					}
 				}
 			}
-			if = {
-				limit = {
-					has_government = neutrality
-				}
-				hidden_effect = {
-					kill_country_leader = yes
-					kill_ideology_leader = fascism
-				}
-				create_country_leader = {
-					name = "Emilio Mola"
-					desc = "POLITICS_EMILIO_MOLA_DESC"
-					picture = "GFX_portrait_emilio_mola"
-					expire = "1965.1.1"
-					ideology = despotism
-					traits = {
-						the_director
-						r56_trait_opposed_to_communism
-						r56_trait_opposed_to_democracy
-					}
-				}
-				hidden_effect = {
-					create_country_leader = {
-						name = "Emilio Mola"
-						desc = "POLITICS_EMILIO_MOLA_DESC"
-						picture = "GFX_portrait_emilio_mola"
-						expire = "1965.1.1"
-						ideology = falangism
-						traits = {
-							the_director
-							r56_trait_opposed_to_communism
-							r56_trait_opposed_to_democracy
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_government = fascism
-				}
-				hidden_effect = {
-					kill_country_leader = yes
-					kill_ideology_leader = neutrality
-				}
-				create_country_leader = {
-					name = "Emilio Mola"
-					desc = "POLITICS_EMILIO_MOLA_DESC"
-					picture = "GFX_portrait_emilio_mola"
-					expire = "1965.1.1"
+			add_country_leader_role = {
+				character = SPA_emilio_mola
+				country_leader = {
 					ideology = falangism
 					traits = {
 						the_director
 						r56_trait_opposed_to_communism
 						r56_trait_opposed_to_democracy
 					}
+					expire = "1965.1.1"
 				}
-				hidden_effect = {
-					create_country_leader = {
-						name = "Emilio Mola"
-						desc = "POLITICS_EMILIO_MOLA_DESC"
-						picture = "GFX_portrait_emilio_mola"
-						expire = "1965.1.1"
-						ideology = despotism
-						traits = {
-							the_director
-							r56_trait_opposed_to_communism
-							r56_trait_opposed_to_democracy
-						}
+				promote_leader = yes 
+			}
+			add_country_leader_role = {
+				character = SPA_emilio_mola
+				country_leader = {
+					ideology = despotism
+					traits = {
+						the_director
+						r56_trait_opposed_to_communism
+						r56_trait_opposed_to_democracy
 					}
+					expire = "1965.1.1"
 				}
+				promote_leader = yes 
 			}
 		}
 	}
@@ -1666,29 +1612,17 @@ focus_tree = {
 		cost = 10
 
 		available_if_capitulated = yes
-		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
 			add_political_power = 100
 			custom_effect_tooltip = SPA_the_national_syndicalist_state_tt
 			hidden_effect = {
 				drop_cosmetic_tag = yes
 				set_cosmetic_tag = SPA_spanish_empire
-				kill_country_leader = yes
-				kill_ideology_leader = neutrality
 			}
-			create_country_leader = {
-				name = "José Antonio Primo de Rivera"
-				desc = "POLITICS_JOSE_ANTONIO_PRIMO_DE_RIVERA_DESC"
-				picture = "GFX_portrait_SPA_jose_antonio_primo_de_rivera"
-				expire = "1965.1.1"
-				ideology = falangism
-				traits = {
-					sins_of_the_father
-					r56_trait_opposed_to_communism
-					r56_trait_opposed_to_democracy
-				}
-			}
+			retire_character = SPA_emilio_mola
+			promote_character = SPA_jose_antonio_primo_de_rivera
 		}
+		search_filters = {FOCUS_FILTER_POLITICAL}
 	}
 
 	focus = {
@@ -2175,7 +2109,7 @@ focus_tree = {
 		available = {
 			has_full_control_of_state = 290
 			has_country_leader = {
-				name = "José Antonio Primo de Rivera"
+				character = SPA_jose_antonio_primo_de_rivera
 				ruling_only = yes
 			}
 		}
@@ -2260,6 +2194,17 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			every_state = {
+				limit = {
+					NOT = {
+						is_claimed_by = ROOT
+						is_core_of = ROOT
+						is_owned_by = ROOT
+					}
+					is_core_of = POR
+				}
+				add_claim_by = ROOT
+			}
 			if = {
 				limit = {
 					POR = {
@@ -2334,6 +2279,13 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			every_state = {
+				limit = {
+					is_core_of = POR
+					is_controlled_by = ROOT
+				}
+				add_core_of = ROOT
+			}
 			if = {
 				limit = {
 					country_exists = BRA
@@ -2876,6 +2828,7 @@ focus_tree = {
 					has_dlc = "By Blood Alone"
 				}
 				add_tech_bonus = {
+					name = SPA_expand_the_air_branch
 					bonus = 1.0
 					uses = 1
 					technology = aa_cannon_1
@@ -3751,9 +3704,59 @@ focus_tree = {
 		completion_reward = {
 			add_stability = 0.1
 			activate_mission = SPA_carlist_uprising_mission
-			add_timed_idea = { 
-				idea = SPA_anti_major_cuck_idea
-				days = 730
+			unlock_decision_tooltip = SPA_appease_anti_secular_elements
+			generate_character = {					#he stops to exist after SCW begins, hence have to o it this way
+				token_base = SPA_francisco_franco
+				name=SPA_francisco_franco
+				portraits={
+					civilian={
+						large="gfx/leaders/SPR/r56_portrait_SPR_Francisco_Franco.dds"
+					}
+					army={
+						small="gfx/interface/ideas/idea_SPA_francisco_franco.dds"
+					}
+				}
+				
+				
+			}
+			SPA_francisco_franco = {
+				add_field_marshal_role = {
+					traits={ logistics_wizard organisational_leader expert_delegator trait_SPA_nationalist_sympathies }
+					skill=3
+					attack_skill=3
+					defense_skill=2
+					planning_skill=3
+					logistics_skill=2
+					legacy_id=1108
+					visible = {
+						OR = {
+							AND = {
+								NOT = {
+									has_global_flag = spr_r56_focus_tree
+								}
+								OR = {
+									NOT = { has_global_flag = spanish_civil_war }
+									AND = {
+										tag = SPA
+										has_global_flag = spanish_civil_war
+										NOT = { has_country_flag = SPA_sin_paquito_flag }
+									}
+									AND = {
+										tag = SPD
+										has_global_flag = spanish_civil_war
+										has_country_flag = SPA_sin_paquito_flag
+									}
+								}
+							}
+							AND = {
+								has_global_flag = spr_r56_focus_tree
+								tag = N56
+								has_global_flag = spanish_civil_war
+							}
+						}
+					}
+				}
+				
 			}
 		}
 	}
@@ -3818,7 +3821,7 @@ focus_tree = {
 
 		ai_will_do = {
 			factor = 5
-		}		
+		}
 
 		icon = GFX_focus_spa_caudillo_of_spain
 		x = 1
@@ -3830,30 +3833,26 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_STABILITY}
 		completion_reward = {
 			add_stability = 0.05
-			hidden_effect = {
-				kill_country_leader = yes
-				kill_ideology_leader = fascism
-			}
-			create_country_leader = {
-				name = "Francisco Franco"
-				desc = "POLITICS_FRANCISCO_FRANCO_DESC"
-				picture = "gfx/leaders/SPR/r56_portrait_SPR_Francisco_Franco.dds"
-				expire = "1965.1.1"
-				ideology = despotism
-				traits = {
-					caudillo_1
+			
+			add_country_leader_role = {
+				character = SPA_francisco_franco
+				country_leader = {
+				  ideology=despotism
+				  traits = { caudillo_1 }
+				  expire="1965.1.1"
 				}
+				promote_leader = yes
 			}
-			create_country_leader = {
-				name = "Francisco Franco"
-				desc = "POLITICS_FRANCISCO_FRANCO_DESC"
-				picture = "gfx/leaders/SPR/r56_portrait_SPR_Francisco_Franco.dds"
-				expire = "1965.1.1"
-				ideology = fascism_ideology
-				traits = {
-					caudillo_1
+			add_country_leader_role = {
+				character = SPA_francisco_franco
+				country_leader = {
+				  ideology=fascism_ideology
+				  traits = { caudillo_1 }
+				  expire="1965.1.1"
 				}
+				promote_leader = yes
 			}
+			unlock_decision_tooltip = SPA_prepare_the_merge_of_falanga_with_carlists
 		}
 	}
 
@@ -5144,37 +5143,36 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_STABILITY}
 		completion_reward = {
 			add_stability = 0.05
-			remove_country_leader_trait = caudillo_1
-			add_country_leader_trait = caudillo_2
+			swap_ruler_traits = { remove = caudillo_1 add = caudillo_2 }
 			hidden_effect = {
 				if = {
 					limit = {
 						has_government = neutrality
 					}
-					retire_ideology_leader = fascism
-					create_country_leader = {
-						name = "Francisco Franco"
-						picture = "GFX_portrait_spain_francisco_franco_old"
-						expire = "1965.1.1"
+					remove_trait = {
+						character = SPA_francisco_franco
 						ideology = fascism_ideology
-						traits = {
-							caudillo_2
-						}
+						trait = caudillo_1
+					}
+					add_trait = {
+						character = SPA_francisco_franco
+						ideology = fascism_ideology
+						trait = caudillo_2
 					}
 				}
 				if = {
 					limit = {
 						has_government = fascism
 					}
-					retire_ideology_leader = neutrality
-					create_country_leader = {
-						name = "Francisco Franco"
-						picture = "GFX_portrait_spain_francisco_franco_old"
-						expire = "1965.1.1"
+					remove_trait = {
+						character = SPA_francisco_franco
 						ideology = despotism
-						traits = {
-							caudillo_2
-						}
+						trait = caudillo_1
+					}
+					add_trait = {
+						character = SPA_francisco_franco
+						ideology = despotism
+						trait = caudillo_2
 					}
 				}
 			}
@@ -5826,10 +5824,6 @@ focus_tree = {
 				remove_idea = SPA_carlism_1
 				add_idea = SPA_disjointed_carlist_juntas
 			}
-			add_timed_idea = { 
-				idea = SPA_anti_major_cuck_idea
-				days = 730
-			}
 			activate_mission = SPA_fascist_crackdown_mission
 			#remove_ideas = SPA_carlism_1
 			#add_ideas = SPA_disjointed_carlist_juntas
@@ -6451,12 +6445,7 @@ focus_tree = {
 				remove_idea = SPA_crusade_against_democracy_9
 				add_idea = SPA_crusade_against_democracy_10
 			}
-			if = { 
-				limit = {
-					has_dlc = "Waking the Tiger"
-				}
-				custom_effect_tooltip = cost_reduced_last_stand 
-			}
+			custom_effect_tooltip = cost_reduced_last_stand 
 		}
 	}
 
@@ -8294,7 +8283,7 @@ focus_tree = {
 					}
 				}
 			}
-			#add_ideas = r56i_laws_gender_equality
+			add_ideas = r56i_laws_gender_equality
 		}
 	}
 
@@ -8537,7 +8526,6 @@ focus_tree = {
 					set_party_name = { ideology = communism long_name = SPR_communism_independent_party_long name = SPR_communism_independent_party }
 					create_country_leader = {
 						name = "Julián Gorkin"
-						desc = "POLITICS_JULIAN_GORKIN_DESC"
 						picture = "GFX_portrait_SPR_julian_gorkin"
 						expire = "1965.1.1"
 						ideology = marxism
@@ -8548,7 +8536,6 @@ focus_tree = {
 					}
 					create_country_leader = {
 						name = "Anarchist Commune"
-						desc = "POLITICS_ANARCHIST_COMMUNE_DESC"
 						picture = "GFX_portrait_SPR_anarchist_commune"
 						expire = "1965.1.1"
 						ideology = anarchism
@@ -8584,7 +8571,6 @@ focus_tree = {
 					set_party_name = { ideology = communism long_name = SPR_communism_independent_party_long name = SPR_communism_independent_party }
 					create_country_leader = {
 						name = "Julián Gorkin"
-						desc = "POLITICS_JULIAN_GORKIN_DESC"
 						picture = "GFX_portrait_SPR_julian_gorkin"
 						expire = "1965.1.1"
 						ideology = marxism
@@ -9734,7 +9720,7 @@ focus_tree = {
 			division_template = {
 				name = "Anarchist Militia"
 				priority = 1
-				is_locked = no
+				is_locked = yes
 				division_names_group = SPD_INF_06
 				regiments = {
 					infantry = { x = 0 y = 0 }
@@ -10073,7 +10059,6 @@ focus_tree = {
 				}
 				create_country_leader = {
 					name = "José Díaz"
-					desc = "POLITICS_JOSE_DIAZ_DESC"
 					picture = "portrait_spr_jose_diaz.dds"
 					expire = "1965.1.1"
 					ideology = stalinism
@@ -12618,7 +12603,6 @@ focus_tree = {
 				}
 				create_country_leader = {
 					name = "José Díaz"
-					desc = "POLITICS_JOSE_DIAZ_DESC"
 					picture = "portrait_spr_jose_diaz.dds"
 					expire = "1965.1.1"
 					ideology = stalinism
@@ -12765,7 +12749,7 @@ focus_tree = {
 					template_counter = 3
 					priority = 1
 					division_names_group = SPR_INF_01
-					is_locked = no
+					is_locked = yes
 					regiments = {
 						infantry = { x = 0 y = 0 }
 						infantry = { x = 0 y = 1 }
@@ -14230,526 +14214,5 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
 	}
-
-	#### INDUSTRY TREE
-
-	focus = {
-		id = SPR_industry_tree
-		icon = GFX_goal_generic_construction
-		cost = 5
-		ai_will_do = {
-			factor = 40
-		}
-		available = {
-
-		}
-
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = industrial_bonus
-				bonus = 1.0
-				uses = 1
-				category = industry
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		x = 32
-		y = 2
-
-
-	}
-	focus = {
-		id = SPR_increase_public_investments1
-		icon = GFX_goal_generic_construct_civ_factory
-		cost = 10.00
-		prerequisite = {
-			focus = SPR_industry_tree
-		}
-		ai_will_do = {
-			factor = 40
-		}
-		
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		relative_position_id = SPR_industry_tree
-		x = -1
-		y = 1
-
-	}
-	focus = {
-		id = SPR_create_the_ini1
-		icon = GFX_goal_generic_intelligence_exchange
-		cost = 5
-		prerequisite = {
-			focus = SPR_increase_public_investments1
-		}
-		ai_will_do = {
-			factor = 30
-		}
-
-
-		completion_reward = {
-			add_ideas = SPR_ini
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = -2
-		y = 2
-		relative_position_id = SPR_industry_tree
-	}
-	focus = {
-		id = SPR_create_instalaza1
-		icon = GFX_goal_spr_fund_instalaza
-		cost = 5
-		ai_will_do = {
-			factor = 30
-		}
-		prerequisite = {
-			focus = SPR_create_the_ini1
-		}
-
-
-	
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = -1
-		y = 3
-		relative_position_id = SPR_industry_tree
-	}
-	focus = {
-		id = SPR_surevaluate_the_peseta1
-		icon = GFX_focus_GRE_Combat_depression
-		cost = 5
-		ai_will_do = {
-			factor = 35
-		}
-		prerequisite = {
-			focus = SPR_industry_tree
-		}
-
-
-		completion_reward = {
-			add_ideas = SPR_peseta_surevaluated
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = 1
-		y = 1
-		relative_position_id = SPR_industry_tree
-	}
-	focus = {
-		id = SPR_save_the_education_budget1
-		icon = GFX_goal_generic_scientific_exchange
-		cost = 10.00
-		prerequisite = {
-			focus = SPR_increase_public_investments1
-		}
-		ai_will_do = {
-			factor = 50
-		}
-		prerequisite = {
-			focus = SPR_surevaluate_the_peseta1
-		}
-		completion_reward = {
-			add_research_slot = 1
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		x = 0
-		y = 2
-		relative_position_id = SPR_industry_tree
-	}
-	focus = {
-		id = SPR_repair_the_national_roads1
-		icon = GFX_goal_generic_construct_infrastructure
-		cost = 10.00
-		prerequisite = {
-			focus = SPR_surevaluate_the_peseta1
-		}
-		available = {
-		}
-		ai_will_do = {
-			factor = 45
-		}
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = 2
-		y = 2
-		relative_position_id = SPR_industry_tree
-
-	}
-	focus = {
-		id = SPR_expand_the_mines1
-		icon = GFX_goal_generic_construction2
-		cost = 10.00
-		ai_will_do = {
-			factor = 20
-		}
-
-		available = {
-		}
-
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = excavation_tech_bonus
-				bonus = 1.5
-				uses = 2
-				category = excavation_tech
-			}			
-		#	add_resource = {
-		#	    type = tungsten
-		#	    amount = 21
-		#	    state = 171
-		#	}
-		#	add_resource = {
-		#	    type = steel
-		#	    amount = 13
-		#	    state = 166
-		#	}
-		#	add_resource = {
-		#	    type = steel
-		#	    amount = 13
-		#	    state = 173
-		#	}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		prerequisite = {
-			focus = SPR_repair_the_national_roads1
-		}
-		x = 1
-		y = 3
-		relative_position_id = SPR_industry_tree
-	}
-	focus = {
-		id = SPR_support_the_heavy_industry1
-		icon = GFX_goal_generic_construct_mil_factory
-		cost = 10.00
-		prerequisite = {
-			focus = SPR_create_instalaza1
-		}
-		ai_will_do = {
-			factor = 50
-		}
-
-
-		prerequisite = {
-			focus = SPR_expand_the_mines1
-		}
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = 0
-		y = 4
-		relative_position_id = SPR_industry_tree
-	}
-
-
-
-
-
 
 }
