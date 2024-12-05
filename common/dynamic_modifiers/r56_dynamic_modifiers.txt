@@ -178,24 +178,8 @@ r56_the_project = {
 	}
 	icon = GFX_modifiers_SOV_civilian_labor_in_defense
 
-	state_production_speed_nuclear_facility_factor = 0.10
-	state_production_speed_nuclear_reactor_factor = 0.10
-}
 
-#For use outside of the USA
-r56_the_project_generic = {
-	remove_trigger = {
-		THIS = {
-			NOT = {
-				is_fully_controlled_by = ROOT
-			}
-		}
-	}
-
-	icon = GFX_modifiers_SOV_civilian_labor_in_defense
-
-	state_production_speed_nuclear_facility_factor = 0.10
-	state_production_speed_nuclear_reactor_factor = 0.10
+	state_production_speed_nuclear_reactor_factor = 0.25
 }
 
 r56_wpa_project = {
@@ -255,43 +239,6 @@ r56_volksdeutscher_selbstschutz_recruitment = {
 	state_resources_factor = 0.05
 }
 
-r56_AOI_provincial_capital = {
-	enable = { always = yes }
-	remove_trigger = {
-		ROOT = { 
-			NOT = {
-				CONTROLLER = {
-					tag = AOI
-				}
-			} # ROOT refers to the state on which the modifier is added
-		}
-	}
-
-	icon = GFX_modifiers_generic_military_plans
-
-		
-	#resistance_growth = -0.05
-	army_defence_factor = 0.10
-	max_dig_in_factor = 0.25
-	local_building_slots_factor = 0.25
-	local_non_core_supply_impact_factor = -0.25
-}
-
-r56_channel_island_defendablity = {
-	enable = { always = yes }
-	icon = GFX_modifiers_generic_military_plans
-	remove_trigger = {
-		ROOT = { 
-			CONTROLLER = {
-				tag = JER
-			}
-		}
-	}	
-	
-	army_defence_factor = -0.10
-	local_supplies = -0.25
-}
-
 r56_MPL_mandate_area = {
 	remove_trigger = {
 		OR = {
@@ -319,21 +266,17 @@ r56_MPL_mandate_area = {
 	local_building_slots_factor = 0.5
 	local_non_core_supply_impact_factor = -1
 }
-
 r56_ISR_palestinian_resistance = {
 	remove_trigger = {
 		controller = {
 			NOT = {
-				original_tag = ISR
-			}
-			NOT = {
-				has_war_with = ISR
+				TAG = ISR
 			}
 		}
 	}
 	enable = {
 		controller = {
-			original_tag = ISR
+			TAG = ISR
 		}
 	}
 	icon = GFX_decision_SWI_consolidate_council_power
@@ -343,21 +286,17 @@ r56_ISR_palestinian_resistance = {
 	local_supplies = -0.3
 	local_manpower = -0.8
 }
-
 r56_ISR_palestinian_resistance_low = {
 	remove_trigger = {
 		controller = {
 			NOT = {
-				original_tag  = ISR
-			}
-			NOT = {
-				has_war_with = ISR
+				TAG = ISR
 			}
 		}
 	}
 	enable = {
 		controller = {
-			original_tag = ISR
+			TAG = ISR
 		}
 	}
 	icon = GFX_decision_generic_civil_support
@@ -370,16 +309,13 @@ r56_ISR_palestinian_resistance_lower = {
 	remove_trigger = {
 		controller = {
 			NOT = {
-				original_tag  = ISR
-			}
-			NOT = {
-				has_war_with = ISR
+				TAG = ISR
 			}
 		}
 	}
 	enable = {
 		controller = {
-			original_tag = ISR
+			TAG = ISR
 		}
 	}
 	icon = GFX_decision_eng_trade_unions_support
@@ -400,9 +336,8 @@ r56_ISR_negev_modifier = {
 }
 r56_ISR_negev_offensive = {
 	icon = GFX_decision_generic_nationalism
-	enable = {
-		always = yes
-	}
+	attacker_modifier = yes
+
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.05
 	army_speed_factor = 0.05
@@ -412,8 +347,9 @@ r56_ISR_negev_offensive = {
 				has_full_control_of_state = 1017
 			}
 			ISR = {
-				has_completed_focus = ISR_win
-				has_war = no
+				NOT = {
+					has_war_with = PAL
+				}
 			}
 		}
 	}
@@ -427,19 +363,21 @@ r56_ISR_jerusalem_strategy = {
 	remove_trigger = {
 		OR = {
 			ISR = {
-				has_completed_focus = ISR_win
+				NOT = {
+					has_war_with = PAL
+				}
 			}
 			ISR = {
 				NOT = {
 					controls_state = 1016
 				}
-				has_war = no
 			}
 		}
 		
 	}
 }
 r56_ISR_retake_jerusalem = {
+	attacker_modifier = yes
 
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.05
@@ -449,13 +387,16 @@ r56_ISR_retake_jerusalem = {
 				has_full_control_of_state = 1016
 			}
 			ISR = {
-				has_completed_focus = ISR_win
+				NOT = {
+					has_war_with = PAL
+				}
 			}
 		}
 	}
 }
 r56_ISR_attack_west_bank = {
 	icon = GFX_decision_generic_nationalism
+	attacker_modifier = yes
 
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.05
@@ -465,8 +406,9 @@ r56_ISR_attack_west_bank = {
 				has_full_control_of_state = 1017
 			}
 			ISR = {
-				has_completed_focus = ISR_win
-				has_war = no
+				NOT = {
+					has_war_with = PAL
+				}
 			}
 		}
 	}
@@ -485,7 +427,7 @@ r56_PAL_telaviv_offensive = {
 	remove_trigger = {
 		controller = {
 			NOT = {
-				original_tag = ISR
+				TAG = ISR
 			}
 		}
 	}
@@ -498,7 +440,7 @@ r56_PAL_jerusalem_offensive = {
 	remove_trigger = {
 		controller = {
 			NOT = {
-				original_tag = ISR
+				TAG = ISR
 			}
 		}
 	}
@@ -509,7 +451,8 @@ r56_PAL_jerusalem_offensive = {
 
 r56_PAL_reclaim_sicilly = {
 	icon = GFX_decision_generic_nationalism
- 
+	attacker_modifier = yes
+
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.05
 	army_speed_factor = 0.05
@@ -521,6 +464,7 @@ r56_PAL_reclaim_sicilly = {
 }
 r56_PAL_reclaim_azerbaijan = {
 	icon = GFX_decision_generic_nationalism
+	attacker_modifier = yes
 
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.1
@@ -579,6 +523,7 @@ r56_PAL_atheism_issue = {
 
 r56_AFG_attack_kabul = {
 	icon = GFX_decision_generic_nationalism
+	attacker_modifier = yes
 
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.05
@@ -599,6 +544,7 @@ r56_AFG_attack_kabul = {
 
 r56_AFG_attack_alborz = {
 	icon = GFX_decision_generic_nationalism
+	attacker_modifier = yes
 
 	army_attack_factor = 0.1
 	breakthrough_factor = 0.05
@@ -618,97 +564,20 @@ r56_AFG_attack_alborz = {
 	}
 }
 
-r56_AUS_crownland = {
-	icon = GFX_decision_generic_monarchy
-	
-	local_manpower = 0.25
-	local_factories = 0.15
-	local_resources = 0.2
-	compliance_gain = 0.15
-	enable = {
-		is_controlled_by = AUS
-	}
-	remove_trigger = {
-		OR = {
-			is_core_of = AUS
-			AND = {
-				NOT = {
-					is_controlled_by = AUS
-				}
-				controller = {
-					NOT = {
-						has_war_with = AUS
-					}
-				}
-			}
-		}
-	}
+Colonial_suppression = { # on State, not Province! - Fantom
+
+	icon = GFX_idea_saf_history_of_segregation
+
+    local_manpower = -0.40
 }
 
-r56_AUS_red_vienna = {
-	icon = GFX_decision_generic_merge_plant_materiel
-	local_supplies_for_controller = 0.25
-	local_building_slots_factor = 0.1
-	local_manpower = 0.15
-	state_production_speed_buildings_factor = 0.1
-	
-	
-	enable = {
-		4 = {
-			is_controlled_by = AUS
-		}
-	}
-	remove_trigger = {
-		4= {
-			OR = {
-				AUS = {
-					has_civil_war = no
-					NOT = {
-						has_government = democratic
-						has_government = communism
-					}
-				}
-				controller = {
-					NOT ={
-						original_tag = AUS
-						has_war_with = AUS
-					}
-				}
-			}
-		}
-	}
+france_retreat = { # on State, not Province! - Fantom
+
+	icon = GFX_idea_prc_the_long_march2
+
+    state_production_speed_buildings_factor = -0.15
+	compliance_gain = 0.05
+	resistance_growth = -0.25
+	resistance_damage_to_garrison = -0.25
 }
 
-r56_AUS_german_resistance_armed = {
-	icon = GFX_decision_revolt
-	army_defence_factor = -0.1
-	attrition_for_controller = 0.05
-	army_speed_factor_for_controller = -0.1
-	disable_strategic_redeployment_for_controller = 1
-	remove_trigger = {
-		FROM = {
-			is_fully_controlled_by = AUS
-		}
-	}
-	enable = {
-		FROM = {
-			is_controlled_by = GER
-		}
-	}
-}
-SAU_oil_rush = {
-	icon = GFX_decision_oil
-	
-	state_production_speed_buildings_factor = 0.1
-	local_supply_impact_factor = 0.15
-	state_resources_factor = 0.05
-}
-
-PHI_agriculture = {
-	icon = generic_agrarian_society
-	
-	weekly_manpower = 250
-	production_speed_infrastructure_factor = 0.15
-	production_speed_industrial_complex_factor = 0.1
-	local_supply_impact_factor = -0.15
-}

@@ -1,0 +1,1249 @@
+scripted_gui = {
+	show_open_eu4_like_ages_window = {
+		context_type = player_context
+
+		window_name = "show_open_eu4_like_ages_window"
+		parent_window_token = top_bar
+
+		visible = {
+			is_ai = no
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			show_button_click = {
+				clr_country_flag = hide_open_eu4_like_ages_window
+			}
+			hide_button_click = {
+				set_country_flag = hide_open_eu4_like_ages_window
+			}
+		}
+
+		triggers = {
+			show_button_visible = {
+				has_country_flag = hide_open_eu4_like_ages_window
+			}
+			hide_button_visible = {
+				NOT = { has_country_flag = hide_open_eu4_like_ages_window }
+			}
+		}
+	}
+
+	open_eu4_like_ages_window = {
+		context_type = player_context
+
+		window_name = "open_eu4_like_ages_window"
+		parent_window_token = top_bar
+
+		visible = {
+			has_variable = global.current_age
+			OR = {
+				is_ai = yes
+				NOT = { has_country_flag = hide_open_eu4_like_ages_window }
+			}
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			open_button_click = {
+				if = {
+					limit = {
+						has_variable = show_eu4_like_ages_window
+					}
+					clear_variable = show_eu4_like_ages_window
+					scoped_sound_effect = "click_close"
+				}
+				else = {
+					set_variable = { show_eu4_like_ages_window = 1 }
+					meta_effect = {
+						text = {
+							scoped_sound_effect = eu4_style_age_[AGE]_sound
+						}
+						AGE = "[?global.current_age]"
+					}
+				}
+			}
+			open_button_right_click = {
+				if = {
+					limit = {
+						has_variable = show_eu4_like_ages_window
+					}
+					clear_variable = show_eu4_like_ages_window
+				}
+				else = {
+					set_variable = { show_eu4_like_ages_window = 1 }
+				}
+			}
+		}
+
+		triggers = {
+			open_button_overlay_golden_age_visible = {
+				has_country_flag = had_golden_age
+				has_idea = golden_age_idea
+			}
+			age_ability_unlockable_glow_visible = {
+				is_ai = no
+				any_of = {
+					array = global.current_age_abilities
+					value = v
+					set_temp_variable = { age_ability = v }
+					can_select_current_age_ability = yes
+					can_select_current_unique_age_ability = yes
+				}
+			}
+			get_next_age_trigger_icon_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 1 }
+					}
+					are_triggers_met_for_age_1 = yes
+				}
+				else_if = {
+					limit = {
+						check_variable = { global.current_age < 2 }
+					}
+					are_triggers_met_for_age_2 = yes
+				}
+				else_if = {
+					limit = {
+						check_variable = { global.current_age < 3 }
+					}
+					are_triggers_met_for_age_3 = yes
+				}
+				else_if = {
+					limit = {
+						check_variable = { global.current_age < 4 }
+					}
+					are_triggers_met_for_age_4 = yes
+				}
+				else_if = {
+					limit = {
+						check_variable = { global.current_age < 5 }
+					}
+					are_triggers_met_for_age_5 = yes
+				}
+				else_if = {
+					limit = {
+						check_variable = { global.current_age < 6 }
+					}
+					are_triggers_met_for_age_6 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+		}
+
+		properties = {
+			small_age_icon = {
+				frame = global.current_age
+			}
+		}
+
+		ai_enabled = {
+			always = yes
+		}
+
+		ai_test_interval = 168
+		ai_test_variance = 0.1
+
+		ai_check = {
+			NOT = { check_variable = { show_eu4_like_ages_window > 0 } }
+			AI_wants_to_select_age_ability = yes
+		}
+
+		ai_weights = {
+			open_button_click = {
+				ai_will_do = {
+					factor = 1
+				}
+			}
+		}
+	}
+
+	eu4_like_ages_window = {
+		context_type = player_context
+
+		window_name = "eu4_like_ages_window"
+
+		visible = {
+			check_variable = { show_eu4_like_ages_window > 0 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			close_button_click = {
+				clear_variable = show_eu4_like_ages_window
+			}
+			golden_age_button_click = {
+				add_timed_idea = {
+					idea = golden_age_idea
+					days = 730
+				}
+				hidden_effect = {
+					set_country_flag = had_golden_age
+					set_variable = { golden_age_start_date = global.date }
+					meta_effect = {
+						text = {
+							set_variable = { golden_age_start_year = [YEAR] }
+							set_variable = { golden_age_end_year = [YEAR] }
+							add_to_variable = { golden_age_end_year = 2 }
+						}
+						YEAR = "[GetYear]"
+					}
+					set_variable = { golden_age_end_date = global.date }
+					add_to_variable = { golden_age_end_date = 17.52 }
+					every_other_country = {
+						limit = {
+							is_ai = no
+							NOT = { has_country_flag = disabled_other_country_golden_age_alert }
+						}
+						add_to_array = { eu4_like_ages_other_country_golden_age_alert_array = ROOT.id }
+					}
+				}
+			}
+			select_ability_button_click = {
+				set_temp_variable = { age_ability = v }
+				if = {
+					limit = {
+						is_ai = yes
+					}
+					enact_age_ability_effect = yes
+				}
+				else = {
+					effect_tooltip = {
+						enact_age_ability_effect = yes
+					}
+					set_variable = { confirm_select_age_ability = age_ability }
+				}
+			}
+		}
+
+		triggers = {
+			golden_age_button_visible = {
+				NOT = { has_country_flag = had_golden_age }
+			}
+			golden_age_button_click_enabled = {
+				is_fulfilling_3_age_objectives = yes
+			}
+			golden_age_icon_visible = {
+				has_country_flag = had_golden_age
+				has_idea = golden_age_idea
+			}
+			golden_age_over_icon_visible = {
+				has_country_flag = had_golden_age
+				NOT = { has_idea = golden_age_idea }
+			}
+			golden_age_text_visible = {
+				has_country_flag = had_golden_age
+			}
+			small_age_icon_1_visible = {
+				check_variable = { global.current_age = 1 }
+			}
+			very_small_age_icon_1_visible = {
+				NOT = { check_variable = { global.current_age = 1 } }
+			}
+			get_trigger_for_age_1_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 1 }
+					}
+					are_triggers_met_for_age_1 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			small_age_icon_2_visible = {
+				check_variable = { global.current_age = 2 }
+			}
+			very_small_age_icon_2_visible = {
+				NOT = { check_variable = { global.current_age = 2 } }
+			}
+			get_trigger_for_age_2_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 2 }
+					}
+					are_triggers_met_for_age_2 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			small_age_icon_3_visible = {
+				check_variable = { global.current_age = 3 }
+			}
+			very_small_age_icon_3_visible = {
+				NOT = { check_variable = { global.current_age = 3 } }
+			}
+			get_trigger_for_age_3_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 3 }
+					}
+					are_triggers_met_for_age_3 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			small_age_icon_4_visible = {
+				check_variable = { global.current_age = 4 }
+			}
+			very_small_age_icon_4_visible = {
+				NOT = { check_variable = { global.current_age = 4 } }
+			}
+			get_trigger_for_age_4_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 4 }
+					}
+					are_triggers_met_for_age_4 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			small_age_icon_5_visible = {
+				check_variable = { global.current_age = 5 }
+			}
+			very_small_age_icon_5_visible = {
+				NOT = { check_variable = { global.current_age = 5 } }
+			}
+			get_trigger_for_age_5_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 5 }
+					}
+					are_triggers_met_for_age_5 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			small_age_icon_6_visible = {
+				check_variable = { global.current_age = 6 }
+			}
+			very_small_age_icon_6_visible = {
+				NOT = { check_variable = { global.current_age = 6 } }
+			}
+			get_trigger_for_age_6_visible = {
+				hidden_trigger = {
+					is_ai = no
+				}
+				if = {
+					limit = {
+						check_variable = { global.current_age < 6 }
+					}
+					are_triggers_met_for_age_6 = yes
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			# Abilities:
+			ability_bg_red_visible = {
+				set_temp_variable = { age_ability = v }
+				NOT = { is_in_array = { currently_selected_age_abilities = age_ability } }
+				NOT = { can_select_current_age_ability = yes }
+				can_select_current_unique_age_ability = yes
+			}
+			ability_bg_green_visible = {
+				set_temp_variable = { age_ability = v }
+				can_select_current_age_ability = yes
+				can_select_current_unique_age_ability = yes
+			}
+			ability_bg_blue_visible = {
+				set_temp_variable = { age_ability = v }
+				is_in_array = { currently_selected_age_abilities = age_ability }
+			}
+			select_ability_button_visible = {
+				set_temp_variable = { age_ability = v }
+				NOT = { is_in_array = { currently_selected_age_abilities = age_ability } }
+			}
+			select_ability_button_click_enabled = {
+				set_temp_variable = { age_ability = v }
+				can_select_current_age_ability = yes
+				can_select_current_unique_age_ability = yes
+			}
+			selected_ability_icon_visible = {
+				set_temp_variable = { age_ability = v }
+				is_in_array = { currently_selected_age_abilities = age_ability }
+			}
+			ability_flag_icon_visible = {
+				is_ai = no
+				check_variable = { i > 6 }
+			}
+			ability_flag_icon_click_enabled = {
+				set_temp_variable = { age_ability = v }
+				can_select_current_unique_age_ability = yes
+			}
+
+			# Objectives:
+			objective_icon_click_enabled = {
+				set_temp_variable = { age_objective = v }
+				country_fulfills_current_age_objective = yes
+			}
+			objective_frame_click_enabled = {
+				set_temp_variable = { age_objective = v }
+				country_fulfills_current_age_objective = yes
+			}
+		}
+
+		properties = {
+			current_age_image = {
+				frame = global.current_age
+			}
+			select_ability_button = {
+				frame = v
+			}
+			selected_ability_icon = {
+				frame = v
+			}
+			ability_flag_icon = {
+				image = "[This.GetAbilityFlagIcon]"
+			}
+			objective_icon = {
+				frame = v
+			}
+		}
+
+		dynamic_lists = {
+			age_abilities_gridbox = {
+				array = global.current_age_abilities
+				entry_container = age_abilities_entry
+
+				ai_weights = {
+					select_ability_button_click = {
+						ai_will_do = {
+							base = 2
+							modifier = {
+								add = 100
+								check_variable = { i > 6 }
+								set_temp_variable = { age_ability = v }
+								can_select_current_unique_age_ability = yes
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 5 }
+								has_stability > 0.8
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 14 }
+								has_army_size = {
+									size < 1
+									type = artillery
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 15 }
+								has_deployed_air_force_size = {
+									size < 1
+									type = cas
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 17 }
+								num_of_nukes < 1
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 18 }
+								has_war_support > 0.999
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 19 }
+								has_war = no
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 20 }
+								has_war = no
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 21 }
+								has_army_size = {
+									size < 1
+									type = armor
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 22 }
+								has_navy_size = {
+									size < 1
+									type = capital_ship
+								}
+							}
+							modifier = {
+								factor = 0.25
+								check_variable = { v = 25 }
+								OR = {
+									AND = {
+										NOT = { has_dlc = "Together for Victory" }
+										NOT = { has_dlc = "Death or Dishonor" }
+										NOT = { has_dlc = "Waking the Tiger" }
+									}
+									num_subjects < 1
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 29 }
+								has_deployed_air_force_size = {
+									size < 1
+									type = strategic_bomber
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 30 }
+								NOT = { has_government = democratic }
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 37 }
+								has_navy_size = {
+									size < 1
+									type = capital_ship
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 41 }
+								NOT = { has_government = democratic }
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 45 }
+								has_army_size = {
+									size < 1
+									type = artillery
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 51 }
+								has_war_support > 0.999
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 53 }
+								has_navy_size = {
+									size < 1
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 55 }
+								NOT = { has_government = democratic }
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 58 }
+								has_navy_size = {
+									size < 1
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 60 }
+								has_deployed_air_force_size = {
+									size < 1
+									type = cas
+								}
+							}
+							modifier = {
+								factor = 0.5
+								check_variable = { v = 63 }
+								has_stability > 0.8
+							}
+						}
+					}
+				}
+			}
+			age_objectives_gridbox = {
+				array = global.current_age_objectives
+				entry_container = age_objectives_entry
+			}
+		}
+
+		ai_enabled = {
+			always = yes
+		}
+
+		ai_test_interval = 48
+		ai_test_variance = 0.1
+
+		ai_check = {
+			check_variable = { show_eu4_like_ages_window > 0 }
+		}
+
+		ai_max_weight_taken_per_test = 13
+		ai_weights = {
+			close_button_click = {
+				ai_will_do = {
+					base = 0
+					modifier = {
+						add = 1000
+						NOT = { AI_wants_to_select_age_ability = yes }
+					}
+				}
+			}
+			golden_age_button_click = {
+				ai_will_do = {
+					base = 0
+					modifier = {
+						add = 500
+						AI_wants_to_select_golden_age = yes
+					}
+				}
+			}
+		}
+	}
+
+	age_ability_window_confirm_alert = {
+		context_type = player_context
+
+		window_name = "age_ability_window_confirm_alert"
+
+		visible = {
+			is_ai = no
+			has_variable = confirm_select_age_ability
+			set_temp_variable = { age_ability = confirm_select_age_ability }
+		}
+
+		effects = {
+			cancel_button_click = {
+				clear_variable = confirm_select_age_ability
+			}
+			accept_button_click = {
+				set_temp_variable = { age_ability = confirm_select_age_ability }
+				enact_age_ability_effect = yes
+				clear_variable = confirm_select_age_ability
+			}
+		}
+
+		triggers = {
+			accept_button_click_enabled = {
+				set_temp_variable = { age_ability = confirm_select_age_ability }
+				can_select_current_age_ability = yes
+				can_select_current_unique_age_ability = yes
+			}
+		}
+	}
+
+	eu4_like_ages_new_age_popup_alert_window = {
+		context_type = player_context
+
+		window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			is_ai = no
+			check_variable = { show_eu4_like_ages_new_age_popup_alert_window > 0 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			close_button_click = {
+				clear_variable = show_eu4_like_ages_new_age_popup_alert_window
+			}
+		}
+
+		properties = {
+			current_age_image = {
+				frame = global.current_age
+			}
+			objective_icon = {
+				frame = v
+			}
+		}
+
+		dynamic_lists = {
+			age_objectives_new_age_popup_alert_gridbox = {
+				array = global.current_age_objectives
+				entry_container = age_objectives_new_age_popup_alert_entry
+			}
+		}
+	}
+
+	age_1_unique_age_objectives_window = {
+		context_type = player_context
+
+		window_name = "age_1_unique_age_objectives_window"
+		parent_window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			check_variable = { global.current_age = 1 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			unique_age_objective_country_icon_1_click = {
+				JAP = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_2_click = {
+				random_country = {
+					limit = {
+						tag = AUH
+						exists = yes
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+			unique_age_objective_country_icon_3_click = {
+				SER = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_click = {
+				ITA = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+		}
+
+		properties = {
+			unique_age_objective_country_icon_1 = {
+				image = "[JAP.GetFlag]"
+			}
+			unique_age_objective_country_icon_2 = {
+				image = "[AUH.GetFlag]"
+			}
+			unique_age_objective_country_icon_3 = {
+				image = "[SER.GetFlag]"
+			}
+			unique_age_objective_country_icon_4 = {
+				image = "[ITA.GetFlag]"
+			}
+		}
+	}
+
+	age_2_unique_age_objectives_window = {
+		context_type = player_context
+
+		window_name = "age_2_unique_age_objectives_window"
+		parent_window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			check_variable = { global.current_age = 2 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			unique_age_objective_country_icon_1_click = {
+				FRA = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_2_click = {
+				ENG = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_3_click = {
+				GER = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_click = {
+				USA = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+		}
+
+		properties = {
+			unique_age_objective_country_icon_1 = {
+				image = "[FRA.GetFlag]"
+			}
+			unique_age_objective_country_icon_2 = {
+				image = "[ENG.GetFlag]"
+			}
+			unique_age_objective_country_icon_3 = {
+				image = "[GER.GetFlag]"
+			}
+			unique_age_objective_country_icon_4 = {
+				image = "[USA.GetFlag]"
+			}
+		}
+	}
+
+	age_3_unique_age_objectives_window = {
+		context_type = player_context
+
+		window_name = "age_3_unique_age_objectives_window"
+		parent_window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			check_variable = { global.current_age = 3 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			unique_age_objective_country_icon_1_click = {
+				GER = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_2_click = {
+				CHI = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_3_click = {
+				ENG = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_click = {
+				POL = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+		}
+
+		properties = {
+			unique_age_objective_country_icon_1 = {
+				image = "[GER.GetFlag]"
+			}
+			unique_age_objective_country_icon_2 = {
+				image = "[CHI.GetFlag]"
+			}
+			unique_age_objective_country_icon_3 = {
+				image = "[ENG.GetFlag]"
+			}
+			unique_age_objective_country_icon_4 = {
+				image = "[POL.GetFlag]"
+			}
+		}
+	}
+
+	age_4_unique_age_objectives_window = {
+		context_type = player_context
+
+		window_name = "age_4_unique_age_objectives_window"
+		parent_window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			check_variable = { global.current_age = 4 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			unique_age_objective_country_icon_1_click = {
+				FRA = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_2_click = {
+				JAP = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_3_click = {
+				SOV = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_click = {
+				ITA = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+		}
+
+		properties = {
+			unique_age_objective_country_icon_1 = {
+				image = "[FRA.GetFlag]"
+			}
+			unique_age_objective_country_icon_2 = {
+				image = "[JAP.GetFlag]"
+			}
+			unique_age_objective_country_icon_3 = {
+				image = "[SOV.GetFlag]"
+			}
+			unique_age_objective_country_icon_4 = {
+				image = "[ITA.GetFlag]"
+			}
+		}
+	}
+
+	age_5_unique_age_objectives_window = {
+		context_type = player_context
+
+		window_name = "age_5_unique_age_objectives_window"
+		parent_window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			check_variable = { global.current_age = 5 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			unique_age_objective_country_icon_1_click = {
+				USA = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_2_click = {
+				random_country = {
+					limit = {
+						has_government = democratic
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+			unique_age_objective_country_icon_3_click = {
+				random_country = {
+					limit = {
+						has_government = communism
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_click = {
+				random_country = {
+					limit = {
+						has_government = neutrality
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+		}
+
+		properties = {
+			unique_age_objective_country_icon_1 = {
+				image = "[USA.GetFlag]"
+			}
+		}
+	}
+
+	age_6_unique_age_objectives_window = {
+		context_type = player_context
+
+		window_name = "age_6_unique_age_objectives_window"
+		parent_window_name = "eu4_like_ages_new_age_popup_alert_window"
+
+		visible = {
+			check_variable = { global.current_age = 6 }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			unique_age_objective_country_icon_1_click = {
+				random_country = {
+					limit = {
+						has_government = democratic
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+			unique_age_objective_country_icon_2_click = {
+				random_country = {
+					limit = {
+						capital_scope = {
+							is_on_continent = europe
+						}
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+			unique_age_objective_country_icon_3_click = {
+				random_country = {
+					limit = {
+						capital_scope = {
+							is_on_continent = africa
+						}
+					}
+					capital_scope = {
+						ROOT = { goto_state = PREV }
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_click = {
+				PRC = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+			unique_age_objective_country_icon_4_MD = {
+				CHI = {
+					if = {
+						limit = {
+							exists = yes
+						}
+						capital_scope = {
+							ROOT = { goto_state = PREV }
+						}
+					}
+				}
+			}
+		}
+
+		triggers = {
+			unique_age_objective_country_icon_4_visible = {
+				NOT = { has_start_date > 2000.1.1 }
+			}
+			unique_age_objective_country_icon_4_MD_visible = {
+				has_start_date > 2000.1.1
+			}
+		}
+
+		properties = {
+			unique_age_objective_country_icon_4 = {
+				image = "[PRC.GetFlag]"
+			}
+			unique_age_objective_country_icon_4_MD = {
+				image = "[CHI.GetFlag]"
+			}
+		}
+	}
+
+	eu4_like_ages_other_country_entered_golden_age_popup_alert_window = {
+		context_type = player_context
+
+		window_name = "eu4_like_ages_other_country_entered_golden_age_popup_alert_window"
+
+		visible = {
+			is_ai = no
+			check_variable = { eu4_like_ages_other_country_golden_age_alert_array^num > 0 }
+			NOT = { has_country_flag = disabled_other_country_golden_age_alert }
+			has_game_rule = {
+				rule = eu4_disable_enable_ideas 
+				option = YES
+			}
+		}
+
+		effects = {
+			left_flag_click = {
+				capital_scope = {
+					ROOT = {
+						goto_state = PREV
+					}
+				}
+			}
+			right_flag_click = {
+				capital_scope = {
+					ROOT = {
+						goto_state = PREV
+					}
+				}
+			}
+			ok_button_click = {
+				ROOT = {
+					remove_from_array = { eu4_like_ages_other_country_golden_age_alert_array = PREV.id }
+				}
+			}
+			message_settings_button_click = {
+				ROOT = {
+					clear_array = eu4_like_ages_other_country_golden_age_alert_array
+					set_country_flag = disabled_other_country_golden_age_alert
+				}
+			}
+		}
+
+		properties = {
+			left_flag = {
+				image = "[This.GetFlag]"
+			}
+			right_flag = {
+				image = "[This.GetFlag]"
+			}
+		}
+
+		dynamic_lists = {
+			eu4_like_ages_other_country_entered_golden_age_popup_alert_gridbox = {
+				array = eu4_like_ages_other_country_golden_age_alert_array
+				entry_container = eu4_like_ages_other_country_entered_golden_age_popup_alert_entry
+				change_scope = yes
+			}
+		}
+	}
+}
