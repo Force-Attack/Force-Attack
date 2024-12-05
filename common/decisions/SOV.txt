@@ -5698,22 +5698,23 @@ SOV_diplomacy_baltic_decision_category = {
 		remove_effect = {
 			FROM = {
 				country_event = { id = NSB_soviet_foreign_politics_events.2 hours = 4 random_hours = 2 }
+				set_country_flag = SOV_ideological_rallies_promoted_flag 
 			}
 			custom_effect_tooltip = SOV_promote_rallies_effects_tt
 			custom_effect_tooltip = SOV_promote_ideological_rallies_cd_tt
 		}
 	}
 
-	SOV_send_ultimatum_to_country_baltic = {
+	SOV_send_ultimatum_to_baltic_countries = {
 		priority = 50
 
 		icon = eng_trade_unions_demand
 
 		ai_will_do = {
-			base = 200
+			base = 400
 			modifier = {
 				factor = 10
-				has_political_power > 160
+				has_political_power > 100
 			}
 			modifier = {
 				factor = 10
@@ -5721,22 +5722,8 @@ SOV_diplomacy_baltic_decision_category = {
 			}
 			modifier = {
 				factor = 0
-				OR = {
-					is_in_faction_with = FROM
-					surrender_progress > 0.15
-				}
+				surrender_progress > 0.15
 			}
-		}
-
-		targets = { EST LAT LIT }
-
-		target_trigger = {
-			SOV_basic_ultimatum_triggers = yes
-		}
-
-		target_root_trigger = {
-			has_completed_focus = SOV_claims_in_baltic
-			is_subject = no
 		}
 
 		allowed = {
@@ -5744,15 +5731,19 @@ SOV_diplomacy_baltic_decision_category = {
 		}
 
 		available = {
-			FROM = {
-				exists = yes
-				has_capitulated = no
+			any_other_country = {
+				OR = {
+					original_tag = EST
+					original_tag = LAT
+					original_tag = LIT
+				}
 				NOT = { has_war_with = ROOT }
 				is_subject = no
 			}
 		}
 
 		visible = {
+			has_completed_focus = SOV_claims_in_baltic
 		}
 
 		days_remove = SOV_ultimatum_days
@@ -5760,30 +5751,38 @@ SOV_diplomacy_baltic_decision_category = {
 		cost = SOV_send_ultimatum_to_country_cost
 
 		remove_effect = {
-			if = {
+			every_other_country = {
 				limit = {
-					FROM = { tag = EST }
+					OR = {
+						original_tag = EST
+						original_tag = LAT
+						original_tag = LIT
+					}
+					NOT = { has_war_with = ROOT }		#from scripted triggers
+					NOT = { is_in_faction_with = ROOT } #CAN'T SEND ULTIMATUMS TO ALLIES OR SUBJECTS
+					#OR = { #Can send Ultimatum to non-allies or puppets (but not to faction allies)
+					#	NOT = { is_in_faction_with = ROOT }
+					#	is_Subject_of = ROOT
+					#}
+					NOT = { has_country_flag = SOV_ultimatum_sent_flag }
 				}
-				EST = {
-					set_country_flag = SOV_ultimatum_sent_flag
+				set_country_flag = SOV_ultimatum_sent_flag
+				if = {
+					limit = {
+						original_tag = EST
+					}
 					country_event = { id = baltic.1 hours = 16 random_hours = 8 }
 				}
-			}
-			else_if = {
-				limit = {
-					FROM = { tag = LAT }
-				}
-				LAT = {
-					set_country_flag = SOV_ultimatum_sent_flag
+				if = {
+					limit = {
+						original_tag = LAT
+					}
 					country_event = { id = baltic.2 hours = 16 random_hours = 8 }
 				}
-			}
-			else_if = {
-				limit = {
-					FROM = { tag = LIT }
-				}
-				LIT = {
-					set_country_flag = SOV_ultimatum_sent_flag
+				if = {
+					limit = {
+						original_tag = LIT
+					}
 					country_event = { id = baltic.3 hours = 16 random_hours = 8 }
 				}
 			}
@@ -6800,24 +6799,29 @@ SOV_diplomacy_middle_east_decision_category = {
 		}
 
 		available =  {
-			#PER = { has_capitulated = yes }	#Doesnt seem to work
 			custom_trigger_tooltip = {
-				tooltip = "All starting Iranian states controlled by [SOV.GetNameDef] or her allies."
-				all_of_scopes = {
-					array = SOV_iranian_initial_states
+				tooltip = r56_operation_countenance_tooltip
+				OR = {
+					PER = { has_capitulated = yes }
+					has_global_flag = R56_PER_countenance_has_capitulated_flag
+				}
+			}
+			PER = {	#replaces broken variable loop that went through starting states
+				all_core_state = {
 					OR = {
-						is_controlled_by = SOV
-						any_allied_country = {
-							controls_state = PREV
+						owner = {
+							NOT = {
+								tag = PER
+							}
 						}
-						AND = {
-							has_global_flag = SOV_agreed_anglo_soviet_invasion_of_iran_flag
+						controller = {
 							OR = {
-								is_controlled_by = ENG
-								ENG = {
-									any_allied_country = {
-										controls_state = PREV
+								is_ally_with = SOV
+								AND = {
+									ENG = {	#required for how the flag is written
+										has_global_flag = SOV_agreed_anglo_soviet_invasion_of_iran_flag
 									}
+									is_ally_with = ENG
 								}
 							}
 						}
@@ -7480,7 +7484,7 @@ SOV_diplomacy_asia_decision_category = {
 				has_full_control_of_state = 618 #DZUNGARIA
 			}
 			num_of_civilian_factories_available_for_projects > 0
-			has_equipment = { fighter_equipment > 39 }
+			has_equipment = { small_plane_airframe > 39 }
 			has_equipment = { infantry_equipment > 499 }
 			NOT = { has_country_flag = SOV_sinkiang_investment_ongoing_flag }
 		}
@@ -7547,7 +7551,7 @@ SOV_diplomacy_asia_decision_category = {
 				custom_effect_tooltip = SOV_sinikiang_influence_cg_tt_sov
 
 				send_equipment = {
-					type = fighter_equipment
+					type = small_plane_airframe
 					amount = 40
 					target = SIK
 				}
@@ -7694,6 +7698,7 @@ SOV_diplomacy_asia_decision_category = {
 				has_full_control_of_state = 756 #JIUQUAN
 				has_full_control_of_state = 754 #GOLOG
 				has_full_control_of_state = 753 #GANNAN
+				has_full_control_of_state = 1075 #GYARONG
 				has_full_control_of_state = 283 #GANSU
 				has_full_control_of_state = 616 #NINGXIA
 			}
@@ -7727,7 +7732,7 @@ SOV_diplomacy_asia_decision_category = {
 						NOT = { has_full_control_of_state = 755 } #HAIXI
 						NOT = { has_full_control_of_state = 756 } #JIUQUAN
 						NOT = { has_full_control_of_state = 754 } #GOLOG
-						NOT = { has_full_control_of_state = 753 } #GANNAN
+						NOT = { has_full_control_of_state = 1075 } #GYARONG
 						NOT = { has_full_control_of_state = 283 } #GANSU
 						NOT = { has_full_control_of_state = 616 } #NINGXIA
 					}
@@ -8326,6 +8331,7 @@ SOV_soviet_aid_decision_category = {
 				NOT = { has_full_control_of_state = 756 } #JIUQUAN
 				NOT = { has_full_control_of_state = 754 } #GOLOG
 				NOT = { has_full_control_of_state = 753 } #GANNAN
+				NOT = { has_full_control_of_state = 1075 } #GYARONG
 				NOT = { has_full_control_of_state = 283 } #GANSU
 				NOT = { has_full_control_of_state = 616 } #NINGXIA
 			}
@@ -8668,6 +8674,7 @@ prospect_for_resources = {
 			has_full_control_of_state = 756 #JIUQUAN
 			has_full_control_of_state = 754 #GOLOG
 			has_full_control_of_state = 753 #GANNAN
+			has_full_control_of_state = 1075 #GYARONG
 			has_full_control_of_state = 283 #GANSU
 			has_full_control_of_state = 616 #NINGXIA
 			num_of_civilian_factories_available_for_projects > 1
@@ -8680,6 +8687,7 @@ prospect_for_resources = {
 			has_full_control_of_state = 756 #JIUQUAN
 			has_full_control_of_state = 754 #GOLOG
 			has_full_control_of_state = 753 #GANNAN
+			has_full_control_of_state = 1075 #GYARONG
 			has_full_control_of_state = 283 #GANSU
 			has_full_control_of_state = 616 #NINGXIA
 		}
@@ -11559,6 +11567,7 @@ SOV_industry_relocation = {
 					}
 				}
 			}
+			set_global_flag = relocate_industry_from_leningrad
 			custom_effect_tooltip = SOV_relocate_industry_from_leningrad_tt
 		}
 	}
@@ -13913,7 +13922,7 @@ SOV_soviet_civil_war_dec_cat = {
 				hidden_effect = {
 					random_controlled_state = {
 						damage_building = {
-							type = railway
+							type = rail_way
 							damage = 1
 						}
 						set_state_flag = railway_damaged_flag
@@ -13922,7 +13931,7 @@ SOV_soviet_civil_war_dec_cat = {
 					random_controlled_state = {
 						limit = { NOT = { has_state_flag = railway_damaged_flag }}
 						damage_building = {
-							type = railway
+							type = rail_way
 							damage = 1
 						}
 						set_state_flag = railway_damaged_flag
@@ -13931,7 +13940,7 @@ SOV_soviet_civil_war_dec_cat = {
 					random_controlled_state = {
 						limit = { NOT = { has_state_flag = railway_damaged_flag }}
 						damage_building = {
-							type = railway
+							type = rail_way
 							damage = 1
 						}
 						set_state_flag = railway_damaged_flag
@@ -18128,6 +18137,9 @@ operations = {
 		visible = {
 			JAP = { has_completed_focus = JAP_strengthen_civilian_government }
 			MAN = { exists = yes }
+			NOT = {
+				has_decision = SOV_counter_attack_through_manchuria
+			}
 		}
 
 		complete_effect = {
@@ -18148,6 +18160,65 @@ operations = {
 			modifier = {
 				threat < 0.25
 				factor = 0
+			}
+		}
+	}
+
+	SOV_counter_attack_through_manchuria = { # anti exploit decision if Japan attacks you
+
+		icon = generic_operation
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			JAP = { has_war_with = SOV }
+			MAN = { 
+				is_puppet_of = JAP 
+			}
+			NOT = {
+				has_war_with = MAN
+			}
+		}
+
+		cost = 25
+		fire_only_once = yes
+		visible = {
+			is_ai = yes	#a player can just declare war, since its a puppet of someone youre at war with
+			MAN = {
+				exists = yes 
+				is_puppet_of = JAP 
+			}			
+			JAP = { has_war_with = SOV }
+			controls_state = 657
+			controls_state = 561
+		}
+
+		complete_effect = {
+			create_wargoal = {
+				target = MAN
+				type = annex_everything
+			}
+		}
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				MAN = {
+					is_ai = no
+				}
+				factor = 0 #we're mean but not that mean
+			}
+			modifier = {
+				SOV = {
+					divisions_in_border_state = { # it should work, please confirm it works.
+    					size > 5
+    					state = 657
+    					border_state = 714
+					}
+				}
+				add = 20
 			}
 		}
 	}
@@ -18478,6 +18549,7 @@ SOV_panslavic_nationalism = {
 		available = {
 			has_full_control_of_state = 9
 			has_full_control_of_state = 69
+			has_full_control_of_state = 1078
 			has_full_control_of_state = 70
 			has_full_control_of_state = 71
 			has_full_control_of_state = 72
@@ -18505,6 +18577,7 @@ SOV_panslavic_nationalism = {
 		remove_effect = {
 			add_state_core = 9
 			add_state_core = 69
+			add_state_core = 1078
 			add_state_core = 70
 			add_state_core = 71
 			add_state_core = 72
@@ -18718,6 +18791,7 @@ SOV_panslavic_nationalism = {
 			has_country_flag = SOV_integrated_yugoslavia_flag
 			has_full_control_of_state = 9
 			has_full_control_of_state = 69
+			has_full_control_of_state = 1078
 			has_full_control_of_state = 70
 			has_full_control_of_state = 71
 			has_full_control_of_state = 72
@@ -19010,7 +19084,7 @@ SOV_weapons_purchases_category = {
 			factor = 1
 			modifier = {
 				has_equipment = {
-					fighter_equipment < 1
+					small_plane_airframe < 1
 				}
 				factor = 5
 			}

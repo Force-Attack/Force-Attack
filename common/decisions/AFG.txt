@@ -16,15 +16,28 @@ AFG_balance_of_power_category = {
 	
 		custom_cost_text = EGY_decision_cost_command_power
 
+		available = {
+			NOT = {
+				has_government = communism
+				has_government = democratic
+			}
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
 
 		visible = {
+			NOT = {
+				has_government = communism
+				has_government = democratic
+			}
 			original_tag = AFG
 			has_completed_focus = AFG_first_loya_jirga
 		}
 
 		fire_only_once = no
 
-		days_re_enable = 180
+		days_re_enable = 120
 
 		days_remove = 90
 
@@ -33,13 +46,49 @@ AFG_balance_of_power_category = {
 			weekly_manpower = 500
 		}
 
+		remove_effect = {
+			remove_power_balance_modifier = {
+				id = AFG_power_balance
+				modifier = AFG_recruit_tribal_mercenaries_modifier
+			}
+			custom_effect_tooltip = AFG_reactivates_in_120_days
+		}
+
+		complete_effect = {
+			add_command_power = -15
+			add_power_balance_modifier = {
+				id = AFG_power_balance
+				modifier = AFG_recruit_tribal_mercenaries_modifier
+			}
+		}
+
 		ai_will_do = {
 			base = 1
 			modifier = {
 				has_country_flag = AFG_win_loya_jirga
 				factor = 3
 			}
-
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value > 0.45
+				}
+				factor = 0
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.5
+				}
+				factor = 25
+			}
+			modifier = {
+				NOT = {
+					has_country_flag = AFG_win_loya_jirga
+				}
+				factor = 0
+			}
+		}
 	}
 	AFG_grant_tribal_autonomy = {
 
@@ -53,18 +102,46 @@ AFG_balance_of_power_category = {
 
 		cost = 50
 
+		available = {
+			NOT = {
+				has_government = communism
+			}
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
+
+		days_remove = 30
+
 		visible = {
+			NOT = {
+				has_government = communism
+			}
 			original_tag = AFG
 			has_completed_focus = AFG_first_loya_jirga
 		}
 
-		days_re_enable = 120
+		days_re_enable = 180
 
 		ai_will_do = {
 			base = 5
 			modifier = {
 				has_country_flag = AFG_win_loya_jirga
 				factor = 10
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value > 0.45
+				}
+				factor = 0
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.5
+				}
+				factor = 25
 			}
 			modifier = {
 				NOT = {
@@ -74,6 +151,19 @@ AFG_balance_of_power_category = {
 			}
 		}
 
+		modifier = {
+			political_power_factor = -0.25
+			fascism_drift = -0.01
+		}
+
+		remove_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.1
+				tooltip_side = AFG_tribal_side
+			}
+			custom_effect_tooltip = AFG_reactivates_in_180_days
+		}
 		
 		complete_effect = {
 			add_stability = 0.03
@@ -92,7 +182,17 @@ AFG_balance_of_power_category = {
 
 		cost = 25
 
-		
+		available = {
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
+
+		custom_cost_trigger = {
+			command_power > 14
+		}
+	
+		custom_cost_text = EGY_decision_cost_command_power
 
 		visible = {
 			original_tag = AFG
@@ -103,14 +203,24 @@ AFG_balance_of_power_category = {
 
 		days_remove = 30
 
+		days_re_enable = 120
+
 		modifier = {
 			weekly_manpower = -50
 			war_support_weekly = -0.002
 		}
 
-		
+		remove_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.05
+				tooltip_side = AFG_tribal_side
+			}
+			custom_effect_tooltip = AFG_reactivates_in_120_days
+		}
 
 		complete_effect = {
+			add_command_power = -15
 			add_stability = 0.03
 		}
 
@@ -121,10 +231,106 @@ AFG_balance_of_power_category = {
 				factor = 5
 			}
 			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value > 0.45
+				}
+				factor = 0
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.5
+				}
+				factor = 50
+			}
+			modifier = {
 				NOT = {
 					has_country_flag = AFG_win_loya_jirga
 				}
 				factor = 0
+			}
+		}
+	}
+	AFG_admit_tax_cuts = {
+
+		icon = GFX_decision_generic_welfare
+
+		priority = 1
+
+		allowed = {
+			original_tag = AFG
+		}
+
+		cost = 35
+
+		available = {
+			NOT = {
+				has_completed_focus = AFG_introduce_new_taxes
+			}
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
+
+		visible = {
+			original_tag = AFG
+			has_completed_focus = AFG_first_loya_jirga
+			NOT = {
+				has_completed_focus = AFG_introduce_new_taxes
+			}
+		}
+
+		days_re_enable = 180
+
+		days_remove = 60
+
+		ai_will_do = {
+			base = 5
+			modifier = {
+				has_country_flag = AFG_win_loya_jirga
+				factor = 10
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value > 0.45
+				}
+				factor = 0
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.5
+				}
+				factor = 25
+			}
+			modifier = {
+				NOT = {
+					has_country_flag = AFG_win_loya_jirga
+				}
+				factor = 0
+			}
+		}
+
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+
+		remove_effect = {
+			add_popularity = {
+				ideology = ROOT
+				popularity = 0.03
+			}
+			add_stability = 0.05
+			custom_effect_tooltip = AFG_reactivates_in_180_days
+		}
+		
+		complete_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.1
+				tooltip_side = AFG_tribal_side
 			}
 		}
 	}
@@ -140,7 +346,11 @@ AFG_balance_of_power_category = {
 
 		cost = 75
 
-		
+		available = {
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
 
 		visible = {
 			original_tag = AFG
@@ -149,9 +359,21 @@ AFG_balance_of_power_category = {
 				character = AFG_amanullah_khan
 				ruling_only = yes
 			}
+			power_balance_value = {
+				id = AFG_power_balance
+				value > 0.1
+			}
+		}
 
 		fire_only_once = yes
 
+		remove_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.1
+				tooltip_side = AFG_tribal_side
+			}
+		}
 
 		complete_effect = {
 			set_country_flag = AFG_approached_haji_mirzali_khan
@@ -162,7 +384,22 @@ AFG_balance_of_power_category = {
 
 		ai_will_do = {
 			base = 1
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value > 0.45
+				}
+				factor = 0
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.3
+				}
+				factor = 50
+			}
 		}
+	}
 	AFG_education_over_service = {
 
 		icon = GFX_decision_generic_research
@@ -174,15 +411,26 @@ AFG_balance_of_power_category = {
 		}
 
 		cost = 50
+		available = {
+			NOT = {
+				has_government = fascism
+			}
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
 
 		visible = {
 			original_tag = AFG
 			has_completed_focus = AFG_first_loya_jirga
+			NOT = {
+				has_government = fascism
+			}
 		}
 
 		fire_only_once = no
 
-		days_re_enable = 180
+		days_re_enable = 120
 
 		days_remove = 90
 
@@ -192,9 +440,20 @@ AFG_balance_of_power_category = {
 			army_org_factor = -0.05
 		}
 
-		
+		remove_effect = {
+			remove_power_balance_modifier = {
+				id = AFG_power_balance
+				modifier = AFG_education_over_service_modifier
+			}
+			custom_effect_tooltip = AFG_reactivates_in_120_days
+		}
 
-		
+		complete_effect = {
+			add_power_balance_modifier = {
+				id = AFG_power_balance
+				modifier = AFG_education_over_service_modifier
+			}
+		}
 
 		ai_will_do = {
 			base = 1
@@ -203,6 +462,13 @@ AFG_balance_of_power_category = {
 					has_country_flag = AFG_win_loya_jirga
 				}
 				factor = 3
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.35
+				}
+				factor = 0
 			}
 			modifier = {
 				has_country_flag = AFG_win_loya_jirga
@@ -225,6 +491,13 @@ AFG_balance_of_power_category = {
 		}
 	
 		custom_cost_text = AFG_decision_cost_army_experience
+
+		available = {
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
+
 		visible = {
 			original_tag = AFG
 			has_completed_focus = AFG_first_loya_jirga
@@ -232,7 +505,16 @@ AFG_balance_of_power_category = {
 
 		fire_only_once = no
 
-		days_re_enable = 365
+		days_re_enable = 180
+
+		remove_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = -0.1
+				tooltip_side = AFG_government_side
+			}
+			custom_effect_tooltip = AFG_reactivates_in_180_days
+		}
 
 		complete_effect = {
 			army_experience = -15
@@ -259,6 +541,13 @@ AFG_balance_of_power_category = {
 				factor = 3
 			}
 			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.35
+				}
+				factor = 0
+			}
+			modifier = {
 				has_country_flag = AFG_win_loya_jirga
 				factor = 0
 			}
@@ -280,6 +569,12 @@ AFG_balance_of_power_category = {
 	
 		custom_cost_text = EGY_decision_cost_command_power
 
+		available = {
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
+
 		visible = {
 			original_tag = AFG
 			has_completed_focus = AFG_first_loya_jirga
@@ -293,7 +588,7 @@ AFG_balance_of_power_category = {
 
 		fire_only_once = no
 
-		days_re_enable = 60
+		days_re_enable = 120
 
 		complete_effect = {
 			add_command_power = -15
@@ -302,6 +597,14 @@ AFG_balance_of_power_category = {
 		remove_effect = {
 			add_stability = -0.03
 			army_experience = 15
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = -0.05
+				tooltip_side = AFG_government_side
+			}
+			custom_effect_tooltip = AFG_reactivates_in_120_days
+		}
+
 		ai_will_do = {
 			base = 1
 			modifier = {
@@ -309,6 +612,91 @@ AFG_balance_of_power_category = {
 					has_country_flag = AFG_win_loya_jirga
 				}
 				factor = 5
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.35
+				}
+				factor = 0
+			}
+			modifier = {
+				has_country_flag = AFG_win_loya_jirga
+				factor = 0
+			}
+		}
+	}
+	AFG_impose_the_sarkoti = {
+
+		icon = GFX_decision_POL_looming_peasants_strike
+
+		priority = 1
+
+		allowed = {
+			original_tag = AFG
+		}
+
+		cost = 35
+
+		available = {
+			NOT = {
+				has_government = fascism
+			}
+			has_power_balance = {
+				id = AFG_power_balance
+			}
+		}
+
+		visible = {
+			original_tag = AFG
+			has_completed_focus = AFG_first_loya_jirga
+			NOT = {
+				has_government = fascism
+			}
+		}
+
+		days_remove = 60
+
+		fire_only_once = no
+
+		days_re_enable = 180
+
+		modifier = {
+			stability_weekly = -0.002
+			consumer_goods_factor = -0.35
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = -0.1
+				tooltip_side = AFG_government_side
+			}
+		}
+
+		remove_effect = {
+			add_stability = -0.05
+			add_popularity = {
+				ideology = ROOT
+				popularity = -0.03
+			}
+			custom_effect_tooltip = AFG_reactivates_in_180_days
+		}
+
+		ai_will_do = {
+			base = 1
+			modifier = {
+				NOT = {
+					has_country_flag = AFG_win_loya_jirga
+				}
+				factor = 5
+			}
+			modifier = {
+				power_balance_value = {
+					id = AFG_power_balance
+					value < -0.35
+				}
+				factor = 0
 			}
 			modifier = {
 				has_country_flag = AFG_win_loya_jirga
@@ -472,7 +860,6 @@ AFG_communist_bop_category = {
 					free_building_slots = {
 						building = infrastructure
 						size > 0
-						include_locked = yes
 					}
 				}
 				add_extra_state_shared_building_slots = 1
@@ -787,7 +1174,7 @@ AFG_communist_bop_category = {
 		modifier = {
 			consumer_goods_factor = 0.05
 			political_power_factor = -0.1
-			research_speed_factor = 0.05
+			research_speed_factor = 0.1
 		}
 
 		remove_effect = {
@@ -845,6 +1232,7 @@ AFG_rural_schools_category = {
 				NOT = {
 					has_state_flag = AFG_school_opened
 					state = 267
+					state = 442
 				}
                 is_owned_and_controlled_by = AFG
 				is_core_of = AFG
@@ -860,16 +1248,6 @@ AFG_rural_schools_category = {
 				flag = AFG_opening_schools_flag
 				value = 1
 				days = 90
-			}
-		}
-
-		cancel_trigger = {
-			any_state = {
-				has_state_flag = AFG_opening_schools_state
-				NOT = {
-					is_controlled_by = AFG
-					is_owned_by = AFG
-				}
 			}
 		}
 
@@ -1254,6 +1632,7 @@ AFG_opium_crackdown = {
 				NOT = {
 					has_state_flag = AFG_enforced_opium_ban
 					state = 267
+					state = 442
 				}
 				is_owned_and_controlled_by = AFG
 				is_core_of = AFG
@@ -1299,9 +1678,16 @@ AFG_loya_jirga = {
 		}
 		
 		available = {
-			#has_idea = r56i_laws_gender_traditional
+			has_idea = r56i_laws_gender_traditional
 		}
 		
+		cancel_trigger = {
+			NOT = {
+				has_power_balance = {
+					id = AFG_power_balance
+				}
+			}
+		}
 	
 		icon = eng_trade_unions_support
 	
@@ -1314,9 +1700,21 @@ AFG_loya_jirga = {
 		days_mission_timeout = 60
 	
 		complete_effect = {
-			add_stability = 0.025
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.05
+				tooltip_side = AFG_tribal_side
+			}
+			add_stability = 0.05
 			set_country_flag = AFG_finished_first_loya_jirga
 		}
+	
+		timeout_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = -0.05
+				tooltip_side = AFG_government_side
+			}
 			add_political_power = -25
 			set_country_flag = AFG_finished_first_loya_jirga
 		}
@@ -1332,6 +1730,15 @@ AFG_loya_jirga = {
 				is_political_advisor = yes
 			}
 		}
+		
+		cancel_trigger = {
+			NOT = {
+				has_power_balance = {
+					id = AFG_power_balance
+				}
+			}
+		}
+	
 		icon = generic_political_discourse
 	
 		is_good = no
@@ -1343,13 +1750,26 @@ AFG_loya_jirga = {
 		days_mission_timeout = 90
 	
 		complete_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.05
+				tooltip_side = AFG_tribal_side
+			}
 			add_war_support = 0.05
 			set_country_flag = AFG_finished_second_loya_jirga
 		}
 	
 		timeout_effect = {
-			add_war_support = -0.025
-			add_stability = -0.025
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = -0.05
+				tooltip_side = AFG_government_side
+			}
+			add_stability = -0.05
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.03
+			}
 			set_country_flag = AFG_finished_second_loya_jirga
 		}
 	}
@@ -1364,6 +1784,11 @@ AFG_loya_jirga = {
 		}
 		
 		cancel_trigger = {
+			NOT = {
+				has_power_balance = {
+					id = AFG_power_balance
+				}
+			}
 		}
 	
 		icon = POL_looming_peasants_strike
@@ -1377,6 +1802,11 @@ AFG_loya_jirga = {
 		days_mission_timeout = 180
 	
 		complete_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = 0.05
+				tooltip_side = AFG_tribal_side
+			}
 			random_owned_controlled_state = {
 				prioritize = { 1011 }
 				add_extra_state_shared_building_slots = 1
@@ -1386,6 +1816,11 @@ AFG_loya_jirga = {
 		}
 	
 		timeout_effect = {
+			add_power_balance_value = {
+				id = AFG_power_balance
+				value = -0.05
+				tooltip_side = AFG_government_side
+			}
 			1009 = {
 				damage_building = {
 					type = infrastructure
@@ -2118,6 +2553,7 @@ AFG_civil_war = {
 			267 = {
 				add_dynamic_modifier = {
 					modifier = r56_AFG_attack_kabul
+					scope = AFG
 					days = 90
 				}
 			}
@@ -2179,6 +2615,7 @@ AFG_civil_war = {
 			1011 = {
 				add_dynamic_modifier = {
 					modifier = r56_AFG_attack_alborz
+					scope = AFG
 					days = 90
 				}
 			}
@@ -5289,7 +5726,9 @@ AFG_revive_basmachi_decision_category = {
 				autonomy_state = autonomy_integrated_puppet
 				freedom_level = 0.5
 			}
+			custom_effect_tooltip = r56_newline
 			custom_effect_tooltip = AFG_BUK_create_2_inf_divs_tt
+			custom_effect_tooltip = r56_newline
 			BUK = {
 				add_country_leader_role = {
 					character = BUK_mohammed_alim_khan
@@ -5437,7 +5876,9 @@ AFG_revive_basmachi_decision_category = {
 				autonomy_state = autonomy_integrated_puppet
 				freedom_level = 0.5
 			}
+			custom_effect_tooltip = r56_newline
 			custom_effect_tooltip = AFG_KHI_create_2_cav_divs_tt
+			custom_effect_tooltip = r56_newline
 			KHI = {
 				promote_character = KHI_junaid_khan
 				set_politics = {
@@ -5978,6 +6419,7 @@ AFG_rebellion_in_pakistan_decision_category = {
 					type = take_state_focus
 				}
 			}
+			custom_effect_tooltip = r56_newline
 			hidden_effect = {
 				division_template = {
 					name = "Pakistani Mujahideen"
@@ -6463,6 +6905,9 @@ political_actions = {
 				any_state = {
 					is_owned_and_controlled_by = ROOT
 					is_core_of = AFG
+					NOT = {
+						state = 442
+					}
 				}
 			}
 		}
@@ -6650,6 +7095,7 @@ political_actions = {
 				popularity = -0.05
 			}
 			add_stability = 0.05
+			custom_effect_tooltip = r56_newline
 			custom_effect_tooltip = AFG_reactivates_in_180_days
 		}
 
@@ -6831,7 +7277,19 @@ AFG_internal_crisis = {
 		remove_effect = {
 			add_stability = 0.05
 			remove_ideas = AFG_heavy_taxation
-			
+			if = {
+				limit = {
+					has_power_balance = {
+						id = AFG_power_balance
+					}
+				}
+				custom_effect_tooltip = r56_newline
+				add_power_balance_value = {
+					id = AFG_power_balance
+					value = 0.15
+					tooltip_side = AFG_tribal_side
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -6870,7 +7328,19 @@ AFG_internal_crisis = {
 		remove_effect = {
 			add_stability = 0.05
 			remove_ideas = AFG_anulled_hasht_nafari
-
+			if = {
+				limit = {
+					has_power_balance = {
+						id = AFG_power_balance
+					}
+				}
+				custom_effect_tooltip = r56_newline
+				add_power_balance_value = {
+					id = AFG_power_balance
+					value = 0.15
+					tooltip_side = AFG_tribal_side
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -6908,6 +7378,19 @@ AFG_internal_crisis = {
 
 		remove_effect = {
 			remove_ideas = AFG_backtrack_on_reforms_idea
+			if = {
+				limit = {
+					has_power_balance = {
+						id = AFG_power_balance
+					}
+				}
+				custom_effect_tooltip = r56_newline
+				add_power_balance_value = {
+					id = AFG_power_balance
+					value = 0.1
+					tooltip_side = AFG_tribal_side
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -6944,6 +7427,7 @@ AFG_pan_islamic_unification = {
 				controls_state = 445
 				controls_state = 444
 				controls_state = 443
+				controls_state = 1093
 				controls_state = 787
 				controls_state = 441
 				controls_state = 440
@@ -7076,6 +7560,7 @@ AFG_pan_islamic_unification = {
 				state = 445
 				state = 444
 				state = 443
+				state = 1093
 				state = 787
 				state = 441
 				state = 440
@@ -7199,6 +7684,7 @@ AFG_pan_islamic_unification = {
 				controls_state = 445
 				controls_state = 444
 				controls_state = 443
+				controls_state = 1093
 				controls_state = 787
 				controls_state = 441
 				controls_state = 440
@@ -7218,6 +7704,10 @@ AFG_pan_islamic_unification = {
 					resistance < 25
 				}
 				443 = {
+					compliance > 40
+					resistance < 25
+				}
+				1093 = {
 					compliance > 40
 					resistance < 25
 				}
@@ -7246,6 +7736,7 @@ AFG_pan_islamic_unification = {
 				state = 445
 				state = 444
 				state = 443
+				state = 1093
 				state = 787
 				state = 441
 				state = 440
@@ -7268,6 +7759,7 @@ AFG_pan_islamic_unification = {
 						state = 445
 						state = 444
 						state = 443
+						state = 1093
 						state = 787
 						state = 441
 						state = 440
