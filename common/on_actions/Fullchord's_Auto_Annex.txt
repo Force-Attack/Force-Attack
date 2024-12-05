@@ -1,0 +1,69 @@
+########## Auto Annex: Made by Fullchord ##########
+
+on_actions = {
+	# ROOT is capitulated country, FROM is winner (Country with the most war score)
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					and = {
+						#Is Enabled in Game Rules
+						has_game_rule = {
+							rule = enable_auto_annex
+							option = ENABLED
+						}
+
+						#does not work for AI
+						FROM = { is_ai = no }
+
+						# capped country is not in a faction
+						ROOT = { is_in_faction = no }
+
+						#capped country faction is not in the war
+						ROOT = { 
+							NOT = {
+								any_allied_country = {
+									has_war_with = FROM
+								}
+							}
+						}
+
+						#capped country is an ai
+						ROOT = { is_ai = yes }
+
+						# all of capped countries enemies are puppets of aggressor or in faction with aggressor
+						ROOT = {
+							all_enemy_country = {
+								or = { 
+									tag = FROM
+									is_in_faction_with = FROM
+									is_puppet_of = FROM
+								}
+							}
+						}
+
+						#capped country is not in a civil war
+						ROOT = { has_civil_war = no }
+
+						#capped country is not a puppet
+						ROOT = { is_puppet = no }
+
+						#capped country is not a overlord
+						ROOT = { num_subjects < 1 }
+					}
+				}
+
+				ROOT = {
+					transfer_navy = { target = FROM }
+				}
+
+				FROM = {
+					annex_country = {
+						target = ROOT
+						transfer_troops = no
+					}
+				}
+			}
+		}
+	}
+}

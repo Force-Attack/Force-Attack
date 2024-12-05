@@ -1,0 +1,1908 @@
+set_ideas_up_at_start_effect = {
+	if = {
+		limit = {
+			OR = {
+				NOT = { has_country_flag = selected_idea_groups_array_set }
+				check_variable = { national_ideas_id = 0 }
+				check_variable = { selected_idea_groups^num = 0 }
+			}
+		}
+		set_country_flag = selected_idea_groups_array_set
+		set_variable = { eu4_like_ideas_country_policy_cost = global.eu4_like_ideas_policy_cost }
+		set_variable = { completed_national_ideas = 0 }
+		set_variable = { until_next_completed_national_idea = 3 }
+		swap_national_ideas_effect = yes
+		if = {
+			limit = {
+				any_of = {
+					array = selected_idea_groups
+					check_variable = { v > 0 }
+				}
+			}
+			for_each_loop = {
+				array = selected_idea_groups
+				if = {
+					limit = {
+						check_variable = { v > 0 }
+					}
+					remove_idea_group_effect = yes
+				}
+			}
+		}
+		clear_array = selected_idea_groups
+		resize_array = { selected_idea_groups = global.num_of_unlockable_idea_groups }
+		clear_array = adm_idea_groups
+		add_to_array = { adm_idea_groups = 1 }
+		add_to_array = { adm_idea_groups = 2 }
+		add_to_array = { adm_idea_groups = 3 }
+		add_to_array = { adm_idea_groups = 4 }
+		add_to_array = { adm_idea_groups = 5 }
+		add_to_array = { adm_idea_groups = 6 }
+		add_to_array = { adm_idea_groups = 19 }
+		add_to_array = { adm_idea_groups = 22 }
+		add_to_array = { adm_idea_groups = 25 }
+		clear_array = dip_idea_groups
+		add_to_array = { dip_idea_groups = 7 }
+		add_to_array = { dip_idea_groups = 8 }
+		add_to_array = { dip_idea_groups = 9 }
+		add_to_array = { dip_idea_groups = 10 }
+		add_to_array = { dip_idea_groups = 11 }
+		add_to_array = { dip_idea_groups = 12 }
+		add_to_array = { dip_idea_groups = 20 }
+		add_to_array = { dip_idea_groups = 23 }
+		add_to_array = { dip_idea_groups = 26 }
+		clear_array = mil_idea_groups
+		add_to_array = { mil_idea_groups = 13 }
+		add_to_array = { mil_idea_groups = 14 }
+		add_to_array = { mil_idea_groups = 15 }
+		add_to_array = { mil_idea_groups = 16 }
+		add_to_array = { mil_idea_groups = 17 }
+		add_to_array = { mil_idea_groups = 18 }
+		add_to_array = { mil_idea_groups = 21 }
+		add_to_array = { mil_idea_groups = 24 }
+		add_to_array = { mil_idea_groups = 27 }
+	}
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+}
+
+swap_national_ideas_effect = {
+	if = {
+		limit = {
+			NOT = { check_variable = { national_ideas_id = 0 } }
+		}
+		calculate_progress_of_national_ideas = yes
+		clear_national_ideas = yes
+	}
+	set_variable = { national_ideas_id = 1000 } # Generic Ideas
+	if = {
+		limit = {
+			check_variable = { swap_to_custom_national_ideas > 0 }
+		}
+		set_variable = { national_ideas_id = selected_custom_national_ideas_id }
+	}
+	else_if = {
+		limit = {
+			calculate_right_national_ideas_id = yes
+		}
+		set_variable = { national_ideas_id = national_ideas_id_other_context }
+	}
+	complete_national_idea_0 = yes
+	calculate_progress_of_national_ideas = yes
+	update_main_ideas_window = yes
+}
+
+sort_selectable_adm_idea_groups = {
+	for_loop_effect = {
+		start = 1
+		end = adm_idea_groups^num
+		value = loop_value
+		set_temp_variable = { var = j value = loop_value }
+		set_temp_variable = { var = j_minus value = j }
+		subtract_from_temp_variable = { var = j_minus value = 1 }
+		while_loop_effect = {
+			limit = {
+				check_variable = { j > 0 }
+				check_variable = { adm_idea_groups^j_minus > adm_idea_groups^j }
+			}
+			# swap j-1 with j if value of j-1 > j
+			set_temp_variable = { var = temp value = adm_idea_groups^j }
+			set_variable = { var = adm_idea_groups^j value = adm_idea_groups^j_minus }
+			set_variable = { var = adm_idea_groups^j_minus value = temp }
+			subtract_from_temp_variable = { var = j value = 1 }
+			subtract_from_temp_variable = { var = j_minus value = 1 }
+		}
+	}
+}
+
+sort_selectable_dip_idea_groups = {
+	for_loop_effect = {
+		start = 1
+		end = dip_idea_groups^num
+		value = loop_value
+		set_temp_variable = { var = j value = loop_value }
+		set_temp_variable = { var = j_minus value = j }
+		subtract_from_temp_variable = { var = j_minus value = 1 }
+		while_loop_effect = {
+			limit = {
+				check_variable = { j > 0 }
+				check_variable = { dip_idea_groups^j_minus > dip_idea_groups^j }
+			}
+			# swap j-1 with j if value of j-1 > j
+			set_temp_variable = { var = temp value = dip_idea_groups^j }
+			set_variable = { var = dip_idea_groups^j value = dip_idea_groups^j_minus }
+			set_variable = { var = dip_idea_groups^j_minus value = temp }
+			subtract_from_temp_variable = { var = j value = 1 }
+			subtract_from_temp_variable = { var = j_minus value = 1 }
+		}
+	}
+}
+
+sort_selectable_mil_idea_groups = {
+	for_loop_effect = {
+		start = 1
+		end = mil_idea_groups^num
+		value = loop_value
+		set_temp_variable = { var = j value = loop_value }
+		set_temp_variable = { var = j_minus value = j }
+		subtract_from_temp_variable = { var = j_minus value = 1 }
+		while_loop_effect = {
+			limit = {
+				check_variable = { j > 0 }
+				check_variable = { mil_idea_groups^j_minus > mil_idea_groups^j }
+			}
+			# swap j-1 with j if value of j-1 > j
+			set_temp_variable = { var = temp value = mil_idea_groups^j }
+			set_variable = { var = mil_idea_groups^j value = mil_idea_groups^j_minus }
+			set_variable = { var = mil_idea_groups^j_minus value = temp }
+			subtract_from_temp_variable = { var = j value = 1 }
+			subtract_from_temp_variable = { var = j_minus value = 1 }
+		}
+	}
+}
+
+add_to_national_ideas_threshold = {
+	hidden_effect = {
+		subtract_from_variable = { until_next_completed_national_idea = 1 }
+		if = {
+			limit = {
+				check_variable = { until_next_completed_national_idea < 1 }
+			}
+			add_to_variable = { completed_national_ideas = 1 }
+			set_variable = { until_next_completed_national_idea = 3 }
+			if = {
+				limit = {
+					is_ai = no
+					NOT = { has_country_flag = disabled_ideas_window_national_idea_unlocked_alert }
+					NOT = { check_variable = { completed_national_ideas > 7 } }
+				}
+				if = {
+					limit = {
+						has_variable = show_ideas_window_national_idea_unlocked_alert
+						check_variable = { show_ideas_window_national_idea_unlocked_alert < 1000 }
+					}
+					add_to_variable = { show_ideas_window_national_idea_unlocked_alert = 1 }
+				}
+				else = {
+					set_variable = { show_ideas_window_national_idea_unlocked_alert = 1 }
+				}
+			}
+		}
+		calculate_progress_of_national_ideas = yes
+	}
+}
+
+calculate_total_num_of_ideas = {
+	if = {
+		limit = {
+			calculate_total_num_of_ideas_trigger = yes
+		}
+		set_temp_variable = { completed_national_ideas_temp = num_of_ideas_temp }
+	}
+}
+
+calculate_progress_of_national_ideas = {
+	calculate_total_num_of_ideas = yes
+	divide_temp_variable = { completed_national_ideas_temp = 21 }
+	multiply_temp_variable = { completed_national_ideas_temp = 100 }
+	round_temp_variable = completed_national_ideas_temp
+	set_variable = { national_ideas_progress = completed_national_ideas_temp }
+	country_event = { id = remove_idea_group_ideas_events.3 }
+	update_main_ideas_window = yes
+}
+
+remove_ideas_of_group = {
+	country_event = { id = remove_idea_group_ideas_events.1 }
+}
+
+update_idea_cost_modifiers = {
+	set_variable = { idea_cost_var = global.idea_cost_constant }
+	set_temp_variable = { idea_cost_multipliers_var = 1 }
+	add_to_temp_variable = { idea_cost_multipliers_var = modifier@idea_cost_modifier }
+	if = {
+		limit = {
+			check_variable = { idea_cost_multipliers_var < 0.1 }
+		}
+		# Min Idea Cost
+		set_temp_variable = { idea_cost_multipliers_var = 0.1 }
+	}
+	multiply_variable = { idea_cost_var = idea_cost_multipliers_var }
+	round_variable = idea_cost_var
+	refresh_eu4_like_alerts = yes
+	update_main_ideas_window = yes
+}
+
+refresh_eu4_like_alerts = {
+	if = {
+		limit = {
+			is_ai = no
+		}
+		if = {
+			limit = {
+				can_select_any_idea = yes
+				NOT = { is_in_array = { eu4_like_ideas_alerts = 1 } }
+				NOT = { has_country_flag = disabled_eu4_like_ideas_alerts_1 }
+				NOT = { has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_1 }
+			}
+			add_to_array = { eu4_like_ideas_alerts = 1 }
+		}
+		else_if = {
+			limit = {
+				NOT = { can_select_any_idea = yes }
+				is_in_array = { eu4_like_ideas_alerts = 1 }
+			}
+			remove_from_array = { eu4_like_ideas_alerts = 1 }
+		}
+		else_if = {
+			limit = {
+				NOT = { can_select_any_idea = yes }
+				has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_1
+			}
+			clr_country_flag = temporarily_disabled_eu4_like_ideas_alerts_1
+		}
+		if = {
+			limit = {
+				can_select_any_idea_group = yes
+				NOT = { is_in_array = { eu4_like_ideas_alerts = 2 } }
+				NOT = { has_country_flag = disabled_eu4_like_ideas_alerts_2 }
+				NOT = { has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_2 }
+			}
+			add_to_array = { eu4_like_ideas_alerts = 2 }
+		}
+		else_if = {
+			limit = {
+				NOT = { can_select_any_idea_group = yes }
+				is_in_array = { eu4_like_ideas_alerts = 2 }
+			}
+			remove_from_array = { eu4_like_ideas_alerts = 2 }
+		}
+		else_if = {
+			limit = {
+				NOT = { can_select_any_idea_group = yes }
+				has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_2
+			}
+			clr_country_flag = temporarily_disabled_eu4_like_ideas_alerts_2
+		}
+		if = {
+			limit = {
+				can_select_any_policy = yes
+				NOT = { is_in_array = { eu4_like_ideas_alerts = 3 } }
+				NOT = { has_country_flag = disabled_eu4_like_ideas_alerts_3 }
+				NOT = { has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_3 }
+			}
+			add_to_array = { eu4_like_ideas_alerts = 3 }
+		}
+		else_if = {
+			limit = {
+				NOT = { can_select_any_policy = yes }
+				is_in_array = { eu4_like_ideas_alerts = 3 }
+			}
+			remove_from_array = { eu4_like_ideas_alerts = 3 }
+		}
+		else_if = {
+			limit = {
+				NOT = { can_select_any_policy = yes }
+				has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_3
+			}
+			clr_country_flag = temporarily_disabled_eu4_like_ideas_alerts_3
+		}
+	}
+}
+
+remove_flags_for_available_dismissed_alerts = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = disabled_eu4_like_ideas_alerts_1 }
+			has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_1
+			NOT = { is_in_array = { eu4_like_ideas_alerts = 1 } }
+			can_select_any_idea = yes
+		}
+		clr_country_flag = temporarily_disabled_eu4_like_ideas_alerts_1
+	}
+	if = {
+		limit = {
+			NOT = { has_country_flag = disabled_eu4_like_ideas_alerts_2 }
+			has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_2
+			NOT = { is_in_array = { eu4_like_ideas_alerts = 2 } }
+			can_select_any_idea_group = yes
+		}
+		clr_country_flag = temporarily_disabled_eu4_like_ideas_alerts_2
+	}
+	if = {
+		limit = {
+			NOT = { has_country_flag = disabled_eu4_like_ideas_alerts_3 }
+			has_country_flag = temporarily_disabled_eu4_like_ideas_alerts_3
+			NOT = { is_in_array = { eu4_like_ideas_alerts = 3 } }
+			can_select_any_policy = yes
+		}
+		clr_country_flag = temporarily_disabled_eu4_like_ideas_alerts_3
+	}
+}
+
+# Completed Ideas:
+complete_1_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_1
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_2_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_2
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_3_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_3
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_4_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_4
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_5_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_5
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_6_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_6
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_7_idea_of_group = {
+	meta_effect = {
+		text = {
+			add_to_variable = { completed_ideas_of_group_[GROUP] = 1 }
+			add_ideas = idea_group_[GROUP]_7
+			add_ideas = idea_group_[GROUP]_8
+		}
+		GROUP = "[?v]"
+	}
+	add_to_national_ideas_threshold = yes
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_0 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					NOT = { has_idea = national_ideas_[GROUP]_0 }
+				}
+				add_ideas = national_ideas_[GROUP]_0
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_1 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 0 }
+					NOT = { has_idea = national_ideas_[GROUP]_1 }
+				}
+				add_ideas = national_ideas_[GROUP]_1
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 0 } }
+					has_idea = national_ideas_[GROUP]_1
+				}
+				remove_national_idea_1 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_2 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 1 }
+					NOT = { has_idea = national_ideas_[GROUP]_2 }
+				}
+				add_ideas = national_ideas_[GROUP]_2
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 1 } }
+					has_idea = national_ideas_[GROUP]_2
+				}
+				remove_national_idea_2 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_3 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 2 }
+					NOT = { has_idea = national_ideas_[GROUP]_3 }
+				}
+				add_ideas = national_ideas_[GROUP]_3
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 2 } }
+					has_idea = national_ideas_[GROUP]_3
+				}
+				remove_national_idea_3 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_4 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 3 }
+					NOT = { has_idea = national_ideas_[GROUP]_4 }
+				}
+				add_ideas = national_ideas_[GROUP]_4
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 3 } }
+					has_idea = national_ideas_[GROUP]_4
+				}
+				remove_national_idea_4 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_5 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 4 }
+					NOT = { has_idea = national_ideas_[GROUP]_5 }
+				}
+				add_ideas = national_ideas_[GROUP]_5
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 4 } }
+					has_idea = national_ideas_[GROUP]_5
+				}
+				remove_national_idea_5 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_6 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 5 }
+					NOT = { has_idea = national_ideas_[GROUP]_6 }
+				}
+				add_ideas = national_ideas_[GROUP]_6
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 5 } }
+					has_idea = national_ideas_[GROUP]_6
+				}
+				remove_national_idea_6 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+complete_national_idea_7 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					check_variable = { completed_national_ideas > 6 }
+					NOT = { has_idea = national_ideas_[GROUP]_7 }
+				}
+				add_ideas = national_ideas_[GROUP]_7
+				add_ideas = national_ideas_[GROUP]_8
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { completed_national_ideas > 6 } }
+					has_idea = national_ideas_[GROUP]_7
+				}
+				remove_national_idea_7 = yes
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_0 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_0
+				}
+				remove_ideas = national_ideas_[GROUP]_0
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_1 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_1
+				}
+				remove_ideas = national_ideas_[GROUP]_1
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_2 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_2
+				}
+				remove_ideas = national_ideas_[GROUP]_2
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_3 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_3
+				}
+				remove_ideas = national_ideas_[GROUP]_3
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_4 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_4
+				}
+				remove_ideas = national_ideas_[GROUP]_4
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_5 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_5
+				}
+				remove_ideas = national_ideas_[GROUP]_5
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_6 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_6
+				}
+				remove_ideas = national_ideas_[GROUP]_6
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+remove_national_idea_7 = {
+	meta_effect = {
+		text = {
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_7
+				}
+				remove_ideas = national_ideas_[GROUP]_7
+			}
+			if = {
+				limit = {
+					has_idea = national_ideas_[GROUP]_8
+				}
+				remove_ideas = national_ideas_[GROUP]_8
+			}
+		}
+		GROUP = "[?national_ideas_id]"
+	}
+	update_main_ideas_window = yes
+}
+
+clear_national_ideas = {
+	country_event = { id = remove_idea_group_ideas_events.2 }
+	update_main_ideas_window = yes
+}
+
+copy_idea_set_from_PREV = {
+	set_country_flag = selected_idea_groups_array_set
+	swap_national_ideas_effect = yes
+	for_each_loop = {
+		array = PREV.selected_idea_groups
+		value = v
+		break = break_temp
+		if = {
+			limit = {
+				check_variable = { v > 0 }
+			}
+			remove_ideas_of_group = yes
+		}
+		else = {
+			set_temp_variable = { break_temp = 1 }
+		}
+	}
+	if = {
+		limit = {
+			PREV = {
+				check_variable = { selected_policies_array^num > 0 }
+			}
+		}
+		for_each_loop = {
+			array = PREV.selected_policies_array
+			value = v
+			remove_policy = yes
+		}
+	}
+	clear_array = selected_policies_array
+	clear_array = selected_idea_groups
+	clear_array = adm_idea_groups
+	clear_array = dip_idea_groups
+	clear_array = mil_idea_groups
+	resize_array = { selected_idea_groups = PREV.selected_idea_groups^num }
+	for_each_loop = {
+		array = PREV.selected_idea_groups
+		value = v
+		break = break_temp
+		if = {
+			limit = {
+				check_variable = { v > 0 }
+			}
+			select_idea_group_effect = yes
+			meta_effect = {
+				text = {
+					set_temp_variable = { num_of_ideas_of_group_temp = PREV.completed_ideas_of_group_[GROUP] }
+				}
+				GROUP = "[?v]"
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 0 }
+				}
+				complete_1_idea_of_group = yes
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 1 }
+				}
+				complete_2_idea_of_group = yes
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 2 }
+				}
+				complete_3_idea_of_group = yes
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 3 }
+				}
+				complete_4_idea_of_group = yes
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 4 }
+				}
+				complete_5_idea_of_group = yes
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 5 }
+				}
+				complete_6_idea_of_group = yes
+			}
+			if = {
+				limit = {
+					check_variable = { num_of_ideas_of_group_temp > 6 }
+				}
+				complete_7_idea_of_group = yes
+			}
+		}
+		else = {
+			set_temp_variable = { break_temp = 1 }
+		}
+	}
+	for_each_loop = {
+		array = PREV.adm_idea_groups
+		value = v
+		add_to_array = { adm_idea_groups = v }
+	}
+	for_each_loop = {
+		array = PREV.dip_idea_groups
+		value = v
+		add_to_array = { dip_idea_groups = v }
+	}
+	for_each_loop = {
+		array = PREV.mil_idea_groups
+		value = v
+		add_to_array = { mil_idea_groups = v }
+	}
+	if = {
+		limit = {
+			has_government = communism
+			set_temp_variable = { idea_group_out_of_context = 4 }
+			NOT = { has_selected_idea_group = yes }
+			OR = {
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 5 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 6 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 19 }
+					has_selected_idea_group = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 5 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_5 }
+			set_temp_variable = { v = 5 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 6 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_6 }
+			set_temp_variable = { v = 6 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 19 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_19 }
+			set_temp_variable = { v = 19 }
+			remove_idea_group_effect = yes
+		}
+		set_temp_variable = { v = 4 }
+		select_idea_group_effect = yes
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 0 }
+			}
+			complete_1_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 1 }
+			}
+			complete_2_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 2 }
+			}
+			complete_3_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 3 }
+			}
+			complete_4_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 4 }
+			}
+			complete_5_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 5 }
+			}
+			complete_6_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 6 }
+			}
+			complete_7_idea_of_group = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_government = democratic
+			set_temp_variable = { idea_group_out_of_context = 5 }
+			NOT = { has_selected_idea_group = yes }
+			OR = {
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 4 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 6 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 19 }
+					has_selected_idea_group = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 4 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_4 }
+			set_temp_variable = { v = 4 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 6 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_6 }
+			set_temp_variable = { v = 6 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 19 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_19 }
+			set_temp_variable = { v = 19 }
+			remove_idea_group_effect = yes
+		}
+		set_temp_variable = { v = 5 }
+		select_idea_group_effect = yes
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 0 }
+			}
+			complete_1_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 1 }
+			}
+			complete_2_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 2 }
+			}
+			complete_3_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 3 }
+			}
+			complete_4_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 4 }
+			}
+			complete_5_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 5 }
+			}
+			complete_6_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 6 }
+			}
+			complete_7_idea_of_group = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_government = fascism
+			set_temp_variable = { idea_group_out_of_context = 6 }
+			NOT = { has_selected_idea_group = yes }
+			OR = {
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 4 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 5 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 19 }
+					has_selected_idea_group = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 4 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_4 }
+			set_temp_variable = { v = 4 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 5 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_5 }
+			set_temp_variable = { v = 5 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 19 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_19 }
+			set_temp_variable = { v = 19 }
+			remove_idea_group_effect = yes
+		}
+		set_temp_variable = { v = 6 }
+		select_idea_group_effect = yes
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 0 }
+			}
+			complete_1_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 1 }
+			}
+			complete_2_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 2 }
+			}
+			complete_3_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 3 }
+			}
+			complete_4_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 4 }
+			}
+			complete_5_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 5 }
+			}
+			complete_6_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 6 }
+			}
+			complete_7_idea_of_group = yes
+		}
+	}
+	else_if = {
+		limit = {
+			has_government = neutrality
+			set_temp_variable = { idea_group_out_of_context = 19 }
+			NOT = { has_selected_idea_group = yes }
+			OR = {
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 4 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 5 }
+					has_selected_idea_group = yes
+				}
+				AND = {
+					set_temp_variable = { idea_group_out_of_context = 6 }
+					has_selected_idea_group = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 4 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_4 }
+			set_temp_variable = { v = 4 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 5 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_5 }
+			set_temp_variable = { v = 5 }
+			remove_idea_group_effect = yes
+		}
+		else_if = {
+			limit = {
+				set_temp_variable = { idea_group_out_of_context = 6 }
+				has_selected_idea_group = yes
+			}
+			set_temp_variable = { num_of_ideas_of_group_temp = completed_ideas_of_group_6 }
+			set_temp_variable = { v = 6 }
+			remove_idea_group_effect = yes
+		}
+		set_temp_variable = { v = 19 }
+		select_idea_group_effect = yes
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 0 }
+			}
+			complete_1_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 1 }
+			}
+			complete_2_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 2 }
+			}
+			complete_3_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 3 }
+			}
+			complete_4_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 4 }
+			}
+			complete_5_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 5 }
+			}
+			complete_6_idea_of_group = yes
+		}
+		if = {
+			limit = {
+				check_variable = { num_of_ideas_of_group_temp > 6 }
+			}
+			complete_7_idea_of_group = yes
+		}
+	}
+	clear_variable = show_ideas_window
+}
+
+set_AI_pp_cost_reduction = {
+	set_global_flag = eu4_like_ideas_ai_idea_cost_reduced
+	if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = NONE
+			}
+		}
+		clear_variable = global.eu4_like_ideas_AI_pp_cost_reduction_var
+		clr_global_flag = eu4_like_ideas_ai_idea_cost_reduced
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_5_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 5 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_10_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 10 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_15_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 15 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_20_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 20 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_25_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 25 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_30_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 30 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_35_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 35 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_40_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 40 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_45_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 45 }
+	}
+	else_if = {
+		limit = {
+			has_game_rule = {
+				rule = eu4_like_ideas_rule_AI_pp_cost_reduction
+				option = RULE_50_PERCENT
+			}
+		}
+		set_variable = { global.eu4_like_ideas_AI_pp_cost_reduction_var = 50 }
+	}
+	every_country = {
+		set_AI_pp_cost_reduction_modifier = yes
+	}
+}
+
+set_AI_pp_cost_reduction_modifier = {
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_5
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_5
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_10
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_10
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_15
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_15
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_20
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_20
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_25
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_25
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_30
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_30
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_35
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_35
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_40
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_40
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_45
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_45
+	}
+	if = {
+		limit = {
+			has_idea = eu4_like_ideas_AI_pp_cost_reduction_50
+		}
+		remove_ideas = eu4_like_ideas_AI_pp_cost_reduction_50
+	}
+	if = {
+		limit = {
+			is_ai = yes
+			has_variable = global.eu4_like_ideas_AI_pp_cost_reduction_var
+		}
+		meta_effect = {
+			text = {
+				add_ideas = eu4_like_ideas_AI_pp_cost_reduction_[LEVEL]
+			}
+			LEVEL = "[?global.eu4_like_ideas_AI_pp_cost_reduction_var]"
+		}
+	}
+}
+
+set_eu4_like_ideas_AI_idea_usage_delay = {
+	if = {
+		limit = {
+			NOT = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = NONE
+				}
+			}
+		}
+		set_global_flag = eu4_like_ideas_ai_idea_usage_delayed
+		set_temp_variable = { temp = 8.76 }
+		set_variable = { global.eu4_like_ideas_AI_idea_usage_delay = global.date }
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_1_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 1 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_2_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 2 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_3_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 3 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_4_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 4 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_5_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 5 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_6_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 6 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_7_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 7 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_8_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 8 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_9_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 9 }
+		}
+		else_if = {
+			limit = {
+				has_game_rule = {
+					rule = eu4_like_ideas_AI_idea_usage_delay
+					option = RULE_DELAY_10_YEAR
+				}
+			}
+			multiply_temp_variable = { temp = 10 }
+		}
+		else = {
+			multiply_temp_variable = { temp = 0 }
+		}
+		add_to_variable = { global.eu4_like_ideas_AI_idea_usage_delay = temp }
+	}
+}
+
+select_idea_group_effect = {
+	if = {
+		limit = {
+			check_variable = { selected_idea_groups^0 = 0 }
+		}
+		set_temp_variable = { temp = 0 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { selected_idea_groups^1 = 0 }
+		}
+		set_temp_variable = { temp = 1 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 2 }
+			check_variable = { selected_idea_groups^2 = 0 }
+		}
+		set_temp_variable = { temp = 2 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 2 }
+			check_variable = { selected_idea_groups^3 = 0 }
+		}
+		set_temp_variable = { temp = 3 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 4 }
+			check_variable = { selected_idea_groups^4 = 0 }
+		}
+		set_temp_variable = { temp = 4 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 4 }
+			check_variable = { selected_idea_groups^5 = 0 }
+		}
+		set_temp_variable = { temp = 5 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 6 }
+			check_variable = { selected_idea_groups^6 = 0 }
+		}
+		set_temp_variable = { temp = 6 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 6 }
+			check_variable = { selected_idea_groups^7 = 0 }
+		}
+		set_temp_variable = { temp = 7 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 8 }
+			check_variable = { selected_idea_groups^8 = 0 }
+		}
+		set_temp_variable = { temp = 8 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 8 }
+			check_variable = { selected_idea_groups^9 = 0 }
+		}
+		set_temp_variable = { temp = 9 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 10 }
+			check_variable = { selected_idea_groups^10 = 0 }
+		}
+		set_temp_variable = { temp = 10 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 10 }
+			check_variable = { selected_idea_groups^11 = 0 }
+		}
+		set_temp_variable = { temp = 11 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 12 }
+			check_variable = { selected_idea_groups^12 = 0 }
+		}
+		set_temp_variable = { temp = 12 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 12 }
+			check_variable = { selected_idea_groups^13 = 0 }
+		}
+		set_temp_variable = { temp = 13 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 14 }
+			check_variable = { selected_idea_groups^14 = 0 }
+		}
+		set_temp_variable = { temp = 14 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 14 }
+			check_variable = { selected_idea_groups^15 = 0 }
+		}
+		set_temp_variable = { temp = 15 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 16 }
+			check_variable = { selected_idea_groups^16 = 0 }
+		}
+		set_temp_variable = { temp = 16 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 16 }
+			check_variable = { selected_idea_groups^17 = 0 }
+		}
+		set_temp_variable = { temp = 17 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 18 }
+			check_variable = { selected_idea_groups^18 = 0 }
+		}
+		set_temp_variable = { temp = 18 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 18 }
+			check_variable = { selected_idea_groups^19 = 0 }
+		}
+		set_temp_variable = { temp = 19 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 20 }
+			check_variable = { selected_idea_groups^20 = 0 }
+		}
+		set_temp_variable = { temp = 20 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 20 }
+			check_variable = { selected_idea_groups^21 = 0 }
+		}
+		set_temp_variable = { temp = 21 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 22 }
+			check_variable = { selected_idea_groups^22 = 0 }
+		}
+		set_temp_variable = { temp = 22 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 22 }
+			check_variable = { selected_idea_groups^23 = 0 }
+		}
+		set_temp_variable = { temp = 23 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 24 }
+			check_variable = { selected_idea_groups^24 = 0 }
+		}
+		set_temp_variable = { temp = 24 }
+	}
+	else_if = {
+		limit = {
+			check_variable = { global.num_of_unlockable_idea_groups > 24 }
+			check_variable = { selected_idea_groups^25 = 0 }
+		}
+		set_temp_variable = { temp = 25 }
+	}
+
+	set_variable = { selected_idea_groups^temp = v }
+	if = {
+		limit = {
+			is_in_array = { adm_idea_groups = v }
+		}
+		remove_from_array = { adm_idea_groups = v }
+	}
+	else_if = {
+		limit = {
+			is_in_array = { dip_idea_groups = v }
+		}
+		remove_from_array = { dip_idea_groups = v }
+	}
+	else_if = {
+		limit = {
+			is_in_array = { mil_idea_groups = v }
+		}
+		remove_from_array = { mil_idea_groups = v }
+	}
+	update_selectable_idea_groups_window = yes
+	clear_variable = show_selectable_idea_groups_window
+	add_to_variable = { num_of_selected_idea_groups = 1 }
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	if = {
+		limit = {
+			has_variable = show_ideas_window
+		}
+		update_main_ideas_window = yes
+	}
+	else = {
+		set_variable = { show_ideas_window = 1 }
+	}
+}
+
+remove_idea_group_effect = {
+	calculate_total_num_of_ideas = yes
+	remove_ideas_of_group = yes
+	meta_effect = {
+		text = {
+			subtract_from_temp_variable = { completed_national_ideas_temp = completed_ideas_of_group_[GROUP] }
+			set_temp_variable = { pp_regain = completed_ideas_of_group_[GROUP] }
+			clear_variable = completed_ideas_of_group_[GROUP]
+		}
+		GROUP = "[?v]"
+	}
+	set_temp_variable = { halfed_idea_cost_temp = idea_cost_var }
+	divide_temp_variable = { halfed_idea_cost_temp = 2 }
+	round_temp_variable = halfed_idea_cost_temp
+	multiply_temp_variable = { pp_regain = halfed_idea_cost_temp }
+	add_political_power = pp_regain
+	set_variable = { completed_national_ideas = 0 }
+	while_loop_effect = {
+		limit = {
+			check_variable = { completed_national_ideas_temp > 2 }
+		}
+		subtract_from_temp_variable = { completed_national_ideas_temp = 3 }
+		add_to_variable = { completed_national_ideas = 1 }
+	}
+	set_variable = { until_next_completed_national_idea = completed_national_ideas_temp }
+	subtract_from_variable = { until_next_completed_national_idea = 3 }
+	if = {
+		limit = {
+			check_variable = { until_next_completed_national_idea < -3 }
+		}
+		set_variable = { until_next_completed_national_idea = -3 }
+	}
+	multiply_variable = { until_next_completed_national_idea = -1 }
+	calculate_progress_of_national_ideas = yes
+	if = {
+		limit = {
+			OR = {
+				check_variable = { v = 1 }
+				check_variable = { v = 2 }
+				check_variable = { v = 3 }
+				check_variable = { v = 4 }
+				check_variable = { v = 5 }
+				check_variable = { v = 6 }
+				check_variable = { v = 19 }
+				check_variable = { v = 22 }
+				check_variable = { v = 25 }
+			}
+		}
+		add_to_array = { adm_idea_groups = v }
+		sort_selectable_adm_idea_groups = yes
+	}
+	else_if = {
+		limit = {
+			OR = {
+				check_variable = { v = 7 }
+				check_variable = { v = 8 }
+				check_variable = { v = 9 }
+				check_variable = { v = 10 }
+				check_variable = { v = 11 }
+				check_variable = { v = 12 }
+				check_variable = { v = 20 }
+				check_variable = { v = 23 }
+				check_variable = { v = 26 }
+			}
+		}
+		add_to_array = { dip_idea_groups = v }
+		sort_selectable_dip_idea_groups = yes
+	}
+	else = {
+		add_to_array = { mil_idea_groups = v }
+		sort_selectable_mil_idea_groups = yes
+	}
+	remove_from_array = { selected_idea_groups = v }
+	add_to_array = { selected_idea_groups = 0 }
+	subtract_from_variable = { num_of_selected_idea_groups = 1 }
+	update_idea_cost_modifiers = yes
+	update_policy_costs = yes
+	check_and_perhaps_remove_current_policies_effect = yes
+	update_selectable_idea_groups_window = yes
+	update_main_ideas_window = yes
+}
+
+update_selectable_idea_groups_window = {
+	if = {
+		limit = {
+			has_variable = show_selectable_idea_groups_window
+		}
+		if = {
+			limit = {
+				check_variable = { show_selectable_idea_groups_window > 1000 }
+			}
+			set_variable = { show_selectable_idea_groups_window = 1 }
+		}
+		else = {
+			add_to_variable = { show_selectable_idea_groups_window = 1 }
+		}
+	}
+}
+
+update_policy_window = {
+	if = {
+		limit = {
+			has_variable = show_policies_window
+		}
+		if = {
+			limit = {
+				check_variable = { show_policies_window > 1000 }
+			}
+			set_variable = { show_policies_window = 1 }
+		}
+		else = {
+			add_to_variable = { show_policies_window = 1 }
+		}
+	}
+}
+
+update_custom_national_ideas_window = {
+	if = {
+		limit = {
+			has_variable = show_eu4_like_ideas_custom_national_ideas_window
+		}
+		if = {
+			limit = {
+				check_variable = { show_eu4_like_ideas_custom_national_ideas_window > 1000 }
+			}
+			set_variable = { show_eu4_like_ideas_custom_national_ideas_window = 1 }
+		}
+		else = {
+			add_to_variable = { show_eu4_like_ideas_custom_national_ideas_window = 1 }
+		}
+	}
+}
+
+update_alerts_policies_options_window = {
+	if = {
+		limit = {
+			has_variable = show_eu4_like_ideas_alerts_policies_options_window
+		}
+		if = {
+			limit = {
+				check_variable = { show_eu4_like_ideas_alerts_policies_options_window > 1000 }
+			}
+			set_variable = { show_eu4_like_ideas_alerts_policies_options_window = 1 }
+		}
+		else = {
+			add_to_variable = { show_eu4_like_ideas_alerts_policies_options_window = 1 }
+		}
+	}
+	update_policy_window = yes
+}
+
+update_main_ideas_window = {
+	if = {
+		limit = {
+			has_variable = show_ideas_window
+		}
+		if = {
+			limit = {
+				check_variable = { show_ideas_window > 1000 }
+			}
+			set_variable = { show_ideas_window = 1 }
+		}
+		else = {
+			add_to_variable = { show_ideas_window = 1 }
+		}
+	}
+}
