@@ -18,7 +18,7 @@ war_measures = {
 			has_civil_war = no
 		}
 
-		cost = 100
+		cost = 50
 		fire_only_once = yes
 		ai_will_do = {
 			factor = 200
@@ -32,7 +32,12 @@ war_measures = {
 		}
 
 		complete_effect = {
-			add_stability = -0.1
+			if = {
+				limit = {
+					has_war_support < 0.9
+				}
+				set_war_support = 0.9
+			}
 			if = {
 				limit = {
 					has_idea = great_depression
@@ -61,10 +66,7 @@ war_measures = {
 				}
 				add_ideas = war_economy
 			}
-			add_timed_idea = {
-				idea = USA_homeland_defense
-				days = 270
-			}
+			add_ideas = USA_homeland_defense
 		}
 	}
 	USA_raise_silver_legions = {
@@ -92,7 +94,7 @@ war_measures = {
 					name = "Silver Legion"
 					priority = 0
 					division_names_group = USA_INF_01
-					is_locked = yes
+					is_locked = no
 					regiments = {
 						infantry = { x = 0 y = 0 }
 						infantry = { x = 0 y = 1 }
@@ -726,7 +728,7 @@ war_measures = {
 			factor = 1
 			modifier = {
 				has_equipment = {
-					small_plane_airframe < 1
+					fighter_equipment < 1
 				}
 				factor = 5
 			}
@@ -746,7 +748,7 @@ war_measures = {
 		}
 		remove_effect = {
 			add_equipment_to_stockpile = {
-				type = small_plane_airframe
+				type = fighter_equipment
 				amount = 50
 			}
 			USB = {
@@ -818,49 +820,6 @@ war_measures = {
 	}
 }
 USA_aid_britain = {
-	USA_renounce_the_destroyer_for_bases_territories = {
-
-		icon = generic_operation
-
-		allowed = {
-			original_tag = USA
-		}
-
-		available = {
-			has_global_flag = destroyers_for_bases_treaty
-			date > 1946.01.01
-			has_government = democratic
-			has_war = no
-			ENG = {
-				exists = yes 
-				is_puppet = no
-				has_war = no
-			}
-		}
-
-		cost = 50
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 3
-		}
-
-		visible = {
-			has_war = no
-		}
-
-		modifier = {
-			
-		}
-
-		days_remove = 30
-
-		complete_effect = {
-		
-		}
-		remove_effect = {
-			country_event = { id = r56_usa.14 }
-		}		
-	}	
 	USA_establish_personal_communication_with_former_naval_person = {
 
 		icon = generic_political_discourse
@@ -1031,7 +990,7 @@ USA_aid_britain = {
 			war_support_weekly = 0.001		
 			industrial_capacity_factory = 0.02
 			industrial_capacity_dockyard = 0.02
-			consumer_goods_factor = -0.15
+			consumer_goods_factor = -0.05
 		}
 
 		days_remove = 360
@@ -1396,9 +1355,6 @@ USA_honor_the_confederacy = {
 		}
 		visible = {
 			NOT = {
-				has_focus_tree = confederate_focus
-			}
-			NOT = {
 				has_country_flag = USA_washington_legitimacy
 			}
 			USA = {
@@ -1485,9 +1441,7 @@ USA_honor_the_confederacy = {
 			has_cosmetic_tag = USA_CSA 
 		}
 		visible = {
-			NOT = {
-				has_focus_tree = confederate_focus
-			}			
+			
 		}
 		cost = 75
 		fire_only_once = yes
@@ -1522,9 +1476,6 @@ USA_honor_the_confederacy = {
 			has_cosmetic_tag = USA_CSA
 		}	
 		visible = {
-			NOT = {
-				has_focus_tree = confederate_focus
-			}			
 			has_country_flag = {
 				flag = USA_CSA_legitimacy
 				value > 2
@@ -1572,9 +1523,6 @@ USA_honor_the_confederacy = {
 			fascism > 0.35
 		}
 		visible = {
-			NOT = {
-				has_focus_tree = confederate_focus
-			}			
 			has_country_flag = {
 				flag = USA_CSA_legitimacy
 				value > 2
@@ -2390,7 +2338,7 @@ USA_intervention_mandate = {
 			}
 			modifier = {
 				OR = {
-					GER = { has_completed_focus = GER_danzig_or_war }
+					GER = {  has_completed_focus = GER_danzig_or_war  }
 					JAP = { has_completed_focus = JAP_intervene_in_china }
 				}
 				factor = 10

@@ -45,12 +45,37 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TUR_modest_economic_liberalization
+		icon = GFX_goal_free_trade
+		prerequisite = { focus = TUR_one_party_many_faces }
+		available = {
+			has_government = neutrality
+		}
+		x = -6
+		y = 1
+		relative_position_id = TUR_one_party_many_faces
+		cost = 5
+		ai_will_do = {
+			base = 10
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = TUR_ismet_inonu
+				}
+				remove_ideas = TUR_ismet_inonu
+				add_ideas = TUR_celal_bayar
+			}
+			add_ideas = free_trade
+		}
+	}
+
+	focus = {
 		id = TUR_ratify_the_six_arrows
 		icon = GFX_focus_TUR_ratify_the_six_arrows
-		prerequisite = {
-			focus = TUR_one_party_many_faces
-		}
-		x = -8
+		prerequisite = { focus = TUR_one_party_many_faces }
+		x = 0
 		y = 1
 		relative_position_id = TUR_one_party_many_faces
 		cost = 5
@@ -102,7 +127,7 @@ focus_tree = {
 			has_government = neutrality
 		}
 		x = -2
-		y = 1
+		y = 2
 		relative_position_id = TUR_solidify_the_seventh_inonu_government
 		cost = 5
 		ai_will_do = {
@@ -121,15 +146,15 @@ focus_tree = {
 	focus = {
 		id = TUR_fully_integrate_the_is_bank
 		icon = GFX_goal_generic_banking_legislation
-		prerequisite = { focus = TUR_one_party_many_faces }
 		mutually_exclusive = { focus = TUR_continue_the_policy_of_etatism }
+		prerequisite = { focus = TUR_modest_economic_liberalization }
 		available = {
 			has_government = neutrality
 		}
-		x = -6
+		x = 0
 		y = 1
-		relative_position_id = TUR_one_party_many_faces
-		cost = 10
+		relative_position_id = TUR_modest_economic_liberalization
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -144,14 +169,6 @@ focus_tree = {
 					remove_idea = TUR_etatism_economy_law_idea
 					add_idea = civilian_economy
 				}
-			}
-			add_ideas = free_trade
-			if = {
-				limit = {
-					has_idea = TUR_ismet_inonu
-				}
-				remove_ideas = TUR_ismet_inonu
-				add_ideas = TUR_celal_bayar
 			}
 			custom_effect_tooltip = TUR_sanayiciler_liberals_tt
 		}
@@ -563,11 +580,24 @@ focus_tree = {
 				# IF THEY ACCEPT
 				custom_effect_tooltip = if_they_accept_tt
 				effect_tooltip = {
-					ROOT = {
-						set_autonomy = {
-							target = PREV
-							autonomous_state = autonomy_dominion
-							freedom_level = 0.4
+					if = {
+						limit = {
+							OR = {
+								has_dlc = "Together for Victory"
+								has_dlc = "Man the Guns"
+							}
+						}
+						ROOT = {
+							set_autonomy = {
+								target = PREV
+								autonomous_state = autonomy_dominion
+								freedom_level = 0.4
+							}
+						}
+						else = {
+							ROOT = {
+								puppet = PREV
+							}	
 						}
 					}
 				}
@@ -727,7 +757,7 @@ focus_tree = {
 			every_country_with_original_tag = {
 				original_tag_to_check = ROM
 				limit = {
-					has_completed_focus = ROM_enforce_royal_dictatorship
+					has_completed_focus = ROM_his_majestys_loyal_government
 				}
 				add_opinion_modifier = {
 					target = TUR
@@ -807,10 +837,10 @@ focus_tree = {
 			if = {			#flavour
 				limit = {
 					NOT = {
-						has_idea = r56i_laws_leadership_cult
-						has_idea = r56i_laws_leadership_secular
-						has_idea = r56i_laws_leadership_divine
-						has_idea = r56i_laws_leadership_people
+						#has_idea = r56i_laws_leadership_cult
+						#has_idea = r56i_laws_leadership_secular
+						#has_idea = r56i_laws_leadership_divine
+						#has_idea = r56i_laws_leadership_people
 						has_idea = r56i_laws_leadership_communal_decision_making
 					}
 					NOT = {
@@ -1392,7 +1422,7 @@ focus_tree = {
 				GER = { has_completed_focus = GER_restore_the_empire }
 				HUN = { has_completed_focus = HUN_proclaim_the_restoration_of_austria_hungary }
 				AND = {
-					AUS = { has_completed_focus = AUS_past_glories }
+					AUS = { has_completed_focus = AUS_old_ties }
 					exists = yes
 				}	
 			}
@@ -1866,6 +1896,7 @@ focus_tree = {
 					free_building_slots = {
 						building = infrastructure
 						size > 0
+						include_locked = yes
 					}
 				}
 				add_extra_state_shared_building_slots = 1
@@ -1881,6 +1912,7 @@ focus_tree = {
 					free_building_slots = {
 						building = infrastructure
 						size > 0
+						include_locked = yes
 					}
 				}
 				add_extra_state_shared_building_slots = 1
@@ -1896,6 +1928,7 @@ focus_tree = {
 					free_building_slots = {
 						building = infrastructure
 						size > 0
+						include_locked = yes
 					}
 				}
 				add_extra_state_shared_building_slots = 1
@@ -1999,8 +2032,8 @@ focus_tree = {
 		id = TUR_reinforce_state_arsenals
 		icon = GFX_goal_generic_munitions_factories
 		prerequisite = { focus = TUR_the_sanayiciler }
-		x = -2
-		y = 1
+		x = -1
+		y = 2
 		relative_position_id = TUR_the_sanayiciler
 		cost = 10
 
@@ -2115,7 +2148,7 @@ focus_tree = {
 		id = TUR_utilize_foreign_capital
 		icon = GFX_goal_LAT_devaulate_the_currency
 		prerequisite = { focus = TUR_cooperate_with_the_debt_council }
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = TUR_cooperate_with_the_debt_council
 		cost = 5
@@ -2134,8 +2167,8 @@ focus_tree = {
 		id = TUR_expand_the_university_education_network
 		icon = GFX_goal_generic_education
 		prerequisite = { focus = TUR_cooperate_with_the_debt_council }
-		x = 1
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = TUR_cooperate_with_the_debt_council
 		cost = 5
 		ai_will_do = {
@@ -3046,7 +3079,7 @@ focus_tree = {
 						character = TUR_ismet_inonu
 						country_leader = {
 							expire = "1965.1.1"
-							ideology = social_nationalism
+							ideology = centrism
 							traits = {
 								milli_sef
 							}
@@ -6385,13 +6418,13 @@ focus_tree = {
 
 		completion_reward = {
 			add_tech_bonus = {
-				name = TUR_learning_from_the_tripolitanian_war
+				name = TUR_learning_from_tripolitania
 				bonus = 1.0
 				uses = 1
 				category = engineers_tech
 			}
 			add_tech_bonus = {
-				name = TUR_learning_from_the_tripolitanian_war
+				name = TUR_learning_from_tripolitania
 				bonus = 1.0
 				uses = 1
 				category = recon_tech
@@ -6551,40 +6584,38 @@ focus_tree = {
 			base = 10
 			modifier = {
 				factor = 0
-				NOT = {
-					count_triggers = {	#at least 2 suitable candidates, added faction check over availability
-						amount = 2
-						GRE = {
-							exists = yes
-							is_subject = no
-							is_in_faction = no
-							NOT = {
-								has_war_with = ROOT
-							}
+				count_triggers = {	#at least 2 suitable candidates, added faction check over availability
+					amount = 2
+					GRE = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+						NOT = {
+							has_war_with = ROOT
 						}
-						HUN = {
-							exists = yes
-							is_subject = no
-							is_in_faction = no
-							NOT = {
-								has_war_with = ROOT
-							}
+					}
+					HUN = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+						NOT = {
+							has_war_with = ROOT
 						}
-						ROM = {
-							exists = yes
-							is_subject = no
-							is_in_faction = no
-							NOT = {
-								has_war_with = ROOT
-							}
+					}
+					ROM = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+						NOT = {
+							has_war_with = ROOT
 						}
-						YUG = {
-							exists = yes
-							is_subject = no
-							is_in_faction = no
-							NOT = {
-								has_war_with = ROOT
-							}
+					}
+					YUG = {
+						exists = yes
+						is_subject = no
+						is_in_faction = no
+						NOT = {
+							has_war_with = ROOT
 						}
 					}
 				}
@@ -7856,7 +7887,7 @@ focus_tree = {
 				limit = {
 					ROM = {
 						is_in_faction_with = TUR
-
+						has_completed_focus = ROM_danubian_transport_network
 						controls_state = 82
 						controls_state = 81
 						controls_state = 46
@@ -9765,6 +9796,7 @@ focus_tree = {
 						free_building_slots = {
 							building = air_base
 							size > 1
+							include_locked = yes
 						}
 					}
 					add_building_construction = {
@@ -9780,6 +9812,7 @@ focus_tree = {
 						free_building_slots = {
 							building = air_base
 							size > 1
+							include_locked = yes
 						}
 					}
 					add_building_construction = {
@@ -9795,6 +9828,7 @@ focus_tree = {
 						free_building_slots = {
 							building = air_base
 							size > 1
+							include_locked = yes
 						}
 					}
 					add_building_construction = {
@@ -9810,6 +9844,7 @@ focus_tree = {
 						free_building_slots = {
 							building = air_base
 							size > 2
+							include_locked = yes
 						}
 					}
 					add_building_construction = {
