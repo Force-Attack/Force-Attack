@@ -80,13 +80,20 @@ SOV_morozov_design_bureau_organization = {
 	allowed = {	
 		OR = {
 			tag = SOV
+			tag = MON
 			original_tag = UKR
 			AND = {
 				tag = MEX 
 				has_dlc = "Man the Guns"
 			}
-			is_literally_china = yes
-			tag = MAN
+			AND = {
+				OR = {
+					is_literally_china = yes
+					tag = MAN
+					tag = MEN
+				} 
+				has_dlc = "Waking the Tiger"
+			}
 			NOR_AAT = yes
 		}
 	}
@@ -262,7 +269,10 @@ SOV_astrov_design_bureau_organization = {
 	icon = GFX_idea_astrov_design_bureau
 	
 	allowed = {	
-		original_tag = SOV
+		OR = {
+			original_tag = SOV
+			tag = MON
+		}
 	}
 
 	add_trait = { 
@@ -385,6 +395,7 @@ SOV_okmo_organization = {
 		OR = {
 			tag = SOV
 			tag = CUB
+			tag = MON
 			AND = {
 				tag = BUL
 				has_dlc = "Battle for the Bosporus"
@@ -420,19 +431,12 @@ SOV_okmo_organization = {
 
 		IF = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_okmo_mio_flag
-				}
-			}
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = SOV
 				}
 				#is_in_faction_with = SOV
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -855,19 +859,12 @@ SOV_nevskoye_design_bureau_organization = {
 
 		IF = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_nevskoye_mio_flag
-				}
-			}
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = SOV
 				}
 				#is_in_faction_with = SOV
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -1015,6 +1012,14 @@ SOV_rubin_design_bureau_organization = {
 				tag = ETH 
 				has_dlc = "By Blood Alone"
 			}
+			AND = {
+				tag = ARG
+				has_dlc = "Trial of Allegiance"
+			}
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance"
+			}
 			NOR_AAT = yes
 		}
 	}
@@ -1040,6 +1045,20 @@ SOV_rubin_design_bureau_organization = {
 				FROM = { original_tag = NOR }
 			}
 			FROM = { has_completed_focus = NOR_invite_soviet_designers }
+		}
+
+		IF = {
+			limit = {
+				FROM = { original_tag = ARG }
+			}
+			FROM = { has_completed_focus = ARG_russian_manufacturers }
+		}
+
+		IF = {
+			limit = {
+				FROM = { original_tag = BRA }
+			}
+			FROM = { has_completed_focus = BRA_soviet_arms_industry }
 		}
 	}
 	initial_trait = {
@@ -1608,6 +1627,14 @@ SOV_mig_design_bureau_organization = {
 				tag = ETH 
 				has_dlc = "By Blood Alone"
 			}
+			AND = {
+				tag = ARG
+				has_dlc = "Trial of Allegiance" 
+			}
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance" #TODO MH Change DLC
+			}
 		}
 	}
 	
@@ -1625,6 +1652,18 @@ SOV_mig_design_bureau_organization = {
 				FROM = { NOT = { original_tag = SOV } }
 			}
 			FROM = { NOT = { has_war_with = SOV } }
+		}
+		IF = {
+			limit = {
+				FROM = { original_tag = ARG }
+			}
+			FROM = { has_completed_focus = ARG_russian_manufacturers }
+		}
+		IF = {
+			limit = {
+				FROM = { original_tag = BRA }
+			}
+			FROM = { has_completed_focus = BRA_soviet_arms_industry }
 		}
 	}
 
@@ -1752,10 +1791,6 @@ SOV_mig_design_bureau_organization = {
 					uses = 1
 					category = radar_tech
 				}
-				add_breakthrough_progress = {
-					specialization = specialization_air
-					value = 0.25
-				}		
 			}
 		}
 
@@ -1792,19 +1827,13 @@ SOV_ilyushin_design_bureau_organization = {
 
 		IF = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_ilyushin_mio_flag
-				}
-			}
+
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = SOV
 				}
 				#is_in_faction_with = SOV
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -1929,15 +1958,11 @@ SOV_ilyushin_design_bureau_organization = {
 			FROM = {
 				set_country_flag = SOV_merge_vef_plant_flag
 				add_tech_bonus = {
-					name = SOV_merge_aircraft_plant_3
+					name = SOV_mio_trait_merge_vef_plant
 					bonus = 1
 					uses = 1
 					category = radar_tech
 				}
-				add_breakthrough_progress = {
-					specialization = specialization_air
-					value = 0.25
-				}		
 			}
 		}
 
@@ -2078,15 +2103,11 @@ SOV_yakovlev_design_bureau_organization = {
 			FROM = {
 				set_country_flag = SOV_merge_vef_plant_flag
 				add_tech_bonus = {
-					name = SOV_merge_aircraft_plant_3
+					name = SOV_mio_trait_merge_vef_plant
 					bonus = 1
 					uses = 1
 					category = radar_tech
 				}
-				add_breakthrough_progress = {
-					specialization = specialization_air
-					value = 0.25
-				}		
 			}
 		}
 
@@ -2292,15 +2313,11 @@ SOV_tupolev_design_bureau_organization = {
 			FROM = {
 				set_country_flag = SOV_merge_vef_plant_flag
 				add_tech_bonus = {
-					name = SOV_merge_aircraft_plant_3
+					name = SOV_mio_trait_merge_vef_plant
 					bonus = 1
 					uses = 1
 					category = radar_tech
 				}
-				add_breakthrough_progress = {
-					specialization = specialization_air
-					value = 0.25
-				}		
 			}
 		}
 
@@ -2634,6 +2651,14 @@ SOV_gaz_organization = {
 				tag = ETH 
 				has_dlc = "By Blood Alone"
 			}
+			AND = {
+				tag = ARG
+				has_dlc = "Trial of Allegiance" #TODO_Eildih fix DLC
+			}
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance" #TODO MH fix DLC
+			}
 			NOR_AAT = yes
 		}
 	}
@@ -2656,19 +2681,14 @@ SOV_gaz_organization = {
 
 		IF = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_gaz_mio_flag
-				}
-			}
+
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = SOV
 				}
 				#is_in_faction_with = SOV
-				NOT = { has_completed_focus = BUL_nationalization }
+
 			}
 		}
 		ELSE_IF = {
@@ -2676,6 +2696,20 @@ SOV_gaz_organization = {
 				FROM = { original_tag = NOR }
 			}
 			FROM = { has_completed_focus = NOR_invite_soviet_designers }
+		}
+		
+		IF = {
+			limit = {
+				FROM = { original_tag = ARG }
+			}
+			FROM = { has_completed_focus = ARG_russian_manufacturers }
+		}
+
+		IF = {
+			limit = {
+				FROM = { original_tag = BRA }
+			}
+			FROM = { has_completed_focus = BRA_soviet_arms_industry }
 		}
 	}
 

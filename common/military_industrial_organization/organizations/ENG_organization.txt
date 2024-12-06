@@ -64,12 +64,7 @@ ENG_vickers_armstrong_eng_organization = {
 					FROM = { original_tag = ETH }
 				}  
 			}
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_vickers_mio_flag 
-				}
-			}
+
 		}
 		if = {
 			limit = { FROM = { original_tag = BUL } } 
@@ -79,7 +74,6 @@ ENG_vickers_armstrong_eng_organization = {
 					is_subject_of = ENG
 				}
 				#is_in_faction_with = ENG
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -155,6 +149,10 @@ ENG_vauxhall_organization = {
 				has_dlc = "By Blood Alone"
 			}
 			tag = EGY
+			AND = {
+				tag = BRA 
+				has_dlc = "Trial of Allegiance"
+			}
 		}
 	}
 
@@ -198,12 +196,6 @@ ENG_vauxhall_organization = {
 					FROM = { original_tag = ETH }
 				}  
 			}
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_vauxhall_mio_flag 
-				}
-			}
 		}
 		if = {
 			limit = { FROM = { original_tag = BUL } } 
@@ -213,14 +205,10 @@ ENG_vauxhall_organization = {
 					is_subject_of = ENG
 				}
 				#is_in_faction_with = ENG
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
-		if = {
-			limit = { FROM = { original_tag = BUL } } 
-			FROM = {
-				has_completed_focus = EGY_study_british_armor
-			}
+		IF = {
+			limit = { FROM = { original_tag = BRA } }
 		}
 	}
 
@@ -229,34 +217,6 @@ ENG_vauxhall_organization = {
 			armor_value = 0.05
 		}
 	}
-}
-ENG_vulcan_foundry_organization = {	#HOL werkspoor copy
-	name = ENG_vulcan_foundry
-	include = generic_heavy_tank_organization
-	icon = GFX_idea_generic_electronics_concern_2
-	allowed = {
-		original_tag = ENG
-	}
-
-	equipment_type = {  
-		armor
-		train_equipment
-	}
-
-	research_categories = { 
-		armor
-		train_tech
-	}
-
-
-	initial_trait = {
-		name = NOR_mio_initial_trait_mechanical_workshop
-		
-		equipment_bonus = {
-			build_cost_ic = -0.05
-		}
-	}
-	
 }
 
 
@@ -382,7 +342,11 @@ ENG_cammell_laird_organization = {
 			original_tag = ENG
 			original_tag = sco
 			original_tag = NIR
-			original_tag = IRE			
+			original_tag = IRE
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance"
+			}			
 		}
 		has_dlc = "Arms Against Tyranny"
 	}
@@ -407,6 +371,9 @@ ENG_cammell_laird_organization = {
 					is_core_of = PREV
 				}
 			}			
+		}
+		IF = {
+			limit = { FROM = { original_tag = BRA } }
 		}
 	}
 	visible = {
@@ -500,19 +467,12 @@ ENG_yarrow_shipbuilders_organization = {
 
 		if = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_yarrow_mio_flag 
-				}
-			}
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = ENG
 				}
 				#is_in_faction_with = ENG
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -816,19 +776,12 @@ ENG_fairey_aviation_organization = {
 
 		if = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_fairey_aviation_mio_flag 
-				}
-			}
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = ENG
 				}
 				#is_in_faction_with = ENG
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -849,7 +802,24 @@ ENG_avro_organization = {
 	include = generic_heavy_aircraft_organization
 	icon = GFX_idea_avro
 	allowed = {	
-		tag = ENG
+		OR = {
+			tag = ENG
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance"
+			}
+		}
+	}
+	available = {
+		IF = {
+			limit = {
+				FROM = { NOT = { original_tag = ENG } }
+			}
+			FROM = { NOT = { has_war_with = ENG } }
+		}
+		IF = {
+			limit = { FROM = { original_tag = BRA } }
+		}
 	}
 	initial_trait = {
 		name = generic_mio_initial_trait_heavy_aircraft_designer
@@ -997,7 +967,6 @@ ENG_vauxhall_automotive_organization = {
 		OR = {
 			tag = ENG
 			tag = POL # If Poland sets up a local one
-			#tag = ROM - Removed for now
 			AND = {
 				tag = BUL
 				has_dlc = "Battle for the Bosporus"
@@ -1041,12 +1010,6 @@ ENG_vauxhall_automotive_organization = {
 					FROM = { original_tag = ETH }
 				}  
 			}
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_vauxhall_mio_flag 
-				}
-			}
 		}
 		if = {
 			limit = { FROM = { original_tag = BUL } }
@@ -1056,9 +1019,12 @@ ENG_vauxhall_automotive_organization = {
 					is_subject_of = ENG
 				}
 				#is_in_faction_with = ENG
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
+		if = {
+			limit = { FROM = { original_tag = ROM } }
+			FROM = { has_country_flag = ENG_mot_chosen }
+		}	
 	}
 	
 	initial_trait = {

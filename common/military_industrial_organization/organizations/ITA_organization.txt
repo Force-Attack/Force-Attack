@@ -32,6 +32,10 @@ ITA_fiat_organization = {
 				tag = AFG
 				has_dlc = "Arms Against Tyranny"
 			}
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance"
+			}
 		}
 	}
 
@@ -70,13 +74,23 @@ ITA_fiat_organization = {
 					has_country_flag = has_invited_fiat_mio_flag
 				}
 			}
+
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = ITA
 				}
 				#is_in_faction_with = ITA
-				NOT = { has_completed_focus = BUL_nationalization }
+			}
+		}
+		IF = {
+			limit = {
+				FROM = {
+					original_tag = BRA
+				}
+			}
+			FROM = {
+				has_completed_focus = BRA_italian_trucks
 			}
 		}
 		IF = {
@@ -158,19 +172,13 @@ ITA_crda_organization = {
 
 		IF = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_crda_mio_flag
-				}
-			}
+
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = ITA
 				}
 				#is_in_faction_with = ITA
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
@@ -875,14 +883,35 @@ ITA_fiat_aviazione_organization = {
 	icon = GFX_idea_ITA_fiat_aviazione
 	
 	allowed = {	 
-		tag = ITA 
+		OR = {
+			tag = ITA
+			AND = {
+				tag = BRA
+				has_dlc = "Trial of Allegiance"
+			}
+		} 
 	}
 	
 	available = {
-		FROM = {
-			controls_state = 158 #PIEDMONT (Torino)
+		IF = {
+			limit = {
+				FROM = { NOT = { original_tag = ITA } }
+			}
+			FROM = { NOT = { has_war_with = ITA } }
 		}
-		ITA_is_northern_designer = yes
+		ELSE = {
+			FROM = {
+				controls_state = 158 #PIEDMONT (Torino)
+			}
+			ITA_is_northern_designer = yes
+		}
+
+		IF = {
+			limit = { FROM = { original_tag = BRA } }
+			FROM = { 
+				has_completed_focus = BRA_italian_aircraft
+			} 
+		}		
 	}
 	
 	initial_trait = {
@@ -1061,19 +1090,12 @@ ITA_lancia_organization = {
 		
 		IF = {
 			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_lancia_mio_flag
-				}
-			}
 			FROM = {
 				OR = {
 					is_subject = no
 					is_subject_of = ITA
 				}
 				#is_in_faction_with = ITA
-				NOT = { has_completed_focus = BUL_nationalization }
 			}
 		}
 	}
