@@ -4493,12 +4493,8 @@ country_event = {
 				progress > 0
 			}
 		}
-		# any_enemy_country = { #extra check below so lets make it a bit simpler to trigger when it actually should
-		# 	is_major = yes
-		# }
-		any_controlled_state = { #r56 - although crashes for ahistorical could be created, this event makes no sense if Libya isnt under attack
-			is_core_of = LBA
-			days_since_last_strategic_bombing < 22 #triggers are checked every 20 days
+		any_enemy_country = {
+			is_major = yes
 		}
 	}
 
@@ -4797,14 +4793,13 @@ country_event = {
 		}
 	}
 
-
 	# Lucky bois
 	option = { 
 		name = BBA_italy_air_accident.12.a
 
-		if = { #Upgrade trait
+		if = { #Upgrade trait and re-hire him
 			limit = {	
-				has_character = ITA_aldo_pellegrini
+				has_idea = ITA_aldo_pellegrini
 			}
 			ITA_aldo_pellegrini = {
 				custom_effect_tooltip = ITA_pellegrini_promotion_tt
@@ -4815,7 +4810,6 @@ country_event = {
 						trait = air_chief_ground_support_1
 						slot = air_chief
 					}
-
 					add_trait = {
 						trait = air_chief_ground_support_2
 						slot = air_chief
@@ -5550,7 +5544,6 @@ country_event = {
 		name = BBA_italy_bop.3.a
 
 		ITA_bop_high_increase_effect = yes	
-		ITA_bop_decrease_lost_core_modifier = yes
 		custom_effect_tooltip = ITA_reclaiming_cores_tt	
 	}
 }
@@ -5590,109 +5583,152 @@ country_event = { #TODO_Manu: Check if this solves the shit
 
 
 # CIVIL WAR!!! - Event for Italy
-country_event = {
-	id = BBA_italy_civil_war.1
-	title = BBA_italy_civil_war.1.t
-	desc = BBA_italy_civil_war.1.desc
-	picture = GFX_report_event_ITA_italian_civil_war
-	
-	is_triggered_only = yes
-
-	immediate = {
-		
-	}
-
-	# Fascist
-	option = { 
-		name = BBA_italy_civil_war.1.a
-
-		ai_chance = {
-			base = 1
-		}
-
-		effect_tooltip = {
-			
-		}
-
-		hidden_effect = {
-
-		}
-		#ITA_log_the_shit = yes
-	}
-
-	# Monarchist
-	option = { 
-		name = BBA_italy_civil_war.1.b
-
-		ai_chance = {
-			base = 0
-		}
-
-		effect_tooltip = {
-			
-		}
-
-		hidden_effect = {
-
-		}
-		#ITA_log_the_shit = yes
-
-		#BELLA CIAO
-		hidden_effect = {
-			play_song = "bella_ciao"
-		}
-	}
-
-	# Communist
-	option = { 
-		name = BBA_italy_civil_war.1.c
-
-		ai_chance = {
-			base = 0
-		}
-		
-		set_global_flag = ITA_communist_cw_flag
-
-		effect_tooltip = {
-		
-		}
-
-		hidden_effect = {
-	
-		}
-		#ITA_log_the_shit = yes
-
-		#BELLA CIAO
-		hidden_effect = {
-			play_song = "bella_ciao"
-		}
-	}
-
-	# Democratic
-	option = { 
-		name = BBA_italy_civil_war.1.d
-
-		ai_chance = {
-			base = 0
-		}
-		
-		set_global_flag = ITA_democratic_cw_flag
-
-		effect_tooltip = {
-		
-		}
-
-		hidden_effect = {
-
-		}
-		#ITA_log_the_shit = yes
-
-		#BELLA CIAO
-		hidden_effect = {
-			play_song = "bella_ciao"
-		}
-	}
-}
+#country_event = {
+#	id = BBA_italy_civil_war.1
+#	title = BBA_italy_civil_war.1.t
+#	desc = BBA_italy_civil_war.1.desc
+#	picture = GFX_report_event_ITA_italian_civil_war
+#	
+#	is_triggered_only = yes
+#
+#	immediate = {
+#		hidden_effect = {
+#			set_country_flag = ITA_fascist_side_for_character_split_flag # Used for character split
+#			ITA_cw_set_sides_and_overlords = yes #MANAGES SIDES (Cosmetics, flags, overlords, etc.)
+#
+#			ITA_cw_manage_states_split_effect = yes #SETS THE STATE SPLIT
+#		}
+#	}
+#
+#	# Fascist
+#	option = { 
+#		name = BBA_italy_civil_war.1.a
+#
+#		ai_chance = {
+#			base = 1
+#		}
+#
+#		effect_tooltip = {
+#			start_civil_war = {
+#				ideology = neutrality #SPLITTING TAG
+#				size = 0.35
+#			}
+#			custom_effect_tooltip = BBA_italy_civil_war_fascist_tt
+#		}
+#
+#		hidden_effect = {
+#			ITA_set_special_characters_as_fascist_effect = yes
+#			ITA_start_civil_war_effect = yes
+#			complete_national_focus = ITA_the_italian_social_republic
+#			RDS = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			news_event = { id = bba_news.110 hours = 2 }
+#		}
+#		#ITA_log_the_shit = yes
+#	}
+#
+#	# Monarchist
+#	option = { 
+#		name = BBA_italy_civil_war.1.b
+#
+#		ai_chance = {
+#			base = 0
+#		}
+#
+#		effect_tooltip = {
+#			start_civil_war = {
+#				ideology = neutrality #SPLITTING TAG
+#				size = 0.35
+#			}
+#			custom_effect_tooltip = BBA_italy_civil_war_monarchist_tt
+#		}
+#
+#		hidden_effect = {
+#			ITA_set_special_characters_as_monarchist_effect = yes
+#			ITA_start_civil_war_effect = yes
+#			RDS = { change_tag_from = ROOT }
+#			#FOCUS TREE for RSI -> Needs to be here otherwise RDS player will see completion popup for this
+#			RSI = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			RDS = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			news_event = { id = bba_news.110 hours = 2 }
+#		}
+#		#ITA_log_the_shit = yes
+#
+#		#BELLA CIAO
+#		hidden_effect = {
+#			play_song = "bella_ciao"
+#		}
+#	}
+#
+#	# Communist
+#	option = { 
+#		name = BBA_italy_civil_war.1.c
+#
+#		ai_chance = {
+#			base = 0
+#		}
+#		
+#		set_global_flag = ITA_communist_cw_flag
+#
+#		effect_tooltip = {
+#			start_civil_war = {
+#				ideology = neutrality #SPLITTING TAG
+#				size = 0.35
+#			}
+#			custom_effect_tooltip = BBA_italy_civil_war_communist_tt
+#		}
+#
+#		hidden_effect = {
+#			ITA_set_special_characters_as_monarchist_effect = yes #Should be enough for the split (Commies + Democ + Monarchists together)
+#			ITA_start_civil_war_effect = yes
+#			RDS = { change_tag_from = ROOT }
+#			#FOCUS TREE for RSI -> Needs to be here otherwise RDS player will see completion popup for this
+#			RSI = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			RDS = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			news_event = { id = bba_news.110 hours = 2 }
+#		}
+#		#ITA_log_the_shit = yes
+#
+#		#BELLA CIAO
+#		hidden_effect = {
+#			play_song = "bella_ciao"
+#		}
+#	}
+#
+#	# Democratic
+#	option = { 
+#		name = BBA_italy_civil_war.1.d
+#
+#		ai_chance = {
+#			base = 0
+#		}
+#		
+#		set_global_flag = ITA_democratic_cw_flag
+#
+#		effect_tooltip = {
+#			start_civil_war = {
+#				ideology = neutrality #SPLITTING TAG
+#				size = 0.35
+#			}
+#			custom_effect_tooltip = BBA_italy_civil_war_democratic_tt
+#		}
+#
+#		hidden_effect = {
+#			ITA_set_special_characters_as_monarchist_effect = yes #Should be enough for the split (Commies + Democ + Monarchists together)
+#			ITA_start_civil_war_effect = yes
+#			RDS = { change_tag_from = ROOT }
+#			#FOCUS TREE for RSI -> Needs to be here otherwise RDS player will see completion popup for this
+#			RSI = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			RDS = { country_event = { id = BBA_italy_civil_war.0 hours = 1 } }
+#			news_event = { id = bba_news.110 hours = 2 }
+#		}
+#		#ITA_log_the_shit = yes
+#
+#		#BELLA CIAO
+#		hidden_effect = {
+#			play_song = "bella_ciao"
+#		}
+#	}
+#}
 
 # Fronte Militare Clandestino (state modifier) - Event for RSI
 country_event = {
@@ -6006,13 +6042,10 @@ country_event = {
 		ITA_civil_war_deal_with_militias = yes
 
 		ITA_anti_fascist_civil_war_deal_with_fascist_side = yes
-		
-		AUS = {
-			country_event = {
-				id = austria.135
-				days = 5
-				random_hours = 24
-			}
+
+		add_timed_idea = { 
+			idea = ITA_civil_war_buff 
+			days = 180 
 		}
 	}
 	
@@ -6038,14 +6071,9 @@ country_event = {
 
 		ITA_anti_fascist_civil_war_deal_with_fascist_side = yes
 
-		hidden_effect = {
-			AUS = {
-				country_event = {
-					id = austria.135
-					days = 5
-					random_hours = 24
-				}
-			}
+		add_timed_idea = { 
+			idea = ITA_civil_war_buff 
+			days = 180 
 		}
 	}
 }
@@ -6235,7 +6263,7 @@ country_event = {
 				country_event = { id = BBA_italy_purge_the_party.1 days = 7 random_days = 3 }
 			}
 			else = {
-				news_event = { id = bba_news.100 hours = 12 random_hours = 8 } 				
+				country_event = { id = bba_news.100 hours = 12 random_hours = 8 } 				
 			}
 		}
 	}		
@@ -7146,8 +7174,8 @@ country_event = {
 
 			add_doctrine_cost_reduction = {
 				name = ITA_army_modernization
-				cost_reduction = 1
-				uses = 1
+				cost_reduction = 0.5
+				uses = 2
 				category = land_doctrine
 			}
 		}
@@ -9658,7 +9686,7 @@ country_event = {
 	option = {
 		name = BBA_italy_anti_colonialism_events.100.c
 		ai_chance = {
-			base = 20 
+			factor = 20 
 			modifier = {
 				factor = 0
 				OR = {
@@ -9762,7 +9790,7 @@ country_event = {
 
 	#War goal
 	option = {
-		name = BBA_italy_anti_colonialism_events.103.b
+		name = BBA_italy_anti_colonialism_events.103.a
 
 		ai_chance = {
 			base = 5
@@ -9836,7 +9864,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.2
 			    days = 2
-			    random_hours = 12
+			    random = 6
 			}
 		}
 	}
@@ -9853,7 +9881,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.3
 			    days = 2
-			    random_hours = 12
+			    random = 6
 			}
 		}
 	}
@@ -9929,7 +9957,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.5
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}	
 	}
@@ -9946,7 +9974,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.6
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -9964,12 +9992,28 @@ country_event = {
 	# bellissimo!
 	option = { 
 		name = BBA_italy_interaction_events.5.a
-		ITA = {
-			set_autonomy = {
-				target = CRO
-				autonomy_state = autonomy_reichsprotectorate
-				end_wars = no
-				end_civil_wars = no
+		
+		IF = {
+			limit = {
+				has_dlc = "Together for Victory"
+			}
+			ITA = {
+				set_autonomy = {
+				    target = CRO
+				    autonomy_state = autonomy_reichsprotectorate
+				    end_wars = no
+				    end_civil_wars = no
+				}
+			}
+		}
+		IF = {
+			limit = {
+				NOT = {
+					has_dlc = "Together for Victory"
+				}
+			}
+			ITA = {
+				puppet = CRO
 			}
 		}
 	}
@@ -10081,29 +10125,13 @@ country_event = {
 					transfer_state = 852
 				}
 			}
-			if = {	#R56, Kvarner
-				limit = {
-					ROOT = {	
-						OR = {		
-							owns_state = 958
-							any_subject_country = {
-								is_ai= yes
-								owns_state = 958
-							}
-						}
-					}
-				}
-				FROM = {
-					transfer_state = 958
-				}
-			}
 		}
 
 		ITA = { 
 			country_event = {
 			    id = BBA_italy_interaction_events.9
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10125,7 +10153,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.10
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 		hidden_effect = {
@@ -10200,25 +10228,7 @@ country_event = {
 			ROOT = {
 				transfer_state = 852
 			}
-		}
-		if = {	#R56, Kvarner
-			limit = {
-				OR = {
-					FROM = {
-						owns_state = 958
-					}
-					FROM = {
-						any_subject_country = {
-							is_ai= yes
-							owns_state = 958
-						}
-					}
-				}
-			}
-			ROOT = {
-				transfer_state = 958
-			}
-		}
+		}	
 	}
 }
 
@@ -10317,7 +10327,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.12
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10334,7 +10344,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.13
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10408,7 +10418,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.15
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10425,7 +10435,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.16
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10512,7 +10522,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.19
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10529,7 +10539,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.20
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10612,7 +10622,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.22
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10629,7 +10639,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.23
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 	}
@@ -10710,7 +10720,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.25
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 		add_war_support = 0.15
@@ -10777,7 +10787,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.26
 			    days = 1
-			    random_hours = 6
+			    random = 2
 			}
 		}
 		add_war_support = -0.1
@@ -10815,14 +10825,17 @@ country_event = {
 			    type = annex_everything
 			}
 		}
-		every_state = {
-			limit = {
-				AND = {
-					is_owned_by = AUS
-					is_core_of = AUS
-				}
-			}
-			add_claim_by = ROOT
+		848 = {
+			add_claim_by = GER 
+		}
+		153 = {
+			add_claim_by = GER
+		}
+		152 = {
+			add_claim_by = GER
+		}
+		4 = {
+			add_claim_by = GER
 		}
 	}
 
@@ -10885,11 +10898,65 @@ country_event = {
 	# alright.. on to the next one I guess
 	option = { 
 		name = BBA_italy_interaction_events.26.a 
-		AUS = {
-			country_event = {
-				id = erwache.8	
-				days = 1
+
+		4 = {
+			if = {
+				limit = { is_owned_by = AUS }
+				add_core_of = GER
 			}
+		}
+		152 = {
+			if = {
+				limit = { is_owned_by = AUS }
+				add_core_of = GER
+			}
+		}
+		153 = {
+			if = {
+				limit = { is_owned_by = AUS }
+				add_core_of = GER
+			}
+		}
+		848 = {
+			if = {
+				limit = { is_owned_by = AUS }
+				add_core_of = GER
+			}
+		}
+		AUS = {
+			every_unit_leader = {
+				set_nationality = GER
+			}
+		}
+		annex_country = { target = AUS transfer_troops = yes }
+		add_political_power = 75
+		set_country_flag = AUS_annexed
+		add_war_support = 0.1
+		add_stability = 0.05
+		USA = {
+			set_country_flag = { flag = USA_anschluss_window days = 60 value = 1 }
+		}
+		custom_effect_tooltip = anschluss_mefo_bills_tt
+		hidden_effect = { # Having it appear twice might be confusing
+			GER_mefo_bills_level_down = yes
+			GER_mefo_bills_level_down = yes
+		}
+		custom_effect_tooltip = anschluss_mefo_bills_double_reduction
+		add_to_variable = { var = GER_mefo_bill_counter value = -10 }
+
+		if = {
+			limit = {
+				has_dlc = "Death or Dishonor"
+				country_exists = YUG
+				YUG = { has_war = no }
+			}
+			country_event = {
+				id = DOD_yugoslavia.30
+				days = 4
+			}
+		}
+		hidden_effect = {
+			news_event = { hours = 6 id = news.36 }
 		}
 	}
 }
@@ -11301,7 +11368,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.32
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11336,7 +11403,7 @@ country_event = {
 					country_event = {
 					    id = BBA_italy_interaction_events.33
 					    days = 3
-					    random_hours = 12
+					    random = 6
 					}
 				}
 			}
@@ -11351,7 +11418,7 @@ country_event = {
 					country_event = {
 					    id = BBA_italy_interaction_events.34
 					    days = 3
-					    random_hours = 12
+					    random = 6
 					}
 				}
 			}
@@ -11365,7 +11432,7 @@ country_event = {
 					country_event = {
 					    id = BBA_italy_interaction_events.35
 					    days = 3
-					    random_hours = 12
+					    random = 6
 					}
 				}
 			}
@@ -11374,7 +11441,7 @@ country_event = {
 					country_event = { #Balkan claims event
 					    id = BBA_italy_interaction_events.36
 					    days = 3
-					    random_hours = 12
+					    random = 6
 					}
 				}
 			}
@@ -11421,7 +11488,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.32
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11435,7 +11502,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.33
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11450,7 +11517,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.34
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11464,7 +11531,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11473,7 +11540,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11570,7 +11637,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.33
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11585,7 +11652,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.34
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11599,7 +11666,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11608,7 +11675,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11636,7 +11703,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.33
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11651,7 +11718,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.34
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11665,7 +11732,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11674,7 +11741,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11754,7 +11821,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.34
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11768,7 +11835,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11777,7 +11844,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11813,7 +11880,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.34
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11827,7 +11894,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11836,7 +11903,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11923,7 +11990,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11932,7 +11999,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11967,7 +12034,7 @@ country_event = {
 				country_event = {
 				    id = BBA_italy_interaction_events.35
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -11976,7 +12043,7 @@ country_event = {
 				country_event = { #Balkan claims event
 				    id = BBA_italy_interaction_events.36
 				    days = 3
-				    random_hours = 12
+				    random = 6
 				}
 			}
 		}
@@ -12056,7 +12123,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.36
 			    days = 3
-			    random_hours = 12
+			    random = 6
 			}
 		}
 
@@ -12084,7 +12151,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.36
 			    days = 3
-			    random_hours = 12
+			    random = 6
 			}
 		}
 
@@ -12183,7 +12250,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.37
 			    days = 3
-			    random_hours = 12
+			    random = 6
 			}
 		}
 	}
@@ -12631,19 +12698,17 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		hidden_effect = {
-			if = {
+		if = {
+			limit = {
+				ROOT = {
+					is_faction_leader = yes
+				}
+			}
+			every_other_country = {
 				limit = {
-					ROOT = {
-						is_faction_leader = yes
-					}
+					is_in_faction_with = ROOT
 				}
-				every_other_country = {
-					limit = {
-						is_in_faction_with = ROOT
-					}
-					set_country_flag = ITA_add_to_the_stresa_front
-				}
+				set_country_flag = ITA_add_to_the_stresa_front
 			}
 		}
 	}
@@ -12656,87 +12721,6 @@ country_event = {
 			base = 100
 		}
 
-		every_country = { #If Italy has any wargoal on other countries, remove them so they can join the faction
-			limit = {
-				OR = {
-					is_in_faction_with = ROOT
-					tag = ROOT
-				}
-				FROM = {
-					has_wargoal_against = PREV
-				}
-			}
-			FROM = {
-				remove_wargoal = {
-					type = all
-					target = PREV
-				}
-			}
-		}
-
-		effect_tooltip = {
-			if = {
-				limit = {
-					ENG = {
-						is_faction_leader = yes
-					}
-				}
-				ENG = { add_to_faction = FRA }
-				ENG = { add_to_faction = ITA }
-			}
-			else = {
-				ROOT = {
-					create_faction = stresa_front_ita
-					ROOT = { add_to_faction = ITA }
-					ROOT = { add_to_faction = ENG }
-				}
-				every_other_country = {
-					limit = {
-						NOT = {
-							original_tag = ENG
-						}
-						has_country_flag = ITA_add_to_the_stresa_front
-					}
-					ROOT = {
-						add_to_faction = PREV #Add already existing faction members to the new faction
-					}
-				}
-			}
-		}
-		hidden_effect = {
-			country_event = {
-				id = BBA_italy_interaction_events.411
-				days = 2
-			}
-		}
-	}
-
-	# No thank you
-	option = { 
-		name = BBA_italy_interaction_events.40.b 
-
-		ai_chance = {
-			base = 0
-		}
-
-		add_war_support = -0.3
-
-	}
-}
-
-country_event = { #Hidden event
-	id = BBA_italy_interaction_events.411
-	
-	hidden = yes
-	is_triggered_only = yes
-	fire_only_once = no
-
-	#Italy joins the faction
-	option = { 
-		name = BBA_italy_interaction_events.41.a 
-		ai_chance = {
-			base = 100
-		}
 		if = {
 			limit = {
 				ENG = {
@@ -12754,9 +12738,6 @@ country_event = { #Hidden event
 			}
 			every_other_country = {
 				limit = {
-					NOT = {
-						original_tag = ENG
-					}
 					has_country_flag = ITA_add_to_the_stresa_front
 				}
 				ROOT = {
@@ -12764,6 +12745,17 @@ country_event = { #Hidden event
 				}
 			}
 		}
+	}
+
+	# No thank you
+	option = { 
+		name = BBA_italy_interaction_events.40.b 
+
+		ai_chance = {
+			base = 0
+		}
+
+		add_war_support = -0.3
 	}
 }
 
@@ -12820,7 +12812,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.42
 			    days = 2
-			    random_hours = 12
+			    random = 6
 			}
 		}
 	}
@@ -12837,7 +12829,7 @@ country_event = {
 			country_event = {
 			    id = BBA_italy_interaction_events.43
 			    days = 2
-			    random_hours = 12
+			    random = 6
 			}
 		}
 	}
@@ -12928,7 +12920,7 @@ country_event = {
 			country_event = {
 				id = BBA_italy_interaction_events.45
 				days = 2
-				random_hours = 12
+				random = 6
 			}
 		}
 	}
@@ -12945,7 +12937,7 @@ country_event = {
 			country_event = {
 				id = BBA_italy_interaction_events.46
 				days = 2
-				random_hours = 12
+				random = 6
 			}
 		}
 	}
@@ -12959,6 +12951,7 @@ country_event = {
 	picture = GFX_report_event_fascist_speech
 	
 	is_triggered_only = yes
+	fire_only_once = no
 
 	# Niceu
 	option = { 
@@ -12976,6 +12969,7 @@ country_event = {
 	picture = GFX_report_event_fascist_speech 
 	
 	is_triggered_only = yes
+	fire_only_once = no
  
 	# We can do little to change their minds...
 	option = { 
@@ -13269,8 +13263,6 @@ country_event = {
 		name = BBA_italy_interaction_events.667.a 
 
 		transfer_state = 454 #PALESTINE
-		transfer_state = 1016
-		transfer_state = 1017
 		add_opinion_modifier = {
 			target = FROM
 			modifier = ITA_complied_to_church_demands
@@ -13320,7 +13312,7 @@ country_event = {
 		create_wargoal = {
 			type = take_state
 			target = FROM
-			generator = { 454 1016 1017 1016 1017 } 
+			generator = { 454 } 
 		}
 	}
 }
