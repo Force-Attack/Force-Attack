@@ -214,22 +214,42 @@ focus_tree = {
 					POR = { set_country_flag = POR_released_mozambique_flag }
 				}
 			}
-			POR = {
-				if = {
-					limit = { has_country_flag = POR_released_angola_flag }
-					set_autonomy = {
-						target = ANG
-						autonomy_state = autonomy_integrated_puppet
+
+			if = {
+				limit = {
+					OR = {
+						has_dlc = "Together for Victory"
+						has_dlc = "Man the Guns"
 					}
 				}
-				if = {
-					limit = { has_country_flag = POR_released_mozambique_flag }
-					set_autonomy = {
-						target = MZB
-						autonomy_state = autonomy_integrated_puppet
+
+				POR = {
+					if = {
+						limit = { has_country_flag = POR_released_angola_flag }
+						set_autonomy = {
+						    target = ANG
+						    autonomy_state = autonomy_integrated_puppet
+						}
+					}
+					if = {
+						limit = { has_country_flag = POR_released_mozambique_flag }
+						set_autonomy = {
+						    target = MZB
+						    autonomy_state = autonomy_integrated_puppet
+						}
 					}
 				}
 			}
+			else = {
+				if = {
+					limit = { has_country_flag = POR_released_angola_flag }
+					POR = { puppet = ANG }
+				}
+				if = {
+					limit = { has_country_flag = POR_released_mozambique_flag }
+					POR = { puppet = MZB }
+				}
+			}			
 
 			every_other_country = {
 				limit = { has_government = democratic }
@@ -998,7 +1018,7 @@ focus_tree = {
 				}
 				custom_effect_tooltip = available_mio_tt
 				show_mio_tooltip = POR_fma_organization
-				mio:POR_fma_organization = {
+				mio:HOL_daf_organization = {
 					add_mio_funds = 500
 				}
 			}
@@ -1216,10 +1236,6 @@ focus_tree = {
 			    bonus = 1.0
 			    uses = 1
 			    category = jet_technology
-			}
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.25
 			}
 		}
 	}
@@ -2566,9 +2582,9 @@ focus_tree = {
 			if = {
 				limit = {
 					NOT = {
-						has_idea = r56i_laws_security_balanced
-						has_idea = r56i_laws_security_rights
-						has_idea = r56i_laws_security_order
+						#has_idea = r56i_laws_security_balanced
+						#has_idea = r56i_laws_security_rights
+						#has_idea = r56i_laws_security_order
 					}
 				}
 				custom_effect_tooltip = EFFECT_CHANGE_LAW_r56i_laws_social
@@ -4705,9 +4721,6 @@ focus_tree = {
 		id = POR_strengthen_the_regime
 		available = {
 			has_country_leader = { character = POR_antonio_de_oliveira_salazar }
-			has_manpower > 80000
-			has_equipment = { support_equipment > 799 }
-			has_equipment = { infantry_equipment > 799 }
 		}
 
 		ai_will_do = {
@@ -4724,17 +4737,6 @@ focus_tree = {
 		relative_position_id = POR_observation_mission
 		cost = 10
 		completion_reward = {
-			add_manpower = -3000
-			add_equipment_to_stockpile = {
-				type = support_equipment
-				amount = -800
-				producer = POR
-			}
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = -800
-				producer = POR
-			}
 			add_stability = -0.1
 			add_popularity = {
 			    ideology = neutrality
@@ -6521,7 +6523,7 @@ focus_tree = {
 				name = "Dom Duarte Nuno"
 				picture = "gfx/leaders/POR/portrait_por_duarte_nuno.dds"
 				expire = "1976.12.24"
-				ideology = constitutional_monarchy
+				ideology = despotism
 				traits = {
 					constitutional_monarch_minor
 				}
