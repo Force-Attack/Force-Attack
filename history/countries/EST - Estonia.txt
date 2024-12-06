@@ -1,38 +1,33 @@
 ﻿capital = 812
 
+oob = "EST_1936"
 if = {
-	limit = {
-		NOT = {
-			has_dlc = "No Step Back"
+	limit = { has_dlc = "By Blood Alone" }
+		set_air_oob = "EST_1936_air_bba"
+	else = {
+		set_air_oob = "EST_1936_air_legacy"
+		set_technology = {
+			early_fighter = 1
+
 		}
 	}
-	set_oob = "EST_1936"
-}
-if = {
-	limit = {
-		has_dlc = "No Step Back"
-	}
-	set_oob = "EST_1936_nsb"
-}
-if = {
-	limit = { 
-		has_dlc = "Man the Guns" 
-	}
-	set_naval_oob = "EST_1936_naval_mtg"
-	else = {
-		set_naval_oob = "EST_1936_naval_legacy"
-	}
 }
 
-set_war_support = 0.5
-set_stability = 0.6 
-set_convoys = 15
-set_research_slots = 4
+if = {
+	limit = { has_dlc = "Arms Against Tyranny" }
+	store_core_states_on_game_start = yes
+}
+set_research_slots = 3
 
 add_ideas = {
-	EST_outdated_military
-	EST_student_protests
 	limited_conscription
+}
+IF = {
+	limit = { has_dlc = "No Step Back" }
+	add_ideas = {
+		democratic_opposition
+		EST_vaps_idea_1
+	}
 }
 
 recruit_character = EST_konstantin_pats
@@ -56,75 +51,41 @@ recruit_character = EST_august_rei
 recruit_character = EST_jaan_anvelt
 recruit_character = EST_johan_laidoner
 
-recruit_character = EST_gustav_jonson
-recruit_character = EST_johan_pitka
-recruit_character = EST_hermann_salza
-recruit_character = EST_herbert_brede
-
-### SCIENTISTS ###
-recruit_character = EST_voldemar_post
-recruit_character = EST_herman_voldemar_reier
-recruit_character = EST_albrecht_altma
-
-#NSB extra characters
-if = {
-	limit = {
-		has_dlc = "No Step Back"
-	}
+IF = { 
+	limit = { has_dlc = "No Step Back"}
 	recruit_character = EST_august_jakobson
 	recruit_character = EST_viktor_puskar
 	recruit_character = EST_voldemar_voolman
 	recruit_character = EST_henrik_allik
+	recruit_character = EST_johan_pitka
 	recruit_character = EST_hjalmar_mae
 	recruit_character = EST_aleksander_jaakson
-	
+	recruit_character = EST_herbert_brede
 	recruit_character = EST_otto_heinze
 }
 
+set_variable = {
+	var = vaps_days_var
+	value = 80
+}
+
+set_variable = {
+	var = vaps_crackdown_var
+	value = 360
+}
+
 set_technology = {
-
-	# Extended Technologies
-	etax_doctrine = 1
-	camo = 1
-
 	infantry_weapons = 1
 	infantry_weapons1 = 1
-	tech_support = 1
 	gw_artillery = 1
+	interwar_antiair = 1
+	tech_support = 1
 	basic_train = 1
-	armored_train = 1
-
-}
-if = {
-	limit = { has_dlc = "By Blood Alone" }
-	set_air_oob = "EST_1936_air_bba"
-	set_technology = {
-		iw_small_airframe = 1
-		engines_1 = 1
-		aa_lmg = 1
-	}
-	else = {
-		set_air_oob = "EST_1936_air_legacy"
-		set_technology = {
-			early_fighter = 1
-		}
-	}
-}
-if = {
-	limit = {
-		has_dlc = "La Resistance"
-		EST = { is_ai = no }
-	}
-	set_technology = {
-		armored_car1 = 1
-	}
 }
 if = {
 	limit = { not = { has_dlc = "Man the Guns" } }
 	set_technology = {
 		early_submarine = 1
-		basic_submarine = 1
-		transport = 1
 	}
 }
 if = {
@@ -134,196 +95,161 @@ if = {
 		submarine_mine_laying = 1
 		early_ship_hull_light = 1
 		early_ship_hull_submarine = 1
-		basic_ship_hull_submarine = 1
 		basic_battery = 1
 		basic_torpedo = 1
-		mtg_transport = 1
-	}
-}
-if = {
-	limit = {
-		NOT = { has_dlc = "No Step Back" }
-	}
-	set_technology = {
-		gwtank = 1
-	}
-}
-if = {
-	limit = {
-		has_dlc = "No Step Back"
-	}
-	set_technology = {
-		gwtank_chassis = 1
-		r56_gw_railway_gun = 1
 	}
 }
 
-set_politics = {	
+set_convoys = 5
+
+1939.1.1 = {
+
+	set_country_flag = fought_vaps_flag #Estonia shouldn't have to fight the Vaps in 39
+
+	remove_ideas = {
+		democratic_opposition
+		EST_vaps_idea_1
+	}
+
+	add_political_power = 1198
+	add_command_power = 100
+	
+	if = {
+		limit = {
+			has_dlc = "No Step Back"
+		}
+		complete_national_focus = EST_era_of_silence
+		complete_national_focus = EST_fight_the_vaps
+		complete_national_focus = EST_ismaaliit
+		complete_national_focus = BALTIC_rejoin_the_railways
+		complete_national_focus = BALTIC_renew_allied_trade
+		complete_national_focus = EST_establish_the_rahvuskogu
+		complete_national_focus = EST_national_council
+		complete_national_focus = EST_chamber_of_deputies
+		complete_national_focus = EST_modernize_capital
+		complete_national_focus = BALTIC_attract_workers_to_capital
+		complete_national_focus = BALTIC_modernize_industry
+		complete_national_focus = EST_exploit_the_banks
+		complete_national_focus = EST_support_independent_militaries
+		complete_national_focus = EST_republican_defence_league
+		complete_national_focus = BALTIC_ford_motors
+		complete_national_focus = BALTIC_crossley_motors
+		complete_national_focus = BALTIC_natural_resources
+	}
+	
+	oob = "EST_1939"
+	if = {
+		limit = { has_dlc = "Man the Guns" }
+			set_naval_oob = "EST_1939_naval_mtg"
+		else = {
+			set_naval_oob = "EST_1939_naval_legacy"
+		}
+	}
+	if = {
+		limit = { has_dlc = "By Blood Alone" }
+			set_air_oob = "EST_1936_air_bba" #deliberately using 1936 OOB since no change in aircraft strength or models
+		else = {
+			set_air_oob = "EST_1936_air_legacy"
+			set_technology = {
+				fighter1 = 1
+				early_bomber = 1
+				CAS1 = 1
+				naval_bomber1 = 1
+
+			}
+		}
+	}
+	set_technology = {
+		tech_recon = 1	
+		tech_engineers = 1
+		interwar_artillery = 1
+		support_weapons = 1
+
+		#doctrines
+		air_superiority = 1
+		grand_battle_plan = 1
+		trench_warfare = 1
+		fleet_in_being = 1
+		battlefleet_concentration = 1
+		convoy_sailing = 1
+
+		#electronics
+		electronic_mechanical_engineering = 1
+		radio = 1
+		radio_detection = 1
+		mechanical_computing = 1
+		computing_machine = 1
+
+		#industry
+		basic_machine_tools = 1
+		improved_machine_tools = 1
+		advanced_machine_tools = 1
+		synth_oil_experiments = 1
+		fuel_silos = 1
+		oil_processing = 1
+		improved_oil_processing = 1
+		construction1 = 1
+		construction2 = 1
+		dispersed_industry = 1
+		dispersed_industry2 = 1
+	}
+	if = {
+		limit = { not = { has_dlc = "Man the Guns" } }
+		set_technology = {
+			basic_submarine = 1
+		}
+	}
+	if = {
+		limit = { has_dlc = "Man the Guns" }
+		set_technology = {
+			basic_ship_hull_submarine = 1
+		}
+	}
+}
+
+set_politics = {
 	ruling_party = neutrality
 	last_election = "1932.5.21"
 	election_frequency = 48
 	elections_allowed = no
 }
-
 set_popularities = {
-	democratic = 15
-	fascism = 10
-	communism = 20
-	neutrality = 55
+	democratic = 20
+	fascism = 15
+	communism = 5
+	neutrality = 60
 }
 
-if = {
-	limit = { NOT = { has_dlc = "Man the Guns" } }
-	### Ship Variants ###
-	create_equipment_variant = {
-		name = "Kalev Class"
-		type = submarine_2
-		name_group = EST_SS_HISTORICAL
-		parent_version = 0
-		upgrades = {
-			ship_reliability_upgrade = 1
-			sub_engine_upgrade = 0
-			sub_stealth_upgrade = 0
-			sub_torpedo_upgrade = 1
+1939.1.1 = {
+	set_politics = {
+		ruling_party = neutrality
+		last_election = "1938.2.25"
+		election_frequency = 48
+		elections_allowed = no
+	}
+}
+
+
+### VARIANTS ###
+# 1939 Start #
+1939.1.1 = {
+	if = {
+		limit = { not = { has_dlc = "Man the Guns" } }
+		# Ship variants #
+	}
+	if = {
+		limit = { has_dlc = "Man the Guns" }
+		# Submarines #
+		create_equipment_variant = {
+			name = "Kalev Class"				
+			type = ship_hull_submarine_2
+			name_group = EST_SS_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_torpedo_slot = ship_torpedo_sub_1
+				fixed_ship_engine_slot = sub_ship_engine_1
+				rear_1_custom_slot = ship_mine_layer_sub
+			}
 		}
 	}
-}
-
-if = {
-	limit = { has_dlc = "Man the Guns" }
-	# Submarines #
-	create_equipment_variant = {
-		name = "Kalev Class"
-		type = ship_hull_submarine_2
-		name_group = EST_SS_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_torpedo_slot = ship_torpedo_sub_1
-			fixed_ship_engine_slot = sub_ship_engine_1
-			rear_1_custom_slot = ship_mine_layer_sub
-		}
-	}
-}
-
-# create_country_leader = {
-# 	name = "Karl Säre"
-# 	picture = "r56_portrait_EST_Karl_Sare.dds"
-# 	expire = "1967.1.1"
-# 	ideology = stalinism
-# 	traits = {
-# 		#
-# 	}
-# }
-
-#create_country_leader = {	#already commented out before NSB
-#	name = "Hjalmar Mae"
-#	picture = "r56_portrait_EST_Hjalmar_Mae.dds"
-#	expire = "1959.1.1"
-#	ideology = nazism
-#	traits = {
-#		#triumphant_revolutionary what?
-#	}
-#}
-#r add Aleksander Jaakson as field marshal?
-
-# create_field_marshal = { #Purged after annexed by soviets
-# 	name = "Johan Laidoner"
-# 	picture = "r56_portrait_EST_Johan_Laidoner.dds"
-# 	traits = { war_hero defensive_doctrine homeland_connoisseur brilliant_strategist }
-# 	skill = 5
-# 	id = 199
-#     attack_skill = 3
-#     defense_skill = 7
-#     planning_skill = 3
-#     logistics_skill = 3
-# }
-
-# create_corps_commander = { #Purged after annexed by soviets
-# 	name = "Aleksander Jaakson"
-# 	picture = "r56_portrait_EST_Aleksander_Jaakson.dds"
-# 	traits = { career_officer infantry_officer vigorous promising }
-# 	skill = 2
-#     attack_skill = 2
-#     defense_skill = 1
-#     planning_skill = 2
-#     logistics_skill = 2
-# }
-
-
-# create_corps_commander = { #Jailed but lived after joining red army 
-# 	name = "Richard Tomberg"
-# 	picture = "r56_portrait_EST_Richard_Tomberg.dds"
-# 	traits = { career_officer air_force_ties JAP_communist_sympathizer }
-# 	skill = 2
-#     attack_skill = 1
-#     defense_skill = 1
-#     planning_skill = 2
-#     logistics_skill = 3
-# }
-
-# create_corps_commander = { #Purged after annexed
-# 	name = "Gustav Jonson"
-# 	picture = "r56_portrait_EST_Gustav_Jonson.dds"
-# 	traits = { cavalry_officer winter_specialist }
-# 	skill = 2
-# 	id = 299
-#     attack_skill = 2
-#     defense_skill = 2
-#     planning_skill = 1
-#     logistics_skill = 2
-# }
-
-# create_corps_commander = { #Purged after joining red army in 1941
-# 	name = "Herbert Brede"
-# 	picture = "r56_portrait_EST_Herbert_Brede.dds"
-# 	traits = { career_officer old_guard war_hero JAP_communist_sympathizer }
-# 	skill = 2
-#     attack_skill = 1
-#     defense_skill = 3
-#     planning_skill = 2
-#     logistics_skill = 1
-# }
-
-# create_navy_leader = { #Wasn't in a command in 1936, needs to be tied to a focus or something in the futrue -SpicyAlfredo
-# 	name = "Johan Pitka"
-# 	picture = "r56_portrait_EST_Johan_Pitka.dds"
-# 	traits = { old_guard_navy inshore_fighter superior_tactician }
-# 	skill = 3
-# 	id = 289
-# 	attack_skill = 1
-# 	defense_skill = 2
-# 	maneuvering_skill = 3
-# 	coordination_skill = 1
-# }
-
-# create_navy_leader = { #Fate unknown
-# 	name = "Hermann Salza"
-# 	portrait_path = "gfx/leaders/EST/r56_portrait_EST_Hermann_Salza.dds"
-# 	traits = { seawolf gentlemanly }
-# 	skill = 2
-# 	attack_skill = 3
-# 	defense_skill = 1
-# 	maneuvering_skill = 1
-# 	coordination_skill = 2
-# }
-if = {
-	limit = {
-		has_dlc = "La Resistance"
-	}
-	create_operative_leader = {
-		name = "M. Gavrilov"
-		gfx = GFX_portrait_europe_generic_operative_m_6
-		traits = { operative_double_agent }
-		bypass_recruitment = no
-		available_to_spy_master = yes
-		nationalities = { EST SOV }
-	}
-	create_operative_leader = {
-		name = "Rudolf Velling"
-		gfx = GFX_r56_portrait_europe_generic_operative_m_5
-		traits = { operative_infiltrator }
-		bypass_recruitment = no
-		available_to_spy_master = yes
-		nationalities = { EST }
-	}		
 }
