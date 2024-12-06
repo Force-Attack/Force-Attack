@@ -18,33 +18,28 @@ country_event = {
 		add_war_support = 0.05
 		create_wargoal = {
   			type = annex_everything
-  			target = 608.owner
+  			target = CHI
   		}
-		608 = {
-			owner = {
-				if = {
-					limit = {
-						NOT = {
-							has_completed_focus = KMT_national_def_propaganda
-							has_completed_focus = KMT_focus_on_our_own_army
-							has_completed_focus = KMT_incorporate_warlord_forces
-						}
+		CHI = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = KMT_national_def_propaganda
+						has_completed_focus = KMT_focus_on_our_own_army
+						has_completed_focus = KMT_incorporate_warlord_forces
 					}
-					add_timed_idea = {
-						idea = JAP_caught_off_gruad
-						days = 30
-					}
+				}
+				add_timed_idea = {
+					idea = JAP_caught_off_gruad
+					days = 70
 				}
 			}
 		}
   		if = {
 			limit = {
-				MEN = {
-					OR = { 
-						is_puppet_of = CHI
-						is_puppet_of = PRC
-						is_puppet = no
-					}
+				OR = {
+					MEN = { is_puppet_of = CHI }
+					MEN = { is_puppet = no }
 				}			
 			}	
 			create_wargoal = {
@@ -52,27 +47,14 @@ country_event = {
   				target = MEN
   			}
 		}
-		if = {
-			limit = {
-				MEN = { is_puppet_of = ROOT }
-				SHX = {
-					exists = yes
-					is_in_faction = no
-					is_neighbor_of = MEN
-				}
-			}
-			create_wargoal = {
-				type = annex_everything
-				target = SHX
-			}
-		}
+  		
 		hidden_effect = {
 			news_event = { days = 5 id = news.1 }
 		}
 		USA = { set_country_flag = { flag = USA_china_window days = 60 value = 1 } }
 		if = {
 			limit = {
-				has_country_leader = { character = JAP_emperor_hirohito }
+				has_country_leader = { ruling_only = yes name = "Hirohito" }
 			}
 			remove_country_leader_trait = imperial_sanction
 		}
@@ -148,7 +130,7 @@ country_event = {
 		add_state_claim = 613
 		if = {
 			limit = {
-				has_country_leader = { character = JAP_emperor_hirohito }
+				has_country_leader = { ruling_only = yes name = "Hirohito" }
 			}
 			remove_country_leader_trait = imperial_sanction
 		}
@@ -156,12 +138,6 @@ country_event = {
 		add_ai_strategy = {
 			type = antagonize
 			id = "CHI"
-			value = 500
-		}
-		
-		add_ai_strategy = {
-			type = antagonize
-			id = "PRC"
 			value = 500
 		}
 	}
@@ -214,9 +190,9 @@ country_event = {
 			category = cat_anti_tank
 		}
 		name = japan.3.a
-		#SOV = {
-		#	country_event = { id = soviet.2 }
-		#}
+		SOV = {
+			country_event = { id = soviet.2 }
+		}
 	}
 }
 # Soviets Push Back And Lose
@@ -265,9 +241,9 @@ country_event = {
 			uses = 1
 			category = cat_grand_battle_plan
 		}		
-		#SOV = {
-		#	country_event = { id = soviet.3 }
-		#}
+		SOV = {
+			country_event = { id = soviet.3 }
+		}
 	}
 }
 
@@ -543,7 +519,7 @@ country_event = {
 
 	option = {
 		name = japan.11.b
-		ai_chance = { base = 0 }
+		ai_chance = { factor = 0 }
 	}
 }
 
@@ -559,7 +535,7 @@ country_event = {
 	option = {
 		name = japan.12.a
 		ai_chance = {
-			base = 90 
+			factor = 90 
 			modifier = {
 				#If they have a fighting chance, they should stand their ground
 				factor = 0
@@ -577,7 +553,7 @@ country_event = {
 
 	option = {
 		name = japan.12.b
-		ai_chance = { base = 10 }
+		ai_chance = { factor = 10 }
 		JAP = { 
 			country_event = { id = japan.14 }
 			effect_tooltip = {
@@ -642,16 +618,22 @@ country_event = {
 		set_global_flag = indian_national_army_setup
 		RAJ = {
 			add_stability = -0.2
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.1
-			}
-			add_popularity = {
-				ideology = democratic
-				popularity = -0.05
-			}
-			ENG = {
-				country_event = { id = britain.19 }
+			if = {
+				limit = { has_dlc = "Together for Victory" }
+				add_popularity = {
+					ideology = fascism
+					popularity = 0.1
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = -0.05
+				}
+				else = {
+					add_ideas = RAJ_subhas_chanda_bose_tfv 
+					ENG = {
+						country_event = { id = britain.19 }
+					}
+				}
 			}
 		}
 	}
@@ -773,3 +755,260 @@ country_event = {
 		}
 	}
 }
+# Manchu concessions succeed
+country_event = {
+	id = japan.19
+	title = japan.19.t
+	desc = japan.19.d
+	picture = GFX_report_event_chinese_soldiers_running
+	
+	is_triggered_only = yes
+	
+	option = {
+		SOV = {
+			transfer_state = 942
+			transfer_state = 717
+			transfer_state = 943
+			transfer_state = 944
+			transfer_state = 714
+			transfer_state = 761
+			transfer_state = 945
+		}
+		SOV = {
+			add_tech_bonus = {
+				name = infantry_weapons
+				uses = 1
+				bonus = 0.5
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = support_weapons
+				uses = 1
+				bonus = 0.5
+				category = support_tech
+			}
+		}
+		SOV = {
+			add_tech_bonus = {
+				name = industry
+				uses = 2
+				bonus = 0.5
+				category = industry
+			}
+		}
+		JAP = {
+			add_ideas = JAP_air
+			add_tech_bonus = {
+				name = japanesetech
+				uses = 1
+				bonus = 0.5
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = japanesetech2
+				uses = 1
+				bonus = 0.5
+				category = support_tech
+			}
+		}
+		JAP = {
+			add_tech_bonus = {
+				name = industry
+				uses = 2
+				bonus = 0.5
+				category = industry
+			}
+		}
+		random_owned_controlled_state = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+			random_owned_controlled_state = {
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+				random_owned_controlled_state = {
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		name = japan.19.a
+
+	}
+}
+
+# soviets refuse to aid us
+country_event = {
+	id = japan.20
+	title = japan.20.t
+	desc = japan.20.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = {
+		name = japan.20.a
+		add_stability = 0.05
+	}
+}
+###MANCHU EVENT COMMIE AFTERWARDS
+country_event = {
+	id = japan.21
+	title = japan.21.t
+	desc = japan.21.desc
+	picture = GFX_report_event_japanese_officers
+	timeout_days = 14
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = japan.21.a
+		ai_chance = { base = 1 }
+		random_controlled_state = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		set_party_name = { 
+			ideology = fascism
+			name = JAP_neutrality_party_kodoha
+			long_name = JAP_neutrality_party_kodoha_long
+		}
+		create_country_leader = {
+			name = "Kenkichi Ueda"
+			desc = ""
+			picture = "gfx/leaders/JAP/Portrait_Japan_Kenkichi_Ueda.dds"
+			expire = "1989.1.1"
+			ideology = rexism
+			traits = {
+				kwantung_leader
+				kwantung_exile
+			}
+		}
+	}
+	option = {
+		name = japan.21.b
+		ai_chance = { base = 0 }
+		random_controlled_state = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		set_party_name = { 
+			ideology = fascism
+			name = JAP_neutrality_party_kodoha
+			long_name = JAP_neutrality_party_kodoha_long
+		}
+		create_country_leader = {
+			name = "Seishiro Itagaki"
+			desc = ""
+			picture = GFX_portrait_MAN_Itagaki
+			expire = "1989.1.1"
+			ideology = rexism
+			traits = {
+				kwantung_intelligence
+				kwantung_staff
+				kwantung_exile
+			}
+		}
+	}
+	option = {
+		name = japan.21.c
+		ai_chance = { base = 10000 }
+		random_controlled_state = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		trigger = {
+			has_idea = MAN_exiled_imperial_family
+		}
+		set_party_name = { 
+			ideology = neutrality
+			name = JAP_neutrality_party_kodoha
+			long_name = JAP_neutrality_party_kodoha_long
+		}
+		set_party_name = { 
+			ideology = fascism
+			name = JAP_neutrality_party_kodoha
+			long_name = JAP_neutrality_party_kodoha_long
+		}
+		create_country_leader = {
+			name = "Hirohito"
+			desc = "POLITICS_Hirohito_DESC"
+			picture = "gfx/leaders/JAP/Portrait_Japan_Hirohito.dds"
+			expire = "1989.1.1"
+			ideology = rexism
+			traits = {
+				warrior_code
+				emperor_showa
+				kwantung_exile
+			}
+		}
+		create_country_leader = {
+			name = "Hirohito"
+			desc = "POLITICS_Hirohito_DESC"
+			picture = "gfx/leaders/JAP/Portrait_Japan_Hirohito.dds"
+			expire = "1989.1.1"
+			ideology = despotism
+			traits = {
+				warrior_code
+				emperor_showa
+				kwantung_exile
+			}
+		}
+	}
+}
+country_event = { ####JAPAN GETS THIS EVENT FROM MANCHU
+	id = japan.22
+	title = japan.22.t
+	desc = japan.22.d
+	picture = GFX_report_event_chinese_soldiers_01
+
+	is_triggered_only = yes
+	
+	option = {
+		name = japan.22.a
+		MAN = {
+			create_wargoal = {
+				target = FROM
+				type = puppet_wargoal_focus
+				expire = 0
+			}
+		}
+	}
+	option = {
+		name = japan.22.b
+		MAN = {
+			puppet = JAP
+		}
+	}
+}
+
