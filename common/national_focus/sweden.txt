@@ -2584,25 +2584,18 @@ focus_tree = {
 
 		completion_reward = {
 			add_tech_bonus = {
-				name = SWE_rockets
+				name = jet_rocket_bonus
 				bonus = 1
-				uses = 1
-				technology  = experimental_rockets # optional
+				uses = 2
+				category = rocketry
 			}
-
-			add_tech_bonus = {
-				name = SWE_rockets
-				bonus = 1
-				uses = 1
-				technology  = rocket_engines # optional
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.75
 			}
-
-			add_tech_bonus = {
-				name = SWE_rockets
-				bonus = 0.75
-				uses = 1
-				technology  = improved_rocket_engines # optional
-			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_ideas = r56_generic_rocket_idea
 		}
 	}
 
@@ -2638,6 +2631,29 @@ focus_tree = {
 	#	
 	#	}
 	#}
+
+	focus = {
+		id = SWE_license_skf_ball_bearings
+		icon = GFX_focus_SWE_SKF_ball_bearings
+		x = 4
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = SWE_saltsjobaden_agreement focus = SWE_reject_saltsjobaden }
+		relative_position_id = SWE_saltsjobaden_agreement
+		
+
+		ai_will_do = {
+			factor = 10		
+		}
+
+		search_filters = {  FOCUS_FILTER_STABILITY FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP FOCUS_FILTER_NAVY_XP FOCUS_FILTER_AIR_XP }
+
+		completion_reward = {
+			unlock_decision_tooltip = SWE_trade_ball_bearings
+			custom_effect_tooltip = SWE_ball_bearing_trade_tt
+		}
+	}
 
 	focus = {
 		id = SWE_economic_deregulation
@@ -3162,7 +3178,6 @@ focus_tree = {
 
 			if = {
 				limit = {
-					has_dlc = "Death or Dishonor"
 					YUG = {
 						has_completed_focus = YUG_western_focus
 						is_ai = no
@@ -5299,7 +5314,7 @@ focus_tree = {
 				regiments = {
 					bus = { x = 0 y = 0 }
 				}
-				is_locked = no
+				is_locked = yes
 				override_model = SWE_bus_vehicle_entity
 			}
 
@@ -5651,6 +5666,7 @@ focus_tree = {
 				add_idea = SWE_land_air_warfare_1
 			}
 			add_tech_bonus = {
+				name = SWE_rapid_response_force
 				bonus = 1
 				uses = 2
 				category = support_tech # optional 
@@ -5681,6 +5697,7 @@ focus_tree = {
 				add_idea = SWE_land_air_warfare_2
 			}
 			add_tech_bonus = {
+				name = SWE_tank_development
 				bonus = 1
 				uses = 1
 				category = armor # optional 
@@ -5854,7 +5871,7 @@ focus_tree = {
 			unlock_decision_tooltip = SWE_activate_home_guard
 			division_template = {
 				name = "Hemvärn"
-				is_locked = no
+				is_locked = yes
 				priority = 1
 				regiments = {
 					infantry = { x = 0 y = 0 }
@@ -6369,7 +6386,7 @@ focus_tree = {
 				division_template = {
 					name = "Stormtrupper"		
 					division_names_group = SWE_BS_01
-					is_locked = no
+					is_locked = yes
 					#force_allow_recruiting = yes
 					template_counter = 20
 					# Note: Represents brownshirts
@@ -6800,11 +6817,9 @@ focus_tree = {
 			if = {
 				limit = {
 					GER = {
-						has_completed_focus = GER_rhineland
+						has_completed_focus = GER_remilitarize_the_rhineland
 					}
-					
 					NOT = { has_global_flag = von_lettow_is_in_a_country }
-					has_dlc = "Waking the Tiger"
 				}
 
 				set_global_flag = von_lettow_is_in_a_country
@@ -7018,16 +7033,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_breakthrough_progress = {
+				specialization = specialization_nuclear
+				value = 0.25
+			}
 			add_tech_bonus = {
 				name = SWE_ger_swe_nuclear_bonus
-				bonus = 1
-				uses = 2
+				bonus = 0.5
+				uses = 1 # was 2
 				category = nuclear
 			}
+			add_ideas = ROM_uranium_supply_idea
 			GER = {
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.5
+				}
 				add_tech_bonus = {
 					name = SWE_ger_swe_nuclear_bonus
-					bonus = 1
+					bonus = 0.75 # was 1
 					uses = 1
 					category = nuclear
 				}
@@ -8483,11 +8507,29 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = SWE_karnvapenprogram_nuclear_bonus
-				bonus = 1
-				uses = 1
-				category = nuclear
+			IF = {
+				limit = {
+					NOT = {
+						has_tech = atomic_research
+					}
+				}
+				add_tech_bonus = {
+					name = SWE_karnvapenprogram
+					bonus = 1.0
+					uses = 1
+					category = nuclear
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.5
+				}
+			}
+			ELSE = {
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.8
+				}
 			}
 			add_tech_bonus = {
 				name = SWE_karnvapenprogram_air_bonus

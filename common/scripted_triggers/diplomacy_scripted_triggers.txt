@@ -115,13 +115,8 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 				NOT = { has_dlc = "La Resistance" }
 				NOT = { original_tag = SPR }
 			}
-			OR = {
-				NOT = { has_dlc = "Death or Dishonor" }
-				AND = {
-					NOT = { original_tag = ROM }
-					NOT = { original_tag = YUG }
-				}
-			}
+			NOT = { original_tag = ROM }
+			NOT = { original_tag = YUG }
 			NOT = { original_tag = SOV }
 			NOT = { original_tag = MPL }
 		}
@@ -183,7 +178,6 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 				rule = allow_release_nations
 				option = FREE
 			}
-			has_dlc = "Death or Dishonor"
 			original_tag = YUG
 			NOT = { has_completed_focus = YUG_reunite_the_kingdom }
 		}
@@ -360,7 +354,6 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 					option = PEACE_ONLY
 				}
 			}
-			has_dlc = "Death or Dishonor"
 			original_tag = ITA
 		}
 		custom_trigger_tooltip = {
@@ -562,6 +555,7 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 		custom_trigger_tooltip = {
 			tooltip = RULE_ALLOW_RELEASE_NATIONS_NOT_CSA_TOOLTIP #US constitution has no exit clause
 			NOT = { FROM = { tag = CSA } }
+			NOT = { FROM = { tag = TXS } }
 		}
 	}
 	if = {
@@ -571,6 +565,7 @@ DIPLOMACY_RELEASE_NATION_ENABLE_TRIGGER = {
 		custom_trigger_tooltip = {
 			tooltip = RULE_ALLOW_RELEASE_NATIONS_NOT_CSA_TOOLTIP #LOL
 			NOT = { FROM = { tag = USA } }
+			NOT = { FROM = { tag = TXS } }
 		}
 	}
 	if = {
@@ -1142,13 +1137,25 @@ DIPLOMACY_STAGE_COUP_ENABLE_TRIGGER = {
 DIPLOMACY_LEAVE_FACTION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
-			has_game_rule = {
-				rule = allow_leave_faction
-				option = BLOCKED
+			OR = {
+				has_game_rule = {
+					rule = allow_leave_faction
+					option = BLOCKED
+				}
 			}
 		}
 		custom_trigger_tooltip = {
 			tooltip = RULE_ALLOW_LEAVE_FACTION_BLOCKED_TOOLTIP
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			tag = ROM
+			has_country_flag = ROM_bound_to_comintern_flag
+		}
+		custom_trigger_tooltip = {
+			tooltip = NO_LEAVING_COMINTERN_IF_SOVIETS_SAID_SO
 			always = no
 		}
 	}
@@ -1607,12 +1614,42 @@ DIPLOMACY_JOIN_ALLY_ENABLE_TRIGGER = {
 		limit = {
 			FROM = {
 				tag = IRQ
-				NOT = { has_country_flag = IRQ_british_occupation_flag }
+				has_country_flag = IRQ_british_occupation_flag
 			}
 			
 		}
 		custom_trigger_tooltip = {
 			tooltip = IRQ_british_occupation_diplo_tt
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				original_tag = JOR
+				
+				has_idea = JOR_unsupported_war
+				has_war_with = ISR
+			}
+			
+		}
+		custom_trigger_tooltip = {
+			tooltip = JOR_cant_call_allies_diplo_2
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				original_tag = EGY
+				
+				has_idea = JOR_unsupported_war
+				has_war_with = ISR
+			}
+			
+		}
+		custom_trigger_tooltip = {
+			tooltip = JOR_cant_call_allies_diplo_2
 			always = no
 		}
 	}
@@ -1641,12 +1678,40 @@ DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER = {
 		limit = {
 			ROOT = {
 				tag = IRQ
-				NOT = { has_country_flag = IRQ_british_occupation_flag }
+				has_country_flag = IRQ_british_occupation_flag
 			}
 			
 		}
 		custom_trigger_tooltip = {
 			tooltip = IRQ_british_occupation_diplo_tt
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			ROOT = {
+				original_tag = JOR
+				has_idea = JOR_unsupported_war
+				has_war_with = ISR
+			}
+			
+		}
+		custom_trigger_tooltip = {
+			tooltip = JOR_cant_call_allies_diplo
+			always = no
+		}
+	}
+	if = {
+		limit = {
+			ROOT = {
+				original_tag = EGY
+				has_idea = JOR_unsupported_war
+				has_war_with = ISR
+			}
+			
+		}
+		custom_trigger_tooltip = {
+			tooltip = JOR_cant_call_allies_diplo
 			always = no
 		}
 	}

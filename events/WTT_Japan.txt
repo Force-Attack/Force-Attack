@@ -390,13 +390,6 @@ country_event = {
 		ai_chance = {
 			base = 0
 		}
-	ROOT = {
-		create_wargoal = {
-			target = FROM
-			type = annex_everything
-			expire = 120
-		}
-	}
 	}
 }
 
@@ -491,30 +484,27 @@ country_event = {
 
 #Japan propse all samurai generals go to MAN
 country_event = {
-    id = wtt_japan.21
-    title = wtt_japan.21.t
-    desc = wtt_japan.21.desc
-    picture = GFX_report_event_japanese_officers
+	id = wtt_japan.21
+	title = wtt_japan.21.t
+	desc = wtt_japan.21.desc
+	picture = GFX_report_event_japanese_officers
 
-    is_triggered_only = yes
-    
-    #Accept generals
-    option = {
-        name = wtt_japan.21.a
-        ai_chance = {
-            base = 10
-        }
-        FROM = {        
-            every_army_leader = {
-                limit = { has_trait = JAP_samurai_lineage }
-                set_nationality = ROOT
-            }
-            every_navy_leader = {
-                set_nationality = ROOT
-            }
-        }    
-        FROM = { country_event = { id = wtt_japan.22 } }
-    }
+	is_triggered_only = yes
+	
+	#Accept generals
+	option = {
+		name = wtt_japan.21.a
+		ai_chance = {
+			base = 10
+		}
+		FROM = {		
+			every_army_leader = {
+				limit = { has_trait = JAP_samurai_lineage }
+				set_nationality = ROOT
+			}
+		}		
+		FROM = { country_event = { id = wtt_japan.22 } }
+	}
 }
 
 #MAN Answers Japan yes
@@ -551,13 +541,12 @@ country_event = {
 	
 	#Exile them
 	option = {
-		add_political_power = 150
 		name = wtt_japan.31.a
 		trigger = {
 			country_exists = MAN
 		}
 		ai_chance = {
-			base = 10
+			base = 5
 		}
 		MAN = {
 			country_event = { id = wtt_japan.32 }
@@ -573,7 +562,7 @@ country_event = {
 		ai_chance = {
 			base = 5
 		}
-		add_stability = -0.20
+		add_stability = -0.1
 	}
 }
 
@@ -592,10 +581,6 @@ country_event = {
 			base = 10
 		}
 		add_ideas = MAN_exiled_imperial_family
-		add_timed_idea = {
-			idea = MAN_production
-			days = 270
-		}
 	}
 }
 
@@ -1302,7 +1287,6 @@ country_event = {
 			}
 			create_country_leader = {
 				name = "Hideki Tojo"
-				desc = "hideki_tojo_desc"
 				picture = "gfx/leaders/JAP/Portrait_Japan_Generic_land_2.dds"
 				expire = "1965.1.1"
 				ideology = fascism_ideology
@@ -1338,7 +1322,7 @@ country_event = {
 	# Join the war
 	option = {
 		name = wtt_japan.115.a
-		add_to_war = { targeted_alliance = JAP enemy = SOV hostility_reason = ally }
+		add_to_war = { targeted_alliance = JAP enemy = SOV hostility_reason = asked_to_join }
 		JAP = { country_event = { id = wtt_japan.116 hours = 6 } }
 	}
 
@@ -1446,7 +1430,7 @@ country_event = {
 		division_template = { 
 			name = "Soviet Volunteers"
 			division_names_group = SOV_INF_01
-			is_locked = no
+			is_locked = yes
 			regiments = { 
 				infantry = { x = 0 y = 0 }
 				infantry = { x = 1 y = 0 }
@@ -1663,13 +1647,14 @@ country_event = {
 	option = {
 		name = excellent
 		effect_tooltip = {
+			transfer_state = 328
 			transfer_state = 609
 			transfer_state = 610
-			transfer_state = 716
-			transfer_state = 715
-			transfer_state = 328
-			transfer_state = 717
 			transfer_state = 714
+			transfer_state = 715
+			transfer_state = 716
+			transfer_state = 717
+			transfer_state = 761
 			transfer_state = 941
 			transfer_state = 942
 			transfer_state = 943
@@ -1816,7 +1801,7 @@ country_event = {
 		}
 		
 		ai_chance = {
-			factor = 90
+			base = 90
 		}
 	}
 
@@ -1828,7 +1813,7 @@ country_event = {
 		}
 		
 		ai_chance = { # If Japan has lots of major enemies, the AI will not make a separate peace
-			factor = 10
+			base = 10
 			modifier = {
 				add = 50
 				USA = {
@@ -2069,7 +2054,7 @@ country_event = {
 	option = {
 		name = wtt_japan.126.a
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 		effect_tooltip = {
 			if = {
@@ -2144,7 +2129,7 @@ country_event = {
 	option = {
 		name = wtt_japan.126.b
 		ai_chance = {
-			factor = 0
+			base = 0
 		}
 		FROM = {
 			country_event = { id = wtt_japan.128 }
@@ -2350,4 +2335,3 @@ country_event = {
 	}
 	
 }
-

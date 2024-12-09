@@ -473,6 +473,37 @@ focus_tree = {
 
 		available_if_capitulated = yes
 
+		ai_will_do = {
+			base = 1
+			modifier = {
+				is_historical_focus_on = yes
+				add = -10
+			}
+			modifier = {
+				AND = {
+					date > 1938.6.1
+					OR = {
+						GER = {
+							has_added_tension_amount > 25
+						}
+						SOV = {
+							has_added_tension_amount > 25
+						}
+						ITA = {
+							has_added_tension_amount > 25
+						}
+						ENG = {
+							has_added_tension_amount > 25
+						}
+						FRA = {
+							has_added_tension_amount > 25
+						}
+					}
+				}
+				add = 10
+			}
+		}
+
 		available = {
 			is_subject = no
 			is_in_faction = no 
@@ -536,13 +567,13 @@ focus_tree = {
 					}
 					140 = {
 						create_unit = {
-							division = "division_template = \"Dansk Militärpolis\" start_experience_factor = 0.1 start_equipment_factor = 0.2"
+							division = "division_template=\"Polistrupp\" name = \"Dansk Militärpolis\" start_experience_factor = 0.1 start_equipment_factor = 0.2"
 							owner = SWE
 						}
 					}
 					140 = {
 						create_unit = {
-							division = "division_template = \"Dansk Militärpolis\" start_experience_factor = 0.3 start_equipment_factor = 0.4"
+							division = "division_template=\"Polistrupp\" name = \"Dansk Militärpolis\" start_experience_factor = 0.3 start_equipment_factor = 0.4"
 							owner = SWE
 						}
 					}
@@ -558,13 +589,13 @@ focus_tree = {
 					}
 					138 = {
 						create_unit = {
-							division = "division_template = \"Norsk Militärpolis\" start_experience_factor = 0.3 start_equipment_factor = 0.3"
+							division = "division_template=\"Polistrupp\" name = \"Norsk Militärpolis\" start_experience_factor = 0.3 start_equipment_factor = 0.3"
 							owner = SWE
 						}
 					}
 					138 = {
 						create_unit = {
-							division = "division_template = \"Norsk Militärpolis\" start_experience_factor = 0.2 start_equipment_factor = 0.6"
+							division = "division_template=\"Polistrupp\" name = \"Norsk Militärpolis\" start_experience_factor = 0.2 start_equipment_factor = 0.6"
 							owner = SWE
 						}
 					}
@@ -971,6 +1002,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			hidden_effect = {
+				set_cosmetic_tag = SWE_swedish_empire_cosmetic
+			}
 			custom_effect_tooltip = SWE_integrate_imperial_territories_tt
 			promote_character = SWE_gustaf_adolf_vi 
 			set_politics = {
@@ -1231,6 +1265,37 @@ focus_tree = {
 			is_subject = no
 		}
 
+		ai_will_do = {
+			base = 1
+			modifier = {
+				is_historical_focus_on = yes
+				add = -10
+			}
+			modifier = {
+				AND = {
+					date > 1938.6.1
+					OR = {
+						GER = {
+							has_added_tension_amount > 25
+						}
+						SOV = {
+							has_added_tension_amount > 25
+						}
+						ITA = {
+							has_added_tension_amount > 25
+						}
+						ENG = {
+							has_added_tension_amount > 25
+						}
+						FRA = {
+							has_added_tension_amount > 25
+						}
+					}
+				}
+				add = 10
+			}
+		}
+
 		available_if_capitulated = yes
 
 		completion_reward = {
@@ -1288,7 +1353,7 @@ focus_tree = {
 		relative_position_id = SWE_the_northern_lights
 		x = -2
 		y = 3
-		cost = 20
+		cost = 10
 
 		available_if_capitulated = yes
 
@@ -1403,7 +1468,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SWE_fourth_brother_tt
 			set_country_flag = SWE_fourth_brother
-			add_political_power = 100		
+			add_political_power = 75		
 		}
 	}
 	focus = {
@@ -1413,7 +1478,7 @@ focus_tree = {
 		relative_position_id = SWE_the_third_brother
 		x = 0
 		y = 1
-		cost = 20
+		cost = 10
 
 		available_if_capitulated = yes
 
@@ -2849,7 +2914,7 @@ focus_tree = {
 				GER = {
 					is_subject_of = SWE
 					is_subject_of = FRA
-					exists = No
+					exists = no
 				}
 			}
 		}
@@ -2885,9 +2950,24 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			create_wargoal = {
-				target = GER
-				type = annex_everything
+			every_other_country = {
+				limit = {
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { is_subject_of = ROOT }
+					any_owned_state = {
+						OR = {
+							state = 63
+							state = 62
+						}
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_state_focus
+						expire = 0
+					}
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -5205,11 +5285,29 @@ focus_tree = {
 		cost = 10
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = SWE_the_swedish_nuclear_program
-				bonus = 1
-				uses = 1
-				category = nuclear
+			IF = {
+				limit = {
+					NOT = {
+						has_tech = atomic_research
+					}
+				}
+				add_tech_bonus = {
+					name = SWE_the_swedish_nuclear_program
+					bonus = 1.0
+					uses = 1
+					category = nuclear
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.5
+				}
+			}
+			ELSE = {
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.8
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL }
@@ -7030,346 +7128,19 @@ focus_tree = {
 		
 		completion_reward = {
 			add_tech_bonus = {
-				name = SWE_rocket_propulsion
+				name = jet_rocket_bonus
 				bonus = 1
-				uses = 1
-				technology  = experimental_rockets
+				uses = 2
+				category = rocketry
 			}
-			add_tech_bonus = {
-				name = SWE_rocket_propulsion
-				bonus = 1
-				uses = 1
-				technology  = rocket_engines
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.75
 			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_ideas = r56_generic_rocket_idea
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	### Non WTT Core Unification
-	focus = {
-		id = SWE_unify_scandinavia
-		icon = GFX_goal_NOR_nordic_alliance_crossed_flags
-		relative_position_id = SWE_reclaim_the_imperial_east
-		x = 2
-		y = 1
-		cost = 10
-
-		allow_branch = {
-			NOT = { has_dlc = "Waking the Tiger" }
-		}
-
-		available = {
-			is_subject = no
-			# Norwayz
-			custom_trigger_tooltip = {
-				tooltip = form_country_norway_required_states_tt
-				all_state = {
-					OR = {
-						NOT = { 
-							region = 11
-							region = 191
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-			}
-			# Sweden
-			custom_trigger_tooltip = {
-				tooltip = form_country_sweden_required_states_tt
-				all_state = {
-					OR = {
-						NOT = { 
-							region = 10
-							region = 192
-							AND = {
-								region = 9
-								NOT = {
-									state = 145	#not Aland, don't be that mean
-								}
-							}
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-			}
-			# Denmark / European Mainland
-			custom_trigger_tooltip = {
-				tooltip = form_scandinavia_denmark_required_states_tt
-				all_state = {
-					OR = {
-						NOT = {
-							AND = {
-								region = 6
-								NOT = {
-									state = 56
-									state = 57
-									state = 58
-									state = 998
-									state = 59
-								}
-							}
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-			}			
-		}
-
-		completion_reward = {			
-			set_cosmetic_tag = SCA_UNIFIED
-			# Norway
-			custom_effect_tooltip = form_country_norway_coring_states_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							region = 11
-							region = 191
-						}
-					}
-					add_core_of = ROOT
-				}
-			}
-			# Sweden
-			custom_effect_tooltip = form_country_sweden_coring_states_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							region = 10
-							region = 192
-							AND = {
-								region = 9	#just because there is Gotland and it is a separate state
-								NOT = {
-									state = 145	#not Aland, don't be that mean
-								}
-							}
-						}
-					}
-					add_core_of = ROOT
-				}
-				if = {
-					limit = {
-						controls_state = 145 #aland 
-					}
-					145 = { add_core_of = ROOT }
-				}
-			}
-			# Denmark / European Mainland
-			custom_effect_tooltip = form_scandinavia_denmark_coring_states_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						region = 6
-						NOT = {
-							state = 56
-							state = 57
-							state = 58
-							state = 998
-							state = 59
-						}
-					}
-					add_core_of = ROOT
-				}
-			}
-			hidden_effect = {
-				news_event = { id = wtt_news.53 hours = 6 }
-				set_global_flag = form_scandinavia_flag
-			}
-			add_ideas = generic_recent_political_unification
-			add_ideas = generic_recent_army_unification
-			add_ideas = generic_recent_economic_unification	
-		}
-	}
-	focus = {
-		id = SWE_unify_the_nordics
-		icon = GFX_goal_northern_lights
-		relative_position_id = SWE_unify_scandinavia
-		prerequisite = { focus = SWE_unify_scandinavia }
-		x = 0
-		y = 1
-		cost = 10
-
-		available = {
-			is_subject = no
-			# Norway
-			custom_trigger_tooltip = {
-				tooltip = form_country_norway_required_states_tt
-				all_state = {
-					OR = {
-						NOT = { 
-							region = 11
-							region = 191
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-			}
-			# Sweden
-			custom_trigger_tooltip = {
-				tooltip = form_country_sweden_required_states_tt
-				all_state = {
-					OR = {
-						NOT = { 
-							region = 10
-							region = 192
-							AND = {
-								region = 9
-								NOT = {
-									state = 145	#not Aland, don't be that mean
-								}
-							}
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-			}
-			# Denmark
-			custom_trigger_tooltip = {
-				tooltip = form_country_denmark_required_states_tt
-				all_state = {
-					OR = {
-						NOT = {
-							region = 45	#Faroe Islands
-							region = 161	#Iceland
-							region = 36 #Greenland
-							AND = {
-								region = 6
-								NOT = {
-									state = 56
-									state = 57
-									state = 58
-									state = 998
-									state = 59
-								}
-							}
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-			}
-			# Finland
-			custom_trigger_tooltip = {
-				tooltip = form_country_finland_required_states_tt
-				all_state = {
-					OR = {
-						NOT = { 
-							region = 13	#sorry, but you need Karelia, Petsamo and Salla too!
-							AND = {
-								region = 12
-								NOT = {
-									state = 213	#not Murmansk
-								}
-							}
-							AND = {
-								region = 9
-								NOT = {
-									state = 124	#Aland, not Gotland
-								}
-							}
-						}
-						is_controlled_by = ROOT 
-					}
-				}
-				#controls_state = 111
-				#controls_state = 145
-				#controls_state = 148
-				#controls_state = 149
-				#controls_state = 150
-			}			
-		}
-
-		completion_reward = {
-			set_cosmetic_tag = NDC_UNIFIED
-			# Norway
-			custom_effect_tooltip = form_country_norway_coring_states_tt
-			hidden_effect = {
-				hidden_effect = {
-					every_state = {
-						limit = {
-							OR = {
-								region = 11
-								region = 191
-							}
-						}
-						add_core_of = ROOT
-					}
-				}
-			}
-			# Sweden
-			custom_effect_tooltip = form_country_sweden_coring_states_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							region = 10
-							region = 192
-							AND = {
-								region = 9	#just because there is Gotland and it is a separate state
-								NOT = {
-									state = 145	#not Aland, not here
-								}
-							}
-						}
-					}
-					add_core_of = ROOT
-				}
-			}
-			# Denmark
-			custom_effect_tooltip = form_country_denmark_coring_states_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							region = 45	#Faroe Islands
-							region = 161	#Iceland
-							region = 36 #Greenland
-							AND = {
-								region = 6
-								NOT = {
-									state = 56
-									state = 57
-									state = 58
-									state = 998
-									state = 59
-								}
-							}
-						}
-					}
-					add_core_of = ROOT
-				}
-			}
-			# Finland
-			custom_effect_tooltip = form_country_finland_coring_states_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-							region = 13	#sorry, but you need Karelia, Petsamo and Salla too!
-							AND = {
-								region = 12
-								NOT = {
-									state = 213	#not Murmansk
-								}
-							}
-							AND = {
-								region = 9
-								NOT = {
-									state = 124	#Aland, not Gotland
-								}
-							}
-						}
-					}
-					add_core_of = ROOT
-				}
-			}
-			hidden_effect = {
-				news_event = { id = wtt_news.54 hours = 6 }
-				set_global_flag = form_nordic_league_flag
-			}
-			add_ideas = generic_recent_political_unification
-			add_ideas = generic_recent_army_unification
-			add_ideas = generic_recent_economic_unification				
-		}
 	}		
 }

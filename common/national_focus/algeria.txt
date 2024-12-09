@@ -716,14 +716,29 @@ focus_tree = {
             factor = 1
         }
         completion_reward = {	
-           add_tech_bonus = {
-            name = UK_secret_focus
-                bonus = 1
-                uses = 1
-                category = nuclear
-            }      
-
-            
+            IF = {	
+				limit = {
+					NOT = {
+						has_tech = atomic_research
+					}
+				}
+				add_tech_bonus = {
+					name =  nuclear_bonus
+					bonus = 1.0
+					uses = 1
+					category = nuclear
+				}
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.5
+				}
+			}
+			ELSE = {
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.8
+				}
+			}     
         }    
     }
     focus = {
@@ -2031,9 +2046,6 @@ focus_tree = {
     focus = {
         id = ALG_mechanized_focus
         icon = GFX_goal_mechanized_offensive
-        available = {
-			has_tech = gwtank
-		}
         prerequisite = { focus = ALG_french_tanks }
         prerequisite = { focus = ALG_artillery_focus }
         search_filters = {FOCUS_FILTER_RESEARCH}
@@ -2367,7 +2379,13 @@ focus_tree = {
 				uses = 1
 				category = radar_tech
             }
-					  
+            custom_effect_tooltip = generic_skip_one_line_tt
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.25
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+            add_ideas = r56_generic_radar_idea
         }
     }
 

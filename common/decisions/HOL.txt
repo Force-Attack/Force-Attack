@@ -87,7 +87,7 @@ HOL_obtain_foreign_colonial_investments = {
 		days_remove = 90
 
 		modifier = {
-			consumer_goods_factor = -0.05
+			consumer_goods_factor = -0.15
 		}
 
 		visible = {
@@ -1414,6 +1414,19 @@ HOL_gateway_to_europe_ger_category = {
 								}
 							}
 						}
+						AND = { #has not stabilized as non-DLC kaiserreich
+							has_completed_focus = GER_rally_the_monarchists
+							NOT = { has_completed_focus = GER_restore_the_empire }
+						}
+						AND = {
+							has_completed_focus = GER_kill_hitler
+							NOT = {
+								OR = { #by lack of better checks
+									has_government = communism
+									has_government = democratic
+								}
+							}
+						}
 					}
 				}
 			}
@@ -1498,14 +1511,18 @@ HOL_gateway_to_europe_ger_category = {
 			}
 			modifier = {
 				factor = 0
-				#focus_progress = {
-				#	focus = GER_around_maginot_vanilla
-				#	progress > 0
-				#}
+				focus_progress = {
+					focus = GER_around_maginot_vanilla
+					progress > 0
+				}
 			}
 			modifier = {
 				factor = 0
-				has_completed_focus = GER_oppose_hitler
+				OR ={
+					#has_completed_focus = GER_oppose_hitler
+					has_completed_focus = GER_kill_hitler
+					has_completed_focus = GER_rally_the_monarchists
+				}
 			}
 		}
 
@@ -1786,6 +1803,19 @@ HOL_gateway_to_europe_hol_category = {
 									}
 								}
 							}
+							AND = { #has not stabilized as non-DLC kaiserreich
+								has_completed_focus = GER_rally_the_monarchists
+								NOT = { has_completed_focus = GER_restore_the_empire }
+							}
+							AND = {
+								has_completed_focus = GER_kill_hitler
+								NOT = {
+									OR = { #by lack of better checks
+										has_government = communism
+										has_government = democratic
+									}
+								}
+							}
 						}
 					}
 				}
@@ -2027,17 +2057,36 @@ HOL_request_allied_favors = {
 			has_completed_focus = HOL_request_allied_favors
 		}
 
-		modifier = {
-		}
-
-		complete_effect = {
-		}
-
 		remove_effect = {
-			add_equipment_to_stockpile = {
-			    type = fighter_equipment
-			    amount = 50
-			    producer = ENG
+			if = {
+				limit = {
+					NOT = {
+						has_dlc = "By Blood Alone"
+					}
+				}
+				add_equipment_to_stockpile = {
+				    type = fighter_equipment_1
+				    amount = 50
+				    producer = ENG
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+				    type = small_plane_airframe_0
+				    amount = 50
+				    producer = ENG
+				    variant_name = "Gloster Gladiator"
+				}	
+			}
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_equipment_subsidy = {
+					cic = 1000
+					equipment_type = small_plane_airframe
+					seller_tags = { ENG } 
+				}
 			}
 		}
 
@@ -2335,7 +2384,7 @@ political_actions = {
 			OR = {
 				AND = {
 					is_in_faction_with = BEL
-					
+					BEL = { has_government = ROOT }
 				}
 				#remove when fully working with FLA and WLL
 				#AND = {
@@ -2346,10 +2395,10 @@ political_actions = {
 				#}
 			}
 			is_in_faction_with = LUX
-		
+			LUX = { has_government = ROOT }
 		}
 
-		cost = 100
+		cost = 300
 
 		fire_only_once = yes
 
@@ -2359,9 +2408,6 @@ political_actions = {
 		}
 
 		complete_effect = {
-			puppet = {
-				target = COG
-			}
 			effect_tooltip = {
 				set_cosmetic_tag = HOL_benelux_unified
 				BEL = {
@@ -2373,24 +2419,13 @@ political_actions = {
 					every_unit_leader = {
 						set_nationality = ROOT
 					}
-					
-					
 				}
-				COG = {
-					every_unit_leader = {
-						set_nationality = ROOT
-					}
-				
 				annex_country = {
 				    target = BEL
 				    transfer_troops = yes
 				}
 				annex_country = {
 				    target = LUX
-				    transfer_troops = yes
-				}
-				annex_country = {
-				    target = COG
 				    transfer_troops = yes
 				}
 				every_state = {
@@ -2402,18 +2437,17 @@ political_actions = {
 					}
 					add_core_of = ROOT
 				}
-
-
+				add_ideas = generic_recent_political_unification
+				add_ideas = generic_recent_army_unification
+				add_ideas = generic_recent_economic_unification	
 			}
-		}
 			custom_effect_tooltip = HOL_propose_benelux_unification_tt
 			BEL = {
-				country_event = { id = mtg_netherlands.77 days = 1 random_days = 3 }
+				country_event = { id = mtg_netherlands.77 days = 5 random_days = 3 }
 			}
 			LUX = {
 				country_event = { id = mtg_netherlands.77 days = 1 random_days = 3 }
 			}
-		
+		}
 	}
-}
 }

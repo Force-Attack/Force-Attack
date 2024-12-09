@@ -1,15 +1,17 @@
 ideas = {
 
-	economy = { 
+	economy = {
 		law = yes
 		use_list_view = yes
-		
+
 		undisturbed_isolation = {
+
+
 			allowed = {
 				always = no
 			}
 			removal_cost = -1
-		
+
 			modifier = {
 				consumer_goods_expected_value = 0.50
 				production_speed_industrial_complex_factor = -0.5
@@ -26,24 +28,36 @@ ideas = {
 				fuel_gain_factor = -0.6
 				agency_upgrade_time = 1.0
 			}
-			
+
 			allowed_to_remove = {
-				OR = {
-					has_war_support > 0.5
-					has_war = yes
-					has_completed_focus = USA_limited_intervention
+				IF = {
+					limit = {
+						original_tag = USA
+					}
+					OR = {
+						has_war_support > 0.5
+						has_war = yes
+						has_completed_focus = USA_limited_intervention
+					}
+				}
+				ELSE = {
+					OR = {
+						has_war_support > 0.5
+						has_war = yes
+					}
 				}
 			}
-			
+
 			cancel_if_invalid = no
 		}
-		
+
 		isolation = {
+
 			allowed = {
 				always = no
 			}
 			removal_cost = -1
-			
+
 			modifier = {
 				consumer_goods_expected_value = 0.4
 				production_speed_industrial_complex_factor = -0.4
@@ -60,20 +74,33 @@ ideas = {
 				agency_upgrade_time = 0.8
 			}
 			allowed_to_remove = {
-				OR = {
-					has_war_support > 0.75
-					has_war = yes
-					has_completed_focus = USA_limited_intervention					
+				IF = {
+					limit = {
+						original_tag = USA
+					}
+					OR = {
+						has_war_support > 0.75
+						has_war = yes
+						has_completed_focus = USA_limited_intervention
+					}
+				}
+				ELSE = {
+					OR = {
+						has_war_support > 0.75
+						has_war = yes
+					}
 				}
 			}
-			
+
 			cancel_if_invalid = no
 		}
-		
+
 		civilian_economy = {
+
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
 				consumer_goods_expected_value = 0.35
 				production_speed_arms_factory_factor = -0.3
@@ -84,25 +111,72 @@ ideas = {
 				max_fuel_factor = -0.25
 				fuel_gain_factor = -0.4
 			}
-			
+
 			default = yes
-			
+
 			cancel_if_invalid = no
 		}
-		
+
 		low_economic_mobilisation = {
+
 			available = {
 				has_war_support > 0.15
-				if = {
+				
+				IF = {
 					limit = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
+						NOT = {
+							has_dlc = "Gotterdammerung"
+						}
 					}
-					OR = {
-						has_completed_focus = HUN_secret_rearmament
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						NOT = { has_idea = HUN_treaty_of_triannon_aat }
+					}
+					ELSE = {
 						NOT = { has_idea = HUN_treaty_of_triannon }
 					}
 				}
+				ELSE_IF = {
+					limit = {
+						original_tag = HUN
+						has_dlc = "Gotterdammerung"
+					}
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						custom_trigger_tooltip = {
+							tooltip = wuw_HUN_not_has_trianon_for_laws_tt
+							NOT = { 
+								OR = {
+									has_idea = HUN_treaty_of_triannon_aat_wuw 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_air_debuff 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_army_exp_debuff 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_air_or_army_debuff 
+								}
+							}
+							
+						}		
+					}
+					ELSE = {
+						custom_trigger_tooltip = {
+							tooltip = wuw_HUN_not_has_trianon_for_laws_tt
+							NOT = { 
+								OR = {
+									has_idea = HUN_treaty_of_triannon_wuw 
+									has_idea = HUN_treaty_of_triannon_wuw_no_army_exp_debuff 
+									has_idea = HUN_treaty_of_triannon_wuw_no_air_debuff 
+									has_idea = HUN_treaty_of_triannon_wuw_no_air_or_army_debuff 
+								}
+							}
+						}
+					}
+				}
+
 				if = {
 					limit = {
 						has_completed_focus = USA_limited_intervention
@@ -135,10 +209,10 @@ ideas = {
 					USA_congress_large_opposition = yes
 				}
 			}
-			
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
 				consumer_goods_expected_value = 0.3
 				production_speed_industrial_complex_factor = 0.05
@@ -146,7 +220,7 @@ ideas = {
 				production_speed_arms_factory_factor = -0.1
 				fuel_gain_factor = -0.25
 			}
-			
+
 			cancel_if_invalid = no
 
 			ai_will_do = {
@@ -154,7 +228,7 @@ ideas = {
 
    				modifier = {
 					factor = 20
-					
+
 					is_major = yes
 				}
 				modifier = {
@@ -169,18 +243,54 @@ ideas = {
 				}
    			}
 		}
-		
+
 		partial_economic_mobilisation = {
+
 			available = {
 				has_war_support > 0.25
 
-				if = {
+				IF = {
 					limit = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
+						NOT = {
+							has_dlc = "Gotterdammerung"
+						}
 					}
-					NOT = { has_idea = HUN_treaty_of_triannon }
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						OR = {
+							has_completed_focus = HUN_secret_rearmament
+							NOT = { has_idea = HUN_treaty_of_triannon_aat }
+						}
+					}
+					ELSE = {
+						has_completed_focus = HUN_secret_rearmament
+						NOT = { has_idea = HUN_treaty_of_triannon }
+					}
 				}
+				ELSE_IF = {
+					limit = {
+						original_tag = HUN
+						has_dlc = "Gotterdammerung"
+					}
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						OR = {
+							has_completed_focus = wuw_HUN_secret_rearmament
+							NOT = { has_idea = HUN_treaty_of_triannon_aat_wuw }
+						}
+					}
+					ELSE = {
+						has_completed_focus = wuw_HUN_secret_rearmament
+						NOT = { has_idea = HUN_treaty_of_triannon_wuw }
+					}
+				}
+
 				if = {
 					limit = {
 						has_completed_focus = USA_limited_intervention
@@ -206,7 +316,7 @@ ideas = {
 
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
 				consumer_goods_expected_value = 0.25
 				production_speed_arms_factory_factor = 0.1
@@ -215,7 +325,7 @@ ideas = {
 				conversion_cost_mil_to_civ_factor = -0.1
 				fuel_gain_factor = -0.1
 			}
-			
+
 			cancel_if_invalid = no
 			on_add = {
 				if = {
@@ -232,13 +342,39 @@ ideas = {
 
    				modifier = {
 					factor = 20
-					
+
 					is_major = yes
+				}
+				
+				modifier = {
+					add = 80
+					original_tag = SOV
+					date < 1937.1.1
+					NOT = { 
+						OR = {
+							has_idea = war_economy 
+							has_idea = tot_economic_mobilisation
+						}
+					}
+				}
+				
+				modifier = {
+					factor = 100
+					OR = {
+						original_tag = URG
+						original_tag = PAR
+					}
+					NOT = {
+						has_idea = war_economy
+					}
+					has_completed_focus = GUAY_coup_detat
 				}
    			}
 		}
-		
+
 		war_economy = {
+
+
 			available = {
 				has_war_support > 0.5
 				OR = {
@@ -248,21 +384,69 @@ ideas = {
 					AND = {
 						has_war = yes
 						any_enemy_country = {
-							ic_ratio = { 
-								tag = ROOT 
+							ic_ratio = {
+								tag = ROOT
 								ratio > 0.4
 							}
 						}
 					}
 				}
 
-				if = {
+				IF = {
 					limit = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
+						NOT = {
+							has_dlc = "Gotterdammerung"
+						}
 					}
-					NOT = { has_idea = HUN_treaty_of_triannon }
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						NOT = { has_idea = HUN_treaty_of_triannon_aat }
+					}
+					ELSE = {
+						NOT = { has_idea = HUN_treaty_of_triannon }
+					}
 				}
+				ELSE_IF = {
+					limit = {
+						original_tag = HUN
+						has_dlc = "Gotterdammerung"
+					}
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						custom_trigger_tooltip = {
+							tooltip = wuw_HUN_not_has_trianon_for_laws_tt
+							NOT = { 
+								OR = {
+									has_idea = HUN_treaty_of_triannon_aat_wuw 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_air_debuff 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_army_exp_debuff 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_air_or_army_debuff 
+								}
+							}
+							
+						}		
+					}
+					ELSE = {
+						custom_trigger_tooltip = {
+							tooltip = wuw_HUN_not_has_trianon_for_laws_tt
+							NOT = { 
+								OR = {
+									has_idea = HUN_treaty_of_triannon_wuw 
+									has_idea = HUN_treaty_of_triannon_wuw_no_army_exp_debuff 
+									has_idea = HUN_treaty_of_triannon_wuw_no_air_debuff 
+									has_idea = HUN_treaty_of_triannon_wuw_no_air_or_army_debuff 
+								}
+							}
+						}
+					}
+				}
+
 				if = {
 					limit = {
 						has_completed_focus = USA_limited_intervention
@@ -285,18 +469,17 @@ ideas = {
 					}
 				}
 			}
-		
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
 				consumer_goods_expected_value = 0.2
 				production_speed_arms_factory_factor = 0.2
-				production_speed_dockyard_factor = 0.2
 				conversion_cost_civ_to_mil_factor= -0.2
 				conversion_cost_mil_to_civ_factor = -0.2
 			}
-			
+
 			cancel_if_invalid = no
 			on_add = {
 				if = {
@@ -309,7 +492,7 @@ ideas = {
 				}
 			}
 			ai_will_do = {
-   				factor = 5
+   				base = 3
 
 				modifier = {
 					#High prio on production
@@ -334,32 +517,90 @@ ideas = {
 
 				modifier = {
 					add = 1800
-					
+
 					# revert from closed_economy if we have large allies
 					has_idea = closed_economy
 					has_large_ally_not_pick_closed_economy = yes
 				}
    			}
 		}
-		
+
 		tot_economic_mobilisation = {
+
+			visible = {
+				if = {
+					limit = {
+						original_tag = GER
+					}
+					NOT = { has_completed_focus = GER_totaler_krieg }
+				}
+			}
+
 			available = {
 				has_war = yes
 				has_war_support > 0.8
 				any_enemy_country = {
-					ic_ratio = { 
-						tag = ROOT 
+					ic_ratio = {
+						tag = ROOT
 						ratio > 0.5
 					}
 				}
 
-				if = {
+				IF = {
 					limit = {
 						original_tag = HUN
 						has_dlc = "Death or Dishonor"
+						NOT = {
+							has_dlc = "Gotterdammerung"
+						}
 					}
-					NOT = { has_idea = HUN_treaty_of_triannon }
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						NOT = { has_idea = HUN_treaty_of_triannon_aat }
+					}
+					ELSE = {
+						NOT = { has_idea = HUN_treaty_of_triannon }
+					}
 				}
+				ELSE_IF = {
+					limit = {
+						original_tag = HUN
+						has_dlc = "Gotterdammerung"
+					}
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+						}
+						custom_trigger_tooltip = {
+							tooltip = wuw_HUN_not_has_trianon_for_laws_tt
+							NOT = { 
+								OR = {
+									has_idea = HUN_treaty_of_triannon_aat_wuw 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_air_debuff 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_army_exp_debuff 
+									has_idea = HUN_treaty_of_triannon_aat_wuw_no_air_or_army_debuff 
+								}
+							}
+							
+						}		
+					}
+					ELSE = {
+						custom_trigger_tooltip = {
+							tooltip = wuw_HUN_not_has_trianon_for_laws_tt
+							NOT = { 
+								OR = {
+									has_idea = HUN_treaty_of_triannon_wuw 
+									has_idea = HUN_treaty_of_triannon_wuw_no_army_exp_debuff 
+									has_idea = HUN_treaty_of_triannon_wuw_no_air_debuff 
+									has_idea = HUN_treaty_of_triannon_wuw_no_air_or_army_debuff 
+								}
+							}
+						}
+					}
+				}
+				
 				if = {
 					limit = {
 						has_completed_focus = USA_limited_intervention
@@ -407,7 +648,7 @@ ideas = {
 					manpower_per_military_factory <  10000
 				}
 
-				
+
 				modifier = {
 					# never take this if we are on low conscription laws for safety
 					factor = 0
@@ -422,7 +663,7 @@ ideas = {
 					factor = 0
 
 					tag = GER
-					NOT = { has_tech = mission_type_tactics }
+					NOT = { has_tech = volkssturm }
 					has_war = yes
 					date < 1944.01.01
 				}
@@ -439,13 +680,13 @@ ideas = {
 								has_idea = service_by_requirement
 							}
 						}
-					}									
+					}
 				}
    			}
-			
+
 			cost = 150
 			removal_cost = -1
-			
+
 			modifier = {
 				consumer_goods_expected_value = 0.10
 				conscription = -0.03
@@ -454,9 +695,9 @@ ideas = {
 				conversion_cost_civ_to_mil_factor= -0.3
 				conversion_cost_mil_to_civ_factor = -0.3
 			}
-			
+
 			cancel_if_invalid = no
-		} 
+		}
 
 		japanese_war_economy = {
 			picture = japanese_war_economy
@@ -1016,13 +1257,98 @@ ideas = {
 				}
    			}
 		}
-		
+
+		autarkic_economy = {
+			visible = {
+				original_tag = GER
+				has_completed_focus = GER_autarky_efforts
+				NOT = { has_completed_focus = GER_autarky_achieved }
+			}
+
+			available = {
+			}
+
+			cost = 150
+			removal_cost = -1
+
+			modifier = {
+				min_export = 0.15
+				#industrial_capacity_factory = 0.05
+				#industrial_capacity_dockyard = 0.05
+				production_speed_buildings_factor = 0.05
+				research_speed_factor = 0.05
+				lend_lease_tension = 0.20
+				faction_trade_opinion_factor = 0.25
+				#cic_construction_boost = -0.05
+			}
+
+			cancel_if_invalid = no
+
+			ai_will_do = { #Germany should always for AutarkicEconomy if its available
+   				factor = 100
+
+   				modifier = {
+   					add = 500
+   					has_idea = limited_exports
+   				}
+
+   				modifier = {
+   					add = 1500
+   					has_idea = closed_economy
+   					has_large_ally_not_pick_closed_economy = yes
+   				}
+   			}
+		}
+
+		autarkic_economy_improved = {
+			picture = autarkic_economy
+			name = autarkic_economy
+			visible = {
+				original_tag = GER
+				has_completed_focus = GER_autarky_achieved
+			}
+
+			available = {
+			}
+
+			cost = 150
+			removal_cost = -1
+
+			modifier = {
+				min_export = 0.15
+				industrial_capacity_factory = 0.05
+				industrial_capacity_dockyard = 0.05
+				production_speed_buildings_factor = 0.1
+				research_speed_factor = 0.05
+				lend_lease_tension = 0.20
+				faction_trade_opinion_factor = 0.5
+				#cic_construction_boost = -0.05
+			}
+
+			cancel_if_invalid = no
+
+			ai_will_do = { #Germany should always for AutarkicEconomy if its available
+   				factor = 100
+
+   				modifier = {
+   					add = 500
+   					has_idea = limited_exports
+   				}
+
+   				modifier = {
+   					add = 1500
+   					has_idea = closed_economy
+   					has_large_ally_not_pick_closed_economy = yes
+   				}
+   			}
+		}
+
 		closed_economy = {
-			
-			
+
+
 			available = {
 				has_war = yes
-				OR = { 
+				OR = {
 					has_government = fascism
 					has_government = communism
 				}
@@ -1100,8 +1426,16 @@ ideas = {
 					# since they will require our trades
 					has_large_ally_not_pick_closed_economy = yes
 				}
+				modifier = { #Germany should keep its Autarkic Economy
+					factor = 0.5
+					original_tag = GER
+					is_in_faction = yes
+					OR = {
+						has_idea = autarkic_economy
+						has_idea = autarkic_economy_improved
+					}
+				}
    			}
 		}
-
 	}
 }
