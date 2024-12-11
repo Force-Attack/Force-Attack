@@ -1093,7 +1093,6 @@ focus_tree = {
 		id = ETH_new_weapons_and_tactics
 		 icon = GFX_focus_generic_combined_arms
 		prerequisite = { focus = ETH_the_junior_officer_corps focus = ETH_camouflage }
-		mutually_exclusive = { focus = ETH_old_reliable }
 		x = 0
 		y = 1
 		relative_position_id = ETH_the_junior_officer_corps
@@ -1125,7 +1124,6 @@ focus_tree = {
 		id = ETH_old_reliable
 		 icon = GFX_focus_secret_rearmament
 		prerequisite = { focus = ETH_camouflage focus = ETH_the_junior_officer_corps }
-		mutually_exclusive = { focus = ETH_new_weapons_and_tactics }
 		x = 0
 		y = 1
 		relative_position_id = ETH_camouflage
@@ -1333,9 +1331,7 @@ focus_tree = {
 					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 2
-				custom_effect_tooltip = ETH_develop_the_capital_region_tt
-				set_state_flag = ETH_can_electrify_state_flag
+				add_extra_state_shared_building_slots = 2	
 			}
 			
 		}
@@ -1362,7 +1358,7 @@ focus_tree = {
 			ETH_BOP_centralization_small_effect = yes 
 			custom_effect_tooltip = ETH_the_state_bank_of_ethiopia_tt
 			add_to_variable = { ETH_bureaucracy_research_speed_factor = 0.05 }
-			add_to_variable = { ETH_bureaucracy_production_speed_buildings_factor = 0.05 }
+			add_to_variable = { ETH_bureaucracy_production_speed_buildings_factor = 0.10 }
 		}
 	}
 	focus = {
@@ -1400,7 +1396,6 @@ focus_tree = {
 		id = ETH_state_owned_industry
 		icon = GFX_focus_generic_industry_1
 		prerequisite = { focus = ETH_develop_the_capital_region }
-		mutually_exclusive = { focus = ETH_encourage_local_development }
 		x = 2
 		y = 1
 		relative_position_id = ETH_develop_the_capital_region
@@ -1420,75 +1415,19 @@ focus_tree = {
 		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_BALANCE_OF_POWER}
-		complete_tooltip = {
-			random_owned_controlled_state = {
-				limit = {
-					has_state_flag = state_industry_flag
-				}
-				prioritize = { 835 } # Hararghe
-				ETH_upgrade_state_category = yes 
-				ETH_upgrade_main_city = yes 
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				custom_effect_tooltip = ETH_state_owned_industry_tt
-				add_to_variable = { ETH_state_development_production_speed = 0.2 }
-				add_to_variable = { ETH_state_development_local_building_slots_factor = 0.2 }
-				
-				add_extra_state_shared_building_slots = 2 
-				
-			}
-			IF = {
-				limit = {
-					271 = {
-						is_controlled_by = ROOT 
-						free_building_slots = {
-							building = arms_factory
-							size > 0
-							include_locked = yes
-						}
-					}
-				}
-				271 = { add_extra_state_shared_building_slots = 1 }		
-			}
-		}
 
 		completion_reward = {
-			ETH_BOP_centralization_large_effect = yes 
-			random_owned_controlled_state = {
-				limit = {
-					not = { state = 271 }
-				}
-				prioritize = { 835 } # Hararghe
-				ETH_upgrade_state_category = yes 
-				ETH_upgrade_main_city = yes 
+			271 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 2 
 				custom_effect_tooltip = ETH_state_owned_industry_tt
-				add_to_variable = { ETH_state_development_production_speed = 0.2 }
-				add_to_variable = { ETH_state_development_local_building_slots_factor = 0.2 }
-				set_state_flag = state_industry_flag 
-
+				set_variable = { ETH_state_development_production_speed = 0.2 }
+				set_variable = { ETH_state_development_local_building_slots_factor = 0.2 }
 				
-			}
-			IF = {
-				limit = {
-					271 = {
-						is_controlled_by = ROOT 
-						free_building_slots = {
-							building = arms_factory
-							size > 0
-							include_locked = yes
-						}
-					}
-				}
-				271 = { add_extra_state_shared_building_slots = 1 }
 			}
 		}
 	}
@@ -1496,7 +1435,6 @@ focus_tree = {
 		id = ETH_encourage_local_development
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = ETH_develop_the_capital_region }
-		mutually_exclusive = { focus = ETH_state_owned_industry }
 		x = 4
 		y = 1
 		relative_position_id = ETH_develop_the_capital_region
@@ -1521,23 +1459,20 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_BALANCE_OF_POWER}
 
 		completion_reward = {
-			ETH_BOP_decentralization_large_effect = yes 
 			every_owned_state = {
-				limit = { 
-					check_variable = { ETH_state_development_production_speed < -0.15 }
-					check_variable = { ETH_state_development_local_building_slots_factor < -0.15 }
-					NOT = { state = 271 }
+				limit = {
+					is_core_of = ETH
 				}
-				custom_effect_tooltip = ETH_encourage_local_development_tt
-				add_to_variable = { ETH_state_development_production_speed = 0.1 }
-				add_to_variable = { ETH_state_development_local_building_slots_factor = 0.1 }
-			}
-			custom_effect_tooltip = ETH_encourage_local_development_2_tt
-			hidden_effect = {
-				country_event = {
-					id = BBA_ethiopia_industrial_financial_events.1
-					days = 5
-					random_days = 10 
+				add_extra_state_shared_building_slots = 1 
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
@@ -1713,7 +1648,6 @@ focus_tree = {
 		relative_position_id = ETH_taxing_the_nobility
 		cost = 10
 		available = {
-			is_subject = no
 		}
 		ai_will_do = {
 			base = 1
@@ -1738,7 +1672,6 @@ focus_tree = {
 		id = ETH_increased_factory_output
 		icon = GFX_focus_generic_industry_2
 		prerequisite = { focus = ETH_state_owned_industry focus = ETH_encourage_local_development }
-		mutually_exclusive = { focus = ETH_adapt_and_improve }
 		x = 0
 		y = 1
 		relative_position_id = ETH_state_owned_industry
@@ -1760,7 +1693,6 @@ focus_tree = {
 		id = ETH_adapt_and_improve
 		icon = GFX_focus_generic_license_production
 		prerequisite = { focus = ETH_encourage_local_development focus = ETH_state_owned_industry }
-		mutually_exclusive = { focus = ETH_increased_factory_output }
 		x = 0
 		y = 1
 		relative_position_id = ETH_encourage_local_development
@@ -1798,7 +1730,6 @@ focus_tree = {
 		relative_position_id = ETH_reform_the_currency
 		cost = 10
 		available = {
-			is_subject = no
 		}
 		ai_will_do = {
 			base = 2
@@ -1936,7 +1867,6 @@ focus_tree = {
 		id = ETH_bomb_proofing
 		icon = GFX_goal_generic_occupy_start_war
 		prerequisite = { focus = ETH_increased_factory_output focus = ETH_adapt_and_improve }
-		mutually_exclusive = { focus = ETH_rapid_industrial_expansion }
 		x = 0
 		y = 1
 		relative_position_id = ETH_increased_factory_output
@@ -1958,7 +1888,6 @@ focus_tree = {
 		id = ETH_rapid_industrial_expansion
 		icon = GFX_focus_SOV_organize_wreckers
 		prerequisite = { focus = ETH_adapt_and_improve focus = ETH_increased_factory_output }
-		mutually_exclusive = { focus = ETH_bomb_proofing }
 		x = 0
 		y = 1
 		relative_position_id = ETH_adapt_and_improve
@@ -2035,21 +1964,9 @@ focus_tree = {
 						state = 908
 					}
 				}
-				custom_effect_tooltip = ETH_invest_tt
-				#set_state_flag = ETH_can_electrify_state_flag
-				set_state_flag = ETH_investment_state_flag
-				IF = {
-					limit = {
-						NOT = { has_state_flag = ETH_can_electrify_state_flag }
-					}
-					set_state_flag = ETH_can_electrify_state_flag
-				}
-				IF = {
-					limit = {
-						NOT = { has_state_flag = ETH_can_improve_communication_state_flag }
-					}
-					set_state_flag = ETH_can_improve_communication_state_flag
-				}
+				custom_effect_tooltip = ETH_encourage_local_development_tt
+				set_variable = { ETH_state_development_production_speed = 0.1 }
+				set_variable = { ETH_state_development_local_building_slots_factor = 0.1 }
 
 			}
 			IF = {
@@ -2094,21 +2011,9 @@ focus_tree = {
 						state = 843
 					}
 				}
-				custom_effect_tooltip = ETH_invest_tt
-				set_state_flag = ETH_investment_state_flag # Mark state as "invested in"
-				 # Enable electrification
-				IF = {
-					limit = {
-						NOT = { has_state_flag = ETH_can_electrify_state_flag }
-					}
-					set_state_flag = ETH_can_electrify_state_flag
-				}
-				IF = {
-					limit = {
-						NOT = { has_state_flag = ETH_can_improve_communication_state_flag }
-					}
-					set_state_flag = ETH_can_improve_communication_state_flag
-				}							
+				custom_effect_tooltip = ETH_encourage_local_development_tt
+				set_variable = { ETH_state_development_production_speed = 0.1 }
+				set_variable = { ETH_state_development_local_building_slots_factor = 0.1 }						
 			}
 			custom_effect_tooltip = available_industrial_concern
 			show_ideas_tooltip = ETH_dire_dawa_industries
@@ -2146,31 +2051,9 @@ focus_tree = {
 						state = 839
 					}
 				}
-				custom_effect_tooltip = ETH_invest_tt
-				set_state_flag = ETH_investment_state_flag
-				IF = {
-					limit = {
-						NOT = { has_state_flag = ETH_can_electrify_state_flag }
-					}
-					set_state_flag = ETH_can_electrify_state_flag
-				}
-				IF = {
-					limit = {
-						NOT = { has_state_flag = ETH_can_improve_communication_state_flag }
-					}
-					set_state_flag = ETH_can_improve_communication_state_flag
-				}
-			}
-			IF = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}	
-				custom_effect_tooltip = invites_mio_tt
-				show_mio_tooltip = ETH_ncgf_organization
-			}
-			ELSE = {
-				custom_effect_tooltip = available_designer
-				show_ideas_tooltip = ETH_ncgf
+				custom_effect_tooltip = ETH_encourage_local_development_tt
+				set_variable = { ETH_state_development_production_speed = 0.1 }
+				set_variable = { ETH_state_development_local_building_slots_factor = 0.1 }
 			}
 		}
 	}
@@ -2372,7 +2255,7 @@ focus_tree = {
 		id = ETH_ethiopian_industrial_research_institute
 		icon = GFX_focus_research
 		prerequisite = { focus = ETH_modernizing_the_industry }
-		mutually_exclusive = { focus = ETH_invite_foreign_prospectors }
+	
 		dynamic = yes 
 		x = -1
 		y = 1
@@ -2395,7 +2278,7 @@ focus_tree = {
 		id = ETH_invite_foreign_prospectors
 		icon = GFX_goal_generic_intelligence_exchange
 		prerequisite = { focus = ETH_modernizing_the_industry }
-		mutually_exclusive = { focus = ETH_ethiopian_industrial_research_institute }
+		
 		x = 1
 		y = 1
 		relative_position_id = ETH_modernizing_the_industry
@@ -2474,6 +2357,10 @@ focus_tree = {
 						}
 					}					
 				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
 			}
 			IF = {
 				limit = {
@@ -2484,6 +2371,10 @@ focus_tree = {
 							value > 50
 						}
 					}					
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
 				}
 			}
 			IF = {
@@ -2496,6 +2387,10 @@ focus_tree = {
 						}
 					}					
 				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
 			}
 			IF = {
 				limit = {
@@ -2507,6 +2402,10 @@ focus_tree = {
 						}
 					}					
 				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
 			}
 			IF = {
 				limit = {
@@ -2517,6 +2416,10 @@ focus_tree = {
 							value > 50
 						}
 					}					
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
 				}
 			}
 		}
