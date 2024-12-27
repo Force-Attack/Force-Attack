@@ -16,7 +16,6 @@ focus_tree = {
 			add = 10
 			tag = COG
 			has_dlc = "Gotterdammerung"
-			has_global_flag = bel_dlc_focus_tree
 		}
 	}
 
@@ -734,7 +733,7 @@ focus_tree = {
 
 		relative_position_id = COG_establish_the_anc
 
-		search_filters = { FOCUS_FILTER_AIR_XP FOCUS_FILTER_HISTORICAL }
+		search_filters = { FOCUS_FILTER_AIR_XP FOCUS_FILTER_HISTORICAL FOCUS_FILTER_MILITARY_CHARACTER }
 	
 		cost = 5
 	
@@ -1178,28 +1177,11 @@ focus_tree = {
 	
 		completion_reward = {
 
-			IF = {	
-				limit = {
-					NOT = {
-						has_tech = atomic_research
-					}
-				}
-				add_tech_bonus = {
-					name = COG_triga_i_project
-					bonus = 1.0
-					uses = 1
-					category = nuclear
-				}
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.5
-				}
-			}
-			ELSE = {
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.8
-				}
+			add_tech_bonus = {
+				name = COG_triga_i_project
+				bonus = 1.0
+				uses = 1
+				category = nuclear
 			}
 
 			custom_effect_tooltip = generic_skip_one_line_tt
@@ -1472,21 +1454,10 @@ focus_tree = {
 				swap_country_leader_traits = {
 				    remove = pro_allied_governor_general
 				    add = pro_allied_governor_general_2
-				    ideology = colonial_government
+				    ideology = oligarchism
 				}
 			}
 
-			custom_effect_tooltip = generic_skip_one_line_tt
-
-			if = {
-				limit = {
-					has_cosmetic_tag = COG_BEL
-				}
-				hidden_effect = {
-					drop_cosmetic_tag = yes
-					set_cosmetic_tag = COG_belgian_congo # The Belgian Congo
-				}
-			}
 		}
 
 	}
@@ -1502,7 +1473,7 @@ focus_tree = {
 
 		relative_position_id = COG_governor_general_pierre_ryckmans
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY }
 	
 		cost = 10
 	
@@ -1540,7 +1511,7 @@ focus_tree = {
 
 		relative_position_id = COG_governor_general_pierre_ryckmans
 
-		search_filters = { FOCUS_FILTER_MANPOWER }
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY }
 	
 		cost = 10
 	
@@ -1605,7 +1576,7 @@ focus_tree = {
 
 		relative_position_id = COG_invest_in_urban_centers
 
-		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL_CHARACTER }
+		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_POLITICAL }
 	
 		cost = 5
 	
@@ -1643,7 +1614,7 @@ focus_tree = {
 
 		relative_position_id = COG_invest_in_urban_centers
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_STABILITY FOCUS_FILTER_HISTORICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_STABILITY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
 	
 		cost = 10
 	
@@ -2000,7 +1971,7 @@ focus_tree = {
 
 		mutually_exclusive = { focus = COG_allow_local_autonomy }
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY }
 	
 		cost = 5
 	
@@ -2095,7 +2066,7 @@ focus_tree = {
 
 		relative_position_id = COG_attempt_to_centralize_the_state
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL_CHARACTER }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_INDUSTRY }
 	
 		cost = 10
 	
@@ -2270,7 +2241,7 @@ focus_tree = {
 
 		relative_position_id = COG_governor_general_pierre_ryckmans
 
-		search_filters = { FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_STABILITY FOCUS_FILTER_HISTORICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_STABILITY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_TFV_AUTONOMY FOCUS_FILTER_WAR_SUPPORT }
 	
 		cost = 5
 	
@@ -2549,7 +2520,7 @@ focus_tree = {
 
 		relative_position_id = COG_closer_cooperation_with_eugene_jungers
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL_CHARACTER }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_INDUSTRY }
 	
 		cost = 5
 	
@@ -3888,7 +3859,7 @@ focus_tree = {
 
 		relative_position_id = COG_congo_and_the_war_in_europe
 
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_TFV_AUTONOMY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_TFV_AUTONOMY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_INDUSTRY }
 	
 		cost = 5
 	
@@ -4519,6 +4490,13 @@ focus_tree = {
 		}
 	
 		bypass = {
+			has_government = democratic
+			NOT = {
+				has_country_leader = {
+					ruling_only = yes
+					character = COG_joseph_kasa_vubu
+				}	
+			}
 		}
 	
 		available = {
@@ -4825,7 +4803,7 @@ focus_tree = {
 
 		relative_position_id = COG_the_ten_year_plan
 
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER }
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
 	
 		cost = 10
 
@@ -4870,7 +4848,7 @@ focus_tree = {
 
 		relative_position_id = COG_kasa_vubus_first_cabinet
 
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY }
 	
 		cost = 5
 
@@ -4909,7 +4887,7 @@ focus_tree = {
 
 		relative_position_id = COG_improve_the_civil_administration
 
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_STABILITY FOCUS_FILTER_INDUSTRY }
 	
 		cost = 5
 
@@ -4980,12 +4958,10 @@ focus_tree = {
 		y = 1
 
 		prerequisite = { focus = COG_the_lion_roars }
-
-		#mutually_exclusive = { focus = COG_found_the_congolese_national_movement }
-
+		
 		relative_position_id = COG_the_lion_roars
 
-		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY }
 	
 		cost = 10
 
@@ -5207,7 +5183,7 @@ focus_tree = {
 
 		relative_position_id = COG_form_the_gecamines
 
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 	
 		cost = 10
 
@@ -5738,6 +5714,10 @@ focus_tree = {
 				hours = 2
 			}
 
+			hidden_effect = {
+				set_country_flag = org_founder_is_authoritarian_flag
+			}
+
 		}
 
 	}
@@ -5826,9 +5806,7 @@ focus_tree = {
 					hours = 1
 				}	
 			}
-			set_variable = { org_africa_central_bank_stability_factor = -0.05 }
-			set_variable = { org_africa_central_bank_industrial_complex_factor = -0.1 }
-			set_variable = { org_africa_central_bank_infrastructure_factor = -0.1 }
+			set_african_central_bank_variables = yes
 			custom_effect_tooltip = generic_skip_one_line_tt
 			add_dynamic_modifier = {
 				modifier = african_union_central_bank_modifier
@@ -5868,6 +5846,10 @@ focus_tree = {
 		}
 	
 		completion_reward = { 
+
+			add_political_power = 100
+
+			custom_effect_tooltip = generic_skip_one_line_tt
 			
 			custom_effect_tooltip = ETH_executive_council_tt
 			every_other_country = {
@@ -5921,7 +5903,7 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			add_political_power = 100
+			add_political_power = 150
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
@@ -5951,7 +5933,7 @@ focus_tree = {
 
 		relative_position_id = COG_the_lion_roars
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER }
 	
 		cost = 5
 
@@ -6049,7 +6031,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = COG_assemble_a_regency_council
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER FOCUS_FILTER_STABILITY }
 
 		cost = 10
 
@@ -6115,7 +6097,7 @@ focus_tree = {
 			factor = 25
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		allow_branch = {
 			has_dlc = "Gotterdammerung"
@@ -6160,7 +6142,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = COG_assemble_a_regency_council
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		cost = 10
 
@@ -6217,7 +6199,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = COG_assemble_a_regency_council
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		cost = 10
 
@@ -6274,7 +6256,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = COG_assemble_a_regency_council
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		cost = 10
 
@@ -6331,7 +6313,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = COG_assemble_a_regency_council
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 
 		cost = 10
 
@@ -6397,7 +6379,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = COG_the_kingdom_of_kongo_focus
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION FOCUS_FILTER_MANPOWER }
 
 		cost = 10
 
@@ -6973,7 +6955,7 @@ focus_tree = {
 
 		prerequisite = { focus = COG_children_of_woot }
 
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		dynamic = yes
 		
@@ -8421,6 +8403,8 @@ focus_tree = {
 		cancel_if_invalid = no
 		continue_if_invalid = yes
 		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
 
