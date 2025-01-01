@@ -37,7 +37,7 @@ NDefines.NTechnology.BASE_YEAR_AHEAD_PENALTY_FACTOR = 3.0		-- Base year ahead pe
 NDefines.NTechnology.BASE_TECH_COST = 80					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties
 ----------------------------------
 NDefines.NCountry.SPECIAL_FORCES_CAP_BASE = 0.0 -- prevent special forces exploit 
-NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 400 -- 20 forty-width special forces divisions, plenty  
+NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 1000 -- 20 forty-width special forces divisions, plenty  
 NDefines.NMilitary.CORPS_COMMANDER_DIVISIONS_CAP = 50
 NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 50
 NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
