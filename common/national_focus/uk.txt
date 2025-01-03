@@ -17,23 +17,8 @@ focus_tree = {
 	focus = {
 		id = crypto_bomb_focus
 		available = {
-			has_war_with = GER
-			POL = {
-				NOT = { is_in_faction_with = GER } #We assume POL will help vs Germany unless they are allied to them
-			}
+		has_war = yes
 			
-			if = {
-				limit = {
-					POL = {
-						is_puppet = yes
-					}
-				}
-				POL = {
-					OVERLORD = {
-						is_in_faction_with = ENG
-					}
-				}
-			}
 			if = {
 				limit = {
 					has_dlc = "La Resistance"
@@ -59,9 +44,9 @@ focus_tree = {
 		}
 		
 		icon = GFX_focus_generic_cryptologic_bomb
-		x = -6
+		x = -8
 		y = 0
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 3
 		}
@@ -237,15 +222,16 @@ focus_tree = {
 
 	focus = {
 		id = ENG_the_wartime_cabinet_committee
-		prerequisite = { focus = limited_rearmament_focus }
+		prerequisite = { focus = ENG_ramp_up_constription
+		focus = ENG_britains_finest_armor_corps }
 		available = { 
 			has_war = yes
 		}
 
-		icon = GFX_goal_generic_territory_or_war
-		x = 2
-		y = 1
-		relative_position_id = limited_rearmament_focus
+		icon = GFX_goal_polish_wartime_industry
+		x = 1
+		y = 3
+		relative_position_id = royal_ordinance_focus
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -258,13 +244,13 @@ focus_tree = {
 
 	focus = {
 		id = ENG_motorized_focus
-		prerequisite = { focus = limited_rearmament_focus }
+		prerequisite = { focus = ENG_Provoke_british_patriotism }
 		available = { 			
 		}
 		icon = GFX_goal_generic_army_motorized
-		x = -2
+		x = 2
 		y = 1
-		relative_position_id = limited_rearmament_focus
+		relative_position_id = ENG_Provoke_british_patriotism
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -298,7 +284,7 @@ focus_tree = {
 		id = ENG_tank_focus
 		prerequisite = { focus = ENG_motorized_focus }
 		icon = GFX_goal_generic_heavy_armour_british
-		x = 1
+		x = 2
 		y = 1
 		relative_position_id = ENG_motorized_focus
 		cost = 10
@@ -326,9 +312,9 @@ focus_tree = {
 		id = ENG_tank_variant_focus
 		prerequisite = { focus = ENG_tank_focus }
 		icon = GFX_goal_tank_map
-		x = -2
-		y = 1
-		relative_position_id = ENG_tank_focus
+		x = 3
+		y = 2
+		relative_position_id = ENG_motorized_focus
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -370,17 +356,7 @@ focus_tree = {
 		id = air_defense_focus
 		prerequisite = { focus = limited_rearmament_focus }
 		available = {
-			if = {
-				limit = {
-					has_dlc = "Man the Guns"
-				}
-				OR = {
-					threat > 0.05
-					has_war = yes
-					has_idea = ENG_no_further_appeasement_idea
-					NOT = { has_government = democratic }
-				}
-			}
+			
 			if = {
 				limit = {
 					NOT = { has_dlc = "Man the Guns" }
@@ -397,10 +373,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		icon = GFX_goal_fortify_city_AA
-		x = -10
+		x = -12
 		y = 1
 		relative_position_id = limited_rearmament_focus
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -439,7 +415,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			air_experience = 25
+			air_experience = 75
 			if = {
 				limit = {
 					OR = {
@@ -658,7 +634,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = air_defense_focus
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -685,7 +661,7 @@ focus_tree = {
 			date > 1942.01.01
 		}	
 		prerequisite = { focus = radar_focus }
-		icon = GFX_focus_wonderweapons
+		icon = GFX_focus_research2
 		x = 1
 		y = 2
 		relative_position_id = radar_focus
@@ -709,7 +685,7 @@ focus_tree = {
 	}	
 	focus = {
 		id = shadow_scheme_focus
-		prerequisite = { focus = limited_rearmament_focus }
+		prerequisite = { focus = ENG_Provoke_british_patriotism }
 		available = {
 			threat > 0.05
 		}
@@ -717,10 +693,10 @@ focus_tree = {
 		continue_if_invalid = yes
 		available_if_capitulated = yes
 		
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_generic_whispers
 		x = 0
 		y = 1
-		relative_position_id = limited_rearmament_focus
+		relative_position_id = ENG_Provoke_british_patriotism
 		cost = 10
 		ai_will_do = {
 			factor = 10
@@ -736,9 +712,9 @@ focus_tree = {
 		text = ENG_public_school_funding
 		icon =  GFX_goal_generic_education
 		prerequisite = { focus = ENG_time_of_economic_prosperity }
-		x = 0
-		y = 7
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = -1
+		y = 6
+		relative_position_id = ENG_let_that_lion_roar
 		cost = 5
 		ai_will_do = {
 			factor = 50
@@ -784,11 +760,11 @@ focus_tree = {
 
 		continue_if_invalid = yes
 
-		icon = GFX_goal_generic_consumer_goods
-		x = 4
+		icon = GFX_focus_CONGO_copper_cartridges
+		x = 5
 		y = 1
 		relative_position_id = limited_rearmament_focus
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 10
 		}	
@@ -833,13 +809,13 @@ focus_tree = {
 		available = {
 			threat > 0.25
 		} #at war with major or ger in rhineland or high threat
-		prerequisite = { focus = ENG_tank_focus }
-		prerequisite = {
-			focus = ENG_let_that_lion_roar
-		}
+		prerequisite = { focus = shadow_scheme_focus
+		focus = ENG_let_that_lion_roar
+		focus = ENG_motorized_focus }
+	
 		icon = GFX_goal_generic_munitions_factories
-		x = 1
-		y = 3
+		x = -2
+		y = 1
 		relative_position_id = ENG_motorized_focus
 		cost = 10
 		ai_will_do = {
@@ -1595,8 +1571,8 @@ mutually_exclusive = {
 		prerequisite = { focus = naval_rearmament_focus }
 		prerequisite = { focus = uk_service_focus }
 		icon = GFX_focus_generic_cruiser2
-		x = 4
-		y = 1
+		x = 3
+		y = 2
 		offset = {
 			x = -1
 			y = 0
@@ -3335,7 +3311,7 @@ mutually_exclusive = {
 		x = -8
 		y = 1
 		relative_position_id = uk_service_focus
-		cost = 10
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -3428,19 +3404,13 @@ mutually_exclusive = {
 	focus = {
 		id = uk_burma_focus
 		prerequisite = { focus = uk_asia_focus } 
-		available = {
-			CHI = { 
-				has_war_with = JAP 
-				NOT = { has_war_with = ENG }
-			}
-			JAP = { NOT = { is_in_faction_with = ENG } }
-		}
+		
 
 		icon = GFX_goal_generic_construct_infrastructure
 		x = -2
 		y = 1
 		relative_position_id = uk_asia_focus
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 1
 		}
@@ -3586,7 +3556,7 @@ mutually_exclusive = {
 		x = 0
 		y = 1
 		relative_position_id = uk_asia_focus
-		cost = 10
+		cost = 5
 
 		available = {
 			336 = {
@@ -3634,7 +3604,7 @@ mutually_exclusive = {
 		x = 0
 		y = 1
 		relative_position_id = singapore_focus
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}	
@@ -7583,477 +7553,7 @@ mutually_exclusive = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
-	focus = {
-		id = ENG_militarism_focus
-		icon = GFX_goal_extensive_conscription_fascism
-		prerequisite = { 
-			focus = ENG_join_germany
-			focus = ENG_new_empire
-		}
-		relative_position_id = ENG_join_germany
-		x = 1
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			ENG_mosley_pacifism_level_down = yes
-			add_ideas = ENG_militarism
-			army_experience = 20
-		}
-		search_filters = { FOCUS_FILTER_MANPOWER }
-	}
-
-	focus = {
-		id = ENG_subjugate_colonials
-		icon = GFX_1_6_goal_ENG_attack_dominions
-		relative_position_id = ENG_militarism_focus
-		prerequisite = {
-			focus = ENG_militarism_focus 
-		}
-		x = 0
-		y = 1
-		cost = 10
-		available = {
-			is_subject = no
-			num_subjects > 0
-		}
-		ai_will_do = {
-			factor = 4
-		}
-		completion_reward = {
-			ENG_mosley_pacifism_level_down = yes
-			add_ideas = ENG_colonials
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-
-	focus = {
-		id = ENG_road_war
-		icon = GFX_focus_generic_commonwealth_build_infantry
-		prerequisite = { 
-			focus = ENG_join_germany
-			focus = ENG_new_empire
-		}
-		relative_position_id = ENG_visit_germany
-		x = 5
-		y = 5
-		cost = 10
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			ENG_mosley_pacifism_level_down = yes
-			army_experience = 5
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-			remove_ideas = ENG_the_war_to_end_all_wars
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = ENG_euro_focus
-		icon = GFX_focus_usa_focus_on_europe
-		prerequisite = { focus = ENG_road_war }
-		relative_position_id = ENG_visit_germany
-		x = 5
-		y = 6
-		cost = 8.6
-		ai_will_do = {
-			factor = 4
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_political_power = 120
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
-
-	focus = {
-		id = ENG_war_propaganda_two
-		icon = GFX_goal_manpower
-		prerequisite = { 
-			focus = ENG_euro_focus
-		}
-		relative_position_id = ENG_visit_germany
-		x = 5
-		y = 7
-		cost = 7.9
-		ai_will_do = {
-			factor = 4
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			ENG_mosley_pacifism_level_down = yes
-			add_ideas = ENG_propaganda
-		}
-		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_MANPOWER }
-	}
-
-	focus = {
-		id = ENG_western
-		icon = GFX_goal_wargaming
-		prerequisite = { focus = ENG_war_propaganda_two }
-		x = 2
-		y = 8
-		relative_position_id = ENG_visit_germany
-		cost = 5.0
-		ai_will_do = {
-			factor = 4
-		}
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_political_power = 25
-			FRA = {
-				add_opinion_modifier = { target = ENG modifier = western_focus }
-			}
-			IRE = {
-				add_opinion_modifier = { target = ENG modifier = western_focus }
-			}
-			BEL = {
-				add_opinion_modifier = { target = ENG modifier = western_focus }
-			}
-			HOL = {
-				add_opinion_modifier = { target = ENG modifier = western_focus }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
-
-	focus = {
-		id = ENG_belgium_friend
-		icon = GFX_goal_BEL_allies
-		prerequisite = { focus = ENG_western }
-		mutually_exclusive = { focus = ENG_holland_friend }
-		relative_position_id = ENG_visit_germany
-		available = { 
-			is_puppet = no 
-			NOT = { has_war_with = BEL }
-			BEL = {
-				exists = yes
-				is_puppet = no
-			}
-		}
-
-		#bypass = {
-		#	OR = {
-		#		BEL = { is_in_faction_with = ENG }
-		#		NOT = { country_exists = BEL }
-		#	}
-		#}
-		x = 9
-		y = 9
-		cost = 7.2
-		ai_will_do = {
-			factor = 2
-		}	
-
-		completion_reward = {
-			BEL = {
-				add_opinion_modifier = { target = ENG modifier = ENG_diplomacy_focus }
-				if = {
-					limit = {
-						ENG = {
-							has_government = fascism
-						}
-					}
-					add_timed_idea = { idea = fascist_influence days = 1095 }
-				}
-				country_event = { id = generic.1 }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
-
-	focus = {
-		id = ENG_antagonize_holland
-		available = {
-			HOL = { 
-				exists = yes
-				NOT = { is_in_faction_with = ENG }
-				NOT = { has_war_with = ENG }
-			}	
-		}
-		relative_position_id = ENG_visit_germany
-		prerequisite = { focus = ENG_belgium_friend }
-		icon = GFX_goal_generic_trade
-		x = 9
-		y = 10
-		cost = 7.2
-		ai_will_do = {
-			factor = 2
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			HOL = {
-				add_opinion_modifier = { target = ENG modifier = minor_sanctions }
-				add_opinion_modifier = { target = ENG modifier = minor_sanctions_relations } 
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_holland_friend
-		icon = GFX_goal_HOL_democratic_alliance_ENG
-		prerequisite = { focus = ENG_western }
-		mutually_exclusive = { focus = ENG_belgium_friend }
-		relative_position_id = ENG_visit_germany
-		available = { 
-			is_puppet = no 
-			NOT = { has_war_with = HOL }
-			HOL = {
-				exists = yes
-				is_puppet = no
-			}
-		}
-
-		#bypass = {
-		#	OR = {
-		#		HOL = { is_in_faction_with = ENG }
-		#		NOT = { country_exists = HOL }
-		#	}
-		#}
-		x = 11
-		y = 9
-		cost = 7.2
-		ai_will_do = {
-			factor = 2
-		}
-		completion_reward = {
-			HOL = {
-				add_opinion_modifier = { target = ENG modifier = ENG_diplomacy_focus }
-				if = {
-					limit = {
-						ENG = {
-							has_government = fascism
-						}
-					}
-					add_timed_idea = { idea = fascist_influence days = 1095 }
-				}
-				country_event = { id = generic.1 }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
-
-	focus = {
-		id = ENG_antagonize_belgium
-		available = {
-			BEL = { 
-				exists = yes
-				NOT = { is_in_faction_with = ENG }
-				NOT = { has_war_with = ENG }
-			}	
-		}
-		relative_position_id = ENG_visit_germany
-		prerequisite = { focus = ENG_holland_friend }
-		icon = GFX_goal_generic_trade
-		x = 11
-		y = 10
-		cost = 7.2
-		ai_will_do = {
-			factor = 2
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			BEL = {
-				add_opinion_modifier = { target = ENG modifier = minor_sanctions }
-				add_opinion_modifier = { target = ENG modifier = minor_sanctions_relations } 
-			}
-		}
-	}
-
-	focus = {
-		id = ENG_belgium_war
-		
-		available = {	
-			r56_script_i_am_sane = yes
-			BEL = {
-				r56_script_target_is_sane = yes
-			}
-		}
-			
-		bypass = {
-			BEL = {
-				r56_script_standard_bypass = yes
-			}
-		}
-		
-		will_lead_to_war_with = BEL
-		prerequisite = { focus = ENG_antagonize_belgium }
-		icon = GFX_goal_generic_attack_belgium
-		x = 11
-		y = 11
-		relative_position_id = ENG_visit_germany
-		cost = 8.6
-		ai_will_do = {
-			factor = 2
-		}
-		completion_reward = {
-			create_wargoal = {
-				type = take_state_focus
-				target = BEL
-				expire = 0
-				generator = { 6 }
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-	}
-
-	focus = {
-		id = ENG_dutch_war
-		
-		available = {	
-			r56_script_i_am_sane = yes
-			HOL = {
-				r56_script_target_is_sane = yes
-			}
-		}
-			
-		bypass = {
-			HOL = {
-				r56_script_standard_bypass = yes
-			}
-		}	
-		
-		will_lead_to_war_with = HOL
-		prerequisite = { focus = ENG_antagonize_holland }
-		relative_position_id = ENG_visit_germany
-		icon = GFX_goal_generic_attack_netherlands
-		x = 9
-		y = 11
-		cost = 8.6
-		ai_will_do = {
-			factor = 2
-		}	
-		completion_reward = {
-			create_wargoal = {
-				type = take_state_focus
-				target = HOL
-				expire = 0
-				generator = { 7 }
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-	}
-
-	focus = {
-		id = ENG_ireland_friend
-		icon = GFX_goal_tripartite_pact
-		prerequisite = { focus = ENG_western }
-		mutually_exclusive = { focus = ENG_demand_ireland }
-		available = { 
-			is_puppet = no 
-			NOT = { has_war_with = IRE }
-			IRE = {
-				exists = yes
-				is_puppet = no
-			}
-		}
-		#bypass = {
-		#	OR = {
-		#		IRE = { is_in_faction_with = ENG }
-		#		NOT = { country_exists = IRE }
-		#	}
-		#}
-		relative_position_id = ENG_visit_germany
-		x = 5
-		y = 9
-		cost = 7.2
-		ai_will_do = {
-			factor = 2
-		}	
-
-		#
-		completion_reward = {
-			IRE = {
-				add_opinion_modifier = { target = ENG modifier = ENG_diplomacy_focus }
-				if = {
-					limit = {
-						ENG = {
-							has_government = fascism
-						}
-					}
-					add_timed_idea = { idea = fascist_influence days = 1095 }
-				}
-				country_event = { id = generic.1 }
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
-
-	focus = {
-		id = ENG_demand_ireland
-		icon = GFX_goal_generic_political_pressure
-	 	prerequisite = { focus = ENG_western }
-		mutually_exclusive = { focus = ENG_ireland_friend }
-		relative_position_id = ENG_visit_germany
-		available = {
-			is_puppet = no
-			has_government = fascism
-			has_army_manpower = { size > 750000 }
-			IRE = {
-				exists = yes
-				has_war = no
-				NOT = { is_in_faction_with = ENG }
-			}
-		}
-		ai_will_do = {
-			factor = 20
-		}
-		bypass = {
-			OR = {
-				has_war_with = IRE
-				all_state = {
-					OR = {
-						is_owned_by = ROOT
-						NOT = {
-							is_core_of = IRE
-						}
-					}
-				}
-				IRE = {
-					exists = no
-				}
-				IRE = {
-					is_puppet_of = ROOT
-				}
-			}
-			
-		}
-		will_lead_to_war_with = IRE
-		x = 3
-		y = 9
-		cost = 10
-		completion_reward = {
-			add_named_threat = { threat = 2 name = ENG_demand_ireland }
-			IRE = { country_event = { id = englandmod.5 days = 1 } }
-		}
-	}
-
+	
 	focus = {
 		id = ENG_burn_french
 		icon = GFX_goal_generic_forceful_treaty
@@ -13743,12 +13243,12 @@ mutually_exclusive = {
 	#new eco
 	focus = {
 		id = ENG_Provoke_british_patriotism
-		icon = GFX_focus_generic_infiltration
+		icon = GFX_focus_eng_the_sun_never_sets
 		cost = 5
 		prerequisite = {
 			focus = limited_rearmament_focus
 		}
-		x = -1
+		x = 0
 		y = 1
 		ai_will_do = {
 			factor = 10
@@ -13768,7 +13268,7 @@ mutually_exclusive = {
 		prerequisite = {
 			focus = ENG_Provoke_british_patriotism
 		}
-		x = 0
+		x = -2
 		y = 1
 		relative_position_id = ENG_Provoke_british_patriotism
 		ai_will_do = {
@@ -13793,9 +13293,9 @@ mutually_exclusive = {
 		prerequisite = { focus = ENG_let_that_lion_roar }
 		mutually_exclusive = { focus = ENG_expand_southern_industry }
 		icon = GFX_goal_industrial_investment
-		x = 1
-		y = 2
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = 0
+		y = 1
+		relative_position_id = ENG_let_that_lion_roar
 		cost = 10
 
 		available_if_capitulated = yes
@@ -13857,9 +13357,9 @@ mutually_exclusive = {
 		prerequisite = { focus = ENG_let_that_lion_roar }
 		mutually_exclusive = { focus = ENG_revitalize_northern_england  }
 		icon = GFX_goal_generic_industrial_planning
-		x = -1
-		y = 2
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = -2
+		y = 1
+		relative_position_id = ENG_let_that_lion_roar
 		cost = 10
 
 		available_if_capitulated = yes
@@ -13916,9 +13416,9 @@ mutually_exclusive = {
 		id = ENG_industrialise_celtic_areas
 		prerequisite = { focus = ENG_revitalize_northern_england }
 		icon = GFX_goal_BRI_bagadou_stourm
-		x = 1
-		y = 3
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = 0
+		y = 2
+		relative_position_id = ENG_let_that_lion_roar
 		cost = 10
 		available = {
 			controls_state = 122
@@ -14099,9 +13599,9 @@ mutually_exclusive = {
 		available = {
 			controls_state = 122
 		} 
-		x = -1
-		y = 3
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = -2
+		y = 2
+		relative_position_id = ENG_let_that_lion_roar
 		ai_will_do = {
 			factor = 10
 		}
@@ -14116,16 +13616,16 @@ mutually_exclusive = {
 		id = ENG_attract_colonial_investors
 		icon = GFX_1_6_goal_ENG_service_overseas
 		cost = 5
-		x = -1
+		x = -2
 		ai_will_do = { factor = 1 }
-		y = 5
+		y = 4
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = {
 			focus = ENG_increase_military_budget
 		}
-		relative_position_id = ENG_Provoke_british_patriotism
+		relative_position_id = ENG_let_that_lion_roar
 		completion_reward = {
 			add_timed_idea = {
 				idea = ENG_colonial_investors
@@ -14145,9 +13645,9 @@ mutually_exclusive = {
 		prerequisite = {
 			focus = ENG_Open_our_Markets
 		}
-		x = 1
-		y = 5
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = 0
+		y = 4
+		relative_position_id = ENG_let_that_lion_roar
 		ai_will_do = {
 			factor = 10
 		}
@@ -14165,15 +13665,15 @@ mutually_exclusive = {
 	}	
 	focus = {
 		id = ENG_time_of_economic_prosperity
-		icon = GFX_focus_eng_the_sun_never_sets
-		cost = 10
+		icon = GFX_focus_generic_economic_recovery
+		cost = 10 
 		prerequisite = {
 			focus = ENG_attract_colonial_investors
 			focus = ENG_devaluate_the_pound
 		}
-		x = 0
-		y = 6
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = -1
+		y = 5
+		relative_position_id = ENG_let_that_lion_roar
 		ai_will_do = {
 			factor = 10
 		}
@@ -14195,9 +13695,9 @@ mutually_exclusive = {
 			focus = ENG_industrialise_celtic_areas
 		}
 		ai_will_do = { factor = 1 }
-		x = 1
-		y = 4
-		relative_position_id = ENG_Provoke_british_patriotism
+		x = 0
+		y = 3
+		relative_position_id = ENG_let_that_lion_roar
 		bypass = { has_idea = free_trade }
 		
 		completion_reward = {
@@ -14226,9 +13726,9 @@ mutually_exclusive = {
 	focus = {
 		id = ENG_increase_military_budget
 		icon = GFX_goal_CAN_budget
-		relative_position_id = ENG_Provoke_british_patriotism
-		x = -1
-		y = 4
+		relative_position_id = ENG_let_that_lion_roar
+		x = -2
+		y = 3
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		
@@ -14276,11 +13776,11 @@ mutually_exclusive = {
 		icon = GFX_focus_generic_army_tanks2
 		cost = 5
 		prerequisite = {
-			focus = ENG_tank_variant_focus
+			focus = ENG_tank_focus
 		}
-		relative_position_id = ENG_tank_variant_focus
+		relative_position_id = ENG_tank_focus
 		x = 0
-		y = 1
+		y = 2
 		ai_will_do = {
 			factor = 10
 		}
@@ -14307,7 +13807,7 @@ mutually_exclusive = {
 		prerequisite = {
 			focus = ENG_motorized_focus
 		}
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = ENG_motorized_focus
 		ai_will_do = {
@@ -14332,9 +13832,9 @@ mutually_exclusive = {
 		prerequisite = {
 			focus = uk_small_arms_focus
 		}
-		x = 1
-		y = 5
-		relative_position_id = ENG_motorized_focus
+		x = 0
+		y = 1
+		relative_position_id = uk_small_arms_focus
 		ai_will_do = {
 			factor = 2
 		}
@@ -14350,17 +13850,15 @@ mutually_exclusive = {
 		icon = GFX_focus_generic_tank_production
 		cost = 10
 		prerequisite = {
-			focus = ENG_tank_variant_focus
+			focus = royal_ordinance_focus
 		}
-		prerequisite = {
-			focus = ENG_adopt_bliztkrieg_tactics
-		}
+		
 		mutually_exclusive = {
 			focus = uk_small_arms_focus
 		}
-		x = -1
-		y = 4
-		relative_position_id = ENG_motorized_focus
+		x = 2
+		y = 1
+		relative_position_id = royal_ordinance_focus
 		ai_will_do = {
 			factor = 2
 		}
@@ -14384,10 +13882,14 @@ mutually_exclusive = {
 		cost = 10
 		prerequisite = {
 			focus = ENG_order_increased_tank_production
+			
 		}
-		x = -1
-		y = 5
-		relative_position_id = ENG_motorized_focus
+		available = {
+			has_completed_focus = ENG_adopt_bliztkrieg_tactics
+		}
+		x = 0
+		y = 1
+		relative_position_id = ENG_order_increased_tank_production
 		ai_will_do = {
 			factor = 2
 		}
