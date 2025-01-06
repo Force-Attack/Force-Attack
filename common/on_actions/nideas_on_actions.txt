@@ -1,0 +1,266 @@
+on_actions = {
+	on_monthly = {
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_country_flag = nideas_cw_cflag }
+					has_civil_war = yes
+				}
+				set_country_flag = nideas_cw_cflag
+			}
+			if = {
+				limit = {
+					has_country_flag = nideas_cw_cflag
+					has_civil_war = no
+				}
+				clr_country_flag = nideas_cw_cflag
+			}
+		}
+	}
+
+	on_civil_war_end_before_annexation = { #ROOT = WINNER FROM = ANNEXED
+		effect = {
+			ROOT = {
+				set_temp_variable = { nideas_root_total_taken = 0 }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group1_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group2_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group3_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group4_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group5_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group6_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group7_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group8_taken }
+				add_to_temp_variable = { nideas_root_total_taken = ROOT.idea_group9_taken }
+			}
+			FROM = {
+				set_temp_variable = { nideas_from_total_taken = 0 }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group1_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group2_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group3_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group4_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group5_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group6_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group7_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group8_taken }
+				add_to_temp_variable = { nideas_from_total_taken = FROM.idea_group9_taken }
+			}
+			ROOT = {
+				set_variable = { nideas_cw_refund = 0 }
+				add_to_variable = { nideas_cw_refund = nideas_root_total_taken }
+				add_to_variable = { nideas_cw_refund = nideas_from_total_taken }
+				multiply_variable = { nideas_cw_refund = 50 } #pp refund per idea
+				
+				#Reset idea variables
+				set_variable = { var = ROOT.idea_group1_taken value = 0 }
+				set_variable = { var = ROOT.idea_group2_taken value = 0 }
+				set_variable = { var = ROOT.idea_group3_taken value = 0 }
+				set_variable = { var = ROOT.idea_group4_taken value = 0 }
+				set_variable = { var = ROOT.idea_group5_taken value = 0 }
+				set_variable = { var = ROOT.idea_group6_taken value = 0 }
+				set_variable = { var = ROOT.idea_group7_taken value = 0 }
+				set_variable = { var = ROOT.idea_group8_taken value = 0 }
+				set_variable = { var = ROOT.idea_group9_taken value = 0 }
+				set_variable = { var = ROOT.national_ideas_taken value = 0 }
+				
+				#Clear all idea flags
+				clr_country_flag = nideas_idea_group1_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group1_idea8_complete_cflag
+				
+				clr_country_flag = nideas_idea_group2_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group2_idea8_complete_cflag
+				
+				clr_country_flag = nideas_idea_group3_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group3_idea8_complete_cflag
+				
+				clr_country_flag = nideas_idea_group4_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group4_idea8_complete_cflag
+				
+				clr_country_flag = nideas_idea_group5_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group5_idea8_complete_cflag
+				
+				clr_country_flag = nideas_idea_group6_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group6_idea8_complete_cflag
+				
+				clr_country_flag = nideas_idea_group7_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea8_complete_cflag
+				clr_country_flag = nideas_idea_group7_idea9_complete_cflag
+				
+				clr_country_flag = nideas_idea_group8_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea8_complete_cflag
+				clr_country_flag = nideas_idea_group8_idea9_complete_cflag
+				
+				clr_country_flag = nideas_idea_group9_idea1_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea2_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea3_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea4_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea5_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea6_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea7_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea8_complete_cflag
+				clr_country_flag = nideas_idea_group9_idea9_complete_cflag
+				
+				clr_country_flag = nideas_idea_cost_reduced_cflag
+				clr_country_flag = nideas_border_war_cooldown_reduced_cflag
+				clr_country_flag = nideas_coring_cost_reduced_cflag
+				clr_country_flag = nideas_claimed_state_coring_cost_reduced_cflag
+				clr_country_flag = nideas_formable_allowed_cflag
+				clr_country_flag = nideas_no_formable_debuffs_cflag
+				
+				#Clear all ideas
+				remove_ideas = {
+					NIDEAS_IDEA_GROUP1_SPIRIT1
+					NIDEAS_IDEA_GROUP1_SPIRIT2
+					NIDEAS_IDEA_GROUP1_SPIRIT3
+					NIDEAS_IDEA_GROUP1_SPIRIT4
+					NIDEAS_IDEA_GROUP1_SPIRIT5
+					NIDEAS_IDEA_GROUP1_SPIRIT6
+					NIDEAS_IDEA_GROUP1_SPIRIT7
+					NIDEAS_IDEA_GROUP1_SPIRIT8
+					NIDEAS_IDEA_GROUP1_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP1_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP2_SPIRIT1
+					NIDEAS_IDEA_GROUP2_SPIRIT2
+					NIDEAS_IDEA_GROUP2_SPIRIT3
+					NIDEAS_IDEA_GROUP2_SPIRIT4
+					NIDEAS_IDEA_GROUP2_SPIRIT5
+					NIDEAS_IDEA_GROUP2_SPIRIT6
+					NIDEAS_IDEA_GROUP2_SPIRIT7
+					NIDEAS_IDEA_GROUP2_SPIRIT8
+					NIDEAS_IDEA_GROUP2_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP2_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP3_SPIRIT1
+					NIDEAS_IDEA_GROUP3_SPIRIT2
+					NIDEAS_IDEA_GROUP3_SPIRIT3
+					NIDEAS_IDEA_GROUP3_SPIRIT4
+					NIDEAS_IDEA_GROUP3_SPIRIT5
+					NIDEAS_IDEA_GROUP3_SPIRIT6
+					NIDEAS_IDEA_GROUP3_SPIRIT7
+					NIDEAS_IDEA_GROUP3_SPIRIT8
+					NIDEAS_IDEA_GROUP3_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP3_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP4_SPIRIT1
+					NIDEAS_IDEA_GROUP4_SPIRIT2
+					NIDEAS_IDEA_GROUP4_SPIRIT3
+					NIDEAS_IDEA_GROUP4_SPIRIT4
+					NIDEAS_IDEA_GROUP4_SPIRIT5
+					NIDEAS_IDEA_GROUP4_SPIRIT6
+					NIDEAS_IDEA_GROUP4_SPIRIT7
+					NIDEAS_IDEA_GROUP4_SPIRIT8
+					NIDEAS_IDEA_GROUP4_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP4_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP5_SPIRIT1
+					NIDEAS_IDEA_GROUP5_SPIRIT2
+					NIDEAS_IDEA_GROUP5_SPIRIT3
+					NIDEAS_IDEA_GROUP5_SPIRIT4
+					NIDEAS_IDEA_GROUP5_SPIRIT5
+					NIDEAS_IDEA_GROUP5_SPIRIT6
+					NIDEAS_IDEA_GROUP5_SPIRIT7
+					NIDEAS_IDEA_GROUP5_SPIRIT8
+					NIDEAS_IDEA_GROUP5_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP5_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP6_SPIRIT1
+					NIDEAS_IDEA_GROUP6_SPIRIT2
+					NIDEAS_IDEA_GROUP6_SPIRIT3
+					NIDEAS_IDEA_GROUP6_SPIRIT4
+					NIDEAS_IDEA_GROUP6_SPIRIT5
+					NIDEAS_IDEA_GROUP6_SPIRIT6
+					NIDEAS_IDEA_GROUP6_SPIRIT7
+					NIDEAS_IDEA_GROUP6_SPIRIT8
+					NIDEAS_IDEA_GROUP6_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP6_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP7_SPIRIT1
+					NIDEAS_IDEA_GROUP7_SPIRIT2
+					NIDEAS_IDEA_GROUP7_SPIRIT3
+					NIDEAS_IDEA_GROUP7_SPIRIT4
+					NIDEAS_IDEA_GROUP7_SPIRIT5
+					NIDEAS_IDEA_GROUP7_SPIRIT6
+					NIDEAS_IDEA_GROUP7_SPIRIT7
+					NIDEAS_IDEA_GROUP7_SPIRIT8
+					NIDEAS_IDEA_GROUP7_SPIRIT9
+					NIDEAS_IDEA_GROUP7_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP7_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP8_SPIRIT1
+					NIDEAS_IDEA_GROUP8_SPIRIT2
+					NIDEAS_IDEA_GROUP8_SPIRIT3
+					NIDEAS_IDEA_GROUP8_SPIRIT4
+					NIDEAS_IDEA_GROUP8_SPIRIT5
+					NIDEAS_IDEA_GROUP8_SPIRIT6
+					NIDEAS_IDEA_GROUP8_SPIRIT7
+					NIDEAS_IDEA_GROUP8_SPIRIT8
+					NIDEAS_IDEA_GROUP8_SPIRIT9
+					NIDEAS_IDEA_GROUP8_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP8_SPIRIT_SPEC2
+
+					NIDEAS_IDEA_GROUP9_SPIRIT1
+					NIDEAS_IDEA_GROUP9_SPIRIT2
+					NIDEAS_IDEA_GROUP9_SPIRIT3
+					NIDEAS_IDEA_GROUP9_SPIRIT4
+					NIDEAS_IDEA_GROUP9_SPIRIT5
+					NIDEAS_IDEA_GROUP9_SPIRIT6
+					NIDEAS_IDEA_GROUP9_SPIRIT7
+					NIDEAS_IDEA_GROUP9_SPIRIT8
+					NIDEAS_IDEA_GROUP9_SPIRIT9
+					NIDEAS_IDEA_GROUP9_SPIRIT_SPEC1
+					NIDEAS_IDEA_GROUP9_SPIRIT_SPEC2
+				}
+
+				country_event = { id = nideas.1   days = 1 }
+			}
+		}
+	}
+}
