@@ -7622,9 +7622,11 @@ focus_tree = {
 				}
 
 				start_civil_war = {
-					ideology = democratic	#r56, with vanillas leading ideology this flipped the civil war democratic
+					ideology = neutrality
 					ruling_party = fascism
 					size = FIN_fascist_cw_size_of_breakaway_country
+					keep_all_characters = yes #Keep all characters on target country side - will ignore all following keep_ parameters - default value = no
+
 					#capital = <state_id> # Optional. Capital of Revolt country
 					#states = {<state_id>} # States that go to the revolter. Use "all" to include all states.
 					#states_filter = { <triggers> } # Optional. States that go to the revolter. Filtering trigger on the states scripted to go to the revolter.
@@ -7765,6 +7767,8 @@ focus_tree = {
 			}
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			GER = { country_event = { id = AAT_finland_diplomacy.26 hours = 6 random_hours = 2 } }
 			custom_effect_tooltip = if_they_accept_tt
@@ -7829,10 +7833,6 @@ focus_tree = {
 		}
 
 		bypass = {
-			OR = {
-				is_in_faction_with = GER
-				is_in_faction_with = ITA
-			}
 			is_subject = no
 			has_government = fascism
 			is_in_faction = yes #More generic instead of checking for GER or ITA since there can be scenarios in which FIN goes with someone else like JAP, fascist ENG, etc.
@@ -7861,6 +7861,8 @@ focus_tree = {
 				}
 			}
 		}
+
+		search_filters = {}
 
 		completion_reward = {
 			if = {
@@ -8363,6 +8365,8 @@ focus_tree = {
 			is_faction_leader = yes
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			create_faction = FIN_finnish_supremacy_league
 			custom_effect_tooltip = FIN_finnish_supremacy_in_the_north_invite_to_faction_tt
@@ -8657,13 +8661,13 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = FIN_advanced_jaeger_training_program
-				bonus = 0.75
+				bonus = 0.5
 				uses = 1
 				category = cat_special_forces_generic
 			}
 			add_doctrine_cost_reduction = {
 				name = FIN_advanced_jaeger_training_program
-				cost_reduction = 0.75
+				cost_reduction = 0.5
 				uses = 3
 				category = special_forces_doctrine
 			}
@@ -9798,9 +9802,9 @@ focus_tree = {
 			#TURKU
 			if = {
 				limit = {
-					controls_state = 1036
+					controls_state = 926
 				}
-				1036 = {
+				926 = {
 					create_unit = {
 						division = "division_template = \"Suojeluskunta\" start_experience_factor = 0.7 start_equipment_factor = 1.0"
 						owner = ROOT
@@ -9826,9 +9830,9 @@ focus_tree = {
 			#MIKKELI
 			if = {
 				limit = {
-					controls_state = 1040
+					controls_state = 930
 				}
-				1040 = {
+				930 = {
 					create_unit = {
 						division = "division_template = \"Suojeluskunta\" start_experience_factor = 0.7 start_equipment_factor = 1.0"
 						owner = ROOT
@@ -9854,9 +9858,9 @@ focus_tree = {
 			#OULU
 			if = {
 				limit = {
-					controls_state = 1039
+					controls_state = 929
 				}
-				1039 = {
+				929 = {
 					create_unit = {
 						division = "division_template = \"Suojeluskunta\" start_experience_factor = 0.7 start_equipment_factor = 1.0"
 						owner = ROOT
@@ -10025,9 +10029,6 @@ focus_tree = {
 			show_ideas_tooltip = FIN_ilmari_kianto
 		}
 	}
-
-
-
 
 
 
@@ -12076,13 +12077,17 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_HISTORICAL }
 
 		completion_reward = {
-			army_experience = 25
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_1
-				amount = 3000
+			custom_effect_tooltip = FIN_long_range_patrols_battalion_tt
+
+			hidden_effect = {
+				set_technology = {
+					long_range_patrol_support_tech = 1
+					popup = no
+				}
 			}
 		}
 	}
+
 	
 	focus = {
 		id = FIN_finnish_radio_intelligence
