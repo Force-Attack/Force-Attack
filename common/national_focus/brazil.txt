@@ -32,6 +32,350 @@ focus_tree = {
 		ai_will_do = {
 			factor = 10
 		}
+		available = {
+			is_in_faction_with = USA
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_equipment_subsidy = {
+					cic = 1000
+					equipment_type = infantry_equipment
+					seller_tags = { USA } 
+				}
+				add_equipment_subsidy = {
+					cic = 1000
+					equipment_type = artillery_equipment
+					seller_tags = { USA } 
+				}
+			}
+			add_equipment_to_stockpile = { 
+				type = infantry_equipment
+				amount = 4000
+				producer = USA
+			}
+		}
+	}
+
+
+	focus = {
+		id = BRA_no_fascism_in_south_america
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { 
+			focus = BRA_cooperation_in_the_americas 
+			#focus = BRA_the_international_crisis
+		}
+		x = -4
+		y = 1
+		relative_position_id = BRA_cooperation_in_the_americas
+		cost = 10
+		ai_will_do = {
+			factor = 0
+		}
+		available = {
+			is_subject = no
+			NOT = {
+				USA = {
+					has_government = fascism
+				}
+			}
+			any_country = {
+				capital_scope = {
+					is_on_continent = south_america
+				}
+				has_government = fascism
+				NOT = {
+					OR = {
+						original_tag = ELS
+						original_tag = MEX
+						original_tag = DOM
+						original_tag = PAN
+					}
+				}
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			hidden_effect = {
+				every_other_country = {
+					limit = {
+						capital_scope = {
+							is_on_continent = south_america
+						}
+						has_government = fascism
+						NOT = {
+							OR = {
+								original_tag = ELS
+								original_tag = MEX
+								original_tag = DOM
+								original_tag = PAN
+							}
+						}
+					}
+
+						create_wargoal = {
+							type = puppet_wargoal_focus
+							target = PREV
+							expire = 0
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = BRA_no_fascism_in_south_america_tt
+		} 
+	}
+
+	focus = {
+		id = BRA_senta_a_pua
+		icon = GFX_focus_BRA_senta_a_pua
+		prerequisite = { 
+			focus = BRA_natal_naval_base 
+			#focus = BRA_the_international_crisis
+		}
+		x = 0
+		y = 1
+		relative_position_id = BRA_natal_naval_base
+		cost = 5
+		available = {
+			is_in_faction_with = USA
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_equipment_to_stockpile = { 
+					type = small_plane_airframe_1
+					amount = 200
+					producer = USA
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = { 
+					type = fighter_equipment_1
+					amount = 200
+					producer = USA
+				}
+			}
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_equipment_subsidy = {
+					cic = 500
+					equipment_type = small_plane_airframe
+					seller_tags = { USA } 
+				}
+				add_equipment_subsidy = {
+					cic = 500
+					equipment_type = large_plane_airframe
+					seller_tags = { USA } 
+				}
+				add_equipment_subsidy = {
+					cic = 500
+					equipment_type = medium_plane_airframe
+					seller_tags = { USA } 
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = BRA_no_communism_in_south_america
+		icon = GFX_goal_generic_war_with_comintern
+		prerequisite = { 
+			focus = BRA_cooperation_in_the_americas 
+			#focus = BRA_the_international_crisis
+		}
+		x = 4
+		y = 1
+		relative_position_id = BRA_cooperation_in_the_americas
+		cost = 10
+		ai_will_do = {
+			factor = 0
+		}
+		available = {
+			is_subject = no
+			NOT = {
+				USA = {
+					has_government = communism
+				}
+			}
+			any_country = {
+				capital_scope = {
+					is_on_continent = south_america
+				}
+				has_government = communism
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			custom_effect_tooltip = BRA_no_communism_in_south_america_tt
+			every_country = {
+				limit = {
+					capital_scope = {
+						is_on_continent = south_america
+					}
+					has_government = communism
+				}
+				BRA = {
+					create_wargoal = {
+						type = puppet_wargoal_focus
+						target = PREV
+						expire = 0
+					} 
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = BRA_us_brazil_technology_exchange
+		icon = GFX_goal_tfv_generic_tech_sharing
+		prerequisite = { 
+			focus = BRA_potenji_river_conference 
+			#focus = BRA_the_international_crisis
+		}
+		x = 0
+		y = 1
+		relative_position_id = BRA_potenji_river_conference
+		mutually_exclusive = { focus = BRA_south_american_research_cooperation }
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			is_in_faction_with = USA
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			USA = {
+				country_event = {
+					id = JUNO_brazil_events.120
+					hours = 1
+				}
+			}
+			custom_effect_tooltip = BRA_us_brazil_technology_exchange_tt
+			effect_tooltip = {
+				add_to_tech_sharing_group = BRA_USA_tech_sharing_group
+			}
+		} 
+	}
+
+
+
+
+	##############################################
+
+	##### Domination of the Americas Branch #####
+
+	focus = {
+		id = BRA_domination_of_the_americas
+		icon = GFX_focus_por_recover_latin_america
+		mutually_exclusive = { focus = BRA_cooperation_in_the_americas }
+		prerequisite = { 
+			focus = BRA_secure_our_borders 
+			focus = BRA_ethical_internationalism
+		}
+		x = 5
+		y = 1
+		relative_position_id = BRA_secure_our_borders
+		cost = 10
+		ai_will_do = {
+			factor = 9
+			modifier = {
+				factor = 10
+				OR = {
+					has_government = fascism
+					has_completed_focus = BRA_empire_of_brazil
+				}
+			}
+		}
+		available = {
+			OR = {
+				has_government = fascism
+				has_government = neutrality
+			}
+			has_army_manpower = { size > 199999 }
+		}
+
+		search_filters = { }
+
+		completion_reward = {
+			hidden_effect = {
+				every_other_country = {
+					limit = {
+						any_controlled_state = { 
+							OR = {
+								is_on_continent = north_america
+								is_on_continent = south_america
+							}
+						}
+					}
+					news_event = {
+						id = JUNO_brazil_news.1
+						hours = 1
+					}
+				}
+			}
+			add_timed_idea = {
+				idea = BRA_defense_of_the_fatherland_idea
+				days = 720
+			}
+		}
+	}
+
+	focus = {
+		id = BRA_berlin_accords
+		icon = GFX_focus_chi_mission_to_germany
+		prerequisite = { 
+			focus = BRA_domination_of_the_americas 
+		}
+		bypass = {
+			is_in_faction_with = GER
+		}
+		#mutually_exclusive = { focus = BRA_rome_accords }
+		x = -4
+		y = 1
+		relative_position_id = BRA_domination_of_the_americas
+		cost = 5
+		ai_will_do = {
+			factor = 20
+			modifier = {
+				factor = 0
+				has_completed_focus = BRA_rome_accords
+				GER = {
+					has_war_with = ITA
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			is_in_faction = no
+			GER = {
+				OR = {
+					has_government = fascism
+					has_government = neutrality
+				}
+			}
+		}
+
+		search_filters = { }
+
 		completion_reward = {
 			add_political_power = 50
 			country_event = { days = 1 id = bra.10 }
