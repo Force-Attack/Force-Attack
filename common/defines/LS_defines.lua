@@ -13,7 +13,7 @@ NDefines.NDiplomacy.VOLUNTEERS_TRANSFER_SPEED = 5
 ----------------------------------
 NDefines.NCountry.EVENT_PROCESS_OFFSET = 30				-- Events are checked every X day per country or state (1 is ideal, but CPU heavy)
 ----------------------------------
-NDefines.NTrade.BASE_TRADE_FACTOR = 50
+NDefines.NTrade.BASE_TRADE_FACTOR = 1000
 NDefines.NTrade.PARTY_SUPPORT_TRADE_FACTOR = 20
 NDefines.NDiplomacy.EMBARGO_THREAT_THRESHOLD = -10
 NDefines.NDiplomacy.EMBARGO_COST = 25
