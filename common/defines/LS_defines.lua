@@ -51,12 +51,6 @@ NDefines.NMilitary.TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.DEPLOY_TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.ARMY_EXP_BASE_LEVEL = 5
 NDefines.NMilitary.UNIT_EXP_LEVELS = {0.02, 0.04, 0.06,	0.08, 0.1, 0.14, 0.18, 0.22, 0.26, 0.3, 0.39, 0.48, 0.57, 0.66, 0.75, 0.78, 0.81, 0.84, 0.87, 0.9}
-NDefines.NMilitary.UNIT_EXPERIENCE_PER_TRAINING_DAY = 0.0015
-NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.03
-NDefines.NMilitary.NUKE_MIN_DAMAGE_PERCENT = 0.9
-NDefines.NMilitary.NUKE_MAX_DAMAGE_PERCENT = 1.2
-NDefines.NMilitary.RETREAT_SPEED_FACTOR = 0.15
-NDefines.NMilitary.DIG_IN_FACTOR = 0.02
 NDefines.Enemy_AIR_SUPERIORITY_IMPACT = -0.45
 ----------------------------------
 NDefines.NAir.AIR_WING_FLIGHT_SPEED_MULT = 0.2
@@ -78,9 +72,6 @@ NDefines.NMilitary.NUKE_DELAY_HOURS = 12;
 NDefines.NCountry.NUCLEAR_BOMB_DROP_UNITY_EFFECT_MAX_INFRA = 0.35;
 NDefines.NCountry.NUCLEAR_BOMB_DROP_UNITY_EFFECT_MAX_VP = 1;
 
-
--- R56 DEFINES START HERE
-NDefines.NMilitary.COMBAT_OVER_WIDTH_PENALTY = -2
 	
 NDefines.NProduction.LICENSE_EQUIPMENT_SPEED_NOT_FACTION = 0
 NDefines.NProduction.LICENSE_EQUIPMENT_TECH_SPEED_PER_YEAR = 0
@@ -128,7 +119,6 @@ NDefines.NPolitics.ARMY_LEADER_MAX_COST = 75				-- max cost BEFORE modifiers
 NDefines.NPolitics.NAVY_LEADER_MAX_COST = 75
 NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2 -- base pp gain per (week)?		
 
-NDefines.NMilitary.SUPPLY_GRACE = 84 -- 72 3 days as they say and remain hungry for another 12
 
 NDefines.NMilitary.BASE_DIVISION_BRIGADE_GROUP_COST = 0
 NDefines.NMilitary.BASE_DIVISION_BRIGADE_CHANGE_COST = 0
@@ -139,91 +129,11 @@ NDefines.NMilitary.UNIT_EXP_LEVELS = {0.02, 0.04, 0.06, 0.08, 0.1, 0.14, 0.18, 0
 NDefines.NMilitary.ARMY_EXP_BASE_LEVEL = 5
 NDefines.NMilitary.TRAINING_MAX_LEVEL = 10
 
-NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 2000 -- Max army experience a country can store
-NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 2000 -- Max navy experience a country can store
-NDefines.NMilitary.MAX_AIR_EXPERIENCE = 2000  -- Max air experience a country can store
-
-NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.03
 NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 50
 NDefines.NMilitary.FIELD_MARSHAL_ARMIES_CAP = 10
-NDefines.NMilitary.RECON_SKILL_IMPACT = 6
 NDefines.NMilitary.BASE_DIVISION_BRIGADE_GROUP_COST = 0 -- Base cost to unlock a regiment slot
 NDefines.NMilitary.BASE_DIVISION_BRIGADE_CHANGE_COST = 0 -- Base cost to change a regiment column.
 NDefines.NMilitary.BASE_DIVISION_SUPPORT_SLOT_COST = 0
-
-NDefines.NMilitary.BASE_LEADER_TRAIT_GAIN_XP = 0.4
-NDefines.NMilitary.UNIT_EXPERIENCE_PER_COMBAT_HOUR = 0.000175
-NDefines.NMilitary.FIELD_EXPERIENCE_MAX_PER_DAY = 12
-NDefines.NMilitary.ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.1
-NDefines.NMilitary.PLAYER_ORDER_PLANNING_DECAY = 0.03
-NDefines.NMilitary.DISBAND_MANPOWER_LOSS = 0.0
-NDefines.NMilitary.PLAN_SPREAD_ATTACK_WEIGHT = 4.1 --AI should concentrate forces more a bit experimental. Increased from 4.0 to combat issues with AI death stacks - SpicyAlfredo
-
-NDefines.NMilitary.FIELD_MARSHAL_XP_RATIO = 0.6
-NDefines.NMilitary.COMMANDER_LEVEL_UP_STAT_WEIGHTS = {5, 5, 3, 4}
-NDefines.NMilitary.NEW_COMMANDER_RANDOM_PERSONALITY_TRAIT_CHANCES = { -- Chances to gain a personality trait for new generals
-    0.80, --50% for first trait
-    0.40, --15% for second trait after that
-    0.05, 
-    0.01,
-}
-
-NDefines.NMilitary.PLANNING_DECAY = 0.01
-NDefines.NMilitary.PLANNING_GAIN = 0.02
-
--- PLAN_SPREAD_ATTACK_WEIGHT = 6.0
---This is a Trace to make sure mod is taken into account
-
-NDefines.NMilitary.PLAN_PROVINCE_BASE_IMPORTANCE = 2.0
-NDefines.NMilitary.PLAN_PROVINCE_LOW_VP_IMPORTANCE_AREA = 4.0
-NDefines.NMilitary.PLAN_PROVINCE_MEDIUM_VP_IMPORTANCE_AREA = 6.0 --Vanilla 5
-NDefines.NMilitary.PLAN_PROVINCE_HIGH_VP_IMPORTANCE_AREA = 10.0 -- vanilla 10
-NDefines.NMilitary.PLAN_PROVINCE_LOW_VP_IMPORTANCE_FRONT = 4.0
-NDefines.NMilitary.PLAN_PROVINCE_MEDIUM_VP_IMPORTANCE_FRONT = 6.0
-NDefines.NMilitary.PLAN_PROVINCE_HIGH_VP_IMPORTANCE_FRONT = 8.0
-NDefines.NMilitary.PLAN_AREA_DEFENSE_ENEMY_CONTROLLER_SCORE = 30.0
-NDefines.NMilitary.PLAN_MAX_PROGRESS_TO_JOIN = 0.60
-
--- Addition with 1.3.2
-NDefines.NMilitary.PLAN_PORVINCE_PORT_BASE_IMPORTANCE = 18.0		-- increased from 12.0 ; Added importance for area defense province with a port
-NDefines.NMilitary.PLAN_PORVINCE_PORT_LEVEL_FACTOR = 0.5			-- Bonus factor for port level
-NDefines.NMilitary.PLAN_PORVINCE_AIRFIELD_BASE_IMPORTANCE = 3.5 -- Added importance for area defense province with air field
-NDefines.NMilitary.PLAN_PORVINCE_AIRFIELD_POPULATED_FACTOR = 1.5	-- Bonus factor when an airfield has planes on it
-NDefines.NMilitary.PLAN_PORVINCE_AIRFIELD_LEVEL_FACTOR = 0.25		-- Bonus factor for airfield level
-NDefines.NMilitary.PLAN_PORVINCE_RESISTANCE_BASE_IMPORTANCE = 10.0 -- Used when calculating the calue of defense area provinces for the battle plan system (factored by resistance level)
-    
-NDefines.NMilitary.PLAN_AREA_DEFENSE_ENEMY_CONTROLLER_SCORE = 30.0	-- Score applied to provinces in the defense area order controlled by enemies
-NDefines.NMilitary.PLAN_AREA_DEFENSE_ENEMY_UNIT_FACTOR = -1.5		-- Factor applied to province score in area defense order per enemy unit in that province
-NDefines.NMilitary.PLAN_AREA_DEFENSE_FORT_IMPORTANCE = 0.30			-- Used when calculating the calue of defense area provinces for the battle plan system works as multipliers on the rest
-NDefines.NMilitary.PLAN_AREA_DEFENSE_COASTAL_FORT_IMPORTANCE = 5.0	-- Used when calculating the calue of defense area provinces for the battle plan system
-NDefines.NMilitary.PLAN_AREA_DEFENSE_COAST_NO_FORT_IMPORTANCE = 2.0	-- Used when calculating the calue of defense area provinces for the battle plan system
-
-NDefines.NMilitary.PLAN_STICKINESS_FACTOR = 95.0					-- downed from 100; Factor used in unitcontroller when prioritizing units for locations
-NDefines.NMilitary.PLAN_STICKINESS_IGNORE_STACK_LIMIT = 1			-- 1 == yes 0 == no. Alloes player to override prio to stack units where they want to.
-
-NDefines.NMilitary.PLAN_EXECUTE_CAREFUL_LIMIT = 6.0				-- reduced from 25 ; When looking for an attach target this score limit is required in the battle plan to consider province for attack
-NDefines.NMilitary.PLAN_EXECUTE_BALANCED_LIMIT = 0				-- When looking for an attach target this score limit is required in the battle plan to consider province for attack
-NDefines.NMilitary.PLAN_EXECUTE_RUSH = -200						-- When looking for an attach target this score limit is required in the battle plan to consider province for attack
-NDefines.NMilitary.PLAN_EXECUTE_CAREFUL_MAX_FORT = 4				-- reduced from 5 ; If execution mode is set to careful units will not attack provinces with fort levels greater than or equal to this
-
-NDefines.NMilitary.PLAN_MAX_PROGRESS_TO_JOIN = 0.54				-- increased from 0.50 ; If Lower progress than this probably needs support
-
-NDefines.NMilitary.PLAN_BLITZ_OPTIMISM = 0.3						-- increased from 0.2 ; Additional combat balance value in favor of blitzing side when considering targets (not a combat bonus just offsets planning)
-
-NDefines.NMilitary.BASE_CAPTURE_EQUIPMENT_RATIO = 0.02				-- after a successful land combat ratio of the equipments that are being captured/salvaged from enemy's lost equipment
-
-
-NDefines.NMilitary.NEW_COMMANDER_RANDOM_BASIC_TRAIT_CHANCES = {  -- chances to gain a basic trait for new generals
-}
-
-NDefines.NMilitary.NEW_COMMANDER_RANDOM_STATUS_TRAIT_CHANCES = {  -- chances to gain a status trait for new generals
-}
-
-NDefines.NMilitary.NEW_COMMANDER_RANDOM_SKILL_CHANCES = {  -- chances to give a random stat skill for new generals
-}
-
-NDefines.NMilitary.NEW_NAVY_LEADER_RANDOM_SKILL_CHANCES = { -- chances to give a random stat skill point for a new admiral
-}
 
 NDefines.NAir.SUPPLY_NEED_FACTOR = 0.22 -- 0.28
 
