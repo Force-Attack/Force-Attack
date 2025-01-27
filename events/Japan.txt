@@ -820,35 +820,62 @@ country_event = {
 			}
 		}
 		random_owned_controlled_state = {
-			add_extra_state_shared_building_slots = 3
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+				}
+			}
+			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
 				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
 				level = 2
 				instant_build = yes
 			}
 		}
-			random_owned_controlled_state = {
+		random_owned_controlled_state = {
+			prioritize = { 532 }
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+				}
+			}
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
-				type = industrial_complex
+				type = arms_factory
 				level = 2
 				instant_build = yes
 			}
 		}
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-			}
-				random_owned_controlled_state = {
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
 		name = japan.19.a
 
 	}
@@ -865,7 +892,7 @@ country_event = {
 	
 	option = {
 		name = japan.20.a
-		add_stability = 0.05
+		add_stability = 0.10
 	}
 }
 ###MANCHU EVENT COMMIE AFTERWARDS
@@ -895,15 +922,16 @@ country_event = {
 			name = JAP_neutrality_party_kodoha
 			long_name = JAP_neutrality_party_kodoha_long
 		}
-		create_country_leader = {
-			name = "Kenkichi Ueda"
-			desc = ""
-			picture = "gfx/leaders/JAP/Portrait_Japan_Kenkichi_Ueda.dds"
-			expire = "1989.1.1"
-			ideology = rexism
-			traits = {
-				kwantung_leader
-				kwantung_exile
+		add_country_leader_role = {
+			character = MAN_kenkichi_ueda_tfv
+			promote_leader = yes
+			country_leader = {
+				ideology = rexism
+				expire = "1965.1.1.1"
+				traits = { 
+					kwantung_leader
+					kwantung_exile
+				}
 			}
 		}
 	}
@@ -923,16 +951,17 @@ country_event = {
 			name = JAP_neutrality_party_kodoha
 			long_name = JAP_neutrality_party_kodoha_long
 		}
-		create_country_leader = {
-			name = "Seishiro Itagaki"
-			desc = ""
-			picture = GFX_portrait_MAN_Itagaki
-			expire = "1989.1.1"
-			ideology = rexism
-			traits = {
-				kwantung_intelligence
-				kwantung_staff
-				kwantung_exile
+		add_country_leader_role = {
+			character = MAN_itagaki_seishiro_tfv
+			promote_leader = yes
+			country_leader = {
+				ideology = rexism
+				expire = "1965.1.1.1"
+				traits = { 
+					kwantung_intelligence
+					kwantung_staff
+					kwantung_exile
+				}
 			}
 		}
 	}
@@ -1009,6 +1038,156 @@ country_event = { ####JAPAN GETS THIS EVENT FROM MANCHU
 		MAN = {
 			puppet = JAP
 		}
+	}
+}
+####HIROHITO TAKES OVER
+country_event = {
+	id = japan.23
+	title = "Hirohito Assumes Control of the Nation"
+	desc = "With the recent death of the army leader Araki, the Army Staff has given complete control of the state to Hirohito; Banzai!"
+	picture = GFX_report_event_showa_emperor_poster
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "Tennōheika Banzai!"
+		add_country_leader_role = {
+			character = JAP_emperor_hirohito
+			promote_leader = yes
+			country_leader = {
+				ideology = absolute_monarchism
+				traits = {
+					warrior_code
+					emperor_showa
+					r56_trait_opposed_to_communism
+				}
+				id = 700 #Hirohito
+			}
+		}
+		remove_ideas = JAP_hirohito
+	}
+}
+####elections japan
+country_event = {
+	id = japan.24
+	title = "Host Elections"
+	desc = "Now with the military out of politics, we can have unenpeded elections"
+	picture = GFX_report_event_jap_election
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "Rikken Minseito"
+		set_country_flag = JAP_rikken_mineseito_won
+		set_party_name = {
+			ideology = democratic
+			long_name = JAP_democratic_minseito_party
+			name = JAP_democratic_minseito_party
+		}
+		create_country_leader = {
+			name = "Machida Chuji"
+			desc = ""
+			picture = "gfx/leaders/JAP/Portrait_Japan_Machida_Chuji.dds"
+			expire = "1965.1.1"
+			ideology = conservatism
+			traits = {
+				mediator
+			}
+		}
+	}
+	option = {
+		name = "Rikken Seiyukai"
+		set_country_flag = JAP_rikken_seiyukai_won
+		set_party_name = {
+			ideology = democratic
+			long_name = JAP_democratic_seiyukai_party
+			name = JAP_democratic_seiyukai_party
+		}
+		create_country_leader = {
+			name = "Ichirō Hatoyama"
+			desc = ""
+			picture = "gfx/leaders/JAP/Portrait_Japan_Ichiro_Hatoyama.dds"
+			expire = "1965.1.1"
+			ideology = conservatism
+			traits = {
+				right_industrialist
+			}
+		}
+	}
+}
+####EVENT TO FACTION LEADER
+country_event = {
+	id = japan.25
+	title = japan.25.t
+	desc = japan.25.d
+	picture = GFX_report_event_generic_factory
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "Allow the Japanese To See Our Production Methods for Tanks"
+		set_country_flag = JAP_importer_wants_tanks_flag
+		JAP = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = trade_deal
+			}
+			add_ideas = JAP_sent_us_their_technicians_tanks
+		}
+		add_timed_idea = {
+			idea = JAP_we_sent_our_technicians_tanks
+			days = 180
+		}
+		ai_chance = { factor = 25 }
+	}
+	option = {
+		name = "Allow the Japanese To See Our Production Methods for Small Arms"
+		set_country_flag = JAP_importer_wants_guns_flag
+		JAP = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = trade_deal
+			}
+			add_ideas = JAP_sent_us_their_technicians_infantry
+		}
+		add_timed_idea = {
+			idea = JAP_we_sent_our_technicians_infantry
+			days = 180
+		}
+		ai_chance = { factor = 25 }
+	}
+	option = {
+		name = "Allow the Japanese To See Our Production Methods for Planes"
+		set_country_flag = JAP_importer_wants_planes_flag
+		JAP = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = trade_deal
+			}
+			add_ideas = JAP_sent_us_their_technicians_planes
+		}
+		add_timed_idea = {
+			idea = JAP_we_sent_our_technicians_planes
+			days = 180
+		}
+		ai_chance = { factor = 25 }
+	}
+	option = {
+		name = "No Thanks, you are on you're own."
+		JAP = {
+			mark_focus_tree_layout_dirty = yes
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = medium_decrease
+			}
+			swap_ideas = {
+				remove_idea = JAP_influenced_economy
+				add_idea = JAP_focus_on_our_own_economy
+			}
+			set_country_flag = JAP_inwards_focused_flag
+		}
+		ai_chance = { factor = 25 }
 	}
 }
 
