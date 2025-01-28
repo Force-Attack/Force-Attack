@@ -9,11 +9,7 @@ NDefines.NDiplomacy.BASE_SEND_ATTACHE_CP_COST = 50.0				-- Command Power sent at
 NDefines.NDiplomacy.MIN_WARGOAL_JUSTIFY_COST = 7.0					-- It always takes atleast 10 days to justify a wargoal
 NDefines.NDiplomacy.PEACE_SCORE_PER_PASS = 100.0
 NDefines.NDiplomacy.IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0
-NDefines.NDiplomacy.VOLUNTEERS_TRANSFER_SPEED = 5
-NDefines.NDiplomacy.VOLUNTEERS_PER_TARGET_PROVINCE = 0
-NDefines.NDiplomacy.VOLUNTEERS_PER_COUNTRY_ARMY = 0
-NDefines.NDiplomacy.VOLUNTEERS_RETURN_EQUIPMENT = 1
-NDefines.NDiplomacy.VOLUNTEERS_DIVISIONS_REQUIRED = 0
+NDefines.NDiplomacy.VOLUNTEERS_TRANSFER_SPEED = 5 
 ----------------------------------
 NDefines.NCountry.EVENT_PROCESS_OFFSET = 30				-- Events are checked every X day per country or state (1 is ideal, but CPU heavy)
 ----------------------------------
