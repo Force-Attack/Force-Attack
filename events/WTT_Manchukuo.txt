@@ -10,19 +10,21 @@ country_event = {
 	
 	option = {
 		name = "Tojo and Itagaki support our appeal, the KMT has no future."
+		ai_chance = {
+			factor = 100
+		}
 		JAP = {
 			set_autonomy = {
 					target = MAN
 					autonomy_state = autonomy_wtt_imperial_associate
-					end_wars = no
 				}
 			}
 		custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = MAN_itagaki_seishiro_hc
+			show_ideas_tooltip = itagaki_seishiro_tfv
 			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = MAN_kenkichi_ueda
+			show_ideas_tooltip = kenkichi_ueda_tfv
 			custom_effect_tooltip = available_theorist
-			show_ideas_tooltip = MAN_toshizo_nishio
+			show_ideas_tooltip = toshizo_nishio_tfv
 	}
 }
 country_event = {
@@ -36,7 +38,7 @@ country_event = {
 	option = {
 		name = "Claim it all, the liberation of Asia is our destiny!"
 		ai_chance = {
-			base = 10
+			factor = 10
 		}
 		set_country_flag = asian_liberation
 			add_stability = -0.1
@@ -58,7 +60,7 @@ country_event = {
 	option = {
 		name = "We will not antagonize a friendly nation of our Overlord."
 		ai_chance = {
-			base = 90
+			factor = 90
 		}
 		add_political_power = 100
 		add_stability = 0.05
@@ -75,9 +77,10 @@ country_event = {
 	option = {
 		name = "The Kwantung Army is right, the General Affairs State Council will officially take over."
 		ai_chance = {
-			base = 45
+			factor = 45
 		}
-			promote_character =	MAN_doihara_kenji
+			promote_character =
+					MAN_doihara_kenji_tfv
 			set_politics = {
 				ruling_party = fascism
 			}
@@ -89,9 +92,10 @@ country_event = {
 	option = {
 		name = "There must be a compromise, Kishi will be Chief Executive."
 		ai_chance = {
-			base = 10 
+			factor = 10 
 		}
-			promote_character =	MAN_kishi_nobosuke
+			promote_character =
+					MAN_kishi_nobosuke_tfv
 			set_politics = {
 				ruling_party = fascism
 			}
@@ -103,9 +107,10 @@ country_event = {
 	option = {
 		name = "Aikawa and Naori are right, civillian rule of the Concordia Association will provide legitimacy."
 		ai_chance = {
-			base = 45
+			factor = 45
 		}
-			promote_character =	MAN_ruan_zhenduo
+			promote_character =
+					MAN_ruan_zhenduo
 			set_politics = {
 				ruling_party = fascism
 			}
@@ -126,10 +131,11 @@ country_event = {
 	option = {
 		name = "The legitimacy of the Qing is important, Pujie will succeed his brother."
 		ai_chance = {
-			base = 70
+			factor = 70
 		}
 			set_country_flag = pujie_wins
-			promote_character =	MAN_aisin_gioro_pujie
+			promote_character =
+				MAN_aisin_gioro_pujie_tfv
 			add_stability = 0.05
 			add_political_power = 120
 			
@@ -137,10 +143,11 @@ country_event = {
 	option = {
 		name = "A loyal and capabable general is needed, Qi Xieyuan will assume the Presidency."
 		ai_chance = {
-			base = 30
+			factor = 30
 		}
 			set_country_flag = xieyuan_wins
-			promote_character =	MAN_qi_xieyuan
+			promote_character =
+				MAN_qi_xieyuan_tfv
 			add_stability = 0.05
 			add_political_power = 120
 	}
@@ -156,7 +163,7 @@ country_event = {
 	option = {
 		name = "Their loyalty is assured. Let them have it."
 		ai_chance = {
-			base = 95
+			factor = 95
 		}
 			if = {
 				limit = {
@@ -186,9 +193,100 @@ country_event = {
 	option = {
 		name = "We cannot trust them, we shall remain in control."
 		ai_chance = {
-			base = 5
+			factor = 5
 		}
 	}
+}
+country_event = {
+	id = manchukuo_events.6
+	title = "The [MAN.GetName] exerts pressure"
+	desc = manchukuo_events.6.d
+	picture = GFX_report_event_journalists_speech
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "We can't win against them, we will agree to their compromise"
+		ai_chance = {
+			factor = 80
+		}
+		MAN = {
+			OVERlORD = {
+				puppet = TIB
+			}
+		}
+		TIB = {
+			transfer_state = 604
+		}
+	}		
+	option = {
+		name = "Our independence must be preserved, we will fight!"
+		ai_chance = {
+			factor = 20
+		}
+	}
+}
+
+country_event = {
+	id = manchukuo_events.7
+	title = "[TIB.GetName] accepts!"
+	desc = manchukuo_events.7.d
+	picture = GFX_report_event_journalists_speech
+
+	trigger = {
+		tag = MAN
+		TIB = {
+			is_subject_of = JAP
+		}
+		has_completed_focus = MAN_pressure_tibet
+	}
+
+	mean_time_to_happen = {
+    days = 3
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = "Welcome to the Sphere!"
+		ai_chance = {
+			factor = 100
+		}
+		
+	}		
+}
+country_event = {
+	id = manchukuo_events.8
+	title = "[TIB.GetName] refuses!"
+	desc = manchukuo_events.8.d
+	picture = GFX_report_event_journalists_speech
+
+	trigger = {
+		tag = MAN
+		NOT = {
+			TIB = {
+				is_subject_of = JAP
+			}
+		}
+		has_completed_focus = MAN_pressure_tibet
+	}
+
+	mean_time_to_happen = {
+    days = 3
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = "Then we shall seize Lhasa!"
+		ai_chance = {
+			factor = 100
+		}
+		declare_war_on = {
+					target = TIB
+					type = puppet_wargoal_focus
+				}
+	}		
 }
 
 	
