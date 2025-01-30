@@ -13,7 +13,7 @@ NDefines.NDiplomacy.VOLUNTEERS_TRANSFER_SPEED = 5
 ----------------------------------
 NDefines.NCountry.EVENT_PROCESS_OFFSET = 30				-- Events are checked every X day per country or state (1 is ideal, but CPU heavy)
 ----------------------------------
-NDefines.NTrade.BASE_TRADE_FACTOR = 50
+NDefines.NTrade.BASE_TRADE_FACTOR = 1000
 NDefines.NTrade.PARTY_SUPPORT_TRADE_FACTOR = 20
 NDefines.NDiplomacy.EMBARGO_THREAT_THRESHOLD = -10
 NDefines.NDiplomacy.EMBARGO_COST = 25
@@ -78,8 +78,6 @@ NDefines.NMilitary.NUKE_DELAY_HOURS = 12;
 NDefines.NCountry.NUCLEAR_BOMB_DROP_UNITY_EFFECT_MAX_INFRA = 0.35;
 NDefines.NCountry.NUCLEAR_BOMB_DROP_UNITY_EFFECT_MAX_VP = 1;
 
-
--- R56 DEFINES START HERE
 NDefines.NMilitary.COMBAT_OVER_WIDTH_PENALTY = -2
 	
 NDefines.NProduction.LICENSE_EQUIPMENT_SPEED_NOT_FACTION = 0
