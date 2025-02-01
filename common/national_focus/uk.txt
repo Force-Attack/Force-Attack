@@ -1873,39 +1873,14 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		search_filters = {FOCUS_FILTER_RESEARCH}
-		completion_reward = {
-			if = {
-				limit = {
-					NOT = { has_dlc = "By Blood Alone" }
-				}
+		completion_reward = {			
 				air_experience = 25
 				add_tech_bonus = {
 					name = coastal_command_focus
 					bonus = 1.0
 					uses = 2
-					category = naval_bomber
-					category = cas_bomber
-				}
-			}
-			else_if = {
-				limit = {
-					has_dlc = "By Blood Alone"
-				}
-				air_experience = 25
-				add_tech_bonus = {
-					name = coastal_command_focus
-					bonus = 1.0
-					uses = 1
-					category = naval_bomber
-					category = cas_bomber
-				}
-				add_doctrine_cost_reduction = {
-					name = ENG_coastal_command_focus #land_doc_bonus
-					cost_reduction = 0.5
-					uses = 1
-					category = air_doctrine
-				}
-			}
+					category = plane_modules_tech
+				}		
 		}
 	}
 	focus = {
@@ -2471,6 +2446,12 @@ focus_tree = {
 		id = ENG_reinforce_the_empire
 		text = uk_empire_focus
 		mutually_exclusive = { focus = ENG_revisit_colonial_policy }
+
+		allow_branch = {
+			NOT = {
+				has_completed_focus = ENG_revisit_colonial_policy
+			}
+		}
 		available = {
 			NOT = { has_government = communism }
 			num_subjects > 0
@@ -2494,6 +2475,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			add_stability = 0.1
 			#custom_effect_tooltip = ENG_concessions_to_the_trade_unions_tt_2
 		}
@@ -2988,13 +2970,13 @@ focus_tree = {
 			
 			
 		}
-		#offset = {
-		#	x = -20
-		#	y = 0
-		#	trigger = {
-		#		has_completed_focus = ENG_revisit_colonial_policy
-		#	}
-		#}
+		offset = {
+			x = -15
+			y = 0
+			trigger = {
+				has_completed_focus = ENG_revisit_colonial_policy
+			}
+		}
 
 
 		continue_if_invalid = yes
@@ -5520,7 +5502,7 @@ focus_tree = {
 			}
 		}
 		offset = {
-			x = -3
+			x = 0
 			y = 0
 			trigger = {
 				has_game_rule = {
