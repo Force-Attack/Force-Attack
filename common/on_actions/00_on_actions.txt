@@ -3446,31 +3446,60 @@ on_actions = {
 		}
 	}
 
-	on_monthly = {
+
+	on_daily = {
 		effect = {
-			set_temp_variable = {
-				sf_divs = 0
+			set_variable = {
+				sf_battalion_marines = num_battalions_with_type@marine	
 			}
-	
-			every_country_division = {
-				limit = {
-					division_has_battalion_in_template = mountaineers
-				}
-				add_to_temp_variable = {
-					sf_divs = 1
-				}
+			set_variable = {
+				sf_battalion_mountaineers = num_battalions_with_type@mountaineers	
 			}
-	
+			set_variable = {
+				sf_battalion_shocktroop = num_battalions_with_type@shocktroop	
+			}
+			set_variable = {
+				sf_battalion_paratrooper = num_battalions_with_type@paratrooper	
+			}
+			
+			set_variable = {
+				total_special_forces_count = 0 
+			}
+			add_to_variable = {
+				total_special_forces_count = sf_battalion_marines
+			}
+			add_to_variable = {
+				total_special_forces_count = sf_battalion_mountaineers
+			}
+			add_to_variable = {
+				total_special_forces_count = sf_battalion_mountaineers
+			}
+			add_to_variable = {
+				total_special_forces_count = sf_battalion_paratrooper
+			}
+			
 			if = {
 				limit = {
-					check_variable = {
-						sf_divs > 50
+					check_variable = { 
+						total_special_forces_count > 1000
 					}
 				}
 				country_event = my_mod.1
 			}
+			if = {
+				limit = {
+					has_country_flag = special_forces_penalized_flag
+					check_variable = {
+						var = total_special_forces_count 
+						value = 1000
+						compare = less_than_or_equals
+					}
+				}
+				country_event = my_mod.2	
+			}
 		}
 	}
+
 	
 	on_monthly_GER = {
 		effect = {
