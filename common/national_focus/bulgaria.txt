@@ -64,7 +64,7 @@ focus_tree = {
 		prerequisite = { focus = BUL_acquire_modern_tools }
 		icon = GFX_goal_generic_road2
 		relative_position_id = BUL_acquire_modern_tools
-		x = -9
+		x = -11
 		y = 1
 		cost = 10
 
@@ -484,7 +484,7 @@ focus_tree = {
 		prerequisite = { focus = BUL_improve_the_road_system }
 		icon = GFX_goal_generic_construct_infrastructure
 		relative_position_id = BUL_improve_the_road_system
-		x = 2
+		x = 3
 		y = 2
 		cost = 5
 
@@ -541,28 +541,83 @@ focus_tree = {
 			}				
 		}
 	}
+	
+	focus = {
+		id = BUL_all_that_glitters
 
+		prerequisite = { focus = BUL_national_railway_lines }
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		relative_position_id = BUL_national_railway_lines
+		mutually_exclusive = { focus = BUL_light_metal_exploitation }
+		x = -1
+		y = 1
+		cost = 5
+
+		available = {
+			controls_state = 48
+		}
+		
+		search_filters = {FOCUS_FILTER_INDUSTRY}
+		completion_reward = {
+			add_stability = 0.05
+			48 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = BUL_light_metal_exploitation
+
+		prerequisite = { focus = BUL_national_railway_lines }
+		icon = GFX_goal_generic_construct_civilian
+		relative_position_id = BUL_national_railway_lines
+		mutually_exclusive = { focus = BUL_all_that_glitters }
+		x = 1
+		y = 1
+		cost = 5
+
+		available = {
+			controls_state = 48
+		}
+		
+		search_filters = {FOCUS_FILTER_INDUSTRY}
+		completion_reward = {
+			48 = {
+				add_resource = {
+					type = aluminium
+					amount = 8 #At least one factory's worth
+				}
+			}
+		}
+	}
+	
 	focus = {
 		id = BUL_steel_plant_in_pernik
 
-		prerequisite = { focus = BUL_national_railway_lines }
+		prerequisite = { focus = BUL_all_that_glitters focus = BUL_light_metal_exploitation }
 		icon = GFX_focus_generic_steel
 		relative_position_id = BUL_national_railway_lines
 		x = 0
-		y = 1
+		y = 2
 		cost = 10
 
 		available = {
-			
+			controls_state = 48
 		}
 		
-		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_STEEL}
+		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
 		completion_reward = {
 			add_tech_bonus = {
 				name = BUL_mineral_extraction_in_the_rhodopes
-				ahead_reduction = 0
+				ahead_reduction = 2
 			    bonus = 1.0
-			    uses = 2
+			    uses = 1
 			    category = industry
 			}
 			if = {
@@ -603,7 +658,7 @@ focus_tree = {
 		icon = GFX_goal_generic_chromium
 		relative_position_id = BUL_steel_plant_in_pernik
 		x = 0
-		y = 2
+		y = 1
 		cost = 5
 
 		available = {
@@ -2757,7 +2812,7 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
-			add_political_power = 70
+			add_political_power = 120
 			add_popularity = {
 				ideology = communism
 				popularity = 0.05
@@ -2923,13 +2978,16 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
-			add_political_power = 30
+			add_political_power = 50
 			add_stability = 0.05
 			add_popularity = {
 				ideology = communism
 				popularity = 0.05
 			}
-			BUL_bs_low_loyalty_increase_effect = yes
+			BUL_zveno_high_loyalty_increase_effect = yes
+			BUL_bs_high_loyalty_increase_effect = yes
+			BUL_bzns_high_loyalty_increase_effect = yes
+			BUL_nsm_low_loyalty_decrease_effect = yes
 		}
 	}
 
@@ -2941,7 +2999,7 @@ focus_tree = {
 		relative_position_id = BUL_unify_the_bourgeois_movement
 		x = 0
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 
@@ -2949,15 +3007,14 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
-			add_political_power = 50
+			add_political_power = 70
 			add_stability = 0.05
 			add_popularity = {
 				ideology = fascism
 				popularity = -0.1
 			}
-
-			BUL_bs_low_loyalty_increase_effect = yes
-			BUL_bzns_low_loyalty_increase_effect = yes
+			BUL_bs_high_loyalty_increase_effect = yes
+			BUL_bzns_high_loyalty_increase_effect = yes
 			BUL_nsm_low_loyalty_decrease_effect = yes
 		}
 	}
@@ -4139,7 +4196,7 @@ focus_tree = {
 		relative_position_id = BUL_the_peoples_republic_of_bulgaria
 		x = 0
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 
@@ -4173,10 +4230,10 @@ focus_tree = {
 		relative_position_id = BUL_purge_the_elites
 		x = 0
 		y = 2
-		cost = 10
+		cost = 5
 
 		available = {
-			communism > 0.7
+			#communism > 0.7
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = BUL_collectivization_of_the_countryside_bs_support_requirement_tt
@@ -4209,6 +4266,37 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 			random_owned_state = {
 				limit = {
 					free_building_slots = {
@@ -4731,11 +4819,11 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
-			add_political_power = 100
+			add_political_power = 120
 			add_stability = 0.05
 			add_popularity = {
 				ideology = democratic
-				popularity = 0.05
+				popularity = 0.10
 			}
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = BUL_stefan_stefanov
@@ -4807,7 +4895,7 @@ focus_tree = {
 		relative_position_id = BUL_legalize_the_agrarian_party
 		x = -1
 		y = 1
-		cost = 10
+		cost = 5
 
 		available = {
 
@@ -4856,7 +4944,7 @@ focus_tree = {
 			add_political_power = 70
 			add_popularity = {
 				ideology = democratic
-				popularity = 0.05
+				popularity = 0.10
 			}
 			remove_ideas = BUL_tsar_boris_negative_01
 			if = {
@@ -5098,11 +5186,15 @@ focus_tree = {
 
 		available = {
 			has_stability > 0.5
-			democratic > 0.7
+			#democratic > 0.7
 		}
 		
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
+			add_timed_idea = {
+				idea = JAP_investment
+				days = 120
+			}
 			random_owned_state = {
 				limit = {
 					free_building_slots = {
@@ -5126,6 +5218,89 @@ focus_tree = {
 				}
 				add_extra_state_shared_building_slots = 2
 			}
+			custom_effect_tooltip = "Will build each type of research facility in core bulgarian states"
+			hidden_effect = {
+				IF = {
+					limit = { 
+						48 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+
+					48 = {
+						add_building_construction = {
+							type = air_facility
+							level = 1
+							instant_build = yes
+							province = 949 # South London
+						}
+					}
+				}
+				IF = {
+					limit = { 
+						801 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+
+					801 = {
+						add_building_construction = {
+							type = nuclear_facility
+							level = 1
+							instant_build = yes
+							province = 3952 # South London
+						}
+					}
+				}
+				IF = {
+					limit = { 
+						211 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+
+					211 = {
+						add_building_construction = {
+							type = naval_facility
+							level = 1
+							instant_build = yes
+							province = 9902 # South London
+						}
+					}
+				}
+				IF = {
+					limit = { 
+						212 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+
+					212 = {
+						add_building_construction = {
+							type = land_facility
+							level = 1
+							instant_build = yes
+							province = 6982 # South London
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -5141,7 +5316,7 @@ focus_tree = {
 		mutually_exclusive = { focus = BUL_modernize_the_industry }
 
 		available = {
-			democratic > 0.8
+			#democratic > 0.8
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = BUL_agrarian_cooperative_movement_bzns_support_requirement_tt
@@ -5154,6 +5329,36 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_INDUSTRY FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 			add_war_support = 0.1
 			add_ideas = BUL_government_reforms_democratic_01
 
@@ -5173,7 +5378,7 @@ focus_tree = {
 		mutually_exclusive = { focus = BUL_agrarian_cooperative_movement }
 
 		available = {
-			democratic > 0.8
+			#democratic > 0.8
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = BUL_modernize_the_industry_bs_support_requirement_tt
@@ -5187,7 +5392,36 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
 			add_ideas = BUL_government_reforms_democratic_02
-
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 			BUL_bs_low_loyalty_increase_effect = yes
 		}
 	}
@@ -5217,7 +5451,7 @@ focus_tree = {
 				NOT = { is_justifying_wargoal_against = ROOT }
 				has_opinion	= {
 					target = ROOT
-					value > 24
+					value > 0
 				}
 			}
 			OR = {
@@ -8125,21 +8359,21 @@ focus_tree = {
 		
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_INTERNAL_AFFAIRS}
 		completion_reward = {
-			random_owned_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = industrial_complex
-					level = 3
-					instant_build = yes
-				}
-			}
+			#random_owned_state = {
+			#	limit = {
+			#		free_building_slots = {
+			#			building = industrial_complex
+			#			size > 2
+			#			include_locked = yes
+			#		}
+			#	}
+			#	add_extra_state_shared_building_slots = 3
+			#	add_building_construction = {
+			#		type = industrial_complex
+			#		level = 3
+			#		instant_build = yes
+			#	}
+			#}
 			swap_ideas = {
 				remove_idea = BUL_government_reforms_fascists_01
 				add_idea = BUL_government_reforms_fascists_02
