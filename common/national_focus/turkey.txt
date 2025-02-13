@@ -52,7 +52,7 @@ focus_tree = {
 		}
 		x = -6
 		y = 1
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -171,7 +171,7 @@ focus_tree = {
 	focus = {
 		id = TUR_the_sanayiciler
 		icon = GFX_goal_generic_gold_money
-		prerequisite = { focus = TUR_fully_integrate_the_is_bank }
+		prerequisite = { focus = TUR_fully_integrate_the_is_bank focus = TUR_continue_the_policy_of_etatism }
 		available = {
 			#NOT = { TUR = { has_government = communism } } 
 		}
@@ -193,9 +193,6 @@ focus_tree = {
 		id = TUR_cooperate_with_the_debt_council
 		icon = GFX_goal_generic_positive_trade_relations
 		prerequisite = { focus = TUR_the_sanayiciler }
-		available = {
-			NOT = { TUR = { has_government = communism } } 
-		}
 		x = 0
 		y = 1
 		relative_position_id = TUR_the_sanayiciler
@@ -357,13 +354,16 @@ focus_tree = {
 				category = industry
 			}
 			mio:TUR_koc_ticaret_as_defense_industry_organization = {
-				add_mio_size = 2
+				add_mio_size = 3
+				add_mio_funds_gain_factor = 0.1
 			}
 			mio:TUR_koc_ticaret_as_shipyard_organization = {
-				add_mio_size = 2
+				add_mio_size = 3
+				add_mio_funds_gain_factor = 0.1
 			}
 			mio:TUR_ticaret_organization = {
-				add_mio_size = 2
+				add_mio_size = 3
+				add_mio_funds_gain_factor = 0.1
 			}
 		}
 	}
@@ -378,9 +378,7 @@ focus_tree = {
 		ai_will_do = {
 			base = 10
 		}
-		prerequisite = {
-			focus = TUR_continue_the_policy_of_etatism
-		}
+		prerequisite = { focus = TUR_fully_integrate_the_is_bank focus = TUR_continue_the_policy_of_etatism }
 		relative_position_id = TUR_continue_the_policy_of_etatism
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_TUR_KEMALISM }
 		completion_reward = {
@@ -3136,12 +3134,8 @@ focus_tree = {
 			base = 10
 		}
 
-		available = {
-			has_idea = koc_ticaret_as_shipyard
-		}
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 		completion_reward = {
-			custom_effect_tooltip = TUR_need_naval_designer_tt
 			add_ideas = TUR_imperial_navy
 			random_owned_state = {
 				limit = {
@@ -3664,12 +3658,6 @@ focus_tree = {
 					target = TUR
 					modifier = TUR_regional_force_of_stability
 				}
-				if = {
-					limit = {
-						is_subject = no
-					}
-					country_event = { id = bftb_turkey.144 }
-				}
 			}
 			FRA = {
 				add_opinion_modifier = {
@@ -3677,19 +3665,13 @@ focus_tree = {
 					modifier = TUR_regional_force_of_stability
 				}
 			}
-
-			add_ai_strategy = {
-				type = befriend
-				id = ENG
-				value = 25
+			ENG = {
+				diplomatic_relation = {
+					country = TUR
+					relation = guarantee
+					active = yes
+				}
 			}
-
-			add_ai_strategy = {
-				type = befriend
-				id = FRA
-				value = 25
-			}
-
 			if = {
 				limit = {
 					NOT = {
@@ -3719,78 +3701,6 @@ focus_tree = {
 				}
 				#TODO Gabriel give them a free design?
 				add_equipment_to_stockpile = { type = medium_tank_chassis_1 amount = 25 }
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = TUR_the_chester_concession
-						has_completed_focus = TUR_the_italo_turkish_friendship_treaty
-						has_completed_focus = TUR_the_german_turkish_friendship_treaty
-						has_completed_focus = TUR_renew_the_turkish_soviet_non_aggression_pact
-					}
-				}
-				ROM = {
-					diplomatic_relation = {
-						country = TUR
-						relation = guarantee
-						active = no
-					}
-				}
-				every_other_country = {
-					limit = {
-						has_opinion_modifier = BFTB_balkan_pact_ally
-					}
-					remove_opinion_modifier = {
-						target = TUR
-						modifier = BFTB_balkan_pact_ally
-					}
-				}
-				hidden_effect = {
-					if = {
-						limit = {
-							GRE = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = GRE
-							modifier = BFTB_balkan_pact_ally
-						}
-					}
-					if = {
-						limit = {
-							HUN = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = HUN
-							modifier = BFTB_balkan_pact_ally
-						}
-					}
-					if = {
-						limit = {
-							ROM = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = ROM
-							modifier = BFTB_balkan_pact_ally
-						}
-					}
-					if = {
-						limit = {
-							YUG = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = YUG
-							modifier = BFTB_balkan_pact_ally
-						}
-					} 
-				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MILITARY_EQUIPMENT }
@@ -3963,78 +3873,6 @@ focus_tree = {
 		completion_reward = {
 			USA = { country_event = { id = bftb_turkey.55 } }
 			custom_effect_tooltip = TUR_raise_opinion_of_america_tt
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = TUR_the_anglo_turkish_agreement
-						has_completed_focus = TUR_the_italo_turkish_friendship_treaty
-						has_completed_focus = TUR_the_german_turkish_friendship_treaty
-						has_completed_focus = TUR_renew_the_turkish_soviet_non_aggression_pact
-					}
-				}
-				ROM = {
-					diplomatic_relation = {
-						country = TUR
-						relation = guarantee
-						active = no
-					}
-				}
-				every_other_country = {
-					limit = {
-						has_opinion_modifier = BFTB_balkan_pact_ally
-					}
-					remove_opinion_modifier = {
-						target = TUR
-						modifier = BFTB_balkan_pact_ally
-					}
-				}
-				hidden_effect = {
-					if = {
-						limit = {
-							GRE = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = GRE
-							modifier = BFTB_balkan_pact_ally
-						}
-					}
-					if = {
-						limit = {
-							HUN = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = HUN
-							modifier = BFTB_balkan_pact_ally
-						}
-					}
-					if = {
-						limit = {
-							ROM = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = ROM
-							modifier = BFTB_balkan_pact_ally
-						}
-					}
-					if = {
-						limit = {
-							YUG = {
-								has_opinion_modifier = BFTB_balkan_pact_ally
-							}
-						}
-						remove_opinion_modifier = {
-							target = YUG
-							modifier = BFTB_balkan_pact_ally
-						}
-					} 
-				}
-			}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
@@ -5201,9 +5039,19 @@ focus_tree = {
 		bypass = {
 		}
 
+		
 		completion_reward = {
-			country_event = {
-				id = bftb_turkey.148
+			if = { 
+				limit = { 
+					is_in_faction_with = ITA
+				}
+				ITA = { country_event = { id = bftb_turkey.66 hours = 6 } }
+			}
+			else = {
+				create_wargoal = {
+					target = GRE
+					type = annex_everything
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_ALLIANCE }
@@ -6464,7 +6312,7 @@ focus_tree = {
 		prerequisite = { focus = TUR_reconfigure_our_foreign_policy }
 		x = 15
 		y = 1
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 			modifier = {
@@ -6602,7 +6450,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = TUR_continue_to_prioritise_balkan_integrity
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7093,7 +6941,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TUR_reaffirm_the_balkan_pact
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7138,7 +6986,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TUR_reaffirm_the_balkan_pact
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7190,7 +7038,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = TUR_reaffirm_the_balkan_pact
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7258,7 +7106,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TUR_three_year_industrial_plan
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7345,7 +7193,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TUR_create_the_balkan_central_bank
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7392,7 +7240,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = TUR_joint_budgets_on_fortifications
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -7586,7 +7434,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TUR_create_the_balkan_central_bank
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}	
@@ -7894,7 +7742,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = TUR_the_treaty_for_prosperity_and_trade
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 30
 		}
@@ -8107,7 +7955,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = TUR_the_treaty_for_prosperity_and_trade
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 10
 		}
@@ -9793,6 +9641,22 @@ focus_tree = {
 			add_research_slot = 1
 			every_military_industrial_organization = {
 				add_mio_size = 1
+			}
+			if = {
+				limit = {
+					ROOT = {
+						has_full_control_of_state = 49
+					}
+				}
+				random_core_state = {
+					prioritize = { 49 }
+					add_building_construction = {
+						type = land_facility
+						level = 1
+						instant_build = yes
+						province = 11747
+					}
+				}
 			}
 		}
 	}
