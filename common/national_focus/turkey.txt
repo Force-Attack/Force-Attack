@@ -9396,4 +9396,1513 @@ focus_tree = {
 
 
 
+
+		############################
+	####### ARMY SECTION #######
+	############################
+	
+	focus = {
+		id = TUR_continue_the_military_reorganization
+		icon = GFX_focus_chi_army_reform
+
+		x = 40
+		y = 0
+		cost = 5
+
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+			army_experience = 10
+			custom_effect_tooltip = unlocks_bolstering_our_armed_forces_decisions_tt
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+	}
+	
+	focus = {
+		id = TUR_rejuvenate_the_great_war_arsenal
+		icon = GFX_focus_generic_combined_arms
+		prerequisite = {
+			focus = TUR_continue_the_military_reorganization			
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = TUR_continue_the_military_reorganization
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			set_country_flag = TUR_sponsored_killigil_armaments_flag
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2500
+				producer = FRA
+			}
+			add_tech_bonus = {
+				name = TUR_rejuvenate_the_great_war_arsenal
+				bonus = 0.4
+				uses = 2
+				category = infantry_weapons
+			}
+			custom_effect_tooltip = available_mio_tt
+			show_mio_tooltip = TUR_killigil_endustrileri_organization
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_begin_economic_mobilization
+		icon = GFX_goal_r56_CAN_industry
+		prerequisite = {
+			focus = TUR_rejuvenate_the_great_war_arsenal
+		}
+		x = 3
+		y = 1
+		relative_position_id = TUR_rejuvenate_the_great_war_arsenal
+		cost = 5
+		
+		available = {
+			OR = {
+				has_war = yes
+				threat > 0.5
+				NOT = {
+					has_country_leader = {
+						character = TUR_mustafa_kemal_ataturk
+						ruling_only = yes
+					}
+				}
+			}
+			has_capitulated = no
+		}
+
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+			add_stability = -0.03
+			if = {
+				limit = {
+					OR = {
+						has_idea = TUR_etatism_economy_law_idea
+						has_idea = civilian_economy
+					}
+				}
+				add_ideas = partial_economic_mobilisation
+				random_owned_controlled_state = {
+					prioritize = { 797 }
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {	
+					OR = {
+						has_idea = low_economic_mobilisation
+						has_idea = partial_economic_mobilisation
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 797 }
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {	
+					OR = {
+						has_idea = war_economy
+						has_idea = tot_economic_mobilisation
+					}
+				}
+				add_war_support = 0.05
+				random_owned_controlled_state = {
+					prioritize = { 797 }
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 49 340 347 }
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	
+	focus = {
+		id = TUR_begin_domestic_aircraft_production
+		icon = GFX_focus_generic_aircraft_production
+		prerequisite = {
+			focus = TUR_begin_economic_mobilization		
+		}
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_begin_economic_mobilization
+		cost = 10
+		
+		available = {
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			set_country_flag = TUR_sponsored_killigil_armaments_flag
+			random_owned_controlled_state = {
+				prioritize = { 49 }
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	
+	focus = {
+		id = TUR_expand_the_turkish_state_arsenal
+		icon = GFX_goal_generic_munitions_factories
+		prerequisite = {
+			focus = TUR_begin_economic_mobilization	
+		}
+
+		x = 2
+		y = 1
+		relative_position_id = TUR_begin_economic_mobilization
+		cost = 5
+		
+		available = {
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				random_owned_controlled_state = {
+					prioritize = { 341 }
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+				mio:TUR_istanbul_military_industries_organization = {
+					add_mio_funds = 800
+				}
+				else = {
+					random_owned_controlled_state = {
+						prioritize = { 341 }
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	
+	focus = {
+		id = TUR_defending_our_borders
+		icon = GFX_goal_generic_construct_military
+		prerequisite = { 
+			focus = TUR_rejuvenate_the_great_war_arsenal 
+		}
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_rejuvenate_the_great_war_arsenal
+		cost = 2
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			custom_effect_tooltip = unlocks_fortification_decisions_tt
+		}
+	}
+
+	focus = {
+		id = TUR_doctrine_on_western_lines
+		icon = GFX_goal_wargaming
+		prerequisite = { 
+			focus = TUR_continue_the_military_reorganization 
+		}
+
+		x = -1
+		y = 1
+		relative_position_id = TUR_continue_the_military_reorganization
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			army_experience = 30
+			add_doctrine_cost_reduction = {
+				name = TUR_doctrine_on_western_lines
+				cost_reduction = 0.4
+				uses = 1
+				category = land_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+	}
+	
+	focus = {
+		id = TUR_expand_officer_schools
+		icon = GFX_focus_research
+		x = 0
+		y = 1
+		relative_position_id = TUR_doctrine_on_western_lines
+		cost = 10
+		prerequisite = { 
+			focus = TUR_doctrine_on_western_lines 
+		}
+		prerequisite = { 
+			focus = TUR_rejuvenate_the_great_war_arsenal			
+		}
+		available = {
+			
+		}
+
+		ai_will_do = {
+			factor = 4000
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+
+	focus = {
+		id = TUR_streamline_conscription
+		icon = GFX_goal_constitution
+		prerequisite = { 
+			focus = TUR_rejuvenate_the_great_war_arsenal 
+		}
+		prerequisite = { 
+			focus = TUR_doctrine_on_western_lines 
+		}
+		
+		x = -1
+		y = 2
+		relative_position_id = TUR_doctrine_on_western_lines
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			swap_ideas = { 
+				remove_idea = TUR_army_of_the_grand_national_assembly_idea
+				add_idea = TUR_streamline_conscription_idea
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+	}
+	
+	
+	focus = {
+		id = TUR_standardize_infantry_equipment
+		icon = GFX_focus_ETH_peacekeeping_forces
+		prerequisite = { focus = TUR_rejuvenate_the_great_war_arsenal }
+		prerequisite = { focus = TUR_doctrine_on_western_lines }
+
+		x = 1
+		y = 2
+		relative_position_id = TUR_rejuvenate_the_great_war_arsenal
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_ideas = TUR_standardization_idea
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_infantry_advancements
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { 
+			focus = TUR_standardize_infantry_equipment
+		}
+		
+		x = 3
+		y = 1
+		relative_position_id = TUR_standardize_infantry_equipment
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_weapons_bonus
+				bonus = 0.45
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	
+	
+	focus = {
+		id = TUR_begin_mechanization_developments
+		icon = GFX_goal_mechanized_offensive
+		prerequisite = { 
+			focus = TUR_standardize_infantry_equipment
+		}	
+
+		x = 5
+		y = 1
+		relative_position_id = TUR_standardize_infantry_equipment
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = FRA_mechanized_focus
+				ahead_reduction = 0.75
+				bonus = 0.75
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	
+	
+	focus = {
+		id = TUR_tank_centered_force
+		icon = GFX_goal_ger_panzers
+		prerequisite = { 
+			focus = TUR_begin_mechanization_developments
+		}
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_begin_mechanization_developments
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = TUR_tank_centered_force
+				bonus = 0.8
+				uses = 1
+				category = armor
+			}
+			add_tech_bonus = {
+				name = TUR_tank_centered_force
+				bonus = 1
+				uses = 1
+				category = maintenance_company_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	
+	
+	focus = {
+		id = TUR_infantry_is_our_backbone
+		icon = GFX_focus_chi_army_reform
+		prerequisite = { focus = 
+			TUR_infantry_advancements 
+		}
+		
+		x = 0
+		y = 1
+		relative_position_id = TUR_infantry_advancements
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_weapons_bonus
+				ahead_reduction = 1.5
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	
+	focus = {
+		id = TUR_maximize_orientation
+		icon = GFX_goal_manpower
+		prerequisite = { 
+			focus = TUR_streamline_conscription
+		}
+		mutually_exclusive = {
+			focus = TUR_expand_recruitment
+		}
+
+		x = -1
+		y = 1
+		relative_position_id = TUR_streamline_conscription
+		
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			swap_ideas = { 
+				remove_idea = TUR_streamline_conscription_idea
+				add_idea = TUR_maximize_orientation_idea
+			}
+		}
+	}
+	
+	focus = {
+		id = TUR_expand_recruitment
+		icon = GFX_focus_generic_military_academy
+		prerequisite = { focus = 
+			TUR_streamline_conscription 
+		}
+		mutually_exclusive = {
+			focus = TUR_maximize_orientation
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = TUR_streamline_conscription
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			swap_ideas = { 
+				remove_idea = TUR_streamline_conscription_idea
+				add_idea = TUR_expand_recruitment_idea
+			}
+		}
+		search_filters = { FOCUS_FILTER_MANPOWER }
+	}
+	
+	
+	focus = {
+		id = TUR_logistical_advancements
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = {
+			focus = TUR_standardize_infantry_equipment
+			focus = TUR_streamline_conscription
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = TUR_standardize_infantry_equipment
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {		##Insta-researches Motorized 1. If motorized is already researched, gain 2 75% research bonuses toward Logi-Company, and five free trains
+			if = {
+				limit = { 
+					NOT = { 
+						has_tech = motorised_infantry
+					} 
+				}
+				set_technology = { 
+					motorised_infantry = 1
+				}
+				custom_effect_tooltip = TUR_logistical_advancements_tt
+			}
+			else = {
+				add_tech_bonus = {
+					name = AST_fund_owen_gun_research
+					bonus = 0.75
+					uses = 2
+					technology = tech_logistics_company
+					technology = tech_logistics_company2
+					technology = tech_logistics_company3
+					technology = tech_logistics_company4
+				}
+				add_equipment_to_stockpile = {
+					type = train_equipment
+					amount = 5
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_strengthen_troop_coordination
+		icon = GFX_goal_generic_radio_development_2
+		prerequisite = {
+			focus = TUR_standardize_infantry_equipment
+			focus = TUR_streamline_conscription
+		}
+
+		x = -1
+		y = 1
+		relative_position_id = TUR_standardize_infantry_equipment
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			if = {
+				limit = { NOT = { 
+						has_tech = radio 
+					} 
+				}
+				set_technology = { 
+					radio = 1 
+				}
+				custom_effect_tooltip = TUR_strengthen_troop_coordination_tt
+			}
+			else = {
+				add_tech_bonus = {
+					name = TUR_strengthen_troop_coordination
+					bonus = 1
+					uses = 1
+					category = signal_company_tech
+				}
+				add_command_power = 10
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	focus = {
+		id = TUR_combat_engineers
+		icon = GFX_goal_generic_army
+		prerequisite = {
+			focus = TUR_strengthen_troop_coordination
+			focus = TUR_logistical_advancements
+		}
+		
+		x = 1
+		y = 1
+		relative_position_id = TUR_strengthen_troop_coordination
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = TUR_combat_engineers
+				bonus = 0.5
+				uses = 2
+				category = engineers_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_troop_specialization
+		icon = GFX_goal_generic_special_forces
+		prerequisite = {
+			focus = TUR_maximize_orientation
+			focus = TUR_expand_recruitment
+		}	
+		
+		x = 1
+		y = 1
+		relative_position_id = TUR_maximize_orientation
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_doctrine_cost_reduction = {
+					name = special_forces_bonus
+					cost_reduction = 0.5
+					uses = 2
+					category = cat_mountaineers_doctrine
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = TUR_troop_specialization
+					bonus = 0.8
+					uses = 2
+					category = r56_special_forces_training_tech 
+				}
+
+			}  
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+
+
+	############################
+	##### AIRFORCE SECTION #####
+	############################
+
+	focus = {
+		id = TUR_found_an_air_war_academy
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = TUR_continue_the_military_reorganization }
+
+		x = -15
+		y = 1
+		relative_position_id = TUR_continue_the_military_reorganization
+		cost = 5
+
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			air_experience = 20
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = TUR_sabiha_gokcen
+		}
+		search_filters = { FOCUS_FILTER_AIR_XP }
+	}
+	
+	focus = {
+		id = TUR_paratrooper_developments
+		icon = GFX_focus_generic_paratrooper
+		prerequisite = { focus = TUR_found_an_air_war_academy }
+
+		x = -2
+		y = 1
+		relative_position_id = TUR_found_an_air_war_academy
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				category = para_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_AIR_XP }
+	}
+
+	focus = {
+		id = TUR_medium_bomber_focus
+		icon = GFX_goal_generic_occupy_start_war
+		prerequisite = { focus = TUR_found_an_air_war_academy }
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_found_an_air_war_academy
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_equipment_to_stockpile = {
+					type = medium_plane_airframe_0
+					amount = 65
+					producer = ITA
+				}
+				add_tech_bonus = {
+					name = air_bonus
+					bonus = 0.35
+					uses = 1
+					technology = basic_medium_airframe
+					technology = improved_medium_airframe
+					technology = advanced_medium_airframe
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = tac_bomber_equipment_0
+					amount = 65
+					producer = ITA
+				}
+				add_tech_bonus = {
+					name = air_bonus
+					bonus = 0.35
+					uses = 1
+					technology = tactical_bomber1
+					technology = tactical_bomber2
+					technology = tactical_bomber3
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_naval_bombers
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { 
+			focus = TUR_medium_bomber_focus 
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = TUR_medium_bomber_focus
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_dlc = "By Blood Alone" }
+				}
+				air_experience = 35
+				add_tech_bonus = {
+					name = TUR_naval_bombers
+					bonus = 0.8
+					uses = 1
+					category = cat_strategic_bomber
+					category = tactical_bomber
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = TUR_naval_bombers
+					bonus = 0.65
+					uses = 1
+					category = heavy_air
+				}
+				add_tech_bonus = {
+					name = fighter_command_focus
+					bonus = 0.65
+					uses = 1
+					technology = range_improvements
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_airland_battle
+		icon = GFX_goal_generic_airport
+		prerequisite = { 
+			focus = TUR_medium_bomber_focus 
+		}
+
+		x = -1
+		y = 1
+		relative_position_id = TUR_medium_bomber_focus
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_tech_bonus = {
+					name = TUR_airland_battle
+					technology =  basic_medium_airframe
+					technology  = improved_medium_airframe
+					technology = advanced_medium_airframe
+					ahead_reduction = 1
+					uses = 1
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = TUR_airland_battle
+					ahead_reduction = 1
+					uses = 1
+					category = cas_bomber
+				}
+			}
+			#1x50% research bonus to fighter models
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_continue_importing_western_designs
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { 
+			focus = TUR_found_an_air_war_academy
+		}
+
+		x = -4
+		y = 1
+		relative_position_id = TUR_found_an_air_war_academy
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_equipment_to_stockpile = {
+					type = small_plane_airframe_0
+					amount = 65
+					producer = FRA
+				}
+				add_tech_bonus = {
+					name = TUR_continue_importing_western_designs
+					technology =  basic_small_airframe
+					technology  = improved_small_airframe
+					technology = advanced_small_airframe
+					bonus = 0.3
+					uses = 1
+				}
+				add_tech_bonus = {
+					name = TUR_continue_importing_western_designs
+					technology = aa_cannon_1
+					technology = aa_cannon_2
+					uses = 1
+					bonus = 0.3
+				}
+			}
+			else = {
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_0
+					amount = 65
+					producer = FRA
+				}
+				add_tech_bonus = {
+					name = POL_fighter_modernisation
+					bonus = 0.35
+					uses = 1
+					category = light_fighter
+				}
+			}
+			#1x50% research bonus to fighter models
+		}
+			search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_new_cannon_developments
+		icon = GFX_victor
+		
+		prerequisite = { 
+			focus = TUR_continue_importing_western_designs 
+		}
+
+		x = -1
+		y = 1
+		relative_position_id = TUR_continue_importing_western_designs
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_doctrine_cost_reduction = {
+					name = TUR_new_cannon_developments
+					cost_reduction = 0.4
+					uses = 2
+					category = air_doctrine
+				}
+				add_tech_bonus = {
+					name = TUR_new_cannon_developments
+					bonus = 1.0
+					uses = 1
+					technology = aa_hmg
+					technology = aa_cannon_1
+					technology = aa_cannon_2
+					technology = aa_cannon_3
+				}
+				else = {
+					air_experience = 50
+					add_tech_bonus = {
+						name = TUR_new_cannon_developments
+						bonus = 1
+						uses = 1
+						category = light_fighter
+					}
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	focus = {
+		id = TUR_defending_our_skies
+		icon = GFX_goal_generic_CAS
+		
+		prerequisite = { 
+			focus = TUR_continue_importing_western_designs 
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = TUR_continue_importing_western_designs
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TUR_defending_our_skies
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_tech_bonus = {
+					name = TUR_defending_our_skies
+					bonus = 1.0
+					uses = 1
+					technology = engines_1
+					technology = engines_2
+					technology = engines_3
+					technology = engines_4
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+
+	############################
+	####### NAVY SECTION #######
+	############################
+
+	focus = {
+		id = TUR_continue_the_naval_expansion
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { 
+			focus = TUR_continue_the_military_reorganization 
+		}
+
+		x = -7
+		y = 1
+		relative_position_id = TUR_continue_the_military_reorganization
+		cost = 5
+
+		ai_will_do = {
+			factor = 5
+		}
+		
+		completion_reward = {
+			navy_experience = 20
+		}
+		search_filters = { FOCUS_FILTER_NAVY_XP }
+	}
+	
+	focus = {
+		id = TUR_expand_black_sea_presence		#Will likely make unlock more army reform decisions later
+		icon = GFX_focus_generic_black_sea_focus
+		prerequisite = { 
+			focus = TUR_continue_the_naval_expansion
+			focus = TUR_found_an_air_war_academy
+		}
+
+		x = -4
+		y = 1
+		relative_position_id = TUR_continue_the_naval_expansion
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		available = {
+			355 = { 
+				is_fully_controlled_by = ROOT
+			}
+			797 = { 
+				is_fully_controlled_by = ROOT 
+			}
+			354 = {
+				is_fully_controlled_by = ROOT 
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 20
+			355 = {
+				add_building_construction = {
+					type = anti_air_building 
+					level = 1
+					instant_build = yes
+				}
+				
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					instant_build = yes
+					province = 11881
+				}
+				add_building_construction = {
+					type = coastal_bunker 
+					level = 1
+					province = 11842
+					instant_build = yes
+				}
+			}
+			797 = {
+				add_building_construction = {
+					type = naval_base 
+					level = 1
+					province = 9833
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 11829
+					instant_build = yes
+				}
+				
+				add_building_construction = {
+					type = coastal_bunker
+					level = 1
+					province = 9833
+					instant_build = yes
+				}
+			}
+			354 = {
+				add_building_construction = {
+					type = coastal_bunker  
+					level = 1
+					province = 9932
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base 
+					level = 1
+					province = 11881					
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_expand_mediteranean_bases
+		icon = GFX_goal_generic_admirality
+		prerequisite = { 
+			focus = TUR_continue_the_naval_expansion
+			focus = TUR_found_an_air_war_academy
+		}
+
+		x = -6
+		y = 1
+		relative_position_id = TUR_continue_the_naval_expansion
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		available = {
+			339 = { is_fully_controlled_by = ROOT }
+			342 = { is_fully_controlled_by = ROOT }
+			344 = { is_fully_controlled_by = ROOT }
+		}
+		
+		completion_reward = {
+			navy_experience = 10
+			339 = {
+				add_building_construction = {
+					type = anti_air_building 
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = { 
+					type = naval_base 
+					province = 4112 
+					level = 1 
+					instant_build = yes 
+				}
+				add_building_construction = { 
+					type = coastal_bunker 
+					province = 4112 
+					level = 1 
+					instant_build = yes 
+				}
+			}
+				
+			342 = {
+				add_building_construction = {
+					type = anti_air_building 
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = { 
+					type = naval_base 
+					province = 1005 
+					level = 1 
+					instant_build = yes 
+				}
+				add_building_construction = { 
+					type = coastal_bunker 
+					province = 1005
+					level = 1 
+					instant_build = yes 
+				}
+			}
+			344 = {
+				add_building_construction = { 
+					type = coastal_bunker 
+					province = 11746 
+					level = 1 
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = TUR_modern_radar
+		icon = GFX_goal_generic_radar
+		prerequisite = { 
+			focus = TUR_expand_mediteranean_bases
+			focus = TUR_expand_black_sea_presence
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = TUR_expand_mediteranean_bases
+		
+		cost = 5
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = radar_focus
+				bonus = 1.0
+				uses = 1
+				category = radar_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = TUR_expand_the_golcuk_shipyard
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = TUR_continue_the_naval_expansion }
+
+		x = -2
+		y = 1
+		relative_position_id = TUR_continue_the_naval_expansion
+		cost = 5
+		
+		available = {
+			has_full_control_of_state = 340
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			340 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+			
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	
+	focus = {
+		id = TUR_new_shipyards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = TUR_continue_the_naval_expansion }
+
+		x = 2
+		y = 1
+		relative_position_id = TUR_continue_the_naval_expansion
+		cost = 10
+		
+		available = {
+			has_full_control_of_state = 797
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			797 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+			
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	
+	focus = {
+		id = TUR_doctrinal_advancement
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = TUR_continue_the_naval_expansion }
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_continue_the_naval_expansion
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = POL_the_twin_threats
+				cost_reduction = 0.65
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+	}
+	
+	focus = {
+		id = TUR_submarine_focus
+		icon = GFX_goal_generic_wolf_pack
+		prerequisite = { focus = TUR_doctrinal_advancement }
+
+		x = 2
+		y = 1
+		relative_position_id = TUR_doctrinal_advancement
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = POL_import_submarine_technology
+				bonus = 0.75
+				uses = 1
+				category = ss_tech
+			}
+			if = {
+				limit = {
+					has_dlc = "Man the Guns"
+				}
+				add_tech_bonus = {
+					name = SPR_navy_modernization
+					bonus = 0.5
+					uses = 1
+					category = torpedo_equipment
+				}
+			}			
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_amphibious_warfare
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { focus = TUR_doctrinal_advancement }
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_doctrinal_advancement
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_plan_sealion
+				bonus = 0.75
+				uses = 1
+				category = marine_tech
+			}
+			add_tech_bonus = {
+				name = GER_landing_craft
+				bonus = 0.75
+				uses = 1
+				category = tp_tech
+			}	
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_balanced_navy
+		icon = GFX_goal_generic_occupy_states_coastal
+		prerequisite = { focus = TUR_doctrinal_advancement }
+
+		x = -2
+		y = 1
+		relative_position_id = TUR_doctrinal_advancement
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = POL_strike_force
+				bonus = 0.6
+				uses = 1
+				category = dd_tech
+			}
+			add_tech_bonus = {
+				name = POL_strike_force
+				bonus = 0.6
+				uses = 1
+				category = cl_tech
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+
+	focus = {
+		id = TUR_balanced_navy2
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { 
+			focus = TUR_balanced_navy  
+		}
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_balanced_navy
+		cost = 10
+
+		ai_will_do = {
+			factor = 8
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = TUR_balanced_navy2
+				bonus = 0.65
+				uses = 2
+				category = ca_tech
+			}
+			add_tech_bonus = {
+				name = uk_carrier_focus
+				bonus = 0.65
+				uses = 2
+				category = cv_tech
+			}
+			
+			#1x50% research bonus to Light Cruisers
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}
+	
+	focus = {
+		id = TUR_sub_2
+		icon = GFX_goal_generic_navy_anti_submarine
+		prerequisite = { focus = TUR_submarine_focus	}
+
+		x = 0
+		y = 1
+		relative_position_id = TUR_submarine_focus
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = TUR_sub_2
+				ahead_reduction = 1
+				uses = 1
+				category = ss_tech
+			}
+			add_doctrine_cost_reduction = {
+				name = TUR_sub_2
+				cost_reduction = 0.65
+				uses = 1
+				category = naval_doctrine
+			}
+		}
+		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+	}	
+	
+
+
+
 }
