@@ -6511,6 +6511,8 @@ focus_tree = {
 			}
 		}
 		
+
+
 		available_if_capitulated = yes
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
@@ -6559,7 +6561,7 @@ focus_tree = {
 				picture = "gfx/leaders/MEX/r56_portrait_MEX_Maria_Josepha_I.dds"
 				expire = "1965.1.1"
 				ideology = absolute_monarchism
-				traits = { charismatic_monarch }
+				traits = { charismatic_monarch the_statist }
 			}
 			hidden_effect = {
 				MEX_lazaro_cardenas = {
@@ -6625,10 +6627,10 @@ focus_tree = {
 						state = 485
 					}
 				}
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -6646,13 +6648,7 @@ focus_tree = {
 		}
 
 		available = {
-			has_dlc = "La Resistance"
-			NOT = {
-				has_global_flag = SPR_R56_focus_tree
-			}
-			SPR_scw_in_progress = yes
-			country_exists = SPB
-			NOT = { has_war_with = SPB }
+			
 		}
 
 		cost = 5
@@ -6665,7 +6661,7 @@ focus_tree = {
 
 
 		completion_reward = {
-			SPB = {
+			SPR = {
 				add_opinion_modifier = {
 				    target = HON
 				    modifier = POR_helped_in_civil_war
@@ -6675,56 +6671,19 @@ focus_tree = {
 			set_rule = { can_send_volunteers = yes }
 		}
 	}
-	focus = {
-		id = MEX_legacy_of_new_spain
-		icon = GFX_goal_new_burgundy2
-		prerequisite = { focus = MEX_papal_blessing_of_the_empress focus = MEX_support_the_spanish_carlists }
-		mutually_exclusive = { focus = MEX_new_mexican_empire focus = MEX_legacy_of_1864 }
-		relative_position_id = MEX_support_the_spanish_carlists
-		x = -1
-		y = 2
-		cost = 5
-		ai_will_do = {
-			factor = 10
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			has_war = no
-			has_global_flag = scw_over
-			country_exists = SPB
-			SPB = {
-				is_in_faction = no
-			}
-		}
 
-		bypass = {
-			is_in_faction_with = SPB
-		}
-		
-		completion_reward = {
-			set_rule = {
-				can_create_factions = yes
-	  		}
-			create_faction = "Imperium Hispanicum"
-			SPB = {
-	     		country_event = generic.5
-	    	}
-		}
-		search_filters = { FOCUS_FILTER_ALLIANCE }
-	}
 	focus = {
 		id = MEX_restore_the_viceroyalty_system
-		prerequisite = { focus = MEX_legacy_of_new_spain }
+		prerequisite = { focus = MEX_support_the_spanish_carlists }
 		icon = GFX_focus_spa_supremacy_of_the_communion
-		relative_position_id = MEX_legacy_of_new_spain
-		x = -1
+		relative_position_id = MEX_support_the_spanish_carlists
+		x = 0
 		y = 1
 	
 		cost = 10
 
 		available = {
-			is_in_faction_with = SPB
+			
 		}
 	
 		ai_will_do = {
@@ -6732,17 +6691,32 @@ focus_tree = {
 		}
 	
 		completion_reward = {
-			add_ideas = PRU_restore_viceroyalty
+			add_ideas = PRU_restore_viceroyalty	
+				479 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+				481 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 	focus = {
 		id = MEX_new_mexican_empire
 		icon = GFX_goal_tfv_strengthen_commonwealth_ties
-		prerequisite = { focus = MEX_focus_soldaderas_2 }
-		mutually_exclusive = { focus = MEX_legacy_of_new_spain focus = MEX_legacy_of_1864 }
+		prerequisite = { focus = MEX_mimic_the_grande_armee focus = MEX_restore_the_viceroyalty_system }
 		relative_position_id = MEX_focus_soldaderas_2
-		x = 0
+		x = -1
 		y = 2
 		cost = 5
 		ai_will_do = {
@@ -6755,20 +6729,18 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			set_rule = {
-				can_create_factions = yes
-	  		}
-			create_faction = "Imperium Hispanicum"
+			add_stability = 0.05
+			add_political_power = 75
 		}
 		search_filters = { FOCUS_FILTER_ALLIANCE }
 	}
 	focus = {
 		id = MEX_reconquer_the_viceroys
 		icon = GFX_goal_MEX_march_southwards
-		prerequisite = { focus = MEX_legacy_of_new_spain focus = MEX_new_mexican_empire }
-		x = 2
+		prerequisite = { focus = MEX_new_mexican_empire }
+		x = 0
 		y = 1
-		relative_position_id = MEX_legacy_of_new_spain
+		relative_position_id = MEX_new_mexican_empire
 
 		cost = 5
 
@@ -6789,10 +6761,6 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_named_threat = {
-				threat = 2
-				name = threat_mexico_marching_southwards
-			}
 			every_state = {
 				limit = {
 					OR = {
@@ -6889,10 +6857,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_named_threat = {
-				threat = 2
-				name = threat_mexico_unify_centroamerica
-			}
+			
 			every_state = {
 				limit = {
 					OR = {
@@ -6969,7 +6934,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MEX_focus_unify_centroamerica_2
 
-		cost = 10
+		cost = 5
 
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
@@ -6989,10 +6954,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_named_threat = {
-				threat = 1
-				name = threat_mexico_pressure_the_caribbean
-			}
+			
 			every_state = {
 				limit = {
 					OR = {
@@ -7221,12 +7183,12 @@ focus_tree = {
 		id = MEX_focus_push_past_the_darien_gap_2
 		text = MEX_focus_push_past_the_darien_gap
 		icon = GFX_focus_por_recover_latin_america
-		prerequisite = { focus = MEX_focus_unify_centroamerica_2 focus = MEX_mimic_the_grande_armee }
-		x = 3
-		y = 1
-		relative_position_id = MEX_focus_unify_centroamerica_2
+		prerequisite = { focus = MEX_reconquer_the_viceroys }
+		x = 2
+		y = 2
+		relative_position_id = MEX_reconquer_the_viceroys
 
-		cost = 10
+		cost = 5
 
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
@@ -7245,10 +7207,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_named_threat = {
-				threat = 1
-				name = threat_mexico_push_south_of_the_darien_gap
-			}
+			
 			every_state = {
 				limit = {
 					OR = {
@@ -7325,7 +7284,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MEX_focus_push_past_the_darien_gap_2
 
-		cost = 10
+		cost = 5
 
 		search_filters = { FOCUS_FILTER_ANNEXATION }
 
@@ -7345,10 +7304,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_named_threat = {
-				threat = 2
-				name = threat_mexico_andean_offensive
-			}
+			
 			every_state = {
 				limit = {
 					OR = {
@@ -7474,10 +7430,10 @@ focus_tree = {
 		id = MEX_focus_seize_the_panama_canal_2
 		text = MEX_focus_seize_the_panama_canal
 		icon = GFX_goal_generic_attack_panama
-		prerequisite = { focus = MEX_focus_unify_centroamerica_2 }
-		x = 1
-		y = 2
-		relative_position_id = MEX_focus_unify_centroamerica_2
+		prerequisite = { focus = MEX_focus_integrate_the_south_2 }
+		x = 0
+		y = 1
+		relative_position_id = MEX_focus_integrate_the_south_2
 
 		cost = 5
 		
@@ -7564,59 +7520,11 @@ focus_tree = {
 	}
 
 	focus = {
-		id = MEX_focus_fortify_the_canal_2
-		text = MEX_focus_fortify_the_canal
-		icon = GFX_focus_generic_coastal_fort
-		prerequisite = { focus = MEX_focus_seize_the_panama_canal_2 }
-		x = 1
-		y = 1
-		relative_position_id = MEX_focus_seize_the_panama_canal_2
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 80
-		}
-
-		available = {
-			controls_state = 685
-		}
-
-
-
-		
-		
-		available_if_capitulated = yes
-
-		completion_reward = {
-			685 = {
-				add_building_construction = {
-					type = bunker
-					level = 3
-					province = 7617
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 3
-					province = 7617
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = anti_air_building
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-
-	}
-	focus = {
 		id = MEX_focus_rescind_the_mexican_cession_2
 		text = MEX_focus_rescind_the_mexican_cession
 		icon = GFX_focus_spa_the_war_of_vengeance
 		prerequisite = { focus = MEX_focus_seize_the_panama_canal_2 }
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = MEX_focus_seize_the_panama_canal_2
 
@@ -7656,10 +7564,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_named_threat = {
-				threat = 5
-				name = threat_mexico_rescind_cession
-			}
+			
 			if = {
 				limit = {
 					country_exists = USA
@@ -7808,7 +7713,7 @@ focus_tree = {
 			navy_experience = 10
 			random_owned_controlled_state = {
 				prioritize = { 478 }
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
 					level = 2
@@ -7817,52 +7722,16 @@ focus_tree = {
 			}
 			random_owned_controlled_state = {
 				prioritize = { 485 }
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
 		}
 	}
-	focus = {
-		id = MEX_legacy_of_1864
-		icon = GFX_goal_FRA_restoration
-		x = 1
-		y = 2
-		relative_position_id = MEX_reform_the_imperial_army
-
-		mutually_exclusive = { focus = MEX_legacy_of_new_spain focus = MEX_new_mexican_empire }
-
-		prerequisite = {
-			focus = MEX_reform_the_imperial_army
-		}
-
-		available = {
-			is_subject = no
-			has_war = no
-			is_in_faction = no
-			FRA = {
-				has_government = neutrality
-				is_faction_leader = yes
-			}
-		}
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = yes
-		search_filters = {FOCUS_FILTER_ALLIANCE}
-		completion_reward = {
-			FRA = {
-				country_event = { id = generic.2 hours = 6 }
-			}
-		}
-	}
+	
 	focus = {
 		id = MEX_mimic_the_grande_armee
 		icon = GFX_goal_FRA_militarist_society
@@ -7870,48 +7739,17 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
 		prerequisite = {
-			focus = MEX_legacy_of_1864
+			focus = MEX_focus_soldaderas_2
 		}
 		x = 0
 		y = 1
-		relative_position_id = MEX_legacy_of_1864
+		relative_position_id = MEX_focus_soldaderas_2
 		ai_will_do = {
 			factor = 4
 		}
 		completion_reward = {
+			army_experience = 50
 			add_ideas = FRA_militarist_society
 		}
-	}
-	focus = {
-		id = MEX_the_new_continental_system
-		icon = GFX_focus_AST_never_gallipoli
-		cost = 10
-		prerequisite = {
-			focus = MEX_mimic_the_grande_armee
-		}
-		relative_position_id = MEX_mimic_the_grande_armee
-		x = 0
-		y = 1
-		available = {
-			is_subject = no
-			NOT = { is_in_faction_with = ENG }
-			r56_script_i_am_sane = yes
-		}
-		bypass = {
-			has_war_with = ENG
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-		will_lead_to_war_with = ENG
-		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = ENG
-				expire = 0
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
 	}
 }
