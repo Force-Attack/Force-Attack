@@ -1,0 +1,1427 @@
+
+	#Navy Innovations
+	shared_focus = {
+		id = SAU_navy_innovations
+		icon = GFX_goal_generic_build_navy
+		x = 23
+		y = 0
+		offset = {
+			x = -9
+			y = 0 
+			trigger = {
+				OR = {
+					has_completed_focus = SAU_arab_league
+					has_completed_focus = SAU_the_unifier
+			        has_completed_focus = SAU_caliphate
+					has_focus_tree = SAU_communist
+				}
+			}
+		}
+		cost = 6
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY		
+		}
+		
+		available = {
+			any_state = {
+				is_coastal = yes
+				is_controlled_by = ROOT
+			}		
+		}
+		completion_reward = {
+			navy_experience = 25
+			random_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_coastal = yes
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}					
+		}
+	}
+
+	#Naval Effort
+
+	shared_focus = {
+		id = SAU_naval_effort
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH			
+		}
+		prerequisite = { focus = SAU_navy_innovations }
+		relative_position_id = SAU_navy_innovations
+		ai_will_do = {
+			factor = 0
+		}
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				uses = 1
+				category = dd_tech
+			}
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				uses = 1
+				category = cl_tech
+				category = ca_tech
+			}
+			add_doctrine_cost_reduction = {
+				name = naval_doctrine
+				cost_reduction = 0.25
+				uses = 1
+				category = naval_doctrine
+			}		
+		}
+	}
+
+	#Naval Bomber Effort
+
+	shared_focus = {
+		id = SAU_naval_bomber_effort
+		icon = GFX_goal_generic_air_naval_bomber
+		x = 3
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH			
+		}
+		prerequisite = { focus = SAU_air_innovations  focus = SAU_navy_innovations }
+		relative_position_id = SAU_navy_innovations
+		completion_reward = {
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 1.0
+				uses = 2
+				category = naval_bomber
+			}			
+		}
+	}
+
+	#Construct Radars
+
+	shared_focus = {
+		id = SAU_construct_radars
+		icon = GFX_goal_generic_radar
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY			
+		}
+		prerequisite = { focus = SAU_naval_bomber_effort }
+		relative_position_id = SAU_naval_bomber_effort
+		completion_reward = {
+			air_experience = 25
+			add_tech_bonus = {
+				name = radar_focus
+				bonus = 1.0
+				uses = 1
+				category = radar_tech
+			}		
+		}
+	}
+
+	#Royal Saudi Navy
+	shared_focus = {
+		id = SAU_royal_saudi_navy
+		icon = GFX_goal_SAU_Navy
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		prerequisite = { focus = SAU_naval_effort }
+		relative_position_id = SAU_naval_effort
+		completion_reward = {
+			navy_experience = 25
+			add_ideas = sau_navy_force
+			add_manpower = 10000		
+		}
+	}
+
+	#Expand Dockyard Facilities
+
+	shared_focus = {
+		id = SAU_expand_dockyard_facilities
+		icon = GFX_goal_generic_shipyard
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY			
+		}
+		prerequisite = { focus = SAU_royal_saudi_navy  }
+		relative_position_id = SAU_royal_saudi_navy
+		ai_will_do = {
+			factor = 0
+		}
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_coastal = yes
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}		
+		}
+	}
+
+	#Destroyer focus
+
+	shared_focus = {
+		id = SAU_destroyer_focus
+		icon = GFX_focus_generic_destroyer
+		x = -2
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		prerequisite = { focus = SAU_royal_saudi_navy }
+		relative_position_id = SAU_royal_saudi_navy
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				uses = 2
+				category = dd_tech
+			}
+			add_doctrine_cost_reduction = {
+				name = naval_doctrine
+				cost_reduction = 0.25
+				uses = 1
+				category = naval_doctrine
+			}		
+		}
+	}
+
+	#Convoy Escort focus
+
+	shared_focus = {
+		id = SAU_convoy_escort_focus
+		icon = GFX_goal_generic_navy_cruiser
+		x = 2
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		prerequisite = { focus = SAU_royal_saudi_navy }
+		relative_position_id = SAU_royal_saudi_navy 
+		completion_reward = {
+			add_ideas = british_convoy_discount
+			add_doctrine_cost_reduction = {
+				name = naval_doctrine
+				cost_reduction = 0.25
+				uses = 1
+				category = naval_doctrine
+			}		
+		}
+	}
+
+	#Submarine focus
+
+	shared_focus = {
+		id = SAU_submarine_focus
+		icon = GFX_goal_generic_navy_submarine
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH			
+		}
+		prerequisite = { focus = SAU_convoy_escort_focus }
+		mutually_exclusive = { focus = SAU_battleship_focus }
+		relative_position_id = SAU_convoy_escort_focus
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = GER_u_boat_effort
+				bonus = 1.0
+				uses = 2
+				category = ss_tech
+			}		
+		}
+	}
+
+	#Battleship focus
+
+	shared_focus = {
+		id = SAU_battleship_focus
+		icon = GFX_goal_generic_naval_battleship2
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_destroyer_focus }
+		mutually_exclusive = { focus = SAU_submarine_focus }
+		relative_position_id = SAU_destroyer_focus
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = uk_battleship_focus
+				bonus = 1.0
+				uses = 2
+				category = bb_tech
+			}
+			add_tech_bonus = {
+				name = bc_bonus
+				bonus = 1.0
+				uses = 1
+				category = bc_tech
+			}	
+		}
+	}
+
+	#Secure the Persian Gulf and Arabian Sea
+
+	shared_focus = {
+		id = SAU_secure_the_persian_gulf_and_arabian_sea
+		icon = GFX_goal_generic_persian_gulf_shine
+		x = 0
+		y = 3
+		cost = 9
+		search_filters = {FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT}
+		prerequisite = { focus = SAU_battleship_focus focus = SAU_submarine_focus }
+		relative_position_id = SAU_royal_saudi_navy
+
+		available = {
+			any_state = {
+				SAU_state_is_in_the_arab_sea = yes
+				controller = {
+					NOT = {
+						OR = {
+							tag = ROOT
+							is_subject_of = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+				}
+			}
+			is_subject = no
+		}
+
+		bypass = {
+			NOT = {
+				any_state = {
+					SAU_state_is_in_the_arab_sea = yes
+					controller = {
+						NOT = {
+							OR = {
+								tag = ROOT
+								is_subject_of = ROOT
+								is_in_faction_with = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = SAU_dominance_in_the_gulf_claims_tt
+			every_state = {
+				limit = {
+					SAU_state_is_in_the_arab_sea = yes
+					NOT = { is_controlled_by = ROOT }
+					NOT = {
+						any_country = {
+							OR = {
+								is_in_faction_with = ROOT
+								is_subject_of = ROOT
+							}
+							controls_state = PREV
+						}
+					}
+					NOT = { is_claimed_by = ROOT }
+				}
+				add_claim_by = ROOT
+				set_state_flag = SAU_dominance_in_the_gulf_claim_flag
+			}
+			if = {
+			limit = {
+					any_other_country = {
+						any_controlled_state = {
+							SAU_state_is_in_the_arab_sea = yes
+						}
+						NOT = { is_subject_of = ROOT }
+						NOT = { is_in_faction_with = ROOT }
+					}
+				}
+				custom_effect_tooltip = SAU_dominance_in_the_gulf_wargoals_tt
+				every_other_country = {
+					limit = {
+						any_controlled_state = {
+							SAU_state_is_in_the_arab_sea = yes
+						}
+						NOT = { is_subject_of = ROOT }
+						NOT = { is_in_faction_with = ROOT }
+					}
+					hidden_effect = {
+						ROOT = {
+							create_wargoal = {
+								type = annex_everything
+								target = PREV
+								expire = 730
+							}
+						}
+					}
+				}
+			}
+			effect_tooltip = {
+				activate_mission = SAU_dominance_in_the_arab_sea_mission
+			}
+			add_timed_idea = {
+					idea = SAU_supremacy_on_the_gulf
+					days = 180
+				}
+		}
+	}
+
+	#Supremacy of Navy
+
+	shared_focus = {
+		id = SAU_supremacy_of_navy
+		icon = GFX_SAU_Supremacy_of_navy
+		x = 0
+		y = 1
+		cost = 9
+		search_filters = {
+			FOCUS_FILTER_POLITICAL			
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		prerequisite = { focus = SAU_secure_the_persian_gulf_and_arabian_sea }
+		mutually_exclusive = { focus = SAU_supremacy_of_army  focus = SAU_supremacy_of_air_forces  }
+		relative_position_id = SAU_secure_the_persian_gulf_and_arabian_sea
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = sau_navy_force
+				add_idea = sau_navy_supremacy
+			}		
+		}
+	}
+
+	#Air Innovations
+
+	shared_focus = {
+		id = SAU_air_innovations
+		icon = GFX_goal_generic_build_airforce
+		x = 29
+		y = 0
+		offset = {
+			x = -9
+			y = 0
+			trigger = {
+				OR = {
+					has_completed_focus = SAU_arab_league
+					has_completed_focus = SAU_the_unifier
+			        has_completed_focus = SAU_caliphate
+					has_focus_tree = SAU_communist
+				}
+			}
+		}
+		cost = 6
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+							    building = air_base
+							    size > 1
+						    }
+					    }
+				    }
+			    }
+			    random_owned_controlled_state = {
+				    limit = {
+					    free_building_slots = {
+					        building = air_base
+					        size > 1
+				        }
+			        }
+				    add_building_construction = {
+				     	type = air_base
+					    level = 2
+					    instant_build = yes
+				    }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}		
+		}
+	}
+
+	#Pilot Training Program
+
+	shared_focus = {
+		id = SAU_pilot_training_program
+		icon = GFX_goal_generic_air_fighter2
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH			
+		}
+		prerequisite = { focus = SAU_air_innovations  }
+		relative_position_id = SAU_air_innovations
+		completion_reward = {
+			add_ideas = sau_pilot_training		
+		}
+	}
+
+	#Air-Army Joint Command
+
+	shared_focus = {
+		id = SAU_air_army_joint_command
+		icon = GFX_SAU_air_army_joint_command
+		x = 3
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_army_innovations  focus = SAU_air_innovations  }
+		relative_position_id = SAU_air_innovations
+		completion_reward = {
+			air_experience = 25
+			army_experience = 25
+			add_ideas = sau_air_army_joint	
+		}
+	}
+
+	#Close Air Support focus
+
+	shared_focus = {
+		id = SAU_close_air_support_focus
+		icon = GFX_goal_generic_CAS
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_air_army_joint_command  }
+		relative_position_id = SAU_air_army_joint_command
+		completion_reward = {
+			air_experience = 25
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				category = cas_bomber			
+			}			
+		}
+	}
+
+	#Royal Saudi Air Force
+	shared_focus = {
+		id = SAU_royal_saudi_air_force
+		icon = GFX_goal_SAU_Airforce
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_pilot_training_program  }
+		relative_position_id = SAU_pilot_training_program
+		completion_reward = {
+			air_experience = 50
+			add_ideas = sau_air_force
+			add_manpower = 10.000
+		}
+	}
+
+	#Aircraft Production Group
+
+	shared_focus = {
+		id = SAU_aircraft_production_group
+		icon = GFX_z_goal_aircraft_development
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY			
+		}
+		prerequisite = { focus = SAU_royal_saudi_air_force  }
+		relative_position_id = SAU_royal_saudi_air_force
+		completion_reward = {
+			air_experience = 25
+			add_ideas = sau_local_development		
+		}
+	}
+
+	#Fighter focus
+
+	shared_focus = {
+		id = SAU_fighter_focus
+		icon = GFX_goal_generic_air_fighter
+		x = -1
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_aircraft_production_group  }
+		mutually_exclusive = { focus = SAU_bomber_focus  }
+		relative_position_id = SAU_aircraft_production_group
+		completion_reward = {
+			air_experience = 25
+			add_tech_bonus = {
+				name = fighter_command_focus
+				bonus = 1.0
+				uses = 2
+				category = air_equipment
+			}	
+		}
+	}
+
+	#Bomber focus
+
+	shared_focus = {
+		id = SAU_bomber_focus
+		icon = GFX_goal_generic_air_bomber
+		x = 1
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_aircraft_production_group  }
+		mutually_exclusive = { focus = SAU_fighter_focus  }
+		relative_position_id = SAU_aircraft_production_group
+		completion_reward = {
+			air_experience = 25
+			add_tech_bonus = {
+				name = bomber_command_focus
+				bonus = 1.0
+				uses = 1
+				category = tactical_bomber
+				category = cat_strategic_bomber
+			}		
+		}
+	}
+
+	#Long-Range Escorts
+
+	shared_focus = {
+		id = SAU_long_range_escorts
+		icon = GFX_focus_usa_escort_fighters
+		x = 0
+		y = 2
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH			
+		}
+		prerequisite = { focus = SAU_fighter_focus focus = SAU_bomber_focus }
+		relative_position_id = SAU_aircraft_production_group
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_long_range_escorts
+				bonus = 1.0
+				uses = 2
+				category = cat_heavy_fighter
+			}		
+		}
+	}
+
+	#Supremacy of Air Forces
+
+	shared_focus = {
+		id = SAU_supremacy_of_air_forces
+		icon = GFX_SAU_Supremacy_of_air_forces
+		x = 0
+		y = 1
+		cost = 9
+		search_filters = {
+			FOCUS_FILTER_POLITICAL			
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		prerequisite = { focus = SAU_long_range_escorts  }
+		mutually_exclusive = { focus = SAU_supremacy_of_army  focus = SAU_supremacy_of_navy  }
+		relative_position_id = SAU_long_range_escorts
+		completion_reward = {
+			remove_ideas = sau_pilot_training
+			swap_ideas = {
+			    remove_idea = sau_air_force
+				add_idea = sau_air_supremacy
+			}	
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.25
+			}
+		}
+	}
+
+	#Army Innovations
+	shared_focus = {
+		id = SAU_army_innovations
+		icon = GFX_focus_generic_military_mission
+		x = 35
+		y = 0
+		offset = {
+			x = -9
+			y = 0
+			trigger = {
+				OR = {
+					has_completed_focus = SAU_arab_league
+					has_completed_focus = SAU_the_unifier
+			        has_completed_focus = SAU_caliphate
+					has_focus_tree = SAU_communist
+				}
+			}
+		}
+		cost = 6
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		completion_reward = {
+			army_experience = 20
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}		
+			add_manpower = 10000
+		}
+	}
+
+	#Modernizing the Army
+	shared_focus = {
+		id = SAU_modernizing_the_army
+		icon = GFX_goal_SAU_Army
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = SAU_army_innovations  }
+		relative_position_id = SAU_army_innovations
+		completion_reward = {
+			army_experience = 15
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = support_tech
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.25
+				uses = 1 
+				category = land_doctrine
+			}		
+			add_manpower = 10000
+		}
+	}
+
+	#Artillery Effort
+
+	shared_focus = {
+		id = SAU_artillery_effort
+		icon = GFX_goal_generic_army_artillery2
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH			
+		}
+		prerequisite = { focus = SAU_modernizing_the_army  }
+		relative_position_id = SAU_modernizing_the_army
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 2
+				category = artillery
+			}		
+		}
+	}
+
+	#New Weapons, New Tactics
+
+	shared_focus = {
+		id = SAU_new_weapons_new_tactics
+		icon = GFX_focus_generic_military_equipment
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_artillery_effort  }
+		relative_position_id = SAU_artillery_effort
+		completion_reward = {
+			army_experience = 20
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1 
+				category = land_doctrine
+			}		
+		}
+	}
+
+	#Arabian Armored Corps
+
+	shared_focus = {
+		id = SAU_arabian_armored_corps
+		icon = GFX_goal_generic_army_tanks
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_new_weapons_new_tactics  }
+		relative_position_id = SAU_new_weapons_new_tactics
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = armor
+			}
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = motorized_equipment
+			}	
+		}
+	}
+
+	#Lessons of 1934
+	shared_focus = {
+		id = SAU_lessons_of_1934
+		icon = GFX_goal_step_on_skull
+		x = 2
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_army_innovations  }
+		relative_position_id = SAU_army_innovations
+		completion_reward = {
+			army_experience = 30
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.75
+				uses = 1 
+				category = land_doctrine
+			}		
+			add_manpower = 20000
+		}
+	}
+
+	#Support Companies
+
+	shared_focus = {
+		id = SAU_support_companies
+		icon = GFX_goal_generic_support_equipment
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH	
+		}
+		prerequisite = { focus = SAU_lessons_of_1934  }
+		relative_position_id = SAU_lessons_of_1934
+		completion_reward = {
+			army_experience = 20
+			add_tech_bonus = {
+				name = SAU_support_companies
+				bonus = 1
+				uses = 2
+				category = support_tech
+			}		
+		}
+	}
+
+	#Saudi Special Forces
+
+	shared_focus = {
+		id = SAU_saudi_special_forces
+		icon = GFX_z_goal_arab_sultan_army
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH	
+		}
+		prerequisite = { focus = SAU_support_companies  }
+		relative_position_id = SAU_support_companies
+		completion_reward = {
+			add_ideas = special_forces		
+		}
+	}
+
+	#Supremacy on Desert
+
+	shared_focus = {
+		id = SAU_supremacy_on_desert
+		icon = GFX_SAU_supremacy_on_desert
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_WAR_SUPPORT		
+		}
+		prerequisite = { focus = SAU_saudi_special_forces  }
+		relative_position_id = SAU_saudi_special_forces
+		completion_reward = {
+			add_ideas = sau_desert_buff		
+		}
+	}
+
+	#Our Setback in Yemen
+
+	shared_focus = {
+		id = SAU_our_setback_in_yemen
+		icon = GFX_goal_generic_drafted_army
+		x = 4
+		y = 1
+		cost = 6
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = SAU_army_innovations  }
+		relative_position_id = SAU_army_innovations
+		completion_reward = {
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 2
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+			}		
+		}
+	}
+
+	#Create Army Academy
+
+	shared_focus = {
+		id = SAU_create_army_academy
+		icon = GFX_z_goal_arab_military_school
+		x = 0
+		y = 2
+		cost = 6
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_our_setback_in_yemen  }
+		relative_position_id = SAU_our_setback_in_yemen
+		completion_reward = {
+			army_experience = 15
+			every_army_leader = {
+				add_planning = 1
+			}
+			add_ideas = sau_army_academy			
+		}
+	}
+
+	#Reinvigorate the Army
+
+	shared_focus = {
+		id = SAU_reinvigorate_the_army
+		icon = GFX_focus_chi_army_reform
+		x = 0
+		y = 1
+		cost = 6
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		prerequisite = { focus = SAU_create_army_academy  }
+		relative_position_id = SAU_create_army_academy
+		completion_reward = {
+			add_ideas = sau_reinvigorate_army			
+		}
+	}
+
+	#Army Reform
+
+	shared_focus = {
+		id = SAU_army_reform
+		icon = GFX_z_goal_arab_creation_of_a_modern_army
+		x = 0
+		y = 1
+		cost = 8
+		search_filters = {
+			FOCUS_FILTER_RESEARCH		
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 3
+				is_historical_focus_on = yes
+			}
+		}
+		prerequisite = { focus = SAU_reinvigorate_the_army  } prerequisite = { focus = SAU_arabian_armored_corps  } prerequisite = { focus = SAU_supremacy_on_desert  }
+		relative_position_id = SAU_supremacy_on_desert
+		completion_reward = {
+			if = {
+			    limit = { 
+				    has_idea = sau_red_army
+					has_government = communism
+				}
+			    remove_ideas = {
+				    sau_desert_buff sau_reinvigorate_army special_forces sau_red_army
+			    }
+			    add_ideas = sau_red_royal_army
+		    }
+			else = {
+			   remove_ideas = {
+				    sau_desert_buff sau_reinvigorate_army special_forces
+			    }
+			    add_ideas = sau_royal_army
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+		}
+	}
+
+	#Supremacy of Army
+	shared_focus = {
+		id = SAU_supremacy_of_army
+		icon = GFX_SAU_Supremacy_of_army
+		x = 0
+		y = 1
+		cost = 9
+		search_filters = {
+			FOCUS_FILTER_POLITICAL		
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 3
+				is_historical_focus_on = yes
+			}
+		}
+		prerequisite = { focus = SAU_army_reform  }
+		mutually_exclusive = { focus = SAU_supremacy_of_air_forces  focus = SAU_supremacy_of_navy  }
+		relative_position_id = SAU_army_reform
+		available = {
+			OR = {
+				has_idea = sau_red_royal_army
+				has_idea = sau_royal_army
+			}
+		}
+		completion_reward = {
+			if = {
+			    limit = { 
+				    has_idea = sau_royal_army
+				}
+			    swap_ideas = {
+				    remove_idea = sau_royal_army
+				    add_idea = sau_army_supremacy
+			    }
+			}
+			else_if = {
+				limit = {
+					has_idea = sau_red_royal_army
+				}
+				swap_ideas = {
+				    remove_idea = sau_red_royal_army
+				    add_idea = sau_red_royal_army_supremacy
+			    }
+			}
+			else = {
+				add_manpower = 75000
+			}
+		}
+	}
+
+#United Arabia
+shared_focus = {
+	id = SAU_united_arabia
+	text = ARB_united_arabia
+	icon = GFX_z_goal_arab_strengthening_centralization
+	x = 23
+	y = 8
+	offset = {
+		x = -3
+		y = 0
+		trigger = {
+			OR = {
+				has_completed_focus = SAU_arab_league
+				has_completed_focus = SAU_the_unifier
+				has_completed_focus = SAU_caliphate
+				has_focus_tree = SAU_communist
+			}
+		}
+	}
+	cost = 5
+	search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+	allow_branch = {
+		NOT = {
+			OR = {
+				has_global_flag = his_only
+				has_game_rule = {
+					rule = ef_historical_only
+					option = ENABLED
+				}
+			}
+		}
+	}
+	available = {
+		OR = {
+			custom_trigger_tooltip = {
+				tooltip = is_rashidun_tt
+				has_cosmetic_tag = sau_rashidun_caliphate
+			}
+			custom_trigger_tooltip = {
+				tooltip = is_umayyad_tt
+				has_cosmetic_tag = sau_umayyad_caliphate	
+			}
+			custom_trigger_tooltip = {
+				tooltip = is_arab_tt
+				has_cosmetic_tag = ARA_UNIFIED	
+			}
+			custom_trigger_tooltip = {
+				tooltip = is_uar_tt
+				has_cosmetic_tag = sau_united_arab	
+			}
+			custom_trigger_tooltip = {
+				tooltip = is_rdca_tt
+				has_cosmetic_tag = sau_regional_defense_council_of_arabia_anarcho	
+			}
+			custom_trigger_tooltip = {
+				tooltip = is_gdca_tt
+				has_cosmetic_tag = sau_global_defense_council_anarcho	
+			}
+		}
+	}
+	completion_reward = {
+		add_stability = 0.1
+		add_war_support = 0.1
+		add_political_power = 100	
+	}
+}
+
+#Arabian-Iraqi Railways
+shared_focus = {
+	id = SAU_arabian_iraqi_railways
+	text = ARB_arabian_iraqi_railways
+	icon = GFX_goal_generic_construct_infrastructure
+	x = -1
+	y = 1
+	cost = 5
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+	prerequisite = { focus = SAU_united_arabia }
+	relative_position_id = SAU_united_arabia
+	available = {
+		is_puppet = no
+		AND = {
+			controls_state = 675
+			controls_state = 291
+			IRQ = {
+				OR = {
+					is_puppet_of = ROOT
+					NOT = {
+						exists = yes
+					}
+				}
+			}
+		}		
+	}
+	completion_reward = {
+		build_railway = {
+			#level = 1
+			path = { 7994 10876 10744 }
+		}
+	}
+}
+
+#Push Through Iran
+shared_focus = {
+	id = SAU_push_through_iran
+	text = ARB_push_through_iran
+	icon = GFX_z_goal_continue_construction_of_transiranian_road
+	x = 0
+	y = 1
+	cost = 5
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+	prerequisite = { focus = SAU_arabian_iraqi_railways }
+	relative_position_id = SAU_arabian_iraqi_railways
+	available = {
+		is_puppet = no
+		AND = {
+			controls_state = 291
+			controls_state = 421
+			controls_state = 417
+			controls_state = 266
+			PER = {
+				OR = {
+					is_puppet_of = ROOT
+					NOT = {
+						exists = yes
+					}
+				}
+			}
+		}		
+	}
+	completion_reward = {
+		build_railway = {
+			#level = 1
+			path = { 2097 12855 }
+		}
+		build_railway = {
+			#level = 1
+			path = { 2065 5050 829 12855 }
+		}
+	}
+}
+
+#Merge the Industries
+shared_focus = {
+	id = SAU_merge_the_industries
+	text = ARB_merge_the_industries
+	icon = GFX_z_goal_direct_zakat_to_industry
+	x = 1
+	y = 1
+	cost = 5
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+	prerequisite = { focus = SAU_united_arabia }
+	relative_position_id = SAU_united_arabia
+	completion_reward = {
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 0
+					include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}			
+		random_owned_controlled_state = {
+			limit = {
+				free_building_slots = {
+					building = arms_factory
+					size > 0
+					include_locked = yes
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}		
+	}
+}
+
+#Extracting Soil
+shared_focus = {
+	id = SAU_extract_soil
+	text = ARB_extract_soil
+	icon = GFX_BRA_improve_mine_icon
+	x = 0
+	y = 1
+	cost = 5
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+	prerequisite = { focus = SAU_merge_the_industries }
+	relative_position_id = SAU_merge_the_industries
+	available = {
+		is_puppet = no
+		AND = {
+			controls_state = 292	
+			controls_state = 678	
+		}
+	}
+	completion_reward = {
+		add_resource = {
+			type = steel
+			amount = 12
+			state = 292
+		}
+		add_resource = {
+			type = aluminium
+			amount = 12
+			state = 678
+		}	
+	}
+}
+
+#Iraqi Oil Wells
+shared_focus = {
+	id = SAU_iraqi_oil_wells
+	text  = ARB_iraqi_oil_wells_SAU
+	icon = GFX_SAU_Oil_wells
+	x = 3
+	y = 1
+	cost = 5
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+	prerequisite = { focus = SAU_united_arabia }
+	relative_position_id = SAU_united_arabia
+	available = {
+		is_puppet = no
+		AND = {
+			controls_state = 676
+			IRQ = {
+				OR = {
+					is_puppet_of = ROOT
+					NOT = {
+						exists = yes
+					}
+				}
+			}
+		}
+	}
+	completion_reward = {
+		add_resource = {
+			type = oil
+			amount = 12
+			state = 676
+		}		
+	}
+}
+
+#Iranian Oil Wells
+shared_focus = {
+	id = SAU_iranian_oil_wells
+	text = ARB_iranian_oil_wells
+	icon = GFX_z_goal_oil_derrick
+	x = 0
+	y = 1
+	cost = 5
+	search_filters = { FOCUS_FILTER_INDUSTRY }
+	prerequisite = { focus = SAU_iraqi_oil_wells }
+	relative_position_id = SAU_iraqi_oil_wells
+	available = {
+		is_puppet = no
+		AND = {
+			controls_state = 413
+			PER = {
+				OR = {
+					is_puppet_of = ROOT
+					NOT = {
+						exists = yes
+					}
+				}
+			}
+		}		
+	}
+	completion_reward = {
+		add_resource = {
+			type = oil
+			amount = 12
+			state = 413
+		}		
+	}
+}
+
