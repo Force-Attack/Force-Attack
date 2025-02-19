@@ -3445,8 +3445,23 @@ on_actions = {
 			}
 		}
 	}
-
-
+	#UNLIMITED (IF GAME RULE)
+	on_startup = {
+		effect = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = special_forces_limit
+						option = SPECIAL_FORCES_CAP_UNLIMITED
+					}
+				}
+				every_country = {
+					add_ideas = special_forces_cap_idea
+				}
+			}
+		}
+	}
+	#SPECIAL FORCES HARD CAP
 	on_weekly = {
 		effect = {
 			set_variable = {
@@ -3480,19 +3495,31 @@ on_actions = {
 			
 			if = {
 				limit = {
-					check_variable = { 
-						total_special_forces_count > 1000
+					AND = {
+						has_game_rule = {
+							rule = special_forces_limit
+							option = DEFAULT
+						}
+						check_variable = { 
+							total_special_forces_count > 1000
+						}
 					}
 				}
 				country_event = my_mod.1
 			}
 			if = {
 				limit = {
-					has_country_flag = special_forces_penalized_flag
-					check_variable = {
-						var = total_special_forces_count 
-						value = 1000
-						compare = less_than_or_equals
+					AND = {
+						has_game_rule = {
+							rule = special_forces_limit
+							option = DEFAULT
+						}
+						has_country_flag = special_forces_penalized_flag
+						check_variable = {
+							var = total_special_forces_count 
+							value = 1000
+							compare = less_than_or_equals
+						}
 					}
 				}
 				country_event = my_mod.2	
