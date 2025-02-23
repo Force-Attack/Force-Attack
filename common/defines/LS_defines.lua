@@ -228,7 +228,7 @@ NDefines.NAir.SUPPLY_NEED_FACTOR = 0.22 -- 0.28
 
 NDefines.NAir.AIR_WING_XP_LEVELS = {20, 40, 60, 80, 100, 140, 180, 220, 260, 300, 390, 480, 570, 660, 750, 780, 810, 840, 870, 900}
 NDefines.NAir.AIR_WING_XP_TRAINING_MAX = 300.0
-NDefines.NAir.AIR_WING_MAX_STATS_BOMBING = 1000
+NDefines.NAir.AIR_WING_MAX_STATS_BOMBING = 100
 NDefines.NAir.AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 4.5
 NDefines.NAir.AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.01
 NDefines.NAir.AIR_WING_XP_LOSS_WHEN_KILLED = 200
@@ -272,7 +272,7 @@ NDefines.NAir.MISSION_COMMAND_POWER_COSTS = { -- command power cost per plane to
     
 NDefines.NAir.NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 25.0
 
-NDefines.NAir.AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.10				-- 5x levels = 50% defense from bombing. Reduced since Technology would otherwise give you above 100% damage reduction.
+NDefines.NAir.AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.12			-- 5x levels = 50% defense from bombing. Reduced since Technology would otherwise give you above 100% damage reduction.
 --------------------------------------------------------------------------------------------------------------
 -- RESEARCH
 --------------------------------------------------------------------------------------------------------------
