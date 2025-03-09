@@ -5,7 +5,7 @@ tags={
 	"Fixes"
 	"Gameplay"
 }
-name="Force Attack-dev"
+name="Force Attack"
 picture="thumbnail.png"
 replace_path="history/states"
 replace_path="map/strategicregions"
