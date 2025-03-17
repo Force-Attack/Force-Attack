@@ -2259,7 +2259,7 @@ focus_tree = {
 		id = TUR_rebuilding_our_nation
 		icon = GFX_goal_generic_consumer_goods
 		prerequisite = { focus = TUR_pivot_to_the_past }
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = TUR_pivot_to_the_past
 		cost = 5
@@ -2280,10 +2280,10 @@ focus_tree = {
 	focus = {
 		id = TUR_restore_the_divan
 		icon = GFX_focus_generic_improve_the_administration
-		prerequisite = { focus = TUR_rebuilding_our_nation }
-		x = -1
+		prerequisite = { focus = TUR_pivot_to_the_past }
+		x = 1
 		y = 1
-		relative_position_id = TUR_rebuilding_our_nation
+		relative_position_id = TUR_pivot_to_the_past
 		cost = 5
 		ai_will_do = {
 			base = 10
@@ -2420,10 +2420,10 @@ focus_tree = {
 	focus = {
 		id = TUR_janissary_reform
 		icon = GFX_goal_generic_army_professionalism
-		prerequisite = { focus = TUR_rebuilding_our_nation }
+		prerequisite = { focus = TUR_restore_the_divan }
 		x = 1
 		y = 1
-		relative_position_id = TUR_rebuilding_our_nation
+		relative_position_id = TUR_restore_the_divan
 		cost = 5
 		ai_will_do = {
 			base = 10
@@ -2433,13 +2433,69 @@ focus_tree = {
 			add_ideas = TUR_janissary_army
 		}
 	}
+	focus = {
+		id = TUR_refining_our_strategies
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		prerequisite = { focus = TUR_janissary_reform  }
+		x = 0
+		y = 1
+		relative_position_id = TUR_janissary_reform
+		cost = 10
+		ai_will_do = {
+			base = 10
+		}
 
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = TUR_refining_our_strategies
+				cost_reduction = 1.0
+				uses = 2
+				category = land_doctrine
+			}
+			add_doctrine_cost_reduction = {
+				name = TUR_refining_our_strategies
+				cost_reduction = 1.0
+				uses = 2
+				category = naval_doctrine
+			}
+			add_doctrine_cost_reduction = {
+				name = TUR_refining_our_strategies
+				cost_reduction = 1.0
+				uses = 2
+				category = air_doctrine
+			}
+		}
+	}
+	focus = {
+		id = TUR_reinstate_the_darulfununu_sahane
+		icon = GFX_goal_generic_scientific_exchange
+		prerequisite = { focus = TUR_refining_our_strategies }
+		x = 0
+		y = 2
+		relative_position_id = TUR_refining_our_strategies
+		cost = 8
+		ai_will_do = {
+			base = 10
+		}
+		
+		available = {
+			num_of_factories > 70
+		}
+
+		bypass = {
+		}
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
 	focus = {
 		id = TUR_return_of_the_sultan
 		icon = GFX_focus_TUR_pivot_to_the_past
 		prerequisite = { focus = TUR_restore_the_divan }
-		prerequisite = { focus = TUR_janissary_reform}
-		x = 1
+		prerequisite = { focus = TUR_rebuilding_our_nation }
+		x = -1
 		y = 1
 		relative_position_id = TUR_restore_the_divan
 		cost = 7
@@ -2538,8 +2594,8 @@ focus_tree = {
 			}
 		}
 		prerequisite = { focus = TUR_return_of_the_sultan }
-		x = 2
-		y = 1
+		x = 1
+		y = 2
 		relative_position_id = TUR_return_of_the_sultan
 		cost = 8
 		ai_will_do = {
@@ -2597,8 +2653,8 @@ focus_tree = {
 		id = TUR_aligning_bulgaria
 		icon = GFX_focus_generic_befriend_bulgaria
 		prerequisite = { focus = TUR_return_of_the_sultan }
-		x = -2
-		y = 1
+		x = -1
+		y = 2
 		relative_position_id = TUR_return_of_the_sultan
 		cost = 5
 		ai_will_do = {
@@ -2648,7 +2704,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = TUR_aligning_bulgaria focus = TUR_press_the_austro_hungarian_claim focus = TUR_reclaim_macedonia }
 		x = 0
-		y = 1
+		y = 2
 		relative_position_id = TUR_reclaim_macedonia
 		cost = 5
 		ai_will_do = {
@@ -2770,14 +2826,18 @@ focus_tree = {
 
 	focus = {
 		id = TUR_expanding_the_saadabad_pact
-		icon = GFX_focus_TUR_treaty_of_saadabad
-		prerequisite = { focus = TUR_press_the_austro_hungarian_claim }
-		x = 1
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = TUR_reclaiming_our_lost_empire }
+		x = -2
 		y = 1
-		relative_position_id = TUR_press_the_austro_hungarian_claim
-		cost = 5
+		relative_position_id = TUR_reclaiming_our_lost_empire
+		cost = 10
 		ai_will_do = {
 			base = 10
+		}
+
+		available = {
+			is_subject = no
 		}
 
 		bypass = {
@@ -2853,9 +2913,10 @@ focus_tree = {
 			}
 		}
 	}
+	
 	focus = {
 		id = TUR_the_pan_national_association_of_ulemas
-		icon = GFX_goal_islam_and_state
+		icon = GFX_goal_anschluss
 		prerequisite = { focus = TUR_expanding_the_saadabad_pact }
 		x = 0
 		y = 1
@@ -2865,8 +2926,7 @@ focus_tree = {
 			base = 10
 		}
 
-		bypass = {
-		# broken
+		#bypass = {
 		#	custom_trigger_tooltip = { 
 		#		tooltip = TUR_no_faction_alliance_members_tt
 		#		AND = {
@@ -2884,6 +2944,10 @@ focus_tree = {
 		#			}
 		#		}
 		#	}
+		#}
+
+		available = {
+			is_subject = no
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
@@ -2902,8 +2966,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					AFG = {
-						NOT = { is_in_faction_with = TUR }
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							NOT = { is_in_faction_with = TUR }
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				effect_tooltip = { TUR = { puppet = AFG } }
@@ -2912,8 +2978,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					PER = {
-						NOT = { is_in_faction_with = TUR }
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							NOT = { is_in_faction_with = TUR }
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				effect_tooltip = { TUR = { puppet = PER } }
@@ -2922,8 +2990,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					IRQ = {
-						NOT = { is_in_faction_with = TUR }
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							NOT = { is_in_faction_with = TUR }
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				effect_tooltip = { TUR = { puppet = IRQ } }
@@ -2932,8 +3002,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					SYR = {
-						NOT = { is_in_faction_with = TUR }
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							NOT = { is_in_faction_with = TUR }
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				effect_tooltip = { TUR = { puppet = SYR } }
@@ -2942,8 +3014,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					AFG = {
-						is_in_faction_with = TUR
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							is_in_faction_with = TUR
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				TUR = { puppet = AFG }
@@ -2952,8 +3026,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					PER = {
-						is_in_faction_with = TUR
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							is_in_faction_with = TUR
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				TUR = { puppet = PER }
@@ -2962,8 +3038,10 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					IRQ = {
-						is_in_faction_with = TUR
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							is_in_faction_with = TUR
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				TUR = { puppet = IRQ }
@@ -2972,21 +3050,27 @@ focus_tree = {
 				limit = {
 					has_completed_focus = TUR_treaty_of_saadabad
 					SYR = {
-						is_in_faction_with = TUR
-						has_country_flag = TUR_saadabad_pact_member
+						AND = {
+							is_in_faction_with = TUR
+							has_country_flag = TUR_saadabad_pact_member
+						}
 					}
 				}
 				TUR = { puppet = SYR }
 			}
 		}
 	}
+
 	focus = {
 		id = TUR_rebuild_istanbul
 		icon = GFX_goal_generic_industrial_planning
-		prerequisite = { focus = TUR_reclaiming_our_lost_empire }
+		prerequisite = { focus = TUR_rebuilding_our_nation }
 		x = -2
 		y = 1
-		relative_position_id = TUR_reclaiming_our_lost_empire
+		available = {
+			has_completed_focus = TUR_reclaiming_our_lost_empire
+		}
+		relative_position_id = TUR_rebuilding_our_nation
 		cost = 5
 		ai_will_do = {
 			base = 10
@@ -3019,7 +3103,7 @@ focus_tree = {
 		id = TUR_invest_steel
 		icon = GFX_focus_generic_steel
 		prerequisite = { focus = TUR_rebuild_istanbul }
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = TUR_rebuild_istanbul
 		cost = 8
@@ -3057,10 +3141,10 @@ focus_tree = {
 	focus = {
 		id = TUR_invest_in_turkey
 		icon = GFX_goal_generic_construction
-		prerequisite = { focus = TUR_invest_steel }
-		x = 0
+		prerequisite = { focus = TUR_rebuild_istanbul }
+		x = 1
 		y = 1
-		relative_position_id = TUR_invest_steel
+		relative_position_id = TUR_rebuild_istanbul
 		cost = 10
 		ai_will_do = {
 			base = 10
@@ -3154,7 +3238,10 @@ focus_tree = {
 		id = TUR_invest_in_navy
 		icon = GFX_goal_coastal_navy
 		prerequisite = { focus = TUR_invest_in_turkey }
-		x = -2
+		prerequisite = {
+			focus = TUR_invest_steel
+		}
+		x = 0
 		y = 2
 		relative_position_id = TUR_invest_steel
 		cost = 8
@@ -3250,6 +3337,9 @@ focus_tree = {
 		id = TUR_imperial_factories
 		icon = GFX_goal_generic_barrack_industry
 		prerequisite = { focus = TUR_invest_in_turkey }
+		prerequisite = {
+			focus = TUR_invest_steel
+		}
 		x = 2
 		y = 2
 		relative_position_id = TUR_invest_steel
@@ -3302,8 +3392,11 @@ focus_tree = {
 		id = TUR_supporting_the_east
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = TUR_invest_in_turkey }
-		x = 0
-		y = 2
+		prerequisite = {
+			focus = TUR_invest_steel
+		}
+		x = 1
+		y = 1
 		relative_position_id = TUR_invest_steel
 		cost = 7
 		ai_will_do = {
@@ -3367,7 +3460,7 @@ focus_tree = {
 		icon = GFX_goal_polish_wartime_industry
 		prerequisite = { focus = TUR_imperial_factories }
 		prerequisite = { focus = TUR_invest_in_navy }
-		x = 0
+		x = 1
 		y = 3
 		relative_position_id = TUR_invest_steel
 		cost = 10
@@ -3454,70 +3547,12 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = TUR_refining_our_strategies
-		icon = GFX_goal_generic_occupy_states_ongoing_war
+		id = TUR_the_red_apples_of_sevres
+		icon = GFX_focus_focus_fra_ratify_stresa
 		prerequisite = { focus = TUR_reclaiming_our_lost_empire }
 		x = 0
 		y = 1
 		relative_position_id = TUR_reclaiming_our_lost_empire
-		cost = 10
-		ai_will_do = {
-			base = 10
-		}
-
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = TUR_refining_our_strategies
-				cost_reduction = 1.0
-				uses = 2
-				category = land_doctrine
-			}
-			add_doctrine_cost_reduction = {
-				name = TUR_refining_our_strategies
-				cost_reduction = 1.0
-				uses = 2
-				category = naval_doctrine
-			}
-			add_doctrine_cost_reduction = {
-				name = TUR_refining_our_strategies
-				cost_reduction = 1.0
-				uses = 2
-				category = air_doctrine
-			}
-		}
-	}
-	focus = {
-		id = TUR_reinstate_the_darulfununu_sahane
-		icon = GFX_goal_generic_scientific_exchange
-		prerequisite = { focus = TUR_refining_our_strategies }
-		x = 0
-		y = 1
-		relative_position_id = TUR_refining_our_strategies
-		cost = 8
-		ai_will_do = {
-			base = 10
-		}
-		
-		available = {
-			num_of_factories > 70
-		}
-
-		bypass = {
-		}
-
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
-	focus = {
-		id = TUR_the_red_apples_of_sevres
-		icon = GFX_focus_focus_fra_ratify_stresa
-		prerequisite = { focus = TUR_desert_camel_corps }
-		prerequisite = { focus = TUR_imperial_factories  focus = TUR_invest_in_navy } 
-		x = 0
-		y = 3
-		relative_position_id = TUR_desert_camel_corps
 		cost = 10
 		ai_will_do = {
 			base = 10
@@ -5563,13 +5598,192 @@ focus_tree = {
 			}			
 		}
 	}
-
 	focus = {
-		id = TUR_preempt_ideological_threat
-		icon = GFX_focus_attack_soviet
+		id = TUR_turkish_panzers
+		icon = GFX_focus_generic_army_tanks2
 		prerequisite = { focus = TUR_pack_for_a_long_winter }
 		x = 0
 		y = 1
+		relative_position_id = TUR_pack_for_a_long_winter
+		cost = 10
+		ai_will_do = {
+			base = 10
+		}
+
+		completion_reward = { 
+			if = {
+				limit = {
+					NOT = {
+						has_dlc = "No Step Back"
+					}
+				}
+				if = { 
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+						GER = { has_tech = advanced_medium_tank }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = medium_tank_equipment_3
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+						GER = { has_tech = improved_medium_tank }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = medium_tank_equipment_2
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+						GER = { has_tech = basic_medium_tank }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = medium_tank_equipment_1
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = light_tank_equipment_1
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = { has_dlc = "Death or Dishonor" }
+						TUR = { is_in_faction_with = GER }
+					}
+					add_tech_bonus = {
+						name = TUR_turkish_panzers
+						bonus = 0.75
+						uses = 2
+						category = armor
+					}
+				}
+			}
+			else = {
+				if = { 
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+						GER = { has_tech = advanced_medium_tank_chassis }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = medium_tank_chassis_3
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+						GER = { has_tech = improved_medium_tank_chassis }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = medium_tank_chassis_2
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+						GER = { has_tech = basic_medium_tank_chassis }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = medium_tank_chassis_1
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_dlc = "Death or Dishonor"
+						TUR = { is_in_faction_with = GER }
+					}
+					GER = { 
+						create_production_license = {
+							target = TUR
+							equipment = {
+							    type = light_tank_chassis_1
+							}
+							cost_factor = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = { has_dlc = "Death or Dishonor" }
+						TUR = { is_in_faction_with = GER }
+					}
+					add_tech_bonus = {
+						name = TUR_turkish_panzers
+						bonus = 0.75
+						uses = 2
+						category = armor
+					}
+				}
+			}
+			add_tech_bonus = {
+				name = TUR_turkish_panzers
+				bonus = 1.5
+				uses = 1
+				category = armor
+			}
+		}
+	}
+	focus = {
+		id = TUR_preempt_ideological_threat
+		icon = GFX_focus_attack_soviet
+		prerequisite = { focus = TUR_turkish_panzers }
+		x = 0
+		y = 2
 		relative_position_id = TUR_pack_for_a_long_winter
 		cost = 10
 		ai_will_do = {
@@ -6000,6 +6214,46 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TUR_the_turkish_tank_project
+		icon = GFX_focus_generic_tank_production
+		prerequisite = { focus = TUR_readdress_the_montreux_convention }
+		x = 3
+		y = 3
+		relative_position_id = TUR_readdress_the_montreux_convention
+		cost = 10
+		ai_will_do = {
+			base = 10
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+			348 = {
+				if = { 
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = TUR_the_turkish_tank_project
+				bonus = 1.5
+				uses = 1
+				category = cat_heavy_armor
+			}
+		}
+	}
+
+	focus = {
 		id = TUR_dissolve_the_ODPA
 		icon = GFX_goal_generic_banking_legislation
 		prerequisite = { focus = TUR_readdress_the_montreux_convention focus = TUR_join_the_axis }
@@ -6070,6 +6324,27 @@ focus_tree = {
 	}
 
 	focus = {
+		id = TUR_collectivising_our_agriculture
+		icon = GFX_focus_prc_agrarian_socialism
+		prerequisite = { focus = TUR_dissolve_the_ODPA }
+		x = -1
+		y = 2
+		relative_position_id = TUR_scrapping_our_debts
+		cost = 10
+		ai_will_do = {
+			base = 10
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+			random_owned_controlled_state = { add_extra_state_shared_building_slots = 1 }
+			random_owned_controlled_state = { add_extra_state_shared_building_slots = 1 }
+			random_owned_controlled_state = { add_extra_state_shared_building_slots = 1 }
+			random_owned_controlled_state = { add_extra_state_shared_building_slots = 1 }
+		}
+	}
+
+	focus = {
 		id = TUR_strengthening_our_navies
 		icon = GFX_focus_generic_destroyer
 		prerequisite = { focus = TUR_readdress_the_montreux_convention }
@@ -6112,6 +6387,35 @@ focus_tree = {
 			add_research_slot = 1
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+
+	focus = {
+		id = TUR_seize_religious_property
+		icon = GFX_goal_generic_war_with_comintern
+		prerequisite = { focus = TUR_the_international_of_proletarian_freethinkers  }
+		x = 0
+		y = 1
+		relative_position_id = TUR_the_international_of_proletarian_freethinkers
+		cost = 10
+		ai_will_do = {
+			base = 10
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			798 = { add_extra_state_shared_building_slots = 1 }
+			345 = { add_extra_state_shared_building_slots = 1 }
+			344 = { add_extra_state_shared_building_slots = 1 }
+			342 = { add_extra_state_shared_building_slots = 1 }
+			356 = { add_extra_state_shared_building_slots = 1 }
+			349 = { add_extra_state_shared_building_slots = 2 }
+			348 = { add_extra_state_shared_building_slots = 2 }
+			355 = { add_extra_state_shared_building_slots = 2 }
+			add_popularity = { 
+				ideology = communism
+				popularity = 0.07
+			}
+		}
 	}
 
 	focus = {
