@@ -623,6 +623,7 @@ focus_tree = {
         search_filters = {FOCUS_FILTER_POLITICAL}
 
         completion_reward = {
+            set_cosmetic_tag = FORM_MUG
             hidden_effect = {
                 every_country = {
                     limit = {
@@ -655,75 +656,6 @@ focus_tree = {
                         autonomy_state = autonomy_free
                     }
                 }
-
-
-                create_dynamic_country = {
-                    original_tag = RAJ
-                            # copy_tag = TAG # if set, it will copy stuff from copy tag instead of original_tag
-                    reserve_dynamic_country = yes
-                    every_state = {
-                        limit = {
-                            OR = {
-                                is_in_array = {
-                                    array = RAJ.owned_states_at_game_start
-                                    value = THIS
-                                }
-                                state = 992
-                            }
-                            NOT = {
-                                has_state_flag = has_stirred_unrest
-                            }
-                        }
-                        PREV = { transfer_state = PREV } 
-                    }
-					ROOT = {
-						transfer_units_fraction = {
-							target = PREV
-							size = 0.5
-							stockpile_ratio = 0.5
-							army_ratio = 0.5
-							navy_ratio = 0
-							air_ratio = 0
-						}
-					}
-					THIS = { #This effect appears to be scopeless. Sometimes.
-						save_global_event_target_as = UK_INDIA
-					}
-                    ENG = {
-                        set_autonomy = {
-                            target=PREV
-                            autonomy_state = autonomy_colony
-                            freedom_level = 0.5 # 0-1 
-                            end_wars  = yes
-                            end_civil_wars = yes
-                        }
-                    }
-                    add_to_tech_sharing_group = commonwealth_research
-                    set_cosmetic_tag = RAJ_UK
-                    every_army_leader = {
-                        set_nationality = RAJ
-                    }
-                    RAJ = {
-                        random_character = {
-                            limit = {
-                                is_character = RAJ_freeman_freeman_thomas
-                            }
-                            set_nationality = PREV.PREV
-                        }
-                    }
-                    promote_character = RAJ_freeman_freeman_thomas
-                    set_popularities = {
-                        democratic= 28 # 0.0-100
-                        neutrality = 70 # 0.0-100
-                        fascism = 1 # 0.0-100
-                        communism = 1 # 0.0-100
-                    }
-                    set_politics = {
-                        ruling_party = neutrality
-                        elections_allowed = no
-                    }
-                }
-
                 hidden_effect = {
                     if = {
                         limit = {
@@ -788,37 +720,6 @@ focus_tree = {
                     }
                 }
 
-                # to whoever created the character system, why did you do it the way you did? - lily
-                every_navy_leader = {
-                    set_nationality = event_target:UK_INDIA
-                }
-
-                every_character = {
-                    limit = {
-                        is_advisor = yes
-                        is_unit_leader = no
-                        NOT = {
-                            is_character = RAJ_sir_mohammed_iqbal
-                            is_character = RAJ_GOE_muhammad_ali_jinnah
-                            is_character = RAJ_GOE_ukkirapandi_muthuramalinga_thevar
-                            is_character = RAJ_mehar_singh
-                            is_character = RAJ_GOE_mughal_army_command_1
-                            is_character = RAJ_GOE_mughal_army_command_2
-                            is_character = RAJ_GOE_mughal_army_command_3
-                            is_character = RAJ_GOE_mughal_army_command_4
-                            is_character = RAJ_GOE_mughal_army_command_5
-                            is_character = RAJ_GOE_mughal_theorist
-                            is_character = RAJ_GOE_mughal_navy_guy
-                            is_character = RAJ_GOE_mughal_air_guy  
-                            is_character = RAJ_intel_generic
-                            is_character = RAJ_cap_industry_mughal
-                            is_character = RAJ_mughal_industrialist
-                            is_character = RAJ_silent_mughal
-                            is_character = RAJ_backroom_mughal
-                        }
-                    }
-                    set_nationality = event_target:UK_INDIA
-                }
 
                 every_army_leader = {
                     limit = {
@@ -900,77 +801,7 @@ focus_tree = {
                     add_core_of = ROOT
                 }
             }
-            set_cosmetic_tag = RAJ_mughal_breakaway_state
             remove_ideas = RAJ_risk_of_famine
-            custom_effect_tooltip = RAJ_the_mughal_uprising_tt
-			
-			hidden_effect = {
-				ROOT = { set_country_flag = independence_war_mughals }
-				event_target:UK_INDIA = {
-					declare_war_on = {
-						target = RAJ
-						type = annex_everything
-					}
-
-                    division_template = {
-                        name = "Loyalist Infantry Division"
-                        is_locked = yes
-                        priority = 0 # optional 
-                        regiments = {
-                            infantry = { x = 0 y = 0 }
-                            infantry = { x = 0 y = 1 }
-                            infantry = { x = 0 y = 2 }
-                            infantry = { x = 1 y = 0 }
-                            infantry = { x = 1 y = 1 }
-                            
-                        }
-                        support = {
-                            
-                        }
-                    }
-                    439 = {
-                        create_unit = {
-                             division = "name = \"Loyalist Infantry Division\" division_template = \"Loyalist Infantry Division\" start_experience_factor = 0.07 start_equipment_factor = 0.95 start_manpower_factor = 1"
-                             owner = PREV
-                             count = 4 
-                         } 
-                    }
-                    989 = {
-                        create_unit = {
-                             division = "name = \"Loyalist Infantry Division\" division_template = \"Loyalist Infantry Division\" start_experience_factor = 0.07 start_equipment_factor = 0.95 start_manpower_factor = 1"
-                             owner = PREV
-                             count = 4 
-                         } 
-                    }
-                    440 = {
-                        create_unit = {
-                             division = "name = \"Loyalist Infantry Division\" division_template = \"Loyalist Infantry Division\" start_experience_factor = 0.07 start_equipment_factor = 0.95 start_manpower_factor = 1"
-                             owner = PREV
-                             count = 4 
-                         } 
-                    }
-
-				}
-			}
-            ENG = { country_event = { id = GOE_RAJ.33 days = 14 random_days = 2 } }
-            
-            every_army_leader = {
-                limit = {
-                    has_trait = loyalty_to_britain
-                }
-                set_nationality = ENG
-            }
-
-            every_army_leader = {
-                limit = {
-                    has_trait = loyalty_to_india
-                }
-                set_nationality = event_target:UK_INDIA
-            }
-            country_event = {
-                id = GOE_RAJ.33
-                hours = 1
-            }
         } 
     }
 
@@ -9025,14 +8856,7 @@ focus_tree = {
         }
 
         available = {
-            is_subject = no
-            communism > 0.5
-            PAK = {
-                OR = {
-                    is_subject = no
-                    is_subject_of = RAJ
-                }
-            }
+            communism > 0.40
         }
         
         bypass = {
@@ -9090,21 +8914,6 @@ focus_tree = {
 
            custom_effect_tooltip = generic_skip_one_line_tt
 
-            if = {
-                limit = {
-                    PAK = { exists = no }
-                }
-                release = PAK
-            }
-            else = {
-                if = {
-                    limit = {
-                        PAK = { is_subject_of = RAJ }
-                    }
-                    end_puppet = PAK
-                }
-            }
-
            RAJ = { 
                 RAJ_GOE_muhammad_ali_jinnah = {
                     set_nationality = PAK
@@ -9123,85 +8932,6 @@ focus_tree = {
                    modifier = modifier_RAJ_ENG_anti_communist
                }
            }
-           PAK = {
-               add_ideas = idea_RAJ_PAK_british_anti_communist_investments
-               add_opinion_modifier = {
-                   target = RAJ
-                   modifier = modifier_RAJ_ENG_anti_communist
-                }
-                transfer_state = 986
-                transfer_state = 441
-                transfer_state = 989
-                transfer_state = 443
-                transfer_state = 428
-                transfer_state = 431
-                transfer_state = 433
-
-                hidden_effect = {
-                    inherit_technology = RAJ
-                    986 = { add_core_of = THIS }
-                    441 = { add_core_of = THIS }
-                    989 = { add_core_of = THIS }
-                    443 = { add_core_of = THIS }
-                    428 = { add_core_of = THIS }
-                    431 = { add_core_of = THIS }
-                    433 = { add_core_of = THIS }
-                    add_equipment_to_stockpile = { 
-                        type = convoy_1
-                        amount = 80
-                        producer = PAK
-                    }
-
-                    add_equipment_to_stockpile = { 
-                        type = train_equipment_1
-                        amount = 15
-                        producer = PAK
-                    }
-
-                    433 = {
-                        add_building_construction = {
-                            type = supply_node
-                            level = 1
-                            province = 7998
-                            instant_build = yes
-                        }
-                    }
-
-                    build_railway = {
-                        level = 1
-                        start_province = 7998
-                        target_province = 10772
-                    }
-
-                    build_railway = {
-                        level = 1
-                        start_province = 7998
-                        target_province = 1908
-                    }
-                }
-            }   
-            hidden_effect = {
-            
-               random_core_state = {
-                    limit = {
-                        is_controlled_by = PAK   
-                    }
-                    prioritize = { 443 } #optional: to pick those states first if they fulfill the limit
-                    create_unit = {
-                        division = "name = \"Infantry Division\" division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 1 start_manpower_factor = 0.8"
-                        owner = PAK
-
-                        count = 27
-                    }
-                    
-                }
-            }
-
-           set_truce = {
-               target = PAK
-               days = 580
-           }
-
 
            add_stability = -0.15
         }
@@ -10090,10 +9820,16 @@ focus_tree = {
         search_filters = {FOCUS_FILTER_POLITICAL}
 
         completion_reward = {
-            unlock_decision_tooltip = {
-                decision = RAJ_GOE_foment_independence_tension
-                show_effect_tooltip = yes # default is no
-                show_modifiers = yes # default is no
+            random_core_state = {
+                limit = {
+                    is_owned_by = RAJ
+                }
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
             }
         }
     }
@@ -10264,18 +10000,7 @@ focus_tree = {
         }
 
         available = {
-            any_controlled_state = {
-                resistance > 65
-                is_in_array = {
-                    array = RAJ.owned_states_at_game_start
-                    value = THIS
-                }
-                NOT = {
-                    state = 992 #Aden
-                }
-            }
             has_capitulated = no
-            has_war_support > 0.5
         }
         
         bypass = {
@@ -10288,39 +10013,20 @@ focus_tree = {
         search_filters = {FOCUS_FILTER_TFV_AUTONOMY}
 
         completion_reward = {
-
             hidden_effect = {
-                if = {
-                    limit = {
-                        is_subject = yes
-                    }
-                    overlord = {
-                        set_autonomy = {
-                            target = RAJ
-                            autonomy_state = autonomy_free
-                            freedom_level = 1 # 0-1 
-                            end_wars  = no # default yes. will not cancel non civil wars if set to no
-                            end_civil_wars = no # default yes. will not cancel civil wars if set to no
-                        }
-                    }
+                set_war_support= 0.70
+            }
+            overlord = {
+                set_autonomy = {
+                    target = RAJ
+                    autonomy_state = autonomy_free
+                    freedom_level = 1 # 0-1 
+                    end_wars  = no # default yes. will not cancel non civil wars if set to no
+                    end_civil_wars = no # default yes. will not cancel civil wars if set to no
                 }
-                else = { hidden_effect = { set_country_flag = RAJ_was_not_subject_of_eng } }
-                    every_country = {
-                        limit = {
-                            has_war_with = RAJ
-                            NOT = {
-                                RAJ = {
-                                    any_owned_state = {
-                                        is_controlled_by = PREV.PREV
-                                    }
-                                }
-                            }
-                        }
-                        white_peace = RAJ
-                    }
             }
 
-            custom_effect_tooltip = RAJ_give_me_blood_and_i_will_grant_you_freedom_tt
+            #custom_effect_tooltip = RAJ_give_me_blood_and_i_will_grant_you_freedom_tt
             division_template = {
                 name = "Azad Hind Legion"
                 is_locked = no
@@ -10336,211 +10042,6 @@ focus_tree = {
                     
                 }
             }
-
-
-
-            hidden_effect = {
-            start_civil_war = {
-                ideology = democratic
-                ruling_party = neutrality
-                size = 1 # (0-1) Size modifier of the revolt. Affects stockpile, army, air and navy as well
-                states = all
-                states_filter = { resistance < 65 }
-                keep_all_characters = yes
-                keep_political_party_members = yes
-
-                hidden_effect = {
-                    ROOT = {
-                        drop_cosmetic_tag = yes
-                    }
-
-                    RAJ = { set_variable = { revolter_tag = PREV } }
-                        ROOT = {
-                            every_unit_leader = {
-                                limit = { has_trait = loyalty_to_india }
-                                set_nationality = PREV.PREV
-                            }
-                        }
-                        division_template = {
-                            name = "District Garrison"
-                            is_locked = no
-                            #division_names_group = NAMELIST_ID # optional
-                            priority = 0 # optional 
-                            regiments = {
-                                infantry = { x = 0 y = 0 }
-                                infantry = { x = 0 y = 1 }
-                                infantry = { x = 0 y = 2 }
-                                infantry = { x = 1 y = 0 }
-                                infantry = { x = 1 y = 1 }
-                                infantry = { x = 1 y = 2 }
-                                infantry = { x = 2 y = 0 }
-                                infantry = { x = 2 y = 1 }
-                                infantry = { x = 2 y = 2 }     
-                            }
-                            support = {
-                                
-                            }
-                        }
-
-                        if = {  
-                            limit = { has_dlc = "No Step Back"}
-                            set_technology = {
-                                basic_medium_tank_chassis = 1
-                                popup = no
-                            }
-                            create_equipment_variant = {
-                                name = "Cruiser Mk. IV"
-                                type = medium_tank_chassis_1 # equipment type id, example: ship_hull_carrier_2 
-
-                                upgrades = {
-                                    tank_nsb_engine_upgrade = 7
-                                    tank_nsb_armor_upgrade = 3
-                                }
-                                
-                                modules = {      
-                                    main_armament_slot = tank_small_cannon_2
-                                    engine_type_slot = tank_gasoline_engine
-                                    special_type_slot_1 = tank_radio_1
-                                    turret_type_slot = tank_medium_three_man_tank_turret
-                                    suspension_type_slot = tank_christie_suspension
-                                    armor_type_slot = tank_riveted_armor
-                                }
-                                model = ENG_medium_armor_1_entity # optional. Example: GER_light_armor_2_entity
-                            }
-
-                            add_equipment_to_stockpile = { 
-                                type = medium_tank_chassis_1
-                                variant_name = "Cruiser Mk. IV"
-                                amount = 350 
-                                producer = ENG
-                            }
-
-                        }
-                        else = {
-                            add_equipment_to_stockpile = { 
-                                type = medium_tank_equipment_1 
-                                amount = 350 
-                                producer = ENG
-                            }
-                        }
-
-                        division_template = {
-                            name = "Royal Tank Division"
-                            division_names_group = ENG_ARM_01
-                            is_locked = no
-                            #division_names_group = NAMELIST_ID # optional
-                            priority = 2 # optional 
-                            regiments = {
-                                medium_armor = { x = 0 y = 0 }
-                                medium_armor = { x = 0 y = 1 }
-                                medium_armor = { x = 0 y = 2 }
-                                medium_armor = { x = 0 y = 3 }
-                                medium_armor = { x = 0 y = 4 }
-
-                                cavalry = { x = 1 y = 0 }
-                                cavalry = { x = 1 y = 1 }
-                                cavalry = { x = 1 y = 2 }
-                                cavalry = { x = 1 y = 3 }
-                                cavalry = { x = 1 y = 4 }
-            
-                            }
-                            support = {
-                                
-                            }
-                        }
-                    }
-                }
-                for_each_scope_loop = {
-                    array =  RAJ.owned_states_at_game_start 
-                    if = {
-                        limit = {  
-                            has_resistance = yes
-                            resistance > 85 
-                        }
-
-                        ROOT = { 
-                            transfer_state  = PREV 
-                        }
-                        add_core_of = ROOT
-
-                        create_unit = {
-                            division = "name = \"Azad Hind Legion\" division_template = \"Azad Hind Legion\" start_experience_factor = 0.2 start_equipment_factor = 1 start_manpower_factor = 1"
-                            owner = ROOT
-                            allow_spawning_on_enemy_provs = yes 
-                            count = 3
-                        }
-                    }
-                    else_if = {
-                        limit = { 
-                            has_resistance = yes
-                            resistance > 65 
-                            resistance < 85
-                        }
-
-                        ROOT = { 
-                            transfer_state  = PREV 
-                        }
-                        add_core_of = ROOT
-
-                        create_unit = {
-                            division = "name = \"Azad Hind Legion\" division_template = \"Azad Hind Legion\" start_experience_factor = 0.2 start_equipment_factor = 1 start_manpower_factor = 1"
-                            owner = ROOT
-                            allow_spawning_on_enemy_provs = yes 
-                            count = 1
-                        }
-                    }
-                    else = {
-                        create_unit = {
-                            division = "name = \"District Garrison\" division_template = \"District Garrison\" start_experience_factor = 0.2 start_equipment_factor = 1 start_manpower_factor = 1"
-                            owner = var:RAJ.revolter_tag
-                            allow_spawning_on_enemy_provs = yes 
-                            count = 1
-                        }
-                        
-                    }
-
-                    if = {
-                        limit = { has_state_flag = pre_bose_core }
-                        force_disable_resistance = { 
-                            clear = no #if yes, will clear previously disabled resistance
-                            occupier = RAJ
-                            occupied = DIP
-                        }
-                        remove_core_of = DIP 
-                        add_core_of = RAJ
-                    }
-                }
-
-                random_state = { #this used to be a part of the for loop by mistake, leading to the funniest bug report i have ever read: "notice there are 34 newly spawned tank divisions" -lily
-                    limit = {
-                        is_controlled_by = PREV
-                    }
-                    create_unit = {
-                        division = "name = \"Royal Tank Division\" division_template = \"Royal Tank Division\" start_experience_factor = 0.2 start_equipment_factor = 1 start_manpower_factor = 1"
-                        owner = var:RAJ.revolter_tag
-                        allow_spawning_on_enemy_provs = yes 
-                        count = 1
-                    }
-                }
-
-                random_state = {
-                   limit = {
-                        NOT = { state = 439 }
-                        is_in_array = {
-                            array = owned_states_at_game_start
-                            value = THIS
-                        }
-                        is_controlled_by = ROOT
-                   }
-                   RAJ = {
-                       set_capital  = {
-                           state = PREV
-                           remember_old_capital = yes #default = yes
-                       }
-                   }
-               }
-           }
-
             if = {
                 limit = {
                     JAP = {
@@ -10552,92 +10053,6 @@ focus_tree = {
 
                 JAP = { country_event = { id = GOE_RAJ.10 hours = 1  } }
             }
-
-            if = {
-                limit = { is_in_faction_with = ENG }
-                leave_faction = yes
-            }
-
-            every_other_country = {
-                limit = {
-                    original_tag = RAJ
-                }
-                set_variable = { capital_fit_count = 0 }
-                every_core_state = { #try prevent cheese by the player surrounding the capital pre-cw by only picking high resistance states around the enemy capital by picking a capital that at least has an adjectent controlled state
-                    limit = {
-                        NOT = { is_in_array = { PREV.possible_capital = THIS } }
-
-                    }
-                    set_variable = { state_fit_count = 0 }
-
-                    every_neighbor_state = {
-                        limit = {
-                            is_in_array = {
-                                array = RAJ.owned_states_at_game_start
-                                value = THIS
-                            }
-                            is_controlled_by = PREV.PREV
-                        }
-
-                        PREV = { add_to_variable = { state_fit_count = 1 } }
-                    }
-
-                    if = {
-                        limit = { check_variable = { state_fit_count  > PREV.capital_fit_count } }
-                        PREV = {
-                            set_variable = { capital_fit_count = PREV.state_fit_count }
-                            set_variable = {  best_capital_fit =  PREV }
-                        }
-                    }
-                }
-
-                if = {
-                    limit = { check_variable = { capital_fit_count > 0 } }
-
-                    set_capital = {
-                          state = var:best_capital_fit
-                      } 
-                    
-                }
-                else = {
-                    random_core_state = {
-                         PREV = { set_capital = { state = PREV } }
-                    }
-                   PREV = { set_capital = { state = PREV } }
-                }
-
-                if = {
-                    limit = { NOT = { has_country_flag =  RAJ_was_not_subject_of_eng }}
-                    ENG = {
-                        set_autonomy = {
-                            target=PREV
-                            autonomy_state = autonomy_puppet
-                            freedom_level = 0.5 # 0-1 
-                            end_wars  = no # default yes. will not cancel non civil wars if set to no
-                            end_civil_wars = no # default yes. will not cancel civil wars if set to no
-                        }
-                    }
-
-                    overlord = {
-                        add_to_war = {
-                            targeted_alliance = PREV
-                            enemy = RAJ
-                            hostility_reason = asked_to_join
-                        }
-                    }
-                }
-
-                if = {
-                    limit = {
-                        RAJ = { has_country_flag = has_arrested_bose }
-                    }
-
-                    capital_scope = { set_variable = { global.bose_arrest_location = THIS } }
-                }
-
-            }
-
-
             if = {
                 limit = {
                     has_completed_focus = RAJ_infiltrate_aden
@@ -10842,36 +10257,6 @@ focus_tree = {
                     }
                 }
             }
-
-            var:revolter_tag = {
-                set_cosmetic_tag = RAJ_UK
-            }
-          
-           every_other_country = {
-                limit = {
-                    original_tag = RAJ
-                    has_cosmetic_tag = RAJ_UK
-                    has_war_with = ROOT
-                }
-                RAJ = {
-                    every_unit_leader = {
-                        limit = {
-                            has_trait = loyalty_to_britain
-                        }
-                        set_nationality = PREV.PREV
-                    }
-                    RAJ_lord_linlithgow = {
-                        set_nationality = PREV.PREV
-                        add_country_leader_role = {
-                            promote_leader = yes
-                            country_leader = {
-                                ideology = conservatism
-                            }
-                        }
-                    }
-                }
-           }
-
             RAJ = {
                 if = {
                     limit = {
