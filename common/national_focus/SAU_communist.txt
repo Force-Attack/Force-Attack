@@ -1,0 +1,3389 @@
+focus_tree = {
+	id = SAU_communist
+	continuous_focus_position = { x = 1820 y = 2420 }
+        country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = SAU
+		}
+	}
+
+	shared_focus = SAU_navy_innovations
+	shared_focus = SAU_air_innovations
+	shared_focus = SAU_army_innovations
+	shared_focus = SAU_united_arabia
+
+	#Battle For Arabia
+	focus = {
+		id = SAU_battle_for_arabia_began
+		icon = GFX_focus_prc_infiltration
+		x = 7
+		y = 0
+		cost = 1
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = { factor = 1 }
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_manpower = 5000
+			add_stability = 0.1
+			add_war_support = 0.1
+			add_popularity = {
+			    ideology = communism
+			    popularity = 0.20
+			}
+			hidden_effect = {
+				set_party_name = { 
+					ideology = communism
+					long_name = SAU_communist_party_long
+					name = SAU_communist_party_short
+				}
+			}
+		}
+	}
+
+	#Raise Emergency Units
+	focus = {
+		id = SAU_raise_emergency_units
+		icon = GFX_goal_generic_more_territorial_claims
+		x = 1
+		y = 1
+		cost = 3
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = { factor = 1 }
+		prerequisite = { focus = SAU_battle_for_arabia_began }
+		relative_position_id = SAU_battle_for_arabia_began
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_war_support = -0.1
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2000
+			}
+			division_template = {
+				name = "Milita Group"
+				priority = 2
+				#template_counter = 0
+				#division_names_group = SOV_INF_01
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 10 }
+				create_unit = {
+					division = "name = \"Milita Group\" division_template = \"Milita Group\" start_experience_factor = 1.0" 
+					owner = SAU
+				}				
+				create_unit = {
+					division = "name = \"Milita Group\" division_template = \"Milita Group\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+				create_unit = {
+					division = "name = \"Milita Group\" division_template = \"Milita Group\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+				create_unit = {
+					division = "name = \"Milita Group\" division_template = \"Milita Group\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+			}		
+		}
+	}
+
+	#Soviet Union Coming for Help
+	focus = {
+		id = SAU_soviets_coming_help
+		icon = GFX_focus_generic_military_mission
+		x = -1
+		y = 1
+		cost = 3
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = { factor = 1 }
+		prerequisite = { focus = SAU_battle_for_arabia_began }
+		relative_position_id = SAU_battle_for_arabia_began
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			swap_ideas = {
+			    remove_idea = sau_political_turmoil
+			    add_idea = sau_political_turmoil2
+			}
+			division_template = {
+				name = "Strelkovaya Diviziya"
+				priority = 2
+				#template_counter = 0
+				division_names_group = SOV_INF_01
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+		
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }
+		
+					infantry = { x = 2 y = 0 }
+					infantry = { x = 2 y = 1 }
+					infantry = { x = 2 y = 2 }
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 10 }
+				create_unit = {
+					division = "name = \"1ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+				create_unit = {
+					division = "name = \"1ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+				create_unit = {
+					division = "name = \"1ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+				create_unit = {
+					division = "name = \"2ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+					owner = SAU
+				}
+			}
+		}
+	}
+
+	#Purge the Traitors
+	focus = {
+		id = SAU_purge_traitors
+		icon = GFX_goal_generic_forceful_treaty
+		x = 1
+		y = 1
+		cost = 3
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = { factor = 1 }
+		prerequisite = { focus = SAU_soviets_coming_help } prerequisite = { focus = SAU_raise_emergency_units }
+		relative_position_id = SAU_soviets_coming_help
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_manpower = -1000
+		}
+	}
+
+	#Decide Your Way
+	focus = {
+		id = SAU_decide_your_way
+		icon = GFX_goal_generic_dangerous_deal
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = { factor = 1 }
+		prerequisite = { focus = SAU_purge_traitors }
+		relative_position_id = SAU_purge_traitors
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_political_power = 100
+			add_stability = 0.05
+			country_event = {
+				id = saudi.34
+			}
+		}
+	}
+
+	#Victorious from the civil war
+	focus = {
+		id = SAU_victorious_from_civil_war
+		icon = GFX_focus_YUG_pan_slavic_congress
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = { factor = 1 }
+		prerequisite = { focus = SAU_decide_your_way  }
+		relative_position_id = SAU_decide_your_way
+		available = {
+			has_civil_war = no
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.1
+			if = {
+				limit = { has_government = neutrality }
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.10
+				}
+			}
+			else_if = {
+				limit = { has_government = communism }
+				add_popularity = {
+					ideology = communism
+					popularity = 0.10
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = SAU_embraced_communism
+					SOV = { has_completed_focus = SOV_the_path_of_marxism_leninism }
+				}
+				SOV = {
+					diplomatic_relation = {
+					    country = ROOT
+					    relation = guarantee
+					    active = yes
+					}
+					diplomatic_relation = {
+					    country = ROOT
+					    relation = non_aggression_pact
+					    active = yes
+					}
+				}
+			}
+		}
+	}
+
+	#Stabilize Country
+	focus = {
+		id = SAU_stabilize_country
+		icon = GFX_goal_generic_military_sphere
+		x = -1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_victorious_from_civil_war  }
+		relative_position_id = SAU_victorious_from_civil_war
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}	
+		}
+		completion_reward = {
+			add_political_power = 150
+			remove_ideas = sau_political_turmoil2
+		}
+	}
+
+	#Appoint Communist Ministers
+	focus = {
+		id = SAU_appoint_communist_ministers
+		icon = GFX_focus_eng_concessions_to_the_trade_unions
+		x = 1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_victorious_from_civil_war  }
+		relative_position_id = SAU_victorious_from_civil_war
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = { has_government = neutrality }
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.10
+				}
+			}
+			else_if = {
+				limit = { has_government = communism }
+				add_popularity = {
+					ideology = communism
+					popularity = 0.10
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SAU_disbanded_army_2
+				}
+				remove_ideas = SAU_disbanded_army_2
+			}
+			#Anarşist/Tarafsız ise suudi arabistanın karakter dosyalarında bulunan anarşistler gelicek
+			#Komünist ise sovyetlerden 1-2 tane advisor gelicek
+			#General buraya değil aşağıya eklenicek sovyetlerin gereksiz 3 generali
+		}
+	}
+
+	#Reorganization of the Communist Party
+	focus = {
+		id = SAU_reorganization_of_the_communist_party
+		icon = GFX_focus_generic_self_management
+		x = 1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_stabilize_country  } prerequisite = { focus = SAU_appoint_communist_ministers  }
+		relative_position_id = SAU_stabilize_country
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						NOT = { has_country_flag = SAU_embraced_anarcho } 
+					}
+					SOV = {
+						add_ai_strategy = {
+							type = befriend
+							id = SAU
+							value = 25
+						}
+						add_ai_strategy = {
+							type = alliance
+							id = SAU
+							value = 25
+						}
+					}
+				}
+			}
+			add_timed_idea = {
+			    idea = communist_influence
+			    days = 365
+			}
+			SOV = {
+				add_opinion_modifier = {
+					target = SAU
+					modifier = communists_in_government
+				}
+			}	
+		}
+	}
+
+	#The Fate of the Royal Family
+	focus = {
+		id = SAU_the_fate_of_the_royal_family
+		icon = GFX_goal_tfv_burn_the_royal_portraits
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_reorganization_of_the_communist_party  }
+		relative_position_id = SAU_reorganization_of_the_communist_party
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			country_event = {
+			    id = saudi.25
+			}	
+		}
+	}
+
+	#State Atheism
+	focus = {
+		id = SAU_state_atheism
+		icon = GFX_goal_athrizim
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_the_fate_of_the_royal_family  }
+		relative_position_id = SAU_the_fate_of_the_royal_family
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			add_stability = -0.15
+			if = {
+				limit = {
+					has_country_flag = SAU_embraced_anarcho
+				}
+				add_war_support = -0.05
+			}
+			remove_ideas = sau_sharia_law
+			add_ideas = sau_state_atheism
+		}
+	}
+
+	#Nationalize Industry
+	focus = {
+		id = SAU_nationalize_industry
+		icon = GFX_focus_generic_industry_3
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_state_atheism  }
+		relative_position_id = SAU_state_atheism
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = industrial_complex
+			        size > 0
+			        include_locked = yes
+			        }
+			    }  
+			    add_extra_state_shared_building_slots = 4
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = industrial_complex
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 4
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+			random_owned_controlled_state = {
+				limit = {
+				    free_building_slots = {
+				    building = arms_factory
+				    size > 0
+				    include_locked = yes
+				    }
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+				    type = arms_factory
+				    level = 2
+				    instant_build = yes
+				}
+			}
+			add_ideas = sau_nationalized_industry
+		}
+	}
+
+	#Purge Other Parties
+	focus = {
+		id = SAU_purge_other_parties
+		icon = GFX_focus_mex_triumph_over_the_cristeros
+		x = 0
+		y = 2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_anarcho_communism  focus = SAU_stalinism_focus }
+		relative_position_id = SAU_nationalize_industry
+		available = {
+			has_completed_focus = SAU_nationalize_industry
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			add_stability = -0.05
+			add_political_power = 100
+			if = {
+				limit = {
+					has_government = communism
+				}
+				add_popularity = {
+					ideology = neutrality 
+					popularity = -0.15
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = neutrality
+			    }
+				add_popularity = {
+					ideology = communism 
+					popularity = -0.15
+				}
+			}
+		}
+	}
+
+	#United Against Fascism
+	focus = {
+		id = SAU_united_against_fascism
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		x = 1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_purge_other_parties  }
+		relative_position_id = SAU_purge_other_parties
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		completion_reward = {
+			add_political_power = 25
+			add_war_support = 0.05
+			if = {
+				limit = {
+					has_government = communism
+					is_puppet_of = SOV
+				}
+				add_popularity = {
+					ideology = communism 
+					popularity = 0.2
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = communism
+			    }
+				add_popularity = {
+					ideology = communism 
+					popularity = 0.1
+				}
+			}
+			else_if = {
+				limit = {
+					has_government = neutrality
+			    }
+				add_popularity = {
+					ideology = neutrality 
+					popularity = 0.1
+				}
+			}
+		}
+	}
+
+	#Intervene the Spanish Civil War
+	focus = {
+		id = SAU_intervene_the_spanish_civil_war
+		icon = GFX_focus_generic_manpower
+		x = -1
+		y = 1
+		cost = 1
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_purge_other_parties  }
+		relative_position_id = SAU_purge_other_parties
+		available = {
+			OR = {
+			    has_government = communism
+			    has_government = neutrality
+			}
+		}
+		bypass = {
+			has_global_flag = scw_over
+		}
+		completion_reward = {
+			add_ideas = sau_spanish_civil_war
+		}
+	}
+
+	#Open New Universities
+	focus = {
+		id = SAU_open_new_universities
+		icon = GFX_focus_generic_socialist_science
+		x = 1
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_united_against_fascism  focus = SAU_intervene_the_spanish_civil_war  }
+		relative_position_id = SAU_intervene_the_spanish_civil_war
+		completion_reward = {
+			add_research_slot = 1	
+		}
+	}
+
+	#Stalinism
+	focus = {
+		id = SAU_stalinism_focus
+		icon = GFX_focus_fra_loyalty_stalin
+		x = 3
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_nationalize_industry  }
+		mutually_exclusive = { focus = SAU_anarcho_communism  }
+		relative_position_id = SAU_nationalize_industry
+		available = {
+			has_government = communism
+			is_puppet = no
+			SOV = {
+				is_faction_leader = yes
+				has_government = communism
+				NOT = { has_war_with = ROOT }
+			}
+			custom_trigger_tooltip = {
+			    tooltip = sau_embrace_communist_tt
+			    has_country_flag = SAU_embraced_communism
+			}
+		}
+		bypass = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			add_political_power = 150
+			SOV = {
+				add_ai_strategy = {
+					type = befriend
+					id = "SAU"
+					value = 50
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "SAU"
+					value = 50
+				}
+				country_event = generic.2
+			}
+			add_opinion_modifier = {
+			    target = SOV
+			    modifier = SPR_the_stalinist_doctrine
+			}	
+		}
+	}
+
+	#Request Soviet Support
+	focus = {
+		id = SAU_request_soviet_support
+		icon = GFX_focus_chi_mission_to_the_soviet_union
+		x = 2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_stalinism_focus  }
+		relative_position_id = SAU_stalinism_focus
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			add_to_tech_sharing_group = spr_research
+			SOV = { add_to_tech_sharing_group = spr_research }
+			custom_effect_tooltip = sau_expand_soviet_aid_tt
+		}
+	}
+
+	#Expand Soviet Support
+	focus = {
+		id = SAU_expand_soviet_support
+		icon = GFX_goal_generic_build_tank
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_request_soviet_support  }
+		relative_position_id = SAU_request_soviet_support
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = industrial_complex
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 5
+			add_building_construction = {
+			type = industrial_complex
+			level = 4
+			instant_build = yes
+			}
+			}
+			
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = arms_factory
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 5
+			add_building_construction = {
+			type = arms_factory
+			level = 3
+			instant_build = yes
+			}
+			}
+			add_resource = {
+				type = oil
+				amount = 8
+				state = 292
+			}
+			add_resource = {
+				type = oil
+				amount = 8
+			    state = 679
+			}
+		}
+	}
+
+	#Soviet Industrial Aid
+	focus = {
+		id = SAU_soviet_industrial_aid
+		icon = GFX_goal_generic_soviet_construction
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_expand_soviet_support  }
+		relative_position_id = SAU_expand_soviet_support
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = SPR_soviet_industrial_aid
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+			add_timed_idea = { idea = SPR_soviet_industrial_aid days = 365 }
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = industrial_complex
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+			}
+			}
+			custom_effect_tooltip = sau_expand_soviet_industry_aid_tt
+		}
+	}
+
+	#Request Military Advisors
+	focus = {
+		id = SAU_request_military_advisors
+		icon = GFX_focus_generic_military_mission
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_soviet_industrial_aid  }
+		relative_position_id = SAU_soviet_industrial_aid
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			army_experience = 35
+			add_war_support = 0.05
+			add_ideas = SPR_soviet_military_advisors
+		}
+	}
+
+	#The Red Army
+	focus = {
+		id = SAU_the_red_army
+		icon = GFX_focus_SOV_mobilization_plan
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_stalinism_focus  }
+		relative_position_id = SAU_stalinism_focus
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = SAU_disbanded_army_2
+				}
+				remove_ideas = SAU_disbanded_army_2
+			}
+			hidden_effect = {
+				SOV = {
+				retire_character = SOV_kuzma_galitsky
+				retire_character = SOV_ivan_fedyuninsky
+				retire_character = SOV_dmitry_lelyushenko
+				}
+			
+			}
+			army_experience = 25
+			if = {
+			    limit = { 
+				    has_idea = sau_royal_army
+					has_government = communism
+				}
+			    remove_ideas = {
+				    sau_desert_buff sau_reinvigorate_army special_forces sau_red_army
+			    }
+			    add_ideas = sau_red_royal_army
+		    }
+			else_if = {
+				limit = {
+					has_idea = sau_army_supremacy
+					has_government = communism
+				}
+				add_ideas = sau_red_royal_army_supremacy
+			}
+			else = {
+			    add_ideas = sau_red_army
+			}
+		}
+	}
+
+	#Collectivist Propaganda
+	focus = {
+		id = SAU_collectivist_propaganda
+		icon = GFX_goal_generic_propaganda
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_the_red_army  }
+		relative_position_id = SAU_the_red_army
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			add_political_power = 100
+			add_ideas = sau_collectivist_propaganda
+		}
+	}
+
+	#Unite the Arabian Workers
+	focus = {
+		id = SAU_unite_the_arabian_workers
+		icon = GFX_focus_ger_great_red_menace
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_collectivist_propaganda  }
+		relative_position_id = SAU_collectivist_propaganda
+		completion_reward = {
+			add_war_support = 0.1
+			create_wargoal = {
+			    type = annex_everything
+			    target = YEM
+			}
+			create_wargoal = {
+			    type = annex_everything
+			    target = OMA
+			}
+			create_wargoal = {
+			    type = annex_everything
+			    target = IRQ
+			}	
+		}
+		will_lead_to_war_with = YEM
+		will_lead_to_war_with = OMA
+		will_lead_to_war_with = IRQ
+	}
+
+	#Operation Countenance
+	focus = {
+		id = SAU_operation_countenance
+		icon = GFX_focus_generic_attack_iran
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_unite_the_arabian_workers  }
+		relative_position_id = SAU_unite_the_arabian_workers
+		available = {
+			is_in_faction_with = SOV
+			NOT = {  
+				SOV = { has_completed_focus = SOV_preemptive_invasion_of_iran }
+			}
+		}
+		bypass = {
+			SOV = { has_completed_focus = SOV_preemptive_invasion_of_iran }
+		}
+		completion_reward = {
+			PER = {
+				set_country_flag = SOV_ultimatum_sent_flag
+				country_event = { id = saudi.38 hours = 16 random_hours = 8 }
+			}
+			effect_tooltip = {
+				custom_effect_tooltip = if_they_accept_tt
+				ROOT = {
+					puppet = PER
+				}
+				custom_effect_tooltip = if_they_refuse_tt
+				effect_tooltip = {
+					activate_mission = SOV_preparations_for_operation_countenance
+					custom_effect_tooltip = SOV_preparations_for_operation_countenance_tt
+				}
+			}
+		}#event ayarlanacak
+		will_lead_to_war_with = PER
+	}
+
+	#A Deal with the Devil
+	focus = {
+		id = SAU_a_deal_with_the_devil
+		icon = GFX_focus_SOV_the_supreme_soviet
+		x = -1
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_operation_countenance  focus = SAU_request_military_advisors  }
+		relative_position_id = SAU_request_military_advisors
+		completion_reward = {
+			if = { 
+			limit = { has_idea = SPR_soviet_industrial_aid }
+			SOV = { puppet = SAU }
+			}
+			else_if = {
+			limit = { has_idea = SPR_soviet_military_advisors }
+			    SOV = { 
+				    puppet = SAU
+			        set_autonomy = {
+                        target = SAU
+                        autonomy_state = autonomy_integrated_puppet
+                    }
+				}
+				add_political_power = 50
+			}
+			
+			else = { 
+			add_stability = 0.1
+			add_war_support = 0.1
+			add_political_power = 200
+			}
+		}
+	}
+
+	#Research Oil for Soviet
+	focus = {
+		id = SAU_research_oil_for_soviet
+		icon = GFX_SAU_research_for_oil
+		x = 0
+		y = 2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_a_deal_with_the_devil  }
+		relative_position_id = SAU_a_deal_with_the_devil
+		available = {
+			is_in_faction_with = SOV
+		}
+		completion_reward = {
+			add_ideas = sau_research_for_oil
+		}
+	}
+
+	#The Arabian SSR
+	focus = {
+		id = SAU_the_arabian_ssr
+		icon = GFX_goal_support_communism
+		x = 2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_a_deal_with_the_devil  }
+		mutually_exclusive = { focus = SAU_the_arabian_path_to_communism  }
+		relative_position_id = SAU_a_deal_with_the_devil
+		available = {
+			is_puppet_of = SOV
+			is_in_faction_with = SOV	
+		}
+		completion_reward = {
+			add_stability = -0.1
+			add_political_power = 25
+			set_cosmetic_tag = sau_sov_communism	
+		}
+	}
+
+	#Soviet Military Staff
+	focus = {
+		id = SAU_soviet_military_staff
+		icon = GFX_focus_SOV_mobilization_plan
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_the_arabian_ssr  }
+		relative_position_id = SAU_the_arabian_ssr
+		available = {
+			is_puppet_of = SOV
+		}
+		completion_reward = {
+			division_template = {
+							name = "Strelkovaya Diviziya"
+							priority = 2
+							#template_counter = 0
+							division_names_group = SOV_INF_01
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+					
+								infantry = { x = 1 y = 0 }
+								infantry = { x = 1 y = 1 }
+								infantry = { x = 1 y = 2 }
+					
+								infantry = { x = 2 y = 0 }
+								infantry = { x = 2 y = 1 }
+								infantry = { x = 2 y = 2 }
+							}
+							support = {
+								#recon = { x = 0 y = 0 } 		# Recon bn had 16 L tanks, 10 ACs, 1x mot inf co #Eng and recon removed and they seem rather OP. Could revisit if balance changes
+								#engineer = { x = 0 y = 1 } 	# (semi-mot) Engineer bn
+								artillery = { x = 0 y = 0 } 	# Heavy Arty Regiment had 1x 152mm bn + 2x 122mm bn
+							}
+						}
+						random_owned_controlled_state = {
+							limit = { ROOT = { has_full_control_of_state = PREV } }
+							prioritize = { 10 }
+							create_unit = {
+								division = "name = \"1ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+							create_unit = {
+								division = "name = \"2ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+							create_unit = {
+								division = "name = \"3ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+							create_unit = {
+								division = "name = \"4ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+						}
+						random_owned_controlled_state = {
+							limit = { ROOT = { has_full_control_of_state = PREV } }
+							prioritize = { 88 }
+							create_unit = {
+								division = "name = \"5ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+							create_unit = {
+								division = "name = \"6ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+							create_unit = {
+								division = "name = \"7ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+							create_unit = {
+								division = "name = \"8ya Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya\" start_experience_factor = 1.0" 
+								owner = SAU
+							}
+						}
+		}
+	}
+
+	#NKVD
+	focus = {
+		id = SAU_nkvd
+		icon = GFX_goal_generic_military_deal
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_soviet_military_staff  }
+		relative_position_id = SAU_soviet_military_staff
+		available = {
+			is_puppet_of = SOV
+		}
+		completion_reward = {
+			add_political_power = 50
+			add_ideas = sau_soviet_nkvd
+		}
+	}
+
+	#Appeal for Increased Autonomy
+	focus = {
+		id = SAU_appeal_for_increased_autonomy
+		icon = GFX_focus_CZE_german_puppet
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_nkvd  }
+		relative_position_id = SAU_nkvd
+		available = {
+			is_puppet_of = SOV
+		}
+		completion_reward = {
+			SOV = { 
+				country_event = {
+			        id = saudi.26
+			        hours = 6
+			    }   
+			}
+		}
+	}
+
+	#The Arabian Path to Communism
+	focus = {
+		id = SAU_the_arabian_path_to_communism
+		icon = GFX_focus_generic_concessions
+		x = -2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_a_deal_with_the_devil  }
+		mutually_exclusive = { focus = SAU_the_arabian_ssr  }
+		relative_position_id = SAU_a_deal_with_the_devil
+		available = {
+			is_in_faction_with = SOV
+			is_puppet = no
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			add_political_power = 50
+			add_country_leader_trait = headstrong
+		}
+	}
+
+	#New General Staff
+	focus = {
+		id = SAU_new_general_staff
+		icon = GFX_focus_generic_military_dictatorship
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_the_arabian_path_to_communism  }
+		relative_position_id = SAU_the_arabian_path_to_communism
+		completion_reward = {
+			army_experience = 25
+			add_ideas = sau_communist_general_staff
+		}
+	}
+
+	#Re-Educate People
+	focus = {
+		id = SAU_reeducate_people
+		icon = GFX_focus_generic_military_academy
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_new_general_staff  }
+		relative_position_id = SAU_new_general_staff
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 50
+			add_ideas = sau_communist_educate_ppl
+		}
+	}
+
+	#Agriculture Reforms
+	focus = {
+		id = SAU_agriculture_reforms
+		icon = GFX_focus_prc_agrarian_socialism
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_reeducate_people  }
+		relative_position_id = SAU_reeducate_people
+		completion_reward = {
+			add_ideas = sau_communist_agriculture_reform
+		}
+	}
+
+	#Seize Public Transport
+	focus = {
+		id = SAU_seize_public_transport
+		available = {
+		}
+		prerequisite = { focus = SAU_decide_your_way }
+		
+		icon = GFX_goal_generic_army_motorized
+		x = -3
+		y = 1
+		relative_position_id = SAU_decide_your_way
+		cost = 5
+
+		available_if_capitulated = yes
+
+		available = {
+			has_civil_war = yes
+			custom_trigger_tooltip = {
+				tooltip = sau_embrace_anarcho_communist_tt
+				has_country_flag = SAU_embraced_anarcho
+			}
+		}
+		completion_reward = {
+			add_ideas = SPR_anarchist_public_transport
+			custom_effect_tooltip = SPR_seize_public_transport_tt
+		}
+	}
+
+	#Anarco-Communism
+	focus = {
+		id = SAU_anarcho_communism
+		icon = GFX_focus_spr_torchbearers_of_tomorrow
+		x = 0
+		y = 6
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_seize_public_transport }
+		mutually_exclusive = { focus = SAU_stalinism_focus  }
+		relative_position_id = SAU_seize_public_transport
+		available = {
+			has_civil_war = yes
+			is_puppet = no
+			custom_trigger_tooltip = {
+			    tooltip = sau_embrace_anarcho_communist_tt
+			    has_country_flag = SAU_embraced_anarcho
+			}
+		}
+		completion_reward = {
+			add_political_power = 150
+			add_opinion_modifier = {
+			    target = SOV
+			    modifier = SPR_hinder_nkvd_interference
+			}
+			add_stability = -0.1
+			add_war_support = 0.1
+			hidden_effect = {
+				set_cosmetic_tag = sau_anarchist_arabia
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.15
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.20
+			}
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
+			set_party_name = { 
+			    ideology = communism
+			    long_name = SAU_socialist_party_long
+			    name = SAU_socialist_party_short
+			}
+		    }
+			add_ideas = SPR_anarchist_society_1
+			create_country_leader = {
+				name = "Anarchist Commune"
+				desc = "POLITICS_ANARCHIST_COMMUNE_DESC"
+				picture = "GFX_portrait_SPR_anarchist_commune"
+				expire = "1965.1.1"
+				ideology = anarchist_communism
+				traits = {
+					our_right_to_survive
+				}
+			}
+		}
+	}
+
+	#The Anarchist Society of Arabia
+	focus = {
+		id = SAU_anarchist_societyofarabia
+		icon = GFX_focus_spr_masters_of_our_own_fate
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_anarcho_communism  }
+		relative_position_id = SAU_anarcho_communism
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_political_power = 150
+			custom_effect_tooltip = sau_anarchist_advisors_available_tt
+			swap_ideas = {
+				remove_idea = SPR_anarchist_society_1
+				add_idea = SPR_anarchist_society_2
+			}
+		}
+	}
+
+	#Arm the Militas
+	focus = {
+		id = SAU_arm_the_militas
+		icon = GFX_goal_generic_military_sphere
+		x = 0
+		y = 1
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_anarchist_societyofarabia  }
+		relative_position_id = SAU_anarchist_societyofarabia
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			add_stability = -0.1
+			add_ideas = sau_anarchist_army
+			swap_ideas = {
+			    remove_idea = SAU_disbanded_army_2
+			    add_idea = SAU_disbanded_army
+			}	
+			add_manpower = 25000
+		}
+	}
+
+	#Seize Gold and Oil Reserves
+	focus = {
+		id = SAU_seize_the_gold_reserves
+		available = {
+		}
+		prerequisite = { focus = SAU_arm_the_militas focus = SAU_shared_responsibility }
+		
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		x = -2
+		y = 1
+		relative_position_id = SAU_arm_the_militas
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_INDUSTRY}
+		completion_reward = {
+			add_timed_idea = { idea = SPR_seized_gold_reserves  days = 630 }
+		}
+	}
+
+	focus = {
+		id = SAU_mujeres_libres
+		available = {
+			has_government = communism
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_seize_the_gold_reserves }
+		
+		icon = GFX_goal_generic_improve_relations
+		x = 0
+		y = 1
+		relative_position_id = SAU_seize_the_gold_reserves
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_MANPOWER}
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_5
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_5
+					add_idea = SPR_anarchist_society_11
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_8
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_8
+					add_idea = SPR_anarchist_society_13
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_6
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_6
+					add_idea = SPR_anarchist_society_12
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_9
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_9
+					add_idea = SPR_anarchist_society_14
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_7
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_7
+					add_idea = SPR_anarchist_society_15
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_10
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_10
+					add_idea = SPR_anarchist_society_16
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_5
+						add_idea = SPR_anarchist_society_11
+					}
+				}
+			}
+		}
+	}
+
+	#An Anarchist Economy
+	focus = {
+		id = SAU_a_anarchist_economy
+		icon = GFX_focus_generic_self_management
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_arm_the_militas  }
+		relative_position_id = SAU_arm_the_militas
+		completion_reward = {
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			            building = industrial_complex
+			            size > 0
+			            include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 3
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 3
+			        instant_build = yes
+			    }
+			}
+			random_owned_controlled_state = {
+				limit = {
+				    free_building_slots = {
+				        building = industrial_complex
+				        size > 0
+				        include_locked = yes
+				    }
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+				    type = industrial_complex
+				    level = 2
+				    instant_build = yes
+				}
+			}
+			add_resource = {
+				type = oil
+				amount = 8
+				state = 292
+			}
+			add_resource = {
+				type = oil
+				amount = 8
+			    state = 679
+			}
+		}
+	}
+
+	#Anarchist State Laws
+	focus = {
+		id = SAU_agrarian_collectivization
+		icon = GFX_goal_generic_national_unity
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_a_anarchist_economy  }
+		relative_position_id = SAU_a_anarchist_economy
+		completion_reward = {
+			add_stability = -0.05
+			add_political_power = 50
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_2
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_2
+					add_idea = SPR_anarchist_society_5
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_5
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_5
+					add_idea = SPR_anarchist_society_8
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_3
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_3
+					add_idea = SPR_anarchist_society_6
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_6
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_6
+					add_idea = SPR_anarchist_society_9
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_4
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_4
+					add_idea = SPR_anarchist_society_7
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_7
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_7
+					add_idea = SPR_anarchist_society_10
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_2
+						add_idea = SPR_anarchist_society_5
+					}
+				}
+			}
+		}
+	}
+
+	#Self management
+	focus = {
+		id = SAU_self_management
+		icon = GFX_goal_generic_production
+		x = -2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_anarchist_societyofarabia  }
+		relative_position_id = SAU_anarchist_societyofarabia
+		available = {
+			has_government = communism
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_2
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_2
+					add_idea = SPR_anarchist_society_5
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_5
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_5
+					add_idea = SPR_anarchist_society_8
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_3
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_3
+					add_idea = SPR_anarchist_society_6
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_6
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_6
+					add_idea = SPR_anarchist_society_9
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_4
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_4
+					add_idea = SPR_anarchist_society_7
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_7
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_7
+					add_idea = SPR_anarchist_society_10
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_15
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_15
+					add_idea = SPR_anarchist_society_16
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_17
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_17
+					add_idea = SPR_anarchist_society_18
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_18
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_18
+					add_idea = SPR_anarchist_society_19
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_2
+						add_idea = SPR_anarchist_society_5
+					}
+				}
+			}
+		}
+	}
+
+	#Shared Responsibility
+	focus = {
+		id = SAU_shared_responsibility
+		available = {
+			has_government = communism
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_anarchist_societyofarabia }
+		
+		icon = GFX_goal_generic_consumer_goods
+		x = -4
+		y = 1
+		relative_position_id = SAU_anarchist_societyofarabia
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_INDUSTRY}
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_2
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_2
+					add_idea = SPR_anarchist_society_3
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_5
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_5
+					add_idea = SPR_anarchist_society_6
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_8
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_8
+					add_idea = SPR_anarchist_society_9
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_11
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_11
+					add_idea = SPR_anarchist_society_12
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_13
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_13
+					add_idea = SPR_anarchist_society_14
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_2
+						add_idea = SPR_anarchist_society_3
+					}
+				}
+			}
+		}
+	}
+
+	#Support From Tribes
+	focus = {
+		id = SAU_support_from_tribes
+		icon = GFX_focus_SAU_Support_From_Tribes
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_shared_responsibility  }
+		relative_position_id = SAU_shared_responsibility
+		completion_reward = {
+			add_ideas = sau_support_tribes
+		}
+	}
+
+	#Collectivization
+	focus = {
+		id = SAU_collectivization
+		icon = GFX_focus_eng_concessions_to_the_trade_unions
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_support_from_tribes  }
+		relative_position_id = SAU_support_from_tribes
+		completion_reward = {
+			add_stability = -0.05
+			add_war_support = 0.05
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_3
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_3
+					add_idea = SPR_anarchist_society_4
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_6
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_6
+					add_idea = SPR_anarchist_society_7
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_9
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_9
+					add_idea = SPR_anarchist_society_10
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_12
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_12
+					add_idea = SPR_anarchist_society_15
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_14
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_14
+					add_idea = SPR_anarchist_society_16
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_3
+						add_idea = SPR_anarchist_society_4
+					}
+				}
+			}
+		}
+	}
+
+	#The Arabian Anarchist Union
+	focus = {
+		id = SAU_the_arabian_anarchist_union
+		icon = GFX_focus_spr_torchbearers_of_tomorrow
+		x = 2
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_agrarian_collectivization } prerequisite = { focus = SAU_collectivization  } prerequisite = { focus = SAU_mujeres_libres  }
+		relative_position_id = SAU_collectivization
+		available = {
+			has_government = communism
+			has_country_leader = {
+				name = "Anarchist Commune"
+				ruling_only = yes
+			}
+		}
+		completion_reward = {
+			add_war_support = 0.1
+			add_manpower = 50000
+			add_ideas = SPR_collectivized_society
+			if = {
+				limit = {
+					NOT = { has_idea = closed_economy }
+				}
+				add_ideas = closed_economy
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_idea = disarmed_nation
+						has_idea = volunteer_only
+					}
+				}
+				add_ideas = volunteer_only
+			}
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_15
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_15
+					add_idea = SPR_anarchist_society_17
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_16
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_16
+					add_idea = SPR_anarchist_society_18
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_15
+						add_idea = SPR_anarchist_society_17
+					}
+				}
+			}
+		}
+	}
+
+	#Build Organized Army
+	focus = {
+		id = SAU_build_organized_army
+		icon = GFX_focus_generic_commonwealth_build_infantry
+		x = -2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_the_arabian_anarchist_union  }
+		relative_position_id = SAU_the_arabian_anarchist_union
+		completion_reward = {
+			army_experience = 50
+			swap_ideas = {
+			    remove_idea = sau_anarchist_army
+			    add_idea = sau_anarchist_army_2
+			}	
+		}
+	}
+
+	#literacy Programs
+	focus = {
+		id = SAU_literacy_programs
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_build_organized_army }
+		
+		icon = GFX_focus_research
+		x = 0
+		y = 1
+		relative_position_id = SAU_build_organized_army
+		cost = 10
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_RESEARCH}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	#Military Commune
+	focus = {
+		id = SAU_military_commune
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_the_arabian_anarchist_union }
+		
+		icon = GFX_goal_generic_army_doctrines
+		x = 0
+		y = 1
+		relative_position_id = SAU_the_arabian_anarchist_union
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_RESEARCH}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = SPR_communal_military_strategies
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+			remove_ideas = SAU_disbanded_army
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SAU_council_of_theorists
+		}
+	}
+
+	#Refreshed Army and Country
+	focus = {
+		id = SAU_refreshed_army_and_country
+		icon = GFX_focus_generic_industry_3
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_military_commune  }
+		relative_position_id = SAU_military_commune
+		completion_reward = {
+			add_stability = 0.1
+			add_political_power = 100
+			#swap_ideas = {
+			#    remove_idea = sau_socialist_economy
+			#    add_idea = sau_socialist_economy2
+			#}
+		}
+	}
+
+	#Arabian Anarchism
+	focus = {
+		id = SAU_arabian_anarchism
+		available = {
+			any_state = {
+				is_fully_controlled_by = ROOT
+				any_neighbor_state = {
+					is_owned_by = IRQ
+				}
+			}
+		}
+		bypass = {
+			owns_state = 675
+			owns_state = 291
+			owns_state = 676
+			owns_state = 293
+			owns_state = 294
+		}
+
+		will_lead_to_war_with = IRQ
+		will_lead_to_war_with = OMA
+		will_lead_to_war_with = YEM
+		prerequisite = { focus = SAU_the_arabian_anarchist_union }
+		
+		icon = GFX_SAU_goal_attack_iraq
+		x = 2
+		y = 1
+		relative_position_id = SAU_the_arabian_anarchist_union
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			if = {
+                limit = {
+                    IRQ = {is_ai = no}			  
+			    }
+			    ROOT = {
+				create_wargoal = {
+					type = annex_everything
+					target = PREV
+					expire = 0
+				}
+			}
+			}
+			else_if = {
+				limit = {
+					IRQ = {is_ai = yes}
+					IRQ = { has_civil_war = yes }
+				}
+				every_country = {
+					limit = {
+						original_tag = IRQ
+					}
+					ROOT = {
+						create_wargoal = {
+							type = annex_everything
+						    target = PREV
+						    expire = 0
+						}
+					}
+				}
+			}
+			else = {
+				IRQ = { country_event = { id = saudi.35 hours = 6 random_hours = 18 } }
+			}
+			YEM = { country_event = saudi.10 }
+			OMA = { country_event = saudi.13 }
+		}
+	}
+
+	#Demand English Colonies
+	focus = {
+		id = SAU_demand_english_colonies
+		icon = GFX_focus_SAU_demand_english_colonies
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_arabian_anarchism }
+		relative_position_id = SAU_arabian_anarchism
+		completion_reward = {
+			ENG = {
+				country_event = saudi.1
+			}
+		}
+		will_lead_to_war_with = ENG
+	}
+
+	#Torchbearers of Tomorrow
+	focus = {
+		id = SAU_torchbearers_of_tomorrow
+		icon = GFX_goal_generic_demand_territory
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_demand_english_colonies  }
+		relative_position_id = SAU_demand_english_colonies
+		completion_reward = {
+			add_ideas = SPR_torchbearers_of_tomorrow
+		}
+	}
+
+	#Faith in the Cause
+	focus = {
+		id = SAU_faith_in_the_cause
+		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_torchbearers_of_tomorrow  }
+		relative_position_id = SAU_torchbearers_of_tomorrow
+		completion_reward = {
+            add_war_support = 0.15
+		}
+	}
+
+	#Regional Defense Council of Arabia
+	focus = {
+		id = SAU_regional_defense_council_of_arabia
+		available = {
+			OR = {
+			    AND = {
+					owns_state = 293
+			        owns_state = 294
+			        owns_state = 675
+			        owns_state = 291
+			        owns_state = 676
+				}
+				AND = {
+					IRQ = {
+						OR = {
+							is_puppet_of = SAU
+							exists = no
+						}
+					}
+					YEM = {
+						OR = {
+							is_puppet_of = SAU
+							exists = no
+						}
+					}
+					OMA = {
+						OR = {
+							is_puppet_of = SAU
+							exists = no
+						}
+					}
+				}
+			}
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_demand_english_colonies } prerequisite = { focus = SAU_literacy_programs }
+		
+		icon = GFX_goal_generic_alliance
+		x = -2
+		y = 1
+		relative_position_id = SAU_demand_english_colonies
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = sau_regional_defense_council_of_arabia_tt
+			hidden_effect = {
+				drop_cosmetic_tag = yes
+				set_cosmetic_tag = sau_regional_defense_council_of_arabia_anarcho
+				if = {
+					limit = { 
+						IRQ = { is_puppet_of = SAU } 
+					}
+					annex_country = {
+						target = IRQ
+						transfer_troops = yes
+					}
+				}
+			}
+			every_state = {
+				limit = {
+					is_core_of = IRQ
+				}
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = {
+					is_core_of = YEM
+				}
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = {
+					is_core_of = OMA
+				}
+				add_core_of = ROOT
+			}
+		}
+	}
+
+    #the inevitable counterblow
+	focus = {
+		id = SAU_the_inevitable_counterblow
+		available = {
+			has_country_leader = {
+				name = "Anarchist Commune"
+				ruling_only = yes
+			}
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_regional_defense_council_of_arabia }
+		
+		icon = GFX_goal_generic_construct_military
+		x = 0
+		y = 1
+		relative_position_id = SAU_regional_defense_council_of_arabia
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL}
+		completion_reward = {
+			add_ideas = SPR_the_inevitable_counterblow
+			add_country_leader_trait = anarchist_zeal
+			hidden_effect = {
+				news_event = { id = lar_news.22 hours = 6 }
+			}
+		}
+	}
+
+	#Invest Heavy Industry
+	focus = {
+		id = SAU_invest_heavy_industry
+		icon = GFX_goal_generic_army_tanks
+		x = -2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_the_inevitable_counterblow  }
+		relative_position_id = SAU_the_inevitable_counterblow
+		completion_reward = {
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = arms_factory
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+			type = arms_factory
+			level = 2
+			instant_build = yes
+			}
+			}
+			
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = arms_factory
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+			type = arms_factory
+			level = 2
+			instant_build = yes
+			}
+			}
+			add_tech_bonus = {
+				name = SPR_a_new_way_of_warfare
+				bonus = 1.0
+				uses = 1
+				category = light_fighter
+			}
+			add_tech_bonus = {
+				name = SPR_a_new_way_of_warfare
+				bonus = 1.0
+				uses = 1
+				category = armor
+			}
+		}
+	}
+
+	#Fortify the Borders
+	focus = {
+		id = SAU_fortify_the_borders
+		icon = GFX_goal_generic_fortify_city
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SAU_invest_heavy_industry }
+		relative_position_id = SAU_invest_heavy_industry
+		completion_reward = {
+			custom_effect_tooltip = SAU_fortify_the_pyrenees_tt
+			hidden_effect = {
+				if = {
+					limit = { 
+						controls_state = 676 
+					}
+					676 = {
+						add_building_construction = {
+							type = bunker
+							province = {
+								id = 10811
+								id = 5014
+								id = 6826
+								id = 10793
+								id = 10804
+								id = 1938
+								id = 12372
+							}
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+				if = {
+					limit = {
+						controls_state = 675 
+					}
+					675 = {
+						add_building_construction = {
+							type = bunker
+							province = {
+								id = 12413
+								id = 1631
+							}
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+				if = {
+					limit = {
+						controls_state = 455
+					}
+					455 = {
+						add_building_construction = {
+							type = bunker
+							province = {
+								id = 4440
+								id = 1544
+								id = 7001
+								id = 7170
+								id = 7151
+								id = 10089
+								id = 4017
+								id = 4115
+							}
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+				if = {
+					limit = {
+						controls_state = 291
+					}
+					291 = {
+						add_building_construction = {
+							type = bunker
+							province = {
+								id = 12855
+								id = 78
+								id = 12726
+								id = 2089
+							}
+							level = 2
+							instant_build = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Militarize the Industry
+	focus = {
+		id = SAU_militarize_the_industry
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_the_inevitable_counterblow }
+		
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 0
+		y = 1
+		relative_position_id = SAU_the_inevitable_counterblow
+		cost = 5
+
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			every_state = {
+				limit	= {	has_state_flag = SAU_militarize_the_industry_1mil }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = {FOCUS_FILTER_INDUSTRY}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+					is_core_of = ROOT
+				}
+				set_state_flag = SAU_militarize_the_industry_1mil
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+					is_core_of = ROOT
+					NOT = { has_state_flag = SAU_militarize_the_industry_1mil }
+				}
+				set_state_flag = SAU_militarize_the_industry_1mil
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+					is_core_of = ROOT
+					NOT = { has_state_flag = SAU_militarize_the_industry_1mil }
+				}
+				set_state_flag = SAU_militarize_the_industry_1mil
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+					is_core_of = ROOT
+					NOT = { has_state_flag = SAU_militarize_the_industry_1mil }
+				}
+				set_state_flag = SAU_militarize_the_industry_1mil
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	#Autarky
+	focus = {
+		id = SAU_communal_autarky
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_militarize_the_industry }
+		
+		icon = GFX_goal_generic_construction2
+		x = 0
+		y = 1
+		relative_position_id = SAU_militarize_the_industry
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = SPR_anarchist_society_17
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_17
+					add_idea = SPR_anarchist_society_18
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SPR_anarchist_society_18
+				}
+				swap_ideas = {
+					remove_idea = SPR_anarchist_society_18
+					add_idea = SPR_anarchist_society_19
+				}
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPR_anarchist_society_17
+						add_idea = SPR_anarchist_society_18
+					}
+				}
+			}
+			add_tech_bonus = {
+				name = SPR_communal_autarky
+				bonus = 1
+				uses = 1
+				category = excavation_tech
+			}
+			custom_effect_tooltip = SAU_reduce_reliance_on_foreign_resources_tt
+		}
+	}
+
+	#Militarize the People
+	focus = {
+		id = SAU_militarize_the_people
+		available = {
+			has_country_leader = {
+				name = "Anarchist Commune"
+				ruling_only = yes
+			}
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_the_inevitable_counterblow } prerequisite = { focus = SAU_faith_in_the_cause }
+		
+		icon = GFX_goal_generic_military_deal
+		x = 2
+		y = 1
+		relative_position_id = SAU_the_inevitable_counterblow
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = SPA_doctrinal_advancements
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			swap_ideas = {
+				remove_idea = sau_anarchist_army_2
+			    add_idea = sau_anarchist_army_3
+			}
+		}
+	}
+
+	focus = {
+		id = SAU_anarchism_knows_no_borders
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_militarize_the_people }
+		
+		icon = GFX_focus_spr_anarchism_knows_no_borders
+		x = 0
+		y = 1
+		relative_position_id = SAU_militarize_the_people
+		cost = 5
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_WAR_SUPPORT}
+		completion_reward = {
+			add_ideas = SPR_anarchism_knows_no_borders
+		}
+	}
+
+	focus = {
+		id = SAU_global_defense_council
+		available = {
+			has_government = communism
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_anarchism_knows_no_borders }
+		
+		icon = GFX_goal_generic_alliance
+		x = 1
+		y = 1
+		relative_position_id = SAU_anarchism_knows_no_borders
+		cost = 10
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_WAR_SUPPORT}
+		completion_reward = {
+			custom_effect_tooltip = SPR_global_defense_council_tt
+			hidden_effect = {
+				drop_cosmetic_tag = yes
+				set_cosmetic_tag = sau_global_defense_council_anarcho
+			}
+			custom_effect_tooltip = SPR_global_defense_council_tt_2
+		}
+	}
+
+	focus = {
+		id = SAU_plant_the_seeds_of_revolution
+		available = {
+		}
+		bypass = {
+		}
+		prerequisite = { focus = SAU_anarchism_knows_no_borders }
+		
+		icon = GFX_focus_prc_infiltration
+		x = -1
+		y = 1
+		relative_position_id = SAU_anarchism_knows_no_borders
+		cost = 10
+
+		available_if_capitulated = yes
+		search_filters = {FOCUS_FILTER_WAR_SUPPORT}
+		completion_reward = {
+			custom_effect_tooltip = SPR_plant_the_seeds_of_revolution_tt
+			division_template = {
+				name = "Anarchist Militia"
+				priority = 1
+				is_locked = yes
+				division_names_group = SPD_INF_06
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+				}
+			}
+		}
+	}
+
+	#Begin Industrial Buildup
+	focus = {
+		id = SAU_begin_industrial_buildup_com
+		icon = GFX_goal_generic_production
+		x = 45
+		y = 0
+		offset = {
+			x = -9
+			y = 0
+			trigger = {
+				has_focus_tree = SAU_communist
+			}
+		}
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+			if = {
+				limit = {
+					has_full_control_of_state = 292
+				}
+			292 = {
+			    add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		    }
+			if = {
+				limit = {
+					has_full_control_of_state = 679
+				}
+			679 = {
+			    add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		    }
+		}
+	}
+
+	#Heavy Industry
+	focus = {
+		id = SAU_heavy_industry
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_begin_industrial_buildup_com  }
+		relative_position_id = SAU_begin_industrial_buildup_com
+		completion_reward = {
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = arms_factory
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+			type = arms_factory
+			level = 2
+			instant_build = yes
+			}
+			}
+			
+			random_owned_controlled_state = {
+			limit = {
+			free_building_slots = {
+			building = arms_factory
+			size > 0
+			include_locked = yes
+			}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+			type = arms_factory
+			level = 1
+			instant_build = yes
+			}
+			}
+		}
+	}
+
+	#Improve Railway Network
+	focus = {
+		id = SAU_improve_railway_network
+		icon = GFX_goal_generic_construct_infrastructure
+		x = -1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_begin_industrial_buildup_com  }
+		relative_position_id = SAU_begin_industrial_buildup_com
+		completion_reward = {
+			build_railway = {
+			#level = 1
+			path = { 12727 12813 10892 12758 }
+			}
+			build_railway = {
+				#level = 1
+				path = { 12727 5024 12702 }
+			}
+			build_railway = {
+				#level = 1
+				path = { 7970 10901 10815 }
+			}
+			854 = {
+                add_building_construction = {
+                    type = supply_node
+                    level = 1
+                    province = 10815
+                    instant_build = yes
+                }
+            }
+		}
+	}
+
+	#Soviet Style Economy
+	focus = {
+		id = SAU_soviet_style_economy
+		icon = GFX_focus_generic_industry_1
+		x = 1
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_improve_railway_network  } prerequisite = { focus = SAU_heavy_industry  }
+		relative_position_id = SAU_improve_railway_network
+		completion_reward = {
+			swap_ideas = {
+			    remove_idea = sau_economic_sickness
+			    add_idea = sau_economic_communism
+			}
+			if = {
+				limit = {
+					has_full_control_of_state = 292
+				}
+			292 = {
+			add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+		    }
+		}
+	}
+
+	#First Five Year Plan
+	focus = {
+		id = SAU_first_five_year_plan
+		icon = GFX_focus_generic_industry_2
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_soviet_style_economy  }
+		relative_position_id = SAU_soviet_style_economy
+		completion_reward = {
+			swap_ideas = {
+			    remove_idea = sau_economic_communism
+			    add_idea = sau_five_year_plan
+			}
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 2
+				category = industry
+			}
+			if = {
+				limit = {
+					has_full_control_of_state = 292
+				}
+			292 = {
+			add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		    }
+		}
+	}
+
+	#Rare Minerals Exploitation
+	focus = {
+		id = SAU_rare_minerals_exploitation
+		icon = GFX_goal_generic_construction2
+		x = 0
+		y = 2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_first_five_year_plan  }
+		relative_position_id = SAU_first_five_year_plan
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 1.0
+				uses = 2
+				technology = excavation1
+				technology = excavation2
+				technology = excavation3
+				technology = excavation4
+				technology = excavation5
+			}
+			add_resource = {
+				type = steel
+				amount = 12
+				state = 292
+			}
+			add_resource = {
+				type = aluminium
+				amount = 12
+				state = 292
+			}
+		}
+	}
+
+	#Extracting From Our Soil
+	focus = {
+		id = SAU_extracting_from_our_soil_com
+		icon = GFX_goal_generic_oil_refinery
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_rare_minerals_exploitation  }
+		relative_position_id = SAU_rare_minerals_exploitation
+		completion_reward = {
+			set_technology = {
+				steel_production_1 = 1
+			}
+			modify_building_resources = {
+				building = steel_mill
+				resource = steel
+				amount = 1
+			 }
+			add_resource = {
+				type = oil
+				amount = 8
+				state = 292
+			}
+			add_resource = {
+				type = oil
+				amount = 8
+			    state = 679
+			}
+		}
+	}
+
+	#Focus on Oil Production
+	focus = {
+		id = SAU_focus_on_oil_production
+		icon = GFX_focus_generic_rubber
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_extracting_from_our_soil_com  }
+		relative_position_id = SAU_extracting_from_our_soil_com
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 3.0
+				uses = 1
+				category = synth_resources
+			}
+			if = {
+				limit = {
+					has_full_control_of_state = 292
+				}
+				292 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = synthetic_refinery
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			add_ideas = sau_oil_production_com
+			add_resource = {
+				type = oil
+				amount = 6
+				state = 292
+			}
+		}
+	}
+
+	#Research Slot
+	focus = {
+		id = SAU_research_slot_com
+		icon = GFX_focus_research
+		x = 0
+		y = 1
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = SAU_focus_on_oil_production  }
+		relative_position_id = SAU_focus_on_oil_production
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	#Develop Civilian Industry
+	focus = {
+		id = SAU_develop_civilian_industry
+		icon = GFX_goal_generic_production2
+		x = -2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_first_five_year_plan  }
+		mutually_exclusive = { focus = SAU_develop_military_industry  }
+		relative_position_id = SAU_first_five_year_plan
+		completion_reward = {
+			swap_ideas = {
+			    remove_idea = sau_five_year_plan
+			    add_idea = sau_five_year_plan_civ
+			}
+			add_tech_bonus = {
+				bonus = 1.0
+				uses = 2
+				category = industry
+				category = electronics
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = industrial_complex
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 3
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+		}
+	}
+
+	#Develop Military Industry
+	focus = {
+		id = SAU_develop_military_industry
+		icon = GFX_focus_generic_combined_arms
+		x = 2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_first_five_year_plan  }
+		mutually_exclusive = { focus = SAU_develop_civilian_industry  }
+		relative_position_id = SAU_first_five_year_plan
+		completion_reward = {
+			swap_ideas = {
+			    remove_idea = sau_five_year_plan
+			    add_idea = sau_five_year_plan_mil
+			}
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = infantry_weapons
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = arms_factory
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 3
+			    add_building_construction = {
+			        type = arms_factory
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+		}
+	}
+
+	#Industrial Modernization
+	focus = {
+		id = SAU_industrial_modernization_com
+		icon = GFX_goal_reichsautobahn
+		x = 0
+		y = 4
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_develop_civilian_industry  }
+		relative_position_id = SAU_develop_civilian_industry
+		completion_reward = {
+			swap_ideas = {
+			    remove_idea = sau_five_year_plan_civ
+			    add_idea = sau_five_year_plan_civ2
+			}
+			add_tech_bonus = {
+				ahead_reduction = 2
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = industrial_complex
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 4
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = industrial_complex
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 2
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 1
+			        instant_build = yes
+			    }
+			}
+		}
+	}
+
+	#Shifting All Production To The Military
+	focus = {
+		id = SAU_shifting_all_production_to_the_military
+		icon = GFX_focus_generic_tank_production
+		x = 0
+		y = 4
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_develop_military_industry  }
+		relative_position_id = SAU_develop_military_industry
+		completion_reward = {
+			swap_ideas = {
+			    remove_idea = sau_five_year_plan_mil
+			    add_idea = sau_five_year_plan_mil2
+			}
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = cat_production
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = arms_factory
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 4
+			    add_building_construction = {
+			        type = arms_factory
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = arms_factory
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 2
+			    add_building_construction = {
+			        type = arms_factory
+			        level = 1
+			        instant_build = yes
+			    }
+			}
+		}
+	}
+
+	#Finish the Five Year Plan
+	focus = {
+		id = SAU_finish_the_five_year_plan
+		icon = GFX_focus_generic_industry_1
+		x = 2
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_industrial_modernization_com  focus = SAU_shifting_all_production_to_the_military  }
+		relative_position_id = SAU_industrial_modernization_com
+		completion_reward = {
+			if = { 
+			    limit = { 
+					has_idea = sau_five_year_plan_mil2 
+				}
+			swap_ideas = {
+			    remove_idea = sau_five_year_plan_mil2
+			    add_idea = sau_five_year_plan_mil3
+			}
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = arms_factory
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 3
+			    add_building_construction = {
+			        type = arms_factory
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = support_tech
+			}
+			}
+			else = { 
+			    swap_ideas = {
+			        remove_idea = sau_five_year_plan_civ2
+			        add_idea = sau_five_year_plan_civ3
+			    }
+			random_owned_controlled_state = {
+			    limit = {
+			        free_building_slots = {
+			        building = industrial_complex
+			        size > 0
+			        include_locked = yes
+			        }
+			    }
+			    add_extra_state_shared_building_slots = 4
+			    add_building_construction = {
+			        type = industrial_complex
+			        level = 2
+			        instant_build = yes
+			    }
+			}
+			add_tech_bonus = {
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+			}	
+		}
+	}
+
+	#The New Arabian Industry
+	focus = {
+		id = SAU_the_new_arabian_industry
+		icon = GFX_goal_generic_production
+		x = 0
+		y = 1
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = SAU_finish_the_five_year_plan  }
+		relative_position_id = SAU_finish_the_five_year_plan
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 50
+			add_timed_idea = {
+			    idea = sau_new_economic_plan
+			    days = 180
+			}
+		}
+	}
+
+}

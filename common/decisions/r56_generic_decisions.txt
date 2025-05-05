@@ -1122,16 +1122,17 @@ political_actions = {
 		days_re_enable = 120
 		fire_only_once = yes
 		available = {
-			compare_autonomy_progress_ratio > 0.98
+			compare_autonomy_progress_ratio > 0.5
 			surrender_progress < 0.3
 		}
 		visible = {
-			has_completed_focus = CAN_patriation
 			#is_ai = yes
 			NOT = {
 				has_country_flag = has_declared_independence
 			}
-			is_puppet = yes
+			#high autonomy state
+			is_subject = yes
+			is_puppet = no
 		}
 		cost = 25
 		complete_effect = {
@@ -1190,84 +1191,7 @@ political_actions = {
 		}
 	}
 
-	r56_allow_militia_formation = {
-		icon = ger_military_buildup
 
-		allowed = {
-			always = yes
-		}
-
-		fire_only_once = yes
-
-		available = {
-			hidden_trigger = {
-				NOT = {
-					has_tech = r56_militia_tech
-				}
-			}
-			has_war_support > 0.49
-			if = {
-				limit = {
-					NOT = {
-						has_government = democratic
-					}
-				}
-				OR = {
-					has_defensive_war = yes
-					surrender_progress > 0.25
-					has_tech = r56_milita_formation
-				}
-			}
-			else = {
-				OR = {
-					surrender_progress > 0.35
-					has_tech = r56_milita_formation 
-				}
-			}
-			command_power > 24
-			has_political_power > 24
-		}
-
-		visible = {
-			has_war_support > 0.15
-			NOT = {
-				has_tech = r56_militia_tech
-			}
-		}
-
-		cost = 25
-		custom_cost_text = r56_deploy_heavy_aa_capital_cost
-		custom_cost_trigger = {
-			command_power > 24
-		}
-
-		days_remove = 25
-
-		remove_effect = {
-			hidden_effect = {
-				add_command_power = -25
-			}
-			#order of effects matter, don't change - SpicyAlfredo
-			custom_effect_tooltip = r56_militia_tt
-			hidden_effect = {
-				set_technology = {
-					r56_militia_tech = 1
-				}
-			}
-			If = {
-				limit = {
-					NOT = {
-						has_country_flag = r56_militia_formation_flag
-					}
-				}
-				hidden_effect = {
-					load_oob = "r56_unlock_militia"
-				}
-				custom_effect_tooltip = UNLOCK_DIVISION_TEMPLATE
-			}
-			set_country_flag = r56_militia_formation_flag
-		}
-	}
 
 	r56_deploy_heavy_aa_capital = {
 		icon = ger_military_buildup
@@ -1499,24 +1423,6 @@ political_actions = {
 }
 
 economy_decisions = {
-#	raise_militias = {
-#		icon = generic_infantry
-#        allowed = {
-#        }
-#        available = {
-#            has_civil_war = yes
-#        }
-#        visible = {
-#            has_civil_war = yes
-#        }
-#        ai_will_do = {
-#			factor = 1
-#		}
-#		complete_effect = {
-#        	load_oob = generic_civil_war_volunteers
-#        }
-#	}
-
 	r56_coordinate_land_equipment_manufacturers = {
 		icon = generic_industry
 
@@ -1593,7 +1499,6 @@ economy_decisions = {
 			}
 			any_controlled_state = {
 				is_coastal = yes
-#				is_controlled_by = ROOT
 			}
 		}
 		cost = 50
@@ -1870,8 +1775,8 @@ war_measures = {
             has_war = yes
             has_idea = tot_economic_mobilisation
             #OR = {
-            #	#has_idea = r56i_laws_gender_limited
-            #	#has_idea = r56i_laws_gender_equality
+            #	has_idea = r56i_laws_gender_limited
+            #	has_idea = r56i_laws_gender_equality
             #}
             has_decision = women_in_the_workforce
             if = {
@@ -2329,7 +2234,7 @@ war_measures = {
 industrial_requisition_category = {
 	seize_machine_toolings_in_state = {
 		icon = generic_factory
-#		fire_only_once = yes #ideally shouldn't be there but flags seemed ineffective for some reason
+
 
  		allowed = {
 			always = yes
@@ -2351,12 +2256,9 @@ industrial_requisition_category = {
 						has_state_flag = machine_tooling_looted
 					}
 				}
-#				AND = { #The array used makes this part redundant.
-#					is_controlled_by = ROOT
-					owner = {
-						has_war_with = ROOT
-					}
-#				}
+				owner = {
+					has_war_with = ROOT
+				}
 				non_damaged_building_level = {
 					building = arms_factory
 					level > 0
@@ -2410,9 +2312,9 @@ industrial_requisition_category = {
 		}
 
 		cost = 30
-##		# + command power?
+
 		days_remove = 60
-#
+
 		remove_effect = {
 			FROM = {
 				set_state_flag = machine_tooling_looted
@@ -2444,6 +2346,66 @@ industrial_requisition_category = {
 				}
 				set_state_flag = machine_tooling_beneficiary
 			}
+		}
+	}
+}
+
+foreign_politics = {
+	r56_abandon_the_balkan_pact = {
+		allowed = {
+			OR = {
+				original_tag = GRE
+				original_tag = TUR
+				original_tag = ROM
+				original_tag = YUG
+			}
+		}
+
+		available = {
+			has_idea = r56_ROM_balkan_pact
+		}
+
+		visible = {
+			has_idea = r56_ROM_balkan_pact
+		}
+
+		cost = 50
+		days_remove = 35
+
+		ai_will_do = {
+			factor = 0
+		}
+
+		remove_effect = {
+			remove_ideas = r56_ROM_balkan_pact
+		}
+	}
+	r56_abandon_the_little_entente = {
+		allowed = {
+			OR = {
+				original_tag = CZE
+				original_tag = ROM
+				original_tag = YUG
+			}
+		}
+
+		available = {
+			has_idea = r56_YUG_little_entente
+		}
+
+		visible = {
+			has_idea = r56_YUG_little_entente
+		}
+
+		cost = 50
+		days_remove = 35
+
+		ai_will_do = {
+			factor = 0
+		}
+
+		remove_effect = {
+			remove_ideas = r56_YUG_little_entente
 		}
 	}
 }

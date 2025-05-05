@@ -125,6 +125,7 @@ operations = {
 		}
 	}
 }	
+
 SOV_ukrainian_reclaimation = {
 	
 	SOV_reclaim_ukraine = {
@@ -146,7 +147,7 @@ SOV_ukrainian_reclaimation = {
 		days_remove = 60
 
 		ai_will_do = {
-			factor = 25
+			factor = 0
 		}
 
 		visible = {
@@ -154,6 +155,8 @@ SOV_ukrainian_reclaimation = {
 			original_tag = SOV
 			NOT = {
 				has_war_with = UKR
+				has_global_flag = game_rule_SOV_fragmented
+				has_global_flag = game_rule_SOV_utterly_fragmented
 			}
 			UKR = {
 				exists = yes
@@ -203,10 +206,22 @@ SOV_ukrainian_reclaimation = {
 				}
 				OR = {	
 					has_completed_focus = SOV_the_zinovyevite_terrorist_center
-					has_completed_focus = SOV_bringing_breakaways_back_to_the_fold
+					if = {
+						limit = {
+							has_dlc = "No Step Back"
+						}
+						has_completed_focus = SOV_bringing_breakaways_back_to_the_fold
+					}
+					if = {
+						limit = {
+							NOT = {
+								has_dlc = "No Step Back"
+							}
+						}
+						has_completed_focus = SOV_power_struggle
+					}
 					has_completed_focus = SOV_right_purges
 					has_completed_focus = SOV_left_purges
-					has_country_flag = r56_UKR_revolt_active
 				}		
 			}
 			any_controlled_state = {
@@ -233,12 +248,12 @@ SOV_ukrainian_reclaimation = {
 			original_tag = SOV
 		}
 
-		cost = 10
+		cost = 50
 		
 		fire_only_once = no
-		days_re_enable = 90 #incase you need it again
+		days_re_enable = 180 #incase you need it again
 		
-		days_remove = 10
+		days_remove = 70
 
 		ai_will_do = {
 			factor = 9
@@ -252,7 +267,10 @@ SOV_ukrainian_reclaimation = {
 				}
 			}
 			any_controlled_state = { #if the main Ukrainian lands did not lose cores, only allow integration of Bessarabia to show up when its controlled
-				is_core_of = UKR
+				OR = {
+					is_core_of = UKR
+					is_core_of = RUT
+				}
 				NOT = {
 					OR = {
 						state = 89
@@ -270,7 +288,7 @@ SOV_ukrainian_reclaimation = {
 
 		modifier = {
 			resistance_damage_to_garrison = 0.05
-			#stability_weekly = -0.002
+			stability_weekly = -0.002
 		}
 		
 		remove_effect = {	
@@ -326,7 +344,10 @@ SOV_ukrainian_reclaimation = {
 					is_core_of = UKR
 					is_core_of = RUT
 				}
-				compliance > 10
+				OR = {
+					compliance > 10
+					is_core_of = ROOT
+				}
 				has_dynamic_modifier = {
 					modifier = r56_upa_state_modifier
 				}			
@@ -345,7 +366,7 @@ SOV_ukrainian_reclaimation = {
 		
 		fire_only_once = yes
 		
-		days_remove = 10
+		days_remove = 70
 
 		ai_will_do = {
 			factor = 10
@@ -417,7 +438,10 @@ SOV_ukrainian_reclaimation = {
 			91 = {
 				is_fully_controlled_by = ROOT
 				is_core_of = RUT
-				compliance > 10
+				OR = {
+					compliance > 10
+					is_core_of = ROOT
+				}
 				has_dynamic_modifier = {
 					modifier = r56_upa_state_modifier
 				}			
@@ -505,7 +529,10 @@ SOV_ukrainian_reclaimation = {
 			89 = {
 				is_fully_controlled_by = ROOT
 				is_core_of = RUT
-				compliance > 10
+				OR = {
+					compliance > 10
+					is_core_of = ROOT
+				}
 				has_dynamic_modifier = {
 					modifier = r56_upa_state_modifier
 				}			
@@ -590,7 +617,10 @@ SOV_ukrainian_reclaimation = {
 			80 = {
 				is_fully_controlled_by = ROOT
 				is_core_of = RUT
-				compliance > 10
+				OR = {
+					compliance > 10
+					is_core_of = ROOT
+				}
 				has_dynamic_modifier = {
 					modifier = r56_upa_state_modifier
 				}			
@@ -675,7 +705,10 @@ SOV_ukrainian_reclaimation = {
 			73 = {
 				is_fully_controlled_by = ROOT
 				is_core_of = UKR
-				compliance > 10
+				OR = {
+					compliance > 10
+					is_core_of = ROOT
+				}
 				has_dynamic_modifier = {
 					modifier = r56_upa_state_modifier
 				}			
@@ -760,7 +793,10 @@ SOV_ukrainian_reclaimation = {
 			996 = {
 				is_fully_controlled_by = ROOT
 				is_core_of = UKR
-				compliance > 10
+				OR = {
+					compliance > 10
+					is_core_of = ROOT
+				}
 				has_dynamic_modifier = {
 					modifier = r56_upa_state_modifier
 				}			
@@ -1077,241 +1113,241 @@ political_actions = {
 		ai_will_do = {
 			base = 10
 		}
-	}	
+	}
 }
-# SOV_restore_the_union = {
+SOV_restore_the_union = {
 	
-# 	SOV_restore_order_in_the_caucasus = {
+	SOV_restore_order_in_the_caucasus = {
 
-# 		icon = oppression
+		icon = oppression
 
-# 		available = {
-# 			controls_state = 229
-# 			controls_state = 230
-# 			controls_state = 231
-# 		}
+		available = {
+			controls_state = 229
+			controls_state = 230
+			controls_state = 231
+		}
 
-# 		allowed = {
-# 			original_tag = SOV
-# 		}
+		allowed = {
+			original_tag = SOV
+		}
 
-# 		cost = 50
+		cost = 50
 		
-# 		fire_only_once = yes
+		fire_only_once = yes
 		
-# 		days_remove = 60
+		days_remove = 60
 
-# 		ai_will_do = {
-# 			factor = 10
-# 		}
+		ai_will_do = {
+			factor = 10
+		}
 
-# 		visible = {
-# 			has_government = communism
-# 			original_tag = SOV
-# 		}
+		visible = {
+			has_government = communism
+			original_tag = SOV
+		}
 		
-# 		remove_effect = {
-# 			add_state_core = 229
-# 			add_state_core = 230
-# 			add_state_core = 231
-# 			drop_cosmetic_tag = yes
-# 			clr_global_flag = SOV_became_russia				
-# 		}		
-# 	}
-# 	SOV_restore_order_in_belarus = {
+		remove_effect = {
+			add_state_core = 229
+			add_state_core = 230
+			add_state_core = 231
+			drop_cosmetic_tag = yes
+			clr_global_flag = SOV_became_russia				
+		}		
+	}
+	SOV_restore_order_in_belarus = {
 
-# 		icon = oppression
+		icon = oppression
 
-# 		available = {
-# 			controls_state = 194
-# 			controls_state = 204
-# 			controls_state = 206
-# 			controls_state = 207
-# 			controls_state = 241
-# 		}
+		available = {
+			controls_state = 194
+			controls_state = 204
+			controls_state = 206
+			controls_state = 207
+			controls_state = 241
+		}
 
-# 		allowed = {
-# 			original_tag = SOV
-# 		}
+		allowed = {
+			original_tag = SOV
+		}
 
-# 		cost = 50
+		cost = 50
 		
-# 		fire_only_once = yes
+		fire_only_once = yes
 		
-# 		days_remove = 60
+		days_remove = 60
 
-# 		ai_will_do = {
-# 			factor = 10
-# 		}
+		ai_will_do = {
+			factor = 10
+		}
 
-# 		visible = {
-# 			has_government = communism
-# 			original_tag = SOV
-# 		}
+		visible = {
+			has_government = communism
+			original_tag = SOV
+		}
 		
-# 		remove_effect = {
-# 			add_state_core = 194
-# 			add_state_core = 204
-# 			add_state_core = 206
-# 			add_state_core = 207
-# 			add_state_core = 241
-# 			drop_cosmetic_tag = yes
-# 			clr_global_flag = SOV_became_russia
-# 		}		
-# 	}
-# 	SOV_restore_order_in_ukraine = {
+		remove_effect = {
+			add_state_core = 194
+			add_state_core = 204
+			add_state_core = 206
+			add_state_core = 207
+			add_state_core = 241
+			drop_cosmetic_tag = yes
+			clr_global_flag = SOV_became_russia
+		}		
+	}
+	SOV_restore_order_in_ukraine = {
 
-# 		icon = oppression
+		icon = oppression
 
-# 		available = {
-# 			controls_state = 201
-# 			controls_state = 199
-# 			controls_state = 198
-# 			controls_state = 192
-# 			controls_state = 202
-# 			controls_state = 203
-# 			controls_state = 193
-# 			controls_state = 225
-# 			controls_state = 259
-# 			controls_state = 197
-# 			controls_state = 226
-# 			controls_state = 196
-# 			controls_state = 200
-# 			controls_state = 221
-# 			controls_state = 227
-# 			controls_state = 228
-# 		}
+		available = {
+			controls_state = 201
+			controls_state = 199
+			controls_state = 198
+			controls_state = 192
+			controls_state = 202
+			controls_state = 203
+			controls_state = 193
+			controls_state = 225
+			controls_state = 259
+			controls_state = 197
+			controls_state = 226
+			controls_state = 196
+			controls_state = 200
+			controls_state = 221
+			controls_state = 227
+			controls_state = 228
+		}
 
-# 		allowed = {
-# 			original_tag = SOV
-# 		}
+		allowed = {
+			original_tag = SOV
+		}
 
-# 		cost = 50
+		cost = 50
 		
-# 		fire_only_once = yes
+		fire_only_once = yes
 		
-# 		days_remove = 60
+		days_remove = 60
 
-# 		ai_will_do = {
-# 			factor = 10
-# 		}
+		ai_will_do = {
+			factor = 10
+		}
 
-# 		visible = {
-# 			has_government = communism
-# 			original_tag = SOV
-# 		}
+		visible = {
+			has_government = communism
+			original_tag = SOV
+		}
 		
-# 		remove_effect = {	
-# 			add_state_core = 201
-# 			add_state_core = 199
-# 			add_state_core = 198
-# 			add_state_core = 192
-# 			add_state_core = 202
-# 			add_state_core = 203
-# 			add_state_core = 193
-# 			add_state_core = 225
-# 			add_state_core = 259
-# 			add_state_core = 197
-# 			add_state_core = 226
-# 			add_state_core = 196
-# 			add_state_core = 200
-# 			add_state_core = 221
-# 			add_state_core = 227
-# 			add_state_core = 228
-# 			drop_cosmetic_tag = yes
-# 			clr_global_flag = SOV_became_russia			
-# 		}		
-# 	}
-# 	SOV_restore_order_in_kazakhstan = {
+		remove_effect = {	
+			add_state_core = 201
+			add_state_core = 199
+			add_state_core = 198
+			add_state_core = 192
+			add_state_core = 202
+			add_state_core = 203
+			add_state_core = 193
+			add_state_core = 225
+			add_state_core = 259
+			add_state_core = 197
+			add_state_core = 226
+			add_state_core = 196
+			add_state_core = 200
+			add_state_core = 221
+			add_state_core = 227
+			add_state_core = 228
+			drop_cosmetic_tag = yes
+			clr_global_flag = SOV_became_russia			
+		}		
+	}
+	SOV_restore_order_in_kazakhstan = {
 
-# 		icon = oppression
+		icon = oppression
 
-# 		available = {
-# 				controls_state = 587
-# 				controls_state = 589
-# 				controls_state = 590
-# 				controls_state = 407
-# 				controls_state = 583
-# 				controls_state = 586
-# 				controls_state = 588
-# 				controls_state = 402
-# 				controls_state = 404
-# 				controls_state = 406
-# 		}
+		available = {
+				controls_state = 587
+				controls_state = 589
+				controls_state = 590
+				controls_state = 407
+				controls_state = 583
+				controls_state = 586
+				controls_state = 588
+				controls_state = 402
+				controls_state = 404
+				controls_state = 406
+		}
 
-# 		allowed = {
-# 			original_tag = SOV
-# 		}
+		allowed = {
+			original_tag = SOV
+		}
 
-# 		cost = 50
+		cost = 50
 		
-# 		fire_only_once = yes
+		fire_only_once = yes
 		
-# 		days_remove = 60
+		days_remove = 60
 
-# 		ai_will_do = {
-# 			factor = 10
-# 		}
+		ai_will_do = {
+			factor = 10
+		}
 
-# 		visible = {
-# 			has_government = communism
-# 			original_tag = SOV
-# 		}
+		visible = {
+			has_government = communism
+			original_tag = SOV
+		}
 		
-# 		remove_effect = {
-# 			add_state_core = 587
-# 			add_state_core = 589
-# 			add_state_core = 590
-# 			add_state_core = 407
-# 			add_state_core = 583
-# 			add_state_core = 586
-# 			add_state_core = 588
-# 			add_state_core = 402
-# 			add_state_core = 404
-# 			add_state_core = 406
-# 			drop_cosmetic_tag = yes
-# 			clr_global_flag = SOV_became_russia				
-# 		}		
-# 	}
-# 	SOV_restore_order_in_central_asia = {
+		remove_effect = {
+			add_state_core = 587
+			add_state_core = 589
+			add_state_core = 590
+			add_state_core = 407
+			add_state_core = 583
+			add_state_core = 586
+			add_state_core = 588
+			add_state_core = 402
+			add_state_core = 404
+			add_state_core = 406
+			drop_cosmetic_tag = yes
+			clr_global_flag = SOV_became_russia				
+		}		
+	}
+	SOV_restore_order_in_central_asia = {
 
-# 		icon = oppression
+		icon = oppression
 
-# 		available = {
-# 			controls_state = 405
-# 			controls_state = 585
-# 			controls_state = 584
-# 			controls_state = 742
-# 			controls_state = 732
-# 		}
+		available = {
+			controls_state = 405
+			controls_state = 585
+			controls_state = 584
+			controls_state = 742
+			controls_state = 732
+		}
 
-# 		allowed = {
-# 			original_tag = SOV
-# 		}
+		allowed = {
+			original_tag = SOV
+		}
 
-# 		cost = 50
+		cost = 50
 		
-# 		fire_only_once = yes
+		fire_only_once = yes
 		
-# 		days_remove = 60
+		days_remove = 60
 
-# 		ai_will_do = {
-# 			factor = 10
-# 		}
+		ai_will_do = {
+			factor = 10
+		}
 
-# 		visible = {
-# 			has_government = communism
-# 			original_tag = SOV
-# 		}
+		visible = {
+			has_government = communism
+			original_tag = SOV
+		}
 		
-# 		remove_effect = {
-# 			add_state_core = 405
-# 			add_state_core = 585
-# 			add_state_core = 584
-# 			add_state_core = 742
-# 			add_state_core = 732
-# 			drop_cosmetic_tag = yes
-# 			clr_global_flag = SOV_became_russia
-# 		}		
-# 	}			
-# }
+		remove_effect = {
+			add_state_core = 405
+			add_state_core = 585
+			add_state_core = 584
+			add_state_core = 742
+			add_state_core = 732
+			drop_cosmetic_tag = yes
+			clr_global_flag = SOV_became_russia
+		}		
+	}			
+}

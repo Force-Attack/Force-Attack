@@ -1,73 +1,145 @@
-foreign_politics = {
+political_actions = {
 	
-	ENG_split_up_the_British_Raj = {
-
-		icon = eng_trade_unions_support
-
-		available = {
-			original_tag = ENG
-			date > 1937.03.01
-			RAJ = {
-				is_subject_of = ENG
-				has_full_control_of_state = 659
-			}
-		}
-
-		allowed = {
-			original_tag = ENG
-		}
-
-		targets = { RAJ }
-
-		target_trigger = {
-			FROM = {
-				tag = RAJ
-			}
-		}
-
-		ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				date < 1937.04.01
-			}
-		}
-
-		visible = {
-			original_tag = ENG
-			RAJ = {
-				owns_state = 659
-			}
-		}
-
-		fire_only_once = yes
-		
-		complete_effect = {
-			transfer_state = 659
-			if = {
-				limit = {
-					NOT = { has_country_flag = india_remains_united }
-				}
-				RAJ = {
-					set_country_flag = burma_separate
-					every_owned_state = {
-						limit = {
-							is_core_of = BRM
-						}
-						set_state_flag = colony_of_burma
-						add_dynamic_modifier = { modifier = colony_of_burma }
-					}
-				}
-			}
-			RAJ = {
-				country_event = india.100
-			}
-		}
-
-	}
-
+	#ENG_split_up_the_British_Raj = {
+#
+	#	icon = eng_trade_unions_support
+#
+	#	available = {
+	#		date > 1937.3.1
+	#		RAJ = {
+	#			is_subject_of = ENG
+	#		}
+	#	}
+#
+	#	allowed = {
+	#		original_tag = ENG
+	#	}
+#
+	#	targets = { RAJ }
+#
+	#	target_trigger = {
+	#		FROM = {
+	#			tag = RAJ
+	#		}
+	#	}
+#
+	#	cost = 50
+#
+	#	days_remove = 30
+#
+	#	ai_will_do = {
+	#		base = 1
+	#		modifier = {
+	#			factor = 0.5
+	#			RAJ = {
+	#				has_war_together_with = ROOT
+	#			}
+	#		}
+	#		modifier = {
+	#			factor = 3
+	#			NOT = {
+	#				has_government = ROOT
+	#			}
+	#		}
+	#		modifier = {
+	#			factor = 2
+	#			RAJ = {
+	#				has_completed_focus = RAJ_Indian_National_Congress
+	#			}
+	#		}
+	#		modifier = {
+	#			factor = 5
+	#			RAJ = {
+	#				has_completed_focus = r56_RAJ_revolt_against_the_oppressors_showcase
+	#			}
+	#		}
+	#		modifier = {
+	#			factor = 10
+	#			RAJ = {
+	#				has_completed_focus = RAJ_Independent_Labour_Party
+	#			}
+	#		}
+	#		modifier = {
+	#			factor = 0
+	#			date < 1937.3.1
+	#		}
+	#		modifier = {
+	#			factor = 500
+	#			date > 1937.3.1
+	#			is_historical_focus_on = yes
+	#		}
+	#	}
+#
+	#	visible = {
+	#		NOT = {
+	#			has_country_flag = india_remains_united
+	#		}
+	#		original_tag = ENG
+	#		RAJ = {
+	#			is_subject_of = ROOT
+	#			OR = {
+	#				count_triggers = {
+	#					amount = 3
+	#				}
+	#				288 = {
+	#					is_owned_and_controlled_by = RAJ
+	#				}
+	#				1019 = {
+	#					is_owned_and_controlled_by = RAJ
+	#				}
+	#				640 = {
+	#					is_owned_and_controlled_by = RAJ
+	#				}
+	#				1018 = {
+	#					is_owned_and_controlled_by = RAJ
+	#				}
+	#				1020 = {
+	#					is_owned_and_controlled_by = RAJ
+	#				}
+	#			}
+	#		}
+	#	}
+#
+	#	fire_only_once = yes
+	#	
+	#	remove_effect = {
+	#		every_state = {
+	#			limit = {
+	#				is_core_of = BRM
+	#				is_owned_and_controlled_by = RAJ
+	#			}
+	#			RAJ =  {
+	#				give_resource_rights = {
+	#					receiver = ROOT
+	#					state = PREV
+	#				}
+	#			}
+	#			add_dynamic_modifier = {
+	#				modifier = colony_of_burma
+	#			}
+	#			hidden_effect = {
+	#				remove_dynamic_modifier = {
+	#					modifier = slight_religious_minority
+	#				}
+	#			}
+	#		}
+	#		custom_effect_tooltip = r56_newline
+	#		if = {
+	#			limit = {
+	#				RAJ = {
+	#					659 = {
+	#						is_owned_and_controlled_by = RAJ
+	#					}
+	#				}
+	#			}
+	#			transfer_state = 659
+	#			RAJ = {
+	#				country_event = india.100
+	#			}
+	#		}
+	#	}
+	#}
 }
-
 
 ENG_weapons_purchases_category = {
 	ENG_order_weapons_in_USA = {
@@ -101,6 +173,7 @@ ENG_weapons_purchases_category = {
 		remove_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
+				producer = USA
 				amount = 2500
 			}
 			USA = {
@@ -139,15 +212,16 @@ ENG_weapons_purchases_category = {
 		remove_effect = {
 			add_equipment_to_stockpile = {
 				type = artillery_equipment
-				amount = 75
+				producer = USA
+				amount = 100
 			}
 			USA = {
-				add_offsite_building = { type = industrial_complex level = 2 }
+				add_offsite_building = { type = industrial_complex level = -2 }
 			}
 		}
 	}
 	ENG_order_tanks_in_USA = {
-		icon = generic_air
+		icon = generic_tank
 		visible = {
 			USA_can_sell_weapons_trigger = yes
 		}
@@ -191,6 +265,7 @@ ENG_weapons_purchases_category = {
 				}
 				add_equipment_to_stockpile = {
 					type = light_tank_chassis
+					producer = USA
 					amount = 50
 				}
 			}
@@ -207,6 +282,7 @@ ENG_weapons_purchases_category = {
 				}
 				add_equipment_to_stockpile = {
 					type = medium_tank_chassis
+					producer = USA
 					amount = 50
 				}
 			}
@@ -229,7 +305,7 @@ ENG_weapons_purchases_category = {
 			factor = 1
 			modifier = {
 				has_equipment = {
-					fighter_equipment < 1
+					small_plane_airframe < 1
 				}
 				factor = 5
 			}
@@ -247,7 +323,8 @@ ENG_weapons_purchases_category = {
 		}
 		remove_effect = {
 			add_equipment_to_stockpile = {
-				type = fighter_equipment
+				type = small_plane_airframe
+				producer = USA
 				amount = 50
 			}
 			USA = {
@@ -288,7 +365,8 @@ ENG_weapons_purchases_category = {
 		}
 		remove_effect = {
 			add_equipment_to_stockpile = {
-				type = tac_bomber_equipment
+				type = medium_plane_airframe
+				producer = USA
 				amount = 25
 			}
 			USA = {
@@ -298,11 +376,16 @@ ENG_weapons_purchases_category = {
 	}
 }
 
+
 ENG_organize_the_blackshirts = {
 
 	ENG_urge_restraint = {
 
 		icon = eng_propaganda_campaigns
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -314,6 +397,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = no
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -328,7 +413,11 @@ ENG_organize_the_blackshirts = {
 		}
 
 		ai_will_do = {
-			factor = 0
+			factor = 1
+			modifier = {
+				factor = 0
+				fascism > 0.5
+			}			
 		}
 	}
 
@@ -336,14 +425,18 @@ ENG_organize_the_blackshirts = {
 
 		icon = eng_blackshirt_march
 
+		allowed = {
+			tag = ENG
+		}
+
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
 			has_full_control_of_state = 119
 		}
 
 		highlight_states = {
- highlight_state_targets = { state = 119 } 
-}
+			highlight_state_targets = { state = 119 } 
+		}
 
 		on_map_mode = map_only
 
@@ -352,6 +445,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -389,10 +484,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_northern_ireland
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}		
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.581
@@ -408,15 +521,18 @@ ENG_organize_the_blackshirts = {
 
 		icon = eng_blackshirt_march
 
+		allowed = {
+			tag = ENG
+		}
+
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
 			has_full_control_of_state = 120
 		}
 
 		highlight_states = {
- highlight_state_targets = { state = 120 } 
-}
-
+			highlight_state_targets = { state = 120 } 
+		}
 		on_map_mode = map_only
 
 		cost = 6
@@ -424,6 +540,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -461,10 +579,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_highlands
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}		
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.518
@@ -479,6 +615,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_aberdeenshire = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -496,6 +636,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -533,10 +675,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_aberdeenshire
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.551
@@ -551,6 +711,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_lanark = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -568,6 +732,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -605,10 +771,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_lanark
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.653
@@ -623,6 +807,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_lothian = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -640,6 +828,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -677,10 +867,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_lothian
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.596
@@ -695,6 +903,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_northern_england = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -712,6 +924,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -749,10 +963,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_northern_england
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.644
@@ -767,6 +999,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_yorkshire = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -784,6 +1020,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -821,10 +1059,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_yorkshire
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.803
@@ -839,6 +1095,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_lancashire = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -856,6 +1116,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -893,10 +1155,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_lancashire
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.89
@@ -911,6 +1191,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_wales = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -928,6 +1212,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -965,10 +1251,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_wales
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.656
@@ -983,6 +1287,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_west_midlands = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1000,6 +1308,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1037,10 +1347,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_west_midlands
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.749
@@ -1055,6 +1383,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_east_midlands = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1072,6 +1404,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1109,10 +1443,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_east_midlands
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.65
@@ -1127,6 +1479,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_east_anglia = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1144,6 +1500,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1181,10 +1539,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_east_anglia
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.593
@@ -1199,6 +1575,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_gloucestershire = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1216,6 +1596,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1253,10 +1635,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_gloucestershire
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.623
@@ -1271,6 +1671,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_london = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1288,6 +1692,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1325,10 +1731,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_london
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.944
@@ -1343,6 +1767,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_cornwall = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1360,6 +1788,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1397,10 +1827,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_cornwall
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 20
 			modifier = {
 				factor = 0
 				has_stability < 0.584
@@ -1415,6 +1863,10 @@ ENG_organize_the_blackshirts = {
 	ENG_blackshirt_march_in_sussex = {
 
 		icon = eng_blackshirt_march
+
+		allowed = {
+			tag = ENG
+		}
 
 		available = {
 			NOT = { has_country_flag = ENG_march_timer_flag }
@@ -1432,6 +1884,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1469,10 +1923,28 @@ ENG_organize_the_blackshirts = {
 			custom_effect_tooltip = ENG_blackshirt_march_tt
 			set_country_flag = ENG_march_temp_sussex
 			set_country_flag = ENG_march_timer_flag
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_variable = var_ENG_count_blackshirt_marches		#check if correct				
+						}
+					}
+					set_variable = {
+					   	var = var_ENG_count_blackshirt_marches
+					   	value = 0
+					}				
+					
+				}
+				add_to_variable = {
+				    var = var_ENG_count_blackshirt_marches
+				    value = 1
+				}				
+			}
 		}
 
 		ai_will_do = {
-			factor = 10
+			factor = 40
 			modifier = {
 				factor = 0
 				has_stability < 0.716
@@ -1488,6 +1960,10 @@ ENG_organize_the_blackshirts = {
 
 		icon = eng_blackshirt_march
 
+		allowed = {
+			tag = ENG
+		}
+
 		available = {
 			has_full_control_of_state = 126
 			fascism > 0.5
@@ -1498,6 +1974,8 @@ ENG_organize_the_blackshirts = {
 		fire_only_once = yes
 
 		visible = {
+			tag = ENG
+			has_completed_focus = ENG_organize_the_blackshirts
 			NOT = { has_government = fascism }
 		}
 
@@ -1507,10 +1985,9 @@ ENG_organize_the_blackshirts = {
 		}
 
 		ai_will_do = {
-			factor = 100
+			factor = 1000
 		}
 	}
-
 	ENG_reconciliatory_speech = {
 
 		icon = eng_blackshirt_march
@@ -1569,7 +2046,6 @@ ENG_organize_the_blackshirts = {
 			}
 		}
 	}
-
 	ENG_speech_against_germany = {
 
 		icon = eng_blackshirt_speech
@@ -1580,13 +2056,39 @@ ENG_organize_the_blackshirts = {
 
 		available = {
 			FROM = {
-				has_government = fascism
+			#	OR = {
+					has_government = fascism
+			#		if = {
+			#			limit = {
+			#				has_global_flag = game_rule_flag_germany_fragmented
+			#			}
+			#			FROM = {
+			#				OR = {
+			#					original_tag = SOV
+			#					if = {
+			#						limit = {
+			#							FRA = {
+			#								OR = {
+			#									has_completed_focus = FRA_far_right_leagues
+			#									has_completed_focus = FRA_radicalize_front
+			#									has_completed_focus = FRA_action_francaise
+			#								}
+			#							}	
+			#						}
+			#						FROM = {
+			#							original_tag = FRA
+			#						}
+			#					}
+			#				}
+			#			}
+			#		}					
+			#	}
 			}
 			has_stability < 0.8
 		}
 
-		targets = { GER }
-		targets_dynamic = yes
+		#targets = { GER }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_organize_the_blackshirts
@@ -1594,7 +2096,11 @@ ENG_organize_the_blackshirts = {
 
 		target_trigger = {
 			FROM = {
-				original_tag = GER
+			#	OR = {
+			#		original_tag = SOV
+			#		original_tag = FRA
+					original_tag = GER	
+			#	}						
 			}
 		}
 
@@ -1607,7 +2113,31 @@ ENG_organize_the_blackshirts = {
 		visible = {
 			NOT = { has_government = fascism }
 			FROM = {
-				has_government = fascism
+			#	OR = {
+					has_government = fascism
+				#	if = {
+				#		limit = {
+				#			has_global_flag = game_rule_flag_germany_fragmented
+				#		}
+				#		FROM = {
+				#			OR = {
+				#				original_tag = SOV
+				#				if = {
+				#					limit = {
+				#						FRA = {
+				#							OR = {
+				#								has_completed_focus = FRA_far_right_leagues
+				#								has_completed_focus = FRA_radicalize_front
+				#								has_completed_focus = FRA_action_francaise
+				#							}
+				#						}	
+				#					}
+				#					original_tag = FRA
+				#				}
+				#			}
+				#		}
+				#	}					
+				#}	
 			}
 		}
 
@@ -1618,7 +2148,17 @@ ENG_organize_the_blackshirts = {
 		}
 
 		complete_effect = {
-			country_event = { id = mtg_britain.60 hours = 6 }
+			random_list = {
+				80 = {
+					country_event = { id = mtg_britain.60 hours = 6 }
+				}
+				10 = { 
+					country_event = { id = r56_eng.1 hours = 6 }
+				}
+				10 = { 
+					country_event = { id = r56_eng.2 hours = 6 }
+				}					
+			}			
 			custom_effect_tooltip = ENG_speech_against_germany_tt
 			add_ai_strategy = {
 				type = antagonize
@@ -1688,7 +2228,87 @@ ENG_organize_the_blackshirts = {
 			}
 		}
 	}
+	ENG_speech_against_war = {
 
+		icon = eng_blackshirt_speech
+
+		allowed = {
+			tag = ENG
+		}
+
+		available = {
+			has_stability < 0.8
+		}
+
+
+		days_remove = 60
+
+		cost = 50
+
+		fire_only_once = no
+
+		visible = {
+			has_completed_focus = ENG_organize_the_blackshirts
+			NOT = { has_government = fascism }
+			OR = {
+				has_global_flag = game_rule_flag_germany_fragmented
+				NOT = {
+					country_exists = GER
+				}
+			}
+			
+		}
+
+		cancel_if_not_visible = yes
+
+		modifier = {
+			stability_weekly = 0.02
+		}
+
+		complete_effect = {
+			random_list = {
+				50 = { 
+					country_event = { id = r56_eng.1 hours = 6 }
+				}
+				50 = { 
+					country_event = { id = r56_eng.2 hours = 6 }
+				}					
+			}
+			random_list = {
+				50 = { 
+					add_war_support = -0.01
+				}
+				50 = { 
+					add_war_support = -0.02
+				}					
+			}			
+			
+		}
+
+		remove_effect = {
+
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 10
+				has_stability < 0.8
+			}
+			modifier = {
+				factor = 5
+				has_stability < 0.7
+			}
+			modifier = {
+				factor = 10
+				has_stability < 0.6
+			}
+			modifier = {
+				factor = 0
+				fascism > 0.5
+			}
+		}
+	}
 	ENG_the_mosley_plan = {
 
 		icon = generic_construction
@@ -1699,6 +2319,7 @@ ENG_organize_the_blackshirts = {
 
 		visible = {
 			has_country_flag = won_british_civil_war
+			has_completed_focus = ENG_organize_the_blackshirts
 		}
 
 		fire_only_once = yes
@@ -1750,8 +2371,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { CAN }
-		targets_dynamic = yes
+		#targets = { CAN }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -1909,8 +2530,8 @@ ENG_appeal_to_imperial_loyalists = {
 			has_army_experience > 5
 		}
 
-		targets = { ENG }
-		targets_dynamic = yes
+		#targets = { ENG }
+		#targets_dynamic = yes
 
 		target_trigger = {
 			FROM = {
@@ -2020,8 +2641,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 		
-		targets = { CAN }
-		targets_dynamic = yes
+		#targets = { CAN }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -2124,8 +2745,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { SAF }
-		targets_dynamic = yes
+		#targets = { SAF }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -2283,8 +2904,8 @@ ENG_appeal_to_imperial_loyalists = {
 			has_army_experience > 5
 		}
 
-		targets = { ENG }
-		targets_dynamic = yes
+		#targets = { ENG }
+		#targets_dynamic = yes
 
 		target_trigger = {
 			FROM = {
@@ -2394,8 +3015,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { SAF }
-		targets_dynamic = yes
+		#targets = { SAF }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -2512,8 +3133,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { AST }
-		targets_dynamic = yes
+		#targets = { AST }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -2638,7 +3259,7 @@ ENG_appeal_to_imperial_loyalists = {
 						desc = " "
 						picture = "gfx/leaders/ENG/portrait_eng_william_birdwood.dds"
 						expire = "1965.1.1"
-						ideology = centrism
+						ideology = military_junta
 					}
 				}
 				AST = { hidden_effect = { news_event = { id = mtg_news.26 days = 1 } } }
@@ -2678,8 +3299,8 @@ ENG_appeal_to_imperial_loyalists = {
 			has_army_experience > 5
 		}
 
-		targets = { ENG }
-		targets_dynamic = yes
+		#targets = { ENG }
+		#targets_dynamic = yes
 
 		target_trigger = {
 			FROM = {
@@ -2789,8 +3410,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { AST }
-		targets_dynamic = yes
+		#targets = { AST }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -2906,8 +3527,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { NZL }
-		targets_dynamic = yes
+		#targets = { NZL }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -3080,8 +3701,8 @@ ENG_appeal_to_imperial_loyalists = {
 			has_army_experience > 5
 		}
 
-		targets = { ENG }
-		targets_dynamic = yes
+		#targets = { ENG }
+		#targets_dynamic = yes
 
 		target_trigger = {
 			FROM = {
@@ -3190,8 +3811,8 @@ ENG_appeal_to_imperial_loyalists = {
 			}
 		}
 
-		targets = { NZL }
-		targets_dynamic = yes
+		#targets = { NZL }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_appeal_to_imperial_loyalists
@@ -3283,7 +3904,7 @@ ENG_appeal_to_imperial_loyalists = {
 			NOT = { is_in_faction_with = CAN }
 		}
 
-		targets_dynamic = yes
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_bring_the_dominions_back_into_the_fold
@@ -3336,7 +3957,6 @@ ENG_appeal_to_imperial_loyalists = {
 					add_to_faction = PREV
 					if = {
 						limit = {
-							has_dlc = "Death or Dishonor"
 							has_government = fascism
 						}
 						set_autonomy = {
@@ -3344,27 +3964,16 @@ ENG_appeal_to_imperial_loyalists = {
 							autonomy_state = autonomy_reichskommissariat
 						}
 					}
-					else_if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
+					else = {
 						set_autonomy = {
 							target = PREV
 							autonomy_state = autonomy_integrated_puppet
 						}
 					}
-					else = {
-						puppet = PREV
-					}
 				}
 				hidden_effect = {
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						load_focus_tree = { tree = r56_canadian_focus keep_completed = yes }
-						CAN_enforce_loyalty = yes
-					}
+					load_focus_tree = { tree = r56_canadian_focus keep_completed = yes }
+					CAN_enforce_loyalty = yes
 				}	
 				hidden_effect = { country_event = { id = mtg_britain.112 days = 1 } }
 			}
@@ -3388,7 +3997,7 @@ ENG_appeal_to_imperial_loyalists = {
 			NOT = { is_in_faction_with = SAF }
 		}
 
-		targets_dynamic = yes
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_bring_the_dominions_back_into_the_fold
@@ -3441,7 +4050,6 @@ ENG_appeal_to_imperial_loyalists = {
 					add_to_faction = PREV
 					if = {
 						limit = {
-							has_dlc = "Death or Dishonor"
 							has_government = fascism
 						}
 						set_autonomy = {
@@ -3449,28 +4057,16 @@ ENG_appeal_to_imperial_loyalists = {
 							autonomy_state = autonomy_reichskommissariat
 						}
 					}
-					else_if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
+					else = {
 						set_autonomy = {
 							target = PREV
 							autonomy_state = autonomy_integrated_puppet
 						}
 					}
-					else = {
-						puppet = PREV
-					}
 				}
 				hidden_effect = {
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-							has_global_flag = saf_tfv_focus_tree
-						}
-						load_focus_tree = { tree = south_african_focus keep_completed = yes }
-						SAF_enforce_loyalty = yes
-					}
+					load_focus_tree = { tree = r56_south_africa_focus keep_completed = yes }
+					SAF_enforce_loyalty = yes
 				}
 				hidden_effect = { country_event = { id = mtg_britain.112 days = 1 } }
 			}
@@ -3493,7 +4089,7 @@ ENG_appeal_to_imperial_loyalists = {
 			AST = { has_civil_war = yes }
 			NOT = { is_in_faction_with = AST }
 		}
-		targets_dynamic = yes
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_bring_the_dominions_back_into_the_fold
@@ -3546,7 +4142,6 @@ ENG_appeal_to_imperial_loyalists = {
 					add_to_faction = PREV
 					if = {
 						limit = {
-							has_dlc = "Death or Dishonor"
 							has_government = fascism
 						}
 						set_autonomy = {
@@ -3554,27 +4149,16 @@ ENG_appeal_to_imperial_loyalists = {
 							autonomy_state = autonomy_reichskommissariat
 						}
 					}
-					else_if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
+					else= {
 						set_autonomy = {
 							target = PREV
 							autonomy_state = autonomy_integrated_puppet
 						}
 					}
-					else = {
-						puppet = PREV
-					}
 				}
 				hidden_effect = {
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						load_focus_tree = { tree = australian_focus keep_completed = yes }
-						AST_enforce_loyalty = yes
-					}
+					load_focus_tree = { tree = r56_australian_focus keep_completed = yes }
+					AST_enforce_loyalty = yes
 				}
 				hidden_effect = { country_event = { id = mtg_britain.112 days = 1 } }
 			}
@@ -3598,7 +4182,7 @@ ENG_appeal_to_imperial_loyalists = {
 			NOT = { is_in_faction_with = NZL }
 		}
 
-		targets_dynamic = yes
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_bring_the_dominions_back_into_the_fold
@@ -3651,7 +4235,6 @@ ENG_appeal_to_imperial_loyalists = {
 					add_to_faction = PREV
 					if = {
 						limit = {
-							has_dlc = "Death or Dishonor"
 							has_government = fascism
 						}
 						set_autonomy = {
@@ -3659,27 +4242,16 @@ ENG_appeal_to_imperial_loyalists = {
 							autonomy_state = autonomy_reichskommissariat
 						}
 					}
-					else_if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
+					else = {
 						set_autonomy = {
 							target = PREV
 							autonomy_state = autonomy_integrated_puppet
 						}
 					}
-					else = {
-						puppet = PREV
-					}
 				}
 				hidden_effect = {
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						load_focus_tree = { tree = new_zealander_focus keep_completed = yes }
-						NZL_enforce_loyalty = yes
-					}
+					load_focus_tree = { tree = r56_new_zealander_focus keep_completed = yes }
+					set_country_flag = britain_enforced_our_loyalty
 				}
 				hidden_effect = { country_event = { id = mtg_britain.112 days = 1 } }
 			}
@@ -3705,7 +4277,6 @@ ENG_concessions_to_the_trade_unions = {
 
 		available = {
 			NOT = { has_country_flag = ENG_trade_unions_demand_timer }
-			NOT = { has_government = communism }
 		}
 
 		cost = 50
@@ -5214,7 +5785,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_minister_appointment
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 200
 
 		fire_only_once = no
 
@@ -5577,7 +6148,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_conscription_limitations_done_flag
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 150
 
 		fire_only_once = no
 
@@ -5749,7 +6320,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_workplace_safety_legislation_done_flag
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 150
 
 		fire_only_once = no
 
@@ -5921,7 +6492,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_increase_in_paid_leave_done_flag
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 150
 
 		fire_only_once = no
 
@@ -6093,7 +6664,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_minimum_pay_increase_done_flag
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 150
 
 		fire_only_once = no
 
@@ -6245,7 +6816,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_construction_safety_legislation_done_flag
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 150
 
 		fire_only_once = no
 
@@ -6397,7 +6968,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_country_flag = ENG_trade_unions_demand_mandatory_union_days_done_flag
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 200
 
 		fire_only_once = no
 
@@ -6519,7 +7090,7 @@ ENG_concessions_to_the_trade_unions = {
 			has_government = communism
 		}
 
-		days_mission_timeout = 30
+		days_mission_timeout = 200
 
 		fire_only_once = no
 
@@ -6766,48 +7337,57 @@ ENG_concessions_to_the_trade_unions = {
 			factor = 0
 		}
 	}
-	ENG_expected_decolonization = { # timer for the player to see how much longer they have to decolonize before they get a civil war
-
-		icon = eng_abdication_crisis
-		
-		available = {
-			has_completed_focus = ENG_decolonization
-		}
-
-		days_mission_timeout = 730
-
-		fire_only_once = yes
-
-		activation = {
-			tag = ENG
-			OR = {
-				has_completed_focus = ENG_concessions_to_the_trade_unions
-				has_completed_focus = ENG_opposition_to_the_national_government
-			}
-			
-			NOT = { has_completed_focus = ENG_decolonization }
-			has_government = communism
-			has_country_flag = ENG_switched_to_communism_civil_war_flag
-		}
-
-		visible = {
-			tag = ENG
-			NOT = { has_completed_focus = ENG_decolonization }
-		}
-
-		cancel_if_not_visible = yes
-
-		is_good = no
-
-		complete_effect = {
-			custom_effect_tooltip = ENG_expected_decolonization_tt
-		}
-
-		timeout_effect = {
-			add_political_power = 10
-		}
-	}
+	#ENG_expected_decolonization = { # timer for the player to see how much longer they have to decolonize before they get a civil war
+	#
+	#	icon = eng_abdication_crisis
+	#	
+	#	available = {
+	#		has_completed_focus = ENG_decolonization
+	#	}
+	#
+	#	days_mission_timeout = 730
+	#
+	#	fire_only_once = yes
+	#
+	#	activation = {
+	#		tag = ENG
+	#		OR = {
+	#			has_completed_focus = ENG_concessions_to_the_trade_unions
+	#			has_completed_focus = ENG_opposition_to_the_national_government
+	#		}
+	#		
+	#		NOT = { has_completed_focus = ENG_decolonization }
+	#		has_government = communism
+	#		has_country_flag = ENG_switched_to_communism_civil_war_flag
+	#	}
+	#
+	#	visible = {
+	#		tag = ENG
+	#		NOT = { has_completed_focus = ENG_decolonization }
+	#	}
+	#
+	#	cancel_if_not_visible = yes
+	#
+	#	is_good = no
+	#
+	#	complete_effect = {
+	#		custom_effect_tooltip = ENG_expected_decolonization_tt
+	#	}
+	#
+	#	timeout_effect = {
+	#		add_political_power = 10
+	#	}
+	#}
 }
+
+
+
+
+
+
+
+
+
 
 ENG_move_to_secure_the_dominions = {
 	
@@ -6830,8 +7410,8 @@ ENG_move_to_secure_the_dominions = {
 			NOT = { army_manpower_in_state = { state = 276 amount < 48000 } }
 		}
 
-		targets = { CAN }
-		targets_dynamic = yes
+		#targets = { CAN }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -6916,8 +7496,8 @@ ENG_move_to_secure_the_dominions = {
 			FROM = { has_country_flag = ENG_cannot_leave_faction }
 		}
 
-		targets = { CAN }
-		targets_dynamic = yes
+		#targets = { CAN }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -6998,8 +7578,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { CAN }
-		targets_dynamic = yes
+		#targets = { CAN }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7063,8 +7643,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { CAN }
-		targets_dynamic = yes
+		#targets = { CAN }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7123,8 +7703,8 @@ ENG_move_to_secure_the_dominions = {
 			NOT = { army_manpower_in_state = { state = 940 amount < 19200 } }
 		}
 
-		targets = { SAF }
-		targets_dynamic = yes
+		#targets = { SAF }
+		#targets_dynamic = yes
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
 		}
@@ -7203,8 +7783,8 @@ ENG_move_to_secure_the_dominions = {
 			FROM = { has_country_flag = ENG_cannot_leave_faction }
 		}
 
-		targets = { SAF }
-		targets_dynamic = yes
+		#targets = { SAF }
+		#targets_dynamic = yes
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
 		}
@@ -7276,8 +7856,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 				
-		targets = { SAF }
-		targets_dynamic = yes
+		#targets = { SAF }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7337,8 +7917,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { SAF }
-		targets_dynamic = yes
+		#targets = { SAF }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7396,6 +7976,7 @@ ENG_move_to_secure_the_dominions = {
 				}
 				NOT = { army_manpower_in_state = { state = 442 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 443 amount < 9600 } }
+				NOT = { army_manpower_in_state = { state = 1093 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 440 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 441 amount < 9600 } }
 			}
@@ -7419,7 +8000,6 @@ ENG_move_to_secure_the_dominions = {
 				NOT = { army_manpower_in_state = { state = 430 amount < 9600 } }
 			}
 			NOT = { army_manpower_in_state = { state = 432 amount < 9600 } }
-			NOT = { army_manpower_in_state = { state = 434 amount < 9600 } }
 			if = {
 				limit = {
 					NOT = { country_exists = BRM }
@@ -7430,8 +8010,8 @@ ENG_move_to_secure_the_dominions = {
 			NOT = { army_manpower_in_state = { state = 439 amount < 96000 } }
 		}
 
-		targets = { RAJ }
-		targets_dynamic = yes
+		#targets = { RAJ }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7511,6 +8091,7 @@ ENG_move_to_secure_the_dominions = {
 				}
 				NOT = { army_manpower_in_state = { state = 442 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 443 amount < 9600 } }
+				NOT = { army_manpower_in_state = { state = 1093 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 440 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 441 amount < 9600 } }
 			}
@@ -7534,7 +8115,6 @@ ENG_move_to_secure_the_dominions = {
 				NOT = { army_manpower_in_state = { state = 430 amount < 9600 } }
 			}
 			NOT = { army_manpower_in_state = { state = 432 amount < 9600 } }
-			NOT = { army_manpower_in_state = { state = 434 amount < 9600 } }
 			if = {
 				limit = {
 					NOT = { country_exists = BRM }
@@ -7546,8 +8126,8 @@ ENG_move_to_secure_the_dominions = {
 			FROM = { has_country_flag = ENG_cannot_leave_faction }
 		}
 
-		targets = { RAJ }
-		targets_dynamic = yes
+		#targets = { RAJ }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7617,6 +8197,7 @@ ENG_move_to_secure_the_dominions = {
 				}
 				NOT = { army_manpower_in_state = { state = 442 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 443 amount < 9600 } }
+				NOT = { army_manpower_in_state = { state = 1093 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 440 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 441 amount < 9600 } }
 			}
@@ -7640,7 +8221,6 @@ ENG_move_to_secure_the_dominions = {
 				NOT = { army_manpower_in_state = { state = 430 amount < 9600 } }
 			}
 			NOT = { army_manpower_in_state = { state = 432 amount < 9600 } }
-			NOT = { army_manpower_in_state = { state = 434 amount < 9600 } }
 			if = {
 				limit = {
 					NOT = { country_exists = BRM }
@@ -7655,8 +8235,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { RAJ }
-		targets_dynamic = yes
+		#targets = { RAJ }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7712,6 +8292,7 @@ ENG_move_to_secure_the_dominions = {
 				}
 				NOT = { army_manpower_in_state = { state = 442 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 443 amount < 9600 } }
+				NOT = { army_manpower_in_state = { state = 1093 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 440 amount < 9600 } }
 				NOT = { army_manpower_in_state = { state = 441 amount < 9600 } }
 			}
@@ -7735,7 +8316,6 @@ ENG_move_to_secure_the_dominions = {
 				NOT = { army_manpower_in_state = { state = 430 amount < 9600 } }
 			}
 			NOT = { army_manpower_in_state = { state = 432 amount < 9600 } }
-			NOT = { army_manpower_in_state = { state = 434 amount < 9600 } }
 			if = {
 				limit = {
 					NOT = { country_exists = BRM }
@@ -7750,8 +8330,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { RAJ }
-		targets_dynamic = yes
+		#targets = { RAJ }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7809,8 +8389,8 @@ ENG_move_to_secure_the_dominions = {
 			NOT = { army_manpower_in_state = { state = 285 amount < 48000 } }
 		}
 
-		targets = { AST }
-		targets_dynamic = yes
+		#targets = { AST }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7891,8 +8471,8 @@ ENG_move_to_secure_the_dominions = {
 			FROM = { has_country_flag = ENG_cannot_leave_faction }
 		}
 
-		targets = { AST }
-		targets_dynamic = yes
+		#targets = { AST }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -7966,8 +8546,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 	
-		targets = { AST }
-		targets_dynamic = yes
+		#targets = { AST }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -8027,8 +8607,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { AST }
-		targets_dynamic = yes
+		#targets = { AST }
+		#targets_dynamic = yes
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
 		}
@@ -8083,8 +8663,8 @@ ENG_move_to_secure_the_dominions = {
 			NOT = { army_manpower_in_state = { state = 284 amount < 48000 } }
 		}
 
-		targets = { NZL }
-		targets_dynamic = yes
+		#targets = { NZL }
+		#targets_dynamic = yes
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
 		}
@@ -8162,8 +8742,8 @@ ENG_move_to_secure_the_dominions = {
 			FROM = { has_country_flag = ENG_cannot_leave_faction }
 		}
 
-		targets = { NZL }
-		targets_dynamic = yes
+		#targets = { NZL }
+		#targets_dynamic = yes
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
 		}
@@ -8234,8 +8814,8 @@ ENG_move_to_secure_the_dominions = {
 			}
 		}
 
-		targets = { NZL }
-		targets_dynamic = yes
+		#targets = { NZL }
+		#targets_dynamic = yes
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
 		}
@@ -8265,7 +8845,7 @@ ENG_move_to_secure_the_dominions = {
 				set_politics = { ruling_party = fascism elections_allowed = no }
 				add_popularity = { ideology = fascism popularity = 0.2 }
 				add_timed_idea = { idea = fascist_influence days = 730 }
-				NZL_enforce_loyalty = yes
+				set_country_flag = britain_enforced_our_loyalty
 				country_event = { id = mtg_britain.65 }
 			}
 		}
@@ -8291,8 +8871,8 @@ ENG_move_to_secure_the_dominions = {
 				communism > 0.2
 			}
 		}
-		targets = { NZL }
-		targets_dynamic = yes
+		#targets = { NZL }
+		#targets_dynamic = yes
 
 		target_root_trigger = {
 			has_completed_focus = ENG_move_to_secure_the_dominions
@@ -8325,7 +8905,7 @@ ENG_move_to_secure_the_dominions = {
 				add_popularity = { ideology = communism popularity = 0.2 }
 				add_timed_idea = { idea = communist_influence days = 730 }
 				hidden_effect = { set_country_flag = ENG_remain_as_puppet }
-				NZL_enforce_loyalty = yes
+				set_country_flag = britain_enforced_our_loyalty
 				country_event = { id = mtg_britain.65 }
 			}
 		}
@@ -8527,6 +9107,52 @@ ENG_imperial_conference_decision = {
 		}
 	}
 
+	ENG_discuss_imperial_federation = {
+
+		icon = eng_imperial_federation
+
+		allowed = {
+			tag = ENG
+		}
+
+		available = {
+			NOT = { has_country_flag = ENG_imperial_conference_discussion_in_progress }
+			OR = {
+				CAN = { exists = yes }
+				SAF = { exists = yes }
+				AST = { exists = yes }
+				NZL = { exists = yes }
+				AND = {
+					RAJ = { is_subject_of = ENG }
+					has_completed_focus = ENG_indian_autonomy
+				}
+			}
+		}
+
+		cost = 100
+
+		fire_only_once = yes
+
+		visible = {
+			has_completed_focus = ENG_imperial_conference
+			has_country_flag = ENG_imperial_conference_timer_flag
+		}
+
+		complete_effect = {
+			country_event = { id = mtg_britain.99 hours = 6 }
+			set_country_flag = ENG_imperial_conference_discussion_in_progress
+			if = {
+				limit = {
+					NOT = { has_completed_focus = ENG_indian_autonomy }
+				}
+				custom_effect_tooltip = ENG_indian_autonomy_tt
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
 }
 
 political_actions = {
@@ -8868,7 +9494,7 @@ political_actions = {
 			has_country_flag = ENG_abdication_crisis_changed_mind
 		}
 
-		days_mission_timeout = 100
+		days_mission_timeout = 200
 
 		fire_only_once = yes
 
@@ -8883,7 +9509,8 @@ political_actions = {
 		visible = {
 			tag = ENG
 			NOT = {
-			#	has_country_flag = ENG_edward_viii_abdicated
+				has_country_flag = ENG_edward_abdicating
+				has_country_flag = ENG_abdication_crisis_changed_mind
 				has_country_flag = edward_viii_married_wallis_simpson
 			}													  
 		}
@@ -9056,7 +9683,6 @@ political_actions = {
 				set_politics = { ruling_party = neutrality elections_allowed = no }
 				create_country_leader = {
 					name = "Wallis I"
-					desc = "POLITICS_WALLIS_I_DESC"
 					picture = GFX_portrait_eng_wallis_simpson
 					expire = "1965.1.1"
 					ideology = absolute_monarchism
@@ -9110,10 +9736,9 @@ political_actions = {
 				set_politics = { ruling_party = neutrality elections_allowed = no }
 				create_country_leader = {
 					name = "Wallis I"
-					desc = "POLITICS_WALLIS_I_DESC"
 					picture = GFX_portrait_eng_wallis_simpson
 					expire = "1965.1.1"
-					ideology = despotism
+					ideology = absolute_monarchism
 					female = yes
 					traits = {
 						unpopular_monarch socialite_connections wallis_fancy_title
@@ -9158,7 +9783,7 @@ political_actions = {
 				is_core_of = USA
 				is_controlled_by = ENG
 			}
-			#NOT = { has_country_flag = created_amer }
+			#NOT = { has_country_flag = created_amer }		#not used?
 			NOT = { has_country_flag = created_american_monarchy }
 			has_completed_focus = ENG_unite_the_anglosphere
 		}
@@ -9179,6 +9804,12 @@ political_actions = {
 					set_cosmetic_tag = CAN_north_america_dominion
 					save_event_target_as = MTG_loyalist_canada
 				}
+			}
+			every_state = {
+				limit = {
+					is_core_of = CAN
+				}
+				add_core_of = ROOT
 			}
 			custom_effect_tooltip = ENG_create_pan_north_american_state_tt
 			event_target:MTG_loyalist_canada = {
@@ -9201,6 +9832,66 @@ political_actions = {
 				}
 			}
 			hidden_effect = { news_event = { id = mtg_news.57 hours = 6 } }
+		}
+	}
+
+	ENG_embrace_royal_german_heritage = {
+
+		icon = generic_monarchy
+
+		#targets = { GER }
+
+		allowed = {
+			tag = ENG
+		}
+
+		available = {
+			has_country_leader = { 
+				name = "Edward VIII"
+				ruling_only = yes
+			}
+			NOT = {
+				has_war_with = GER
+			}
+		}
+
+		cost = 10
+
+		fire_only_once = yes
+
+		visible = {
+			tag = ENG
+			has_country_leader = { 
+				name = "Edward VIII"
+				ruling_only = yes
+			}
+			OR = {
+				has_completed_focus = ENG_alliance_with_germany
+				has_completed_focus = ENG_london_pact
+				is_in_faction_with = GER
+			}
+			NOT = {
+				has_war_with = GER
+			}
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				set_temp_variable = {
+					var = embrace_german_heritage_var
+					value = party_popularity@democratic
+				}
+				multiply_temp_variable = {
+					var = embrace_german_heritage_var
+					value = -0.05
+				}			
+			}
+			add_stability = embrace_german_heritage_var
+			set_party_name = { ideology = neutrality name = "Saxe-Coburg and Gotha" long_name = "House of Saxe-Coburg and Gotha" }
+		}
+
+		ai_will_do = {
+			factor = 200 #Gotta allow the Americans to help
 		}
 	}
 
@@ -9231,6 +9922,19 @@ operations = {
 
 		ai_will_do = {
 			factor = 1
+			modifier = {	#factor of 1 means they cheap out and dont take it/take it late
+				factor = 1000
+				is_historical_focus_on = yes
+			}
+			modifier = {	#Ive adjusted USA code that made them guarantee, but just in case
+				factor = 0
+				any_country = {
+					NOT = {
+						has_war_with = ROOT
+					}
+					has_guaranteed = ICE
+				}
+			}
 		}
 		
 		visible = {
@@ -9378,6 +10082,25 @@ operations = {
 		}
 	}
 }
+
+ENG_Economic_Policy = {
+	ENG_Abolish_Taxes = {
+			icon = GFX_decision_SOV_academy_of_sciences
+			complete_effect = {
+				set_country_flag = ENG_Mosley_Abolished_Tax_System
+				add_ideas = ENG_Decreased_Budget
+				add_stability = 0.05
+				add_popularity = {
+					ideology = fascism
+					popularity = 0.05
+				}
+			}
+			cost = 0
+			fire_only_once = yes
+		}
+	}
+
+
 
 ENG_enforce_the_naval_treaties = {
 
@@ -9588,19 +10311,441 @@ ENG_enforce_the_naval_treaties = {
 	}
 
 }
-ENG_Economic_Policy = {
-	ENG_Abolish_Taxes = {
-			icon = GFX_decision_SOV_academy_of_sciences
-			complete_effect = {
-				set_country_flag = ENG_Mosley_Abolished_Tax_System
-				add_ideas = ENG_Decreased_Budget
-				add_stability = 0.05
-				add_popularity = {
-					ideology = fascism
-					popularity = 0.05
+# Home Defense
+ENG_homeland_defense_decision_cat = {
+	
+	# Enforce Blackouts
+	ENG_enforce_blackouts = {
+
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		priority = 100
+
+		visible = {
+			NOT = {
+				has_idea = ENG_blackouts_idea
+			}
+		}
+
+		available = {
+			has_war = yes
+			NOT = {
+				has_idea = ENG_blackouts_idea
+			}
+		}
+	
+		cost = 50
+
+		days_remove = 14
+
+		remove_effect = {
+			add_ideas = ENG_blackouts_idea
+			custom_effect_tooltip = ENG_enforce_blackouts_tt
+		}
+		
+		ai_will_do = {
+			base = 50
+			modifier = {
+				factor = 2
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 5
+				has_war_with = GER
+				FRA = {
+					has_capitulated = yes
 				}
 			}
-			cost = 0
-			fire_only_once = yes
 		}
 	}
+
+	# End the Blackouts
+	ENG_end_the_blackouts = {
+
+		icon = GFX_decision_eng_propaganda_campaigns
+
+		priority = 99
+
+		visible = {
+			has_idea = ENG_blackouts_idea
+		}
+
+		available = {
+			has_idea = ENG_blackouts_idea
+		}
+	
+		cost = 50
+
+		days_remove = 14
+
+		remove_effect = {
+			remove_ideas = {
+				ENG_blackouts_idea
+			}	
+		}
+		
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 100
+				has_war = no
+			}
+		}
+	}
+
+	# Enforce Blackouts
+	ENG_promote_the_blitz_spirit = {
+
+		icon = GFX_decision_eng_install_government
+
+		priority = 95
+
+		visible = {
+			has_war_with = GER
+			NOT = {
+				has_idea = ENG_blitz_spirit_idea
+			}
+		}
+
+		available = {
+			has_war = yes
+			has_completed_focus = general_rearmament_focus
+		}
+	
+		cost = 50
+
+		days_remove = 35
+
+		remove_effect = {
+			swap_ideas = {
+				remove_idea = british_austerity_idea
+				add_idea = ENG_blitz_spirit_idea
+			}	
+		}
+		
+		ai_will_do = {
+			base = 50
+			modifier = {
+				factor = 2
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 5
+				has_war_with = GER
+				FRA = {
+					has_capitulated = yes
+				}
+			}
+		}
+	}
+
+	# The Homeland Defense Act
+	ENG_the_homeland_defense_act = {
+
+		icon = GFX_decision_eng_trade_unions_support
+
+		priority = 98
+
+		visible = {
+			has_war = yes
+		}
+
+		available = {
+			has_war = yes
+			any_owned_state = {
+				is_core_of = ROOT
+				#is_in_home_area = yes 	
+				NOT = {
+					is_controlled_by = ROOT
+				}
+			}
+		}
+
+		fire_only_once = yes
+	
+		cost = 15
+
+		complete_effect = {
+			add_timed_idea = {
+				idea = ENG_desperate_defense_of_the_homeland
+				days = 180
+			}	
+		}
+		
+		ai_will_do = {
+			base = 150
+			modifier = {
+				factor = 2
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 5
+				has_war_with = GER
+				FRA = {
+					has_capitulated = yes
+				}
+			}
+		}
+	}
+
+	# Establish the Local Defence Volunteers
+	ENG_establish_the_local_defense_volunteers = {
+
+		icon = GFX_decision_eng_blackshirt_march
+
+		priority = 97
+
+		available = {
+			has_war = yes
+		}
+
+		fire_only_once = yes
+	
+		cost = 25
+
+		days_remove = 70
+
+		remove_effect = {
+			add_war_support = 0.03
+			custom_effect_tooltip = ENG_establish_the_local_defense_volunteers_tt
+			hidden_effect = {
+				set_country_flag = ENG_home_guard_established_flag
+				delete_unit_template_and_units = {
+					division_template = "Home Guard Defense Brigades"
+					disband = yes #if yes, will refund equipment/manpower.
+				}
+
+				division_template = {
+					name = "Home Guard Defense Brigades"
+					division_names_group = ENG_INF_01
+					template_counter = 99
+					role = garrison
+					is_locked = yes
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+					}
+					support = {
+					}
+				}
+			}
+		}
+		
+		ai_will_do = {
+			base = 50
+			modifier = {
+				factor = 2
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 5
+				has_war_with = GER
+				FRA = {
+					has_capitulated = yes
+				}
+			}
+		}
+	}
+
+	# Utilize the Home Guard in the Factories
+	ENG_utilize_home_guard_in_factories = {
+
+		icon = GFX_decision_generic_industry
+
+		priority = 96
+
+		visible = {
+			has_country_flag = ENG_home_guard_established_flag
+		}
+
+		available = {
+			has_war = yes
+		}
+
+		fire_only_once = yes
+	
+		cost = 50
+
+		days_remove = 70
+
+		days_re_enable = 184
+
+		remove_effect = {
+			add_timed_idea = {
+				idea = ENG_home_guard_assistance_in_factories
+				days = 180
+			}	
+			custom_effect_tooltip = ENG_utilize_home_guard_in_factories_tt
+		}
+		
+		ai_will_do = {
+			base = 20
+			modifier = {
+				factor = 2
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 3
+				has_war_with = GER
+				FRA = {
+					has_capitulated = yes
+				}
+			}
+		}
+	}
+
+	# Raise the Home Guard in [FROM.GetName]
+	ENG_raise_the_home_guard_in_state = {
+
+		icon = GFX_decision_generic_protection
+
+		allowed = {
+			original_tag = ENG
+		} 
+
+		priority = 80
+
+		visible = {
+			is_subject = no
+			has_civil_war = no
+			has_country_flag = ENG_home_guard_established_flag
+		}
+
+		available = {
+			has_war = yes
+			any_owned_state = {
+				is_core_of = ROOT
+				#is_in_home_area = yes 	
+				NOT = {
+					is_controlled_by = ROOT
+				}
+			}
+			NOT = {
+				has_country_flag = ENG_raising_militia_flag
+			}
+		}
+
+		state_target = yes
+
+		on_map_mode = map_and_decisions_view
+
+		target_array = ROOT.core_states
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					state = 126
+					state = 128
+					state = 130
+					state = 132
+					state = 121
+					state = 133
+				}
+				NOT = {
+					has_state_flag = {
+						flag = ENG_raised_home_guard_here_already_flag
+					}	
+				}
+				is_controlled_by = ROOT
+			}			
+		}
+		
+		cost = 25
+
+		fire_only_once = yes
+
+		days_remove = 7
+
+		ai_will_do = {
+			base = 50
+			modifier = {
+				factor = 2
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 5
+				has_war_with = GER
+				FRA = {
+					has_capitulated = yes
+				}
+			}
+		}
+
+		cancel_trigger = {
+			has_civil_war = yes
+			NOT = {
+				FROM = { is_controlled_by = ROOT } 
+			}
+		}
+
+		cancel_effect = {
+			clr_country_flag = ENG_raising_militia_flag
+		}
+
+		complete_effect = {
+			set_country_flag = ENG_raising_militia_flag
+		}
+
+		remove_effect = {
+
+			FROM = {
+				set_state_flag = ENG_raised_home_guard_here_already_flag
+				create_unit = {
+				    division = "name = \"Home Guard Defense Brigade\" division_template = \"Home Guard Defense Brigades\" start_experience_factor = 0.1 start_equipment_factor = 0.6"
+				    owner = ROOT
+				}
+				create_unit = {
+				    division = "name = \"Home Guard Defense Brigade\" division_template = \"Home Guard Defense Brigades\" start_experience_factor = 0.1 start_equipment_factor = 0.6"
+				    owner = ROOT
+				}
+			}
+
+			clr_country_flag = ENG_raising_militia_flag
+		}
+	}
+
+	# Send the Hoem Guards back Home
+	ENG_send_the_home_guard_back_home = {
+
+		icon = GFX_decision_SWI_dismiss_council
+
+		priority = 81
+
+		visible = {
+			has_country_flag = ENG_home_guard_established_flag
+		}
+
+		available = {
+			has_war = no
+		}
+
+		fire_only_once = yes
+	
+		cost = 10
+
+		complete_effect = {
+
+			custom_effect_tooltip = ENG_disband_home_guards_tt
+
+			hidden_effect = {
+				delete_units = {
+					division_template = "Home Guard Defense Brigades"
+					disband = no #MP or weapons are not ours to take
+				}
+			}
+
+		}
+		
+		ai_will_do = {
+			base = 500
+		}
+	}
+
+}

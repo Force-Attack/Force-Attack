@@ -440,11 +440,6 @@ focus_tree = {
 				is_in_faction_with = GER
 			}
 		}
-
-		available = {
-			has_dlc = "Death or Dishonor"
-		}
-
 		completion_reward = {
 			add_ideas = YUG_idea_tank_conversions
 		}
@@ -619,9 +614,6 @@ focus_tree = {
 
 		ai_will_do = {
 			factor = 4
-		}
-		available = {
-			has_dlc = "Death or Dishonor"
 		}
 
 		completion_reward = {
@@ -1329,7 +1321,7 @@ focus_tree = {
 		x = -3
 		y = 1
 
-		cost = 1
+		cost = 5
  		ai_will_do = {
  			factor = 10
 		}
@@ -1338,16 +1330,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			if = {
-				limit = {
-					has_dlc = "Together for Victory"
-				}
-				YUG = { add_to_tech_sharing_group = yugoslav_research }
-				add_to_tech_sharing_group = yugoslav_research
-				else = {
-					add_ideas = CRO_yugoslav_scientific_cooperation
-				}
-			}
+			YUG = { add_to_tech_sharing_group = yugoslav_research }
+			add_to_tech_sharing_group = yugoslav_research
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
@@ -1696,14 +1680,12 @@ focus_tree = {
 			add_research_slot = 1
 			if = {
 				limit = {
-					has_dlc = "Death or Dishonor"
 					country_exists = YUG
 				}
 				YUG = { add_research_slot = 1}
 			}
 			if = {
 				limit = {
-					has_dlc = "Death or Dishonor"
 					NOT = {country_exists = YUG}
 				}
 				set_global_flag = YUG_zagreb_university_flag
@@ -2090,10 +2072,28 @@ focus_tree = {
 
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = nuclear_bonus
-				ahead_reduction = 0.5
-				category = nuclear
+			IF = {	
+				limit = {
+					NOT = {
+						has_tech = atomic_research
+					}
+				}
+				add_tech_bonus = {
+					name =  nuclear_bonus
+					bonus = 1.0
+					uses = 1
+					category = nuclear
+				}
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.5
+				}
+			}
+			ELSE = {
+				add_breakthrough_progress = {
+					specialization = specialization_nuclear
+					value = 0.8
+				}
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -2637,9 +2637,6 @@ focus_tree = {
 			if = {
 				limit = {
 					is_subject = yes
-					OVERLORD = {
-						has_government = communism
-					}
 				}
 				OVERLORD = {
 					has_government = communism
@@ -3402,7 +3399,6 @@ focus_tree = {
 		y = 2
 		cost = 10
 		available = {
-			has_dlc = "Together for Victory"
 			has_government = fascism
 			CRO = {
 				is_subject = yes

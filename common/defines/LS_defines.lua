@@ -9,13 +9,16 @@ NDefines.NDiplomacy.BASE_SEND_ATTACHE_CP_COST = 50.0				-- Command Power sent at
 NDefines.NDiplomacy.MIN_WARGOAL_JUSTIFY_COST = 7.0					-- It always takes atleast 10 days to justify a wargoal
 NDefines.NDiplomacy.PEACE_SCORE_PER_PASS = 100.0
 NDefines.NDiplomacy.IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0
+NDefines.NDiplomacy.VOLUNTEERS_TRANSFER_SPEED = 5 
 ----------------------------------
 NDefines.NCountry.EVENT_PROCESS_OFFSET = 30				-- Events are checked every X day per country or state (1 is ideal, but CPU heavy)
 ----------------------------------
-NDefines.NTrade.BASE_TRADE_FACTOR = 50
+NDefines.NTrade.BASE_TRADE_FACTOR = 1000
 NDefines.NTrade.PARTY_SUPPORT_TRADE_FACTOR = 20
 NDefines.NDiplomacy.EMBARGO_THREAT_THRESHOLD = -10
 NDefines.NDiplomacy.EMBARGO_COST = 25
+
+NDefines.NBuildings.OWNER_CHANGE_EXTRA_SHARED_SLOTS_FACTOR = 1
 ----------------------------------
 NDefines.NProduction.EQUIPMENT_MODULE_ADD_XP_COST = 0					-- XP cost for adding a new equipment module in an empty slot when creating an equipment variant.
 NDefines.NProduction.EQUIPMENT_MODULE_REPLACE_XP_COST = 0				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
@@ -27,7 +30,8 @@ NDefines.NProduction.CONVOY_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.RAILWAY_GUN_MAX_MIL_FACTORIES_PER_LINE = 30
-NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 3.5
+NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5
+NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 3.0
 NDefines.NProduction.MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0.01
 NDefines.NProduction.CAPITULATE_STOCKPILES_RATIO = 0
 ----------------------------------
@@ -36,14 +40,14 @@ NDefines.NTechnology.BASE_RESEARCH_POINTS_SAVED = 50.0 --#base game 30 changed t
 NDefines.NTechnology.BASE_YEAR_AHEAD_PENALTY_FACTOR = 3.0		-- Base year ahead penalty
 NDefines.NTechnology.BASE_TECH_COST = 80					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties
 ----------------------------------
-NDefines.NCountry.SPECIAL_FORCES_CAP_BASE = 0.5
-NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 50
+NDefines.NCountry.SPECIAL_FORCES_CAP_BASE = 0.0 -- prevent special forces exploit 
+NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 1000 -- 20 forty-width special forces divisions, plenty  
 NDefines.NMilitary.CORPS_COMMANDER_DIVISIONS_CAP = 50
 NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 50
 NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 5000
-NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = true
+NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = false -- yeah lets keep this true, or else EVERYONE and their mother has cracked out generals
 NDefines.NMilitary.TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.DEPLOY_TRAINING_MAX_LEVEL = 10
 NDefines.NMilitary.ARMY_EXP_BASE_LEVEL = 5
@@ -75,8 +79,6 @@ NDefines.NMilitary.NUKE_DELAY_HOURS = 12;
 NDefines.NCountry.NUCLEAR_BOMB_DROP_UNITY_EFFECT_MAX_INFRA = 0.35;
 NDefines.NCountry.NUCLEAR_BOMB_DROP_UNITY_EFFECT_MAX_VP = 1;
 
-
--- R56 DEFINES START HERE
 NDefines.NMilitary.COMBAT_OVER_WIDTH_PENALTY = -2
 	
 NDefines.NProduction.LICENSE_EQUIPMENT_SPEED_NOT_FACTION = 0
@@ -148,15 +150,15 @@ NDefines.NMilitary.BASE_DIVISION_BRIGADE_GROUP_COST = 0 -- Base cost to unlock a
 NDefines.NMilitary.BASE_DIVISION_BRIGADE_CHANGE_COST = 0 -- Base cost to change a regiment column.
 NDefines.NMilitary.BASE_DIVISION_SUPPORT_SLOT_COST = 0
 
-NDefines.NMilitary.BASE_LEADER_TRAIT_GAIN_XP = 0.4
-NDefines.NMilitary.UNIT_EXPERIENCE_PER_COMBAT_HOUR = 0.000175
-NDefines.NMilitary.FIELD_EXPERIENCE_MAX_PER_DAY = 12
+NDefines.NMilitary.BASE_LEADER_TRAIT_GAIN_XP = 0.45
+NDefines.NMilitary.UNIT_EXPERIENCE_PER_COMBAT_HOUR = 0.0001
+NDefines.NMilitary.FIELD_EXPERIENCE_MAX_PER_DAY = 1.2
 NDefines.NMilitary.ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.1
 NDefines.NMilitary.PLAYER_ORDER_PLANNING_DECAY = 0.03
 NDefines.NMilitary.DISBAND_MANPOWER_LOSS = 0.0
 NDefines.NMilitary.PLAN_SPREAD_ATTACK_WEIGHT = 4.1 --AI should concentrate forces more a bit experimental. Increased from 4.0 to combat issues with AI death stacks - SpicyAlfredo
 
-NDefines.NMilitary.FIELD_MARSHAL_XP_RATIO = 0.6
+NDefines.NMilitary.FIELD_MARSHAL_XP_RATIO = 0.3
 NDefines.NMilitary.COMMANDER_LEVEL_UP_STAT_WEIGHTS = {5, 5, 3, 4}
 NDefines.NMilitary.NEW_COMMANDER_RANDOM_PERSONALITY_TRAIT_CHANCES = { -- Chances to gain a personality trait for new generals
     0.80, --50% for first trait
@@ -226,6 +228,7 @@ NDefines.NAir.SUPPLY_NEED_FACTOR = 0.22 -- 0.28
 
 NDefines.NAir.AIR_WING_XP_LEVELS = {20, 40, 60, 80, 100, 140, 180, 220, 260, 300, 390, 480, 570, 660, 750, 780, 810, 840, 870, 900}
 NDefines.NAir.AIR_WING_XP_TRAINING_MAX = 300.0
+NDefines.NAir.AIR_WING_MAX_STATS_BOMBING = 100
 NDefines.NAir.AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 4.5
 NDefines.NAir.AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.01
 NDefines.NAir.AIR_WING_XP_LOSS_WHEN_KILLED = 200
@@ -269,7 +272,7 @@ NDefines.NAir.MISSION_COMMAND_POWER_COSTS = { -- command power cost per plane to
     
 NDefines.NAir.NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 25.0
 
-NDefines.NAir.AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.10				-- 5x levels = 50% defense from bombing. Reduced since Technology would otherwise give you above 100% damage reduction.
+NDefines.NAir.AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.12			-- 5x levels = 50% defense from bombing. Reduced since Technology would otherwise give you above 100% damage reduction.
 --------------------------------------------------------------------------------------------------------------
 -- RESEARCH
 --------------------------------------------------------------------------------------------------------------

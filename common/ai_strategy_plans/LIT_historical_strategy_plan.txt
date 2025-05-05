@@ -7,34 +7,35 @@ LIT_historical = {
 	}
 
 	enable = {
-		always = yes
+		has_dlc = "No Step Back"
+		has_game_rule = {
+			rule = LIT_focus_tree_selection
+			option = STANDARD_TREE
+		}
+		OR = {
+			AND = {
+				is_historical_focus_on = yes
+				has_game_rule = {
+					rule = LIT_ai_behavior
+					option = DEFAULT
+				}
+			}
+			has_country_flag = LIT_AI_RANDOM_HISTORICAL
+			has_game_rule = {
+				rule = LIT_ai_behavior
+				option = HISTORICAL
+			}
+		}
 	}
 	abort = {
-		
+
 	}
 
 	ai_national_focuses = {
 		LIT_secure_a_loyal_cabinet
+		LIT_rastikis_military_reforms
 		LIT_exile_voldemares
 		LIT_root_out_the_iron_wolf
-
-		BALTIC_rejoin_the_railways
-		BALTIC_modernize_industry
-		BALTIC_attract_workers_to_capital
-		BALTIC_domestic_motors
-		BALTIC_renew_allied_trade
-		BALTIC_ford_motors
-		BALTIC_crossley_motors
-		BALTIC_british_designers
-		BALTIC_rebuild_forts
-		BALTIC_arm_the_nation
-		BALTIC_defence_of_our_nation
-		BALTIC_original_designs
-		BALTIC_arms_industry
-
-
-		LIT_rastikis_military_reforms
-
 		BALTIC_rejoin_the_railways
 		BALTIC_renew_allied_trade
 		LIT_lithuanian_preservationism
@@ -76,8 +77,85 @@ LIT_historical = {
 		support_tech = 6.5
 	}
 
-	ideas = {
-		
+	traits = {
+		captain_of_industry = 5
+		war_industrialist = 5
+	}
+
+	# Keep small, as it is used as a factor for some things (such as research needs)
+	# Recommended around 1.0. Useful for relation between plans
+	weight = {
+		factor = 1.0
+		modifier = {
+			factor = 1.0
+		}
+	}
+
+	focus_factors = {
+		LIT_formalize_baltic_entente = 0
+		LIT_beyond_the_baltic = 0
+		LIT_enforce_military_rule = 0
+	}
+
+}
+
+LIT_historical_r56 = { #r56 tree
+	name = "Lithuanian historical plan"
+	desc = ""
+
+	allowed = {
+		original_tag = LIT
+	}
+
+	enable = {
+		OR = {
+			NOT = {
+				has_dlc = "No Step Back"
+			}
+			has_game_rule = {
+				rule = LIT_focus_tree_selection
+				option = R56_TREE
+			}
+		}
+		OR = {
+			AND = {
+				is_historical_focus_on = yes
+				has_game_rule = {
+					rule = LIT_ai_behavior
+					option = DEFAULT
+				}
+			}
+			has_country_flag = LIT_AI_RANDOM_HISTORICAL
+			has_game_rule = {
+				rule = LIT_ai_behavior
+				option = HISTORICAL
+			}
+		}
+	}
+	abort = {
+
+	}
+
+	ai_national_focuses = { #roughly based on the order in vanilla
+		LIT_announce_upcoming_elections
+		LIT_force_parties_to_reregister
+		LIT_finish_marshalls_reforms
+		LIT_amend_the_electoral_law
+		LIT_revive_the_trade_sector
+		LIT_long_term_investments
+		LIT_decrease_representation
+		LIT_prepare_the_nations_defences 	#25% tension, do as soon as possible after stable gov
+		LIT_elect_the_fourth_seimas
+		LIT_subsidize_food_industry
+		LIT_form_the_youth_branch
+		LIT_exile_voldemaras 				#spelled differently than vanilla
+	}
+
+	research = {
+		industry = 50.0
+		infantry_tech = 15.0
+		artillery = 8.0
+		support_tech = 6.5
 	}
 
 	traits = {
@@ -95,9 +173,6 @@ LIT_historical = {
 	}
 
 	focus_factors = {
-		LIT_formalize_baltic_entente = 0
-		LIT_beyond_the_baltic = 0.01
-		LIT_enforce_military_rule = 0
 	}
 
 }
@@ -112,6 +187,10 @@ LIT_democratic = {
 
 	enable = {
 		has_dlc = "No Step Back"
+		has_game_rule = {
+			rule = LIT_focus_tree_selection
+			option = STANDARD_TREE
+		}
 		OR = {
 			has_country_flag = LIT_AI_RANDOM_DEMOCRATIC
 			has_game_rule = {
@@ -121,7 +200,7 @@ LIT_democratic = {
 		}
 	}
 	abort = {
-		
+
 	}
 
 	ai_national_focuses = {
@@ -175,10 +254,6 @@ LIT_democratic = {
 		support_tech = 6.5
 	}
 
-	ideas = {
-		
-	}
-
 	traits = {
 		captain_of_industry = 5
 		war_industrialist = 5
@@ -194,7 +269,7 @@ LIT_democratic = {
 	}
 
 	focus_factors = {
-		
+
 	}
 
 }

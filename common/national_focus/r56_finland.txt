@@ -14,7 +14,6 @@ focus_tree = {
 	
 	continuous_focus_position = { x = 0 y = 1400 }	
 	shared_focus = SCA_scandinavian_unification
-	shared_focus = NORDIC_form_joint_alliance
 	focus = {
 		id = fin_political_focus
 		icon = GFX_focus_fin_political_focus
@@ -663,7 +662,7 @@ focus_tree = {
 				is_faction_leader = yes
 				NOT = {
 					is_in_faction_with = SOV
-					has_completed_focus = GER_soviet_ally
+					has_completed_focus = GER_alliance_with_the_ussr
 				}
 				any_neighbor_country = {
 					tag = SOV
@@ -743,7 +742,6 @@ focus_tree = {
 							free_building_slots = {
 								building = infrastructure
 								size > 1
-								include_locked = yes
 							}
 						}
 						add_building_construction = {
@@ -1487,9 +1485,9 @@ focus_tree = {
 		
 		available = { 
 			OR = { 
-				GER = { OR = { has_completed_focus = GER_mol_rib_pact has_completed_focus = GER_mol_rib_pact_vanilla } }
+				GER = { has_completed_focus = GER_molotov_ribbentrop_pact }
 				SOV = { has_completed_focus = SOV_baltic_security }
-				}
+			}
 			OR = {
 				has_war_with = GER
 				SOV = { has_war_with = GER }
@@ -1530,11 +1528,11 @@ focus_tree = {
 		}
 		relative_position_id = fin_techengfoc
 		
-				available = { 
-			OR = { 
-				GER = { OR = { has_completed_focus = GER_mol_rib_pact has_completed_focus = GER_mol_rib_pact_vanilla } }
+		available = { 
+			OR = {
+				GER = { has_completed_focus = GER_molotov_ribbentrop_pact }
 				SOV = { has_completed_focus = SOV_baltic_security }
-				}
+			}
 			OR = {
 				has_war_with = GER
 				SOV = { has_war_with = GER }
@@ -1546,7 +1544,7 @@ focus_tree = {
 		
 		bypass = {
 			NOT = {
-			owns_state = 146
+				owns_state = 146
 			}
 		}
 		
@@ -3954,6 +3952,7 @@ focus_tree = {
 						has_dlc = "By Blood Alone"
 					}
 					add_tech_bonus = {
+						name = fin_homemadedesigns
 						bonus = 1
 						uses = 1
 						category = light_air
@@ -4693,7 +4692,17 @@ focus_tree = {
 			random_owned_controlled_state = {
 				prioritize = { 149 }
 				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = rubber_refinery
+					level = 2
+					instant_build = yes
+				}
 			}		
+	       	modify_building_resources = {
+        	   building = rubber_refinery
+        	   resource = rubber
+        	   amount = 2
+        	}
         	add_tech_bonus = {
 				name = GER_synth_oil_research
 				bonus = 1
@@ -4844,7 +4853,7 @@ focus_tree = {
 		id = fin_unitedscandfoc
 		text = fin_unitedscandfoc
 		icon = GFX_goal_scandinavia
-		cost = 15
+		cost = 25
 		prerequisite = {
 			focus = fin_invdenfoc
 		}
@@ -4862,6 +4871,7 @@ focus_tree = {
 		y = 2
 		
 		available = {
+			date > 1938.6.1
 			is_in_faction_with = DEN 
 			is_in_faction_with = SWE
 			is_in_faction_with = NOR
@@ -4980,7 +4990,6 @@ focus_tree = {
 			
 				create_country_leader = {
 					name = "Nordic Council"
-					desc = "NORDIC_COUNCIL_DESC"
 					picture = "gfx/leaders/SCA/r56_portrait_SCA_Nordic_Council.dds"
 					expire = "1965.1.1"
 					ideology = liberalism
@@ -4990,7 +4999,6 @@ focus_tree = {
 				}
 				create_country_leader = {
 					name = "Nordic Council"
-					desc = "NORDIC_COUNCIL_DESC"
 					picture = "gfx/leaders/SCA/r56_portrait_SCA_Nordic_Council.dds"
 					expire = "1965.1.1"
 					ideology = marxism
@@ -5000,7 +5008,6 @@ focus_tree = {
 				}
 				create_country_leader = {
 					name = "Nordic Council"
-					desc = "NORDIC_COUNCIL_DESC"
 					picture = "gfx/leaders/SCA/r56_portrait_SCA_Nordic_Council.dds"
 					expire = "1965.1.1"
 					ideology = fascism_ideology
@@ -5010,10 +5017,9 @@ focus_tree = {
 				}
 				create_country_leader = {
 					name = "Nordic Council"
-					desc = "NORDIC_COUNCIL_DESC"
 					picture = "gfx/leaders/SCA/r56_portrait_SCA_Nordic_Council.dds"
 					expire = "1965.1.1"
-					ideology = centrism
+					ideology = oligarchism
 					traits = {
 						great_council
 					}
@@ -5384,9 +5390,9 @@ focus_tree = {
 			is_in_faction_with = LAT
 			is_in_faction_with = LIT
 			OR = { 
-				GER = { OR = { has_completed_focus = GER_mol_rib_pact has_completed_focus = GER_mol_rib_pact_vanilla } }
+				GER = { has_completed_focus = GER_molotov_ribbentrop_pact }
 				SOV = { has_completed_focus = SOV_baltic_security }
-				}
+			}
 		}
 		
 		x = 24
@@ -5588,11 +5594,18 @@ focus_tree = {
 		
 		completion_reward = {
 			add_tech_bonus = {
-				name = radar_focus
-				bonus = 1
+                name = radar_focus
+                bonus = 1
 				uses = 1
 				category = radar_tech
+            }
+            custom_effect_tooltip = generic_skip_one_line_tt
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 0.25
 			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+            add_ideas = r56_generic_radar_idea
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
