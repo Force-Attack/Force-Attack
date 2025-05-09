@@ -301,7 +301,7 @@ focus_tree = {
         mutually_exclusive = { focus = ENG_expand_housing }
 		x = 1
 		y = 1
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 1
 		}
@@ -309,7 +309,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			random_owned_controlled_state = {
+				126 = {
 				limit = {
 					is_in_home_area = yes
 					free_building_slots = {
@@ -321,15 +321,15 @@ focus_tree = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
-			122 = {
-				add_extra_state_shared_building_slots = 1
+			338 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = infrastructure
-					level = 1
+					type = industrial_complex
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -395,16 +395,17 @@ focus_tree = {
 
 	focus = {
 		id = ENG_expand_housing
-		icon = GFX_focus_DEN_civilian_preparations	
-		prerequisite = { focus = limited_rearmament_focus }
-		mutually_exclusive = {focus = ENG_expand_southern_industry }
+		icon = GFX_focus_SWE_the_lion_of_the_north
+		prerequisite = { focus = ENG_revitalize_northern_england }
+	
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = -1
+		x = 0
 		y = 1
 		cost = 5
 		available_if_capitulated = yes
-        relative_position_id = limited_rearmament_focus
-		completion_reward = {		
+        relative_position_id = ENG_revitalize_northern_england
+		completion_reward = {	
+			add_ideas = ENG_expanded_housing_idea	
 			random_owned_controlled_state = {
 				limit = {
 					is_in_home_area = yes
@@ -436,19 +437,18 @@ focus_tree = {
 	}
 	focus = {
 		id = ENG_revitalize_northern_england
-		icon = GFX_goal_generic_light_industry
-		prerequisite = { focus = ENG_expand_housing }
+		icon = GFX_goal_generic_coal_mining
+		prerequisite = { focus = limited_rearmament_focus }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		x = 0
+		mutually_exclusive = {focus = ENG_expand_southern_industry }
+		x = -1
 		y = 1
-		cost = 5
-		relative_position_id = ENG_expand_housing
+		cost = 10
+		relative_position_id = limited_rearmament_focus
 		completion_reward = {
-			add_ideas = ENG_expanded_housing_idea
-			random_owned_controlled_state = {
-				prioritize = {
-					133
-				}
+		
+			131 = {
+				
 				limit = {
 					is_in_home_area = yes
 					free_building_slots = {
@@ -464,14 +464,30 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			132 = {
 				
+				limit = {
+					is_in_home_area = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = ENG_double_down
 		icon = GFX_goal_industrial_investment
-		prerequisite = { focus = ENG_amplify_the_exploitation_of_welsh_coal focus = ENG_revitalize_northern_england }
+		prerequisite = { focus = ENG_amplify_the_exploitation_of_welsh_coal focus = ENG_expand_housing }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		x = -1
 		y = 2
@@ -553,6 +569,107 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = ENG_develop_ireland
+		prerequisite = { focus = ENG_double_down focus = ENG_vickers_experimental_facility_focus }
+		available = {
+			controls_state = 113
+			controls_state = 135
+			controls_state = 134
+			controls_state = 119
+			
+	     113 = { 
+			is_core_of = ROOT
+			}
+			135 = {
+			is_core_of = ROOT
+			}
+			134 = {
+			is_core_of = ROOT
+			}	
+			119 = {
+			is_core_of = ROOT
+			}
+		}
+
+		continue_if_invalid = yes
+
+		icon = GFX_goal_IRE_the_celtic_way
+		x = 0
+		y = 1
+		relative_position_id = ENG_double_down
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {FOCUS_FILTER_INDUSTRY}	
+		completion_reward = {
+			113 = {
+				limit = {
+					is_in_home_area = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			119 = {
+				limit = {
+					is_in_home_area = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			134 = {
+				limit = {
+					is_in_home_area = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			135 = {
+				limit = {
+					is_in_home_area = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
 	focus = {
 		id = general_rearmament_focus
 		prerequisite = { focus = limited_rearmament_focus }
@@ -1242,7 +1359,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = shadow_scheme_focus
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}	
@@ -1265,10 +1382,10 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -1281,10 +1398,10 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
