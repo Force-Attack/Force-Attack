@@ -3955,13 +3955,14 @@ focus_tree = {
 		x = 6
 		y = 1
 		relative_position_id = GRE_reevaluating_the_drachma
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			base = 1
 		}
 
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MANPOWER FOCUS_FILTER_STABILITY }
 		completion_reward = { 
+			add_political_power = 25
 			if = { 
 				limit = { 
 					has_idea = GRE_agrarian_society
@@ -4770,7 +4771,7 @@ focus_tree = {
 						}
 					}
 				}	
-				add_extra_state_shared_building_slots = 3
+				increase_state_category = yes
 				add_building_construction = {
 					type = industrial_complex
 					level = 1
@@ -5462,19 +5463,96 @@ focus_tree = {
 	}
 
 	focus = {
+		id = GRE_the_hellenic_air_force_expanded
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = GRE_the_hellenic_air_force }
+		x = 0
+		y = 1
+		relative_position_id = GRE_the_hellenic_air_force
+		cost = 10
+		ai_will_do = {
+			base = 1
+		}
+
+		available = {
+			OR = {
+				has_full_control_of_state = 182
+				has_full_control_of_state = 185
+				has_full_control_of_state = 47
+			}
+		}
+
+		completion_reward = {
+			generate_scientist_character = {
+  				portrait = GFX_portrait
+  				portrait_tag_override = GRE
+  				gender = male
+  				skills = {
+    				specialization_air = 2
+  				}
+  			traits = { scientist_trait_electronics_specialist scientist_trait_bright }
+}
+			random_owned_controlled_state = {
+				limit = {
+					can_construct_building = air_facility
+				}
+				prioritize = { 47 }
+				construct_building_in_random_province = {
+					air_facility = 1
+				}
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 1
+			}
+		}
+	}
+
+	focus = {
+		id = GRE_the_hellenic_air_equipment
+		icon = GFX_focus_generic_armored_air_support
+		prerequisite = { focus = GRE_the_hellenic_air_force_expanded }
+		x = 0
+		y = 1
+		relative_position_id = GRE_the_hellenic_air_force_expanded
+		cost = 10
+		ai_will_do = {
+			base = 1
+		}
+
+		available = {
+			OR = {
+				has_full_control_of_state = 182
+				has_full_control_of_state = 185
+				has_full_control_of_state = 47
+			}
+		}
+
+		completion_reward = {
+			air_experience = 50
+			add_tech_bonus = {
+				name = GRE_new_weapons_old_tricks
+				bonus = 0.5
+				uses = 2
+				category = air_equipment
+			}
+		}
+	}
+
+	focus = {
 		id = GRE_the_hellenic_army
 		icon = GFX_goal_GRE_coa_army
 		prerequisite = { focus = GRE_hellenic_armed_forces }
 		x = 0
 		y = 1
 		relative_position_id = GRE_hellenic_armed_forces
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			base = 1
 		}
 
 		completion_reward = {
-			army_experience = 15
+			army_experience = 25
 			add_doctrine_cost_reduction = {
 				name = GRE_the_hellenic_army
 				cost_reduction = 0.5
@@ -5491,7 +5569,7 @@ focus_tree = {
 				name = GRE_new_weapons_old_tricks
 				bonus = 0.5
 				uses = 2
-				category = cat_anti_tank
+				category = infantry_weapons
 			}
 		}
 	}			
@@ -5509,6 +5587,28 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					can_construct_building = naval_facility
+				}
+				prioritize = { 47 }
+				construct_building_in_random_province = {
+					naval_facility = 1
+				}
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_naval
+				value = 0.50
+			}
+			generate_scientist_character = {
+  				portrait = GFX_portrait
+  				portrait_tag_override = GRE
+  				gender = male
+  				skills = {
+    				specialization_naval = 2
+  				}
+  			traits = {  scientist_trait_fast_learner scientist_trait_surface_ship_specialist }
+}
 			add_tech_bonus = {
 				name = GRE_the_cannon
 				bonus = 0.75
@@ -5532,22 +5632,7 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			random_owned_controlled_state = {
-				limit = {
-					dockyard > 0
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1
-					instant_build = yes
-				}	
-			}	
+			
 		}
 	}
 
@@ -5569,16 +5654,6 @@ focus_tree = {
 				specialization = specialization_naval
 				value = 0.25
 			}
-			IF = {
-				limit = {
-					has_dlc = "Man the Guns"
-				}
-				add_ideas = cruiser_submarine_specialization_mtg
-			}
-			ELSE = {
-				add_ideas = cruiser_submarine_specialization
-			}
-
 			add_tech_bonus = {
 				name = GRE_a_modern_navy
 				bonus = 0.75
@@ -5622,7 +5697,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = GRE_a_fleet_fit_for_the_aegean
 				bonus = 1.0
-				uses = 1
+				uses = 2
 				category = naval_gunnery_tech
 			}
 			random_owned_controlled_state = {
@@ -5820,10 +5895,10 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 1
+					level = 2
 					instant_build = yes
 				}	
 			}
@@ -6021,6 +6096,7 @@ focus_tree = {
 				name = GRE_greek_mechanisation
 				bonus = 1.0
 				uses = 1
+				ahead_reduction = 1
 				category = cat_mechanized_equipment
 			}
 		}
@@ -6039,15 +6115,30 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = special_bonus
-				bonus = 0.5
-				uses = 2
-				technology = tech_mountaineers
-				technology = tech_mountaineers2
-			}
 			custom_effect_tooltip = GRE_mountain_training_effect
 			hidden_effect = { set_technology = { mountain_warfare = 1 } }
+				generate_scientist_character = {
+  				portrait = GFX_portrait
+  				portrait_tag_override = GRE
+  				gender = male
+  				skills = {
+    				specialization_land = 2
+  				}
+  			traits = {  scientist_trait_fast_learner }
+}
+			random_owned_controlled_state = {
+				limit = {
+					can_construct_building = land_facility
+				}
+				prioritize = { 47 }
+				construct_building_in_random_province = {
+					land_facility = 1
+				}
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.50
+			}
 		}
 	}	
 
@@ -6055,8 +6146,7 @@ focus_tree = {
 		id = GRE_destroying_our_foes
 		icon = GFX_goal_generic_CAS
 		prerequisite = { focus = GRE_the_hellenic_air_force }
-		mutually_exclusive = { focus = GRE_protecting_our_skies }
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = GRE_the_hellenic_air_force
 		cost = 10
@@ -6095,8 +6185,7 @@ focus_tree = {
 		id = GRE_protecting_our_skies
 		icon = GFX_goal_generic_air_fighter
 		prerequisite = { focus = GRE_the_hellenic_air_force }
-		mutually_exclusive = { focus = GRE_destroying_our_foes }
-		x = 1
+		x = 2
 		y = 1
 		relative_position_id = GRE_the_hellenic_air_force
 		cost = 10
@@ -6105,18 +6194,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			set_technology = {
+				iw_small_airframe = 1
+			}
+			
+			add_ideas = GRE_vasilios_tsarpalis
 			add_doctrine_cost_reduction = {
 				name = GRE_protecting_our_skies
 				cost_reduction = 0.5
 				uses = 2
 				category = air_doctrine
-			}
-			add_doctrine_cost_reduction = {
-				name = GRE_protecting_our_skies
-				cost_reduction = 0.25
-				uses = 1
-				category = battlefield_support_tree
-			}
+			}		
 			add_tech_bonus = {
 				name = GRE_protecting_our_skies
 				bonus = 1.0
@@ -6186,7 +6274,7 @@ focus_tree = {
 		id = GRE_fund_the_hellenic_air_force_academy
 		icon = GFX_goal_generic_air_doctrine
 		prerequisite = { focus = GRE_escorts_for_our_bombers focus = GRE_defending_our_seas }
-		x = 1
+		x = 2
 		y = 1
 		relative_position_id = GRE_escorts_for_our_bombers
 		cost = 10
