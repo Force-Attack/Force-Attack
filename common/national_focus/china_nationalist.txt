@@ -4276,7 +4276,7 @@ focus_tree = {
 		prerequisite = { focus = CHI_soviet_industrial_assistance  }
 		relative_position_id = CHI_soviet_industrial_assistance
 		available = {
-			date < 1941
+			date < 1941.1.1
 		}
 		bypass = {
 		}
@@ -4638,6 +4638,52 @@ focus_tree = {
 				country_event = { id = chi.84 }
 			}
 		}
+	}
+	focus = {
+		id = CHI_ally_japan_commie
+		icon = GFX_focus_chi_collaboration_with_the_japanese
+		relative_position_id = CHI_anti_soviet_revisionist_aim
+		x = 1
+		y = 1
+
+		prerequisite = {
+			focus = CHI_anti_soviet_revisionist_aim
+		}
+
+		cost = 10
+
+		available = {
+			has_government = communism
+			is_subject = no
+			JAP = {
+				has_government = communism
+				NOT = {
+					has_completed_focus = JAP_close_the_island
+				}
+			}
+			NOT = { has_war_with = JAP }
+		}
+
+		completion_reward = {
+			if = {
+				limit = {
+					JAP = {
+						has_government = communism
+						is_faction_leader = yes
+						has_capitulated = no
+					}
+				}
+				JAP = {
+					country_event = generic.2
+				}
+			}
+			else = {
+				JAP = {
+					country_event = generic.5
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_ALLIANCE FOCUS_FILTER_POLITICAL }
 	}
 	focus = {
 		id = CHI_demand_return_of_trade_ports
@@ -6050,7 +6096,7 @@ focus_tree = {
 		icon = GFX_goal_generic_major_diplo
 
 		relative_position_id = CHI_a_trans_pacific_alliance
-		x = 6
+		x = 4
 		y = 1
 
 		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
@@ -6087,7 +6133,7 @@ focus_tree = {
 		icon = GFX_goal_generic_army_purges
 		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
 		relative_position_id = CHI_ally_japan
-		x = -5
+		x = -4
 		y = 1
 		cost = 10
 		available = {
@@ -6200,7 +6246,7 @@ focus_tree = {
 		icon = GFX_focus_eng_concessions_to_the_trade_unions
 
 		relative_position_id = CHI_begin_decentralization_of_the_beauracy
-		x = -1
+		x = 0
 		y = 1
 
 		prerequisite = {
@@ -6242,7 +6288,7 @@ focus_tree = {
 		icon = GFX_focus_generic_the_giant_wakes
 
 		relative_position_id = CHI_begin_decentralization_of_the_beauracy
-		x = 1
+		x = 2
 		y = 1
 
 		prerequisite = {
@@ -6446,154 +6492,72 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CHI_introduce_shipbuilding_technology_usa
+		id = CHI_introduce_shipbuilding_technology
 		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
 		relative_position_id = CHI_a_trans_pacific_alliance
-		x = 1
-		y = 1
-		mutually_exclusive = {
-			focus = CHI_introduce_shipbuilding_technology_jap
-		}
-		cost = 3
-		available = {
-			NOT = {
-				has_completed_focus = CHI_introduce_shipbuilding_technology_jap
-			}
-			is_puppet = no
-			NOT = {
-				has_war_with = USA
-			}
-			USA = {
-				has_government = democratic
-				exists = yes
-				has_opinion = {
-					target = ROOT
-					value > 9
-				}
-			}
-		}
-		
-		completion_reward = {
-			USA = {
-				country_event = { id = kmt.224 }
-				custom_effect_tooltip = needs_approval
-			}
-			effect_tooltip = {
-				custom_effect_tooltip = KMT_jap_navy_indus_assist_tt
-				add_tech_bonus = {
-					name = dd_bonus
-					ahead_reduction = 1
-					uses = 1
-					bonus = 1
-					category = naval_equipment
-				}
-				if = {
-					limit = {
-						USA = { has_idea = bureau_of_ships_focus }
-					}
-					add_ideas = bureau_of_ships_focus
-				}
-				if = {
-					limit = {
-						USA = { has_idea = liberty_ships_focus }
-					}
-					add_ideas = liberty_ships_focus
-				}
-			}
-		}	
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CHI_introduce_shipbuilding_technology_jap
-		icon = GFX_goal_generic_construct_naval_dockyard
-		prerequisite = { focus = CHI_a_trans_pacific_alliance focus = CHI_a_democracy_in_asia focus = CHI_ally_japan }
-		relative_position_id = CHI_ally_japan
-		mutually_exclusive = {
-			focus = CHI_introduce_shipbuilding_technology_usa
-		}
-		x = -1
-		y = 1
-		cost = 3
-		available = {
-			NOT = {
-				has_completed_focus = CHI_introduce_shipbuilding_technology_usa
-			}
-			is_puppet = no
-			NOT = {
-				has_war_with = JAP
-			}
-			JAP = { 
-				exists = yes
-				has_government = democratic
-			}
-		}
-		
-		completion_reward = {
-			JAP = {
-				country_event = { id = kmt.224 }
-				custom_effect_tooltip = needs_approval
-			}
-			effect_tooltip = {
-				custom_effect_tooltip = KMT_jap_navy_indus_assist_tt
-				add_tech_bonus = {
-					name = dd_bonus
-					ahead_reduction = 1
-					uses = 1
-					bonus = 1
-					category = naval_equipment
-				}
-			}
-			if = {
-				limit = {
-					JAP = { has_idea = the_long_lance }
-				}
-				add_ideas = the_long_lance
-			}
-		}	
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CHI_qingdao_naval_academy_expansion
-		icon = GFX_goal_generic_naval_academy
-		prerequisite = { focus = CHI_introduce_shipbuilding_technology_jap focus = CHI_introduce_shipbuilding_technology_usa }
-		relative_position_id = CHI_introduce_shipbuilding_technology_usa
-		mutually_exclusive = {
-			focus = CHI_establish_koahsiung_naval_academy
-		}
-		x = 0
-		y = 1
-		cost = 3
-		available = {
-			has_full_control_of_state = 743
-		}
-		
-		completion_reward = {
-			add_ideas = CHI_expanded_naval_academy
-		}	
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CHI_establish_koahsiung_naval_academy
-		icon = GFX_goal_naval_treaty
-		prerequisite = { focus = CHI_introduce_shipbuilding_technology_jap focus = CHI_introduce_shipbuilding_technology_usa }
-		relative_position_id = CHI_introduce_shipbuilding_technology_usa
-		mutually_exclusive = {
-			focus = CHI_qingdao_naval_academy_expansion
-		}
 		x = 2
 		y = 1
 		cost = 3
 		available = {
-			has_full_control_of_state = 524
+			is_puppet = no
+			OR = {
+				AND = {
+					USA = {
+						has_government = democratic
+						exists = yes
+						has_opinion = {
+							target = ROOT
+							value > 9
+						}
+					}
+					NOT = {
+						has_war_with = USA
+					}
+				}
+				AND = {
+					JAP = {
+						has_government = democratic
+						exists = yes
+						has_opinion = {
+							target = ROOT
+							value > 9
+						}
+					}
+					NOT = {
+						has_war_with = JAP
+					}
+				}
+			}
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = CHI_taiwan_hold_idea_or_else_tt
-			add_ideas = CHI_taiwan_naval_buff_idea
+			country_event = CHI.2
 		}	
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
+	focus = {
+		id = CHI_naval_academy_expansion
+		icon = GFX_goal_generic_naval_academy
+		prerequisite = {  focus = CHI_introduce_shipbuilding_technology }
+		relative_position_id = CHI_introduce_shipbuilding_technology
+		x = 0
+		y = 1
+		cost = 3
+		available = {
+			OR = {
+				has_full_control_of_state = 743
+				has_full_control_of_state = 524
+			}
+			
+		}
+		
+		completion_reward = {
+			country_event = CHI.21
+		}	
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	
 
 	#Military
 
@@ -7415,7 +7379,7 @@ focus_tree = {
 				name = air_bonus
 				bonus = 1
 				uses = 1
-				category = cas_bomber
+				category = plane_modules_tech
 			}	 
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -7437,7 +7401,7 @@ focus_tree = {
 				name = air_bonus
 				bonus = 1
 				uses = 1
-				category = naval_bomber
+				category = plane_modules_tech
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -9476,7 +9440,7 @@ focus = {
 focus = {
 	id = CHI_pacific_fleet
 	icon = GFX_goal_generic_navy_carrier
-	prerequisite = { focus = CHI_taiwan_fleet_hub focus = CHI_gain_control_of_the_sea }
+	prerequisite = { focus = CHI_taiwan_fleet_hub focus = CHI_study_foreign_ship }
 	relative_position_id = CHI_taiwan_fleet_hub
 	mutually_exclusive = { focus = CHI_sea_fleet }
 	x = 0
@@ -9511,7 +9475,7 @@ focus = {
 focus = {
 	id = CHI_sea_fleet
 	icon = GFX_goal_generic_navy_submarine
-	prerequisite = { focus = CHI_taiwan_fleet_hub focus = CHI_gain_control_of_the_sea }
+	prerequisite = { focus = CHI_taiwan_fleet_hub focus = CHI_study_foreign_ship }
 	mutually_exclusive = { focus = CHI_pacific_fleet }
 	relative_position_id = CHI_taiwan_fleet_hub
 	x = -2

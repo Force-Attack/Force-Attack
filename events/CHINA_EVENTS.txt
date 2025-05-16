@@ -33,48 +33,100 @@ country_event = {
 
 }
 
-country_event = { #will u puppet me pls
+country_event = { ###SHIP BUILDING USA OR JAPAN????
 	id = CHI.2
 	title = CHI.2.t
 	desc = CHI.2.d
-	picture = s
+	picture = GFX_report_event_SWE_psilander_affair
 
 	is_triggered_only = yes
 
-	option = { #yes
+	option = { ###USA
 		name = CHI.2.a
 		ai_chance = {
 			base = 60
 		}
-		CHI =  {
-			country_event = { id = CHI.21 }
+		USA = {
+			country_event = { id = kmt.224 }
+			custom_effect_tooltip = needs_approval
+		}
+		effect_tooltip = {
+			custom_effect_tooltip = KMT_jap_navy_indus_assist_tt
+			add_tech_bonus = {
+				name = dd_bonus
+				ahead_reduction = 1
+				uses = 1
+				bonus = 1
+				category = naval_equipment
+			}
+			if = {
+				limit = {
+					USA = { has_idea = bureau_of_ships_focus }
+				}
+				add_ideas = bureau_of_ships_focus
+			}
+			if = {
+				limit = {
+					USA = { has_idea = liberty_ships_focus }
+				}
+				add_ideas = liberty_ships_focus
+			}
 		}
 	}
-	option = { #no
+	option = { ####JAP
 		name = CHI.2.b
 		ai_chance = {
 			base = 20
 		}
-		CHI =  {
-			country_event = { id = CHI.22 }
+		JAP = {
+			country_event = { id = kmt.224 }
+			custom_effect_tooltip = needs_approval
+		}
+		effect_tooltip = {
+			custom_effect_tooltip = KMT_jap_navy_indus_assist_tt
+			add_tech_bonus = {
+				name = dd_bonus
+				ahead_reduction = 1
+				uses = 1
+				bonus = 1
+				category = naval_equipment
+			}
+		}
+		if = {
+			limit = {
+				JAP = { has_idea = the_long_lance }
+			}
+			add_ideas = the_long_lance
 		}
 	}
 }
 
-country_event = { #japan said yes
+country_event = { 
 	id = CHI.21
 	title = CHI.21.t
 	desc = CHI.21.d
-	picture = GFX_report_event_chinese_japanese_handshake
+	picture = GFX_report_event_ast_navy
 
 	is_triggered_only = yes
 	
-	option = {
+	option = { ####QINGDAO
 		name = CHI.21.a
 		ai_chance = {
 			base = 70
 		}
-		complete_national_focus = CHI_unite_aginst_imperialist
+		add_ideas = CHI_expanded_naval_academy
+
+	}
+	option = { ######TAIWAN
+		name = CHI.21.b
+		ai_chance = {
+			base = 70
+		}
+		trigger = {
+			has_full_control_of_state = 524
+		}
+		custom_effect_tooltip = CHI_taiwan_hold_idea_or_else_tt
+		add_ideas = CHI_taiwan_naval_buff_idea
 
 	}
 
@@ -2823,6 +2875,8 @@ country_event = {
 
 	trigger = {
 		tag = CHI
+		has_government = communism
+		has_war = no
 		num_of_controlled_states > 3
 	}
 	
