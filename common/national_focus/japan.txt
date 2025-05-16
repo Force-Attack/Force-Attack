@@ -8254,6 +8254,7 @@ focus = {
 		id = JAP_diversified_tank_roles
 		icon = GFX_goal_tank_map
 		prerequisite = { focus = JAP_armored_divisions }
+		mutually_exclusive = { focus = JAP_expand_the_teishin_shudan }
 		x = 0
 		y = 1
 		relative_position_id = JAP_armored_divisions
@@ -8687,38 +8688,46 @@ focus = {
 	
 	focus = {
 		id = JAP_expand_the_teishin_shudan
-		icon = GFX_goal_generic_amphibious_assault
+		icon = GFX_focus_generic_paratrooper
 		prerequisite = { focus = JAP_army_expansion }
-		mutually_exclusive = { focus = JAP_bicycle_battalions }
+		mutually_exclusive = { focus = JAP_diversified_tank_roles }
 		x = -1
 		y = 2
 		relative_position_id = JAP_army_expansion
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		cost = 5
+=======
+		cost = 10
+>>>>>>> parent of d0b7da40 (Merge branch 'main' into China-Rework)
 
 		ai_will_do = {
 			factor = 1
 		}
 		
 		completion_reward = {
-			add_ideas = JAP_marine_focus
+			army_experience = 10
+			air_experience = 5
 			add_tech_bonus = {
-				name = JAP_marine_focus
-				bonus = 1
-				uses = 1
-				category = marine_tech
+				name = JAP_expand_the_teishin_shudan
+				bonus = 1.0
+				uses = 2
+				category = r56_special_forces_training_tech 
 			}	
+			hidden_effect = {
+				set_country_flag = cite_an_airborne_unit_flag
+			}
+			unlock_decision_tooltip = { decision = cite_an_airborne_unit show_effect_tooltip = yes }					
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 	
 	focus = {
 		id = JAP_bicycle_battalions
-		icon = GFX_goal_generic_mountain_warfare
+		icon = GFX_goal_generic_special_forces
 		prerequisite = { focus = JAP_army_expansion }
-		mutually_exclusive = { focus = JAP_expand_the_teishin_shudan }
 		x = 1
 		y = 2
 		relative_position_id = JAP_army_expansion
@@ -8773,24 +8782,16 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
-		available = {
-			if = {
-				has_tech = tech_mountaineers
-			}
-		}
 		
 		completion_reward = {
-			add_ideas = JAP_mountaineer_focus
-
+			set_technology = { bicycle_infantry = 1 }
 			add_tech_bonus = {
-				name = JAP_mountaineer_focus
+				name = JAP_bicycle_battalions
 				bonus = 1
 				uses = 1
-				category = mountaineers_tech
-			}	
+				category = recon_tech
+			}			
 		}
-		
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 	
