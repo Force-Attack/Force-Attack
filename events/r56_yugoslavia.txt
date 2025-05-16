@@ -1,3 +1,5 @@
+
+
 add_namespace = r56_yugoslavia
 add_namespace = r56_yugoslavia_deaths
 
@@ -7,28 +9,50 @@ country_event = {
 	title = r56_yugoslavia.1.t
 	desc = r56_yugoslavia.1.d
 	picture = GFX_report_event_generic_sign_treaty2
-
-	is_triggered_only = yes
 	
 	trigger = {
 		tag = YUG
-		has_idea = YUG_idea_croatian_opposition
 		has_country_leader =  {
 			character = YUG_milan_stojadinovic
 			ruling_only = yes
 		}
+		if = {
+			limit = {
+				has_dlc = "Death or Dishonor"
+			}
+			has_idea = YUG_idea_croatian_opposition
+		}
+		date > 1939.2.1
+		date < 1939.2.10
 	}
+	
+	mean_time_to_happen = { days = 7 }
 
 	fire_only_once = yes
 	
 	option = {
 		name = r56_yugoslavia.1.a
 		ai_chance = {
-			base = 100
+			factor = 90
 		}
 		add_political_power = -25
 		retire_country_leader = yes
-		promote_character = YUG_dragisa_cvetkovic
+		create_country_leader = {
+			name = "Dragiša Cvetković"
+			picture = "gfx/leaders/YUG/r56_portrait_YUG_Dragisa_Cvetkovic.dds"
+			expire = "1965.1.1"
+			ideology = despotism
+			traits = {
+				popular_figurehead2
+				great_architect
+				r56_trait_opposed_to_communism
+			}
+		}
+		set_party_name = { 
+			ideology = neutrality
+			name = YUG_JRS_neutrality_party
+			long_name = YUG_JRS_neutrality_party_long
+		}
 	}
 }
 
@@ -39,12 +63,19 @@ country_event = {
 	desc = r56_yugoslavia_deaths.1.d
 	picture = GFX_report_event_generic_funeral
 
-	is_triggered_only = yes
+	trigger = {
+		tag = YUG
+		date > 1940.2.12
+		date < 1940.2.19
+	}
+	
+	mean_time_to_happen = { days = 7 }
 
 	fire_only_once = yes
 	
 	immediate = {
 		hidden_effect = {
+			set_global_flag = ljubomir_davidovic_dead
 			if = {
 				limit = {
 					has_country_leader =  {
@@ -56,11 +87,15 @@ country_event = {
 			}
 			if = {
 				limit = {
-					has_character = YUG_ljubomir_davidovic
+					NOT = {
+						has_country_leader =  {
+							character = YUG_ljubomir_davidovic
+							ruling_only = yes
+						}
+					}
 				}
-				retire_character = YUG_ljubomir_davidovic
+				promote_character = YUG_milan_grol
 			}
-			promote_character = YUG_milan_grol
 		}
 	}
 	
@@ -73,7 +108,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 10
+			factor = 90
 		}
 	}
 	
@@ -86,7 +121,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 90
+			factor = 90
 		}
 	}
 }
@@ -97,8 +132,6 @@ country_event = {
 	title = r56_yugoslavia_deaths.2.t
 	desc = r56_yugoslavia_deaths.2.d
 	picture = GFX_report_event_generic_funeral
-
-	is_triggered_only = yes
 
 	trigger = {
 		if = {
@@ -121,13 +154,19 @@ country_event = {
 			}
 			tag = SLV
 		}
+		date > 1940.12.7
+		date < 1940.12.15
 	}
-
-	immediate = {
-		retire_character = YUG_anton_korosec
-	}
+	
+	mean_time_to_happen = { days = 7 }
 
 	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_global_flag = anton_korosec_dead
+		}
+	}
 	
 	option = {
 		name = r56_yugoslavia_deaths.1.a #not a mistake
@@ -140,7 +179,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 10
+			factor = 90
 		}
 	}
 	
@@ -153,7 +192,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 90
+			factor = 90
 		}
 	}
 }
@@ -165,8 +204,6 @@ country_event = {
 	desc = r56_yugoslavia_deaths.3.d
 	picture = GFX_report_event_generic_funeral
 
-	is_triggered_only = yes
-
 	trigger = {
 		tag = YUG
 		BOS = {
@@ -175,18 +212,24 @@ country_event = {
 				is_subject_of = YUG
 			}
 		}
+		date > 1939.6.24
+		date < 1939.6.30
 	}
-
-	immediate = {
-		retire_character = YUG_mehmed_spaho
-	}
+	
+	mean_time_to_happen = { days = 7 }
 
 	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_global_flag = mehmed_spaho_dead
+		}
+	}
 	
 	option = {
 		name = r56_yugoslavia_deaths.1.a
 		ai_chance = {
-			base = 100
+			factor = 90
 		}
 	}
 }
@@ -205,7 +248,7 @@ country_event = {
 	option = {
 		name = r56_yugoslavia.3.a
 		ai_chance = {
-			base = 10
+			factor = 10
 		}
 		if = {
 			limit = {
@@ -260,7 +303,7 @@ country_event = {
 	option = {
 		name = r56_yugoslavia.3.b
 		ai_chance = {
-			base = 20
+			factor = 20
 		}
 		if = {
 			limit = {
@@ -325,7 +368,7 @@ country_event = {
 	option = {
 		name = r56_yugoslavia.3.c
 		ai_chance = {
-			base = 40
+			factor = 40
 		}
 		if = {
 			limit = {

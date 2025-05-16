@@ -118,10 +118,6 @@ country_event = {
 		name = bftb_turkey.4.b #it matters little to us
 		ai_chance = {
 			factor = 50
-			modifier = {
-				check_variable = { SOV_great_purge_counter > 0 }
-				factor = 0.25
-			}
 		}
 		custom_effect_tooltip = TUR_soviets_allow_militarisation_tt
 		hidden_effect = {
@@ -501,15 +497,11 @@ country_event = {
 				modifier = {
 					add = 100
 					OR = { 
-						AND = { 
-							has_country_flag = TUR_islamist_voting_initiative
-							has_country_flag = TUR_islamist_kurdish_alliance
-							has_country_flag = TUR_demokrat_rally
-							OR = {
-								has_country_flag = TUR_corrupt_officials_killed
-								has_country_flag = TUR_corrupt_officials_meddling
-							}
-						}
+						has_country_flag = TUR_islamist_voting_initiative
+						has_country_flag = TUR_islamist_kurdish_alliance
+						has_country_flag = TUR_demokrat_rally
+						has_country_flag = TUR_corrupt_officials_killed
+						has_country_flag = TUR_corrupt_officials_meddling
 						NOT = { has_idea = TUR_rising_islamist_dissidence } 
 					}
 				} 
@@ -721,14 +713,19 @@ country_event = {
 			}
 			modifier = {
 				OR = {
+					has_country_flag = TUR_AI_RANDOM_DEMOCRATIC_ALTERNATE
 					has_country_flag = TUR_AI_RANDOM_OTTOMAN
 					has_game_rule = {
 						rule = TUR_ai_behavior
-						option = OTTOMAN
+						option = TUR_DEMOCRATIC_ALTERNATE
 					}
+					has_game_rule = {
+						rule = TUR_ai_behavior
+						option = OTTOMAN
+					}						
 				}
 				factor = 0
-			}
+			}			
 		}
 		hidden_effect = {
 			if = {
@@ -763,8 +760,6 @@ country_event = {
 				promote_leader = yes
 			}
 		}
-		custom_effect_tooltip = TUR_will_lead_to_democracy_tt
-		set_country_flag = TUR_republican_flag
 		custom_effect_tooltip = TUR_republican_victory_tt
 		hidden_effect = {
 			set_party_name = { 
@@ -825,26 +820,29 @@ country_event = {
 			modifier = {
 				OR = {
 					has_country_flag = TUR_AI_RANDOM_DEMOCRATIC_ALTERNATE
+					has_country_flag = TUR_AI_RANDOM_OTTOMAN
 					has_game_rule = {
 						rule = TUR_ai_behavior
 						option = TUR_DEMOCRATIC_ALTERNATE
 					}
+					has_game_rule = {
+						rule = TUR_ai_behavior
+						option = OTTOMAN
+					}					
 				}
 				factor = 100
 			}
 			modifier = {
 				OR = {
-					has_country_flag = TUR_AI_RANDOM_OTTOMAN
+					has_country_flag = TUR_AI_RANDOM_DEMOCRATIC
 					has_game_rule = {
 						rule = TUR_ai_behavior
-						option = OTTOMAN
+						option = TUR_DEMOCRATIC_KEMALIST
 					}
 				}
-				factor = 500
-			}
+				factor = 0
+			}			
 		}
-		custom_effect_tooltip = TUR_will_lead_to_civil_war_tt
-		set_country_flag = TUR_demokrat_flag
 		custom_effect_tooltip = TUR_conservative_victory_tt
 		hidden_effect = {
 			country_event = { id = bftb_turkey.135 days = 30 random = 60 }
@@ -890,9 +888,9 @@ country_event = {
 		name = bftb_turkey.22.a #the Almighty guides our hand!
 		if = {
 			limit = {
-				TUR_kazim_orbay = { is_unit_leader = yes }
+				has_unit_leader = 903
 			}
-			TUR_kazim_orbay = { remove_unit_leader_role = yes }
+			remove_unit_leader = 903
 		}
 		if = {
 			limit = {
@@ -917,9 +915,6 @@ country_event = {
 				size = 0.05
 				capital = 797
 				states = { 797 341 }
-				keep_unit_leaders = { 
-					901 
-				}
 			}
 		}
 		else_if = {
@@ -945,9 +940,6 @@ country_event = {
 				size = 0.15
 				capital = 797
 				states = { 797 341 339 354 }
-				keep_unit_leaders = { 
-					901 
-				}
 			}
 		}
 		else_if = {
@@ -973,9 +965,6 @@ country_event = {
 				size = 0.35
 				capital = 797
 				states = { 797 341 339 354 340 342 }
-				keep_unit_leaders = { 
-					901 
-				}
 			}
 		}
 		else_if = {
@@ -1001,9 +990,6 @@ country_event = {
 				size = 0.55
 				capital = 797
 				states = { 797 341 339 354 340 342 343 346 }
-				keep_unit_leaders = { 
-					901 
-				}
 			}
 		}
 		else_if = {
@@ -1029,9 +1015,6 @@ country_event = {
 				size = 0.75
 				capital = 49
 				states = { 797 341 339 354 340 342 343 346 347 49 }
-				keep_unit_leaders = { 
-					901 
-				}
 			}
 		}
 		hidden_effect = {
@@ -1059,28 +1042,28 @@ country_event = {
 	picture = GFX_report_event_tur_the_saadabad_pact
 
 	is_triggered_only = yes
-	
+
+	immediate = {
+		FROM = {
+			add_to_variable = {
+				var = AFG_num_invited_to_saadabad
+				value = 1
+			}
+		}
+	}
+
 	option = {
 		name = bftb_turkey.23.a #we are stronger together!
 		ai_chance = {
-			factor = 100
+			base = 10
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 100
 			}
 		}
 		add_political_power = 120
-		diplomatic_relation = {
-			country = TUR
-			relation = non_aggression_pact
-			active = yes
-		}
+		custom_effect_tooltip = AFG_will_get_nap_saadabad
 		hidden_effect = {
-			add_ai_strategy = {
-				type = befriend
-				id = FROM
-				value = 100
-			}
 			set_country_flag = TUR_saadabad_pact_member
 			if = {
 				limit = {
@@ -1090,20 +1073,28 @@ country_event = {
 				}
 				set_global_flag = TUR_saadabad_pact
 			}
-			TUR = { 
-				country_event = { id = bftb_turkey.92 hours = 6 random = 8 }
-				add_ai_strategy = {
-					type = befriend
-					id = ROOT
-					value = 50
+			FROM = {
+				country_event = { id = bftb_turkey.92 hours = 6 random_hours = 8 }
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = TUR_saadabad_pact_member
+						}
+					}
+					set_country_flag = TUR_saadabad_pact_member
+				}
+				add_to_variable = {
+					var = AFG_num_answered_to_saadabad
+					value = 1
 				}
 			}
 		}
 	}
+
 	option = {
-		name = bftb_turkey.23.b #Turkey does not hold our best interests at heart
+		name = bftb_turkey.23.b #FROM does not hold our best interests at heart
 		ai_chance = {
-			factor = 5
+			base = 5
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -1111,7 +1102,13 @@ country_event = {
 		}
 		add_war_support = 0.05
 		hidden_effect = {
-			TUR = { country_event = { id = bftb_turkey.93 hours = 6 random = 8 } }
+			FROM = {
+				country_event = { id = bftb_turkey.93 hours = 6 random_hours = 8 }
+				add_to_variable = {
+					var = AFG_num_answered_to_saadabad
+					value = 1
+				}
+			}
 		}
 	}
 }
@@ -1128,12 +1125,41 @@ country_event = {
 	option = {
 		name = bftb_turkey.92.a #true and honest friends!
 		add_political_power = 25
-		effect_tooltip = { 
-			diplomatic_relation = {
-				country = FROM
-				relation = non_aggression_pact
-				active = yes
+		if = {
+			limit = {
+				has_global_flag = TUR_saadabad_pact
+				check_variable = {
+					AFG_num_invited_to_saadabad = AFG_num_answered_to_saadabad
+				}
 			}
+			every_country = {
+				limit = {
+					has_country_flag = TUR_saadabad_pact_member
+				}
+				custom_effect_tooltip = AFG_will_get_nap_saadabad
+				hidden_effect = {
+					every_country = {
+						limit = {
+							NOT = {
+								tag = PREV
+								has_non_aggression_pact_with = PREV
+							}
+							has_country_flag = TUR_saadabad_pact_member
+						}
+						add_ai_strategy = {
+							type = befriend
+							id = PREV
+							value = 50
+						}
+						diplomatic_relation = {
+							country = PREV
+							relation = non_aggression_pact
+							active = yes
+						}
+					}
+				}
+			}
+			clear_variable = AFG_num_answered_to_saadabad
 		}
 	}
 }
@@ -1226,6 +1252,12 @@ country_event = {
 			}
 			promote_leader = yes
 		}
+		ai_chance = {
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 100
+			}
+		}
 	}
 	option = {
 		name = bftb_turkey.24.d #nationalist
@@ -1254,7 +1286,7 @@ country_event = {
 			character = TUR_fevzi_cakmak
 			country_leader = {
 				expire = "1965.1.1"
-				ideology = rexism
+				ideology = ultranationalism
 				traits = {
 					maresal
 				}
@@ -1312,13 +1344,12 @@ country_event = {
 		name = bftb_turkey.24.i #military junta
 		trigger = {
 			NOT = {
-				OR = {
-					has_completed_focus = TUR_fully_integrate_the_is_bank
-					has_completed_focus = TUR_peace_at_home
-					has_completed_focus = TUR_reinvigorate_turkish_nationalism
-					has_completed_focus = TUR_kemalism_and_the_modern_movement
-					has_completed_focus = TUR_kemalist_socialist_theory
-				}
+				has_completed_focus = TUR_fully_integrate_the_is_bank
+				has_completed_focus = TUR_peace_at_home
+				has_completed_focus = TUR_reinvigorate_turkish_nationalism
+				has_completed_focus = TUR_kemalism_and_the_modern_movement
+				has_completed_focus = TUR_kemalist_socialist_theory
+				has_focus_tree = turkish_focus_r56
 			}
 		}
 		add_country_leader_role = {
@@ -1338,6 +1369,7 @@ country_event = {
 		trigger = {
 			NOT = {
 				has_completed_focus = TUR_ratify_the_six_arrows
+				has_focus_tree = turkish_focus_r56
 			}
 		}
 		add_country_leader_role = {
@@ -1350,6 +1382,47 @@ country_event = {
 				}
 			}
 			promote_leader = yes
+		}
+	}
+	option = {
+		name = bftb_turkey.24.k 	#Ismet Inonu - For Road Tree + DLC
+		trigger = {
+			has_focus_tree = turkish_focus_r56
+		}
+		add_stability = -0.1	#Ataturk doesn't give a stability buff in the road version
+		promote_character = TUR_ismet_inonu
+		ai_chance = {
+			base = 10
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 100
+			}
+		}
+	}
+	option = {
+		name = bftb_turkey.24.l #Cakmak - For Road Tree + DLC
+		trigger = {
+			has_completed_focus = TUR_continue_the_moderate_course
+		}
+		add_stability = -0.1	#Ataturk doesn't give a stability buff in the road version
+		add_country_leader_role = {
+			character = TUR_fevzi_cakmak
+			country_leader = {
+				expire = "1965.1.1"
+				ideology = moderatism
+				traits = {
+					maresal
+				}
+			}
+			promote_leader = yes
+		}
+		set_politics = { ruling_party = neutrality }
+		ai_chance = {
+			base = 10
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
 		}
 	}
 }
@@ -1368,7 +1441,7 @@ country_event = {
 		ai_chance = {
 			factor = 70
 			modifier = {
-				has_completed_focus = FRA_review_foreign_policy
+				has_completed_focus = FRA_status_quo
 				factor = 20
 			}
 			modifier = {
@@ -1976,10 +2049,8 @@ country_event = {
 			base = 10
 			modifier = {
 				factor = 0.5
-				AND = {
-					is_in_faction = yes
-					has_war = yes
-				}
+				is_in_faction = yes
+				has_war = yes
 			}
 		}
 		if = {
@@ -2014,10 +2085,8 @@ country_event = {
 			base = 1
 			modifier = {
 				factor = 5
-				AND = {
-					is_in_faction = yes
-					has_war = yes
-				}
+				is_in_faction = yes
+				has_war = yes
 			}
 		}
 		hidden_effect = {
@@ -2069,35 +2138,17 @@ country_event = {
 	
 	option = {
 		name = bftb_turkey.44.a #strategically sound!
-		ai_chance = {
-			base = 10
-			modifier = {
-				has_opinion = {
-					target = FROM
-					value > 75
-				}
-				factor = 2
-			}
-			modifier = {
-				has_opinion = {
-					target = FROM
-					value < -25
-				}
-				factor = 0.2
-			}
-		}
 		effect_tooltip = {
-			IF = {
-				limit = { 455 = { is_owned_by = ROOT } }
-				TUR = { transfer_state = 455 }
-			}
-			IF = {
-				limit = { 454 = { is_owned_by = ROOT } }
-				TUR = { transfer_state = 454 }
-			}
-			IF = {
-				limit = { 453 = { is_owned_by = ROOT } }
-				TUR = { transfer_state = 453 }
+			TUR = {
+				transfer_state = 455
+				transfer_state = 1021
+				transfer_state = 1022
+				transfer_state = 454
+				transfer_state = 1016
+				transfer_state = 1017
+				transfer_state = 453
+				transfer_state = 949
+				transfer_state = 966
 			}
 		}
 		hidden_effect = {
@@ -2109,15 +2160,6 @@ country_event = {
 
 	option = {
 		name = bftb_turkey.44.b #the Ottoman Empire collapsed for a reason
-		ai_chance = {
-			base = 5
-			modifier = { # More sceptical if already promised to Ethiopia
-				454 = {
-					is_in_array = { ETH.ETH_promised_states_array = THIS }
-				}
-				factor = 4
-			}
-		}
 		TUR = {
 			country_event = { id = bftb_turkey.46 hours = 8 }
 		}
@@ -2135,24 +2177,15 @@ country_event = {
 	
 	option = {
 		name = bftb_turkey.45.a #we will not let them down
-		IF = {
-			limit = {
-				455 = { is_owned_by = FROM }
-			}
-			transfer_state = 455
-		}
-		IF = {
-			limit = {
-				454 = { is_owned_by = FROM }
-			}
-			transfer_state = 454
-		}
-		IF = {
-			limit = {
-				453 = { is_owned_by = FROM }
-			}
-			transfer_state = 453
-		}
+		transfer_state = 455
+		transfer_state = 1021
+		transfer_state = 1022
+		transfer_state = 454
+		transfer_state = 1016
+		transfer_state = 1017
+		transfer_state = 453
+		transfer_state = 949
+		transfer_state = 966		
 		custom_effect_tooltip = TUR_unlock_camelry_effect_tt
 		hidden_effect = { set_technology = { camelry = 1 } } 
 	}
@@ -2174,8 +2207,14 @@ country_event = {
 	option = {
 		name = bftb_turkey.46.b #then we escalate!
 		add_state_claim = 455
+		add_state_claim = 1021
+		add_state_claim = 1022
 		add_state_claim = 454
+		add_state_claim = 1016
+		add_state_claim = 1017
 		add_state_claim = 453
+		add_state_claim = 949
+		add_state_claim = 966		
 		add_stability = -0.15
 	}
 }
@@ -2196,6 +2235,7 @@ country_event = {
 				transfer_state = 656
 				transfer_state = 658
 				transfer_state = 765
+				transfer_state = 1007
 				transfer_state = 659
 			}
 		}
@@ -2228,6 +2268,7 @@ country_event = {
 		transfer_state = 656
 		transfer_state = 658
 		transfer_state = 765
+		transfer_state = 1007
 		transfer_state = 659
 		if = {
 			limit = {
@@ -2253,7 +2294,6 @@ country_event = {
 		add_stability = -0.05
 	}
 }
-
 #Turkey Desires Light Tanks!
 country_event = {
 	id = bftb_turkey.50
@@ -2366,7 +2406,6 @@ country_event = {
 		TUR = { country_event = bftb_turkey.54 }
 	}	
 }
-
 #Turkey Desires Light Tanks - Improved Light Tanks
 country_event = {
 	id = bftb_turkey.51
@@ -2393,18 +2432,9 @@ country_event = {
 				add_equipment_to_stockpile = { type = light_tank_chassis_2 amount = 50 producer = ITA } 
 			}
 		}
-		if = {
-			limit = {
-				has_dlc = "Arms Against Tyranny"
-			}
-			add_equipment_subsidy = {
-				cic = 500
-				equipment_type = light_tank_chassis
-				seller_tags = { ITA } 
-			}
-		}
 	}
 }
+
 
 #Turkey Desires Light Tanks - Light Tanks
 country_event = {
@@ -2430,16 +2460,6 @@ country_event = {
 		else = {
 			effect_tooltip = {
 				add_equipment_to_stockpile = { type = light_tank_chassis_1 amount = 75 producer = ITA } 
-			}
-		}
-		if = {
-			limit = {
-				has_dlc = "Arms Against Tyranny"
-			}
-			add_equipment_subsidy = {
-				cic = 500
-				equipment_type = light_tank_chassis
-				seller_tags = { ITA } 
 			}
 		}
 	}
@@ -2469,16 +2489,6 @@ country_event = {
 		else = {
 			effect_tooltip = {
 				add_equipment_to_stockpile = { type = light_tank_chassis_0 amount = 75 producer = ITA } 
-			}
-		}
-		if = {
-			limit = {
-				has_dlc = "Arms Against Tyranny"
-			}
-			add_equipment_subsidy = {
-				cic = 500
-				equipment_type = light_tank_chassis
-				seller_tags = { ITA } 
 			}
 		}
 	}
@@ -2513,12 +2523,14 @@ country_event = {
 			TUR = { 
 				add_offsite_building = { type = industrial_complex level = 3 } 
 				add_tech_bonus = {
+					name = industrial_bonus
 					bonus = 1.5
 					uses = 2
 					category = excavation_tech
 				}
 			}
 			add_tech_bonus = {
+				name = industrial_bonus
 				bonus = 0.75
 				uses = 1
 				category = excavation_tech
@@ -2596,6 +2608,7 @@ country_event = {
 			}
 		}
 		add_tech_bonus = {
+			name = industrial_bonus
 			bonus = 1.5
 			uses = 2
 			category = excavation_tech
@@ -2603,6 +2616,7 @@ country_event = {
 		hidden_effect = {
 			USA = {
 				add_tech_bonus = {
+					name = industrial_bonus
 					bonus = 0.75
 					uses = 1
 					category = excavation_tech
@@ -2625,6 +2639,7 @@ country_event = {
 		name = bftb_turkey.57.a #fine
 		add_offsite_building = { type = industrial_complex level = 3 } 
 		add_tech_bonus = {
+			name = industrial_bonus
 			bonus = 1.5
 			uses = 2
 			category = excavation_tech
@@ -2670,6 +2685,7 @@ country_event = {
 		name = bftb_turkey.58.a #fair is fair
 		TUR = { give_resource_rights = { receiver = USA state = 342 } }
 		add_tech_bonus = {
+			name = industrial_bonus
 			bonus = 0.75
 			uses = 1
 			category = excavation_tech
@@ -2873,7 +2889,7 @@ country_event = {
 		hidden_effect = {
 			TUR = { country_event = { id = bftb_turkey.68 hours = 1 } } 
 			IRQ = { set_country_flag = TUR_iraqi_government_flag }
-			ENG = { remove_resource_rights = 676 }
+			ENG = { remove_resource_rights = 1048 }
 			random_other_country = { 
            		limit = { 
            		    original_tag = IRQ 
@@ -2893,8 +2909,8 @@ country_event = {
 		}
 		set_politics = { ruling_party = fascism }
 		ENG = { 
-			remove_resource_rights = 676
-			remove_resource_rights = 291
+			remove_resource_rights = 1048
+			remove_resource_rights = 1045
 		}
 		add_stability = -0.1
 		effect_tooltip = {
@@ -3297,16 +3313,15 @@ country_event = {
 		add_political_power = -250
 		give_resource_rights = {
 			receiver = ENG
-			state = 676
+			state = 1048
 		}
 		give_resource_rights = {
 			receiver = ENG
-			state = 291
+			state = 1045
 		}
 	}
 }
 
-#MM: Never used. Unlocalized
 #Support the Golden Square - The Iraqi Government Wins the Civil War
 country_event = {
 	id = bftb_turkey.78
@@ -3803,25 +3818,6 @@ country_event = {
 	}
 }
 
-#Etatism - Country Economy Collapses
-country_event = {
-	id = bftb_turkey.94
-	title = bftb_turkey.94.t
-	desc = bftb_turkey.94.desc
-	picture = GFX_report_event_gre_political_upheaval
-
-	is_triggered_only = yes
-	
-	option = {
-		name = bftb_turkey.94.a #we were fools!
-		add_political_power = -250
-		add_timed_idea = {
-			idea = TUR_economic_collapse
-			days = 180
-		}
-	}
-}
-
 #The Civil War - Ottoman Officers Offer Chance to Restore Sultanate
 country_event = {
 	id = bftb_turkey.95
@@ -3831,10 +3827,15 @@ country_event = {
 
 	is_triggered_only = yes
 
+	hidden = yes #made to automatically pick
+
 	fire_only_once = yes
 	
 	option = {
 		name = bftb_turkey.95.a #our old glory will be ours again
+		trigger = {
+			has_completed_focus = TUR_traditionalize_the_ataturk_legacy
+		}
 		ai_chance = {
 			factor = 15
 			modifier = {
@@ -3845,8 +3846,18 @@ country_event = {
 						option = OTTOMAN
 					}
 				}
-				factor = 100
+				factor = 1000000
 			}
+			modifier = {
+				OR = {
+					has_country_flag = TUR_AI_RANDOM_DEMOCRATIC_ALTERNATE
+					has_game_rule = {
+						rule = TUR_ai_behavior 
+						option = TUR_DEMOCRATIC_ALTERNATE
+					}
+				}
+				factor = 0
+			}			
 		}
 		retire_country_leader = yes
 		add_country_leader_role = {
@@ -3905,39 +3916,39 @@ country_event = {
 
 			if = {
 				limit = {
-					TUR_fahrettin_altay = { is_unit_leader = yes }
+					has_unit_leader = 902
 				}
-				TUR_fahrettin_altay = { remove_unit_leader_role = yes }
+				remove_unit_leader = 902 
 			}
 			if = {
 				limit = {
-					TUR_kazim_orbay = { is_unit_leader = yes }
+					has_unit_leader = 903
 				}
-				TUR_kazim_orbay = { remove_unit_leader_role = yes }
+				remove_unit_leader = 903
 			}
 			if = {
 				limit = {
-					TUR_cemil_cahit_toydemir = { is_unit_leader = yes }
+					has_unit_leader = 904
 				}
-				TUR_cemil_cahit_toydemir = { remove_unit_leader_role = yes }
+				remove_unit_leader = 904
 			}
 			if = {
 				limit = {
-					TUR_izzettin_chalishlar = { is_unit_leader = yes }
+					has_unit_leader = 974
 				}
-				TUR_izzettin_chalishlar = { remove_unit_leader_role = yes }
+				remove_unit_leader = 974
 			}
 			if = {
 				limit = {
-					TUR_mehmet_salih_omurtak = { is_unit_leader = yes }
+					has_unit_leader = 906
 				}
-				TUR_mehmet_salih_omurtak = { remove_unit_leader_role = yes }
+				remove_unit_leader = 906
 			}
 			if = {
 				limit = {
-					TUR_sukru_okan = { is_unit_leader = yes }
+					has_unit_leader = 907
 				}
-				TUR_sukru_okan = { remove_unit_leader_role = yes }
+				remove_unit_leader = 907
 			}
 			set_country_flag = TUR_PROVISIONARY_flag
 			TUR_set_appropriate_cosmetic_tag = yes
@@ -3946,6 +3957,9 @@ country_event = {
 	}
 	option = {
 		name = bftb_turkey.95.b #our allegiance is to the Republic and to democracy!
+		trigger = {
+			has_completed_focus = TUR_democratic_transition_focus
+		}
 		ai_chance = {
 			factor = 5
 			modifier = {
@@ -3958,6 +3972,16 @@ country_event = {
 				}
 				factor = 100
 			}
+			modifier = {
+				OR = {
+					has_country_flag = TUR_AI_RANDOM_OTTOMAN
+					has_game_rule = {
+						rule = TUR_ai_behavior
+						option = OTTOMAN
+					}
+				}
+				factor = 0
+			}			
 		}
 		effect_tooltip = {
 			every_state = {
@@ -4236,7 +4260,6 @@ country_event = {
 	}
 }
 
-#MM: Never used
 #hidden dispatch event for Kurdish events
 country_event = {
 	id = bftb_turkey.105
@@ -4251,10 +4274,8 @@ country_event = {
 				modifier = {
 					factor = 0
 					all_owned_state = {
-						AND = {  
-							is_core_of = KUR
-							infrastructure > 1
-						}
+						is_core_of = KUR
+						infrastructure > 1
 					}
 				}
 				country_event = { id = bftb_turkey.106 } #Kurds demand removal of infrastructure
@@ -4266,10 +4287,8 @@ country_event = {
 				modifier = {
 					factor = 0
 					all_owned_state = {
-						AND = {  
-							is_core_of = KUR
-							has_dynamic_modifier = { modifier = conscription_exemptions_granted }
-						}
+						is_core_of = KUR
+						has_dynamic_modifier = { modifier = conscription_exemptions_granted }
 					}
 				}
 				country_event = { id = bftb_turkey.108 } #Kurds demand exemption from conscription
@@ -4278,11 +4297,9 @@ country_event = {
 				modifier = {
 					factor = 0
 					any_owned_state = {
-						AND = { 
-							is_core_of = KUR
-							NOT = {
-								has_dynamic_modifier = { modifier = kurdish_rebellion }
-							}
+						is_core_of = KUR
+						NOT = {
+							has_dynamic_modifier = { modifier = kurdish_rebellion }
 						}				
 					}
 				}
@@ -4292,7 +4309,6 @@ country_event = {
 	}
 }
 
-#MM: Never used. Unlocalized
 #Kurdistani Resistance - Kurds Object to Infrastructure Project
 country_event = {
 	id = bftb_turkey.106
@@ -4353,7 +4369,6 @@ country_event = {
 	}
 }
 
-#MM: Never used. Unlocalized
 #Kurdistani Resistance - Kurds March for Freedom
 country_event = {
 	id = bftb_turkey.107
@@ -4390,7 +4405,6 @@ country_event = {
 	}
 }
 
-#MM: Never used. Unlocalized
 #Kurdistani Resistance - Kurds Demand Exemption from Conscription
 country_event = {
 	id = bftb_turkey.108
@@ -4425,7 +4439,6 @@ country_event = {
 	}
 }
 
-#MM: Never used. Unlocalized
 #Kurdistani Resistance - Radical Kurds Occupy Rural Population Centers in the East
 country_event = {
 	id = bftb_turkey.109
@@ -4633,27 +4646,23 @@ country_event = {
 				modifier = {
 					factor = 0
 					all_owned_state = {
-						AND = { 
-							OR = { 
-								has_dynamic_modifier = { modifier = islamist_opposition }
-								has_dynamic_modifier = { modifier = islamist_sedition }
-								has_dynamic_modifier = { modifier = islamist_insurgency }
-							}
-							OR = {
-								is_core_of = TUR
-								AND = {
-									is_core_of = KUR
-									is_owned_by = TUR
-									NOT = {
-										OR = {
-											is_core_of = IRQ
-											is_core_of = PER
-										}
-									}
+						OR = { 
+							has_dynamic_modifier = { modifier = islamist_opposition }
+							has_dynamic_modifier = { modifier = islamist_sedition }
+							has_dynamic_modifier = { modifier = islamist_insurgency }
+						}
+						OR = {
+							is_core_of = TUR
+							AND = {
+								is_core_of = KUR
+								is_owned_by = TUR
+								NOT = {
+									is_core_of = IRQ
+									is_core_of = PER
 								}
 							}
-							THIS = { num_of_civilian_factories < 1 }
 						}
+						THIS = { num_of_civilian_factories < 1 }
 					}
 				}
 				modifier = {
@@ -5100,10 +5109,6 @@ country_event = {
 			}
 			activate_targeted_decision = { target = TUR decision = ROOT_invest_in_turkish_state_heavy_industry }
 		}
-
-		hidden_effect = { #Country has accepted Turkish portfolio so the decision to actually invest is available, but the country still need to take it!
-			set_country_flag = TUR_investment_in_turkey_pending_flag
-		}
 	}
 	option = {
 		name = bftb_turkey.126.b #no
@@ -5169,7 +5174,7 @@ country_event = {
 				40 = {
 					add_building_construction = {
 						type = infrastructure
-						level = 1
+						level = 2
 						instant_build = yes
 					}
 				}
@@ -5192,7 +5197,7 @@ country_event = {
 		FROM = {
 			add_ai_strategy = {
 				type = befriend
-				target = ROOT
+				id = ROOT
 				value = 10
 			}
 		}
@@ -5210,7 +5215,7 @@ country_event = {
 			}
 			add_ai_strategy = {
 				type = antagonize
-				target = ROOT
+				id = ROOT
 				value = 5
 			}
 		}
@@ -5259,7 +5264,7 @@ country_event = {
 		FROM = {
 			add_ai_strategy = {
 				type = befriend
-				target = ROOT
+				id = ROOT
 				value = 15
 			}
 		}
@@ -5277,7 +5282,7 @@ country_event = {
 			}
 			add_ai_strategy = {
 				type = antagonize
-				target = ROOT
+				id = ROOT
 				value = 10
 			}
 		}
@@ -5326,12 +5331,12 @@ country_event = {
 		FROM = {
 			add_ai_strategy = {
 				type = befriend
-				target = ROOT
+				id = ROOT
 				value = 50
 			}
 			add_ai_strategy = {
 				type = alliance
-				target = ROOT
+				id = ROOT
 				value = 30
 			}
 		}
@@ -5349,12 +5354,12 @@ country_event = {
 			}
 			add_ai_strategy = {
 				type = antagonize
-				target = ROOT
+				id = ROOT
 				value = 25
 			}
 			add_ai_strategy = {
 				type = conquer
-				target = ROOT
+				id = ROOT
 				value = 5
 			}
 		}
@@ -5376,7 +5381,7 @@ country_event = {
 			ruling_only = yes
 		}
 		date > 1937.01.01
-		date < 1939.14.08
+		date < 1939.08.14
 	}
 
 	fire_only_once = yes
@@ -5419,6 +5424,7 @@ country_event = {
 				TUR_mustafa_kemal_ataturk = { remove_unit_leader_role = yes }
 			}
 			mark_focus_tree_layout_dirty = yes
+			retire_character = TUR_mustafa_kemal_ataturk
 		}
 	}
 	
@@ -5437,24 +5443,18 @@ country_event = {
 			has_completed_focus = TUR_the_sanayiciler
 			has_completed_focus = TUR_peace_at_home
 		}
-		add_country_leader_role = {
-			character = TUR_celal_bayar
-			country_leader = {
-				expire = "1965.1.1"
-				ideology = centrism
-				traits = {
-					liberal_democratic_paragon
-				}
-			}
-			promote_leader = yes
-		}
+		promote_character = TUR_celal_bayar
 	}
 	option = {
 		name = bftb_turkey.134.c #liberal + historic = Bayar and Ismet / Ismet
 		trigger = {
-			has_idea = TUR_ismet_inonu
+			OR = {
+				has_idea = TUR_ismet_inonu
+				has_idea = TUR_sukru_saracoglu_prime_minister #added sukru_saracoglu_prime_minister because he was the key to make ataturk immortal.	
+			}
 			has_completed_focus = TUR_the_sanayiciler
 			has_completed_focus = TUR_peace_at_home
+			
 		}
 		hidden_effect = {
 			remove_country_leader_role = {
@@ -5473,6 +5473,12 @@ country_event = {
 			}
 			promote_leader = yes
 		}
+		ai_chance = {
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 100
+			}
+		}
 	}
 	option = {
 		name = bftb_turkey.134.d #nationalist
@@ -5483,11 +5489,9 @@ country_event = {
 		add_country_leader_role = {
 			character = TUR_fevzi_cakmak
 			country_leader = {
-				expire = "1965.1.1"
-				ideology = despotism
-				traits = {
-					maresal
-				}
+			  ideology=despotism
+			  traits = { maresal }
+			  expire="1965.1.1"
 			}
 			promote_leader = yes
 		}
@@ -5501,11 +5505,9 @@ country_event = {
 		add_country_leader_role = {
 			character = TUR_fevzi_cakmak
 			country_leader = {
-				expire = "1965.1.1"
-				ideology = rexism
-				traits = {
-					maresal
-				}
+			  ideology = ultranationalism
+			  traits = { maresal }
+			  expire="1965.1.1"
 			}
 			promote_leader = yes
 		}
@@ -5517,7 +5519,7 @@ country_event = {
 			has_idea = TUR_recep_peker
 			has_completed_focus = TUR_kemalism_and_the_modern_movement
 		}
-		promote_character = TUR_mehmet_recep_peker #Has the country role already set in the Character File (FASCISM -> fascism_ideology)
+		promote_character = TUR_mehmet_recep_peker
 		set_politics = { ruling_party = fascism }
 	}
 	option = {
@@ -5529,11 +5531,9 @@ country_event = {
 		add_country_leader_role = {
 			character = TUR_sevket_sureyya_aydemir
 			country_leader = {
-				expire = "1965.1.1"
-				ideology = marxism
-				traits = {
-					the_academic
-				}
+			  ideology=marxism
+			  traits = { the_academic }
+			  expire="1965.1.1"
 			}
 			promote_leader = yes
 		}
@@ -5548,11 +5548,9 @@ country_event = {
 		add_country_leader_role = {
 			character = TUR_ismet_inonu
 			country_leader = {
-				expire = "1965.1.1"
-				ideology = marxism
-				traits = {
-					milli_sef
-				}
+			  ideology=marxism
+			  traits = { milli_sef }
+			  expire="1965.1.1"
 			}
 			promote_leader = yes
 		}
@@ -5561,31 +5559,66 @@ country_event = {
 	option = {
 		name = bftb_turkey.134.i #military junta
 		trigger = {
+			NOT = {
+				has_focus_tree = turkish_focus_r56
+			}
 			OR = { 
 				TUR_has_a_prime_minister = no
 				NOT = {
-					OR = {
-						has_completed_focus = TUR_fully_integrate_the_is_bank
-						has_completed_focus = TUR_privatize_the_anadolu_agency
-						has_completed_focus = TUR_the_sanayiciler
-						has_completed_focus = TUR_peace_at_home
-						has_completed_focus = TUR_reinvigorate_turkish_nationalism
-						has_completed_focus = TUR_kemalism_and_the_modern_movement
-						has_completed_focus = TUR_kemalist_socialist_theory
-					}
+					has_completed_focus = TUR_fully_integrate_the_is_bank
+					has_completed_focus = TUR_privatize_the_anadolu_agency
+					has_completed_focus = TUR_the_sanayiciler
+					has_completed_focus = TUR_peace_at_home
+					has_completed_focus = TUR_reinvigorate_turkish_nationalism
+					has_completed_focus = TUR_kemalism_and_the_modern_movement
+					has_completed_focus = TUR_kemalist_socialist_theory
 				}
 			}
 		}
 		add_country_leader_role = {
 			character = TUR_kazim_orbay
 			country_leader = {
-				expire = "1965.1.1"
-				ideology = despotism
-				traits = {
-					celebrity_junta_leader
-				}
+			  ideology=despotism
+			  traits = { celebrity_junta_leader }
+			  expire="1965.1.1"
 			}
 			promote_leader = yes
+		}
+	}
+	option = {
+		name = bftb_turkey.134.j #Ismet Inonu - For Road Tree + DLC
+		trigger = {
+			has_focus_tree = turkish_focus_r56
+		}
+		add_stability = -0.1	#Ataturk doesn't give a stability buff in the road version
+		promote_character = TUR_ismet_inonu
+		ai_chance = {
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 100
+			}
+		}
+	}
+	option = {
+		name = bftb_turkey.134.k #Nationalist - For Road Tree + DLC
+		trigger = {
+			has_completed_focus = TUR_continue_the_moderate_course
+		}
+		add_stability = -0.1	#Ataturk doesn't give a stability buff in the road version
+		add_country_leader_role = {
+			character = TUR_fevzi_cakmak
+			country_leader = {
+			  ideology=despotism
+			  traits = { maresal }
+			  expire="1965.1.1"
+			}
+			promote_leader = yes
+		}
+		ai_chance = {
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
 		}
 	}
 }
@@ -5601,6 +5634,7 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = { remove_ideas = TUR_mustafa_kemal_ataturk_figurehead }
+		retire_character = TUR_mustafa_kemal_ataturk
 	}
 
 	option = {
@@ -5620,6 +5654,10 @@ country_event = {
 		original_tag = TUR
 		has_country_flag = TUR_altered_royal_succession_laws
 		date > 1942.12.20
+	}
+
+	mean_time_to_happen = {	#why check every day if it is meant to happen late anyway?
+		days = 7
 	}
 
 	fire_only_once = yes
@@ -5667,7 +5705,7 @@ country_event = {
 
 	option = {
 		name = bftb_turkey.136.a
-		effect_tooltip = {  
+		effect_tooltip = {
 			if = {
 				limit = {
 					has_country_leader = {
@@ -5704,7 +5742,6 @@ country_event = {
 			}
 		}
 	}
-
 	option = {
 		name = bftb_turkey.136.b
 		add_country_leader_role = {
@@ -5743,10 +5780,8 @@ country_event = {
 	option = {
 		name = bftb_turkey.137.b #they are traitors to the Revolution!
 		trigger = {
-			AND = {
-				has_government = communism
-				NOT = { tag = SOV }
-			}
+			has_government = communism
+			NOT = { tag = SOV }
 		}
 		TUR = {
 			leave_faction = yes
@@ -5756,10 +5791,8 @@ country_event = {
 	option = {
 		name = bftb_turkey.137.c #perhaps they are experimenting with Socialism in One Country!
 		trigger = {
-			AND = {
-				has_government = communism
-				tag = SOV
-			}
+			has_government = communism
+			tag = SOV
 		}
 		custom_effect_tooltip = TUR_keeping_turkey_under_observation
 		hidden_effect = {
@@ -5907,5 +5940,155 @@ country_event = {
 
 	immediate = {
 		hidden_effect = { BUL = { country_event = generic.5 } }
+	}
+}
+
+country_event = {
+	id = bftb_turkey.190
+	title = bftb_turkey.190.t
+	desc = bftb_turkey.190.d
+	picture = GFX_report_event_polish_army
+	
+	is_triggered_only = yes
+
+	option = {
+		name = bftb_turkey.190.a
+		
+	}
+}
+
+country_event = { #Turkey requests a German/UK guarantee
+	id = bftb_turkey.144
+	title = bftb_turkey.144.t
+	desc = bftb_turkey.144.d
+	picture = GFX_report_event_tur_military_affair
+	
+	is_triggered_only = yes
+
+	option = {
+		name = bftb_turkey.144.a #agree to guarantee
+		ai_chance = {
+			factor = 160
+			modifier = {
+				is_historical_focus_on = yes
+				NOT = { is_in_faction_with = TUR }
+				factor = 0
+			}
+			modifier = {
+				OR = {
+					has_government = fascism
+					has_government = neutrality
+				}
+				TUR = { has_government = communism }
+				factor = 0
+			}
+			modifier = {
+				has_government = democratic
+				TUR = { has_government = communism }
+				has_opinion = {
+					target = TUR
+					value < 40
+				}
+				factor = 0.4
+			}
+			modifier = {
+				TUR = { has_government = ROOT }
+				factor = 3
+			}
+			modifier = {
+				has_opinion = {
+					target = TUR
+					value < -35
+				}
+				factor = 0.5 #tension causer or unreliable ally
+			}
+			modifier = {
+				OR = {
+					is_guaranteed_by = GER
+					is_guaranteed_by = ENG
+				}
+				factor = 0.5 #other major has guaranteed
+			}
+		}
+		diplomatic_relation = {
+			country = TUR
+			relation = guarantee
+			active = yes
+		}
+		TUR = { country_event = { id = bftb_turkey.145 } }
+	}
+	option = {
+		name = bftb_turkey.144.b #refuse to guarantee
+		ai_chance = {
+			factor = 80
+			modifier = {
+				is_in_faction_with = TUR
+				factor = 0
+			}
+		}
+		TUR = { country_event = { id = bftb_turkey.146 } }
+	}
+}
+
+country_event = { #Guarantee request accepted
+	id = bftb_turkey.145
+	title = bftb_turkey.145.t
+	desc = bftb_turkey.145.d
+	picture = GFX_report_event_tur_military_affair
+	
+	is_triggered_only = yes
+
+	option = {
+		name = bftb_turkey.145.a	
+	}
+}
+
+country_event = { #Guarantee request refused
+	id = bftb_turkey.146
+	title = bftb_turkey.146.t
+	desc = bftb_turkey.146.d
+	picture = GFX_report_event_tur_military_affair
+	
+	is_triggered_only = yes
+
+	option = {
+		name = bftb_turkey.146.a
+	}
+}
+
+country_event = { #Turkey thinks of how to deal with Greece in Mediterranean Entente
+	id = bftb_turkey.148
+	title = bftb_turkey.148.t
+	desc = bftb_turkey.148.d
+	picture = GFX_report_event_tur_military_affair
+	
+	is_triggered_only = yes
+
+	#They deserve nothing in the new world order.
+	option = {
+		name = bftb_turkey.148.a
+		if = { 
+			limit = { 
+				is_in_faction_with = ITA
+			}
+			ITA = { country_event = { id = bftb_turkey.66 hours = 6 } }
+		}
+		else = {
+			create_wargoal = {
+				target = GRE
+				type = annex_everything
+			}
+		}
+	}
+
+	#It is a token of a long friendship!
+	option = {
+		name = bftb_turkey.144.b 
+		ai_chance = {
+			factor = 20
+		}
+		GRE = { 
+			country_event = generic.5
+		}
 	}
 }

@@ -310,7 +310,7 @@ country_event = { #Resolves Europe Post Yalta
 						is_government_in_exile = yes
 						is_ai = yes
 					}
-					end_exile = GER
+					end_exile = yes
 				}
 			}
 			if = {
@@ -909,49 +909,8 @@ country_event = { #Resolves Europe Post Yalta
 				limit = {
 					has_global_flag = r56_CZE_in_yalta
 				}
-				CZE = {
-					if = {
-						limit = {
-							is_subject = yes
-						}
-						overlord = {
-							end_puppet = CZE
-						}
-					}
-					remove_ideas = {
-						edvard_benes
-					}
-					set_country_flag = yalta_unlock_focuses
-					set_country_flag = hide_interwar_diplomacy	#shouldve happened already, but just in case they allied with Germany or something
-					mark_focus_tree_layout_dirty = yes
-					
-					unlock_national_focus = CZKE_czechoslovak_government_reform
-
-					#intentionally not adding the ones above so research slot focus can be done if not already
-					unlock_national_focus = CZKE_soviet_treaties
-					unlock_national_focus = CZKE_acquire_access_for_soviets
-					if = {
-						limit = {
-							SOV = {
-								has_government = communism
-							}
-						}
-						retire_character = CZKE_radola_gajda	#incapacitated by Soviet torture
-						uncomplete_national_focus = {
-							focus = CZKE_sokol_movement
-							uncomplete_children = yes
-						}
-						unlock_national_focus = CZKE_empower_internationalism
-						SOV = {
-							country_event = cold_war.43
-						}
-					}
-					else = {
-						SOV = {
-							puppet = CZE
-						}
-					}
-
+				SOV = {
+					puppet = CZE
 				}
 				every_state = { 
 					limit = {
@@ -978,9 +937,6 @@ country_event = { #Resolves Europe Post Yalta
 			if = {
 				limit = {
 					has_global_flag = r56_AUS_in_yalta
-					NOT = {
-						has_global_flag = r56_historical_occupation_yalta_allowed
-					}
 				}
 				if = {
 					limit = {
@@ -991,33 +947,34 @@ country_event = { #Resolves Europe Post Yalta
 					SOV = {
 						end_puppet = AUS
 					}
-				}
-				if = {
-					limit = {
-						AUS = {
-							is_in_faction_with = SOV
-						}
-					}
-					SOV = { remove_from_faction = AUS }
-				}
-				if = {
-					limit = {
-						NOT = {
-							has_global_flag = r56_yalta_origin_is_communism
-							has_global_flag = r56_yalta_origin_is_fascism
-							has_global_flag = r56_yalta_origin_is_neutrality
-						}
-						AUS = {
-							NOT = {
-								has_government = democratic
+					if = {
+						limit = {
+							AUS = {
+								is_in_faction_with = SOV
 							}
 						}
+						SOV = { remove_from_faction = AUS }
 					}
-					AUS = {
-						set_politics = { ruling_party = democratic elections_allowed = yes }
-						add_popularity = {
-							ideology = democratic
-							popularity = 0.5
+					if = {
+						limit = {
+							has_global_flag = r56_AUS_in_yalta
+							NOT = {
+								has_global_flag = r56_yalta_origin_is_communism
+								has_global_flag = r56_yalta_origin_is_fascism
+								has_global_flag = r56_yalta_origin_is_neutrality
+							}
+							AUS = {
+								NOT = {
+									has_government = democratic
+								}
+							}
+						}
+						AUS = {
+							set_politics = { ruling_party = democratic elections_allowed = yes }
+							add_popularity = {
+								ideology = democratic
+								popularity = 0.5
+							}
 						}
 					}
 				}
@@ -1212,21 +1169,6 @@ country_event = { #Resolves Europe Post Yalta
 						}
 					}
 				}
-				YUG = {
-					if = {
-						limit = {
-							is_subject = yes
-						}
-						overlord = {
-							set_autonomy = {
-								target = YUG
-								autonomous_state = autonomy_free
-								end_wars = no
-								end_civil_wars = no
-							}
-						}
-					}
-				}
 				if = {
 					limit = {
 						YUG = {
@@ -1239,13 +1181,13 @@ country_event = { #Resolves Europe Post Yalta
 							has_government = communism
 						}
 					}
-					YUG = {
+					YUG = {	
 						add_popularity = {
 							ideology = communism
 							popularity = 0.55
 						}
 						set_politics = { ruling_party = communism elections_allowed = no }
-						if = {		#2024 note: this is silly but is more interesting for SOV, should be cut if east europe gets post-war mini trees
+						if = {
 							limit = {
 								NOT = {
 									has_completed_focus = YUG_join_comintern
@@ -2322,26 +2264,16 @@ country_event = { #Historical post yalta fixing by marijn211
 			news_event = {
 				id = r56.news_event.30
 			}
-			every_country = {
-				limit = {
-					original_tag = WGR
-				}
-				USA = {
-					annex_country = {
-						target = PREV
-						transfer_troops = no
-					}
+			USA = {
+				annex_country = {
+					target = WGR
+					transfer_troops = no
 				}
 			}
-			every_country = {
-				limit = {
-					original_tag = DDR
-				}
-				SOV = {
-					annex_country = {
-						target = PREV
-						transfer_troops = no
-					}
+			SOV = {
+				annex_country = {
+					target = DDR
+					transfer_troops = no
 				}
 			}
 			#French occupation zone
@@ -2454,15 +2386,10 @@ country_event = { #Historical post yalta fixing by marijn211
 				limit = {
 					has_global_flag = r56_AUS_in_yalta
 				}
-				every_country = {
-					limit = {
-						original_tag = AUS
-					}
-					USA = {
-						annex_country = {
-							target = PREV
-							transfer_troops = no
-						}
+				USA = {
+					annex_country = {
+						target = AUS
+						transfer_troops = no
 					}
 				}
 				if = { #Tyrol - Austria
@@ -2488,14 +2415,6 @@ country_event = { #Historical post yalta fixing by marijn211
 						}
 					}
 					SOV = { transfer_state = 4 }
-				}
-				if = { #Soviet Austria
-					limit = {
-						1086 = { #Burgenland
-							is_owned_by = USA
-						}
-					}
-					SOV = { transfer_state = 1086 }
 				}
 				if = { #Bri'ish Austria
 					limit = {
@@ -2553,21 +2472,6 @@ country_event = { #Historical post yalta fixing by marijn211
 			}
 			ENG = {
 				activate_mission = occupation_of_iran_decision
-			}
-		}
-		if = {
-			limit = {
-				has_global_flag = r56_AUS_in_yalta
-			}
-			every_state = {
-				limit = {
-					is_core_of = AUS
-					is_core_of = GER
-					NOT = {	#just in case a puppet Germany slips through
-						is_owned_by = GER
-					}
-				}
-				remove_core_of = GER
 			}
 		}
 		if = { #Fix Tyrol
@@ -2847,17 +2751,6 @@ country_event = { #Historical post yalta fixing by marijn211
 					}
 					transfer_state = 89
 				}
-				if = {
-					limit = {
-						784 = { #Wilno
-							is_owned_by = POL
-							owner = {
-								is_ai = yes
-							}
-						}
-					}
-					transfer_state = 784
-				}
 			}
 			POL = {	#return Bialystok, which the Soviets take in MolRib
 				if = {
@@ -2868,25 +2761,6 @@ country_event = { #Historical post yalta fixing by marijn211
 						}
 					}
 					transfer_state = 97
-				}
-				if = {	#hopefully fix Danzig enclave
-					limit = {
-						5 = {
-							is_owned_by = PREV
-						}
-						807 = {
-							is_owned_by = PREV
-						}
-						85 = {
-							owner = {
-								NOT = {
-									original_tag = DNZ
-									is_ai = no
-								}
-							}
-						}
-					}
-					transfer_state = 85
 				}
 			}
 			#Removing cores that are still around
@@ -2937,15 +2811,6 @@ country_event = { #Historical post yalta fixing by marijn211
 			limit = {
 				has_global_flag = r56_ITA_in_yalta
 			}
-			# if = {	#WIP
-			# 	limit = {
-			# 		has_global_flag = r56_historical_occupation_yalta_allowed
-			# 	}
-			# 	ITA = {
-			# 		set_country_flag = yalta_unlock_focuses
-			# 		mark_focus_tree_layout_dirty = yes
-			# 	}
-			# }
 			ITA = {
 				if = {
 					limit = {
@@ -2972,9 +2837,20 @@ country_event = { #Historical post yalta fixing by marijn211
 				}
 				if = { #Fix Istria
 					limit = { #Havent seen broken Slovenia puppets yet
-						owns_state = 852
+						owns_state = 911
 						owns_state = 736
-						is_ai = yes
+						OR = {
+							911 = {
+								owner = {
+									is_ai = yes
+								}
+							}
+							736 = {
+								owner = {
+									is_ai = yes
+								}
+							}
+						}
 					}
 					if = {
 						limit = {
@@ -2995,7 +2871,7 @@ country_event = { #Historical post yalta fixing by marijn211
 						limit = {
 							country_exists = SLV
 						}
-						SLV = { transfer_state = 852 }
+						SLV = { transfer_state = 911 }
 					}
 					if = {
 						limit = {
@@ -3004,7 +2880,7 @@ country_event = { #Historical post yalta fixing by marijn211
 								country_exists = SLV
 							}
 						}
-						YUG = { transfer_state = 852 }
+						YUG = { transfer_state = 911 }
 					}
 				}
 				if = {
@@ -3031,14 +2907,7 @@ country_event = { #Historical post yalta fixing by marijn211
 						communism = 25
 					}
 					#announce referendum
-					if = {
-						limit = {
-							NOT = {	#DLC has monarchy/democratic choice by focus, Id make the focuses be auto-completed but the referendum already takes a year to appear
-								has_dlc = "By Blood Alone"
-							}
-						}
-						country_event = { id = r56_italy.107 days = 2 }
-					}
+					country_event = { id = r56_italy.107 days = 2 }
 				}
 				if = { #fixes weird Italy owning things
 					limit = {
@@ -3462,7 +3331,7 @@ country_event = { #Give Hungary Southern Slovakia?
 			}
 		}		
 		ai_chance = {
-			base = 80
+			factor = 80
 		}
 		if = {
 			limit = {
@@ -3508,7 +3377,7 @@ country_event = { #Give Hungary Southern Slovakia?
 		}
 
 		ai_chance = {
-			base = 20
+			factor = 20
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
@@ -3530,7 +3399,7 @@ country_event = { #Give Hungary Southern Slovakia?
 		}
 
 		ai_chance = {
-			base = 20
+			factor = 20
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
@@ -3700,8 +3569,8 @@ country_event = { #Germany offers to "protect Poland"
 		FROM = {
 			country_event = {
 				id = r56.ger.19
-				days = 1
-				random_hours = 6
+				hours = 2
+				random = 20
 			}
 		}
 		if = {
@@ -3760,13 +3629,13 @@ country_event = { #Germany offers to "protect Poland"
 	option = { #Decline
 		name = r56.ger.17.b
 		ai_chance = {
-			base = 50
+			base = 0
 		}
 		FROM = {
 			country_event = {
 				id = r56.ger.18
-				days = 1
-				random_hours = 6
+				hours = 2
+				random = 20
 			}
 		}
 	}
@@ -3819,10 +3688,10 @@ country_event = { #Democratic anschluss
 	option = { #Yes
 		name = r56.ger.20.a
 		trigger = {
-			fascism < 0.3
+			communism < 0.3
 		}
 		ai_chance = {
-			base = 10
+			base = 999
 		}
 		FROM = {
 			annex_country = {
@@ -3834,19 +3703,18 @@ country_event = { #Democratic anschluss
 			add_state_core = 153
 			add_state_core = 848
 			add_state_core = 1054
-			add_state_core = 1086
 			#AI would probably do stupid things with a claim on South Tyrol, perhaps something for a future focus
 			set_country_flag = GER_dem_anschluss_accepted
 		}
 		country_event = r56.ger.26 #world event
 	}
-	option = { #Yes, except the referendum doesnt pass because of fascists
+	option = { #Yes, except the referendum doesnt pass because of commies
 		name = r56.ger.20.a
 		trigger = {
-			fascism > 0.3
+			communism > 0.3
 		}
 		ai_chance = {
-			base = 10
+			base = 0
 		}
 		FROM = {
 			country_event = r56.ger.21
@@ -3856,10 +3724,10 @@ country_event = { #Democratic anschluss
 	option = { #No
 		name = r56.ger.20.b
 		ai_chance = {
-			base = 3
+			base = 0
 			modifier = {
 				factor = 0
-				fascism > 0.3 #take the other option, but keep it available for players
+				communism > 0.3 #take the other option, but keep it available for players
 			}
 			modifier = {
 				factor = 8
@@ -3943,7 +3811,7 @@ country_event = { #Trade Oberschlesien for Gdynia
 	option = { #Yes
 		name = r56.ger.22.a
 		ai_chance = { 
-			base = 75
+			factor = 75
 			modifier = { #were kinda busy
 				factor = 0
 				has_war = yes
@@ -3980,7 +3848,7 @@ country_event = { #Trade Oberschlesien for Gdynia
 	option = { #No
 		name = r56.ger.22.b
 		ai_chance = { 
-			base = 25
+			factor = 25
 		}
 		set_global_flag = GER_dem_poland_trade_failed
 		GER = {
@@ -4052,7 +3920,7 @@ country_event = { #Trade Lithuania for Gdynia (allows forming Poland-Lithuania)
 	option = { #Yes
 		name = r56.ger.24.a
 		ai_chance = { 
-			base = 75
+			factor = 75
 			modifier = { #we're kinda busy
 				factor = 0
 				has_war = yes
@@ -4078,7 +3946,7 @@ country_event = { #Trade Lithuania for Gdynia (allows forming Poland-Lithuania)
 	option = { #No
 		name = r56.ger.22.b
 		ai_chance = { 
-			base = 25
+			factor = 25
 		}
 		set_global_flag = GER_dem_poland_trade_failed
 		GER = {
@@ -4117,7 +3985,6 @@ country_event = { #Germany civil war
 	option = { #Democrats
 		name = r56.ger.25.a
 		custom_effect_tooltip = GER_civil_war_tt
-		custom_effect_tooltip = r56_newline
 		effect_tooltip = {
 			var:cw_dem_preview = {
 				change_tag_from = GER
@@ -4162,7 +4029,6 @@ country_event = { #Germany civil war
 	option = { #Commies
 		name = r56.ger.25.b
 		custom_effect_tooltip = GER_civil_war_tt
-		custom_effect_tooltip = r56_newline
 		effect_tooltip = {
 			var:cw_com_preview = {
 				change_tag_from = GER
@@ -4177,7 +4043,6 @@ country_event = { #Germany civil war
 		}
 
 		custom_effect_tooltip = GER_communists_are_pretty_hard_tt
-		#custom_effect_tooltip = GER_communists_are_pretty_hard_tt_tip
 
 		hidden_effect = {
 			var:cw_com_preview = {
@@ -4424,7 +4289,7 @@ country_event = { #Germany proposes invading communist Yugoslavia with Italy
 	option = { #Yes
 		name = r56.ger.28.a
 		ai_chance = { 
-			base = 80
+			factor = 80
 			modifier = { #we're kinda busy
 				factor = 0
 				any_home_area_neighbor_country = {
@@ -4451,7 +4316,7 @@ country_event = { #Germany proposes invading communist Yugoslavia with Italy
 	option = { #No
 		name = r56.ger.28.b
 		ai_chance = { 
-			base = 20
+			factor = 20
 		}
 	}
 }
@@ -4469,7 +4334,7 @@ country_event = { #Germany proposes to aid Britain in exchange for some colonies
 	option = { #Yes
 		name = r56.ger.29.a
 		ai_chance = { 
-			base = 10
+			factor = 10
 			modifier = {
 				add = 8
 				any_country = { #at some risk
@@ -4522,7 +4387,7 @@ country_event = { #Germany proposes to aid Britain in exchange for some colonies
 	option = { #No
 		name = r56.ger.29.b
 		ai_chance = { 
-			base = 0
+			factor = 0
 			modifier = { #we can handle this
 				add = 10
 				NOT = {
@@ -4580,7 +4445,9 @@ country_event = { #Ludendorff's health worsens
 			}
 			GER_monarchist_bop_low_decrease_effect = yes
 		}
-		remove_unit_leader_role = GER_erich_ludendorff
+		GER_erich_ludendorff = {
+			remove_unit_leader = yes
+		}
 		custom_effect_tooltip = available_political_advisor
 		show_ideas_tooltip = GER_erich_ludendorff
 		set_country_flag = GER_ludendorff_political_advisor
@@ -4656,7 +4523,7 @@ country_event = { #Ludendorff dies (retired)
 country_event = { #Germany proposes economic integration
 	id = r56.ger.34
 	title = r56.ger.34.t
-	desc = r56.ger.34.d
+	desc = r56.ger.34.desc
 	picture = GFX_report_event_generic_construction_site
 
 	is_triggered_only = yes
@@ -4664,7 +4531,7 @@ country_event = { #Germany proposes economic integration
 	option = {	#yippie!
 		name = r56.ger.34.a
 		ai_chance = {
-			base = 10
+			factor = 10
 			modifier = {
 				add = 5
 				FROM = {
@@ -4722,7 +4589,7 @@ country_event = { #Germany proposes economic integration
 	option = {	#no!
 		name = r56.ger.34.b
 		ai_chance = {
-			base = 10
+			factor = 10
 			modifier = {
 				add = 5
 				FROM = {
@@ -4770,7 +4637,7 @@ country_event = { #Germany proposes economic integration
 			}
 		}
 		ai_chance = {
-			base = 10
+			factor = 10
 			modifier = {
 				factor = 0
 				is_in_faction_with = FROM
@@ -4925,7 +4792,16 @@ country_event = { #The military seizes power from Kaiser
 			}
 			add_ideas = GER_wilhelm_iv_idea
 		}
-		promote_character = GER_kurt_von_hammerstein_equord
+		GER_kurt_von_hammerstein_equord = {
+			add_country_leader_role = {
+				promote_leader = yes
+				country_leader = {
+					ideology = oligarchism
+					expire = "1965.1.1"
+					traits = { SWE_conservatist }
+				}
+			}
+		}
 	}
 }
 
@@ -5020,13 +4896,13 @@ country_event = { #Kaiser takes power back
 country_event = { #Germany succeeds coup attempt on us
 	id = r56.ger.39
 	title = r56.ger.39.t
-	desc = r56.ger.39.d
+	desc = r56.ger.39.desc
 	picture = GFX_report_event_generic_italian_fascists
 
 	option = {
 		name = r56.ger.39.a
 		ai_chance = {
-			base = 9
+			factor = 9
 		}
 		if = {
 			limit = {
@@ -5100,7 +4976,7 @@ country_event = { #Germany succeeds coup attempt on us
 	option = {	#civil war
 		name = r56.ger.39.b
 		ai_chance = {
-			base = 1
+			factor = 1
 		}
 		if = {
 			limit = {
@@ -5266,11 +5142,13 @@ country_event = { #Commie German
 	desc = ger.civil_war.2.desc
 	picture = GFX_report_event_generic_sign_treaty2
 
+	fire_only_once = no
+
 	is_triggered_only = yes
 
 	option = { #Yes
 		ai_chance = { 
-			base = 10
+			factor = 10
 		}
 		name = ger.civil_war.2.a
 		hidden_effect={
@@ -5298,7 +5176,7 @@ country_event = { #Commie German
 	option = { #No
 		name = ger.civil_war.2.b
 		ai_chance = { 
-			base = 1
+			factor = 1
 		}
 	}
 }
@@ -5311,11 +5189,13 @@ country_event = { # Democratic Germany offers to renegotiate the treaty of Versa
 	desc = ger.renegotiate_versailles.1.d
 	picture = GFX_report_event_gre_allied_diplomacy
 
+	fire_only_once = no
+
 	is_triggered_only = yes
 
 	option = { # Sure, why not?
 		ai_chance = { 
-			base = 10
+			factor = 10
 		}
 		name = ger.renegotiate_versailles.1.a
 		diplomatic_relation = {
@@ -5338,7 +5218,7 @@ country_event = { # Democratic Germany offers to renegotiate the treaty of Versa
 	option = { # You wot mate?
 		name = ger.renegotiate_versailles.1.b
 		ai_chance = { 
-			base = 1
+			factor = 1
 		}
 		FROM = {
 			country_event = { id = ger.renegotiate_versailles.3 hours = 6 }
@@ -5352,9 +5232,14 @@ country_event = { #
 	desc = ger.renegotiate_versailles.2.d
 	picture = GFX_report_event_generic_sign_treaty3
 
+	fire_only_once = no
+
 	is_triggered_only = yes
 
 	option = { # Sure, why not?
+		ai_chance = { 
+			factor = 10
+		}
 		name = ger.renegotiate_versailles.2.a
 		if = {
 			limit = {
@@ -5378,6 +5263,9 @@ country_event = { #
 	is_triggered_only = yes
 
 	option = { # Sure, why not?
+		ai_chance = { 
+			factor = 10
+		}
 		name = ger.renegotiate_versailles.3.a
 		add_political_power = 10
 	}
@@ -5396,7 +5284,7 @@ country_event = {
 	option = { # Hell naw
 		name = ger_brest_litovsk.1.a
 		ai_chance = {
-			base = 10
+			factor = 10
 			modifier = {
 				add = 10 
 				FROM = {
@@ -5430,7 +5318,7 @@ country_event = {
 	option = { # We give up
 		name = ger_brest_litovsk.1.b
 		ai_chance = {
-			base = 10000
+			factor = 10000
 			modifier = {
 				add = 10
 				FROM = {
@@ -5775,7 +5663,7 @@ country_event = {
 	option = { #Let's be historical
 		name = r56.ger.45.a
 		ai_chance = {
-			base = 0
+			factor = 0
 			modifier = {
 				is_historical_focus_on = yes
 				add = 1000
@@ -5791,11 +5679,12 @@ country_event = {
 		}
 		complete_national_focus = GER_denounce_the_agreement
 		set_country_flag = GER_denounced_the_agreement
+		mark_focus_tree_layout_dirty = yes
 	}
 	option = { #Let's do what they said
 		name = r56.ger.45.b
 		ai_chance = {
-			base = 0
+			factor = 0
 			modifier = {
 				is_historical_focus_on = no
 				add = 10
@@ -5813,8 +5702,33 @@ country_event = {
 				add = 10
 			}
 		}
+		mark_focus_tree_layout_dirty = yes
 		complete_national_focus = GER_adhere_to_the_agreement
 		set_country_flag = GER_adhere_to_the_agreement
+	}
+	option = { #monarchist
+		name = r56.ger.45.c
+		ai_chance = {
+			factor = 0
+			modifier = {
+				is_historical_focus_on = yes
+				add = 1000
+			}
+			modifier = {
+				has_government = fascism
+				add = 15
+			}
+			modifier = {
+				has_government = neutrality
+				add = 15
+			}			
+		}
+		mark_focus_tree_layout_dirty = yes
+		complete_national_focus = GER_restore_the_imperial_navy
+		set_country_flag = GER_restore_imperial_navy_flag
+		trigger = {
+			has_completed_focus = GER_rally_the_monarchists
+		}
 	}
 }
 
@@ -5831,7 +5745,6 @@ country_event = {			# commie leadership change
 		add_political_power = -20
 		promote_character = {
 			character = GER_heinrich_brandler
-			ideology = marxism
 		}
 		set_cosmetic_tag = GER_marxist
 		if = {
@@ -5864,13 +5777,6 @@ country_event = {			# commie leadership change
 				modifier = large_decrease
 			}
 		}
-		hidden_effect = {
-			news_event = {
-				id = r56.ger.50
-				hours = 8
-			}
-		}
-
 		ai_chance = {
 			base = 5
 		}
@@ -5899,13 +5805,6 @@ country_event = {			# commie leadership change
 				modifier = large_decrease
 			}
 		}
-		hidden_effect = {
-			news_event = {
-				id = r56.ger.49
-				hours = 8
-			}
-		}
-
 		ai_chance = {
 			base = 10
 		}
@@ -5933,7 +5832,6 @@ country_event = {			# commie leadership change
 			remove_ideas = GER_world_revolution_idea
 		}
 		complete_national_focus = GER_alliance_with_soviets
-
 		ai_chance = {
 			base = 1
 		}
@@ -5948,9 +5846,6 @@ country_event = {			# heinrich brandler arrives
 
 	fire_only_once = yes
 	is_triggered_only = yes
-	trigger = {
-		has_civil_war = yes
-	}
 
 	option = {
 		name = r56.ger.47.a
@@ -5959,15 +5854,14 @@ country_event = {			# heinrich brandler arrives
 			popularity = 0.05
 		}
 
-		custom_effect_tooltip = r56_newline
+		custom_effect_tooltip = BLANK_SEPERATOR
 		custom_effect_tooltip = available_political_advisor
 		show_ideas_tooltip = heinrich_brandler
 
-		custom_effect_tooltip = r56_newline
+		custom_effect_tooltip = BLANK_SEPERATOR
 		custom_effect_tooltip = kpd_gets_opposition
 
 		set_country_flag = heinrich_brandler_arrived
-
 		ai_chance = {
 			base = 1
 		}
@@ -5996,854 +5890,13 @@ country_event = {			# uncontested thälmann victory
 					}
 				}
 			}
-			news_event = {
-				id = r56.ger.49
-				hours = 8
-			}
 		}
 		effect_tooltip = {
 			GER_ernst_thalmann = {
-				add_country_leader_trait = ger_civil_war_hero
-			}
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-}
-
-news_event = {				# thälmann elected
-	id = r56.ger.49
-	title = r56.ger.49.t
-	desc = r56.ger.49.desc
-	picture = GFX_news_event_GER_thalmann_meeting
-
-	is_triggered_only = yes
-	fire_for_sender = no
-
-	major = yes
-	show_major = {
-		OR = {
-			capital_scope = {
-				is_on_continent = europe
-			}
-			faction_leader = {
-				capital_scope = {
-					is_on_continent = europe
+				add_trait = {
+					trait = ger_civil_war_hero
 				}
 			}
-			is_major = yes
-			has_government = communism
-		}
-	}
-
-	option = {				# not bad commies
-		name = r56.ger.49.a
-		trigger = {
-			NOT = {
-				has_country_leader_ideology = stalinism
-				has_country_leader_ideology = leninism
-				has_country_leader_ideology = anti_revisionism
-				has_country_leader_ideology = juche
-				has_country_leader_ideology = national_bolshevism
-			}
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {				# bad commies
-		name = r56.ger.49.b
-		trigger = {
-			OR = {
-				tag = SOV
-				has_country_leader_ideology = stalinism
-				has_country_leader_ideology = leninism
-				has_country_leader_ideology = anti_revisionism
-				has_country_leader_ideology = juche
-				has_country_leader_ideology = national_bolshevism
-			}
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-}
-
-news_event = {				# brandler elected
-	id = r56.ger.50
-	title = r56.ger.50.t
-	desc = r56.ger.50.desc
-	picture = GFX_news_event_GER_heinrich_brandler
-
-	is_triggered_only = yes
-	fire_for_sender = no
-
-	major = yes
-	show_major = {
-		OR = {
-			capital_scope = {
-				is_on_continent = europe
-			}
-			faction_leader = {
-				capital_scope = {
-					is_on_continent = europe
-				}
-			}
-			is_major = yes
-			has_government = communism
-		}
-	}
-
-	option = {				# not bad commies
-		name = r56.ger.50.a
-		trigger = {
-			NOT = {
-				has_country_leader_ideology = stalinism
-				has_country_leader_ideology = leninism
-				has_country_leader_ideology = anti_revisionism
-				has_country_leader_ideology = juche
-				has_country_leader_ideology = national_bolshevism
-			}
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {				# bad commies
-		name = r56.ger.50.b
-		trigger = {
-			OR = {
-				tag = SOV
-				has_country_leader_ideology = stalinism
-				has_country_leader_ideology = leninism
-				has_country_leader_ideology = anti_revisionism
-				has_country_leader_ideology = juche
-				has_country_leader_ideology = national_bolshevism
-			}
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-}
-
-news_event = {				# communist german-soviet alliance
-	id = r56.ger.51
-	title = r56.ger.51.t
-	desc = r56.ger.51.desc
-	picture = GFX_news_event_GER_german_soviet_pact_communist
-
-	is_triggered_only = yes
-	fire_for_sender = no
-
-	major = yes
-	show_major = {
-		NOT = {
-			OR = {
-				tag = SOV
-				tag = GER
-			}
-		}
-	}
-
-	option = {				# stalinists, rest of world
-		name = r56.ger.51.a
-		trigger = {
-			OR = {
-				has_country_leader_ideology = stalinism
-				NOT = {
-					has_government = communism
-				}
-			}
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {				# non-stalinist communists
-		name = r56.ger.51.b
-		trigger = {
-			NOT = {
-				has_country_leader_ideology = stalinism
-			}
-			has_government = communism
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-}
-
-country_event = {			# soviets accept communist alliance
-	id = r56.ger.52
-	title = r56.ger.52.t
-	desc = r56.ger.52.desc
-	picture = GFX_report_event_GER_german_soviet_pact_communist
-
-	is_triggered_only = yes
-
-	option = {
-		name = r56.ger.52.a
-
-		custom_effect_tooltip = ger_cominform_tt
-		custom_effect_tooltip = r56_newline
-		add_opinion_modifier = {
-			target = SOV
-			modifier = cominform
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-}
-
-country_event = {			# SOV; alliance proposal
-	id = r56.ger.53
-	title = r56.ger.53.t
-	desc = r56.ger.53.desc
-	picture = GFX_report_event_GER_german_soviet_pact_communist
-
-	is_triggered_only = yes
-
-	option = {				# accept
-		name = r56.ger.53.a
-
-		custom_effect_tooltip = cominform_tt
-		custom_effect_tooltip = r56_newline
-		add_opinion_modifier = {
-			target = GER
-			modifier = cominform
-		}
-		hidden_effect = {
-			set_faction_name = "cominform"
-			GER = {
-				if = {
-					limit = {
-						is_faction_leader = yes
-					}
-					dismantle_faction = yes
-				}
-				else_if = {
-					limit = {
-						is_in_faction = yes
-					}
-					remove_from_faction = THIS
-				}
-				else = {
-					SOV = {
-						add_to_faction = GER
-					}
-				}
-				country_event = {
-					id = r56.ger.52
-					hours = 8
-				}
-			}
-			news_event = {
-				id = r56.ger.51
-				hours = 12
-			}
-			set_global_flag = cominform_formed
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {				# refuse
-		name = r56.ger.53.b
-
-		reverse_add_opinion_modifier = {
-			target = GER
-			modifier = cominform_denied
-		}
-
-		ai_chance = {
-			base = 0
-		}
-	}
-}
-country_event = {			# joint exercises request
-	id = r56.ger.54
-	title = r56.ger.54.t
-	desc = r56.ger.54.desc
-	picture = GFX_report_event_military_planning
-
-	is_triggered_only = yes
-
-	option = {				# accept
-		name = r56.ger.54.a
-		GER = {
-			country_event = {
-				id = r56.ger.55
-				hours = 4
-			}
-		}
-		add_ideas = GER_nva_joint_military_exercise_idea
-		hidden_effect = {
-			add_threat = 2
-		}
-	}
-	option = {				# refuse
-		name = r56.ger.54.b
-		GER = {
-			country_event = {
-				id = r56.ger.56
-				hours = 4
-			}
-		}
-	}
-}
-country_event = {			# joint exercise accepted
-	id = r56.ger.55
-	title = r56.ger.55.t
-	desc = r56.ger.55.desc
-	picture = GFX_report_event_military_planning
-
-	is_triggered_only = yes
-
-	option = {
-		name = r56.ger.55.a
-		add_ideas = GER_nva_joint_military_exercise_idea
-	}
-}
-country_event = {			# joint exercise refused
-	id = r56.ger.56
-	title = r56.ger.56.t
-	desc = r56.ger.56.desc
-	picture = GFX_report_event_military_planning
-
-	is_triggered_only = yes
-
-	option = {
-		name = r56.ger.56.a
-		add_political_power = -5
-	}
-}
-
-
-country_event = {			# demo elections
-	id = r56.ger.60
-	title = r56.ger.60.t
-	desc = r56.ger.60.desc
-	picture = GFX_report_event_GER_ballot
-
-	is_triggered_only = yes
-	
-
-	
-
-	option = {			# Zentrum
-		name = r56.ger.60.a
-
-		trigger = {
-			if = {
-				limit = {
-					NOT = {
-						has_country_flag = GER_demo_coalition
-					}
-				}
-				NOT = {
-					has_country_leader = {
-						character = GER_konrad_adenauer
-						ruling_only = yes
-					}
-				}
-			}
-		}
-
-		clr_country_flag = GER_demo_coalition
-		if = {
-			limit = {
-				NOT = {
-					has_country_leader = {
-						character = GER_konrad_adenauer
-						ruling_only = yes
-					}
-				}
-			}
-			promote_character = {
-				character = GER_konrad_adenauer
-				ideology = conservatism
-			}
-		}
-
-		add_political_power = 50
-
-		set_variable = {
-			var = root.gov_count
-			value = 0
-		}
-
-		set_party_name = {
-			ideology = democratic
-			long_name = GER_zentrum_long
-			name = GER_zentrum
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {			# SPD
-		name = r56.ger.60.b
-
-		trigger = {
-			if = {
-				limit = {
-					NOT = {
-						has_country_flag = GER_demo_coalition
-					}
-				}
-				NOT = {
-					has_country_leader = {
-						character = GER_otto_wels
-						ruling_only = yes
-					}
-					has_country_leader = {
-						character = GER_hans_vogel
-						ruling_only = yes
-					}
-					has_country_leader = {
-						character = GER_kurt_schumacher
-						ruling_only = yes
-					}
-				}
-			}
-		}
-
-		clr_country_flag = GER_demo_coalition
-		if = {
-			limit = {
-				has_character = GER_otto_wels
-			}
-			promote_character = {
-				character = GER_otto_wels
-				ideology = socialism
-			}
-		}
-		else_if = {
-			limit = {
-				has_character = GER_hans_vogel
-			}
-			promote_character = {
-				character = GER_hans_vogel
-				ideology = socialism
-			}
-		}
-		else = {
-			promote_character = {
-				character = GER_kurt_schumacher
-				ideology = socialism
-			}
-		}
-
-		add_political_power = 50
-
-		set_variable = {
-			var = root.gov_count
-			value = 0
-		}
-
-		set_party_name = {
-			ideology = democratic
-			long_name = GER_spd_long
-			name = GER_spd
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {			# Zentrum led coalition
-		name = r56.ger.60.c
-
-		trigger = {
-			neutrality > party_popularity@communism
-			if = {
-				limit = {
-					has_country_flag = GER_demo_coalition
-				}
-				NOT = {
-					has_country_leader = {
-						character = GER_konrad_adenauer
-						ruling_only = yes
-					}
-				}
-			}
-		}
-
-		set_country_flag = GER_demo_coalition
-		if = {
-			limit = {
-				NOT = {
-					has_country_leader = {
-						character = GER_konrad_adenauer
-						ruling_only = yes
-					}
-				}
-			}
-			promote_character = {
-				character = GER_konrad_adenauer
-				ideology = conservatism
-			}
-		}
-
-		add_political_power = 25
-		add_stability = 0.025
-
-		set_variable = {
-			var = root.gov_count
-			value = 0
-		}
-		
-		set_party_name = {
-			ideology = democratic
-			long_name = GER_zentrum_coalition_long
-			name = GER_zentrum_coalition
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {			# SPD led coalition
-		name = r56.ger.60.d
-
-		trigger = {
-			communism > party_popularity@neutrality
-			if = {
-				limit = {
-					has_country_flag = GER_demo_coalition
-				}
-				NOT = {
-					has_country_leader = {
-						character = GER_otto_wels
-						ruling_only = yes
-					}
-					has_country_leader = {
-						character = GER_hans_vogel
-						ruling_only = yes
-					}
-					has_country_leader = {
-						character = GER_kurt_schumacher
-						ruling_only = yes
-					}
-				}
-			}
-		}
-
-		set_country_flag = GER_demo_coalition
-		if = {
-			limit = {
-				has_character = GER_otto_wels
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_country_leader = {
-							character = GER_otto_wels
-							ruling_only = yes
-						}
-					}
-				}
-				promote_character = {
-					character = GER_otto_wels
-					ideology = socialism
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_character = GER_hans_vogel
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_country_leader = {
-							character = GER_hans_vogel
-							ruling_only = yes
-						}
-					}
-				}
-				promote_character = {
-					character = GER_hans_vogel
-					ideology = socialism
-				}
-			}
-		}
-		else = {
-			if = {
-				limit = {
-					NOT = {
-						has_country_leader = {
-							character = GER_kurt_schumacher
-							ruling_only = yes
-						}
-					}
-				}
-				promote_character = {
-					character = GER_kurt_schumacher
-					ideology = socialism
-				}
-			}
-		}
-
-		add_political_power = 25
-		add_stability = 0.025
-
-		set_variable = {
-			var = root.gov_count
-			value = 0
-		}
-		
-		set_party_name = {
-			ideology = democratic
-			long_name = GER_spd_coalition_long
-			name = GER_spd_coalition
-		}
-
-		ai_chance = {
-			base = 5
-		}
-	}
-	option = {			# maintain  current government
-		name = r56.ger.60.e
-
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 0
-				check_variable = {
-					var = root.gov_count
-					value = 2
-					compare = greater_than
-				}
-			}
-		}
-
-		add_to_variable = {
-			var = root.gov_count
-			value = 1
-		}
-		if = {
-			limit = {
-				check_variable = {
-					var = root.gov_count
-					value = 2
-					compare = less_than
-				}
-			}
-			add_stability = 0.05
-		}
-		else_if = {
-			limit = {
-				check_variable = {
-					var = root.gov_count
-					value = 2
-					compare = greater_than_or_equals
-				}
-				neutrality < 0.30
-			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.10
-			}
-			add_stability = -0.05
-			custom_effect_tooltip = gov_count_middle
-		}
-		else = {		# presidental dictatorship
-			if = {
-				limit = {
-					has_country_leader = {
-						character = GER_konrad_adenauer
-						ruling_only = yes
-					}
-				}
-				remove_country_leader_role = {
-					character = GER_konrad_adenauer
-					ideology = conservatism
-				}
-				add_country_leader_role = {
-					character = GER_konrad_adenauer
-					promote_leader = yes
-					country_leader = {
-						ideology = oligarchic_democracy
-						traits = {
-							conservative_grandee
-							r56_trait_opposed_to_fascism
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_country_leader = {
-						character = GER_otto_wels
-						ruling_only = yes
-					}
-				}
-				remove_country_leader_role = {
-					character = GER_otto_wels
-					ideology = socialism
-				}
-				add_country_leader_role = {
-					character = GER_otto_wels
-					promote_leader = yes
-					country_leader = {
-						ideology = oligarchic_democracy
-						traits = {
-							staunch_anti_fascist
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_country_leader = {
-						character = GER_hans_vogel
-						ruling_only = yes
-					}
-				}
-				remove_country_leader_role = {
-					character = GER_hans_vogel
-					ideology = socialism
-				}
-				add_country_leader_role = {
-					character = GER_hans_vogel
-					promote_leader = yes
-					country_leader = {
-						ideology = oligarchic_democracy
-						traits = {
-							union_organizer
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_country_leader = {
-						character = GER_kurt_schumacher
-						ruling_only = yes
-					}
-				}
-				remove_country_leader_role = {
-					character = GER_kurt_schumacher
-					ideology = socialism
-				}
-				add_country_leader_role = {
-					character = GER_kurt_schumacher
-					promote_leader = yes
-					country_leader = {
-						ideology = oligarchic_democracy
-						traits = {
-							anti_communist
-						}
-					}
-				}
-			}
-
-			
-			
-		}
-	}
-}
-
-country_event = {
-	id = r56.ger.61			# Otto Wels, SPD; country leader
-	title = r56.ger.61.t
-	desc = r56.ger.61.desc
-	picture = GFX_report_event_GER_otto_wels
-
-	is_triggered_only = yes
-	fire_only_once = yes
-	trigger = {
-		has_country_leader = {
-			character = GER_otto_wels
-			ruling_only = yes
-		}
-	}
-
-	option = {
-		name = r56.ger.61.a
-		kill_country_leader = yes
-		promote_character = GER_hans_vogel
-		add_stability = -0.05
-	}
-}
-# leaders dying, SPD really had a bad run
-country_event = {
-	id = r56.ger.62		# Otto Wels, SPD; not country leader
-
-	hidden = yes
-	is_triggered_only = yes
-
-	trigger = {
-		NOT = {
-			has_country_leader = {
-				character = GER_otto_wels
-				ruling_only = yes
-			}
-		}
-	}
-
-	option = {
-		name = r56.ger.62.a
-		GER_otto_wels = {
-			retire = yes
-		}
-	}
-}
-
-country_event = {
-	id = r56.ger.63		# Hans Vogel, SPD; country leader
-	title = r56.ger.63.t
-	desc = r56.ger.63.desc
-	picture = GFX_report_event_GER_hans_vogel
-
-	is_triggered_only = yes
-	fire_only_once = yes
-	trigger = {
-		has_country_leader = {
-			character = GER_hans_vogel
-			ruling_only = yes
-		}
-	}
-
-	option = {
-		name = r56.ger.63.a
-		kill_country_leader = yes
-		promote_character = GER_kurt_schumacher
-		add_stability = -0.02
-	}
-}
-
-country_event = {
-	id = r56.ger.64		# Hans Vogel, SPD; not country leader
-
-	hidden = yes
-	is_triggered_only = yes
-	
-	trigger = {
-		has_country_leader = {
-			character = GER_hans_vogel
-			ruling_only = yes
-		}
-	}
-	
-	option = {
-		name = r56.ger.64.a
-		GER_hans_vogel = {
-			retire = yes
 		}
 	}
 }

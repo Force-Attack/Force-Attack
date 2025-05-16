@@ -10,9 +10,6 @@ focus_tree = {
 	default = no
 
 	continuous_focus_position = { x = 50 y = 900 }
-	
-	
-	
 	# VIET MINH TREE
 
 	focus = {
@@ -22,22 +19,21 @@ focus_tree = {
 		x = 5
 		y = 0
 
-		mutually_exclusive = {
-			focus = VIN_la_lutte_victorious
-			focus = VIN_the_vnqdd_in_power
-			focus = VIN_the_new_emperor
+		available = {
+			OR = {
+				AND = {
+					has_government = communism
+					is_puppet = yes
+					NOT = {
+						has_country_flag = la_lutte_victorious_flag
+					}
+				}
+				has_country_flag = ho_chi_minh_victorious_flag
+			}
 		}
 
 		completion_reward = {
 			add_political_power = 50
-			add_popularity = {
-			    ideology = communism
-			    popularity = .5
-				set_politics = {
-					ruling_party = communism
-				}
-
-		}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -92,7 +88,7 @@ focus_tree = {
 			focus = VIN_cement_rule_in_the_villages
 		}
 		completion_reward = {
-			add_ideas = VIN_land_reforms_program
+			add_ideas = PER_land_reforms
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		x = 3
@@ -414,24 +410,13 @@ focus_tree = {
 		x = 15
 		y = 0
 
-		mutually_exclusive = {
-			focus = VIN_ho_chi_minh_victorious
-			focus = VIN_the_vnqdd_in_power
-			focus = VIN_the_new_emperor
+		available = {
+			has_country_flag = la_lutte_victorious_flag
 		}
-
-		
 
 
 		completion_reward = {
 			add_political_power = 50
-			add_popularity = {
-			    ideology = communism
-			    popularity = .5
-				set_politics = {
-					ruling_party = communism
-				}
-		}
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -451,7 +436,6 @@ focus_tree = {
 			random_owned_controlled_state = {
 							add_extra_state_shared_building_slots = 1
 						}
-						add_ideas = VIN_land_reforms_program
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		x = 12
@@ -588,11 +572,71 @@ focus_tree = {
 		prerequisite = {
 			focus = VIN_la_lutte_victorious
 		}
+		available = {
+			is_puppet = no
+			is_in_faction = no
+			OR = {
+				MEX = {
+					has_country_leader = {
+					    character = MEX_leon_trotsky
+					    ruling_only = yes
+					}
+					is_faction_leader = yes
+					exists = yes
+					has_capitulated = no
+				}
+				SOV = {
+					has_country_leader = {
+					    character = SOV_lev_trotsky
+					    ruling_only = yes
+					}
+					is_faction_leader = yes
+					exists = yes
+					has_capitulated = no
+				}
+			}
+		}
 		mutually_exclusive = {
 			focus = VIN_our_own_internationale
 		}
 		completion_reward = {
-			add_political_power = 100
+			if = {
+				limit = {
+					MEX = {
+						has_country_leader = {
+							character = MEX_leon_trotsky
+							ruling_only = yes
+						}
+						is_faction_leader = yes
+						exists = yes
+						has_capitulated = no
+						NOT = { has_war_with = ROOT }
+					}
+				}
+				MEX = {
+					country_event = generic.2
+				}
+			else_if = {
+				limit = {
+					SOV = {
+						has_country_leader = {
+							character = SOV_lev_trotsky
+							ruling_only = yes
+						}
+						is_faction_leader = yes
+						exists = yes
+						has_capitulated = no
+						NOT = { has_war_with = ROOT }
+					}
+				}
+				SOV = {
+					country_event = generic.2
+				}
+				else = {
+					custom_effect_tooltip = VIN_align_with_trotsky_regime_tt
+				}
+			}
+			}
 		}
 		search_filters = { FOCUS_FILTER_ALLIANCE }
 		x = 18
@@ -725,26 +769,12 @@ focus_tree = {
 		x = 27
 		y = 0
 
-		mutually_exclusive = {
-			focus = VIN_la_lutte_victorious
-			focus = VIN_ho_chi_minh_victorious
-			focus = VIN_the_new_emperor
+		available = {
+			has_government = democratic
 		}
-		
-	
 
 		completion_reward = {
-			add_political_power = 100
-			add_popularity = {
-			    ideology = democratic
-			    popularity = .5
-				set_politics = {
-					ruling_party = democratic
-				}
-		}
-		
-	
-
+			add_political_power = 50
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -858,8 +888,6 @@ focus_tree = {
 				remove_idea = VIN_hanh_phuc
 				add_idea = VIN_hanh_phuc2
 			}
-			add_ideas = VIN_land_reforms_program
-
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
 		x = 26
@@ -892,15 +920,25 @@ focus_tree = {
 	}
 	focus = {
 		id = VIN_help_the_kuomintang
-		icon = GFX_focus_chi_reach_out_to_france
+		icon = GFX_focus_chi_cooperation_with_the_nationalists
 		cost = 10
 		prerequisite = {
 			focus = VIN_the_vnqdd_in_power
 		}
+		available = {
+			CHI = {
+				is_puppet = no
+				has_war = yes
+				OR = {
+					has_government = neutrality
+					has_government = democratic
+				}
+				
+			}
+		}
 		completion_reward = {
-			add_ideas = FRI_plan_mandel
-			FRA = {
-				add_ideas = FRI_plan_mandel
+			CHI = {
+				country_event = vietnam.6
 			}
 		}
 		mutually_exclusive = {
@@ -968,21 +1006,10 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = VIN_help_the_kuomintang
 		}
-		available = {
-			is_in_faction = no
-			is_puppet = no
-		}
 		completion_reward = {
 			add_political_power = 200
 			add_stability = 0.1
 			add_ideas = POL_Neutral_Foreign_Policy
-			OVERLORD = {
-				set_autonomy = {
-					target = VIN
-					autonomy_state = autonomy_free
-				}
-			}
-			
 		}
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
 		x = 31
@@ -1060,8 +1087,35 @@ focus_tree = {
 		prerequisite = {
 			focus = VIN_incochinese_neutrality
 		}
+		available = {
+			LAO = {
+				exists = yes
+				OR = {
+					has_government = neutrality
+					has_government = democratic
+				}
+			}
+			CAM = {
+				exists = yes
+				OR = {
+					has_government = neutrality
+					has_government = democratic
+				}
+			}
+		}
 		completion_reward = {
-			add_ideas = deterrence
+			LAO = {
+				give_guarantee = CAM
+				give_guarantee = VIN
+			}
+			CAM = {
+				give_guarantee = VIN
+				give_guarantee = LAO
+			}
+			VIN = {
+				give_guarantee = CAM
+				give_guarantee = LAO
+			}
 		}
 		x = 31
 		y = 3
@@ -1079,23 +1133,13 @@ focus_tree = {
 		x = 38
 		y = 0
 
-		mutually_exclusive = {
-			focus = VIN_la_lutte_victorious
-			focus = VIN_the_vnqdd_in_power
-			focus = VIN_ho_chi_minh_victorious
+		available = {
+			has_government = fascism
 		}
 
 		completion_reward = {
 			add_political_power = 50
-			add_popularity = {
-			    ideology = fascism
-			    popularity = .5
-				set_politics = {
-					ruling_party = fascism
-				}
 		}
-		}
-		
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 	}
@@ -1226,17 +1270,6 @@ focus_tree = {
 		id = VIN_cooperation_with_japan
 		icon = GFX_focus_chi_collaboration_with_the_japanese
 		cost = 10
-		available = {
-			is_in_faction = no
-			is_puppet = no
-			JAP = {
-				NOT = { has_war_with = ROOT }
-				exists = yes
-				has_capitulated = no
-				has_government = fascism
-				is_faction_leader = yes
-			}
-		}
 		bypass = {
 			is_in_faction_with = JAP
 		}
@@ -1361,10 +1394,6 @@ focus_tree = {
 		prerequisite = {
 			focus = VIN_the_new_emperor
 		}
-		available = {
-			is_in_faction = no
-			is_puppet = no
-		}
 		mutually_exclusive = {
 			focus = VIN_cooperation_with_japan
 		}
@@ -1473,7 +1502,7 @@ focus_tree = {
 	focus = {
 		id = VIN_create_the_national_railway_administration
 		icon = GFX_goal_generic_construct_infrastructure
-		cost = 10
+		cost = 5
 		x = 50
 		y = 0
 
@@ -1484,58 +1513,18 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
+			286 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = infrastructure
 					level = 2
-					instant_build = yes
 				}
 			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
+			671 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = infrastructure
 					level = 2
-					instant_build = yes
 				}
 			}
 		}
@@ -1591,7 +1580,7 @@ focus_tree = {
 	focus = {
 		id = VIN_cqtbcnqg
 		icon = GFX_goal_generic_production2
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = VIN_create_the_national_railway_administration
 		}
@@ -1611,7 +1600,7 @@ focus_tree = {
 	focus = {
 		id = VIN_the_roaring_dragon_theory
 		icon = GFX_goal_generic_construction
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = VIN_nationalize_french_businesses
 		}
@@ -1637,64 +1626,18 @@ focus_tree = {
 			focus = VIN_the_roaring_dragon_theory
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
+			671 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
-					instant_build = yes
 				}
 			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
+			286 = {
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
-					instant_build = yes
+					level = 2
 				}
 			}
 		}
@@ -1706,12 +1649,12 @@ focus_tree = {
 	focus = {
 		id = VIN_the_new_agriculture_program
 		icon = GFX_goal_agrarian_reform
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_the_roaring_dragon_theory
 		}
 		completion_reward = {
-			add_ideas = VIN_the_new_agriculture_program
+			add_ideas = VIN_land_reforms_program
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MANPOWER }
 		x = 48
@@ -1729,64 +1672,18 @@ focus_tree = {
 			focus = VIN_the_new_agriculture_program
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
+			286 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
-					instant_build = yes
+				}
+			}
+			927 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
 				}
 			}
 		}
@@ -1798,7 +1695,7 @@ focus_tree = {
 	focus = {
 		id = VIN_the_flying_dragon_theory
 		icon = GFX_goal_generic_positive_trade_relations
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = VIN_cqtbcnqg
 		}
@@ -1824,7 +1721,7 @@ focus_tree = {
 	focus = {
 		id = VIN_vietnam_national_university
 		icon = GFX_focus_research
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_the_roaring_dragon_theory
 			focus = VIN_the_flying_dragon_theory
@@ -1843,7 +1740,7 @@ focus_tree = {
 	focus = {
 		id = VIN_educate_the_peasants
 		icon = GFX_focus_generic_socialist_science
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_the_new_agriculture_program
 		}
@@ -1875,7 +1772,7 @@ focus_tree = {
 	focus = {
 		id = VIN_expand_urban_schools
 		icon = GFX_focus_research2
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_vietnam_national_university
 		}
@@ -1892,7 +1789,7 @@ focus_tree = {
 	focus = {
 		id = VIN_petrolimex
 		icon = GFX_goal_generic_oil_refinery
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = VIN_the_flying_dragon_theory
 		}
@@ -1922,65 +1819,21 @@ focus_tree = {
 			focus = VIN_petrolimex
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
+			671 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
-					instant_build = yes
 				}
+				
+			}
+			add_extra_state_shared_building_slots = 2
+			928 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+				}
+				
 			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -2036,10 +1889,10 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 3
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -2067,10 +1920,10 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 3
 					instant_build = yes
 				}
 			}
@@ -2088,64 +1941,18 @@ focus_tree = {
 			focus = VIN_building_the_future
 		}
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
+			286 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
-					instant_build = yes
+				}
+			}
+			927 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
 				}
 			}
 		}
@@ -2203,7 +2010,6 @@ focus_tree = {
 		y = 0
 
 		completion_reward = {
-			add_ideas = FRI_from_militias_to_an_army
 			army_experience = 10
 			remove_ideas = VIN_militias_based_army
 		}
@@ -2230,7 +2036,7 @@ focus_tree = {
 	focus = {
 		id = VIN_new_rifles_for_a_new_army
 		icon = GFX_goal_generic_small_arms
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_establish_the_national_army_of_vietnam
 		}
@@ -2238,7 +2044,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = infantry_weapons_bonus
 				bonus = 1.0
-				uses = 2
+				uses = 1
 				category = infantry_weapons
 			}
 		}
@@ -2250,17 +2056,12 @@ focus_tree = {
 	focus = {
 		id = VIN_group_559
 		icon = GFX_goal_generic_construction2
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_new_rifles_for_a_new_army
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_weapons_bonus
-				bonus = 1.0
-				uses = 2
-				category = support_tech
-			}
+			add_ideas = FRI_from_militias_to_an_army
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		x = 58
@@ -2270,7 +2071,7 @@ focus_tree = {
 	focus = {
 		id = VIN_new_entrenchment_tactics
 		icon = GFX_goal_generic_defence
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_group_559
 		}
@@ -2308,7 +2109,7 @@ focus_tree = {
 	focus = {
 		id = VIN_forest_expertise
 		icon = GFX_goal_generic_forest_warfare
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_group_559
 		}
@@ -2347,7 +2148,7 @@ focus_tree = {
 	focus = {
 		id = VIN_make_the_mountains_tremble
 		icon = GFX_goal_generic_army_artillery2
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_new_rifles_for_a_new_army
 		}
@@ -2402,7 +2203,6 @@ focus_tree = {
 				category = land_doctrine
 			}
 			add_ideas = VIN_national_defense_academy_of_vietnam
-			add_ideas = FRI_indochinese_military_service
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		x = 63
@@ -2430,7 +2230,7 @@ focus_tree = {
 	focus = {
 		id = VIN_tanks_experimentation
 		icon = GFX_goal_generic_army_tanks
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = VIN_fast_and_powerful
 		}

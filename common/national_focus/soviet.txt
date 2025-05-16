@@ -4357,7 +4357,7 @@ allow_branch = {
 		completion_reward = {
 			set_variable = { SOV_red_fleet_naval_invasion_capacity = 10 }
 			set_variable = { SOV_red_fleet_invasion_preparation = -0.1 }
-			#set_variable = { SOV_red_fleet_special_forces_cap_flat = 40 }
+			set_variable = { SOV_red_fleet_special_forces_cap = 0.1 }
 			custom_effect_tooltip = SOV_naval_infantry_ns_tt
 
 			navy_experience = 25
@@ -7446,7 +7446,7 @@ allow_branch = {
 		search_filters = {FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
-			#add_to_variable = { SOV_the_red_army_special_forces_cap_flat = 40 }
+			add_to_variable = { SOV_the_red_army_special_forces_cap = 0.1 }
 			add_to_variable = { SOV_the_red_army_land_doctrine_cost_factor = -0.1 }
 			custom_effect_tooltip = SOV_the_glory_of_the_red_army_ns_tt
 
@@ -7488,7 +7488,7 @@ allow_branch = {
 		search_filters = {FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
-			#add_to_variable = { SOV_the_red_army_special_forces_cap_flat = 40 }
+			add_to_variable = { SOV_the_red_army_special_forces_cap = 0.1 }
 			add_to_variable = { SOV_the_red_army_land_doctrine_cost_factor = -0.1 }
 			custom_effect_tooltip = SOV_the_glory_of_the_red_army_ns_tt
 
@@ -7879,13 +7879,13 @@ allow_branch = {
 		available = {
 			has_country_flag = {
 				flag = SOV_first_moscow_trial_flag
-				days > 150
+				days > 175
 			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_last_purge_focus_days_tt
 				has_country_flag = {
 					flag = SOV_first_moscow_trial_flag
-					days > 150
+					days > 175
 				}
 			}
 		}
@@ -8051,13 +8051,13 @@ allow_branch = {
 		available = {
 			has_country_flag = {
 				flag = SOV_second_moscow_trial_flag
-				days > 150
+				days > 175
 			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_last_purge_focus_days_military_tt
 				has_country_flag = {
 					flag = SOV_second_moscow_trial_flag
-					days > 150
+					days > 175
 				}
 			}
 		}
@@ -8099,13 +8099,13 @@ allow_branch = {
 		available = {
 			has_country_flag = {
 				flag = SOV_trial_of_the_generals_flag
-				days > 150
+				days > 175
 			}
 			custom_trigger_tooltip = {
 				tooltip = SOV_last_purge_focus_days_rights_tt
 				has_country_flag = {
 					flag = SOV_trial_of_the_generals_flag
-					days > 150
+					days > 175
 				}
 			}
 		}
@@ -12923,307 +12923,41 @@ allow_branch = {
 		}
 
 		available = {
+			any_allied_country = {
+				capital_scope = { is_on_continent = asia }
+				is_major = no
+			}
+			num_of_civilian_factories_available_for_projects > 2
+			is_subject = no
+		}
+
+		select_effect = {
+			add_ideas = SOV_development_of_eastern_allies
 		}
 
 		completion_reward = {
-			653 = {
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-						type = industrial_complex
-						level = 2
-						instant_build = yes
-					}
-				add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
+			#Tooltip purposes (Select Effect)
+			custom_effect_tooltip = SOV_focus_select_effect_tt
+			effect_tooltip = {
+				add_ideas = SOV_development_of_eastern_allies
 			}
 
-
-			IF = {
+			#(Complete Effect)
+			custom_effect_tooltip = SOV_focus_complete_effect_tt
+			every_other_country = {
 				limit = {
-				MON = {
 					is_in_faction_with = ROOT
+					capital_scope = { is_on_continent = asia }
+					is_major = no
 				}
+				country_event = { id = NSB_soviet_foreign_politics_events.10 hours = 2 random_hours = 1 }
+				custom_effect_tooltip = if_they_accept
+				custom_effect_tooltip = SOV_development_aid_for_eastern_allies_tt
 			}
-			330 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-						type = industrial_complex
-						level = 2
-						instant_build = yes
-					}
-				add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
+			hidden_effect = {
+				remove_ideas = SOV_development_of_eastern_allies
 			}
 		}
-		IF = {
-			limit = {
-			TAN = {
-				is_in_faction_with = ROOT
-			}
-		}
-		329 = {
-			add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-		}
-	}
-	IF = {
-		limit = {
-		SIA = {
-			is_in_faction_with = ROOT
-		}
-	}
-	289 = {
-		add_extra_state_shared_building_slots = 3
-		add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes
-			}
-		add_building_construction = {
-				type = arms_factory
-				level = 1
-				instant_build = yes
-			}
-	}
-}
-IF = {
-	limit = {
-	RAJ = {
-		is_in_faction_with = ROOT
-	}
-}
-439 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	PAK = {
-		is_in_faction_with = ROOT
-	}
-}
-441 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	AFG = {
-		is_in_faction_with = ROOT
-	}
-}
-267 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	PER = {
-		is_in_faction_with = ROOT
-	}
-}
-266 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	IRQ = {
-		is_in_faction_with = ROOT
-	}
-}
-291 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	SAU = {
-		is_in_faction_with = ROOT
-	}
-}
-292 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	TUR = {
-		is_in_faction_with = ROOT
-	}
-}
-49 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	MAN = {
-		is_in_faction_with = ROOT
-	}
-}
-328 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	KOR = {
-		is_in_faction_with = ROOT
-	}
-}
-917 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	JAP = {
-		is_in_faction_with = ROOT
-	}
-}
-282 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-IF = {
-	limit = {
-	CHI = {
-		is_in_faction_with = ROOT
-}
-}
-613 = {
-	add_extra_state_shared_building_slots = 3
-	add_building_construction = {
-			type = industrial_complex
-			level = 2
-			instant_build = yes
-		}
-	add_building_construction = {
-			type = arms_factory
-			level = 1
-			instant_build = yes
-		}
-}
-}
-
-
-	}
 	}
 
 	focus = {
@@ -15018,17 +14752,6 @@ IF = {
 		mutually_exclusive = { focus = SOV_offer_poland_protection }
 
 		available = {
-			any_country = {
-				OR = {
-					original_tag = POL
-				}
-				exists = yes
-				has_civil_war = no
-				NOT = {
-					has_war = yes
-					is_justifying_wargoal_against = ROOT
-				}
-			}
 			NOT = { has_country_flag = SOV_paranoia_system_active_flag }
 			is_subject = no
 			NOT =  { is_in_faction_with = POL }
@@ -15153,17 +14876,6 @@ IF = {
 		}
 
 		available = {
-			any_country = {
-				OR = {
-					original_tag = POL
-				}
-				exists = yes
-				has_civil_war = no
-				NOT = {
-					has_war = yes
-					is_justifying_wargoal_against = ROOT
-				}
-			}
 			NOT = { has_country_flag = SOV_paranoia_system_active_flag }
 			country_exists = POL
 			NOT = { has_war_with = POL }
@@ -17013,7 +16725,7 @@ IF = {
 		x = -1
 		y = 1
 		relative_position_id = SOV_unification_of_the_exiles
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17051,7 +16763,7 @@ IF = {
 		x = 1
 		y = 1
 		relative_position_id = SOV_unification_of_the_exiles
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17124,10 +16836,7 @@ IF = {
 				SOV_set_up_exile_civil_war = yes
 			}
 			SOV_paranoia_medium_increase_effect = yes
-			add_timed_idea = {
-				idea = SOV_siberian_forest_soldiers_idea
-				years = 1
-			}
+			add_ideas = SOV_siberian_forest_soldiers_idea
 			#set_country_flag = SOV_embrace_the_black_hundreds_flag
 			#custom_effect_tooltip = SOV_embrace_the_black_hundreds_tt
 			add_political_power = 60
@@ -17156,7 +16865,7 @@ IF = {
 		x = -2
 		y = 1
 		relative_position_id = SOV_embrace_the_black_hundreds
-		cost = 3
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17230,7 +16939,7 @@ IF = {
 		x = 0
 		y = 1
 		relative_position_id = SOV_embrace_the_black_hundreds
-		cost = 3
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17277,7 +16986,7 @@ IF = {
 		x = 2
 		y = 1
 		relative_position_id = SOV_muster_the_old_guard
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17329,7 +17038,7 @@ IF = {
 		x = 2
 		y = 1
 		relative_position_id = SOV_fascist_youth_union
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17367,7 +17076,7 @@ IF = {
 		x = 0
 		y = 1
 		relative_position_id = SOV_muster_the_old_guard
-		cost = 3
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -17559,7 +17268,7 @@ IF = {
 		x = 0
 		y = 1
 		relative_position_id = SOV_the_eyes_fear
-		cost = 5
+		cost = 3
 		ai_will_do = {
 			factor = 1
 		}
@@ -18022,10 +17731,10 @@ IF = {
 			add_ideas = SOV_restore_the_glory_of_the_motherland
 			random_controlled_state = {
 				prioritize = { 217 }
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 6
 				add_building_construction = {
 					type = industrial_complex
-					level = 4
+					level = 6
 				}
 			}
 		}
@@ -18038,7 +17747,7 @@ IF = {
 		x = 1
 		y = 2
 		relative_position_id = SOV_reopen_novodevichi
-		cost = 5
+		cost = 3
 		ai_will_do = {
 			factor = 1
 		}
@@ -18077,7 +17786,7 @@ IF = {
 		x = 0
 		y = 2
 		relative_position_id = SOV_the_synod
-		cost = 5
+		cost = 3
 		ai_will_do = {
 			factor = 1
 		}
@@ -18207,7 +17916,7 @@ IF = {
 		y = 0
 		relative_position_id = SOV_reconvene_the_zemsky_sobor
 
-		cost = 10
+		cost = 6
 
 		ai_will_do = {
 			factor = 1
@@ -20405,7 +20114,7 @@ IF = {
 		x = 5
 		y = 1
 		relative_position_id = SOV_reconvene_the_zemsky_sobor
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -20542,7 +20251,7 @@ IF = {
 		x = -5
 		y = 1
 		relative_position_id = SOV_reconvene_the_zemsky_sobor
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -20735,7 +20444,7 @@ IF = {
 		x = -5
 		y = 1
 		relative_position_id = SOV_romanov_reconstruction
-		cost = 10
+		cost = 7
 		ai_will_do = {
 			factor = 1
 		}
@@ -20756,7 +20465,7 @@ IF = {
 		x = -1
 		y = 1
 		relative_position_id = SOV_reinstitute_the_mestnichestvo
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 1
 		}
@@ -20842,7 +20551,7 @@ IF = {
 		id = SOV_the_rightful_heir_to_the_empire
 		icon = GFX_goal_generic_demand_territory
 		prerequisite = { focus = SOV_church_candidates }
-		mutually_exclusive = { focus = SOV_panslavic_nationalism focus = SOV_our_slavic_commitments }
+		mutually_exclusive = { focus = SOV_panslavic_nationalism }
 		x = 0
 		y = 2
 		relative_position_id = SOV_church_candidates
@@ -21162,7 +20871,7 @@ IF = {
 		x = -4
 		y = 1
 		relative_position_id = SOV_westward_bound
-		cost = 5
+		cost = 2
 		ai_will_do = {
 			factor = 1
 		}
@@ -21265,7 +20974,7 @@ IF = {
 		id = SOV_our_slavic_commitments
 		icon = GFX_goal_generic_military_sphere
 		prerequisite = { focus = SOV_the_triple_entente }
-		mutually_exclusive = { focus = SOV_panslavic_nationalism focus = SOV_the_rightful_heir_to_the_empire}
+		mutually_exclusive = { focus = SOV_panslavic_nationalism }
 		x = 0
 		y = 1
 		relative_position_id = SOV_the_triple_entente
@@ -21528,6 +21237,37 @@ IF = {
     		}
 		}
 	}
+
+	focus = {
+		id = SOV_the_fate_of_romania
+		icon = GFX_goal_generic_attack_romania
+		prerequisite = { focus = SOV_our_slavic_commitments focus = SOV_panslavic_nationalism }
+		x = 2
+		y = 1
+		relative_position_id = SOV_our_slavic_commitments
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		will_lead_to_war_with = ROM
+
+		search_filters = {FOCUS_FILTER_ANNEXATION}
+
+		available = {
+			is_subject = no
+			ROM = {
+				exists = yes
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = ROM }
+		}
+	}	
 
 	focus = {
 		id = SOV_pacify_the_rim

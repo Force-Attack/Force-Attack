@@ -16,6 +16,9 @@ focus_tree = {
 			add = 30
 			tag = POR
 			has_dlc = "La Resistance"
+			NOT = {
+				has_global_flag = POR_R56_focus_tree
+			}
 		}
 		modifier = {
 			factor = 0
@@ -26,8 +29,6 @@ focus_tree = {
 	}
 
 	default = no
-
-	#shared_focus = IBERIAN_form_joint_alliance
 
 	continuous_focus_position = { x = 50 y = 1500 }
 
@@ -43,7 +44,7 @@ focus_tree = {
 		x = 2
 		y = 0
 
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_MANPOWER}
 		completion_reward = {
 			add_ideas = POR_colonial_assimilation_policy
@@ -64,7 +65,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_colonial_assimilation_policy
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_MANPOWER}
 		completion_reward = {
 			add_ideas = POR_colonial_army
@@ -103,7 +104,7 @@ focus_tree = {
 		y = 2
 
 		relative_position_id = POR_colonial_assimilation_policy
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_ANNEXATION}
 		completion_reward = {
 			unlock_decision_tooltip = POR_mozambique_overseas_territory
@@ -155,7 +156,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_colonial_army
-		cost = 5
+		cost = 10
 		completion_reward = {
 			add_political_power = 120
 			add_manpower = 30000
@@ -285,7 +286,7 @@ focus_tree = {
 		y = 0
 
 		relative_position_id = POR_limited_self_rule
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 
@@ -439,7 +440,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_develop_south_angola
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_OIL}
 		completion_reward = {
 			796 = {
@@ -619,23 +620,6 @@ focus_tree = {
 		cost = 10
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
 		completion_reward = {
-			IF = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
-				custom_effect_tooltip = available_mio_tt
-				show_mio_tooltip = POR_ogme_organization
-				mio:POR_ogme_organization = {
-					add_mio_size = 3
-				}
-				mio:POR_ogme_organization = {
-					unlock_mio_trait_tooltip = "OGME"
-				}
-			}
-			ELSE = {
-				custom_effect_tooltip = available_designer
-				show_ideas_tooltip = ogme
-			}
 			if = {
 				limit = { has_full_control_of_state = 112 }
 				112 = {
@@ -666,7 +650,17 @@ focus_tree = {
 					}
 				}
 			}
-
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = POR_ogme_organization
+				mio:POR_ogme_organization = {
+					add_mio_funds = 500
+				}
+			}
+			#In ideas, we use Lancia which is always unlocked instead of vanilla's OGME
 		}
 	}
 
@@ -678,7 +672,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_instituto_superior_tecnico
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
 		completion_reward = {
 			if = {
@@ -836,7 +830,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_roads_bridges_and_dams
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_CHROMIUM FOCUS_FILTER_TUNGSTEN}
 		completion_reward = {
 			if = {
@@ -846,57 +840,6 @@ focus_tree = {
 			if = {
 				limit = { has_full_control_of_state = 795 }
 				unlock_decision_tooltip = POR_develop_santarem_chromium_deposits
-			}
-			179 = {
-				add_resource = {
-					type = steel
-					amount = 16
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 496
-					NOT = {
-						has_global_flag = brazil_steel_first_flag
-					}
-				}
-				add_resource = {
-					type = steel
-					amount = 4
-					state = 496
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 496
-					NOT = {
-						has_global_flag = brazil_steel_second_flag
-					}
-				}
-				add_resource = {
-					type = steel
-					amount = 5
-					state = 496
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 496
-					NOT = {
-						has_global_flag = brazil_steel_third_flag
-					}
-				}
-				add_resource = { type = tungsten amount = 3 state = 498 }
-				add_resource = { type = tungsten amount = 2 state = 502 }
-				add_resource = { type = chromium amount = 4 state = 499 }
-				add_resource = { type = chromium amount = 2 state = 496 }
-				add_resource = { type = aluminium amount = 1 state = 500 }
-				add_resource = { type = aluminium amount = 3 state = 496 }
-				add_resource = { type = aluminium amount = 1 state = 501 }
-				add_timed_idea = {
-					idea = bra_industrial_elite
-					days = 100
-				}
 			}
 		}
 	}
@@ -925,7 +868,7 @@ focus_tree = {
 				limit = { has_full_control_of_state = 180 }
 				180 = {
 					add_building_construction = {
-						type = industrial_complex
+						type = infrastructure
 						level = 1
 						instant_build = yes
 					}
@@ -947,7 +890,7 @@ focus_tree = {
 				limit = { has_full_control_of_state = 179 }
 				179 = {
 					add_building_construction = {
-						type = industrial_complex
+						type = infrastructure
 						level = 1
 						instant_build = yes
 					}
@@ -958,7 +901,7 @@ focus_tree = {
 				limit = { has_full_control_of_state = 112 }
 				112 = {
 					add_building_construction = {
-						type = arms_factory
+						type = infrastructure
 						level = 1
 						instant_build = yes
 					}
@@ -981,10 +924,10 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			add_tech_bonus = {
-				name = motorized_bonus
-				ahead_reduction = 1
-				bonus = 0.75
-				category = motorized_equipment
+				name = POR_military_vehicles
+			    bonus = 1.0
+			    uses = 1
+			    category = motorized_equipment
 			}
 
 			if = {
@@ -1074,7 +1017,7 @@ focus_tree = {
 					has_dlc = "Arms Against Tyranny"
 				}
 				custom_effect_tooltip = available_mio_tt
-				show_mio_tooltip = HOL_daf_organization
+				show_mio_tooltip = POR_fma_organization
 				mio:HOL_daf_organization = {
 					add_mio_funds = 500
 				}
@@ -1213,12 +1156,6 @@ focus_tree = {
 		cost = 10
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-
-			set_technology = {
-				basic_small_airframe = 2
-			}
-
-
 			add_tech_bonus = {
 				name = POR_light_aircraft_focus
 			    bonus = 1.0
@@ -1274,8 +1211,8 @@ focus_tree = {
 			add_tech_bonus = {
 				name = POR_advanced_light_aircraft
 			    bonus = 1.0
-			    uses = 2
-			    category = air_equipment
+			    uses = 1
+			    category = light_air
 			}
 			air_experience = 50
 			add_ideas = POR_advanced_light_aircraft
@@ -1312,12 +1249,12 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_instituto_superior_tecnico
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_RESEARCH}
 		completion_reward = {
 			add_tech_bonus = {
 				name = POR_industrial_modernization
-			    bonus = 1
+			    bonus = 1.0
 			    uses = 2
 			    category = industry
 			}
@@ -1398,7 +1335,7 @@ focus_tree = {
 		y = 2
 
 		relative_position_id = POR_continue_the_public_works
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			if = {
@@ -1680,7 +1617,6 @@ focus_tree = {
 		cost = 10
 		search_filters = {FOCUS_FILTER_RESEARCH}
 		completion_reward = {
-			add_ideas = POR_portuguese_marines
 			add_tech_bonus = {
 				name = POR_fuzileiros
 			    bonus = 1.0
@@ -1753,7 +1689,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_second_navy_reequipment
-		cost = 10
+		cost = 20
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			add_tech_bonus = {
@@ -1770,11 +1706,18 @@ focus_tree = {
 			}
 
 			112 = { #Lisbon
-				add_extra_state_shared_building_slots = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
 					level = 3
 					instant_build = yes
+				}
+
+				add_building_construction = {
+					type = naval_base
+					level = 2
+					instant_build = yes
+					province = 11805	#technically on the other side of the river, province 970
 				}
 			}
 		}
@@ -1896,7 +1839,7 @@ focus_tree = {
 		y = 2
 
 		relative_position_id = POR_national_cruiser_production
-		cost = 5
+		cost = 10
 		completion_reward = {
 			if = {
 				limit = { has_full_control_of_state = 698 }
@@ -1969,7 +1912,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_atlantic_defense_strategy
-		cost = 14
+		cost = 20
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
 			add_ideas = POR_endless_sea
@@ -2082,7 +2025,6 @@ focus_tree = {
 				name = POR_metropolitan_army
 			    bonus = 1.0
 			    uses = 2
-				ahead_reduction = 0.5
 			    category = infantry_weapons
 				category = armor
 				category = artillery
@@ -2121,7 +2063,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_standardization
-		cost = 5
+		cost = 10
 		completion_reward = {
 		#Add coastal fort to each port
 			if = {
@@ -2208,7 +2150,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_standardization
-		cost = 5
+		cost = 10
 		completion_reward = {
 			112 = { #Lisbon
 				add_building_construction = {
@@ -2279,7 +2221,7 @@ focus_tree = {
 				bonus = 1.0
 				uses = 2
 				category = r56_desert_infantry_tech
-				
+				category = r56_jaeger_infantry_tech
 				category = r56_jungle_infantry_tech
 				category = r56_marines_infantry_tech
 				category = r56_mountain_infantry_tech
@@ -2365,16 +2307,11 @@ focus_tree = {
 		icon = GFX_goal_generic_socdem
 		x = 9
 		y = 0
-		allow_branch = {
-			NOT = {
-				has_completed_focus = POR_estado_novo
-			}
-		}
+
 		relative_position_id = POR_army_reorganization
 		cost = 10
 		search_filters = {FOCUS_FILTER_POLITICAL}
 		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
 			set_party_name = {
 			    ideology = communism
 			    long_name = POR_communism2_party_long
@@ -2412,12 +2349,12 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_popular_front
-		cost = 5
+		cost = 10
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER}
 		completion_reward = {
 			add_popularity = {
 			    ideology = communism
-			    popularity = 0.1
+			    popularity = 0.05
 			}
 			add_war_support = 0.1
 			add_ideas = POR_nation_in_arms
@@ -2530,6 +2467,7 @@ focus_tree = {
 		icon = GFX_focus_generic_soviet_politics
 		x = -1
 		y = 1
+
 		relative_position_id = POR_nationalize_industry
 		cost = 10
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY}
@@ -2644,9 +2582,9 @@ focus_tree = {
 			if = {
 				limit = {
 					NOT = {
-						has_idea = r56i_laws_security_balanced
-						has_idea = r56i_laws_security_rights
-						has_idea = r56i_laws_security_order
+						#has_idea = r56i_laws_security_balanced
+						#has_idea = r56i_laws_security_rights
+						#has_idea = r56i_laws_security_order
 					}
 				}
 				custom_effect_tooltip = EFFECT_CHANGE_LAW_r56i_laws_social
@@ -2923,14 +2861,7 @@ focus_tree = {
 			    }
 			}
 		}
-		allow_branch = {
-			NOT = {
-				OR = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_estado_novo
-				}
-			}
-		}
+
 		bypass = {
 			OR = {
 				has_global_flag = scw_over
@@ -2950,9 +2881,8 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_popular_front
-		cost = 5
+		cost = 10
 		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
 			if = {
 				limit = {
 					NOT = { has_global_flag = spanish_civil_war }
@@ -3466,7 +3396,7 @@ focus_tree = {
 		prerequisite = { focus = POR_the_popular_front_bloc }
 		icon = GFX_focus_por_latin_american_communism
 		x = 0
-		y = 2
+		y = 1
 
 		relative_position_id = POR_the_popular_front_bloc
 		cost = 10
@@ -3750,237 +3680,72 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_SPA_CIVIL_WAR }
 	}
 
-	focus = {
-		id = POR_intervention_in_spain
+	
 
-		select_effect = {
-			add_ai_strategy = {
-				type = befriend
-				id = SPD
-				value = -100
-			}
-			add_ai_strategy = {
-				type = alliance
-				id = SPD
-				value = -100
-			}
-			add_ai_strategy = {
-				type = prepare_for_war
-				id = SPD
-				value = 100
-			}
-		}
-		offset = {
-			x = 5
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_estado_novo
-				}
-			}
-		}
-		available = {
-			has_global_flag = scw_over
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
-			any_country = {
-				original_tag = SPR
-				NOT = { has_government = ROOT }
-			}
-			has_civil_war = no
-			has_army_manpower = {
-				size > 99999
-			}		
-			has_civil_war = no				
-		}
+	
 
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_completed_focus = POR_support_the_spanish_republic
-				NOT = { has_completed_focus = POR_join_the_comintern }
-			}
-			modifier = {
-				factor = 100
-				has_completed_focus = POR_join_the_comintern
-				SPD = { has_completed_focus = SPR_against_trotskyism_and_stalinism }
-			}
-		}
-		prerequisite = { focus = POR_they_need_our_help focus = POR_allow_free_elections }
-		icon = GFX_focus_focus_fra_intervention_spain
-		x = 0
-		y = 1
-
-		relative_position_id = POR_they_need_our_help
-		cost = 10
-		completion_reward = {
-			hidden_effect = {
-				every_country = {
-					limit = {
-						original_tag = SPR
-						NOT = { has_government = ROOT }
-					}
-					POR = {
-						create_wargoal = {
-						  	target = PREV
-							expire = 0
-						    type = topple_government
-						}
-					}
-				}
-			}
-			custom_effect_tooltip = POR_intervention_in_spain_tt
-
-			hidden_effect = {
-				add_ai_strategy = {
-					type = declare_war
-					id = SPD
-					value = 100
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_SPA_CIVIL_WAR }
-	}
-
-	focus = {
-		id = POR_securing_the_free_world
-		available = {
-			has_global_flag = scw_over
-			threat > 0.4
-			has_government = democratic
-		}
-		prerequisite = { focus = POR_allow_free_elections }
-
-		icon = GFX_focus_generic_treaty
-		x = 2
-		y = 1
-		offset = {
-			x = 5
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_estado_novo
-				}
-			}
-		}
-		relative_position_id = POR_they_need_our_help
-		cost = 10
-		completion_reward = {
-			hidden_effect = {
-				every_other_country = {
-					limit = {
-						capital_scope = {
-							is_on_continent = europe
-						}
-						OR = {
-							has_government = democratic
-							has_government = neutrality
-						}
-						is_major = no
-					}
-					POR = {
-						give_guarantee = PREV
-
-						add_ai_strategy = {
-							type = befriend
-							id = PREV
-							value = 100
-						}
-					}
-				}
-			}
-			custom_effect_tooltip = portugal_guarantees_freedom_tt
-			set_rule = { can_create_factions = yes }
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-
-	focus = {
-		id = POR_protect_chinese_civilians
-
-		select_effect = {
-			random_country = {
-				limit = { controls_state = 592 }
-				ROOT = {
-					add_ai_strategy = {
-						type = prepare_for_war
-						id = PREV
-						value = 100
-					}
-				}
-			}
-		}
-		offset = {
-			x = -2
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_popular_front
-				}
-			}
-		}
-		offset = {
-			x = 5
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_estado_novo
-				}
-			}
-		}
-		available = {
-			has_global_flag = scw_over
-			592 = {
-				owner = {
-					has_war = yes
-					NOT = { is_in_faction_with = ROOT }
-				}
-			}
-			has_army_manpower = {
-				size > 149999
-			}			
-		}
-		prerequisite = { focus = POR_they_need_our_help focus = POR_allow_free_elections focus = POR_the_popular_front_bloc }
-		icon = GFX_focus_chi_united_front
-		x = -2
-		y = 1
-
-		relative_position_id = POR_they_need_our_help
-		cost = 10
-		completion_reward = {
-			592 = {
-				owner =  {
-					ROOT = {
-						create_wargoal = {
-						  	target = PREV
-							expire = 0
-						    type = annex_everything
-						}
-					}
-				}
-			}
-
-			hidden_effect = {
-				random_country = {
-					limit = { controls_state = 592 }
-					ROOT = {
-						add_ai_strategy = {
-							type = declare_war
-							id = PREV
-							value = 100
-						}
-					}
-				}
-			}
-		}
-	}
+#	focus = {
+#		id = POR_protect_chinese_civilians
+#
+#		select_effect = {
+#			random_country = {
+#				limit = { controls_state = 592 }
+#				ROOT = {
+#					add_ai_strategy = {
+#						type = prepare_for_war
+#						id = PREV
+#						value = 100
+#					}
+#				}
+#			}
+#		}
+#
+#		available = {
+#			has_global_flag = scw_over
+#			592 = {
+#				owner = {
+#					has_war = yes
+#					NOT = { is_in_faction_with = ROOT }
+#				}
+#			}
+#			has_army_manpower = {
+#				size > 149999
+#			}			
+#		}
+#		prerequisite = { focus = POR_they_need_our_help focus = POR_allow_free_elections focus = POR_the_popular_front_bloc }
+#		icon = GFX_focus_chi_united_front
+#		x = -2
+#		y = 2
+#
+#		relative_position_id = POR_they_need_our_help
+#		cost = 10
+#		completion_reward = {
+#			592 = {
+#				owner =  {
+#					ROOT = {
+#						create_wargoal = {
+#						  	target = PREV
+#							expire = 0
+#						    type = annex_everything
+#						}
+#					}
+#				}
+#			}
+#
+#			hidden_effect = {
+#				random_country = {
+#					limit = { controls_state = 592 }
+#					ROOT = {
+#						add_ai_strategy = {
+#							type = declare_war
+#							id = PREV
+#							value = 100
+#						}
+#					}
+#				}
+#			}
+#		}
+#	}
 
 	focus = {
 		id = POR_strict_neutrality_in_the_spanish_civil_war
@@ -4000,39 +3765,10 @@ focus_tree = {
 		icon = GFX_goal_generic_neutrality_focus
 		x = 5
 		y = 0
-		allow_branch = {
-			NOT = {
-				OR = {
-					has_completed_focus = POR_support_the_spanish_republic
-					has_completed_focus = POR_support_the_spanish_nationalists
-					has_completed_focus = POR_a_royal_wedding
-				}
-			}
-		}
-		offset = {
-			x = -5 
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_popular_front
-				}
-			}
-		}
-		offset = {
-			x = -3
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_estado_novo
-				}
-			}
-		}
+
 		relative_position_id = POR_support_the_spanish_republic
-		cost = 5
+		cost = 10
 		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
 			every_other_country = {
 				add_opinion_modifier = {
 				    target = POR
@@ -4123,7 +3859,6 @@ focus_tree = {
 		relative_position_id = POR_strict_neutrality_in_the_spanish_civil_war
 		cost = 10
 		completion_reward = {
-			activate_advisor = POR_maria_lamas
 			unlock_decision_tooltip = POR_buy_aa_in_britain
 			unlock_decision_tooltip = POR_buy_at_in_britain
 		}
@@ -4146,9 +3881,9 @@ focus_tree = {
 		bypass = {
 			NOT = { country_exists = ENG }
 		}
-		prerequisite = { focus = POR_british_investment_in_mines focus = POR_british_guns}
+		prerequisite = { focus = POR_british_investment_in_mines focus = POR_british_guns focus = POR_visit_the_front }
 		icon = GFX_focus_generic_industry_3
-		x = 1
+		x = 0
 		y = 1
 
 		relative_position_id = POR_british_investment_in_mines
@@ -4224,8 +3959,16 @@ focus_tree = {
 	focus = {
 		id = POR_allow_free_elections
 		available = {
-			democratic > 0.4
+			democratic > 0.5
 			has_war = no
+			if = {
+				limit = {
+					has_completed_focus = POR_popular_front
+				}
+				NOT = {
+					has_completed_focus = POR_reorganization_of_the_communist_party
+				}
+			}
 		}
 		prerequisite = { focus = POR_british_industrial_investments }
 		icon = GFX_goal_support_democracy
@@ -4334,6 +4077,138 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = POR_securing_the_free_world
+		available = {
+			has_global_flag = scw_over
+			threat > 0.4
+			has_government = democratic
+		}
+		prerequisite = { focus = POR_allow_free_elections }
+
+		icon = GFX_focus_generic_treaty
+		x = 1
+		y = 1
+
+		relative_position_id = POR_allow_free_elections
+		cost = 10
+		completion_reward = {
+			hidden_effect = {
+				every_other_country = {
+					limit = {
+						capital_scope = {
+							is_on_continent = europe
+						}
+						OR = {
+							has_government = democratic
+							has_government = neutrality
+						}
+						is_major = no
+					}
+					POR = {
+						give_guarantee = PREV
+
+						add_ai_strategy = {
+							type = befriend
+							id = PREV
+							value = 100
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = portugal_guarantees_freedom_tt
+			set_rule = { can_create_factions = yes }
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = POR_intervention_in_spain
+
+		select_effect = {
+			add_ai_strategy = {
+				type = befriend
+				id = SPD
+				value = -100
+			}
+			add_ai_strategy = {
+				type = alliance
+				id = SPD
+				value = -100
+			}
+			add_ai_strategy = {
+				type = prepare_for_war
+				id = SPD
+				value = 100
+			}
+		}
+
+		available = {
+			has_global_flag = scw_over
+			OR = {
+				has_government = democratic
+				has_government = communism
+			}
+			any_country = {
+				original_tag = SPR
+				NOT = { has_government = ROOT }
+			}
+			has_civil_war = no
+			has_army_manpower = {
+				size > 99999
+			}		
+			has_civil_war = no				
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_completed_focus = POR_support_the_spanish_republic
+				NOT = { has_completed_focus = POR_join_the_comintern }
+			}
+			modifier = {
+				factor = 100
+				has_completed_focus = POR_join_the_comintern
+				SPD = { has_completed_focus = SPR_against_trotskyism_and_stalinism }
+			}
+		}
+		prerequisite = { focus = POR_they_need_our_help focus = POR_allow_free_elections }
+		icon = GFX_focus_focus_fra_intervention_spain
+		relative_position_id = POR_they_need_our_help
+		x = 0
+		y = 1
+
+		
+		cost = 10
+		completion_reward = {
+			hidden_effect = {
+				every_country = {
+					limit = {
+						original_tag = SPR
+						NOT = { has_government = ROOT }
+					}
+					POR = {
+						create_wargoal = {
+						  	target = PREV
+							expire = 0
+						    type = topple_government
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = POR_intervention_in_spain_tt
+
+			hidden_effect = {
+				add_ai_strategy = {
+					type = declare_war
+					id = SPD
+					value = 100
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_SPA_CIVIL_WAR }
+	}
 
 	focus = {
 		id = POR_join_the_allies
@@ -4406,13 +4281,7 @@ focus_tree = {
 		icon = GFX_focus_research2
 		x = 2
 		y = 1
-		offset = {
-			x = -10
-			y = 0
-			trigger = {
-				has_completed_focus = POR_support_the_spanish_nationalists
-			}
-		}
+
 		relative_position_id = POR_join_the_allies
 		cost = 10
 		search_filters = {FOCUS_FILTER_RESEARCH}
@@ -4447,16 +4316,9 @@ focus_tree = {
 			has_civil_war = no
 			r56_script_i_am_sane = yes	
 		}
-		offset = {
-			x = -10
-			y = 0
-			trigger = {
-				has_completed_focus = POR_support_the_spanish_nationalists
-			}
-		}
 		prerequisite = { focus = POR_join_the_allies focus = POR_honor_anglo_portuguese_alliance }
 		icon = GFX_focus_ger_oppose_hitler
-		x = 4
+		x = 5
 		y = 1
 
 		relative_position_id = POR_join_the_allies
@@ -4530,29 +4392,12 @@ focus_tree = {
 				}
 			}
 		}
-		offset = {
-			x = 5
-			y = 0
-			trigger = {
-				AND = {
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_popular_front
-				}
-			}
-		}
-		offset = {
-			x = -10
-			y = 0
-			trigger = {
-				has_completed_focus = POR_support_the_spanish_nationalists
-			}
-		}
 		prerequisite = { focus = POR_allow_free_elections focus = POR_send_assistance }
 
 		mutually_exclusive = { focus = POR_nationalist_intervention }
 
 		icon = GFX_focus_por_iberian_summit
-		x = 1
+		x = 3
 		y = 1
 
 		relative_position_id = POR_allow_free_elections
@@ -4570,38 +4415,12 @@ focus_tree = {
 		prerequisite = {
 		}
 		icon = GFX_focus_por_estado_novo
-		x = 12
+		x = 13
 		y = 0
-		allow_branch = {
-			NOT = {
-				has_completed_focus = POR_popular_front
-			}
-		}
-		offset = {
-			x = -12
-			y = 0
-			trigger = {
-				has_completed_focus = POR_a_royal_wedding
-			}
-		}
-		offset = {
-			x = -10
-			y = 0
-			trigger = {
-				has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-			}
-		}
-		offset = {
-			x = -10
-			y = 0
-			trigger = {
-				has_completed_focus = POR_support_the_spanish_nationalists
-			}
-		}
+
 		relative_position_id = POR_popular_front
 		cost = 10
 		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
 			add_ideas = POR_estado_novo
 			add_political_power = 100
 			custom_effect_tooltip = available_chief_of_army
@@ -4628,26 +4447,10 @@ focus_tree = {
 		icon = GFX_goal_support_fascism
 		x = 0
 		y = 1
-		allow_branch = {
-			NOT = {
-				OR = {
-					has_completed_focus = POR_popular_front
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_a_royal_wedding
-				}
-			}
-		}
-		offset = {
-			x = 0
-			y = 0
-			trigger = {
-				has_completed_focus = POR_support_the_spanish_nationalists
-			}
-		}
+
 		relative_position_id = POR_estado_novo
-		cost = 5
+		cost = 10
 		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
 			SPA = {
 				add_opinion_modifier = {
 				    target = POR
@@ -4688,7 +4491,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_support_the_spanish_nationalists
-		cost = 5
+		cost = 10
 		completion_reward = {
 			add_ideas = por_portuguese_legion
 		}
@@ -4918,9 +4721,6 @@ focus_tree = {
 		id = POR_strengthen_the_regime
 		available = {
 			has_country_leader = { character = POR_antonio_de_oliveira_salazar }
-			has_manpower > 80000
-			has_equipment = { support_equipment > 300 }
-			has_equipment = { infantry_equipment > 1200 }
 		}
 
 		ai_will_do = {
@@ -4935,19 +4735,8 @@ focus_tree = {
 		y = 0
 
 		relative_position_id = POR_observation_mission
-		cost = 5
+		cost = 10
 		completion_reward = {
-			add_manpower = -3000
-			add_equipment_to_stockpile = {
-				type = support_equipment
-				amount = -300
-				producer = POR
-			}
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = -1200
-				producer = POR
-			}
 			add_stability = -0.1
 			add_popularity = {
 			    ideology = neutrality
@@ -5111,6 +4900,28 @@ focus_tree = {
 		id = POR_national_gold_reserves
 		available = {
 			has_war = no
+			OR = {
+				AND = {
+					ENG = {
+						exists = yes
+						NOT = { has_war_with = ROOT }
+					}
+					any_country = {
+						is_major = yes
+						has_war_with = ENG
+					}
+				}
+				AND = {
+					GER = {
+						exists = yes
+						NOT = { has_war_with = ROOT }
+					}
+					any_country = {
+						is_major = yes
+						has_war_with = GER
+					}
+				}
+			}
 		}
 		prerequisite = { focus = POR_appease_monarchists }
 		icon = GFX_focus_usa_reestablish_the_gold_standard
@@ -5305,7 +5116,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_national_syndicalism
-		cost = 5
+		cost = 10
 		completion_reward = {
 			remove_ideas = POR_estado_novo
 			every_country = {
@@ -5422,7 +5233,7 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_camisas_azuis
-		cost = 5
+		cost = 10
 		completion_reward = {
 			if = {
 				limit = {
@@ -5464,7 +5275,7 @@ focus_tree = {
 		prerequisite = { focus = POR_join_the_axis }
 		icon = GFX_goal_generic_scientific_exchange
 		x = -1
-		y = 2
+		y = 1
 
 		relative_position_id = POR_join_the_axis
 		cost = 10
@@ -5487,57 +5298,17 @@ focus_tree = {
 		y = 1
 
 		relative_position_id = POR_camisas_azuis
-		cost = 10 
+		cost = 10
 		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-			112 = {
-				set_state_flag = POR_fifth_empire_flag
-			}
-			180 = {
-				set_state_flag = POR_fifth_empire_flag
-			}
-			181 = {
-				set_state_flag = POR_fifth_empire_flag
-			}
-			171 = {
-				set_state_flag = POR_fifth_empire_flag
-				add_core_of = ROOT
-			}
-			795 = {
-				set_state_flag = POR_fifth_empire_flag
-			}
-			179 = {
-				set_state_flag = POR_fifth_empire_flag
-			}
-			#698 = {
-			#	set_state_flag = POR_fifth_empire_flag
-			#}
-			#697 = {
-			#	set_state_flag = POR_fifth_empire_flag
-			#}
-			#702 = {
-			#	set_state_flag = POR_fifth_empire_flag
-			#	add_core_of = ROOT
-			#}
 			add_ideas = POR_the_fifth_empire
 			remove_ideas = POR_unstable_republic
-			add_ideas = closed_economy
-			set_technology = {
-				steel_production_1 = 2
+			if = {
+				limit = { is_in_faction = yes }
+				leave_faction = yes
 			}
-			set_technology = {
-				aluminum_production_1 = 2
-			}
-			modify_building_resources = {
-				building = aluminum_mill
-				resource = aluminium
-				amount = 2
-			 }
-			 modify_building_resources = {
-				building = steel_mill
-				resource = steel
-				amount = 2
-			 }						
+			set_rule = { can_create_factions = yes }
+			set_rule = { can_join_factions = no }
 			every_other_country = {
 				limit = {
 					NOT = { is_puppet_of = ROOT }
@@ -5598,7 +5369,7 @@ focus_tree = {
 		prerequisite = { focus = POR_join_the_axis focus = POR_the_fifth_empire }
 		icon = GFX_focus_usa_focus_on_asia
 		x = -1
-		y = 2
+		y = 1
 
 		relative_position_id = POR_the_fifth_empire
 		cost = 10
@@ -5796,7 +5567,7 @@ focus_tree = {
 		prerequisite = { focus = POR_recover_the_east_indies }
 		icon = GFX_focus_attack_japan
 		x = 1
-		y = 2
+		y = 1
 
 		relative_position_id = POR_the_fifth_empire
 		cost = 10
@@ -5817,74 +5588,6 @@ focus_tree = {
 		}
 		search_filters = {  FOCUS_FILTER_MANPOWER }
 	}
-	focus = {
-		id = POR_more_buildings
-
-
-		select_effect = {
-		}
-
-		available = {
-			
-		}
-		prerequisite = { focus = POR_the_fifth_empire }
-		icon = GFX_focus_generic_expansion_of_new_towns
-		x = 0
-		y = 1
-
-		relative_position_id = POR_the_fifth_empire
-		cost = 10
-		completion_reward = {
-			add_political_power = -150
-			custom_effect_tooltip = POR_more_buildings_tt
-			add_timed_idea = {
-				idea = JAP_investment
-				days = 70
-			}
-			every_state = {
-				limit = {
-					AND = {
-						has_state_flag = POR_fifth_empire_flag
-						is_controlled_by = POR
-					}
-				}
-				r56_state_category_level_up = yes
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-		}
-		search_filters = {  FOCUS_FILTER_MANPOWER }
-	}
-	focus = {
-		id = POR_steel_mine
-
-		available = {
-			
-		}
-		prerequisite = { focus = POR_the_fifth_empire focus = POR_join_the_axis }
-		icon = GFX_goal_generic_excavation_equipment
-		x = -2
-		y = 1
-
-		relative_position_id = POR_the_fifth_empire
-		cost = 10
-		completion_reward = {
-			add_resource = {
-				type = steel
-				amount = 18
-				state = 179
-			}				
-			add_resource = {
-				type = rubber
-				amount = 8
-				state = 721
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY  FOCUS_FILTER_STEEL}
-	}
 
 	focus = {
 		id = POR_refuse_the_naval_blockade
@@ -5897,13 +5600,7 @@ focus_tree = {
 				is_in_faction_with = ENG
 			}
 		}
-		offset = {
-			x = -13
-			y= 0
-			trigger = {
-				has_completed_focus = POR_a_royal_wedding
-			}
-		}
+
 		bypass = {
 			ENG = {
 				OR = {
@@ -6156,22 +5853,7 @@ focus_tree = {
 		icon = GFX_focus_generic_royal_wedding
 		x = 13
 		y = 0
-		allow_branch = {
-			NOT = {
-				OR = {
-					has_completed_focus = POR_popular_front
-					has_completed_focus = POR_strict_neutrality_in_the_spanish_civil_war
-					has_completed_focus = POR_support_the_spanish_nationalists
-				}
-			}
-		}
-		offset = {
-			x = -13
-			y = 0 
-			trigger = {
-				has_completed_focus = POR_a_royal_wedding
-			}
-		}
+		
 		ai_will_do = {
 			factor = 0.2
 			modifier = {
@@ -6195,7 +5877,6 @@ focus_tree = {
 		cost = 10
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
 			hidden_effect = {
 				news_event = { id = lar_news.25 days = 3 random_days = 5 }
 			}
@@ -6243,181 +5924,7 @@ focus_tree = {
 		}
 		search_filters = { FOCUS_FILTER_STABILITY }
 	}
-	focus = {
-		id = POR_restore_the_navy
 
-		#available = {
-		#	BRA = {
-		#		is_ai = no
-		#	}
-		#}
-		mutually_exclusive = {
-			focus = POR_monarchist_uprising_in_brazil
-		}
-		prerequisite = { focus = POR_the_return_of_duarte }
-		icon = GFX_goal_generic_navy_battleship
-		x = -4
-		y = 1
-
-		relative_position_id = POR_the_return_of_duarte
-		cost = 10
-		completion_reward = {
-			BRA = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = hostile_status
-				}
-			}
-			add_timed_idea = {
-				idea = NOR_dockyard_investments
-				days = 70
-			}
-			add_timed_idea = {
-				idea = NOR_state_investments
-				days = 30
-			}
-			add_war_support = 0.05
-			add_political_power = 70
-			set_technology = {
-				basic_heavy_battery = 1
-				basic_fire_control_system = 1
-				early_ship_hull_heavy = 1
-				basic_cruiser_armor_scheme = 1
-				basic_heavy_shell = 1
-				marines = 1
-			}
-			division_template = {
-				name = "Fuzileiros"
-				regiments = { 
-					marine = { x = 0 y = 0 }
-					marine = { x = 0 y = 1 }
-					marine = { x = 0 y = 2 }
-					marine = { x = 0 y = 3 }
-					marine = { x = 0 y = 4 }
-					marine = { x = 0 y = 5 }
-					marine = { x = 1 y = 0 }
-					marine = { x = 1 y = 1 }
-					artillery_brigade = { x = 1 y = 2 }
-					artillery_brigade = { x = 1 y = 3 }
-				}
-				support = {
-					engineer = { x = 0 y = 0 }
-					artillery = { x = 0 y = 1 }
-				}
-			}
-			702 = {
-				add_building_construction = {
-    				type = naval_base
-   					level = 2
-   					instant_build = yes
-   					province = 13014
-				}
-				add_building_construction = {
-  					type = air_base
-    				level = 1
-    				instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1
-				}
-				add_core_of = POR
-				create_unit = {
-					division = "name = \"Fuzileiros\" division_template = \"Fuzileiros\" start_experience_factor = 0.8 start_equipment_factor = 0.7" 
-					owner = POR
-				}
-			}
-			create_equipment_variant = {
-				name = "Rio De Janeiro"
-				allow_without_tech = yes
-				type = ship_hull_heavy_1
-				name_group = POR_BB_HISTORICAL
-				parent_version = 0
-				modules = {
-					fixed_ship_battery_slot = ship_heavy_battery_1
-					fixed_ship_anti_air_slot = ship_anti_air_1
-					fixed_ship_fire_control_system_slot = ship_fire_control_system_1
-					fixed_ship_radar_slot = empty
-					fixed_ship_engine_slot = heavy_ship_engine_2
-					fixed_ship_secondaries_slot = ship_secondaries_1
-					fixed_ship_armor_slot = ship_armor_bb_1
-					front_1_custom_slot = ship_anti_air_1
-					mid_1_custom_slot = ship_anti_air_1
-					mid_2_custom_slot = ship_secondaries_1
-					rear_1_custom_slot = ship_heavy_battery_1
-				}
-			}
-			add_equipment_production = {
-				equipment = {
-					type = ship_hull_heavy_1
-					creator = "POR" 
-					version_name = "Rio De Janeiro"
-				}
-				name = "Cabral" 
-				requested_factories = 1
-				progress = 0.75
-				amount = 1
-			}
-			POR_jose_mendes_cabecadas = {
-				add_unit_leader_trait = bold
-				add_unit_leader_trait = spotter
-			}
-		}
-		search_filters = { FOCUS_FILTER_POLITICAL }
-	}
-	focus = {
-		id = POR_reconquest_of_brazil
-
-		available = {
-		}
-
-		prerequisite = { focus = POR_restore_the_navy}
-		icon = GFX_focus_por_recover_brazil
-		x = 0
-		y = 1
-		will_lead_to_war_with = BRA
-		relative_position_id = POR_restore_the_navy
-		cost = 10
-		completion_reward = {
-			add_war_support = 0.05
-			create_wargoal = {
-				target = BRA
-				type = annex_everything
-			}
-			USA = {
-				diplomatic_relation = { country = BRA relation = guarantee active = no }
-			}
-		}
-	}
-	focus = {
-		id = POR_train_our_generals_for_the_fight
-
-		available = {
-		}
-		#allow_branch = {
-		#	always = no
-		#}
-
-		prerequisite = { focus = POR_reconquest_of_brazil}
-		icon = GFX_focus_generic_military_academy
-		x = 0
-		y = 1
-		relative_position_id = POR_reconquest_of_brazil
-		cost = 5
-		available = {
-			has_war_with = BRA
-		}
-		completion_reward = {
-			add_war_support = 0.05
-			POR_luis_augusto_ferreira_martins = {
-				add_unit_leader_trait = hill_fighter
-			}
-			POR_raul_augusto_esteves = {
-				add_unit_leader_trait = naval_invader
-			}
-		}
-	}
 	focus = {
 		id = POR_support_a_spanish_monarchy_in_the_war
 
@@ -6684,6 +6191,7 @@ focus_tree = {
 		icon = GFX_focus_generic_monarchy_2
 		x = 1
 		y = 1
+
 		relative_position_id = POR_the_return_of_duarte
 		cost = 10
 		search_filters = {FOCUS_FILTER_POLITICAL}
@@ -6698,6 +6206,7 @@ focus_tree = {
 	focus = {
 		id = POR_monarchist_uprising_in_brazil
 		available = {
+
 		}
 
 		bypass = {
@@ -6711,9 +6220,6 @@ focus_tree = {
 				}
 			}
 		}
-		mutually_exclusive = {
-			focus = POR_restore_the_navy
-		}
 		prerequisite = { focus = POR_the_return_of_duarte }
 		icon = GFX_focus_por_reclaim_crown_jewel
 		x = -2
@@ -6722,61 +6228,84 @@ focus_tree = {
 		relative_position_id = POR_the_return_of_duarte
 		cost = 10
 		completion_reward = {
-			BRA = {
-				country_event = lar_portugal_promote_monarchist_cause.7
-				effect_tooltip = {
-					add_timed_idea = {
-						idea = POR_monarchists_on_the_rise
-						days = 730
+			if = {
+				limit = {
+					BRA = {
+						is_ai = yes
 					}
-					set_party_name = { 
-						ideology = neutrality
-						long_name = BRA_monarchy_party_long
-						name = BRA_monarchy_party
-					}
-					set_party_name = { 
-						ideology = fascism
-						long_name = BRA_antimonarchist_coalition_long
-						name = BRA_antimonarchist_coalition
-					}
-					if = {
-						limit = {
-							OR = {
-								has_government = neutrality
-								has_government = democratic
-								has_government = communism
-							} 
-						}
-						add_popularity = {
-							ideology = fascism
-							popularity = 0.8
-						}
-						set_politics = {
-							ruling_party = fascism
-						}
-					}
-					hidden_effect = {
-						retire_country_leader = yes
-					}
-
-					BRA_getulio_vargas = {
-						remove_country_leader_role = {
-							ideology = despotism
-						}
-						add_country_leader_role = {
-							country_leader = {
-								expire = "1954.8.24"
-								ideology = fascism_ideology
-								traits = {
-									anti_communist
-								}
-							}
-							promote_leader = yes
-						}
-					}
-					promote_character = BRA_arlindo_veiga_dos_santos
 				}
-			}			
+				BRA = {
+					country_event = lar_portugal_promote_monarchist_cause.7
+					effect_tooltip = {
+						add_timed_idea = {
+							idea = POR_monarchists_on_the_rise
+							days = 730
+						}
+						set_party_name = { 
+							ideology = neutrality
+							long_name = BRA_monarchy_party_long
+							name = BRA_monarchy_party
+						}
+						set_party_name = { 
+							ideology = fascism
+							long_name = BRA_antimonarchist_coalition_long
+							name = BRA_antimonarchist_coalition
+						}
+						if = {
+							limit = {
+								OR = {
+									has_government = neutrality
+									has_government = democratic
+									has_government = communism
+								} 
+							}
+							add_popularity = {
+								ideology = fascism
+								popularity = 0.8
+							}
+							set_politics = {
+								ruling_party = fascism
+							}
+						}
+						hidden_effect = {
+							retire_country_leader = yes
+						}
+	
+						BRA_getulio_vargas = {
+							remove_country_leader_role = {
+								ideology = despotism
+							}
+							add_country_leader_role = {
+								country_leader = {
+									expire = "1954.8.24"
+									ideology = fascism_ideology
+									traits = {
+										anti_communist
+									}
+								}
+								promote_leader = yes
+							}
+						}
+						promote_character = BRA_arlindo_veiga_dos_santos
+					}
+				}
+				custom_effect_tooltip = POR_cannot_destabilize_brazil_player_tt
+			}
+			else = {
+				create_wargoal = {
+					target = BRA
+					type = annex_everything
+				}
+				if = {
+					limit = {
+						is_faction_leader = yes
+					}
+					BRA = {
+						country_event = generic.5
+					}
+				}
+				unlock_national_focus = POR_the_empire_of_brazil
+			}
 		}
 	}
 	focus = {
@@ -6796,9 +6325,12 @@ focus_tree = {
 		}
 
 		available = {
+<<<<<<< HEAD
 			BRA = {
 				neutrality > 0.30
 			}
+=======
+>>>>>>> parent of 9077c144 (Merge branch 'main' into China-Rework)
 			is_puppet = no
 			if = {
 				limit = {
@@ -6995,7 +6527,6 @@ focus_tree = {
 			set_cosmetic_tag = KOP_kingdom_portugal
 			create_country_leader = {
 				name = "Dom Duarte Nuno"
-				desc = "POLITICS_DOM_DUARTE_NUNO_DESC"
 				picture = "gfx/leaders/POR/portrait_por_duarte_nuno.dds"
 				expire = "1976.12.24"
 				ideology = despotism
@@ -7046,17 +6577,10 @@ focus_tree = {
 					NOT = { country_exists = BRA }
 					owns_state = 500
 				}
-				AND = {
-					has_completed_focus = POR_reconquest_of_brazil
-					BRA = {
-						exists = no
-					}
-					has_full_control_of_state = 500
-				}
 			}
 		}
 		prerequisite = { focus = POR_restoration_of_the_monarchy }
-		prerequisite = { focus = POR_the_empire_of_brazil focus = POR_reconquest_of_brazil }
+		prerequisite = { focus = POR_the_empire_of_brazil }
 
 		mutually_exclusive = { focus = POR_recover_brazil focus = POR_luso_monarchist_cooperation }
 
@@ -7070,19 +6594,6 @@ focus_tree = {
 		completion_reward = {
 			remove_ideas = POR_unstable_monarchy
 			add_ideas = POR_the_portuguese_empire
-			if = {
-				limit = {
-					BRA = {
-						exists = no
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = BRA
-					}
-					add_core_of = POR
-				}
-			}
 			if = {
 				limit = {
 					country_exists = BRA
@@ -7491,13 +7002,7 @@ focus_tree = {
 				}
 			}
 		}
-		offset = {
-			x = 7
-			y = 0 
-			trigger = {
-				has_completed_focus = POR_a_royal_wedding 
-			}
-		}
+
 		available = {
 			r56_script_i_am_sane = yes
 			any_country = {

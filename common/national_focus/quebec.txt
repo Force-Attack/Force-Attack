@@ -1212,10 +1212,6 @@ focus_tree = {
 				uses = 2
 				category = jet_technology
 			}
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.50
-			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -1262,20 +1258,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = { 
+			add_tech_bonus = {
 				name = QBC_rocket_research
-				bonus = 0.50
+				bonus = 1.0
 				uses = 2
 				category = rocketry
-				category = jet_technology
 			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.50
-			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			add_ideas = r56_generic_rocket_idea
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -1372,18 +1360,11 @@ focus_tree = {
 
 		completion_reward = {
 			add_tech_bonus = {
-                name = QBC_radar_development
-                bonus = 1
+				name = radar_focus
+				bonus = 1
 				uses = 2
 				category = radar_tech
-            }
-            custom_effect_tooltip = generic_skip_one_line_tt
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.25
 			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-            add_ideas = r56_generic_radar_idea
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}	
@@ -2058,7 +2039,7 @@ focus_tree = {
 
 		bypass = {
 			any_other_country = {
-				has_completed_focus = r56_CAN_sorel_steel_and_foundry
+				has_completed_focus = CAN_sorel_steel_and_foundry
 			}
 		}		
 
@@ -2240,6 +2221,12 @@ focus_tree = {
 			factor = 10
 		}
 
+		bypass = {
+			any_other_country = {
+				has_completed_focus = CAN_sorel_industries
+			}
+		}
+
 		completion_reward = {
 			random_owned_controlled_state = {
 				prioritize = { 468 }
@@ -2324,11 +2311,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = QBC_angus_shop_tank_production
-				bonus = 0.5
-				uses = 2
-				category = construction_tech
+			if = {
+				limit = {
+					has_dlc = "Death or Dishonor"
+				}
+				add_tech_bonus = {
+					name = QBC_angus_shop_tank_production
+					bonus = 2
+					uses = 2
+					technology = improved_equipment_conversion
+					technology = advanced_equipment_conversion
+				}				
 			}
 			random_owned_controlled_state = {
 				prioritize = { 468 }
@@ -2388,29 +2381,11 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			IF = {
-				limit = {
-					NOT = {
-						has_tech = atomic_research
-					}
-				}
-				add_tech_bonus = {
-					name = QBC_nuclear_research
-					bonus = 1.5
-					uses = 1
-					category = nuclear
-				}
-				custom_effect_tooltip = generic_skip_one_line_tt
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.75
-				}
-			}
-			ELSE = {
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.95
-				}
+			add_tech_bonus = {
+				name = nuclear_bonus
+				bonus = 1.5
+				uses = 2
+				category = nuclear
 			}				
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -3935,7 +3910,7 @@ focus_tree = {
 				add_idea = QBC_women_rights
 				remove_idea = QBC_compulsory_education
 			}
-			add_ideas = r56i_laws_gender_equality
+			#add_ideas = r56i_laws_gender_equality
 		}
 		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
@@ -4946,6 +4921,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_ideas = { r56i_laws_gender_patriarchy }
 			add_stability = -0.05
 			add_political_power = 50
 		}
@@ -6196,7 +6172,7 @@ focus_tree = {
 			OR = {
 				CAN = {
 					NOT = {
-						exists = no
+						exists = NO
 						is_puppet_of = QBC
 					}
 				}
@@ -6207,7 +6183,7 @@ focus_tree = {
 		bypass = {
 			CAN = {
 				OR = {
-					exists = no
+					exists = NO
 					is_puppet_of = QBC	
 				}
 			}
@@ -6308,7 +6284,7 @@ focus_tree = {
 		bypass = {
 			USA = {
 				OR = {
-					exists = no
+					exists = NO
 					is_puppet_of = QBC
 				}
 			}
@@ -6386,7 +6362,7 @@ focus_tree = {
 		bypass = {
 			MEX = {
 				OR = {		
-					exists = no
+					exists = NO
 					is_puppet_of = QBC
 				}
 			}
@@ -6567,10 +6543,10 @@ focus_tree = {
 				is_puppet = yes
 				has_war_with = CAN
 			}
-			CAN = {
-				OR = {
+			OR = {
+				CAN = {
 					is_puppet_of = QBC
-					exists = no
+					exists = NO
 				}
 			}
 			has_government = fascism
@@ -6630,7 +6606,7 @@ focus_tree = {
 				NOT = {
 					OR = {
 						is_puppet_of = QBC
-						exists = no
+						exists = NO
 					}
 				}
 			}
@@ -6641,7 +6617,7 @@ focus_tree = {
 			USA = {
 				OR = {
 					is_puppet_of = QBC
-					exists = no
+					exists = NO
 				}
 			}
 		}
@@ -6721,13 +6697,13 @@ focus_tree = {
 	#		USA = {
 	#			OR = {
 	#				is_puppet_of = QBC
-	#				exists = no
+	#				exists = NO
 	#			}
 	#		}
 	#		CSA = {
 	#			OR = {
 	#				is_puppet_of = QBC
-	#				exists = no
+	#				exists = NO
 	#				is_in_faction_with = QBC
 	#			}
 	#		}
@@ -6818,7 +6794,7 @@ focus_tree = {
 		available = {
 			FRA = {
 				NOT = {
-					exists = no
+					exists = NO
 					is_puppet_of = QBC
 				}
 				OR = {
@@ -6828,7 +6804,7 @@ focus_tree = {
 				}
 			}
 			has_government = fascism
-			is_puppet = no
+			is_puppet = NO
 		}
 
 		ai_will_do = {
@@ -8076,7 +8052,7 @@ focus_tree = {
 			is_puppet = no
 			NOT = {
 				USA = {
-					exists = no
+					exists = NO
 					is_puppet_of = QBC
 				}
 			}
@@ -8090,7 +8066,7 @@ focus_tree = {
 				}
 				has_war_with = USA
 				USA = {
-					exists = no
+					exists = NO
 				}
 			}
 		}

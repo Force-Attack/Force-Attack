@@ -10,7 +10,7 @@ SPR_the_inevitable_civil_war = {
 			hidden_trigger = { always = no }
 		}
 
-		days_mission_timeout = 250
+		days_mission_timeout = 151
 
 		fire_only_once = yes
 
@@ -51,7 +51,7 @@ SPR_the_inevitable_civil_war = {
 			hidden_trigger = { always = no }
 		}
 
-		days_mission_timeout = 250
+		days_mission_timeout = 151
 
 		fire_only_once = yes
 
@@ -92,12 +92,15 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPA_primo_de_rivera_imprisoned
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -153,6 +156,9 @@ SPR_the_inevitable_civil_war = {
 		available = {
 			has_country_flag = SPR_primo_de_rivera_first_speech
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPA_primo_de_rivera_imprisoned
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
@@ -207,11 +213,14 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -260,11 +269,14 @@ SPR_the_inevitable_civil_war = {
 		available = {
 			has_country_flag = SPA_political_assassination_flag
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 		}
 
-		cost = 15
+		cost = 10
 
 		fire_only_once = no
 
@@ -312,11 +324,14 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -369,6 +384,9 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 			any_army_leader = {
@@ -376,7 +394,7 @@ SPR_the_inevitable_civil_war = {
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -429,6 +447,9 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 			any_army_leader = {
@@ -436,7 +457,7 @@ SPR_the_inevitable_civil_war = {
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -492,6 +513,9 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 			NOT = {
@@ -502,7 +526,7 @@ SPR_the_inevitable_civil_war = {
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -548,6 +572,9 @@ SPR_the_inevitable_civil_war = {
 
 		available = {
 			NOT = {
+				SPR = {
+					is_ai = yes
+				}
 				has_country_flag = SPR_inevitable_civil_war_in_progress_flag
 			}
 			NOT = {
@@ -558,7 +585,7 @@ SPR_the_inevitable_civil_war = {
 			}
 		}
 
-		cost = 15
+		cost = 30
 
 		fire_only_once = no
 
@@ -5198,7 +5225,7 @@ SPR_opposition_civil_war_preparations = {
 		visible = {
 			tag = SPR
 			has_country_flag = SPR_spanish_elections_flag
-			has_completed_focus = SPA_a_great_spain
+			NOT = { has_completed_focus = SPA_a_great_spain }
 			NOT = { has_global_flag = spanish_civil_war }
 		}
 
@@ -5297,8 +5324,8 @@ SPR_opposition_civil_war_preparations = {
 		visible = {
 			tag = SPR
 			has_country_flag = SPR_spanish_elections_flag
-			has_completed_focus = SPA_a_great_spain
 			NOT = { has_global_flag = spanish_civil_war }
+			NOT = { has_completed_focus = SPA_a_great_spain }
 		}
 
 		timeout_effect = {
@@ -5395,8 +5422,8 @@ SPR_opposition_civil_war_preparations = {
 		visible = {
 			tag = SPR
 			has_country_flag = SPR_spanish_elections_flag
-			has_completed_focus = SPA_a_great_spain
 			NOT = { has_global_flag = spanish_civil_war }
+			NOT = { has_completed_focus = SPA_a_great_spain }
 		}
 
 		timeout_effect = {
@@ -16826,10 +16853,36 @@ SPR_foreign_arms_purchases = {
 						factor = 0
 						has_war_with = ENG
 					}
-					add_equipment_to_stockpile = {
-					    type = fighter_equipment
-					    amount = 25
-					    producer = ENG
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+							has_dlc = "By Blood Alone"
+						}
+						add_equipment_subsidy = {
+							cic = 350
+							equipment_type = small_plane_airframe
+							seller_tags = { ENG } 
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							has_dlc = "By Blood Alone"
+							NOT = {
+								has_dlc = "Arms Against Tyranny"
+							}
+						}
+						add_equipment_to_stockpile = { 
+							type = small_plane_airframe
+							amount = 25
+							producer = ENG
+						}
+					}
+					ELSE = {
+						add_equipment_to_stockpile = { 
+							type = fighter_equipment_1
+							amount = 25
+							producer = ENG
+						}
 					}
 				}
 				10 = {
@@ -16845,10 +16898,37 @@ SPR_foreign_arms_purchases = {
 						factor = 0
 						FRA = { NOT = { has_country_flag = FRA_arms_purchases_allowed } }
 					}
-					add_equipment_to_stockpile = {
-					    type = fighter_equipment
-					    amount = 25
-					    producer = FRA
+
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+							has_dlc = "By Blood Alone"
+						}
+						add_equipment_subsidy = {
+							cic = 350
+							equipment_type = small_plane_airframe
+							seller_tags = { FRA } 
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							has_dlc = "By Blood Alone"
+							NOT = {
+								has_dlc = "Arms Against Tyranny"
+							}
+						}
+						add_equipment_to_stockpile = { 
+							type = small_plane_airframe
+							amount = 25
+							producer = FRA
+						}
+					}
+					ELSE = {
+						add_equipment_to_stockpile = { 
+							type = fighter_equipment_1
+							amount = 25
+							producer = FRA
+						}
 					}
 				}
 				10 = {
@@ -16861,7 +16941,7 @@ SPR_foreign_arms_purchases = {
 						has_war_with = SOV
 					}
 					add_equipment_to_stockpile = {
-					    type = fighter_equipment
+					    type = small_plane_airframe
 					    amount = 25
 					    producer = SOV
 					}
@@ -16875,10 +16955,37 @@ SPR_foreign_arms_purchases = {
 						factor = 0
 						has_war_with = USA
 					}
-					add_equipment_to_stockpile = {
-					    type = fighter_equipment
-					    amount = 25
-					    producer = USA
+					
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+							has_dlc = "By Blood Alone"
+						}
+						add_equipment_subsidy = {
+							cic = 350
+							equipment_type = small_plane_airframe
+							seller_tags = { SOV } 
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							has_dlc = "By Blood Alone"
+							NOT = {
+								has_dlc = "Arms Against Tyranny"
+							}
+						}
+						add_equipment_to_stockpile = { 
+							type = small_plane_airframe
+							amount = 25
+							producer = SOV
+						}
+					}
+					ELSE = {
+						add_equipment_to_stockpile = { 
+							type = fighter_equipment_1
+							amount = 25
+							producer = SOV
+						}
 					}
 				}
 				10 = {
@@ -16890,10 +16997,36 @@ SPR_foreign_arms_purchases = {
 						factor = 0
 						has_war_with = SWE
 					}
-					add_equipment_to_stockpile = {
-					    type = fighter_equipment
-					    amount = 25
-					    producer = SWE
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+							has_dlc = "By Blood Alone"
+						}
+						add_equipment_subsidy = {
+							cic = 350
+							equipment_type = small_plane_airframe
+							seller_tags = { SWE } 
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							has_dlc = "By Blood Alone"
+							NOT = {
+								has_dlc = "Arms Against Tyranny"
+							}
+						}
+						add_equipment_to_stockpile = { 
+							type = small_plane_airframe
+							amount = 25
+							producer = SWE
+						}
+					}
+					ELSE = {
+						add_equipment_to_stockpile = { 
+							type = fighter_equipment_1
+							amount = 25
+							producer = SWE
+						}
 					}
 				}
 				10 = {
@@ -16905,10 +17038,36 @@ SPR_foreign_arms_purchases = {
 						factor = 0
 						has_war_with = GER
 					}
-					add_equipment_to_stockpile = {
-					    type = fighter_equipment
-					    amount = 25
-					    producer = GER
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+							has_dlc = "By Blood Alone"
+						}
+						add_equipment_subsidy = {
+							cic = 350
+							equipment_type = small_plane_airframe
+							seller_tags = { GER } 
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							has_dlc = "By Blood Alone"
+							NOT = {
+								has_dlc = "Arms Against Tyranny"
+							}
+						}
+						add_equipment_to_stockpile = { 
+							type = small_plane_airframe
+							amount = 25
+							producer = GER
+						}
+					}
+					ELSE = {
+						add_equipment_to_stockpile = { 
+							type = fighter_equipment_1
+							amount = 25
+							producer = GER
+						}
 					}
 				}
 				10 = {
@@ -16920,16 +17079,42 @@ SPR_foreign_arms_purchases = {
 						factor = 0
 						has_war_with = ITA
 					}
-					add_equipment_to_stockpile = {
-					    type = fighter_equipment
-					    amount = 25
-					    producer = ITA
+					IF = {
+						limit = {
+							has_dlc = "Arms Against Tyranny"
+							has_dlc = "By Blood Alone"
+						}
+						add_equipment_subsidy = {
+							cic = 350
+							equipment_type = small_plane_airframe
+							seller_tags = { ITA } 
+						}
+					}
+					ELSE_IF = {
+						limit = {
+							has_dlc = "By Blood Alone"
+							NOT = {
+								has_dlc = "Arms Against Tyranny"
+							}
+						}
+						add_equipment_to_stockpile = { 
+							type = small_plane_airframe
+							amount = 25
+							producer = ITA
+						}
+					}
+					ELSE = {
+						add_equipment_to_stockpile = { 
+							type = fighter_equipment_1
+							amount = 25
+							producer = ITA
+						}
 					}
 				}
 			}
 			effect_tooltip = {
 				add_equipment_to_stockpile = {
-				    type = fighter_equipment
+				    type = small_plane_airframe
 				    amount = 25
 				    producer = ENG
 				}
@@ -18490,6 +18675,7 @@ SPR_recovering_from_civil_war = {
 				has_completed_focus = SPR_all_must_do_their_part
 				has_completed_focus = SPR_red_bulwark_in_the_west
 				has_completed_focus = SPR_stabilize_the_nation
+				has_completed_focus = FRA_pacify_the_spanish_countryside
 			}
 			FROM = {
 				is_owned_by = ROOT
@@ -18521,6 +18707,7 @@ SPR_recovering_from_civil_war = {
 				has_completed_focus = SPR_all_must_do_their_part
 				has_completed_focus = SPR_red_bulwark_in_the_west
 				has_completed_focus = SPR_stabilize_the_nation
+				has_completed_focus = FRA_pacify_the_spanish_countryside
 			}
 		}
 

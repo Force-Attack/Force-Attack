@@ -3898,7 +3898,7 @@ economy_decisions = {
 		}
 
 		visible = {
-			#has_tech = construction4
+			has_tech = construction4
 			owns_state = 540
 			has_full_control_of_state = 540
 			540 = {
@@ -12291,7 +12291,7 @@ economy_decisions = {
 		}
 
 		visible = {
-			#has_tech = construction4
+			has_tech = construction4
 			OR = {
 				AND = {
 					has_full_control_of_state = 539
@@ -18115,8 +18115,23 @@ prospect_for_resources = {
 			}
 			OR = {
 				has_full_control_of_state = 655
-				AND = {
-					original_tag = JAP
+				if = {
+					limit = {
+						original_tag = SOV
+					}
+					JAP = {
+						OR = {
+							#has_global_flag = JAP_kalkin_gol
+							has_global_flag = JAP_test_soviet
+							has_war_with = SOV
+							exists = no
+						}
+					}
+				}				
+				if = {
+					limit = {
+						original_tag = JAP
+					}
 					OR = {
 						has_completed_focus = JAP_non_aggression_pact_with_the_soviet_union
 						has_completed_focus = JAP_people_owned_mines
@@ -18137,11 +18152,10 @@ prospect_for_resources = {
 						is_fully_controlled_by = SOV
 					}
 				}
-				
 			}
 
 			num_of_civilian_factories_available_for_projects > 2
-			has_tech = excavation3			
+			has_tech = excavation3
 		}
 
 		visible = {
@@ -19869,7 +19883,7 @@ prospect_for_resources = {
 		}
 
 		visible = {
-			#has_tech = construction4
+			has_tech = construction4
 			OR = {
 				AND = {
 					has_full_control_of_state = 540
@@ -22927,8 +22941,6 @@ prospect_for_resources = {
 					}
 				}
 			}
-			has_tech = excavation3
-			num_of_civilian_factories_available_for_projects > 2		
 			OR = {
 				AND = {
 					has_full_control_of_state = 327
@@ -22938,8 +22950,14 @@ prospect_for_resources = {
 					has_full_control_of_state = 327
 				}				
 			}
+			NOT = {
+				any_other_country = {
+					has_decision = develop_zambales_chromium_deposits_wtt
+				}
+			}
+			num_of_civilian_factories_available_for_projects > 2
+			has_tech = excavation2
 		}
-
 		highlight_states = {
 			highlight_state_targets = {
 				state = 327
@@ -22966,7 +22984,7 @@ prospect_for_resources = {
 		fire_only_once = yes
 
 		cost = 25
-		days_remove = 120
+		days_remove = 60
 
 		modifier = {
 			civilian_factory_use = 3
@@ -26995,13 +27013,13 @@ prospect_for_resources = {
 		}
 
 		visible = {
-			#OR = {
-			#	has_tech = construction4
-			#	AND = {
-			#		has_tech = excavation3
-			#		has_completed_focus = AFR_african_unification
-			#	}
-			#}			
+			OR = {
+				has_tech = construction4
+				AND = {
+					has_tech = excavation3
+					has_completed_focus = AFR_african_unification
+				}
+			}			
 			OR = {
 				has_full_control_of_state = 539
 				any_country = {

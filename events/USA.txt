@@ -268,10 +268,10 @@ country_event = {
 		}		
 		set_party_name = { ideology = democratic long_name = USA_republican_party name = USA_republican_party }
 		set_variable = { election_factor = random }
-		add_to_variable = { election_factor = -0.5 }
+		add_to_variable = { election_factor = -0.6 }
 		USA_election_senate = yes
 		USA_election_house = yes
-		#USA_flip_support = yes
+		USA_flip_support = yes
 		custom_effect_tooltip = usa_congress_elections_tt_good
 		add_political_power = 120
 		if = {
@@ -1676,56 +1676,76 @@ country_event = {
 		clear_global_event_target = USA_congress_investment_state
 	}
 }
-country_event = { 
-	id = usa.65 
+
+
+# force attack dantee treee
+
+country_event = {
+	id = usa.65
 	title = usa.65.t
 	desc = usa.65.d
-	picture = GFX_report_event_SWI_assembly_hall
+	picture = GFX_report_event_generic_sign_treaty1
+
 	is_triggered_only = yes
 
-	immediate = {
-		set_cosmetic_tag = USA_NAZI
-	}
+	fire_only_once = yes
+
 	option = {
 		name = usa.65.a
-		trigger = {
-			ROOT = {
-				has_stability > 0.49
-			}
-		}
-		set_politics = {
-			ruling_party = fascism
-			elections_allowed = no
-		}
-		promote_character = {
-			character = USA_Fritz_Julius_Kuhn
-			ideology = nazism
+		country_event = {
+			id = usa.66
+			days = 30
+			random_days = 20
 		}
 	}
-	
+}
+
+#midwest investment auto build
+country_event = {
+	id = usa.66
+	title = usa.66.t
+	desc = usa.66.d
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
 	option = {
-		name = usa.65.b 
-		trigger = {
-			ROOT = {
-				has_stability < 0.48
+		name = usa.66.a
+		random_owned_controlled_state = {
+			prioritize = {
+				374 383 390 389 384 373 382 381 388 387 380 372
+			}
+			limit = {
+				is_core_of = USA
+				NOT = {
+					has_state_flag = USA_midwest_invested
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = USA_midwest_invested
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_country_flag = USA_midwest_invesment_started
+					NOT = { has_country_flag = USA_midwest_invesment_stop }
+				}
+				country_event = {
+					id = usa.66
+					days = 65
+					random_days = 5
+				}
 			}
 		}
-		set_politics = {
-			ruling_party = fascism
-			elections_allowed = no
-		}
-		promote_character = {
-			character = USA_Fritz_Julius_Kuhn
-			ideology = nazism
-		}
-		start_civil_war = {
-			ideology = democratic
-			states = { 378 385 386 993 992 991 992 990 921 357 }
-			army_ratio = 0.2
-			navy_ratio = 0.0
-			air_ratio = 0.2 
-			capital = 991
-		}
-
 	}
 }

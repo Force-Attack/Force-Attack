@@ -336,8 +336,10 @@ country_event = {
 			modifier = {
 				factor = 0
 				NOT = {
-					has_government = fascism
-					has_government = neutrality
+					OR = {
+						has_government = fascism
+						has_government = neutrality
+					}
 				}
 			}
 			modifier = {
@@ -405,9 +407,11 @@ country_event = {
 			base = 2
 			modifier = {
 				factor = 100
-				NOT = { has_war_with = USA }
-				FROM = {
-					has_war_with = USA
+				AND = {
+					NOT = { has_war_with = USA }
+					FROM = {
+						has_war_with = USA
+					}
 				}
 			}
 		}
@@ -500,11 +504,7 @@ country_event = {
 			every_owned_state = {
 				limit = {
 					is_controlled_by = PREV
-					OR = {
-						state = 687	#Guyana
-						state = 309	#Suriname
-						state = 310	#(French) Guiana
-					}
+					region = 163
 				}
 				ROOT = {
 					transfer_state = PREV
@@ -1180,8 +1180,10 @@ country_event = {
 			base = 3
 			modifier = {
 				factor = 10
-				is_in_faction = yes
-				NOT = { is_in_faction_with = ROOT }
+				AND = {
+					is_in_faction = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
 			}
 		}
 		FROM = {
@@ -1575,9 +1577,13 @@ country_event = {
 			set_cosmetic_tag = KOP_kingdom_portugal
 			create_country_leader = {
 				name = "Duke Duarte Nuno"
+				desc = "POLITICS_DOM_DUARTE_NUNO_DESC"
 				picture = GFX_portrait_Dom_Duarte_Nuno
 				expire = "1976.12.24"
-				ideology = constitutional_monarchy
+				ideology = despotism
+				traits = { 
+					#constitutional_monarch_minor
+				}
 			}
 		}
 		FROM = {
@@ -2070,7 +2076,7 @@ country_event = { #Org member is under attack, should we help?
 				add_to_war = {
 					targeted_alliance = PREV
 					enemy = FROM 
-					hostility_reason = asked_to_join
+					hostility_reason = ally
 				}
 			}
 			country_event = {
@@ -3495,7 +3501,7 @@ country_event = {
 		#date > 1936.02.01
 
 		# Actual Date
-		date > 1938.06.01
+		date > 1938.07.01
 
 		has_government = democratic
 		NOT = {
@@ -3507,7 +3513,7 @@ country_event = {
 		}
 	}
 
-	mean_time_to_happen = { days = 30 }
+	mean_time_to_happen = { days = 1 }
 
 	hidden = yes
 
@@ -3528,7 +3534,11 @@ country_event = {
 	desc = JUNO_brazil_events.202.d
 	picture = GFX_report_event_election_vote
 
+	mean_time_to_happen = { days = 1 }
+
 	hidden = yes
+
+	fire_only_once = no
 	is_triggered_only = yes
 
 	immediate = {
@@ -3551,6 +3561,8 @@ news_event = {
 	desc = JUNO_brazil_news.1.d
 	picture = GFX_news_event_german_speech
 	
+	major = no
+	
 	is_triggered_only = yes
 	
 	option = {
@@ -3563,6 +3575,8 @@ news_event = { # Brazil finishes Constitutional Monarchy focus
 	title = JUNO_brazil_news.2.t
 	desc = JUNO_brazil_news.2.d
 	picture = GFX_news_event_por_return_of_monarchy
+
+	major = no
 	
 	is_triggered_only = yes
 	

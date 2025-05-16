@@ -131,7 +131,7 @@ war_measures = {
 			add_political_power = -25
 		}
 		ai_will_do = {
-			factor = 0 #German AI overstacks these guys
+			factor = 5
 		}
 	}			
 	r56_GER_decision_support_eugen_meindl = {
@@ -183,7 +183,7 @@ war_measures = {
 			add_political_power = -25
 		}
 		ai_will_do = {
-			factor = 0 #German AI overstacks these guys
+			factor = 5
 		}
 	}	
 		
@@ -388,7 +388,7 @@ GER_trade_influence_decisions = {
 			}
 			OR = {
 				NOT = {
-					has_completed_focus = GER_molotov_ribbentrop_pact #just to make clear what this below is about
+					has_completed_focus = GER_mol_rib_pact #just to make clear what this below is about
 				}
 				NOT = {
 					has_global_flag = sov_yes_pact
@@ -793,7 +793,6 @@ GER_middle_eastern_diplomacy_category = {
 					country_event = { id = generic.1 hours = 4 random_hours = 2 }
 				}
 			}
-			custom_effect_tooltip = r56_newline
 			custom_effect_tooltip = AFG_reactivates_in_120_days
 		}
 
@@ -899,7 +898,6 @@ GER_middle_eastern_diplomacy_category = {
 				effect_tooltip = {
 					add_ideas = GER_military_advisors
 				}
-				custom_effect_tooltip = r56_newline
 				country_event = { id = r56.ger.43 hours = 4 random_hours = 2 }
 			}
 		}
@@ -929,147 +927,6 @@ GER_middle_eastern_diplomacy_category = {
 						num_of_factories > 50 #just a check to prevent memes
 					}
 				}
-			}
-		}
-	}
-}
-
-GER_NVA_category = {
-	GER_nva_institute_equal_service = {
-		icon = generic_military
-		cost = 50
-		fire_only_once = yes
-
-		complete_effect = {
-			swap_ideas = {
-				remove_idea = GER_establish_NVA_idea
-				add_idea = GER_establish_NVA_idea_2
-			}
-			add_stability = -0.05
-		}
-
-		ai_will_do = {
-			base = 5
-			modifier = {
-				factor = 3
-				has_manpower < 300000
-			}
-			modifier = {
-				add = -2
-				has_equipment = {
-					infantry_equipment > 20000
-				}
-			}
-		}
-	}
-
-	GER_nva_military_exercise = {
-		icon = r56_decision_soldiers_icon
-		custom_cost_trigger = {
-			command_power > 24
-		}
-		custom_cost_text = decision_cost_CP_50_PP_25
-
-		available = {
-			has_war = no
-		}
-
-		complete_effect = {
-			hidden_effect = {
-				add_command_power = -50
-				add_political_power = -25
-			}
-			add_threat = 1
-		}
-
-		days_remove = 90
-		days_re_enable = 360
-		modifier = {
-			custom_modifier_tooltip = GER_nva_military_exercise_modifier_tt
-			hidden_modifier = {
-				attrition = 0.04
-				training_time_factor = -0.15
-				experience_gain_army_factor = 0.20
-				experience_gain_navy_factor = 0.05
-				experience_gain_air_factor = 0.10
-				naval_attrition = 0.04
-				political_power_cost = 0.25
-				command_power_gain = -0.50
-			}
-		}
-		remove_effect = {
-			army_experience = 50
-			air_experience = 25
-			navy_experience = 15
-		}
-		cancel_trigger = {
-			has_war = yes
-			command_power < 1
-		}
-	}
-
-	GER_nva_joint_military_exercise = {
-		icon = r56_decision_soldiers_icon
-		custom_cost_trigger = {
-			command_power > 75
-		}
-		custom_cost_text = decision_cost_CP_75_PP_50
-
-		available = {
-			has_war = no
-			any_other_country = {
-				is_in_faction_with = ROOT
-				is_faction_leader = yes
-				has_war = no
-			}
-		}
-		visible = {
-			any_other_country = {
-				is_in_faction_with = ROOT
-				is_faction_leader = yes
-			}
-		}
-
-		days_re_enable = 540
-
-		complete_effect = {
-			hidden_effect = {
-				add_command_power = -75
-				add_political_power = -50
-			}
-			every_other_country = {
-				limit = {
-					is_faction_leader = yes
-					is_in_faction_with = ROOT
-				}
-				country_event = {
-					id = r56.ger.54
-					hours = 4
-				}
-			}
-
-			custom_effect_tooltip = r56_newline
-			effect_tooltip = {
-				every_other_country = {
-					limit = {
-						is_faction_leader = yes
-						is_in_faction_with = ROOT
-					}
-					custom_effect_tooltip = needs_approval
-					add_timed_idea = {
-						idea = GER_nva_joint_military_exercise_idea
-						days = 60
-					}
-				}
-
-				custom_effect_tooltip = r56_newline
-				add_timed_idea = {
-					idea = GER_nva_joint_military_exercise_idea
-					days = 60
-				}
-
-				custom_effect_tooltip = r56_newline
-				add_threat = 2
 			}
 		}
 	}

@@ -8,12 +8,12 @@ focus_tree = {
         }
     }
     default = no
-	continuous_focus_position = { x = 5 y = 1150 }
+	continuous_focus_position = { x = 650 y = 1350 }
 
     focus = {
         id = ADR_continue_the_policy_of_neutrality
         icon = GFX_goal_generic_neutrality_focus
-        x = 9
+        x = 12
         y = 0
         cost = 10
         mutually_exclusive = {
@@ -167,15 +167,15 @@ focus_tree = {
         }
         completion_reward = {
             add_stability = -0.1
-			if = {
+            remove_ideas = neutrality_idea
+            if = {
                 limit = {
                     ROOT = {
                         is_ai = no
                     }
                 }
-                add_war_support = 0.05
+                add_war_support = 0.03
             }
-            remove_ideas = neutrality_idea
         }
     }
     focus = {
@@ -221,14 +221,25 @@ focus_tree = {
             factor = 10
         }
         completion_reward = {
-			FRA = {
-				add_opinion_modifier = { target = ROOT modifier = large_increase }	
-				set_autonomy = {
-					target = ADR
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.6
-				}
-			}
+            if = {
+                limit = {
+                    has_dlc = "Together for Victory"
+                }
+                FRA = {
+                    set_autonomy = {
+                        target = ADR
+                        autonomous_state = autonomy_dominion
+                        freedom_level = 0.6
+                    }
+                    add_opinion_modifier = { target = ROOT modifier = large_increase }	
+                }
+                else = {
+                    FRA = {
+                        puppet = ADR
+                        add_opinion_modifier = { target = ROOT modifier = large_increase }
+                    }
+                }
+            }
             hidden_effect = {
                 set_politics = {
                     ruling_party = neutrality
@@ -287,7 +298,7 @@ focus_tree = {
 		icon = GFX_focus_ETH_peacekeeping_forces
 		prerequisite = { focus = ADR_continue_the_policy_of_neutrality }
 
-		x = 6
+		x = 9
 		y = 1
 		#relative_position_id =
 		cost = 5
@@ -297,7 +308,7 @@ focus_tree = {
 		completion_reward = {
 			army_experience = 10
 			division_template = {
-				name = "Cos de Policia d'Andorra"
+				name = "Policia"
 				priority = 1
 				division_names_group = SPR_INF_01
 				regiments = {
@@ -308,7 +319,7 @@ focus_tree = {
 			}
 			capital_scope = {
 				create_unit = {
-					division = "division_template = \"Cos de Policia d'Andorra\" start_experience_factor = 0.05 start_equipment_factor = 0.95"
+					division = "division_template = \"Policia\" start_experience_factor = 0.1 start_equipment_factor = 0.9"
 					owner = PREV
 				}
 			}

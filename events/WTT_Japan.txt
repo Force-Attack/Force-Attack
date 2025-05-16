@@ -390,6 +390,13 @@ country_event = {
 		ai_chance = {
 			base = 0
 		}
+	ROOT = {
+		create_wargoal = {
+			target = FROM
+			type = annex_everything
+			expire = 120
+		}
+	}
 	}
 }
 
@@ -484,30 +491,30 @@ country_event = {
 
 #Japan propse all samurai generals go to MAN
 country_event = {
-	id = wtt_japan.21
-	title = wtt_japan.21.t
-	desc = wtt_japan.21.desc
-	picture = GFX_report_event_japanese_officers
+    id = wtt_japan.21
+    title = wtt_japan.21.t
+    desc = wtt_japan.21.desc
+    picture = GFX_report_event_japanese_officers
 
-	is_triggered_only = yes
-	
-	#Accept generals
-	option = {
-		name = wtt_japan.21.a
-		ai_chance = {
-			base = 10
-		}
-		FROM = {		
-			every_army_leader = {
-				limit = { has_trait = JAP_samurai_lineage }
-				set_nationality = ROOT
-			}
-			every_navy_leader = {
-				set_nationality = ROOT
-			}
-		}	
-		FROM = { country_event = { id = wtt_japan.22 } }
-	}
+    is_triggered_only = yes
+    
+    #Accept generals
+    option = {
+        name = wtt_japan.21.a
+        ai_chance = {
+            base = 10
+        }
+        FROM = {        
+            every_army_leader = {
+                limit = { has_trait = JAP_samurai_lineage }
+                set_nationality = ROOT
+            }
+            every_navy_leader = {
+                set_nationality = ROOT
+            }
+        }    
+        FROM = { country_event = { id = wtt_japan.22 } }
+    }
 }
 
 #MAN Answers Japan yes
@@ -544,12 +551,13 @@ country_event = {
 	
 	#Exile them
 	option = {
+		add_political_power = 150
 		name = wtt_japan.31.a
 		trigger = {
 			country_exists = MAN
 		}
 		ai_chance = {
-			base = 5
+			base = 10
 		}
 		MAN = {
 			country_event = { id = wtt_japan.32 }
@@ -565,7 +573,7 @@ country_event = {
 		ai_chance = {
 			base = 5
 		}
-		add_stability = -0.1
+		add_stability = -0.20
 	}
 }
 
@@ -584,6 +592,10 @@ country_event = {
 			base = 10
 		}
 		add_ideas = MAN_exiled_imperial_family
+		add_timed_idea = {
+			idea = MAN_production
+			days = 270
+		}
 	}
 }
 
@@ -954,18 +966,20 @@ country_event = {
 		set_politics = { ruling_party = neutrality elections_allowed = no }
 		add_popularity = { ideology = neutrality popularity = 0.9 }
 		add_timed_idea = { idea = JAP_military_purges days = 90 }
-		create_country_leader = {
-			name = "Sadao Araki"
-			desc = ""
-			picture = "gfx/leaders/JAP/Portrait_JAP_Sadao_Araki.dds"
-			expire = "1965.1.1"
-			ideology = absolute_monarchism
-			traits = {
-				kadoha_faction
+		add_country_leader_role = {
+			character = JAP_emperor_hirohito
+			promote_leader = yes
+			country_leader = {
+				ideology = absolute_monarchism
+				traits = {
+					warrior_code
+					emperor_showa
+					r56_trait_opposed_to_communism
+				}
+				id = 700 #Hirohito
 			}
 		}
 		hidden_effect = { news_event = { id = wtt_news.27 hours = 6 } }
-		add_ideas = JAP_toseiha_opposition1
 	}
 }
 
@@ -1288,6 +1302,7 @@ country_event = {
 			}
 			create_country_leader = {
 				name = "Hideki Tojo"
+				desc = "hideki_tojo_desc"
 				picture = "gfx/leaders/JAP/Portrait_Japan_Generic_land_2.dds"
 				expire = "1965.1.1"
 				ideology = fascism_ideology
@@ -1323,7 +1338,7 @@ country_event = {
 	# Join the war
 	option = {
 		name = wtt_japan.115.a
-		add_to_war = { targeted_alliance = JAP enemy = SOV hostility_reason = asked_to_join }
+		add_to_war = { targeted_alliance = JAP enemy = SOV hostility_reason = ally }
 		JAP = { country_event = { id = wtt_japan.116 hours = 6 } }
 	}
 
@@ -1431,7 +1446,7 @@ country_event = {
 		division_template = { 
 			name = "Soviet Volunteers"
 			division_names_group = SOV_INF_01
-			is_locked = yes
+			is_locked = no
 			regiments = { 
 				infantry = { x = 0 y = 0 }
 				infantry = { x = 1 y = 0 }
@@ -1648,14 +1663,13 @@ country_event = {
 	option = {
 		name = excellent
 		effect_tooltip = {
-			transfer_state = 328
 			transfer_state = 609
 			transfer_state = 610
-			transfer_state = 714
-			transfer_state = 715
 			transfer_state = 716
+			transfer_state = 715
+			transfer_state = 328
 			transfer_state = 717
-			transfer_state = 761
+			transfer_state = 714
 			transfer_state = 941
 			transfer_state = 942
 			transfer_state = 943
@@ -1802,7 +1816,7 @@ country_event = {
 		}
 		
 		ai_chance = {
-			base = 90
+			factor = 90
 		}
 	}
 
@@ -1814,7 +1828,7 @@ country_event = {
 		}
 		
 		ai_chance = { # If Japan has lots of major enemies, the AI will not make a separate peace
-			base = 10
+			factor = 10
 			modifier = {
 				add = 50
 				USA = {
@@ -2055,7 +2069,7 @@ country_event = {
 	option = {
 		name = wtt_japan.126.a
 		ai_chance = {
-			base = 1
+			factor = 1
 		}
 		effect_tooltip = {
 			if = {
@@ -2130,7 +2144,7 @@ country_event = {
 	option = {
 		name = wtt_japan.126.b
 		ai_chance = {
-			base = 0
+			factor = 0
 		}
 		FROM = {
 			country_event = { id = wtt_japan.128 }
@@ -2257,15 +2271,13 @@ country_event = {
 			uses = 1
 			category = land_doctrine
 		}
-		set_global_flag	= japan_won_border_war
 	}
 	option = {
 		name = japan_border_conflict.2.b
 		trigger = {
 			original_tag = SOV
 		}
-		army_experience = 50
-		set_global_flag	= japan_won_border_war
+		army_experience = 20
 	}
 }
 #Japan loses
@@ -2282,11 +2294,7 @@ country_event = {
 		trigger = {
 			original_tag = JAP
 		}
-		army_experience = 50
-		set_global_flag	= japan_lost_border_war
-		country_event = {
-			id = japan_border_conflict.6
-		}
+		army_experience = 25
 	}
 	option = {
 		name = japan_border_conflict.3.b
@@ -2299,7 +2307,6 @@ country_event = {
 			uses = 1
 			category = land_doctrine
 		}
-		set_global_flag	= japan_lost_border_war
 	}
 }
 
@@ -2318,10 +2325,6 @@ country_event = {
 			original_tag = JAP
 		}
 		army_experience = 50
-		set_global_flag	= japan_lost_border_war
-		country_event = {
-			id = japan_border_conflict.6
-		}
 	}
 	option = {
 		name = japan_border_conflict.3.b
@@ -2329,41 +2332,7 @@ country_event = {
 			original_tag = SOV
 		}
 		army_experience = 50
-		set_global_flag	= japan_lost_border_war
 	}
-}
-#japan loses the border war
-country_event = {
-	id = japan_border_conflict.6
-	title = "Araki Commits Hara-Kiri"
-	desc = "A Once Bold Warrior, with his loss in the latest border conflict, Araki has chosen to commit seppuku in turn for the shame he has committed"
-	picture = GFX_report_event_japanese_soldiers_03
-
-	is_triggered_only = yes
-	trigger = {
-		has_global_flag = japan_lost_border_war
-	}
-	option = {
-		name = "Sayonara"
-		if = {
-			limit = {
-				has_completed_focus = JAP_support_the_kodoha_faction
-			}
-			create_country_leader = {
-				name = "Japanese Army Staff"
-				desc = ""
-				ideology = fascism_ideology
-				expire = "1965.1.1"
-				picture = "gfx/leaders/JAP/imperial_japanese_army_staff.dds"
-				traits = {
-					illegitimate_government
-					kadoha_faction
-				}
-			}
-		}
-		retire_character = JAP_sadao_araki
-	}
-	
 }
 
 #japan escalates
@@ -2381,255 +2350,4 @@ country_event = {
 	}
 	
 }
-######################################
-##########			KODOHA #################
-######################################
-add_namespace = japan_kodoha
-country_event = {
-	id = japan_kodoha.1
-	title = japan_kodoha.1.t
-	desc = japan_kodoha.1.d
-	picture = GFX_report_event_yoshijiro_umezu
 
-	is_triggered_only = yes
-
-	option = {
-		name = japan_kodoha.1.b
-		add_political_power = 25
-		add_stability = -0.05
-		add_popularity = {
-			ideology = fascism
-			popularity = -0.05
-		}
-		retire_character = JAP_yoshijiro_umezu
-		hidden_effect = {
-			country_event = { id = japan_kodoha.2 days = 7}
-		}
-	}
-}
-
-country_event = {
-	id = japan_kodoha.2
-	title = japan_kodoha.2.t
-	desc = japan_kodoha.2.d
-	picture = GFX_report_event_hajime_sugiyama
-
-	is_triggered_only = yes
-
-	option = {
-		name = japan_kodoha.1.b
-		add_political_power = 25
-		add_stability = -0.05
-		add_popularity = {
-			ideology = fascism
-			popularity = -0.05
-		}
-		retire_character = JAP_hajime_sugiyama
-		hidden_effect = {
-			country_event = { id = japan_kodoha.3 days = 7}
-		}
-	}
-}
-
-country_event = {
-	id = japan_kodoha.3
-	title = japan_kodoha.3.t
-	desc = japan_kodoha.3.d
-	picture = GFX_report_event_kenji_doihara
-
-	is_triggered_only = yes
-
-	option = {
-		name = japan_kodoha.1.b
-		add_political_power = 25
-		add_stability = -0.05
-		add_popularity = {
-			ideology = fascism
-			popularity = -0.05
-		}
-		retire_character = JAP_kenji_doihara
-		hidden_effect = {
-			country_event = { id = japan_kodoha.4 days = 14}
-		}
-	}
-}
-
-country_event = {
-	id = japan_kodoha.4
-	title = japan_kodoha.4.t
-	desc = japan_kodoha.4.d
-	picture = GFX_report_event_tojo_dead
-
-	is_triggered_only = yes
-
-	option = {
-		name = japan_kodoha.4.a
-		add_political_power = 50
-		add_popularity = {
-			ideology = fascism
-			popularity = -0.1
-		}
-		retire_character = JAP_hideki_tojo
-		swap_ideas = {
-			remove_idea = JAP_toseiha_opposition1
-			add_idea = JAP_toseiha_opposition2
-		}
-		custom_effect_tooltip = JAP_toseiha_opposition_tt
-		hidden_effect = {
-			country_event = { id = japan_kodoha.5 days = 14}
-		}
-	}
-}
-country_event = {
-	id = japan_kodoha.5
-	title = "Finished Purge of The Toseiha"
-	desc = ""
-	picture = GFX_report_event_tojo_dead
-
-	is_triggered_only = yes
-
-	option = {
-		remove_ideas = JAP_toseiha_opposition2
-		name = "Restoration"
-		add_timed_idea = {
-			idea = JAP_kodoha_enforced
-			days = 120
-		}
-		if = {
-			limit = {
-				has_completed_focus = JAP_modern_shogunate
-			}
-			country_event = { id = japan_kodoha.6 days = 14}
-		}
-	}
-}
-country_event = {
-	id = japan_kodoha.6
-	title = "The Showa Restoration"
-	desc = "The Time to restore the emperor has come, shall we hand over the direction of the country to the emperor as we said, or is there something else we should do?"
-	picture = GFX_report_event_showa_emperor_poster
-
-	is_triggered_only = yes
-
-	option = {
-		add_popularity = { ideology = neutrality popularity = 0.7 }
-		name = "On Second Thought..."
-		add_stability = -0.10
-		add_country_leader_trait = military_rule_enforced
-		add_political_power = 25
-		mark_focus_tree_layout_dirty = yes
-	}
-	option = {
-		name = "Restore The Emperor"
-		country_event = { 
-			id = japan.23 
-		}
-		add_political_power = 25
-	}
-}
-country_event = {
-	id = japan_kodoha.7
-	title = "Peace with the Japanese"
-	desc = "Having lost most of our siberian territories, the japanese have sent us an envoy to cease hostilites."
-	picture = GFX_report_event_japan_army_mountainside
-
-	is_triggered_only = yes
-
-	option = {
-		name = "No, in fact, shoot the envoy"
-		JAP = {
-			add_manpower = -1
-			country_event = japan_kodoha.8
-		}
-		add_war_support = 0.10
-	}
-	option = {
-		name = "We shall cede the eastern territories; we have other problems to deal with"
-		JAP = {
-			country_event = { 
-				id = japan_kodoha.9
-			}
-		}
-	}
-}
-country_event = {
-	id = japan_kodoha.8
-	title = "Soviets Refuse"
-	desc = "They shot our envoy, these communist scum!"
-	picture = GFX_report_event_japan_army_mountainside
-
-	is_triggered_only = yes
-
-	option = {
-		name = "Push onwards then; BANZAI!"
-	}
-}
-country_event = {
-	id = japan_kodoha.9
-	title = "Soviets Accept"
-	desc = "We can now devote our resources elsewhere; they fallen directly into our hands!"
-	picture = GFX_report_event_japanese_parade
-
-	is_triggered_only = yes
-
-	option = {
-		name = "Banzai!"
-		JAP = {
-			transfer_state = 567
-			transfer_state = 575
-			transfer_state = 876
-			transfer_state = 566
-			transfer_state = 564
-			transfer_state = 565
-			transfer_state = 563
-			transfer_state = 574
-			transfer_state = 877
-			transfer_state = 562
-			transfer_state = 874
-			transfer_state = 637
-			transfer_state = 861
-			transfer_state = 860
-			transfer_state = 856
-			transfer_state = 409
-			transfer_state = 408
-			transfer_state = 655
-			transfer_state = 561
-			transfer_state = 560
-			transfer_state = 657
-			transfer_state = 822
-			transfer_state = 875
-			transfer_state = 644
-			white_peace = SOV
-		}
-		add_ideas = JAP_imperial_ambitions_met
-	}
-}
-country_event = {
-	id = japan_kodoha.10
-	title = "The Old Ways"
-	desc = "With the power vacuum created by Araki, the shogunate may come to be."
-	picture = GFX_report_event_japan_army_mountainside
-
-	is_triggered_only = yes
-
-	option = {
-		set_party_name = { 
-			ideology = neutrality
-			name = JAP_shogun_party
-			long_name = JAP_shogun_party_long
-		}
-		name = "Tokugawa Iemasa"
-		create_country_leader = {
-			name = "Tokugawa Iemasa"
-			desc = ""
-			picture = "gfx/leaders/JAP/Portrait_Japan_Iemasa_Tokugawa.dds"
-			expire = "1965.1.1"
-			ideology = absolute_monarchism
-			traits = {
-				r56_trait_opposed_to_communism
-				military_rule_enforced
-			}
-		}
-		add_ideas = JAP_shogunate
-	}
-}

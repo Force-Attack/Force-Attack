@@ -193,7 +193,9 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_MANPOWER }
 
 		completion_reward = { 
-			add_ideas = ARG_growing_nationalism_idea
+
+			add_dynamic_modifier = { modifier = ARG_growing_nationalism_modifier }
+			
 			hidden_effect = {
 				every_owned_state = {
 					limit = {
@@ -224,10 +226,10 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_HISTORICAL}
 
 		completion_reward = { 
-			swap_ideas = {
-				remove_idea = ARG_political_corruption_idea
-				add_idea = ARG_corruption_crackdown_idea
+			remove_dynamic_modifier = {
+				modifier = ARG_political_corruption_modifier
 			}
+			add_dynamic_modifier = { modifier = ARG_corruption_crackdown_modifier }
 		}
 	}
 
@@ -328,7 +330,7 @@ focus_tree = {
 						remove_ideas = ARG_ramon_castillo
 					}
 				}
-			custom_effect_tooltip = r56_newline 
+			custom_effect_tooltip = CHL_skip_one_line_tt 
 			custom_effect_tooltip = ARG_coup_imminent_tt
 			set_country_flag = military_coup_attempt_started
 			}
@@ -457,7 +459,7 @@ focus_tree = {
 		completion_reward = { 
 
 		custom_effect_tooltip = ARG_consolidating_power_tt
-		custom_effect_tooltip = r56_newline
+		custom_effect_tooltip = CHL_skip_one_line_tt
 
 			add_days_mission_timeout = {
 				mission = ARG_military_coup_attempt
@@ -521,7 +523,7 @@ focus_tree = {
 		completion_reward = {
 
 			custom_effect_tooltip = ARG_military_coup_happens_tt
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			country_event = {
 				id = ARG_political_events.1  
@@ -639,7 +641,7 @@ focus_tree = {
 
 		custom_effect_tooltip = ARG_subdue_dissension_tt
 		custom_effect_tooltip = ARG_end_the_coup_tt
-		custom_effect_tooltip = r56_newline
+		custom_effect_tooltip = CHL_skip_one_line_tt
 
 			add_timed_idea = {
 				idea = ARG_subdue_dissension_idea
@@ -672,7 +674,7 @@ focus_tree = {
 			ARG_juan_peron = {
 				add_country_leader_role = {
 					country_leader = {
-						ideology = social_nationalism
+						ideology = moderatism
 						expire = "1965.1.1.1"
 						traits = { ARG_peronism_trait }
 					}
@@ -714,11 +716,11 @@ focus_tree = {
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = ARG_eva_peron
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			add_political_power = 50
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			random_core_state = {
 			limit = {
@@ -788,10 +790,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER }
 
 		completion_reward = { 
-			swap_ideas = {
-				remove_idea = ARG_growing_nationalism_idea
-				add_idea = ARG_growing_nationalism_idea_radical
-			}
+			custom_effect_tooltip = ARG_modify_growing_nationalism_ns_intro
+			add_to_variable = { ARG_growing_nationalism_fascism_drift = 0.1 tooltip = fascism_drift_factor_tt }
+			add_to_variable = { ARG_growing_nationalism_recruitable_population_factor = 0.1 tooltip = recruitable_population_factor_tt}
+			add_to_variable = { ARG_growing_nationalism_war_support_factor = 0.05 tooltip = war_support_factor_tt}
+			add_to_variable = { ARG_growing_nationalism_democratic_drift = -0.05 tooltip = democratic_drift_factor_tt }
 		}
 	}
 
@@ -998,58 +1001,26 @@ focus_tree = {
 		completion_reward = { 
 			IF = {
 				limit = {
-					has_tech = atomic_research 
+					has_tech = nuclear_reactor 
 					has_tech = experimental_rockets
 				}
-
-				add_breakthrough_points = {
-					specialization = specialization_nuclear
-			    	value = 1
-				}
-				add_breakthrough_points = {
-					specialization = specialization_air
-			    	value = 1
-				}
-			}
-			else_if = {
-				if = {
-					limit = {
-						has_tech = atomic_research 
-						NOT = { has_tech = experimental_rockets }
-					}
-				}
 				add_tech_bonus = {
 					name = ARG_arma_maravillosa_bonus
 					bonus = 0.5
-					uses = 1
-					category = rocketry
-				}
-				add_breakthrough_points = {
-					specialization = specialization_air
-			    	value = 0.5
-				}
-			}
-			else_if = {
-				if = {
-					limit = {
-						NOT = { has_tech = atomic_research }
-						has_tech = experimental_rockets
-					}
-				}
-				add_tech_bonus = {
-					name = ARG_arma_maravillosa_bonus
-					bonus = 0.5
-					uses = 1
+					uses = 2
 					category = nuclear
 				}
-				add_breakthrough_points = {
-					specialization = specialization_nuclear
-			    	value = 0.5
+				add_tech_bonus = {
+					name = ARG_arma_maravillosa_bonus
+					bonus = 0.5
+					uses = 2
+					category = rocketry
 				}
 			}
+
 			ELSE = {
 				set_technology = {
-					atomic_research = 1
+					nuclear_reactor = 1
 				}
 
 				set_technology = {
@@ -1216,7 +1187,7 @@ focus_tree = {
 
 			army_experience = 75
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 		}
 	}
 
@@ -1357,10 +1328,11 @@ focus_tree = {
 		search_filters = {  FOCUS_FILTER_MANPOWER  FOCUS_FILTER_STABILITY  FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER }
 
 		completion_reward = { 
-			swap_ideas = {
-				remove_idea = ARG_growing_nationalism_idea 
-				add_idea = ARG_military_government_idea
-			}
+
+  			add_ideas = ARG_military_government_idea
+  			remove_dynamic_modifier = {
+  				modifier = ARG_growing_nationalism_modifier
+  			}
 
 			set_party_name = {
 				ideology = fascism
@@ -1368,7 +1340,7 @@ focus_tree = {
 				name = ARG_gen_nazism_party
 			}
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			custom_effect_tooltip = ARG_guardia_nacional_tt
 
@@ -1429,11 +1401,12 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_STABILITY  FOCUS_FILTER_POLITICAL }
 
 		completion_reward = { 
-			swap_ideas = {
-				remove_idea = ARG_growing_nationalism_idea
-				add_idea = ARG_spirit_of_the_conquistadors_idea
-			}
-			custom_effect_tooltip = r56_newline
+			add_ideas = ARG_spirit_of_the_conquistadors_idea
+			remove_dynamic_modifier = {
+  				modifier = ARG_growing_nationalism_modifier
+  			}
+
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			custom_effect_tooltip = ARG_union_nacional_fascista_tt
 
@@ -1923,7 +1896,7 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = ARG_reach_out_to_chile_tt
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 			custom_effect_tooltip = ARG_reach_out_to_chile_2_tt
 		}
 	}
@@ -2514,10 +2487,10 @@ focus_tree = {
 		}
 
 		completion_reward = { 
-			swap_ideas = {
-				remove_idea = ARG_political_corruption_idea
-				add_idea = ARG_anti_corruption_idea
+			remove_dynamic_modifier = {
+				modifier = ARG_political_corruption_modifier
 			}
+			add_dynamic_modifier = { modifier = ARG_anti_corruption_modifier }
 		}
 	}
 
@@ -2787,24 +2760,13 @@ focus_tree = {
 			factor = 5
 		}
 
-		bypass = {
-			NOT = {
-				has_country_leader = {
-					character = ARG_marcelo_torcuato_de_alvear
-					ruling_only = yes
-				}
-			}
-		}
-
 		search_filters = { FOCUS_FILTER_POLITICAL_CHARACTER }
 
-		completion_reward = {
-			ARG_marcelo_torcuato_de_alvear = {
-				swap_country_leader_traits = {
-					remove = ARG_harsh_democrat
-					add = ARG_father_of_argentine_democracy
-				}
-			} 
+		completion_reward = { 
+			swap_country_leader_traits = {
+				remove = ARG_harsh_democrat
+				add = ARG_father_of_argentine_democracy
+			}
 		}
 	}
 
@@ -3901,7 +3863,10 @@ focus_tree = {
 				popularity = 0.05
 			}
 			add_stability = -0.05
-			remove_ideas = ARG_political_corruption_idea
+
+			remove_dynamic_modifier = {
+				modifier = ARG_political_corruption_modifier
+			}
 			swap_ideas = {
 				remove_idea = ARG_infamous_decade_idea
   				add_idea = ARG_infamous_decade_4_idea 	
@@ -4272,7 +4237,7 @@ focus_tree = {
 		completion_reward = { 
 
 		custom_effect_tooltip = ARG_the_buenos_aires_conference_1_tt
-		custom_effect_tooltip = r56_newline
+		custom_effect_tooltip = CHL_skip_one_line_tt
 		custom_effect_tooltip = ARG_the_buenos_aires_conference_2_tt
 
 		hidden_effect = {
@@ -4998,7 +4963,7 @@ focus_tree = {
 		#relative_position_id =
 		cost = 10
 		offset = {
-			x = -18
+			x = -22
 			y = 0
 			trigger = {
 				has_game_rule = {
@@ -5010,7 +4975,7 @@ focus_tree = {
 		}
 
 		offset = {
-			x = -30
+			x = -34
 			y = 0
 			trigger = {
 				has_game_rule = {
@@ -5129,6 +5094,7 @@ focus_tree = {
 				free_building_slots = {
 					building = infrastructure
 					size > 0
+					include_locked = yes
 				}
 				is_owned_and_controlled_by = ROOT
 			}
@@ -5288,7 +5254,7 @@ focus_tree = {
     			days = 365
 			}
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			custom_effect_tooltip = available_industrial_concern
 			show_ideas_tooltip = ARG_ferrocarriles_argentinos
@@ -5395,7 +5361,7 @@ focus_tree = {
 
 			custom_effect_tooltip = ARG_yacimientos_petroliferos_fiscales_tt
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			custom_effect_tooltip = available_industrial_concern
 			show_ideas_tooltip = ARG_yacimientos_petroliferos_fiscales_idea
@@ -5631,7 +5597,7 @@ focus_tree = {
   				add_idea = ARG_roca_runciman_new_partner_idea 				
   			}
 
-  			custom_effect_tooltip = r56_newline 
+  			custom_effect_tooltip = CHL_skip_one_line_tt 
 
 			random_country = {
 				limit = {
@@ -5718,7 +5684,7 @@ focus_tree = {
 
 			add_research_slot = 1
 
-			custom_effect_tooltip = r56_newline
+			custom_effect_tooltip = CHL_skip_one_line_tt
 
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = ARG_vincente_gallo

@@ -895,16 +895,15 @@ country_event = {
 			name = JAP_neutrality_party_kodoha
 			long_name = JAP_neutrality_party_kodoha_long
 		}
-		add_country_leader_role = {
-			character = MAN_kenkichi_ueda_tfv
-			promote_leader = yes
-			country_leader = {
-				ideology = rexism
-				expire = "1965.1.1.1"
-				traits = { 
-					kwantung_leader
-					kwantung_exile
-				}
+		create_country_leader = {
+			name = "Kenkichi Ueda"
+			desc = ""
+			picture = "gfx/leaders/JAP/Portrait_Japan_Kenkichi_Ueda.dds"
+			expire = "1989.1.1"
+			ideology = rexism
+			traits = {
+				kwantung_leader
+				kwantung_exile
 			}
 		}
 	}
@@ -924,17 +923,16 @@ country_event = {
 			name = JAP_neutrality_party_kodoha
 			long_name = JAP_neutrality_party_kodoha_long
 		}
-		add_country_leader_role = {
-			character = MAN_itagaki_seishiro_tfv
-			promote_leader = yes
-			country_leader = {
-				ideology = rexism
-				expire = "1965.1.1.1"
-				traits = { 
-					kwantung_intelligence
-					kwantung_staff
-					kwantung_exile
-				}
+		create_country_leader = {
+			name = "Seishiro Itagaki"
+			desc = ""
+			picture = GFX_portrait_MAN_Itagaki
+			expire = "1989.1.1"
+			ideology = rexism
+			traits = {
+				kwantung_intelligence
+				kwantung_staff
+				kwantung_exile
 			}
 		}
 	}
@@ -1013,123 +1011,4 @@ country_event = { ####JAPAN GETS THIS EVENT FROM MANCHU
 		}
 	}
 }
-####HIROHITO TAKES OVER 0-- nonaligned
-country_event = {
-	id = japan.23
-	title = "Hirohito Assumes Control of the Nation"
-	desc = "With the recent death of the army leader Araki, the Army Staff has given complete control of the state to Hirohito; Banzai!"
-	picture = GFX_report_event_showa_emperor_poster
 
-	is_triggered_only = yes
-	
-	option = {
-		name = "Tennōheika Banzai!"
-		add_country_leader_role = {
-			character = JAP_emperor_hirohito
-			promote_leader = yes
-			country_leader = {
-				ideology = absolute_monarchism
-				traits = {
-					warrior_code
-					emperor_showa
-					r56_trait_opposed_to_communism
-				}
-				id = 700 #Hirohito
-			}
-		}
-		remove_ideas = JAP_hirohito
-	}
-}
-#japanese cede manchuria for help
-country_event = {
-	id = japan.106
-	title = japan.106.t
-	desc = japan.106.d
-	picture = GFX_report_event_chinese_soldiers_fighting
-	
-	is_triggered_only = yes
-	
-	option = { # dontgivethemanything
-		name = japan.106.a
-		ai_chance = { 
-			factor = 85
-			modifier = {
-				add = -15
-				is_historical_focus_on = no
-			}
-		}
-		effect_tooltip = {
-			JAP = {
-				add_stability = 0.1
-				country_event = {id = japan.20 }
-			}
-		}
-		hidden_effect = {
-			JAP = { country_event = { id = japan.20} }
-		}
-	}
-	option = { # givethemouraid
-		name = japan.106.b
-		ai_chance = { 
-			factor = 15
-			modifier = {
-				add = -14
-				is_historical_focus_on = yes
-			}
-		}
-		country_event = {id = japan.19}
-	}
-}
-
-country_event = {
-	id = japan.24
-	title = japan.24.t
-	desc = japan.24.d
-	picture = GFX_report_event_chinese_soldiers_01
-	
-	is_triggered_only = yes
-	
-	option = { ###ATTACK CHINA
-		name = japan.24.a
-		add_war_support = -0.10
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = CHI
-			expire = 0
-		}
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = PRC
-			expire = 0
-		}
-		if = {
-			limit = { OR = { owns_state = 611 owns_state = 612 } }
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = SHX
-				expire = 0
-			}
-		}
-		add_timed_idea = {
-			idea = MAN_attack_china
-			days = 180
-		}
-	}
-	option = {####ATTACK SOVIET
-		name = japan.24.b
-		add_war_support = 0.10
-		add_political_power = 100
-		create_wargoal = {
-			target = SOV
-			type = puppet_wargoal_focus
-			expire = 0
-		}
-		random_controlled_state = {
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-			}
-		}
-	}
-	
-}

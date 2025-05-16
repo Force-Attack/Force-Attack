@@ -550,7 +550,7 @@ focus_tree = {
 								name = "Eurico Gaspar Dutra"
 								picture = "r56_portrait_BRA_DutraPres.dds"
 								expire = "1965.1.1"
-								ideology = oligarchism
+								ideology = moderatism
 								traits = {
 									devout_industrialist_trait
 									vfb_trait_officer
@@ -595,7 +595,7 @@ focus_tree = {
 								name = "Miguel Costa"
 								picture = "gfx/leaders/South America/Portrait_South_America_Generic_land_1.dds"
 								expire = "1965.1.1"
-								ideology = social_nationalism
+								ideology = moderatism
 								traits = {
 									vfb_trait_mc
 									vfb_trait_officer
@@ -642,7 +642,7 @@ focus_tree = {
 								name = "Eurico Gaspar Dutra"
 								picture = "r56_portrait_BRA_DutraPres.dds"
 								expire = "1965.1.1"
-								ideology = oligarchism
+								ideology = moderatism
 								traits = {
 									devout_industrialist_trait
 									vfb_trait_officer
@@ -724,12 +724,8 @@ focus_tree = {
 					}
 				set_country_flag = bra_nobody_elected_flag
 			}
-			add_victory_points = {
-				province = 5208
-				value = 20    
-			}
-            set_province_name = { id = 5208 name = "Brasília"}
 			set_capital = { state = 505 }
+            set_province_name = { id = 5208 name = "Brasília"}
 			505 = {
 				add_building_construction = {
 					type = supply_node
@@ -739,7 +735,11 @@ focus_tree = {
 				}
 				add_extra_state_shared_building_slots = 2
 			}
-		
+	
+			add_victory_points = {
+				province = 5208
+				value = 10    
+			}	
 			build_railway = {
 				level = 3
 				path = { 12977 8140 5208 }
@@ -770,15 +770,15 @@ focus_tree = {
 			}
 			else = {
 				if = {
-					limit = { has_idea = bra_antropofagia_neu_2 } # used to be by government but could lead to duplicated ideas instead
+					limit = { has_government = neutrality }
 					swap_ideas = { remove_idea = bra_antropofagia_neu_2 add_idea = bra_antropofagia_neu_3 }
 				}
 				else_if = {
-					limit = { has_idea = bra_antropofagia_fasc_2 }
+					limit = { has_government = fascism }
 					swap_ideas = { remove_idea = bra_antropofagia_fasc_2 add_idea = bra_antropofagia_fasc_3 }
 				}
 				else_if = {
-					limit = { has_idea = bra_antropofagia_dem_2 }
+					limit = { has_government = democratic }
 					swap_ideas = { remove_idea = bra_antropofagia_dem_2 add_idea = bra_antropofagia_dem_3 }
 				}
 				else = {
@@ -976,19 +976,8 @@ focus_tree = {
 				name = secret_bonus
 				bonus = 0.5
 				uses = 1
-				category = nuclear
+				category = electronics
 				category = rocketry
-			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			add_ideas = generic_secret_weapons_ns
-			custom_effect_tooltip = generic_skip_one_line_tt
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.50
-			}
-			add_breakthrough_progress = {
-				specialization = specialization_nuclear
-				value = 0.50
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -1006,45 +995,16 @@ focus = {
 		y = 1
 		cost = 15
 		completion_reward = {
-			IF = {
-				limit = {
-					NOT = {
-						has_tech = atomic_research
-					}
-				}
-				add_tech_bonus = {
-					name = bra_nuclear_research_bureau
-					bonus = 1.25
-					uses = 1
-					category = nuclear
-				}
-				custom_effect_tooltip = generic_skip_one_line_tt
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.75
-				}
+			add_tech_bonus = {
+				name = UK_secret_focus
+				ahead_reduction = 1
+				category = nuclear
 			}
-			ELSE = {
-				add_breakthrough_progress = {
-					specialization = specialization_nuclear
-					value = 0.95
-				}
-			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			if = {
-				limit = { 
-					ROOT = {
-						has_character = BRA_alvaro_alberto_da_motta_e_silva
-					}
-				}
-				ROOT = { 
-					BRA_alvaro_alberto_da_motta_e_silva = {
-						add_scientist_xp = {
-							experience = 500
-							specialization = specialization_nuclear
-						}
-					}
-				}
+			add_tech_bonus = {
+				name = UK_secret_focus
+				bonus = 3
+				uses = 1
+				category = nuclear
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }

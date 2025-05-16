@@ -9,7 +9,8 @@ focus_tree = {
 	}
 	default = no
 shared_focus = CARIB_caribbean_unification
-
+shared_focus = GEN_ARMY_organize_army_inspection
+shared_focus = GEN_ARMY_expand_the_general_staff
 
 continuous_focus_position = { x = 5950 y = 2800 }
 
@@ -18,7 +19,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		id = CUB_results_of_the_presidential_election
 		icon = GFX_goal_cuba_presidential_election
 		cost = 1.3
-		x = 48
+		x = 60
 		y = 0
 
 		ai_will_do = {
@@ -83,13 +84,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_the_nine_cent_law
 		}
 
-		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = CUB_issue_amnesties
 		icon = GFX_goal_cuba_issuing_amnesties
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_the_nine_cent_law }
 		relative_position_id = CUB_the_nine_cent_law
 		x = -2
@@ -159,7 +160,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_reduce_american_influence
 		icon = GFX_goal_cuba_diminish_american_influence
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_retirement_pensions }
 		relative_position_id = CUB_retirement_pensions
 		x = 0
@@ -180,7 +181,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			show_ideas_tooltip = USA_general_motors
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
@@ -245,7 +246,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_confederation_of_cuban_workers
 		icon = GFX_goal_generic_industrial_unionism
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_law_of_sugar_coordination }
 		relative_position_id = CUB_law_of_sugar_coordination
 		x = 0
@@ -259,7 +260,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 	}
 
@@ -271,6 +272,27 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		relative_position_id = CUB_confederation_of_cuban_workers
 		x = 4
 		y = 1
+
+		available = {
+			is_subject = no
+			is_in_faction = no
+			any_other_country = {
+				is_major = yes
+				has_government = democratic
+				is_faction_leader = yes
+				has_capitulated = no
+				NOT = { has_war_with = ROOT }
+				NOT = {
+					any_other_country = {
+						is_in_faction_with = PREV
+						has_war_with = ROOT
+					}
+				}						
+			}
+			NOT = {
+				has_completed_focus = CUB_caribbean_dominance
+			}
+		}
 
         completion_reward = {
             if = {
@@ -336,9 +358,28 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	}
 
 	focus = {
+		id = CUB_batista_in_office
+		icon = GFX_goal_cuba_batista_coup
+		cost = 1
+		prerequisite = { focus = CUB_rewrite_the_constitution }
+		relative_position_id = CUB_rewrite_the_constitution
+		x = 0
+		y = 1
+
+		available = {
+
+		}
+
+        completion_reward = {
+            
+        }
+		search_filters = { FOCUS_FILTER_POLITICAL }		
+	}
+
+	focus = {
 		id = CUB_establish_soviet_diplomatic_relations
 		icon = GFX_focus_generic_russian_deal_communist
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_rewrite_the_constitution }
 		relative_position_id = CUB_rewrite_the_constitution
 		x = 2
@@ -387,13 +428,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
         completion_reward = {
             add_research_slot = 1
         }
-		search_filters = { FOCUS_FILTER_RESEARCH }		
+		search_filters = { FOCUS_FILTER_ALLIANCE }		
 	}
 
 	focus = {
 		id = CUB_modernize_medical_care
 		icon = GFX_goal_medicine
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_rewrite_the_constitution }
 		relative_position_id = CUB_rewrite_the_constitution
 		x = 0
@@ -425,7 +466,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
         completion_reward = {
             add_ideas = CUB_increased_army_payroll
         }
-		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_MILITARY_IMPROVEMENT }		
+		search_filters = { FOCUS_FILTER_MANPOWER }		
 	}
 
 	focus = {
@@ -489,6 +530,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			    producer = USA
 			}
 		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MILITARY_EQUIPMENT }
 	}
 
 	focus = {
@@ -518,13 +560,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 					uses = 1
 					category = radar_tech
 				}
-				custom_effect_tooltip = generic_skip_one_line_tt
-				add_breakthrough_progress = {
-					specialization = specialization_air
-					value = 0.25
-				}
-				custom_effect_tooltip = generic_skip_one_line_tt
-				add_ideas = r56_generic_radar_idea
                 add_tech_bonus = {
                     name = secret_bonus
 					bonus = 1
@@ -539,22 +574,15 @@ continuous_focus_position = { x = 5950 y = 2800 }
                     }
                 }
                 add_tech_bonus = {
-					name = radar_focus
+                    name = secret_bonus
 					bonus = 1
 					uses = 2
 					category = radar_tech
 				}
-				custom_effect_tooltip = generic_skip_one_line_tt
-				add_breakthrough_progress = {
-					specialization = specialization_air
-					value = 0.25
-				}
-				custom_effect_tooltip = generic_skip_one_line_tt
-				add_ideas = r56_generic_radar_idea
             }
 			add_ideas = CUB_winning_the_battle_of_the_caribbean
 		}
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_IMPROVEMENT }
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY }
 	}
 
 ###################################################################################################################################################################
@@ -610,7 +638,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_galvanize_the_ctc
 		icon = GFX_focus_eng_concessions_to_the_trade_unions
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_oppose_the_presidency }
 		relative_position_id = CUB_oppose_the_presidency
 		x = 0
@@ -631,7 +659,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_ctc_recruitment
 		icon = GFX_goal_spread_communism
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_galvanize_the_ctc }
 		relative_position_id = CUB_galvanize_the_ctc
 		x = 0
@@ -665,7 +693,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_unionized_sugar_mills
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 	}
 
@@ -790,15 +818,14 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP FOCUS_FILTER_AIR_XP }
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_AIR_XP FOCUS_FILTER_RESEARCH }
 
 	}
 
 	focus = {
 		id = CUB_invite_NKVD_officers
-		text = EGY_invite_NKVD_officers
 		icon = GFX_goal_soviet_military_advisors
-		cost = 10
+		cost = 5
 		prerequisite = { focus = CUB_state_visit_to_the_soviet_union }
 		relative_position_id = CUB_state_visit_to_the_soviet_union
 		x = 1
@@ -818,7 +845,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = EGY_soviet_NKVD_officers
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH }
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH FOCUS_FILTER_POLITICAL }
 
 	}
 
@@ -912,7 +939,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
         prerequisite = {
             focus = CUB_overthrow_the_menocal_government
         }
-        search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
+        search_filters = {FOCUS_FILTER_MILITARY_EQUIPMENT}
         ai_will_do = {
             factor = 10
         }
@@ -971,7 +998,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_cuban_politburo
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MILITARY_IMPROVEMENT }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 
 	}
 
@@ -1023,7 +1050,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_radio_mil_diez_idea
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MILITARY_IMPROVEMENT }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT }
 
 	}
 
@@ -1054,7 +1081,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_liberate_the_dominican_republic
 		icon = GFX_goal_generic_attack_dominica
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_overthrow_the_menocal_government }
 		relative_position_id = CUB_overthrow_the_menocal_government
 		x = 7
@@ -1228,7 +1255,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ANNEXATION }
+		search_filters = { FOCUS_FILTER_ANNEXATION }
 
 	}
 
@@ -1321,7 +1348,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_caribbean_dominance_idea
 		}
 
-		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_ANNEXATION }
 
 	}
 
@@ -1369,7 +1396,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 	}
 
@@ -1441,7 +1468,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_sugar_for_oil
 		icon = GFX_goal_oil_agreement
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_expand_the_plantations }
 		relative_position_id = CUB_expand_the_plantations
 		x = -1
@@ -1580,7 +1607,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_exert_influence_over_the_military
 		icon = GFX_goal_extensive_conscription_fascism
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_seek_falangist_support	}
 		relative_position_id = CUB_seek_falangist_support
 		x = 1
@@ -1593,13 +1620,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = CUB_repeal_liberal_policies
 		icon = GFX_goal_cuba_repeal_left_wing_reforms
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_seek_falangist_support	}
 		relative_position_id = CUB_seek_falangist_support
 		x = -1
@@ -1611,13 +1638,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_repealed_liberal_policies_idea
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_RESOURCES FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = CUB_gather_political_support
 		icon = GFX_goal_tripartite_pact
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_repeal_liberal_policies }
 		prerequisite = { focus = CUB_exert_influence_over_the_military }
 		relative_position_id = CUB_repeal_liberal_policies
@@ -1648,7 +1675,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_anti_communist_violence
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 	
 	focus = {
@@ -1681,7 +1708,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			remove_ideas = { CUB_falangist_military_influence }
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
@@ -1724,13 +1751,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_political_power = 100
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = CUB_panhispanic_diplomacy
 		icon = GFX_goal_CUB_pan_hispanism
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_stabilize_internal_politics }
 		relative_position_id = CUB_stabilize_internal_politics 
 		x = 0
@@ -1750,13 +1777,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY }
 	}
 
 	focus = {
 		id = CUB_subvert_american_influence
 		icon = GFX_goal_cuba_diminish_american_influence
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_stabilize_internal_politics }
 		relative_position_id = CUB_stabilize_internal_politics 
 		x = 1
@@ -1779,7 +1806,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_STABILITY }
 	}
 
 	focus = {
@@ -1818,13 +1845,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_STABILITY }
 	}
 
 	focus = {
 		id = CUB_invite_german_companies
 		icon = GFX_goal_italy_autarky
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_subvert_american_influence }
 		relative_position_id = CUB_subvert_american_influence 
 		x = 1
@@ -1901,7 +1928,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 1
 		relative_position_id = CUB_stabilize_internal_politics
 		
-		cost = 5
+		cost = 10
 
 		available_if_capitulated = yes
 
@@ -1913,7 +1940,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_research_slot = 1
 			add_ideas = CUB_falangist_youth_idea
 		}
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_RESEARCH FOCUS_FILTER_MANPOWER }
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_MANPOWER }
 	}
 
 	focus = {
@@ -1925,7 +1952,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 1
 		relative_position_id = CUB_falangist_ideas_in_schools
 		
-		cost = 5
+		cost = 10
 
 		available_if_capitulated = yes
 
@@ -1939,7 +1966,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 				add_idea = CUB_strengthened_catholic_identity
 			}
 		}
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 	}
 
 
@@ -1952,10 +1979,22 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		prerequisite = { focus = CUB_secure_power focus = CUB_external_interests }
 		x = 4
 		y = 1
-		cost = 5
+		cost = 7.2
 		
 
-		
+		available = {			
+			is_subject = no
+			OR = {
+				NOT = {
+					has_completed_focus = CUB_join_the_allies
+				}
+				NOT = {
+					ENG = {
+						has_government = democratic
+					}
+				}
+			}
+		}
 
 		completion_reward = {
 			add_war_support = 0.10
@@ -1978,7 +2017,15 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			factor = 40
 		}
 
+		available = {
+			NOT = {
+				has_completed_focus = CUB_military_pensions
+			}
+		}
 
+		bypass = {
+			has_completed_focus = CUB_military_pensions
+		}
 
 		available_if_capitulated = yes
 
@@ -2018,7 +2065,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		completion_reward = {
 			add_ideas = CUB_caribbean_guard
 		}
-		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_MILITARY_IMPROVEMENT }
+		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT FOCUS_FILTER_MANPOWER }
 	}
 
 	focus = {
@@ -2072,7 +2119,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 2
 		relative_position_id = CUB_amphibious_invasion_preparation
 
-		cost = 10
+		cost = 14.4
 
 		ai_will_do = {
 			factor = 1
@@ -2114,7 +2161,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			set_rule = { can_create_factions = yes }
 			create_faction = "Caribbean Pact"
 		}
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_ALLIANCE }
+		search_filters = { FOCUS_FILTER_ALLIANCE }
 	}
 
 	focus = {
@@ -2128,12 +2175,14 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		
 
 		available = {
-			is_faction_leader = yes
+			is_in_faction = no
 			is_subject = no
-			SPR = {
-				is_in_faction = no
-				is_subject = no
-				has_government = fascism
+			OR = {
+				SPR = {
+					is_in_faction = no
+					is_subject = no
+					has_government = fascism
+				}
 			}
 		}
 		completion_reward = {
@@ -2183,7 +2232,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 1
 		prerequisite = { focus = CUB_caribbean_dominance }
 		relative_position_id = CUB_caribbean_dominance
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 25
@@ -2252,7 +2301,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 1
 		prerequisite = { focus = CUB_subjugate_hispaniola }
 		relative_position_id = CUB_subjugate_hispaniola
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 25
@@ -2304,7 +2353,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 1
 		prerequisite = { focus = CUB_subjugate_hispaniola }
 		relative_position_id = CUB_subjugate_hispaniola
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 25
@@ -2354,7 +2403,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		prerequisite = { focus = CUB_demand_the_eastern_isles }
 		prerequisite = { focus = CUB_demand_jamaica_and_the_bahamas}
 		relative_position_id = CUB_demand_the_eastern_isles
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 25
@@ -2432,7 +2481,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		prerequisite = { focus = CUB_lay_claim_to_curacao_and_trinidad }
 		relative_position_id = CUB_lay_claim_to_curacao_and_trinidad
 		cost = 20
-		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_INDUSTRY }
+
 		ai_will_do = {
 			factor = 25
 		}
@@ -2690,6 +2739,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 				}
 			}
 		}
+		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_INDUSTRY }
 	}
 
 	focus = {
@@ -2699,7 +2749,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		y = 2
 		prerequisite = { focus = CUB_lay_claim_to_curacao_and_trinidad }
 		relative_position_id = CUB_lay_claim_to_curacao_and_trinidad
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 25
@@ -2748,7 +2798,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		prerequisite = { focus = CUB_demand_the_eastern_isles }
 		prerequisite = { focus = CUB_demand_jamaica_and_the_bahamas}
 		relative_position_id = CUB_demand_the_eastern_isles
-		cost = 5
+		cost = 7.2
 
 		ai_will_do = {
 			factor = 25
@@ -2826,7 +2876,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 			add_war_support = 0.05
 		}
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MILITARY_IMPROVEMENT FOCUS_FILTER_SPA_CIVIL_WAR }
+		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR }
 	}
 
 #######################################################################################################################################################################
@@ -2836,7 +2886,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_military_coup
 		icon = GFX_goal_CUB_batista_military_coup
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_victory_for_gomez }
 		mutually_exclusive = { focus = CUB_the_nine_cent_law }
 		relative_position_id = CUB_victory_for_gomez
@@ -2862,11 +2912,11 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 			add_popularity = {
 				ideology = neutrality
-				popularity = 0.50
+				popularity = 0.2
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
@@ -2908,7 +2958,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
 	}
 
 	focus = {
@@ -2965,7 +3015,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_unite_hispaniola
 		icon = GFX_goal_generic_befriend_haiti
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_reach_out_to_trujillo }
 		relative_position_id = CUB_reach_out_to_trujillo
 		x = 0
@@ -3006,7 +3056,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_caribbean_unity
 		icon = GFX_goal_generic_befriend_united_caribbean
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_unite_hispaniola }
 		relative_position_id = CUB_unite_hispaniola
 		x = 0
@@ -3037,13 +3087,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_ANNEXATION }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = CUB_conduct_joint_military_excercises
 		icon = GFX_goal_generic_multinational_army
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_reach_out_to_trujillo }
 		relative_position_id = CUB_reach_out_to_trujillo
 		x = -1
@@ -3078,7 +3128,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP }
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
 	}
 
 	focus = {
@@ -3105,7 +3155,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			}
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
@@ -3136,10 +3186,10 @@ continuous_focus_position = { x = 5950 y = 2800 }
 
 		completion_reward = {
 			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 				}
 			}
 			custom_effect_tooltip = available_industrial_concern
@@ -3153,7 +3203,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_american_sugar_investments
 		icon = GFX_goal_cuba_nine_cents_law
-		cost = 5
+		cost = 10
 		prerequisite = { focus = CUB_invite_american_corporations }
 		relative_position_id = CUB_invite_american_corporations
 		x = -3
@@ -3237,13 +3287,13 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			add_ideas = CUB_rewritten_constitution
 		}
 
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_POLITICAL }
 	}
 
 	focus = {
 		id = CUB_external_interests
 		icon = GFX_focus_eng_global_defense
-		cost = 5
+		cost = 7.2
 		prerequisite = { focus = CUB_government_reshuffle }
 		relative_position_id = CUB_government_reshuffle
 		x = 2
@@ -3267,7 +3317,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		x = 0
 		y = 1
 		
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MILITARY_IMPROVEMENT }
+		search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT FOCUS_FILTER_POLITICAL }
 
 		cost = 5
 		
@@ -3324,7 +3374,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 	focus = {
 		id = CUB_the_four_year_plan
 		icon = GFX_goal_generic_strenght_through_industry
-		x = 8
+		x = 38
 		y = 0
 		cost = 5
 
@@ -3390,15 +3440,8 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	
 		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 315 }
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-				}
+			315 = {
+
 				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = industrial_complex
@@ -3416,7 +3459,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		x = 0
 		y = 1
 		relative_position_id = CUB_central_region_strategy
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 10
@@ -3425,34 +3468,20 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 994 }
-				limit = {									
-					free_building_slots = {
-						building = c
-						size > 0
-						include_locked = yes
-					}
-				}
+			994 = {
+
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = industrial_complex
+					type = infrastructure
 					level = 2
 					instant_build = yes
 				}
 			}
-			random_owned_controlled_state = {
-				prioritize = { 315 }
-				limit = {									
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-				}
+			315 = {
+
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = industrial_complex
+					type = infrastructure
 					level = 2
 					instant_build = yes
 				}
@@ -3477,23 +3506,20 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 88 }
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 4
+			413 = {
+
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = arms_factory
+					type = industrial_complex
 					level = 2
 					instant_build = yes
 				}
+			}
+			994 = {
+
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = industrial_complex
+					type = arms_factory
 					level = 2
 					instant_build = yes
 				}
@@ -3543,10 +3569,10 @@ continuous_focus_position = { x = 5950 y = 2800 }
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -3595,24 +3621,20 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			factor = 10
 		}
 		
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MILITARY_EQUIPMENT FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			994 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
+			build_railway = {
+				path = { 1550 7590 }
 			}
-			315 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes 
-				}                
-		} 
-	}
+			add_equipment_to_stockpile = { type = train_equipment_1 amount = 25 }
+			add_tech_bonus = {
+				name = CUB_fill_the_railways_gaps
+				bonus = 0.5
+				uses = 2
+				category = train_tech
+			}			
+		}
 	}
 
 	focus = {
@@ -3645,7 +3667,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 				}
 			}
 		}
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESOURCES FOCUS_FILTER_RESEARCH }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STEEL FOCUS_FILTER_RESEARCH }
 	}
 
 	focus = {
@@ -3662,6 +3684,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		}
 
 		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
 			random_owned_controlled_state = {
@@ -3697,7 +3720,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		ai_will_do = {
 			factor = 10
 		}
-		search_filters = { FOCUS_FILTER_RESOURCES FOCUS_FILTER_RESEARCH }
+		search_filters = { FOCUS_FILTER_OIL FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
 			add_tech_bonus = {
@@ -3753,314 +3776,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		}		
 	}
 
-	#Army
-
-	focus = {
-		id = CUB_maximo_gomez_command_academy
-		icon = GFX_goal_CUB_coat_of_arms
-
-		x = 16
-		y = 0
-		cost = 10
-
-		ai_will_do = {
-			factor = 5
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 10
-			add_doctrine_cost_reduction = {
-				name = CUB_maximo_gomez_command_academy
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-			add_ideas = ABC_establish_a_general_staff_idea_1
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH  FOCUS_FILTER_ARMY_XP }
-	}
-
-	focus = {
-		id = CUB_weapon_modernisation
-		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = CUB_maximo_gomez_command_academy }
-		relative_position_id = CUB_maximo_gomez_command_academy
-		x = -2
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_weapon_modernisation
-				bonus = 0.5
-				uses = 2
-				category = infantry_weapons
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_motorized_army
-		icon = GFX_goal_generic_modernizing_the_cavalry
-		prerequisite = { focus = CUB_maximo_gomez_command_academy }
-		relative_position_id = CUB_maximo_gomez_command_academy
-		x = 0
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_motorized_army
-				bonus = 1
-				uses = 1
-				category = motorized_equipment
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_study_new_land_doctrines
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = CUB_motorized_army focus = CUB_weapon_modernisation }
-		relative_position_id = CUB_motorized_army
-		x = -1
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = CUB_study_new_land_doctrines
-				cost_reduction = 0.5
-				uses = 2
-				category = land_doctrine
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = CUB_special_forces
-		icon = GFX_goal_generic_special_forces
-		prerequisite = { focus = CUB_study_new_land_doctrines }
-		relative_position_id = CUB_study_new_land_doctrines
-		x = 0
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 15
-			add_tech_bonus = {
-				name = CUB_special_forces
-				bonus = 1
-				uses = 2
-				category = r56_jaeger_infantry_tech
-				category = r56_mountain_infantry_tech
-				category = r56_paratroops_infantry_tech	
-				category = r56_shock_infantry_tech
-			}
-			add_ideas = ITA_expand_the_elite_forces
-			add_tech_bonus = {
-				name = CUB_special_forces
-				bonus = 1
-				uses = 1
-				category = r56_special_forces_training_tech 
-			}				
-			hidden_effect = {
-				set_country_flag = cite_an_airborne_unit_flag
-			}
-			unlock_decision_tooltip = { decision = cite_an_airborne_unit show_effect_tooltip = yes }			
-		}
-		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_jungle_specialization
-		icon = GFX_goal_generic_jungle_warfare
-		prerequisite = { focus = CUB_special_forces }
-		relative_position_id = CUB_special_forces
-		x = -1
-		y = 1
-		cost = 10
-		ai_will_do = {
-			factor = 10
-		}
-		available_if_capitulated = yes
-		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1
-				uses = 1
-				category = summer_clothing_tech
-			}
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1
-				uses = 1
-				category = r56_jungle_infantry_tech
-			}
-			add_ideas = SAF_hot_climate_training
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-
-	focus = {
-		id = CUB_army_modernisation
-		icon = GFX_goal_cuba_presidential_guard
-		prerequisite = { focus = CUB_elite_tank_forces focus = CUB_special_forces }
-		relative_position_id = CUB_special_forces
-		x = 1
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_army_modernisation
-				bonus = 1
-				uses = 2
-				category = infantry_weapons
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_study_foreign_tanks
-		icon = GFX_goal_generic_license_tanks
-		prerequisite = { focus = CUB_maximo_gomez_command_academy }
-
-		relative_position_id = CUB_maximo_gomez_command_academy
-		x = 2
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_study_foreign_tanks
-				bonus = 1
-				uses = 1
-				category = armor
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_improve_army_logistics
-		icon = GFX_goal_generic_modernizing_the_cavalry2
-		prerequisite = { focus = CUB_study_foreign_tanks focus = CUB_motorized_army  }
-		relative_position_id = CUB_motorized_army
-		x = 2
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_improve_army_logistics
-				bonus = 1
-				uses = 2
-				category = logistics_tech
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_cruisers_experiments
-		icon = GFX_goal_generic_production
-		prerequisite = { focus = CUB_improve_army_logistics }
-		relative_position_id = CUB_improve_army_logistics
-		x = 1
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_cruisers_experiments
-				bonus = 2
-				uses = 1
-				category = maintenance_company_tech
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = CUB_elite_tank_forces
-		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = CUB_improve_army_logistics }
-		relative_position_id = CUB_improve_army_logistics
-		x = -1
-		y = 1
-		cost = 10
-
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = CUB_elite_tank_forces
-				bonus = 1
-				uses = 2
-				category = armor
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
 
 	############################
 	##### AIRFORCE SECTION #####
@@ -4071,8 +3786,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		id = CUB_air_base_expansion
 		icon = GFX_goal_CUB_air_force
 
-		relative_position_id = CUB_maximo_gomez_command_academy
-		x = 6
+		x = 24
 		y = 0
 		cost = 5
 
@@ -4104,7 +3818,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 				category = air_doctrine
 			}			
 		}
-		search_filters = { FOCUS_FILTER_AIR_XP FOCUS_FILTER_RESEARCH }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_AIR_XP FOCUS_FILTER_RESEARCH }
 	}
 
 	focus = {
@@ -4439,19 +4153,12 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		completion_reward = {
 			air_experience = 10
 			add_tech_bonus = {
-				name = jet_rocket_bonus
-				bonus = 0.50
+				name = CUB_rocket_development
+				bonus = 1
 				uses = 2
-				category = rocketry
 				category = jet_technology
+				category = rocketry
 			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			add_breakthrough_progress = {
-				specialization = specialization_air
-				value = 0.50
-			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			add_ideas = r56_generic_rocket_idea
 		}
 		search_filters = { FOCUS_FILTER_AIR_XP FOCUS_FILTER_RESEARCH }
 	}
@@ -4488,10 +4195,10 @@ continuous_focus_position = { x = 5950 y = 2800 }
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = dockyard
-					level = 4
+					level = 2
 					instant_build = yes
 				}	
 			}
@@ -4512,8 +4219,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		ai_will_do = {
 			factor = 10
 		}
-
-		mutually_exclusive = { focus = CUB_import_submarine_technology }
 
 		available_if_capitulated = yes
 
@@ -4557,9 +4262,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		available_if_capitulated = yes
 
 		completion_reward = {
-			
-			add_ideas = SIA_quality_over_quantity
-			
 			add_tech_bonus = {
 				name = CUB_a_cruiser_navy
 				bonus = 1
@@ -4596,8 +4298,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 			factor = 10
 		}
 
-		mutually_exclusive = { focus = CUB_study_foreign_built_ships }
-	
 		available_if_capitulated = yes
 
 		completion_reward = {
@@ -4651,7 +4351,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 				uses = 1
 				category = submarine_doctrine
 			}
-			add_ideas = AFG_under_the_radar_idea
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -4673,7 +4372,6 @@ continuous_focus_position = { x = 5950 y = 2800 }
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = ENG_expand_the_repair_yards
 			navy_experience = 10
 			add_doctrine_cost_reduction = {
 				name = CUB_the_twin_threats
@@ -4773,6 +4471,10 @@ continuous_focus_position = { x = 5950 y = 2800 }
 
 		available_if_capitulated = yes
 
+		available = {
+			
+		}
+
 		completion_reward = {
 			add_tech_bonus = {
 				name = SPR_navy_modernization
@@ -4795,23 +4497,7 @@ continuous_focus_position = { x = 5950 y = 2800 }
 				category = naval_armor_tech
 				category = damage_control_tech
 				
-			}		
-			random_owned_controlled_state = {
-				prioritize = { 1045 }
-				limit = {
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-					type = dockyard
-					level = 4
-					instant_build = yes
-				}	
-			}			
+			}					
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}	

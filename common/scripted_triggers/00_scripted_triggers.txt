@@ -74,7 +74,10 @@ check_has_focus_tree_to_switch_to_fascism = {
 				tag = SAF
 				OR = {	
 					is_puppet = yes
-					has_country_flag = britain_enforced_our_loyalty		
+					has_country_flag = britain_enforced_our_loyalty
+					NOT = {
+						has_completed_focus = SAF_south_africa_first
+					}			
 				}
 			}
 			AND = {
@@ -163,43 +166,58 @@ check_has_focus_tree_to_switch_to_democratic = {
 	}
 	NOT = { tag = CZE }
 	NOT = {
-		tag = HUN
+		AND = {
+			tag = HUN
+			has_dlc = "Death or Dishonor"
+		}
 	}
 	NOT = {
 		AND = {
 			tag = JAP
+			has_dlc = "Waking the Tiger"
 			NOT = {
 				has_completed_focus = JAP_pre_emptive_coup
 			}
 		}
 	}
+	#NOT = {
+	#	AND = {
+	#		tag = GER
+	#		has_dlc = "Waking the Tiger"
+	#	}
+	#}
 	NOT = {
 		AND = {
 			tag = YUN
+			has_dlc = "Waking the Tiger"
 			NOT = { has_focus_tree = china_nationalist_focus }
 		}
 	}
 	NOT = {
 		AND = {
 			tag = GXC
+			has_dlc = "Waking the Tiger"
 			NOT = { has_focus_tree = china_nationalist_focus }
 		}
 	}
 	NOT = {
 		AND = {
 			tag = XSM
+			has_dlc = "Waking the Tiger"
 			NOT = { has_focus_tree = china_nationalist_focus }
 		}
 	}
 	NOT = {
 		AND = {
 			tag = SHX
+			has_dlc = "Waking the Tiger"
 			NOT = { has_focus_tree = china_nationalist_focus }
 		}
 	}
 	NOT = {
 		AND = {
 			tag = SIK
+			has_dlc = "Waking the Tiger"
 			NOT = { has_focus_tree = china_nationalist_focus }
 		}
 	}
@@ -223,6 +241,7 @@ check_has_focus_tree_to_switch_to_communism = {
 	NOT = {
 		AND = {
 			tag = JAP
+			has_dlc = "Waking the Tiger"
 			NOT = {
 				OR = {
 					has_completed_focus = JAP_cast_the_die
@@ -232,16 +251,28 @@ check_has_focus_tree_to_switch_to_communism = {
 		}
 	}
 	NOT = {
-		tag = YUN
+		AND = {
+			tag = YUN
+			has_dlc = "Waking the Tiger"
+		}
 	}
 	NOT = {
-		tag = GXC
+		AND = {
+			tag = GXC
+			has_dlc = "Waking the Tiger"
+		}
 	}
 	NOT = {
-		tag = XSM
+		AND = {
+			tag = XSM
+			has_dlc = "Waking the Tiger"
+		}
 	}
 	NOT = {
-		tag = SHX
+		AND = {
+			tag = SHX
+			has_dlc = "Waking the Tiger"
+		}
 	}
 	NOT = {
 		AND = {
@@ -261,13 +292,7 @@ check_has_focus_tree_to_switch_to_communism = {
 		}
 	}
 	NOT = {
-		AND = {
-			original_tag = TUR
-			has_completed_focus = TUR_revolution_not_reform		#only for this, should be able to convert otherwise
-		}
-	}
-	NOT = {
-		original_tag = ROM
+		original_tag = TUR
 	}
 }
 
@@ -279,20 +304,6 @@ is_controlled_by_ROOT_or_subject = {
 			OR = {
 				tag = ROOT
 				is_subject_of = ROOT
-			}
-		}
-	}
-}
-
-is_not_controlled_by_ROOT_or_subject = {
-	custom_trigger_tooltip = {
-		tooltip = is_not_controlled_by_ROOT_or_subject
-		CONTROLLER = {
-			NOT = {
-				OR = {
-					tag = ROOT
-					is_subject_of = ROOT
-				}
 			}
 		}
 	}
@@ -389,6 +400,7 @@ ai_land_doctrine_tier_2_trigger = {
 }
 
 #CHI_is_on_historical_plan_trigger = {
+#	has_dlc = "Waking the Tiger"
 #	OR = {
 #		AND = {
 #			is_historical_focus_on = yes
@@ -436,7 +448,25 @@ USA_is_on_historical_plan_trigger = {
 		}
 	}
 }
+ROM_is_on_historical_plan_trigger = {
+	has_dlc = "Death or Dishonor"
+	OR = {
+		AND = {
+			is_historical_focus_on = yes
+			has_game_rule = {
+				rule = ROM_ai_behavior
+				option = DEFAULT
+			}
+		}
+		has_country_flag = ROM_AI_RANDOM_FASCIST_HISTORICAL
+		has_game_rule = {
+			rule = ROM_ai_behavior
+			option = FASCIST_HISTORICAL
+		}
+	}
+}
 HUN_is_on_historical_plan_trigger = {
+	has_dlc = "Death or Dishonor"
 	OR = {
 		AND = {
 			is_historical_focus_on = yes
@@ -468,13 +498,7 @@ ENG_is_on_historical_plan_trigger = {
 		}
 	}
 }
-ROM_is_on_historical_plan_trigger = {
-	is_historical_focus_on = yes
-	has_game_rule = {
-		rule = ROM_ai_behavior
-		option = DEFAULT
-	}
-}
+
 SOV_save_pp_for_manpower_trouble = {
 	has_manpower < 1000000
 	has_political_power < 200
@@ -570,21 +594,21 @@ enemy_has_equal_or_better_radar_tech_trigger = {
 				ROOT = { 
 					has_tech = radio_detection 
 					NOT = {
-						has_tech = cavity_magnatron
+						has_tech = decimetric_radar
 					}
 				} 
 			}
 			FROM = { 
 				OR = {
 					has_tech = radio_detection 
-					has_tech = cavity_magnatron
+					has_tech = decimetric_radar
 				}
 			}
 		}
 		else_if = {
 			limit = {
 				ROOT = { 
-					has_tech = cavity_magnatron 
+					has_tech = decimetric_radar 
 					NOT = {
 						has_tech = improved_decimetric_radar
 					}
@@ -592,7 +616,7 @@ enemy_has_equal_or_better_radar_tech_trigger = {
 			}
 			FROM = { 
 				OR = {
-					has_tech = cavity_magnatron 
+					has_tech = decimetric_radar 
 					has_tech = improved_decimetric_radar
 				}
 			}
@@ -980,6 +1004,8 @@ is_organization_of_african_unity_member = {
 
 has_tech_sharing_feature = {
 	OR = {
+		has_dlc = "Together for Victory"
+		has_dlc = "Death or Dishonor"
 		has_dlc = "Waking the Tiger"
 		has_dlc = "La Resistance"
 	}
@@ -1042,25 +1068,7 @@ is_alpine_state = {
 			state = 153 #Tyrol - AUS 
 			state = 152 #Upper Austria - AUS 
 			state = 1054 #Styria - AUS 
-			state = 1086 #Burgenland - AUS 
 			state = 4 #Lower Austria 
-		}
-	}
-}
-
-#State scope
-state_is_fully_controlled_by_ROOT_subject_or_faction_member = {
-	custom_trigger_tooltip = {
-		tooltip = state_is_fully_controlled_by_ROOT_subject_or_faction_member_tt
-		OR = {
-			is_fully_controlled_by = ROOT
-			controller = {
-				OR = {
-					is_subject_of = ROOT
-					is_in_faction_with = ROOT
-				}
-				has_full_control_of_state = PREV
-			}
 		}
 	}
 }
@@ -1152,8 +1160,6 @@ is_unlikely_country_tag = {
 		tag = KAR
 		tag = SIL
 		tag = KSH
-		tag = EIS
-		tag = PPA
 	}
 }
 

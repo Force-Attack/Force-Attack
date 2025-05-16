@@ -23,10 +23,8 @@ focus_tree = {
 		factor = 0
 		
 		modifier = {
-			add = 15
+			add = 10
 			tag = FIN
-			#in vanilla the neutrality tree is still free, maybe check if we wanna use parts
-			has_global_flag = FIN_use_DLC_tree
 		}
 	}
 	
@@ -352,10 +350,10 @@ focus_tree = {
 				ideology = neutrality
 				ruling_party = communism
 				size = FIN_communist_cw_size_of_breakaway_country
+				keep_all_characters = yes #Keep all characters on target country side - will ignore all following keep_ parameters - default value = no
 				#capital = <state_id> # Optional. Capital of Revolt country
 				#states = {<state_id>} # States that go to the revolter. Use "all" to include all states.
 				#states_filter = { <triggers> } # Optional. States that go to the revolter. Filtering trigger on the states scripted to go to the revolter.
-				#keep_all_characters = no #Optional. Keep all characters on target country side - will ignore all following keep_ parameters - default value = no
 				#keep_unit_leaders = { <unit_leader_ids> } # Optional. specify ID of unit leaders that remain with the original country
 				#keep_unit_leaders_trigger = { <triggers> } # Optional. Trigger for unit leaders to remain with the original country
 				#keep_political_leader = no # optional, default is no; If yes, the party leader of the revolting ideology will not join the revolter as its leader.
@@ -1254,6 +1252,8 @@ focus_tree = {
 		relative_position_id = FIN_approach_the_soviets
 		cost = 10
 
+		bypass = { is_in_faction_with = SOV }
+
 		available = {
 			is_subject = no
 			has_civil_war = no
@@ -1321,7 +1321,7 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				prioritize = { 149 1036 111 } #VAASA TURKU UUSIMAA (Helsinki)
+				prioritize = { 149 926 111 } #VAASA TURKU UUSIMAA (Helsinki)
 				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = industrial_complex
@@ -1442,11 +1442,11 @@ focus_tree = {
 			# KYMI (Only if Naval Base)
 			if = {
 				limit = {
-					1038 = {
+					928 = {
 						naval_base > 0
 					}
 				}
-				1038 = { #KYMI
+				928 = { #KYMI
 					add_building_construction = { #Coastal Bunker in Kotka
 						type = coastal_bunker
 						level = 4
@@ -1499,7 +1499,7 @@ focus_tree = {
 			}
 
 			#TURKU
-			1036 = {
+			926 = {
 				add_building_construction = { #Coastal Bunker in Turku
 					type = coastal_bunker
 					level = 4
@@ -1766,7 +1766,7 @@ focus_tree = {
 
 	focus = {
 		id = FIN_social_democracy
-		icon = GFX_goal_generic_socdem
+		icon = GFX_focus_generic_the_giant_wakes
 		prerequisite = { focus = FIN_suomalainen_sosialismi }
 		mutually_exclusive = { focus = FIN_towards_a_red_government }
 
@@ -1777,7 +1777,7 @@ focus_tree = {
 		cost = 5
 
 		bypass = {
-			#has_government = democratic # starts democratic, so this prevents the communist path
+			has_government = democratic
 		}
 
 		available = {
@@ -1806,7 +1806,7 @@ focus_tree = {
 	
 	focus = {
 		id = FIN_pragmatic_socialism
-		icon = GFX_goal_generic_socdem_2
+		icon = GFX_focus_FIN_pragmatic_socialism
 		prerequisite = { focus = FIN_social_democracy }
 
 		x = 4
@@ -1814,7 +1814,9 @@ focus_tree = {
 		relative_position_id = FIN_antagonize_the_soviets
 		cost = 5
 		
-		
+		bypass = {
+			has_government = democratic
+		}
 
 		available = {
 			democratic > 0.6
@@ -1831,7 +1833,6 @@ focus_tree = {
 				election_frequency = 36
 				elections_allowed = yes
 			}
-			promote_character = FIN_vaino_tanner
 
 			add_stability = -0.1
 
@@ -1935,7 +1936,7 @@ focus_tree = {
 	
 	focus = {
 		id = FIN_sosialistinen_eduskuntaryhma
-		icon = GFX_focus_FIN_pragmatic_socialism
+		icon = GFX_focus_prc_agrarian_socialism
 		prerequisite = { focus = FIN_pragmatic_socialism }
 
 		x = -1
@@ -2171,6 +2172,8 @@ focus_tree = {
 			}
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			#TODO_Manu: Possibly unlocks decision to form the Finnish Democratic Republic.
 
@@ -2243,6 +2246,8 @@ focus_tree = {
 				FIN_country_can_be_invited_into_faction_socialist = yes
 			}
 		}
+
+		search_filters = {}
 
 		completion_reward = {
 			create_faction = FIN_northern_defense_front_faction
@@ -2490,6 +2495,8 @@ focus_tree = {
 			}
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			if = {
 				limit = {
@@ -2611,6 +2618,8 @@ focus_tree = {
 			}
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			retire_character = FIN_otto_wille_kuusinen
 			if = {
@@ -2722,15 +2731,6 @@ focus_tree = {
 			NOT = { is_in_faction_with = ENG }
 			NOT = { has_non_aggression_pact_with = ENG }
 			NOT = { has_guaranteed = ENG }
-			OR = {
-				has_army_manpower = { size > 300000 }
-				AND = {
-					ENG = {
-						has_army_manpower = { size < 500000 }
-					}
-					has_army_manpower = { size > 200000 }
-				}
-			}
 		}
 
 		select_effect = {
@@ -3262,7 +3262,7 @@ focus_tree = {
 			666 = { #NORRBOTTEN
 				add_core_of = ROOT
 			}
-			1035 = { #FINNMARK
+			925 = { #FINNMARK
 				add_core_of = ROOT
 			}
 
@@ -3551,6 +3551,8 @@ focus_tree = {
 			is_subject = no
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			custom_effect_tooltip = FIN_finnish_influence_in_the_baltic_tt
 
@@ -3790,62 +3792,69 @@ focus_tree = {
 	}
 	
 	
-	#focus = {
-	#	id = FIN_preserve_sapmi
-	#	icon = GFX_focus_SWE_Sami_reconcilliation
-	#	prerequisite = { focus = FIN_finnish_influence_in_the_baltic }
+	focus = {
+		id = FIN_preserve_sapmi
+		icon = GFX_focus_SWE_Sami_reconcilliation
+		prerequisite = { focus = FIN_finnish_influence_in_the_baltic }
 
-	#	x = 0
-	#	y = 1
-	#	relative_position_id = FIN_finnish_influence_in_the_baltic
-	#	cost = 10
-	#	available = {
-	#	}
+		x = 0
+		y = 1
+		relative_position_id = FIN_finnish_influence_in_the_baltic
+		cost = 10
+		available = {
+			is_subject = no
+			SMI = {
+				any_core_state = {
+					NOT = { is_core_of = ROOT }
+					NOT = { controller = { has_war_with = ROOT } }
+				}
+			}
+		}
 
-	#	search_filters = { FOCUS_FILTER_ANNEXATION }
+		search_filters = { FOCUS_FILTER_ANNEXATION }
 
-	#	completion_reward = {
-	#		custom_effect_tooltip = FIN_preserve_sapmi_event_tt
-	#		if = {
-	#			limit = {
-	#				any_other_country = {
-	#					NOT = { has_war_with = ROOT }
-	#					any_controlled_state = {
-	#						is_core_of = SMI
-	#					}
-	#				}
-	#			}
-	#			custom_effect_tooltip = generic_current_effects
-	#			every_other_country = {
-	#				limit = {
-	#					NOT = { has_war_with = ROOT }
-	#					any_controlled_state = {
-	#						is_core_of = SMI
-	#					}
-	#				}
-	#				country_event = { id = AAT_finland_diplomacy.05 hours = 8 random_hours = 6 }
-	#			}
-	#		}
+		completion_reward = {
+			custom_effect_tooltip = FIN_preserve_sapmi_event_tt
+			if = {
+				limit = {
+					any_other_country = {
+						NOT = { has_war_with = ROOT }
+						any_controlled_state = {
+							is_core_of = SMI
+						}
+					}
+				}
+				custom_effect_tooltip = generic_current_effects
+				every_other_country = {
+					limit = {
+						NOT = { has_war_with = ROOT }
+						any_controlled_state = {
+							is_core_of = SMI
+						}
+					}
+					country_event = { id = AAT_finland_diplomacy.05 hours = 8 random_hours = 6 }
+				}
+			}
 
-	#		custom_effect_tooltip = FIN_preserve_sapmi_cores_tt
-	#		if = {
-	#			limit = {
-	#				any_controlled_state = {
-	#					is_core_of = SMI
-	#					NOT = { is_core_of = FIN }
-	#				}
-	#			}
-	#			custom_effect_tooltip = generic_current_effects
-	#			every_controlled_state = {
-	#				limit = {
-	#					is_core_of = SMI
-	#					NOT = { is_core_of = FIN }
-	#				}
-	#				add_core_of = ROOT
-	#			}
-	#		}
-	#	}
-	#}
+			custom_effect_tooltip = FIN_preserve_sapmi_cores_tt
+			if = {
+				limit = {
+					any_controlled_state = {
+						is_core_of = SMI
+						NOT = { is_core_of = FIN }
+					}
+				}
+				custom_effect_tooltip = generic_current_effects
+				every_controlled_state = {
+					limit = {
+						is_core_of = SMI
+						NOT = { is_core_of = FIN }
+					}
+					add_core_of = ROOT
+				}
+			}
+		}
+	}
 	
 	focus = {
 		id = FIN_confederated_finno_russian_republics
@@ -3858,13 +3867,9 @@ focus_tree = {
 		cost = 10
 		available = {
 			is_subject = no
-			195 = {
-				is_owned_and_controlled_by = ROOT
-			}
-			219 = {
-				is_owned_and_controlled_by = ROOT
-			}
 		}
+
+		search_filters = {}
 
 		completion_reward = {
 			set_cosmetic_tag = FIN_confederated_finno_russian_republics
@@ -3999,30 +4004,17 @@ focus_tree = {
 		icon = GFX_focus_attack_germany
 		prerequisite = { focus = FIN_finnish_influence_in_the_baltic focus = FIN_secure_the_baltic_sea }
 
-		x = 1
+		x = 2
 		y = 1
 		relative_position_id = FIN_finnish_influence_in_the_baltic
 		cost = 10
 
 		available = {
-			r56_script_i_am_sane = yes
-			GER = {
-				r56_script_target_is_sane = yes
-			}
 			is_subject = no
 			country_exists = GER
 			NOT = { is_in_faction_with = GER }
 			NOT = { has_non_aggression_pact_with = GER }
 			NOT = { has_guaranteed = GER }
-			OR = {
-				has_army_manpower = { size > 300000 }
-				AND = {
-					GER = {
-						has_army_manpower = { size < 500000 }
-					}
-					has_army_manpower = { size > 200000 }
-				}
-			}
 		}
 
 		select_effect = {
@@ -4030,17 +4022,6 @@ focus_tree = {
 				type = prepare_for_war
 				id = GER
 				value = 100
-			}
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				add = -10
-				strength_ratio = {
-					tag = GER
-					ratio < 0.6
-				}
 			}
 		}
 
@@ -4246,14 +4227,14 @@ focus_tree = {
 			}
 
 			add_tech_bonus = {
-				ahead_reduction = 1.5
+				ahead_reduction = 2
 				uses = 1
 				category = industry
 				name = FIN_aid_for_entrepreneurs
 			}
 
 			add_tech_bonus = {
-				ahead_reduction = 1.5
+				ahead_reduction = 2
 				uses = 1
 				category = electronics
 				name = FIN_aid_for_entrepreneurs
@@ -4266,40 +4247,16 @@ focus_tree = {
 		icon = GFX_focus_attack_soviet
 		prerequisite = { focus = FIN_secure_the_baltic_sea focus = FIN_aid_for_entrepreneurs }
 
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = FIN_secure_the_baltic_sea
 		cost = 10
 		available = {
-			r56_script_i_am_sane = yes
-			SOV = {
-				r56_script_target_is_sane = yes
-			}
 			is_subject = no
 			country_exists = SOV
 			NOT = { is_in_faction_with = SOV }
 			NOT = { has_non_aggression_pact_with = SOV }
 			NOT = { has_guaranteed = SOV }
-			OR = {
-				has_army_manpower = { size > 300000 }
-				AND = {
-					SOV = {
-						has_army_manpower = { size < 500000 }
-					}
-					has_army_manpower = { size > 200000 }
-				}
-			}
-		}
-
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				add = -10
-				strength_ratio = {
-					tag = SOV
-					ratio < 0.6
-				}
-			}
 		}
 
 		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
@@ -4369,10 +4326,10 @@ focus_tree = {
 			count_triggers = {
 				amount = 6
 				controls_state = 666 #NORRBOTTEN
-				controls_state = 1029 #VÄSTERBOTTEN
+				controls_state = 918 #VÄSTERBOTTEN
 				controls_state = 144 #NORDLAND
-				controls_state = 1034 #TROMS
-				controls_state = 1035 #FINNMARK
+				controls_state = 924 #TROMS
+				controls_state = 925 #FINNMARK
 				controls_state = 213 #MURMANSK
 				controls_state = 215 #ONEGA
 				controls_state = 216 #OLONETS
@@ -4383,6 +4340,8 @@ focus_tree = {
 				controls_state = 191 #TARTU
 			}
 		}
+
+		search_filters = {}
 
 		completion_reward = {
 			set_cosmetic_tag = FIN_grand_finnish_federation
@@ -4399,7 +4358,7 @@ focus_tree = {
 			666 = { #NORRBOTTEN
 				add_core_of = ROOT
 			}
-			1035 = { #FINNMARK
+			925 = { #FINNMARK
 				add_core_of = ROOT
 			}
 
@@ -4408,10 +4367,10 @@ focus_tree = {
 					any_controlled_state = {
 						OR = {
 							state = 666
-							state = 1029
+							state = 918
 							state = 144
-							state = 1034
-							state = 1035
+							state = 924
+							state = 925
 							state = 213
 							state = 215
 							state = 216
@@ -4428,10 +4387,10 @@ focus_tree = {
 					limit = {
 						OR = {
 							state = 666
-							state = 1029
+							state = 918
 							state = 144
-							state = 1034
-							state = 1035
+							state = 924
+							state = 925
 							state = 213
 							state = 215
 							state = 216
@@ -4512,10 +4471,10 @@ focus_tree = {
 		bypass = {
 			is_subject = no
 			controls_state = 666 #NORRBOTTEN
-			controls_state = 1029 #VÄSTERBOTTEN
+			controls_state = 918 #VÄSTERBOTTEN
 			controls_state = 144 #NORDLAND
-			controls_state = 1034 #TROMS
-			controls_state = 1035 #FINNMARK
+			controls_state = 924 #TROMS
+			controls_state = 925 #FINNMARK
 		}
 
 		available = {
@@ -4535,7 +4494,7 @@ focus_tree = {
 				}
 				
 				#VÄSTERBOTTEN
-				1029 = {
+				918 = {
 					controller = {
 						if = {
 							limit = {
@@ -4559,7 +4518,7 @@ focus_tree = {
 				}
 
 				#TROMS
-				1034 = {
+				924 = {
 					controller = {
 						if = {
 							limit = {
@@ -4571,7 +4530,7 @@ focus_tree = {
 				}
 
 				#FINNMARK
-				1035 = {
+				925 = {
 					controller = {
 						if = {
 							limit = {
@@ -4648,10 +4607,7 @@ focus_tree = {
 		cost = 5
 
 		available = {
-			OR = {
-				has_government = neutrality
-				has_government = democratic #added R56
-			}
+			has_government = neutrality
 			is_subject = no
 		}
 
@@ -4665,106 +4621,101 @@ focus_tree = {
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = FIN_risto_ryti
 
-			if = { #To keep AI sane for historical until issues are solved - SpicyAlfredo
-				limit = {
-					ROOT = {
-						is_ai = yes
-						is_historical_focus_on = yes
-					}
-				}
-				add_ideas = neutrality_idea
-			}
-
 			hidden_effect = {
-				# SWAP ADVISOR TRAITS TO HIDE TOOLTIP ABOUT DECISIONS
-				FIN_karl_august_fagerholm = {
-					if = {
-						limit = {
-							has_trait = FIN_democratic_reformer_fagerholm
-						}
-						add_trait = {
-							trait = democratic_reformer
-							slot = political_advisor
-						}
-						remove_trait = {
-							trait = FIN_democratic_reformer_fagerholm
-							slot = political_advisor
+				if = {
+					limit = {
+						has_dlc = "Arms Against Tyranny"
+					}
+					# SWAP ADVISOR TRAITS TO HIDE TOOLTIP ABOUT DECISIONS
+					FIN_karl_august_fagerholm = {
+						if = {
+							limit = {
+								has_trait = FIN_democratic_reformer_fagerholm
+							}
+							add_trait = {
+								trait = democratic_reformer
+								slot = political_advisor
+							}
+							remove_trait = {
+								trait = FIN_democratic_reformer_fagerholm
+								slot = political_advisor
+							}
 						}
 					}
-				}
-				FIN_vaino_tanner = {
-					if = {
-						limit = {
-							has_trait = FIN_humble_appeaser_tanner
-						}
-						add_trait = {
-							trait = appeaser
-							slot = political_advisor
-						}
-						remove_trait = {
-							trait = FIN_humble_appeaser_tanner
-							slot = political_advisor
-						}
-					}
-				}
-				FIN_miina_sillanpaa = {
-					if = {
-						limit = {
-							has_trait = FIN_champion_of_equality_sillanpaa
-						}
-						add_trait = {
-							trait = champion_of_equality
-							slot = political_advisor
-						}
-						remove_trait = {
-							trait = FIN_champion_of_equality_sillanpaa
-							slot = political_advisor
+					FIN_vaino_tanner = {
+						if = {
+							limit = {
+								has_trait = FIN_humble_appeaser_tanner
+							}
+							add_trait = {
+								trait = appeaser
+								slot = political_advisor
+							}
+							remove_trait = {
+								trait = FIN_humble_appeaser_tanner
+								slot = political_advisor
+							}
 						}
 					}
-				}
-				# SWAP ADVISOR TRAITS TO HIDE TOOLTIP ABOUT DECISIONS
-				FIN_yrjo_leino = {
-					if = {
-						limit = {
-							has_trait = FIN_communist_revolutionary_leino
-						}
-						add_trait = {
-							trait = communist_revolutionary
-							slot = political_advisor
-						}
-						remove_trait = {
-							trait = FIN_communist_revolutionary_leino
-							slot = political_advisor
-						}
-					}
-				}
-				FIN_aarne_saarinen = {
-					if = {
-						limit = {
-							has_trait = FIN_technocrat_saarinen
-						}
-						add_trait = {
-							trait = technocrat
-							slot = political_advisor
-						}
-						remove_trait = {
-							trait = FIN_technocrat_saarinen
-							slot = political_advisor
+					FIN_miina_sillanpaa = {
+						if = {
+							limit = {
+								has_trait = FIN_champion_of_equality_sillanpaa
+							}
+							add_trait = {
+								trait = champion_of_equality
+								slot = political_advisor
+							}
+							remove_trait = {
+								trait = FIN_champion_of_equality_sillanpaa
+								slot = political_advisor
+							}
 						}
 					}
-				}
-				FIN_otto_wille_kuusinen = {
-					if = {
-						limit = {
-							has_trait = FIN_patriotic_socialist_kuusinen
+					# SWAP ADVISOR TRAITS TO HIDE TOOLTIP ABOUT DECISIONS
+					FIN_yrjo_leino = {
+						if = {
+							limit = {
+								has_trait = FIN_communist_revolutionary_leino
+							}
+							add_trait = {
+								trait = communist_revolutionary
+								slot = political_advisor
+							}
+							remove_trait = {
+								trait = FIN_communist_revolutionary_leino
+								slot = political_advisor
+							}
 						}
-						add_trait = {
-							trait = patriotic_socialist
-							slot = political_advisor
+					}
+					FIN_aarne_saarinen = {
+						if = {
+							limit = {
+								has_trait = FIN_technocrat_saarinen
+							}
+							add_trait = {
+								trait = technocrat
+								slot = political_advisor
+							}
+							remove_trait = {
+								trait = FIN_technocrat_saarinen
+								slot = political_advisor
+							}
 						}
-						remove_trait = {
-							trait = FIN_patriotic_socialist_kuusinen
-							slot = political_advisor
+					}
+					FIN_otto_wille_kuusinen = {
+						if = {
+							limit = {
+								has_trait = FIN_patriotic_socialist_kuusinen
+							}
+							add_trait = {
+								trait = patriotic_socialist
+								slot = political_advisor
+							}
+							remove_trait = {
+								trait = FIN_patriotic_socialist_kuusinen
+								slot = political_advisor
+							}
 						}
 					}
 				}
@@ -4922,15 +4873,15 @@ focus_tree = {
 			#Railway to Pori and Rauma and Naval Base in Pori
 			if = {
 				limit = {
-					has_full_control_of_state = 1036 #TURKU
+					has_full_control_of_state = 926 #TURKU
 				}
 				if = {
 					limit = {
-						1036 = {
+						926 = {
 							naval_base < 10
 						}
 					}
-					1036 = {
+					926 = {
 						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
 							type = naval_base
@@ -4978,7 +4929,7 @@ focus_tree = {
 					controls_province = 136 #Varkaus
 					controls_province = 11043
 				}
-				1040 = { #MIKKELI
+				930 = { #MIKKELI
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = supply_node
@@ -5155,16 +5106,12 @@ focus_tree = {
 						character = FIN_pehr_evind_svinhufvud
 					}
 				}
-				FIN_pehr_evind_svinhufvud = { #has 2 ideologies in R56, needs ideology argument
+				FIN_pehr_evind_svinhufvud = {
 					swap_country_leader_traits = {
-						ideology = liberalism
 						remove = member_of_the_suojeluskunta
 						add = member_of_the_suojeluskunta_improved
 					}
-					add_country_leader_trait = {
-						ideology = liberalism
-						trait = kokoomus_policies
-					}
+					add_country_leader_trait = kokoomus_policies
 				}
 			}
 			FIN_juho_kusti_paasikivi = {
@@ -5209,21 +5156,16 @@ focus_tree = {
 				ruling_only = yes
 				character = FIN_pehr_evind_svinhufvud
 			}
-			neutrality > 0.5
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
-			set_politics = {
-				ruling_party = neutrality
-				elections_allowed = no
-			}
 			add_country_leader_role = {
 				character =  FIN_prince_wolfgang_von_hesse
 				promote_leader = yes
 				country_leader = {
-					ideology = absolute_monarchism
+					ideology = despotism
 					expire = "1965.1.1.1"
 					traits = { crown_prince_of_finland personal_agenda_von_hesse }
 				}
@@ -5300,26 +5242,6 @@ focus_tree = {
 					add = sotamarsalkka_improved
 				}
 			}
-
-			if = {	#do after trait swap so that doesn't need ideology defined
-				limit = {	#if already switched to neutrality, will not be required, as mannerheim when summoned will instead add this role (except here I give him the improved trait immediately)
-					has_government = democratic
-				}
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-				add_country_leader_role = {
-					character = FIN_carl_mannerheim
-					promote_leader = yes
-					country_leader = {
-						ideology = military_junta # no party - r56: changed from oligarchism
-						expire = "1965.1.1.1"
-						id = -1
-						traits = { sotamarsalkka_improved personal_agenda_mannerheim }
-					}
-				}
-			}
 		}
 	}
 
@@ -5335,7 +5257,7 @@ focus_tree = {
 		available = {
 			has_country_leader = {
 				ruling_only = yes
-				character = FIN_risto_heikki_ryti
+				character = FIN_risto_ryti
 			}
 		}
 
@@ -5346,7 +5268,7 @@ focus_tree = {
 
 			add_political_power = 100
 
-			FIN_risto_heikki_ryti = {
+			FIN_risto_ryti = {
 				swap_country_leader_traits = {
 					remove = white_liberal_leader
 					add = white_liberal_leader_improved
@@ -5421,10 +5343,7 @@ focus_tree = {
 		relative_position_id = FIN_reach_out_to_scandinavia
 		cost = 5
 		available = {
-			OR = {
-				has_government = neutrality
-				has_government = democratic #added R56
-			}
+			has_government = neutrality
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL FOCUS_FILTER_BALANCE_OF_POWER }
@@ -5450,50 +5369,6 @@ focus_tree = {
 				is_in_faction_with = ENG
 				is_in_faction_with = FRA
 				is_in_faction_with = USA
-			}
-		}
-		
-		historical_ai = {
-			NOT = {
-				has_global_flag = FIN_use_DLC_tree
-				OR = {
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = FIN_ai_behavior
-							option = DEFAULT
-						}
-					}
-					has_country_flag = FIN_AI_RANDOM_NON_ALIGNED_HISTORICAL
-					has_game_rule = {
-						rule = FIN_ai_behavior
-						option = NON_ALIGNED_HISTORICAL
-					}
-				}
-			}
-		}
-
-		
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-				has_global_flag = FIN_use_DLC_tree
-				OR = {
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = FIN_ai_behavior
-							option = DEFAULT
-						}
-					}
-					has_country_flag = FIN_AI_RANDOM_NON_ALIGNED_HISTORICAL
-					has_game_rule = {
-						rule = FIN_ai_behavior
-						option = NON_ALIGNED_HISTORICAL
-					}
-				}
 			}
 		}
 
@@ -5531,6 +5406,8 @@ focus_tree = {
 				}
 			}
 		}
+
+		search_filters = {}
 
 		completion_reward = {
 			if = {
@@ -5642,51 +5519,8 @@ focus_tree = {
 			is_subject = no
 			threat > 0.5
 			has_war = no
-			OR = {
-				has_government = neutrality
-				has_government = democratic #added R56
-			}
-		}
-		historical_ai = {
-			NOT = {
-				has_global_flag = FIN_use_DLC_tree
-				OR = {
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = FIN_ai_behavior
-							option = DEFAULT
-						}
-					}
-					has_country_flag = FIN_AI_RANDOM_NON_ALIGNED_HISTORICAL
-					has_game_rule = {
-						rule = FIN_ai_behavior
-						option = NON_ALIGNED_HISTORICAL
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-				has_global_flag = FIN_use_DLC_tree
-				OR = {
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = FIN_ai_behavior
-							option = DEFAULT
-						}
-					}
-					has_country_flag = FIN_AI_RANDOM_NON_ALIGNED_HISTORICAL
-					has_game_rule = {
-						rule = FIN_ai_behavior
-						option = NON_ALIGNED_HISTORICAL
-					}
-				}
-			}
+			has_government = neutrality
+			is_in_faction = no 
 		}
 		bypass = {
 			is_faction_leader = yes 
@@ -5694,6 +5528,8 @@ focus_tree = {
 				NORDIC_is_nordic = yes 
 			}
 		}
+
+		search_filters = {}
 
 		completion_reward = {
 			create_faction = FIN_northern_defense_front_faction
@@ -5733,21 +5569,21 @@ focus_tree = {
 						limit = {
 							is_subject = no
 						}
-						# AI more friendly
+					}
+					# AI more friendly
+					add_ai_strategy = { 
+						type = befriend 
+						id = ROOT
+						value = 40
+					}
+					ROOT = {
 						add_ai_strategy = { 
 							type = befriend 
-							id = ROOT
+							id = PREV
 							value = 40
 						}
-						ROOT = {
-							add_ai_strategy = { 
-								type = befriend 
-								id = PREV
-								value = 40
-							}
-						}
-						country_event = { id = generic.5 hours = 2 }
 					}
+					country_event = { id = generic.5 hours = 2 }
 				}
 				custom_effect_tooltip = FIN_northern_defense_front_faction_tt
 			}
@@ -5766,18 +5602,10 @@ focus_tree = {
 		available = {
 			is_subject = no
 			is_in_faction = no
-			threat > 0.35							#reduced R56 due to not enough WT if historical
-			#neutrality > 0.85						#removed R56 due to different starting ideology
-			#NOT = { has_government = democratic }	#removed R56 due to different starting ideology
+			threat > 0.5
+			neutrality > 0.85
+			NOT = { has_government = democratic }
 			NOT = { has_government = communism }
-			SOV = {
-				OR = {
-					has_war_with = ROOT
-					any_owned_state = {
-						is_core_of = ROOT
-					}
-				}
-			}
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER }
@@ -5786,7 +5614,7 @@ focus_tree = {
 			add_political_power = 100
 			add_stability = 0.05
 			add_war_support = 0.05
-			set_country_flag = r56_fin_trigger_con_war_front_control
+
 			add_ideas = FIN_the_lone_wolf
 		}
 	}
@@ -6175,12 +6003,6 @@ focus_tree = {
 						has_capitulated = no
 						is_in_faction_with = ROOT
 					}
-					OR = {
-						owns_state = 929
-						owns_state = 722
-						owns_state = 926
-						owns_state = 148
-					}
 				}
 				country_event = AAT_finland_misc_events.04
 			}
@@ -6268,9 +6090,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = FIN_military_aid
 		cost = 10
-
 		available = {
-			exists = yes
 		}
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -6700,7 +6520,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = FIN_modernize_the_industry
-				bonus = 0.75
+				bonus = 0.5
 				uses = 2
 				category = industry
 				category = electronics
@@ -6779,7 +6599,7 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = FIN_modify_finnish_army_ns_intro
-			#add_to_variable = { FIN_finnish_army_special_forces_cap_flat = 80 tooltip = special_forces_cap_tt }
+			add_to_variable = { FIN_finnish_army_special_forces_cap = 0.2 tooltip = special_forces_cap_tt }
 
 			add_doctrine_cost_reduction = {
 				name = FIN_modernize_the_army
@@ -6987,6 +6807,8 @@ focus_tree = {
 			}
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			custom_effect_tooltip = FIN_ambitions_in_the_south_claims_tt
 			custom_effect_tooltip = generic_current_effects
@@ -7190,35 +7012,35 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			# if = { #Just for tooltip purposes - R56: replaced with decision
-			# 	limit = {
-			# 		has_war = no
-			# 		country_exists = SWE
-			# 		NOT = {
-			# 			has_war_with = SWE
-			# 			any_enemy_country = {
-			# 				is_in_faction_with = SWE
-			# 			}
-			# 		}
-			# 		SWE = { is_subject = no }
-			# 	}
-			# 	effect_tooltip = {
-			# 		country_event = AAT_finland_winter_war.01
-			# 	}
-			# }
-			# if = {
-			# 	limit = {
-			# 		country_exists = SWE
-			# 		NOT = {
-			# 			has_war_with = SWE
-			# 			any_enemy_country = {
-			# 				is_in_faction_with = SWE
-			# 			}
-			# 		}
-			# 		SWE = { is_subject = no }
-			# 	}
-			# 	country_event = AAT_finland_winter_war.01
-			# }
+			if = { #Just for tooltip purposes
+				limit = {
+					has_war = no
+					country_exists = SWE
+					NOT = {
+						has_war_with = SWE
+						any_enemy_country = {
+							is_in_faction_with = SWE
+						}
+					}
+					SWE = { is_subject = no }
+				}
+				effect_tooltip = {
+					country_event = AAT_finland_winter_war.01
+				}
+			}
+			else_if = {
+				limit = {
+					country_exists = SWE
+					NOT = {
+						has_war_with = SWE
+						any_enemy_country = {
+							is_in_faction_with = SWE
+						}
+					}
+					SWE = { is_subject = no }
+				}
+				country_event = AAT_finland_winter_war.01
+			}
 
 			add_timed_idea = {
 				idea = FIN_international_volunteers
@@ -7246,6 +7068,8 @@ focus_tree = {
 			controls_state = 216 #OLONETS
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			FIN_bop_low_increase_effect = yes
 
@@ -7261,7 +7085,7 @@ focus_tree = {
 			666 = { #NORRBOTTEN
 				add_core_of = ROOT
 			}
-			1035 = { #FINNMARK
+			925 = { #FINNMARK
 				add_core_of = ROOT
 			}
 
@@ -8653,7 +8477,7 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = FIN_modify_fascist_regime_ns_intro
-			#add_to_variable = { FIN_fascist_regime_special_forces_cap_flat = 120 tooltip = special_forces_cap_tt }
+			add_to_variable = { FIN_fascist_regime_special_forces_cap = 0.3 tooltip = special_forces_cap_tt }
 			add_to_variable = { FIN_fascist_regime_special_forces_no_supply_grace = 24 tooltip = special_forces_no_supply_grace_tt }
 			add_to_variable = { FIN_fascist_regime_special_forces_out_of_supply_factor = -0.15 tooltip = special_forces_out_of_supply_factor_tt }
 			add_to_variable = { FIN_fascist_regime_special_forces_attack_factor = 0.10 tooltip = special_forces_attack_factor_tt }
@@ -10032,6 +9856,9 @@ focus_tree = {
 
 
 
+
+
+
 #### ##    ## ########  ##     ##  ######  ######## ########  ####    ###    ##          ########  ########     ###    ##    ##  ######  ##     ## 
  ##  ###   ## ##     ## ##     ## ##    ##    ##    ##     ##  ##    ## ##   ##          ##     ## ##     ##   ## ##   ###   ## ##    ## ##     ## 
  ##  ####  ## ##     ## ##     ## ##          ##    ##     ##  ##   ##   ##  ##          ##     ## ##     ##  ##   ##  ####  ## ##       ##     ## 
@@ -10080,8 +9907,6 @@ focus_tree = {
 
 		cost = 10
 		available = {
-			has_full_control_of_state = 111 #UUSIMAA (Helsinki)
-			has_full_control_of_state = 1036 #TURKU
 		}
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -10115,9 +9940,9 @@ focus_tree = {
 			#HÄME
 			if = {
 				limit = {
-					has_full_control_of_state = 1037
+					has_full_control_of_state = 927
 				}
-				1037 = { #HÄME
+				927 = { #HÄME
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = infrastructure
@@ -10143,9 +9968,9 @@ focus_tree = {
 			#KYME
 			if = {
 				limit = {
-					has_full_control_of_state = 1038
+					has_full_control_of_state = 928
 				}
-				1038 = { #KYME
+				928 = { #KYME
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = infrastructure
@@ -10163,8 +9988,8 @@ focus_tree = {
 
 				if = {
 					limit = {
-						has_full_control_of_state = 1040
-						has_full_control_of_state = 1037
+						has_full_control_of_state = 930
+						has_full_control_of_state = 927
 					}
 					# Helsinki - Hämeenlinna - Lahti - Kouvola - Kotka
 					build_railway = {
@@ -10197,9 +10022,9 @@ focus_tree = {
 			#MIKKELI
 			if = {
 				limit = {
-					has_full_control_of_state = 1040
+					has_full_control_of_state = 930
 				}
-				1040 = { #MIKKELI
+				930 = { #MIKKELI
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = infrastructure
@@ -10247,7 +10072,7 @@ focus_tree = {
 			}
 			else = {
 				random_owned_state = {
-					prioritize = { 1038 } #KYME
+					prioritize = { 928 } #KYME
 					limit = {
 						is_controlled_by = ROOT
 					}
@@ -10262,9 +10087,9 @@ focus_tree = {
 			#TURKU
 			if = {
 				limit = {
-					controls_state = 1036
+					controls_state = 926
 				}
-				1036 = { #TURKU
+				926 = { #TURKU
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = industrial_complex
@@ -10402,7 +10227,7 @@ focus_tree = {
 		relative_position_id = FIN_janiskoski_power_plant
 		cost = 10
 		available = {
-		
+			has_tech = construction3
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
@@ -10441,13 +10266,12 @@ focus_tree = {
 		relative_position_id = FIN_janiskoski_power_plant
 		cost = 5
 		available = {
-			has_full_control_of_state = 1038 #KYME
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			1038 = { #KYME
+			1036 = { #KYME
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -10472,14 +10296,13 @@ focus_tree = {
 		relative_position_id = FIN_expand_imatra_hydropower_plant
 		cost = 5
 		available = {
-			
-			has_full_control_of_state = 1039 #OULU
+			has_tech = excavation3
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			1039 = { #OULU
+			929 = { #OULU
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -10530,7 +10353,7 @@ focus_tree = {
 		relative_position_id = FIN_expand_imatra_hydropower_plant
 		cost = 10
 		available = {
-			
+			has_tech = construction4
 		}
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -10559,7 +10382,7 @@ focus_tree = {
 			}
 
 			random_core_state = {
-				prioritize = { 1037 } #HÄME (Tampere)
+				prioritize = { 927 } #HÄME (Tampere)
 				limit = {
 					is_fully_controlled_by = ROOT
 					free_building_slots = {
@@ -10579,7 +10402,7 @@ focus_tree = {
 			}
 
 			random_core_state = {
-				prioritize = { 1040 } #MIKKELI
+				prioritize = { 930 } #MIKKELI
 				limit = {
 					is_fully_controlled_by = ROOT
 					free_building_slots = {
@@ -10610,7 +10433,6 @@ focus_tree = {
 		relative_position_id = FIN_industrial_development
 		cost = 10
 		available = {
-			has_full_control_of_state = 1037 #HÄME (Tampere - Nokia)
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY }
@@ -10618,7 +10440,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = FIN_tire_factory_at_nokia
-				bonus = 1
+				bonus = 0.5
 				uses = 2
 				category = synth_resources
 			}
@@ -10632,7 +10454,7 @@ focus_tree = {
 			else = {
 				custom_effect_tooltip = FIN_tire_factory_at_nokia_tech_tt
 				effect_tooltip = {
-					1037 = {
+					1036 = {
 						add_extra_state_shared_building_slots = 3
 						custom_effect_tooltip = FIN_tire_factory_at_nokia_add_synthetic_refineries_tt
 					}
@@ -10686,7 +10508,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = FIN_vaisala_radiosonde_tests
-				bonus = 0.75
+				bonus = 0.5
 				uses = 2
 				category = electronics
 			}
@@ -10710,7 +10532,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = FIN_tire_factory_at_nokia
-		cost = 10
+		cost = 5
 		available = {
 		}
 
@@ -10759,15 +10581,13 @@ focus_tree = {
 		relative_position_id = FIN_tire_factory_at_nokia
 		cost = 5
 		available = {
-			has_full_control_of_state = 1036 #TURKU
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			custom_effect_tooltip = available_industrial_concern
-			show_ideas_tooltip = wartsila_company
-			1036 = {
+			1036 = { #TURKU
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 1
@@ -10839,9 +10659,9 @@ focus_tree = {
 			#OULU Chromium
 			if = {
 				limit = {
-					controls_state = 1039
+					controls_state = 929
 				}
-				1039 = {
+				929 = {
 					add_resource = {
 						type = chromium
 						amount = 2
@@ -10852,9 +10672,9 @@ focus_tree = {
 			#TURKU Chromium
 			if = {
 				limit = {
-					controls_state = 1036
+					controls_state = 926
 				}
-				1036 = {
+				926 = {
 					add_resource = {
 						type = chromium
 						amount = 2
@@ -10874,7 +10694,7 @@ focus_tree = {
 		relative_position_id = FIN_expand_mining_prospection
 		cost = 5
 		available = {
-			
+			has_tech = excavation5
 			has_full_control_of_state = 148 #LAPPI (Kemi)
 		}
 
@@ -10950,7 +10770,6 @@ focus_tree = {
 		relative_position_id = FIN_tire_factory_at_nokia
 		cost = 10
 		available = {
-			has_full_control_of_state = 1036 #TURKU (Pori)
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
@@ -11243,7 +11062,7 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = FIN_suomen_maavoimat
-				bonus = 0.75
+				bonus = 1
 				uses = 1
 				category = infantry_weapons
 				category = support_tech
@@ -11438,7 +11257,7 @@ focus_tree = {
 
 			custom_effect_tooltip = FIN_modify_finnish_army_ns_intro
 			add_to_variable = { FIN_finnish_army_army_org_factor = 0.1 tooltip = army_org_factor_tt }
-			#add_to_variable = { FIN_finnish_army_special_forces_cap_flat = 80 tooltip = special_forces_cap_tt }
+			add_to_variable = { FIN_finnish_army_special_forces_cap = 0.15 tooltip = special_forces_cap_tt }
 			add_to_variable = { FIN_finnish_army_breakthrough_factor = 0.05 tooltip = breakthrough_factor_tt }
 			add_to_variable = { FIN_finnish_army_special_forces_out_of_supply_factor = -0.1 tooltip = special_forces_out_of_supply_factor_tt }
 
@@ -11597,8 +11416,13 @@ focus_tree = {
 			add_to_variable = { FIN_finnish_army_winter_attrition_factor = -0.15 tooltip = winter_attrition_factor_tt }
 			add_to_variable = { FIN_finnish_army_supply_combat_penalties_on_core_factor = -0.15 tooltip = supply_combat_penalties_on_core_factor_tt }
 
+			custom_effect_tooltip = FIN_winter_warfare_battalion_tt
 
 			hidden_effect = {
+				set_technology = {
+					winter_logistics_support_tech = 1
+					popup = no
+				}
 			}
 		}
 	}
@@ -11817,25 +11641,31 @@ focus_tree = {
 							amount = 25
 							producer = ENG
 						}
-						create_equipment_variant = {
-							name = "Vickers Mark E Tpye B"
-							type = light_tank_chassis_0
-							parent_version = 0
-							modules = {
-								main_armament_slot = tank_high_velocity_cannon
-								turret_type_slot = tank_light_one_man_tank_turret
-								suspension_type_slot = tank_bogie_suspension
-								armor_type_slot = tank_riveted_armor
-								engine_type_slot = tank_gasoline_engine
-								special_type_slot_1 = secondary_turret_hmg
+
+						if = {
+							limit = {
+								NOT = { has_country_flag = FIN_vickers_template_created_flag }
 							}
-							upgrades = {
-								tank_nsb_armor_upgrade = 3
-								tank_nsb_engine_upgrade = 2
+							create_equipment_variant = {
+								name = "Vickers Mark E Tpye B"
+								type = light_tank_chassis_0
+								parent_version = 0
+								modules = {
+									main_armament_slot = tank_high_velocity_cannon
+									turret_type_slot = tank_light_one_man_tank_turret
+									suspension_type_slot = tank_bogie_suspension
+									armor_type_slot = tank_riveted_armor
+									engine_type_slot = tank_gasoline_engine
+									special_type_slot_1 = secondary_turret_hmg
+								}
+								upgrades = {
+									tank_nsb_armor_upgrade = 3
+									tank_nsb_engine_upgrade = 2
+								}
+								obsolete = yes
+								icon = "GFX_FIN_gw_tank_destroyer_vickers_medium"
+								model = "commonwealth_gfx_light_armor_entity"
 							}
-							obsolete = yes
-							icon = "GFX_FIN_gw_tank_destroyer_vickers_medium"
-							model = "commonwealth_gfx_light_armor_entity"
 						}
 						add_equipment_to_stockpile = { 
 							type = light_tank_chassis_0
@@ -12085,7 +11915,6 @@ focus_tree = {
 			}
 		}
 	}
-
 	
 	focus = {
 		id = FIN_finnish_radio_intelligence
@@ -12139,10 +11968,6 @@ focus_tree = {
 			add_to_variable = { FIN_finnish_army_modifier_army_sub_unit_long_range_patrol_support_defence_factor = 0.1 tooltip = modifier_army_sub_unit_long_range_patrol_support_defence_factor_tt }		
 
 			show_unit_leaders_tooltip = FIN_erkki_raappana
-			custom_effect_tooltip = r56_enable_motti_tactics #port from rt56 content
-			hidden_effect = {
-				set_technology = { masterful_double_envelopment = 1 popup = no }
-			}
 		}
 	}
 	
@@ -12164,7 +11989,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = FIN_national_armor_focus
-				bonus = 0.75
+				bonus = 0.5
 				uses = 2
 				category = armor
 			}
@@ -12399,6 +12224,8 @@ focus_tree = {
 			has_defensive_war = yes
 		}
 
+		search_filters = {}
+
 		completion_reward = {
 			if = {
 				limit = {
@@ -12512,8 +12339,8 @@ focus_tree = {
 			if = {
 				limit = {
 					has_full_control_of_state = 146 #KARJALA
-					has_full_control_of_state = 1038 #KYME
-					has_full_control_of_state = 1040 #MIKKELI
+					has_full_control_of_state = 928 #KYME
+					has_full_control_of_state = 930 #MIKKELI
 				}
 				146 = {
 					#Viipuri
@@ -12524,7 +12351,7 @@ focus_tree = {
 						province = 9206
 					}
 				}
-				1038 = {
+				928 = {
 					#Lappeenranta
 					add_building_construction = {
 						type = bunker
@@ -12539,7 +12366,7 @@ focus_tree = {
 						province = 52
 					}
 				}
-				1040 = {
+				930 = {
 					add_building_construction = {
 						type = bunker
 						level = 2
@@ -12566,160 +12393,6 @@ focus_tree = {
 					path = { 9206 6082 52 3131 37 }
 				}
 			}
-		}
-	}
-
-	focus = { #inter war fort line that was built incase the cont war went south
-		id = FIN_salpa_line
-		icon = GFX_goal_generic_fortification
-		prerequisite = { focus = FIN_defense_in_depth }
-
-		x = 0
-		y = 2
-		relative_position_id = FIN_defense_in_depth
-		cost = 5
-		available = { #at war with soviets past winter war date or lost the states in the winter war
-			OR = {
-				date > 1940.3.13 # made it past the winter wars end
-				has_war_with = SOV
-				AND = {
-					NOT = {
-						has_full_control_of_state = 146
-					}
-					NOT = {
-						has_full_control_of_state = 147
-					}
-				}
-			}
-		}
-
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-
-		completion_reward = {
-			custom_effect_tooltip = FIN_modify_finnish_army_ns_intro
-			add_to_variable = { FIN_finnish_army_dig_in_speed_factor = 0.05 tooltip = dig_in_speed_factor_tt }
-			add_to_variable = { FIN_finnish_army_recon_factor_while_entrenched = 0.05 tooltip = recon_factor_while_entrenched_tt }
-			if = {
-				limit = {
-					NOT = {
-						has_idea = FIN_fortification_effort
-					}
-				}
-				add_timed_idea = {
-					idea = FIN_fortification_effort
-					days = 180
-				}
-			}
-			else = {
-				modify_timed_idea = {
-					idea = FIN_fortification_effort
-					days = 180
-				}
-			}
-			#key points in the line
-			if = {
-				limit = {
-					has_full_control_of_state = 722
-				}
-				722 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6183
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 11142
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 148
-				}
-				148 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 3017
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 9112
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 1039
-				}
-				1039 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6045
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 3073
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6134
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 150
-				}
-				150 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6146
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 9061
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 1038
-				}
-				1038 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6082
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6186
-					}
-				}
-			}
-			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = FIN_rudolf_walden_idea
 		}
 	}
 	
@@ -12859,12 +12532,12 @@ focus_tree = {
 			# TURKU (Pori)
 			if = {
 				limit = {
-					controls_state = 1036
-					1036 = {
+					controls_state = 926
+					926 = {
 						air_base < 9
 					}
 				}
-				1036 = {
+				926 = {
 					add_building_construction = {
 						type = air_base
 						level = 2
@@ -12876,12 +12549,12 @@ focus_tree = {
 			#KYME (Kouvola)
 			if = {
 				limit = {
-					controls_state = 1038
-					1038 = {
+					controls_state = 928
+					928 = {
 						air_base < 9
 					}
 				}
-				1038 = {
+				928 = {
 					add_building_construction = {
 						type = air_base
 						level = 2
@@ -14712,7 +14385,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = FIN_rapid_raiders
-					bonus = 0.75
+					bonus = 0.5
 					uses = 2
 					category = cat_torpedoes
 					category = naval_mines
@@ -14722,7 +14395,7 @@ focus_tree = {
 			else = {
 				add_tech_bonus = {
 					name = FIN_rapid_raiders
-					bonus = 0.75
+					bonus = 0.5
 					uses = 2
 					category = dd_tech
 				}
@@ -14736,7 +14409,7 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				prioritize = { 1036 111 149 } #TURKU HELSINKI VAASA
+				prioritize = { 926 111 149 } #TURKU HELSINKI VAASA
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = dockyard
@@ -15005,7 +14678,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = FIN_deep_sea_raiders
-					bonus = 0.75
+					bonus = 0.5
 					uses = 2
 					category = ss_tech
 					category = cat_torpedoes
@@ -15014,7 +14687,7 @@ focus_tree = {
 			else = {
 				add_tech_bonus = {
 					name = FIN_deep_sea_raiders
-					bonus = 0.75
+					bonus = 0.5
 					uses = 2
 					category = ss_tech
 				}
@@ -15028,7 +14701,7 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				prioritize = { 1036 111 149 } #TURKU HELSINKI VAASA
+				prioritize = { 926 111 149 } #TURKU HELSINKI VAASA
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = dockyard
@@ -15317,7 +14990,7 @@ focus_tree = {
 				navy_experience = 25
 				add_tech_bonus = {
 					name = FIN_sea_mines_strategy
-					bonus = 0.75
+					bonus = 0.5
 					uses = 2
 					category = naval_mines
 				}
@@ -15348,7 +15021,7 @@ focus_tree = {
 				navy_experience = 50
 				add_tech_bonus = {
 					name = FIN_sea_mines_strategy
-					bonus = 0.75
+					bonus = 0.5
 					uses = 2
 					category = dd_tech
 					category = cl_tech
@@ -15384,10 +15057,10 @@ focus_tree = {
 
 			if = {
 				limit = {
-					has_full_control_of_state = 1036
+					has_full_control_of_state = 926
 				}
 				#TURKU
-				1036 = {
+				926 = {
 					add_building_construction = {
 						type = naval_base
 						level = 2
@@ -15468,10 +15141,10 @@ focus_tree = {
 				
 			if = {
 				limit = {
-					has_full_control_of_state = 1039
+					has_full_control_of_state = 929
 				}
 				#OULU
-				1039 = {
+				929 = {
 					add_building_construction = {
 						type = naval_base
 						level = 2
@@ -15499,7 +15172,7 @@ focus_tree = {
 		relative_position_id = FIN_suomen_merivoimat
 		cost = 5
 		available = {
-			has_full_control_of_state = 1036
+			has_full_control_of_state = 926
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
@@ -15513,14 +15186,16 @@ focus_tree = {
 
 			if = {
 				limit = {
-					1036 = {
+					926 = {
 						free_building_slots = {
 							building = dockyard
 							size > 0
+							include_locked = yes
 						}
 					}
 				}
-				1036 = {
+				926 = {
+					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = dockyard
 						level = 1
@@ -15557,7 +15232,7 @@ focus_tree = {
 		available = {
 			OR = {
 				has_full_control_of_state = 111 #UUSIMAA (Helsinki)
-				has_full_control_of_state = 1038 #KYME (Kotka)
+				has_full_control_of_state = 928 #KYME (Kotka)
 				has_full_control_of_state = 149 #VAASA (Vaasa)
 			}
 		}
@@ -15592,7 +15267,7 @@ focus_tree = {
 			#KYME (Kotka)
 			if = {
 				limit = {
-					1038 = {
+					928 = {
 						free_building_slots = {
 							building = dockyard
 							size > 0
@@ -15600,7 +15275,7 @@ focus_tree = {
 						}
 					}
 				}
-				1038 = {
+				928 = {
 					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = dockyard
@@ -15676,7 +15351,7 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = FIN_expansion_towards_the_atlantic
-				bonus = 0.75
+				bonus = 0.5
 				uses = 2
 				category = cv_tech
 				category = bb_tech

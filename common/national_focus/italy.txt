@@ -76,9 +76,21 @@ focus_tree = {
 		}
 		cost = 1
 
+		bypass = {
+			OR = {
+				NOT = { has_global_flag = second_italo_ethiopian_war_flag }
+				AND = {
+					550 = { NOT = { is_owned_and_controlled_by = ITA } }
+					559 = { NOT = { is_owned_and_controlled_by = ITA } }
+					844 = { NOT = { is_owned_and_controlled_by = ITA } }
+				}
+			}
+		}
+
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
 		completion_reward = {
+			if = { limit = { 550 = { is_owned_and_controlled_by = ITA } }
 				550 = {
 					add_building_construction = {
 						type = infrastructure
@@ -94,6 +106,9 @@ focus_tree = {
 						instant_build = yes
 					}
 				}
+			}
+
+			if = { limit = { 559 = { is_owned_and_controlled_by = ITA } }
 				559 = {
 						add_building_construction = {
 							type = infrastructure
@@ -109,6 +124,9 @@ focus_tree = {
 						instant_build = yes
 					}
 				}
+			}
+
+			if = { limit = { 844 = { is_owned_and_controlled_by = ITA } }
 				844 = {
 						add_building_construction = {
 							type = infrastructure
@@ -124,6 +142,7 @@ focus_tree = {
 						instant_build = yes
 					}
 				}
+			}
 		}
 	}
 
@@ -207,7 +226,7 @@ focus_tree = {
 		prerequisite = { focus = ITA_italian_highways_bba }
 		prerequisite = { focus = ITA_ethiopian_war_logistics_bba }
 
-		x = -8
+		x = -7
 		y = 1
 		relative_position_id = ITA_italian_highways_bba
 		cost = 4
@@ -2988,9 +3007,9 @@ focus_tree = {
 
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
-		#mutually_exclusive = {
-		#	focus = ITA_power_plants_in_terni
-		#}
+		mutually_exclusive = {
+			focus = ITA_power_plants_in_terni
+		}
 
 		completion_reward = {
 			add_to_variable = { ITA_iri_production_speed_arms_factory_factor = 0.05 }
@@ -3023,9 +3042,9 @@ focus_tree = {
 			has_full_control_of_state = 2
 		}
 
-		#mutually_exclusive = {
-		#	focus = ITA_steel_industry_in_terni
-		#}
+		mutually_exclusive = {
+			focus = ITA_steel_industry_in_terni
+		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
@@ -3043,62 +3062,18 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = ITA_expand_italian_oil_reserves
-		icon = GFX_SOV_oil_production_ccp_2d_sov_compatibility
-		prerequisite = { focus = ITA_steel_industry_in_terni }
-		
-		x = -1
-		y = 2
-		relative_position_id = ITA_italian_highways_bba
-		cost = 10
-		available = {
-			has_full_control_of_state = 2
-		}
 
-		search_filters = {FOCUS_FILTER_INDUSTRY}
-
-		#mutually_exclusive = {
-		#	focus = ITA_power_plants_in_terni
-		#}
-
-		completion_reward = {
-			159 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = fuel_silo
-					level = 2
-					instant_build = yes
-				}
-				add_resource = {
-					type = oil
-					amount = 12
-				}
-			}
-			850 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = fuel_silo
-					level = 2
-					instant_build = yes
-				}
-				add_resource = {
-					type = oil
-					amount = 16
-				}
-			}
-		}
-	}
 	focus = {
 		id = ITA_finance_anic
 		icon = GFX_focus_generic_rubber
 		prerequisite = { focus = ITA_steel_industry_in_terni focus = ITA_power_plants_in_terni }
 
 		x = 1
-		y = 2
+		y = 1
 		relative_position_id = ITA_steel_industry_in_terni
 		cost = 5
 		available = {
+			has_tech = synth_oil_experiments
 		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
@@ -4510,7 +4485,7 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH FOCUS_FILTER_MANPOWER}
 
 		completion_reward = {
-			#add_to_variable = { ITA_re_special_forces_cap_flat = 20 }
+			add_to_variable = { ITA_re_special_forces_cap = 0.05 }
 			add_to_variable = { ITA_re_special_forces_attack_factor = 0.03 }
 			add_to_variable = { ITA_re_special_forces_defence_factor = 0.03 }
 			custom_effect_tooltip = ITA_bersaglieri_re_tt
@@ -4564,7 +4539,7 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
-			#add_to_variable = { ITA_re_special_forces_cap_flat = 20 }
+			add_to_variable = { ITA_re_special_forces_cap = 0.025 }
 			add_to_variable = { ITA_re_modifier_army_sub_unit_mountaineers_defence_factor = 0.05 }
 			add_to_variable = { ITA_re_modifier_army_sub_unit_mountaineers_max_org_factor = 0.05 }
 			custom_effect_tooltip = ITA_divisioni_alpine_re_tt
@@ -4643,7 +4618,7 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP FOCUS_FILTER_MANPOWER}
 
 		completion_reward = {
-			#add_to_variable = { ITA_re_special_forces_cap_flat = 20 }
+			add_to_variable = { ITA_re_special_forces_cap = 0.025 }
 			add_to_variable = { ITA_re_special_forces_out_of_supply_factor = -0.1 }
 			add_to_variable = { ITA_re_modifier_army_sub_unit_paratrooper_max_org_factor = 0.05 }
 			custom_effect_tooltip = ITA_fanti_dell_aria_re_tt
@@ -6330,7 +6305,7 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_MANPOWER}
 
 		completion_reward = {
-			#add_to_variable = { ITA_rm_special_forces_cap_flat = 20 }
+			add_to_variable = { ITA_rm_special_forces_cap = 0.02 }
 			add_to_variable = { ITA_rm_amphibious_invasion = 0.05 }
 			add_to_variable = { ITA_rm_naval_invasion_capacity = 10 }
 			add_to_variable = { ITA_rm_invasion_preparation = -0.1 }
@@ -8204,6 +8179,10 @@ focus_tree = {
 		}
 
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_the_abyssinian_fiasco_completion_tt
+				always = no
+			}
 		}
 
 		completion_reward = {
@@ -8249,7 +8228,15 @@ focus_tree = {
 		relative_position_id = ITA_the_abyssinian_fiasco
 		cost = 5
 
+		bypass = {
+			ITA_has_peaced_out_eth_on_startup = yes
+		}
+
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_solid_progress_completion_tt
+				always = yes
+			}
 		}
 
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT}
@@ -8274,6 +8261,10 @@ focus_tree = {
 		relative_position_id = ITA_solid_progress
 		cost = 5
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = ITA_the_abyssinian_fiasco_completion_tt
+				always = no
+			}
 		}
 
 		completion_reward = {
@@ -9120,9 +9111,16 @@ focus_tree = {
 		relative_position_id = ITA_servizio_informazione_militare
 		cost = 5
 
+		bypass = {
+			OR = {
+				has_country_flag = ITA_defeat_in_ethiopia_flag
+				ITA_has_peaced_out_eth_on_startup = yes
+			}
+		}
 
 		available = {
-
+			NOT = { has_global_flag = second_italo_ethiopian_war_flag }
+			NOT = { has_country_flag = ITA_defeat_in_ethiopia_flag }
 		}
 
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_BALANCE_OF_POWER}
@@ -10392,7 +10390,7 @@ focus_tree = {
 		completion_reward = {
 			#TODO_Manu: Need to do something here because it is super redundant with everything else
 
-			#custom_effect_tooltip = form_greater_italy_tt
+			custom_effect_tooltip = form_greater_italy_tt
 
 			#TODO_Manu: What if Italian allies/subjects control these?
 
@@ -12962,7 +12960,7 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = ITA_monarchia_d_italia
-		cost = 10
+		cost = 5
 
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
@@ -12985,10 +12983,10 @@ focus_tree = {
 							include_locked = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 1
 					add_building_construction = {
 						type = industrial_complex
-						level = 2
+						level = 1
 						instant_build = yes
 					}
 					add_resource = {
@@ -13092,25 +13090,6 @@ focus_tree = {
 						include_locked = yes
 					}
 				}
-				set_state_flag = ITA_new_corporations_state_flag
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-
-			random_core_state = {
-				limit = {
-					is_fully_controlled_by = ROOT
-					NOT = { has_state_flag = ITA_new_corporations_state_flag }
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -13139,7 +13118,7 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = ITA_extraction_industry
-		cost = 5
+		cost = 10
 
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
@@ -13154,10 +13133,10 @@ focus_tree = {
 					}
 				}
 				set_state_flag = ITA_prepare_for_the_coming_wars
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -13172,10 +13151,10 @@ focus_tree = {
 					}
 				}
 				set_state_flag = ITA_prepare_for_the_coming_wars
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -13190,10 +13169,10 @@ focus_tree = {
 					}
 				}
 				set_state_flag = ITA_prepare_for_the_coming_wars
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
