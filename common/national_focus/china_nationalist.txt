@@ -271,8 +271,8 @@ focus_tree = {
 						has_idea = CHI_mining_commission
 						has_idea = generic_electronics_concern
 					}
-					add_political_power = 100
 				}
+				add_political_power = 100
 			}
 			else = {
 				#custom_effect_tooltip = add_industrial_concern
@@ -896,6 +896,58 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = CHI_one_road_policy
+		icon = GFX_goal_generic_road
+		prerequisite = { focus = CHI_the_great_advance_foward }
+		x = 0
+		y = 1
+		relative_position_id = CHI_the_great_advance_foward
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = own_china_proper_tt
+				own_china_proper = yes
+			}
+			OR = {
+				has_tech = construction4
+			}
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		search_filters = { FOCUS_FILTER_CHI_INFLATION }
+		completion_reward = {
+			custom_effect_tooltip = CHI_one_road_policy_plan_tooltip
+			add_timed_idea = {
+				idea = CHI_state_wide_construction
+				days = 180
+			}
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					is_controlled_by = ROOT
+					has_state_flag = ONE_ROAD_FLAG
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+				}
+			}
+		}
+	}
+	focus = {
 		id = CHI_begin_excavation_of_our_natural_resources
 		icon = GFX_goal_excavation
 		prerequisite = { focus = CHI_internal_development focus = CHI_external_development_in_ports }
@@ -969,58 +1021,7 @@ focus_tree = {
 			add_ideas = CHI_chinese_new_production_plan
 		}
 	}
-	focus = {
-		id = CHI_one_road_policy
-		icon = GFX_goal_generic_road
-		prerequisite = { focus = CHI_the_great_advance_foward }
-		x = 0
-		y = 1
-		relative_position_id = CHI_the_great_advance_foward
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = own_china_proper_tt
-				own_china_proper = yes
-			}
-			OR = {
-				has_tech = construction4
-			}
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		search_filters = { FOCUS_FILTER_CHI_INFLATION }
-		completion_reward = {
-			custom_effect_tooltip = CHI_one_road_policy_plan_tooltip
-			add_timed_idea = {
-				idea = CHI_state_wide_construction
-				days = 180
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					is_controlled_by = ROOT
-					has_state_flag = ONE_ROAD_FLAG
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-				}
-			}
-		}
-	}
+	
 	focus = {
 		id = CHI_civilian_effort
 		icon = GFX_goal_generic_building_our_industry
@@ -3896,13 +3897,6 @@ focus_tree = {
 		
 		available = {
 			has_government = communism
-			MAN = {
-				exists = no
-			}
-			custom_trigger_tooltip = {
-				tooltip = own_china_proper_tt
-				own_china_proper = yes
-			}
 		}
 
 		completion_reward = {
@@ -5415,7 +5409,7 @@ focus_tree = {
 	focus = {
 		id = CHI_repurpose_military_factories
 		icon = GFX_goal_generic_state_economy
-		cost = 10
+		cost = 5
 		x = 3
 		y = 1
 		mutually_exclusive = {
@@ -6959,6 +6953,13 @@ focus_tree = {
 					}
 				}
 				create_intelligence_agency = yes
+			}
+			if = {
+				limit = {
+					has_intelligence_agency = yes
+				}
+				upgrade_intelligence_agency = upgrade_economy_civilian 
+				upgrade_intelligence_agency = upgrade_training_centers 
 			}
 		}
 	}
