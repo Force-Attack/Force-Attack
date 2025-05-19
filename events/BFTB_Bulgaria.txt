@@ -3978,487 +3978,487 @@ country_event = {
 
 
 #Bulgaria wants to get their claims warranted - Event for GER
-country_event = {
-	id = bftb_bulgarian_claims.1
-	title = bftb_bulgarian_claims.1.t
-	desc = bftb_bulgarian_claims.1.desc
-	picture = GFX_report_event_generic_sign_treaty1
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = { #YES
-		name = bftb_bulgarian_claims.1.a
-
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 5
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 2
-				BUL = { 
-					is_in_faction = no
-				}
-			}
-			modifier = {
-				factor = 20
-				BUL = { 
-					is_in_faction_with = ROOT
-				}
-			}
-			modifier = {
-				factor = 100
-				BUL = { 
-					has_country_flag = { flag = BUL_german_influence_flag value > 3 }
-				}
-			}
-			modifier = {
-				factor = 0.5
-				ENG = { 
-					has_opinion = {
-						target = BUL
-						value > 50
-					}
-				}
-			}
-			modifier = {
-				factor = 0.25
-				BUL = { has_completed_focus = BUL_approach_the_united_kingdom }
-			}
-			modifier = {
-				factor = 0
-				BUL = {
-					is_in_faction = yes
-					NOT = { is_in_faction_with = ROOT }
-				}
-			}
-			modifier = {
-				factor = 5
-				BUL_has_some_sort_of_bogdan_filov = yes
-			}
-		}
-
-		every_state = {
-			limit = {
-				has_state_flag = BUL_historical_bulgarian_claim_flag
-				controller = {
-					OR = {
-						tag = GER
-						AND = {
-							NOT = { is_in_faction_with = GER }
-							NOT = { tag = BUL }
-						}
-					}
-				}
-			}
-			set_state_flag = BUL_bulgarian_claim_warranted_flag
-			add_dynamic_modifier = { modifier = bulgarian_territorial_expansion_arranged }
-		}
-		effect_tooltip = {
-			BUL = {
-				add_opinion_modifier = { 
-					target = GER
-					modifier = BUL_bulgarian_claims_recognized
-				}
-			}
-		}
-		BUL = { country_event = { id = bftb_bulgarian_claims.2 hours = 16 random_hours = 8 } }
-
-		set_global_flag = BUL_germany_recognizes_bulgarian_claims_flag
-		custom_effect_tooltip = bftb_bulgarian_claims.1.a_tt
-	}
-
-	option = { #NOPE
-		name = bftb_bulgarian_claims.1.b
-
-		ai_chance = {
-			base = 10
-		}
-
-		effect_tooltip = {
-			BUL = {
-				add_opinion_modifier = { 
-					target = GER
-					modifier = BUL_bulgarian_claims_not_recognized
-				}
-			}
-		}
-		BUL = { country_event = { id = bftb_bulgarian_claims.3 hours = 16 random_hours = 8 } }
-	}
-}
-
-#Germany recognizes Bulgarian claims in the Balkans - Event for BUL
-country_event = {
-	id = bftb_bulgarian_claims.2
-	title = bftb_bulgarian_claims.2.t
-	desc = bftb_bulgarian_claims.2.desc
-	picture = GFX_report_event_bul_boris_with_hitler 
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = {
-		name = bftb_bulgarian_claims.2.a
-
-		add_opinion_modifier = { 
-			target = GER
-			modifier = BUL_bulgarian_claims_recognized
-		}
-		effect_tooltip = {
-			every_state = {
-				limit = {
-					has_state_flag = BUL_historical_bulgarian_claim_flag
-					controller = {
-						OR = {
-							tag = GER
-							AND = {
-								NOT = { is_in_faction_with = GER }
-								NOT = { tag = BUL }
-							}
-						}
-					}
-				}
-				add_dynamic_modifier = { modifier = bulgarian_territorial_expansion_arranged }
-				custom_effect_tooltip = BUL_germany_recognizes_our_claim_tt
-			}
-		}
-
-		if = {
-			limit = {
-				has_country_flag = BUL_german_influence_flag
-			}
-			modify_country_flag = { flag = BUL_german_influence_flag value = 1 }
-		}
-		else = {
-			set_country_flag = { flag = BUL_german_influence_flag value = 1 }
-		}
-	}
-}
-
-#Germany does not recognize Bulgarian claims in the Balkans - Event for BUL
-country_event = {
-	id = bftb_bulgarian_claims.3
-	title = bftb_bulgarian_claims.3.t
-	desc = bftb_bulgarian_claims.3.desc
-	picture = GFX_report_event_generic_sign_treaty1 
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = {
-		name = bftb_bulgarian_claims.3.a
-
-		add_opinion_modifier = { 
-			target = GER
-			modifier = BUL_bulgarian_claims_not_recognized
-		}
-	}
-}
-
-#Germany transferred Bulgaria's claimed states - Event for BUL
-country_event = {
-	id = bftb_bulgarian_claims.4
-	title = bftb_bulgarian_claims.4.t
-	desc = bftb_bulgarian_claims.4.desc
-	picture = GFX_report_event_bul_imro_chieftain
-
-	is_triggered_only = yes
-
-	immediate = {
-		hidden_effect = {
-			GER = { country_event = bftb_bulgarian_claims.5 }
-			if = {
-				limit = {
-					any_state = {
-						OR = {
-							is_controlled_by = GER
-							controller = {
-								is_in_faction_with = GER
-								NOT = { tag = BUL }
-								NOT = { owns_state = PREV } #Not owner (it should be actually occupating the state -> Also prevents the issue in YUG with IMRO removing the core)
-								NOT = { PREV = { is_core_of = PREV } }
-							}
-						}
-					}
-				}
-				every_state = {
-					limit = {
-						has_state_flag = BUL_bulgarian_claim_warranted_flag
-						OR = {
-							is_controlled_by = GER
-							controller = {
-								is_in_faction_with = GER
-								NOT = { tag = BUL }
-								NOT = { owns_state = PREV } #Not owner (it should be actually occupating the state -> Also prevents the issue in YUG with IMRO removing the core)
-								NOT = { PREV = { is_core_of = PREV } }
-							}
-						}
-					}
-					controller = { country_event = bftb_bulgarian_claims.6 }
-					remove_dynamic_modifier = { modifier = bulgarian_territorial_expansion_arranged }
-				}
-			}
-		}
-	}
-
-	option = {
-		name = bftb_bulgarian_claims.4.a
-
-		add_opinion_modifier = { 
-			target = GER
-			modifier = BUL_honored_bulgarian_claims
-		}
-
-		every_state = {
-			limit = {
-				has_state_flag = BUL_bulgarian_claim_warranted_flag
-				OR = {
-					is_controlled_by = GER
-					controller = {
-						is_in_faction_with = GER
-						NOT = { tag = BUL }
-					}
-				}		
-			}
-			clr_state_flag = BUL_bulgarian_claim_warranted_flag #stop retaking these states after losing wars for them
-			BUL = {
-				transfer_state = PREV
-				hidden_effect = {
-					set_state_controller = PREV
-				}
-			}
-		}
-	}
-}
-
-#Germany transferred Bulgaria's claimed states - Event for GER
-country_event = {
-	id = bftb_bulgarian_claims.5
-	title = bftb_bulgarian_claims.5.t
-	desc = bftb_bulgarian_claims.5.desc
-	picture = GFX_report_event_bul_troops_dobrudja
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = {
-		name = bftb_bulgarian_claims.5.a
-
-		effect_tooltip = {
-			BUL = {
-				add_opinion_modifier = { 
-					target = GER
-					modifier = BUL_honored_bulgarian_claims
-				}
-			}
-			every_state = {
-				limit = {
-					has_state_flag = BUL_bulgarian_claim_warranted_flag
-					OR = {
-						is_controlled_by = GER
-						controller = {
-							is_in_faction_with = GER
-						}
-					}		
-				}
-				BUL = { set_state_controller = PREV }
-			}
-		}
-	}
-}
-
-#Germany transferred Bulgaria's claimed states - Event for any allied controller of transferred states
-country_event = {
-	id = bftb_bulgarian_claims.6
-	title = bftb_bulgarian_claims.6.t
-	desc = bftb_bulgarian_claims.6.desc
-	picture = GFX_report_event_bul_troops_dobrudja 
-
-	is_triggered_only = yes
-
-	option = {
-		name = bftb_bulgarian_claims.6.a
-
-		effect_tooltip = {
-			every_state = {
-				limit = {
-					has_state_flag = BUL_bulgarian_claim_warranted_flag
-					is_controlled_by = ROOT		
-				}
-				BUL = { set_state_controller = PREV }
-			}
-		}
-	}
-}
-
-#Bulgaria asks for control over Balkan state - Event for controller of the state
-country_event = {
-	id = bftb_bulgarian_claims.7
-	title = bftb_bulgarian_claims.7.t
-	desc = bftb_bulgarian_claims.7.desc
-	picture = GFX_report_event_generic_sign_treaty2 
-
-	is_triggered_only = yes
-
-	option = { #ACCEPT
-		name = bftb_bulgarian_claims.7.a
-
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 1.5
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 2
-				has_war = yes
-			}
-			modifier = {
-				factor = 2
-				is_major = no
-			}
-			modifier = {
-				factor = 2
-				has_manpower < 49999
-			}
-			modifier = {
-				factor = 5
-				has_manpower < 9999
-			}
-			modifier = {
-				factor = 2
-				has_equipment = {
-					infantry_equipment < 99
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion	= {
-					target = FROM
-					value > 49
-				}
-			}
-			modifier = {
-				factor = 5
-				AND = {
-					tag = GER
-					is_historical_focus_on = yes
-					FROM.FROM = { is_core_of = YUG }
-				}
-			}
-			modifier = {
-				factor = 5
-				FROM.FROM = { is_claimed_by = BUL }
-			}
-			modifier = {
-				factor = 100
-				FROM.FROM = {
-					OR = {
-						is_core_of = BUL
-						has_state_flag = BUL_initial_bulgarian_state_flag
-						has_state_flag = BUL_historical_bulgarian_claim_flag
-					}
-				}
-			}
-			modifier = {
-				factor = 5
-				AND = {
-					tag = GER
-					BUL_has_some_sort_of_bogdan_filov = yes
-				}
-			}
-		}
-
-		add_political_power = 25
-		#FROM.FROM is the state targeted by the decision
-		FROM = {
-			transfer_state = FROM.FROM
-			set_state_controller = FROM.FROM
-			country_event = bftb_bulgarian_claims.8
-		}
-	}
-
-	option = { #REFUSE
-		name = bftb_bulgarian_claims.7.b
-
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 2
-				is_major = yes
-			}
-			modifier = {
-				factor = 1.5
-				BUL = { is_ai = yes }
-			}
-			modifier = {
-				factor = 2
-				has_manpower > 99999
-			}
-			modifier = {
-				factor = 5
-				has_manpower > 199999
-			}
-			modifier = {
-				factor = 2
-				has_opinion	= {
-					target = FROM
-					value < 0
-				}
-			}
-			modifier = {
-				factor = 5
-				has_opinion	= {
-					target = FROM
-					value < -49
-				}
-			}
-		}
-
-		FROM = { country_event = bftb_bulgarian_claims.9 }
-	}
-}
-
-#Country accepts Bulgarian control over state - Event for BUL
-country_event = {
-	id = bftb_bulgarian_claims.8
-	title = bftb_bulgarian_claims.8.t
-	desc = bftb_bulgarian_claims.8.desc
-	picture = GFX_report_event_bul_troops_dobrudja
-
-	is_triggered_only = yes
-
-	option = { #Ok
-		name = bftb_bulgarian_claims.8.a
-
-		effect_tooltip = {
-			#FROM.FROM is the state targeted by the decision
-			transfer_state = FROM.FROM
-			set_state_controller = FROM.FROM
-		}
-	}
-}
-
-#Country rejects Bulgarian control over state - Event for BUL
-country_event = {
-	id = bftb_bulgarian_claims.9
-	title = bftb_bulgarian_claims.9.t
-	desc = bftb_bulgarian_claims.9.desc
-	picture = GFX_report_event_generic_read_write 
-
-	is_triggered_only = yes
-
-	option = { #Ok
-		name = bftb_bulgarian_claims.9.a
-
-	}
-}
+#country_event = {
+#	id = bftb_bulgarian_claims.1
+#	title = bftb_bulgarian_claims.1.t
+#	desc = bftb_bulgarian_claims.1.desc
+#	picture = GFX_report_event_generic_sign_treaty1
+#
+#	is_triggered_only = yes
+#
+#	fire_only_once = yes
+#
+#	option = { #YES
+#		name = bftb_bulgarian_claims.1.a
+#
+#		ai_chance = {
+#			base = 10
+#			modifier = {
+#				factor = 5
+#				is_historical_focus_on = yes
+#			}
+#			modifier = {
+#				factor = 2
+#				BUL = { 
+#					is_in_faction = no
+#				}
+#			}
+#			modifier = {
+#				factor = 20
+#				BUL = { 
+#					is_in_faction_with = ROOT
+#				}
+#			}
+#			modifier = {
+#				factor = 100
+#				BUL = { 
+#					has_country_flag = { flag = BUL_german_influence_flag value > 3 }
+#				}
+#			}
+#			modifier = {
+#				factor = 0.5
+#				ENG = { 
+#					has_opinion = {
+#						target = BUL
+#						value > 50
+#					}
+#				}
+#			}
+#			modifier = {
+#				factor = 0.25
+#				BUL = { has_completed_focus = BUL_approach_the_united_kingdom }
+#			}
+#			modifier = {
+#				factor = 0
+#				BUL = {
+#					is_in_faction = yes
+#					NOT = { is_in_faction_with = ROOT }
+#				}
+#			}
+#			modifier = {
+#				factor = 5
+#				BUL_has_some_sort_of_bogdan_filov = yes
+#			}
+#		}
+#
+#		every_state = {
+#			limit = {
+#				has_state_flag = BUL_historical_bulgarian_claim_flag
+#				controller = {
+#					OR = {
+#						tag = GER
+#						AND = {
+#							NOT = { is_in_faction_with = GER }
+#							NOT = { tag = BUL }
+#						}
+#					}
+#				}
+#			}
+#			set_state_flag = BUL_bulgarian_claim_warranted_flag
+#			add_dynamic_modifier = { modifier = bulgarian_territorial_expansion_arranged }
+#		}
+#		effect_tooltip = {
+#			BUL = {
+#				add_opinion_modifier = { 
+#					target = GER
+#					modifier = BUL_bulgarian_claims_recognized
+#				}
+#			}
+#		}
+#		BUL = { country_event = { id = bftb_bulgarian_claims.2 hours = 16 random_hours = 8 } }
+#
+#		set_global_flag = BUL_germany_recognizes_bulgarian_claims_flag
+#		custom_effect_tooltip = bftb_bulgarian_claims.1.a_tt
+#	}
+#
+#	option = { #NOPE
+#		name = bftb_bulgarian_claims.1.b
+#
+#		ai_chance = {
+#			base = 10
+#		}
+#
+#		effect_tooltip = {
+#			BUL = {
+#				add_opinion_modifier = { 
+#					target = GER
+#					modifier = BUL_bulgarian_claims_not_recognized
+#				}
+#			}
+#		}
+#		BUL = { country_event = { id = bftb_bulgarian_claims.3 hours = 16 random_hours = 8 } }
+#	}
+#}
+#
+##Germany recognizes Bulgarian claims in the Balkans - Event for BUL
+#country_event = {
+#	id = bftb_bulgarian_claims.2
+#	title = bftb_bulgarian_claims.2.t
+#	desc = bftb_bulgarian_claims.2.desc
+#	picture = GFX_report_event_bul_boris_with_hitler 
+#
+#	is_triggered_only = yes
+#
+#	fire_only_once = yes
+#
+#	option = {
+#		name = bftb_bulgarian_claims.2.a
+#
+#		add_opinion_modifier = { 
+#			target = GER
+#			modifier = BUL_bulgarian_claims_recognized
+#		}
+#		effect_tooltip = {
+#			every_state = {
+#				limit = {
+#					has_state_flag = BUL_historical_bulgarian_claim_flag
+#					controller = {
+#						OR = {
+#							tag = GER
+#							AND = {
+#								NOT = { is_in_faction_with = GER }
+#								NOT = { tag = BUL }
+#							}
+#						}
+#					}
+#				}
+#				add_dynamic_modifier = { modifier = bulgarian_territorial_expansion_arranged }
+#				custom_effect_tooltip = BUL_germany_recognizes_our_claim_tt
+#			}
+#		}
+#
+#		if = {
+#			limit = {
+#				has_country_flag = BUL_german_influence_flag
+#			}
+#			modify_country_flag = { flag = BUL_german_influence_flag value = 1 }
+#		}
+#		else = {
+#			set_country_flag = { flag = BUL_german_influence_flag value = 1 }
+#		}
+#	}
+#}
+#
+##Germany does not recognize Bulgarian claims in the Balkans - Event for BUL
+#country_event = {
+#	id = bftb_bulgarian_claims.3
+#	title = bftb_bulgarian_claims.3.t
+#	desc = bftb_bulgarian_claims.3.desc
+#	picture = GFX_report_event_generic_sign_treaty1 
+#
+#	is_triggered_only = yes
+#
+#	fire_only_once = yes
+#
+#	option = {
+#		name = bftb_bulgarian_claims.3.a
+#
+#		add_opinion_modifier = { 
+#			target = GER
+#			modifier = BUL_bulgarian_claims_not_recognized
+#		}
+#	}
+#}
+#
+##Germany transferred Bulgaria's claimed states - Event for BUL
+#country_event = {
+#	id = bftb_bulgarian_claims.4
+#	title = bftb_bulgarian_claims.4.t
+#	desc = bftb_bulgarian_claims.4.desc
+#	picture = GFX_report_event_bul_imro_chieftain
+#
+#	is_triggered_only = yes
+#
+#	immediate = {
+#		hidden_effect = {
+#			GER = { country_event = bftb_bulgarian_claims.5 }
+#			if = {
+#				limit = {
+#					any_state = {
+#						OR = {
+#							is_controlled_by = GER
+#							controller = {
+#								is_in_faction_with = GER
+#								NOT = { tag = BUL }
+#								NOT = { owns_state = PREV } #Not owner (it should be actually occupating the state -> Also prevents the issue in YUG with IMRO removing the core)
+#								NOT = { PREV = { is_core_of = PREV } }
+#							}
+#						}
+#					}
+#				}
+#				every_state = {
+#					limit = {
+#						has_state_flag = BUL_bulgarian_claim_warranted_flag
+#						OR = {
+#							is_controlled_by = GER
+#							controller = {
+#								is_in_faction_with = GER
+#								NOT = { tag = BUL }
+#								NOT = { owns_state = PREV } #Not owner (it should be actually occupating the state -> Also prevents the issue in YUG with IMRO removing the core)
+#								NOT = { PREV = { is_core_of = PREV } }
+#							}
+#						}
+#					}
+#					controller = { country_event = bftb_bulgarian_claims.6 }
+#					remove_dynamic_modifier = { modifier = bulgarian_territorial_expansion_arranged }
+#				}
+#			}
+#		}
+#	}
+#
+#	option = {
+#		name = bftb_bulgarian_claims.4.a
+#
+#		add_opinion_modifier = { 
+#			target = GER
+#			modifier = BUL_honored_bulgarian_claims
+#		}
+#
+#		every_state = {
+#			limit = {
+#				has_state_flag = BUL_bulgarian_claim_warranted_flag
+#				OR = {
+#					is_controlled_by = GER
+#					controller = {
+#						is_in_faction_with = GER
+#						NOT = { tag = BUL }
+#					}
+#				}		
+#			}
+#			clr_state_flag = BUL_bulgarian_claim_warranted_flag #stop retaking these states after losing wars for them
+#			BUL = {
+#				transfer_state = PREV
+#				hidden_effect = {
+#					set_state_controller = PREV
+#				}
+#			}
+#		}
+#	}
+#}
+#
+##Germany transferred Bulgaria's claimed states - Event for GER
+#country_event = {
+#	id = bftb_bulgarian_claims.5
+#	title = bftb_bulgarian_claims.5.t
+#	desc = bftb_bulgarian_claims.5.desc
+#	picture = GFX_report_event_bul_troops_dobrudja
+#
+#	is_triggered_only = yes
+#
+#	fire_only_once = yes
+#
+#	option = {
+#		name = bftb_bulgarian_claims.5.a
+#
+#		effect_tooltip = {
+#			BUL = {
+#				add_opinion_modifier = { 
+#					target = GER
+#					modifier = BUL_honored_bulgarian_claims
+#				}
+#			}
+#			every_state = {
+#				limit = {
+#					has_state_flag = BUL_bulgarian_claim_warranted_flag
+#					OR = {
+#						is_controlled_by = GER
+#						controller = {
+#							is_in_faction_with = GER
+#						}
+#					}		
+#				}
+#				BUL = { set_state_controller = PREV }
+#			}
+#		}
+#	}
+#}
+#
+##Germany transferred Bulgaria's claimed states - Event for any allied controller of transferred states
+#country_event = {
+#	id = bftb_bulgarian_claims.6
+#	title = bftb_bulgarian_claims.6.t
+#	desc = bftb_bulgarian_claims.6.desc
+#	picture = GFX_report_event_bul_troops_dobrudja 
+#
+#	is_triggered_only = yes
+#
+#	option = {
+#		name = bftb_bulgarian_claims.6.a
+#
+#		effect_tooltip = {
+#			every_state = {
+#				limit = {
+#					has_state_flag = BUL_bulgarian_claim_warranted_flag
+#					is_controlled_by = ROOT		
+#				}
+#				BUL = { set_state_controller = PREV }
+#			}
+#		}
+#	}
+#}
+#
+##Bulgaria asks for control over Balkan state - Event for controller of the state
+#country_event = {
+#	id = bftb_bulgarian_claims.7
+#	title = bftb_bulgarian_claims.7.t
+#	desc = bftb_bulgarian_claims.7.desc
+#	picture = GFX_report_event_generic_sign_treaty2 
+#
+#	is_triggered_only = yes
+#
+#	option = { #ACCEPT
+#		name = bftb_bulgarian_claims.7.a
+#
+#		ai_chance = {
+#			base = 10
+#			modifier = {
+#				factor = 1.5
+#				is_historical_focus_on = yes
+#			}
+#			modifier = {
+#				factor = 2
+#				has_war = yes
+#			}
+#			modifier = {
+#				factor = 2
+#				is_major = no
+#			}
+#			modifier = {
+#				factor = 2
+#				has_manpower < 49999
+#			}
+#			modifier = {
+#				factor = 5
+#				has_manpower < 9999
+#			}
+#			modifier = {
+#				factor = 2
+#				has_equipment = {
+#					infantry_equipment < 99
+#				}
+#			}
+#			modifier = {
+#				factor = 2
+#				has_opinion	= {
+#					target = FROM
+#					value > 49
+#				}
+#			}
+#			modifier = {
+#				factor = 5
+#				AND = {
+#					tag = GER
+#					is_historical_focus_on = yes
+#					FROM.FROM = { is_core_of = YUG }
+#				}
+#			}
+#			modifier = {
+#				factor = 5
+#				FROM.FROM = { is_claimed_by = BUL }
+#			}
+#			modifier = {
+#				factor = 100
+#				FROM.FROM = {
+#					OR = {
+#						is_core_of = BUL
+#						has_state_flag = BUL_initial_bulgarian_state_flag
+#						has_state_flag = BUL_historical_bulgarian_claim_flag
+#					}
+#				}
+#			}
+#			modifier = {
+#				factor = 5
+#				AND = {
+#					tag = GER
+#					BUL_has_some_sort_of_bogdan_filov = yes
+#				}
+#			}
+#		}
+#
+#		add_political_power = 25
+#		#FROM.FROM is the state targeted by the decision
+#		FROM = {
+#			transfer_state = FROM.FROM
+#			set_state_controller = FROM.FROM
+#			country_event = bftb_bulgarian_claims.8
+#		}
+#	}
+#
+#	option = { #REFUSE
+#		name = bftb_bulgarian_claims.7.b
+#
+#		ai_chance = {
+#			base = 10
+#			modifier = {
+#				factor = 2
+#				is_major = yes
+#			}
+#			modifier = {
+#				factor = 1.5
+#				BUL = { is_ai = yes }
+#			}
+#			modifier = {
+#				factor = 2
+#				has_manpower > 99999
+#			}
+#			modifier = {
+#				factor = 5
+#				has_manpower > 199999
+#			}
+#			modifier = {
+#				factor = 2
+#				has_opinion	= {
+#					target = FROM
+#					value < 0
+#				}
+#			}
+#			modifier = {
+#				factor = 5
+#				has_opinion	= {
+#					target = FROM
+#					value < -49
+#				}
+#			}
+#		}
+#
+#		FROM = { country_event = bftb_bulgarian_claims.9 }
+#	}
+#}
+#
+##Country accepts Bulgarian control over state - Event for BUL
+#country_event = {
+#	id = bftb_bulgarian_claims.8
+#	title = bftb_bulgarian_claims.8.t
+#	desc = bftb_bulgarian_claims.8.desc
+#	picture = GFX_report_event_bul_troops_dobrudja
+#
+#	is_triggered_only = yes
+#
+#	option = { #Ok
+#		name = bftb_bulgarian_claims.8.a
+#
+#		effect_tooltip = {
+#			#FROM.FROM is the state targeted by the decision
+#			transfer_state = FROM.FROM
+#			set_state_controller = FROM.FROM
+#		}
+#	}
+#}
+#
+##Country rejects Bulgarian control over state - Event for BUL
+#country_event = {
+#	id = bftb_bulgarian_claims.9
+#	title = bftb_bulgarian_claims.9.t
+#	desc = bftb_bulgarian_claims.9.desc
+#	picture = GFX_report_event_generic_read_write 
+#
+#	is_triggered_only = yes
+#
+#	option = { #Ok
+#		name = bftb_bulgarian_claims.9.a
+#
+#	}
+#}
 
 #Germany offers to donate aircraft - Event for BUL
 country_event = {
