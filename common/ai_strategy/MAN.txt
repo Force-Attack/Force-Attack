@@ -10,8 +10,8 @@
 # protect
 # influence
 
-CHI_unit_production = {
-	allowed = { original_tag = CHI }
+MAN_unit_production = {
+	allowed = { original_tag = MAN }
 	enable = {
 		always = yes
 	}
@@ -142,8 +142,8 @@ CHI_unit_production = {
 	}
 }
 
-CHI_dont_waste_on_large_air_early = {
-	allowed = { original_tag = CHI }
+MAN_dont_waste_on_large_air_early = {
+	allowed = { original_tag = MAN }
 
 	enable = {
 		exists = yes
@@ -166,8 +166,8 @@ CHI_dont_waste_on_large_air_early = {
 	}
 }
 
-CHI_armored_production = {
-	allowed = { original_tag = CHI }
+MAN_armored_production = {
+	allowed = { original_tag = MAN }
 	enable = {
 		ai_wants_divisions > 0 #Decreasing the amount of tanks the AI wants
 	}
@@ -182,8 +182,8 @@ CHI_armored_production = {
 	}
 }
 
-CHI_highered_armored_production = {
-	allowed = { original_tag = CHI }
+MAN_highered_armored_production = {
+	allowed = { original_tag = MAN }
 	enable = {
 		num_of_military_factories > 109
 	}
@@ -198,8 +198,8 @@ CHI_highered_armored_production = {
 	}
 }
 
-CHI_prio_military_even_at_peace = {
-	allowed = { original_tag = CHI }
+MAN_prio_military_even_at_peace = {
+	allowed = { original_tag = MAN }
 	enable = {
 		always = yes
 	}
@@ -211,50 +211,10 @@ CHI_prio_military_even_at_peace = {
 
 }
 
-CHI_dont_mess_with_the_soviets = {
 
-	allowed = { original_tag = CHI }
-	enable = {
-		NOT = { has_war_with = SOV }
-	}
-
-	abort = {
-		has_war_with = SOV
-	}
-
-	ai_strategy = {
-		type = contain
-		id = "SOV"
-		value = -200
-	}
-}
-
-CHI_some_safer_places_to_build = {
-	allowed = { original_tag = CHI }
-	enable = {
-		exists = yes
-		has_capitulated = no
-		date > 1941.1.1
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-        type = factory_build_score_factor
-        target = 602
-        value = 300
-    }
-
-	ai_strategy = {
-        type = factory_build_score_factor
-        target = 605
-        value = 300
-    }
-}
-
-CHI_you_should_be_prepared_for_war = {
+MAN_you_should_be_prepared_for_war = {
 	allowed = {
-		is_literally_china = yes
+		original_tag = MAN
 	}
 	enable = {
 		always = yes
@@ -267,63 +227,72 @@ CHI_you_should_be_prepared_for_war = {
     }
 }
 
-CHI_buffer_in_mainland = {
-	allowed = {
-		is_literally_china = yes
-	}
-	enable = {
-		date < 1941.1.1
-	}
-	abort_when_not_enabled = yes
 
-	ai_strategy = {
-		type = put_unit_buffers
-		states = {
-			620 #Mainland china, without coast. This should slow down japanese advance due to tendency for china to retreat in disarray.
-			602
-			600
-			750
-			603
-			748
-			605
-		}
-		ratio = 0.15
-		area = asia
-		subtract_invasions_from_need = no
-		subtract_fronts_from_need = no
-	}
-}
-
-CHI_hunker_down_now  = {
+MAN_hunker_down_now  = {
 	allowed = {
-		original_tag = CHI
+		original_tag = MAN
 	}
 
 	enable = {
-		date < 1945.1.1 #We accept our fate after this point
-		has_war_with = JAP
-		is_historical_focus_on = yes
-		surrender_progress > 0.5
+		date < 1938.1.1 #We accept our fate after this point
+		has_war_with = CHI
+		has_completed_focus = MAN_exile_takeover
 	}
-
 	abort = {
-		OR = {
-			date > 1945.1.1
-			JAP = { has_war_with = USA }
-		}
-		num_of_military_factories > 50
+		own_china_proper = yes
 	}
-
 	ai_strategy = {
 		type = front_control
 
-		tag = JAP
+		tag = CHI
 
 		ratio = 0.2
 
 		priority = 100
 		ordertype = front
-		execution_type = careful
+		execution_type = balanced
+		execute_order = yes
 	}
 
 }
+
+ignore_soviets = {
+	allowed = {
+		original_tag = MAN
+	}
+	enable = {
+		has_country_flag = MAN_focused_on_china
+	}
+	abort = {
+		CHI = {
+			exists = no
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "SOV"
+		value = 1000
+	}
+}
+
+ignore_china = {
+	allowed = {
+		original_tag = MAN
+	}
+	enable = {
+		has_country_flag = MAN_focused_on_soviets
+	}
+	abort = {
+		SOV = {
+			exists = no
+		}
+	}
+
+	ai_strategy = {
+		type = ignore
+		id = "CHI"
+		value = 1000
+	}
+}
+
