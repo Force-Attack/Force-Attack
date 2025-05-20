@@ -642,11 +642,50 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
         ai_will_do = {
-            factor = 10
+            factor = 100
         }
+        cancel_if_invalid = no
         completion_reward = { 
             add_ideas = CSA_rebuild_industry   
-              
+            if = {
+                limit = {
+                    has_war_with = USA
+                }
+            random_owned_controlled_state = {
+				limit = {
+					ROOT = { has_full_control_of_state = PREV }
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					ROOT = { has_full_control_of_state = PREV }
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+            }
         }    
     }
     focus = {
