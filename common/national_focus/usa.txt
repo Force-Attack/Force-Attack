@@ -97,8 +97,8 @@ focus_tree = {
 	focus = {
 		id = USA_double_victory
 		icon = GFX_Goal_USA_double_victory
-		x = -17
-		y = 3
+		x = -23
+		y = 2
 		prerequisite = { focus = USA_wpa focus = USA_suspend_the_presecution }
 		relative_position_id = USA_continue_the_new_deal
 		cost = 5
@@ -144,76 +144,9 @@ focus_tree = {
 	}
 
 	focus = {
-		id = USA_fight_jim_crow_now
-		icon = GFX_goal_african_diplomacy
-		x = -17
-		y = 4
-		prerequisite = { focus = USA_double_victory }
-		relative_position_id = USA_continue_the_new_deal
-		cost = 10
-
-		ai_will_do = {
-			factor = 0.2
-			modifier = {
-				add = 0.8
-				is_historical_focus_on = no
-			}
-		}
-
-		available = {
-			congress_high_support_trigger = yes
-			democratic > 0.95
-			date < 1954.01.01
-			if = {
-				limit = {
-					370 = {
-						is_fully_controlled_by = ROOT
-					}
-				}
-				divisions_in_state = {
-					size > 0
-					state = 370
-				}
-			}
-			if = {
-				limit = {
-					367 = {
-						is_fully_controlled_by = ROOT
-					}
-				}
-				divisions_in_state = {
-					size > 0
-					state = 367
-				}
-			}
-			if = {
-				limit = {
-					371 = {
-						is_fully_controlled_by = ROOT
-					}
-				}
-				divisions_in_state = {
-					size > 0
-					state = 371
-				}
-			}
-
-		}
-
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		search_filters = {  FOCUS_FILTER_USA_CONGRESS}
-		completion_reward = {
-			unlock_decision_tooltip = { decision = USA_pass_a_new_civil_rights_bill show_effect_tooltip = yes } 
-			add_stability = -0.10
-		}
-	}
-
-	focus = {
 		id = USA_suspend_the_presecution
 		icon = GFX_focus_generic_diplomatic_treaty
-		x = -19
+		x = -25
 		y = 1
 		prerequisite = { focus = USA_continue_the_new_deal }
 		relative_position_id = USA_continue_the_new_deal
@@ -400,7 +333,7 @@ focus_tree = {
 		id = USA_scientist_haven_commie
 		icon = GFX_goal_research_silver
 		prerequisite = { focus = USA_a_new_direction focus = USA_democratic_socialism }
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = USA_a_new_direction
 		cost = 10
@@ -1101,9 +1034,7 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-		mutually_exclusive = {
-			focus = USA_agricultural_adjustment_act
-		}
+		
 		available = {
 			congress_medium_support_trigger = yes
 			OR = {
@@ -1112,6 +1043,8 @@ focus_tree = {
 			}
 			not = { has_completed_focus = USA_limited_intervention }
 			not = { has_completed_focus = USA_neutrality_act }
+			not = { has_completed_focus = USA_federal_housing_act }
+			not = { has_completed_focus = USA_agricultural_adjustment_act }
 		}
 
 		cancel_if_invalid = no
@@ -1589,137 +1522,25 @@ focus = {
 		icon = GFX_goal_generic_production
 		prerequisite = { focus = USA_continue_the_new_deal }
 		relative_position_id = USA_continue_the_new_deal
-		x = -14
+		x = -18
 		y = 1
-		cost = 10
+		cost = 5
 		#ai_will_do = {
 		#	factor = 1
 		#}
 
 		available_if_capitulated = yes
-		search_filters = {FOCUS_FILTER_POLITICAL}
+		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY}
 		completion_reward = {
-			add_political_power = 150
-			unlock_decision_tooltip = { decision = USA_WPA_program_decision show_effect_tooltip = no }
-			hidden_effect = {
-				set_variable = {
-					var = USA_WPA_program_cost
-					value = 0
-				}
-				set_variable = {
-					var = USA_WPA_program_daily_cost
-					value = 0
-				}
-			}
-		}
-	}
-	focus = {
-		id = USA_agricultural_adjustment_act
-		icon = GFX_goal_generic_agriculture2
-		x = 0
-		y = 1
-		prerequisite = { focus = USA_wpa }
-		mutually_exclusive = {
-			focus = USA_union_representation_act
-		}
-		relative_position_id = USA_wpa
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			congress_medium_support_trigger = yes
-			has_government = democratic
-		}
-		
-		bypass = {
-			not = {
-				OR = {
-					has_idea = great_depression
-					has_idea = great_depression_2
-					has_idea = great_depression_3
-				}
-			}
-		}
-
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
-		completion_reward = {
-			USA_great_depression_level_down = yes
-			USA_congress_medium_opposition = yes
-			unlock_decision_tooltip = { decision = USA_pay_farm_subsidies show_effect_tooltip = yes }
-			if = {
-				limit = {
-					ROOT = {
-						has_war = no
-					}
-				}
-				activate_mission = USA_population_migration_mission_0 
-			}
-			
-			set_country_flag = USA_new_legislation_drafed_flag #Used to unlock the next focus
-		}
-	}
-	focus = {
-		id = USA_fair_labour_standards_act
-		icon = GFX_focus_eng_concessions_to_the_trade_unions
-		x = 0
-		y = 2
-		prerequisite = { focus = USA_agricultural_adjustment_act }
-		relative_position_id = USA_wpa
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			congress_medium_support_trigger = yes
-			has_government = democratic
-			has_country_flag = {
-				flag = USA_new_legislation_drafed_flag
-				days > 230
-			}
-			custom_trigger_tooltip = {
-				tooltip = r56_USA_legislation_drafted_days_tt
-				has_country_flag = {
-					flag = USA_new_legislation_drafed_flag
-					days > 230
-				}
-			}
-		}
-		
-		bypass = {
-			not = {
-				OR = {
-					has_idea = great_depression
-					has_idea = great_depression_2
-					has_idea = great_depression_3
-				}
-			}
-		}
-
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
-		completion_reward = {
-			clr_country_flag = USA_new_legislation_drafed_flag #cleared for the next counter
-			USA_great_depression_level_down = yes
-			USA_congress_medium_opposition = yes
-			set_country_flag = USA_new_legislation_drafed_flag #Used to unlock the next focus
+			add_political_power = 100			
 		}
 	}
 	focus = {
 		id = USA_federal_housing_act
-		icon = GFX_goal_generic_construct_civilian
-		x = 0
-		y = 3
-		prerequisite = { focus = USA_fair_labour_standards_act }
+		icon = GFX_USA_family
+		x = -2
+		y = 1
+		prerequisite = { focus = USA_wpa }
 		relative_position_id = USA_wpa
 		cost = 10
 
@@ -1730,6 +1551,11 @@ focus = {
 		available = {
 			congress_medium_support_trigger = yes
 			has_government = democratic
+			IF = {
+				limit = {
+					  has_completed_focus = USA_agricultural_adjustment_act
+				}
+			
 			has_country_flag = {
 				flag = USA_new_legislation_drafed_flag
 				days > 230
@@ -1741,6 +1567,8 @@ focus = {
 					days > 230
 				}
 			}
+		}
+		not = {  has_completed_focus = USA_union_representation_act  }
 		}
 
 		cancel_if_invalid = no
@@ -1756,7 +1584,7 @@ focus = {
 		}
 		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
 		completion_reward = {
-			clr_country_flag = USA_new_legislation_drafed_flag #cleared for the next counter
+			set_country_flag = USA_new_legislation_drafed_flag #cleared for the next counter
 			USA_great_depression_level_down = yes
 			USA_congress_medium_opposition = yes
 			custom_effect_tooltip = federal_housing_tt
@@ -1829,8 +1657,8 @@ focus = {
 		}
 	}
 	focus = {
-		id = USA_office_of_scientific_research_and_development
-		icon = GFX_focus_research
+		id = USA_agricultural_adjustment_act
+		icon = GFX_focus_generic_farmland
 		x = 2
 		y = 1
 		prerequisite = { focus = USA_wpa }
@@ -1842,45 +1670,593 @@ focus = {
 		}
 
 		available = {
-			amount_research_slots < 7
+			congress_medium_support_trigger = yes
+			has_government = democratic
+			IF = {
+				limit = {
+					  has_completed_focus = USA_federal_housing_act
+				}
+			
+			has_country_flag = {
+				flag = USA_new_legislation_drafed_flag
+				days > 230
+			}
+			custom_trigger_tooltip = {
+				tooltip = r56_USA_legislation_drafted_days_tt
+				has_country_flag = {
+					flag = USA_new_legislation_drafed_flag
+					days > 230
+				}
+			}
+		}
+		not = {  has_completed_focus = USA_union_representation_act  }
 		}
 		
+		bypass = {
+			not = {
+				OR = {
+					has_idea = great_depression
+					has_idea = great_depression_2
+					has_idea = great_depression_3
+				}
+			}
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		
+		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
+		completion_reward = {
+			USA_great_depression_level_down = yes
+			USA_congress_medium_opposition = yes
+			unlock_decision_tooltip = { decision = USA_pay_farm_subsidies show_effect_tooltip = yes }
+			if = {
+				limit = {
+					ROOT = {
+						has_war = no
+					}
+				}
+				activate_mission = USA_population_migration_mission_0 
+			}
+			
+			set_country_flag = USA_new_legislation_drafed_flag #Used to unlock the next focus
+		}
+	}
+	focus = {
+		id = USA_southern_developtment
+		icon = GFX_focus_SWE_landsverk
+		x = 3
+		y = 2
+		prerequisite = { focus = USA_agricultural_adjustment_act }
+		relative_position_id = USA_wpa
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			congress_low_support_trigger = yes
+		}
+	
+		
+		
+		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
+		completion_reward = {
+			371 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			366 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			367 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			
+		}
+	}
+	focus = {
+		id = USA_american_market
+		icon = GFX_American_map
+		x = 1
+		y = 2
+		prerequisite = { focus = USA_agricultural_adjustment_act }
+		relative_position_id = USA_wpa
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+mutually_exclusive = {
+	focus = USA_foreign_economic_investment
+}
+		available = {
+			democratic > 0.95
+			congress_medium_support_trigger = yes #medium support uwu
+			
+		}
+		
+
+		
+		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
+		completion_reward = {
+			custom_effect_tooltip = USA_midwest_invesment_started_tt
+			set_country_flag = USA_midwest_invesment_started
+			hidden_effect = {
+				country_event = usa.65
+				add_ideas = nationalization_FA_america_capital
+			}
+			custom_effect_tooltip = USA_american_capitalism_tt
+			USA_congress_medium_opposition = yes
+		}
+	}
+	focus = {
+		id = USA_fair_labour_standards_act
+		icon = GFX_focus_generic_public_works
+		x = 2
+		y = 3
+		prerequisite = { focus = USA_american_market }
+		prerequisite = { focus = USA_southern_developtment }
+		relative_position_id = USA_wpa
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			congress_medium_support_trigger = yes
+			has_government = democratic
+			has_country_flag = {
+				flag = USA_new_legislation_drafed_flag
+				days > 230
+			}
+			custom_trigger_tooltip = {
+				tooltip = r56_USA_legislation_drafted_days_tt
+				has_country_flag = {
+					flag = USA_new_legislation_drafed_flag
+					days > 230
+				}
+			}
+		}
+		
+		bypass = {
+			not = {
+				OR = {
+					has_idea = great_depression
+					has_idea = great_depression_2
+					has_idea = great_depression_3
+				}
+			}
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		
+		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
+		completion_reward = {
+			USA_great_depression_level_down = yes
+			USA_congress_medium_opposition = yes
+			set_country_flag = USA_new_legislation_drafed_flag #Used to unlock the next focus
+		}
+	}
+	focus = {
+		id = USA_beacon_of_democracy
+		icon = GFX_beacon_of_democracy
+		prerequisite = { focus = USA_fair_labour_standards_act focus = USA_income_tax_reform_wpa  }
+		x = 0
+		y = 4
+		relative_position_id = USA_wpa
+		cost = 10
+
+		available = {
+		has_war = yes
+		date > 1940.1.1
+		any_enemy_country = {
+			is_major = yes
+		}
+		democratic > 0.90
+	}
+
+		
+		search_filters = {FOCUS_FILTER_INDUSTRY}
+		completion_reward = {
+			add_political_power = 75
+			add_stability = 0.05
+			add_ideas = beacon_of_democracy_idea
+		}
+	}	
+
+	
+	focus = {
+		id = USA_industrial_subsidies_act
+		icon = GFX_focus_CHL_domestic_production_of_the_willys_mb
+		x = -3
+		y = 2
+		prerequisite = { focus = USA_federal_housing_act }
+		relative_position_id = USA_wpa
+		cost = 10
+
+		ai_will_do = {
+			factor = 15
+		}
+
+		available = {
+			congress_low_support_trigger = yes
+			has_government = democratic
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		
+		complete_tooltip = {
+			every_owned_state = {
+				limit = {
+					has_state_flag = USA_federal_housing_act
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		search_filters = {FOCUS_FILTER_MANPOWER FOCUS_FILTER_INDUSTRY FOCUS_FILTER_USA_CONGRESS}
+		completion_reward = {
+			custom_effect_tooltip = USA_industrial_subsidies_act_tt
+			hidden_effect = {
+				add_ideas = USA_industrial_subsidies_act_idea
+			}
+		}
+	}
+	focus = {
+		id = USA_foreign_economic_investment
+		icon = USA_new_foreign_policy
+		x = -1
+		y = 2
+
+		cost = 10
+		mutually_exclusive = {
+			focus = USA_american_market
+		}
+			
+		available = {
+			democratic > 0.95
+			congress_medium_support_trigger = yes #medium support uwu
+		}
+
+		prerequisite = {
+			focus = USA_federal_housing_act
+		}
+
+		relative_position_id = USA_wpa
+
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		bypass = {
+			AND = { 
+				ENG = { exists = no }
+				GER = { exists = no }
+				SOV = { exists = no }
+				ITA = { exists = no }
+				FRA = { exists = no }
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = USA_foreign_economic_investment_tt
+			hidden_effect = {
+				if = { 
+					limit = { 
+						country_exists = GER
+						GER = { has_opinion = { target = USA value > 80 } } 
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = infrastructure
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = industrial_complex
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = industrial_complex
+							level = 3
+							instant_build = yes
+						}
+					}
+				}
+				if = { 
+					limit = { 
+						country_exists = ITA
+						ITA = { has_opinion = { target = USA value > 80 } } 
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = infrastructure
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = industrial_complex
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = industrial_complex
+							level = 3
+							instant_build = yes
+						}
+					}
+				}
+				if = { 
+					limit = { 
+						country_exists = FRA
+						FRA = { has_opinion = { target = USA value > 80 } } 
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = infrastructure
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = industrial_complex
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = industrial_complex
+							level = 3
+							instant_build = yes
+						}
+					}
+				}
+				if = { 
+					limit = { 
+						country_exists = SOV
+						SOV = { has_opinion = { target = USA value > 80 } } 
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = infrastructure
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = infrastructure
+							level = 3
+							instant_build = yes
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = industrial_complex
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = industrial_complex
+							level = 3
+							instant_build = yes
+						}
+					}
+				}
+				if = { 
+					limit = { 
+						country_exists = ENG
+						ENG = { has_opinion = { target = USA value > 80 } } 
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = infrastructure
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+							instant_build = yes
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							free_building_slots = {
+								building = industrial_complex
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = industrial_complex
+							level = 3
+							instant_build = yes
+						}
+					}
+				}
+			}
+			USA_congress_medium_opposition = yes
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+	
+	focus = {
+		id = USA_income_tax_reform_wpa
+		icon = GFX_focus_RAJ_war_taxes
+		x = -2
+		y = 3
+		prerequisite = { focus = USA_foreign_economic_investment }
+		prerequisite = { focus = USA_industrial_subsidies_act }
+		relative_position_id = USA_wpa
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			congress_medium_support_trigger = yes
+			has_government = democratic
+			has_country_flag = {
+				flag = USA_new_legislation_drafed_flag
+				days > 230
+			}
+			custom_trigger_tooltip = {
+				tooltip = r56_USA_legislation_drafted_days_tt
+				has_country_flag = {
+					flag = USA_new_legislation_drafed_flag
+					days > 230
+				}
+			}
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		
+		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MANPOWER FOCUS_FILTER_USA_CONGRESS}
+		completion_reward = {
+			USA_great_depression_level_down = yes
+			USA_congress_medium_opposition = yes
+			unlock_decision_tooltip = { decision = USA_give_tax_break show_effect_tooltip = yes }
+			set_country_flag = USA_new_legislation_drafed_flag
+		}
+	}
+	focus = {
+		id = USA_office_of_scientific_research_and_development
+		icon = GFX_focus_research
+		x = -13
+		y = 1
+		prerequisite = { focus = USA_continue_the_new_deal }
+		relative_position_id = USA_continue_the_new_deal
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 		search_filters = {FOCUS_FILTER_RESEARCH}
 		completion_reward = {
 			add_research_slot = 1
-			if = {
-				limit = {
-					has_idea = rt56_rushed_r_n_d
-				}
-				remove_ideas = rt56_rushed_r_n_d
-			}
 		}
 	}
 
 	focus = {
 		id = USA_rubber_reserve_company
 		icon = GFX_focus_generic_rubber
-		prerequisite = { focus = USA_office_of_scientific_research_and_development }
+		prerequisite = { focus = USA_office_of_scientific_research_and_development focus = USA_wpa }
+		
 		available = {
 			
 		}
-		x = 2
-		y = 2
-		relative_position_id = USA_wpa
-		cost = 10
+		x = 1
+		y = 1
+		relative_position_id = USA_office_of_scientific_research_and_development
+		cost = 5
 		#ai_will_do = {
 		#	factor = 1
 		#}
-		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_RUBBER}
+		search_filters = {FOCUS_FILTER_RESEARCH}
 		completion_reward = {
 			add_tech_bonus = {
-				name = usa_rubber
-				category = cat_synth_rubber
-				category = synth_resources
-				bonus = 1
-				uses = 3
+				name = USA_rubber_reserve_company
+				bonus = 1.0
+				uses = 2
+				technology = rubber_processing
+				technology = improved_rubber_processing
+				technology = advanced_rubber_processing
+				technology = modern_rubber_processing
 			}
-			
 		}
 	}
 #   ### #   # ### ### ### ###      ### #  # ### ### ###  #   # ### #  # ### ###  ##  #  # 
