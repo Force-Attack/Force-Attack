@@ -1,0 +1,46 @@
+scripted_gui = {
+	coring_button_powers5 = {
+	
+		context_type = selected_state_context
+		
+		window_name = "coring_button_powers5_container"
+		
+		visible = {
+			AND = {
+				is_fully_controlled_by = ROOT
+				NOT = { is_core_of = FROM }
+				state_population > 500000
+				NOT = { state_population > 1000000 }
+			}
+		}
+		
+		effects = {
+			create_core5_click = {
+				ROOT = { 
+					add_political_power = -75 
+				}
+				
+				add_core_of = FROM
+				}
+		}
+		triggers = {
+			create_core5_click_enabled = {
+				check_variable = { ROOT.political_power > 74.99 }
+			}
+		}
+		        
+		ai_check = {
+			check_variable = { ROOT.political_power > 74.99 }
+			check_variable = { ai_random > 0.65 }
+		}
+		
+		ai_weights = {
+			create_core5_click = {
+				ai_will_do = {
+					factor = 40
+				}
+			}
+		}
+	}
+}
+

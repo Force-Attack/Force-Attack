@@ -1,0 +1,72 @@
+scripted_gui = {
+	
+	st_take_state = {
+	
+		context_type = diplomatic_action
+		
+		window_name = "st_take_state"
+		
+		visible = {
+			ROOT = {
+				is_ai = no  
+			}
+		}
+		
+		dynamic_lists = {
+			# name of the grid box gui element
+			st_state_grid = {
+				array = owned_controlled_states
+				change_scope = yes
+				entry_container = "[st_give_state_entry_loc]" 
+			}
+		}
+		
+		effects = {
+			st_mark_click = {
+				THIS = { 
+					set_state_flag = marked_for_transfer 
+				}
+				add_to_variable = { ROOT.marked_states = 1 }
+			}
+			
+			st_unmark_click = {
+				THIS = { 
+					clr_state_flag = marked_for_transfer 
+				}
+				subtract_from_variable = { ROOT.marked_states = 1 }
+			}
+		
+			clear_all_markings_click = {
+				ROOT = { 
+					set_variable = { marked_states = 0 }
+				}
+				every_state = {
+					limit = {
+						has_state_flag = marked_for_transfer
+						is_owned_and_controlled_by = THIS
+					}
+					clr_state_flag = marked_for_transfer
+				}
+			}
+			
+		}
+		
+		triggers = {
+			
+			mark_all_states_visible = {
+				always = no
+			}
+		
+			mark_colonial_states_visible = {
+				always = no
+			}
+			
+			clear_all_markings_click_enabled = {
+				check_variable = { ROOT.marked_states > 0 }
+			}
+		
+		}
+        
+	}
+}
+

@@ -1,0 +1,190 @@
+Commonwealth_basic_joint_trigger = {
+	custom_trigger_tooltip = {
+		#tooltip = Commonwealth_is_joint_focus_member_TT
+		is_in_faction = yes
+		OR = {
+			has_country_flag = Commonwealth_council_leader
+			has_country_flag = Commonwealth_union_leader
+			has_country_flag = Commonwealth_league_leader
+			AND = {
+				Commonwealth_is_Commonwealth = yes
+				#is_subject = no  
+				is_in_faction_with = var:global.Commonwealth_alliance_leader 
+			}	
+		}
+	}
+	
+}
+
+Commonwealth_basic_available_trigger = {
+	#is_subject = no 
+	Commonwealth_basic_joint_trigger = yes	
+	any_allied_country = {
+		Commonwealth_basic_joint_trigger = yes
+	}
+}
+
+Commonwealth_valid_decision_target = {
+	hidden_trigger = {
+		Commonwealth_is_Commonwealth = yes 
+	}
+	exists = yes
+	#is_subject = no
+	NOT = {
+		has_war_with = ROOT 
+	}
+}
+
+Commonwealth_is_Commonwealth = {
+	OR = {
+		original_tag = ENG
+		original_tag = CAN
+		original_tag = SAF
+		original_tag = RAJ
+		original_tag = AST
+		original_tag = NZL
+	}
+}
+
+Commonwealth_democratic_alliance_viable = {
+	ROOT = {
+		OR = {
+			has_global_flag = Commonwealth_democratic_alliance_formed
+			has_dynamic_modifier = { modifier = Commonwealth_democratic_alliance_leader_dmod }
+			has_dynamic_modifier = { modifier = Commonwealth_democratic_alliance_member_dmod }
+			AND = {
+				Commonwealth_is_democratic = yes 
+				Commonwealth_alliance_created_already = no 
+				Commonwealth_has_started_communist_focus_tree = no
+				Commonwealth_has_started_monarchist_focus_tree = no
+			}
+			AND = {
+				Commonwealth_has_started_democratic_focus_tree = yes 
+				Commonwealth_alliance_created_already = no 
+			}
+		}
+	}
+}
+
+Commonwealth_communist_alliance_viable = {
+	ROOT = {
+		OR = {
+			has_global_flag = Commonwealth_communist_alliance_formed
+			has_dynamic_modifier = { modifier = Commonwealth_communist_alliance_leader_dmod }
+			has_dynamic_modifier = { modifier = Commonwealth_communist_alliance_member_dmod }
+			AND = {
+				Commonwealth_is_communist = yes 
+				Commonwealth_alliance_created_already = no 
+				Commonwealth_has_started_democratic_focus_tree = no
+				Commonwealth_has_started_monarchist_focus_tree = no
+			}
+			AND = {
+				Commonwealth_has_started_communist_focus_tree = yes
+				Commonwealth_alliance_created_already = no 
+			} 
+		}
+	}
+}
+
+Commonwealth_monarchist_alliance_viable = {
+	ROOT = {
+		OR = {
+			has_global_flag = Commonwealth_monarchist_alliance_formed
+			has_dynamic_modifier = { modifier = Commonwealth_monarchist_alliance_leader_dmod }
+			has_dynamic_modifier = { modifier = Commonwealth_monarchist_alliance_member_dmod }
+			AND = {
+				has_government = fascism 
+				#Commonwealth_alliance_created_already = no
+				Commonwealth_has_started_democratic_focus_tree = no
+				Commonwealth_has_started_communist_focus_tree = no 
+			}
+			AND = {
+				has_government = neutrality 
+				#Commonwealth_alliance_created_already = no 
+				Commonwealth_has_started_democratic_focus_tree = no
+				Commonwealth_has_started_communist_focus_tree = no
+			}
+			AND = {
+				Commonwealth_has_started_monarchist_focus_tree = yes 
+				#Commonwealth_alliance_created_already = no
+			}
+		}
+	}
+}
+
+Commonwealth_has_started_democratic_focus_tree = {
+	OR = {
+		has_completed_focus = ENG_steady_as_she_goes
+	}
+} 
+
+Commonwealth_has_started_communist_focus_tree = {
+	OR = {
+		has_completed_focus = ENG_concessions_to_the_trade_unions
+	}
+}
+
+Commonwealth_has_started_monarchist_focus_tree = {
+	OR = {
+		has_completed_focus = ENG_organize_the_blackshirts
+		has_completed_focus = ENG_the_kings_party
+	}	
+}
+
+Commonwealth_is_democratic = {
+	OR = {
+		original_tag = ENG
+		original_tag = CAN
+		original_tag = SAF
+		original_tag = AST
+		original_tag = NZL
+	}
+	OR = {
+		has_government = democratic
+	}
+}
+Commonwealth_is_monarchist = {
+	OR = {
+		original_tag = ENG
+		original_tag = CAN
+		original_tag = SAF
+		original_tag = AST
+		original_tag = NZL
+	}
+	OR = {
+		has_government = neutrality
+	}
+}
+Commonwealth_is_communist = {
+	OR = {
+		original_tag = ENG
+		original_tag = CAN
+		original_tag = SAF
+		original_tag = AST
+		original_tag = NZL
+	}
+	has_government = communism
+}
+
+Commonwealth_is_fascist = {
+	OR = {
+		original_tag = ENG
+		original_tag = CAN
+		original_tag = SAF
+		original_tag = AST
+		original_tag = NZL
+	}
+	has_government = fascism
+	# Add more triggers if needed
+}
+
+Commonwealth_alliance_created_already = { # Checks if any of the Commonwealth Alliances has been formed.  
+	custom_trigger_tooltip = {
+		tooltip = Commonwealth_alliance_created_already_TT
+		OR = {
+			has_global_flag = Commonwealth_democratic_alliance_formed
+			has_global_flag = Commonwealth_communist_alliance_formed
+			has_global_flag = Commonwealth_monarchist_alliance_formed
+		}
+	}
+}
