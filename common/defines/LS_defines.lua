@@ -30,8 +30,8 @@ NDefines.NProduction.CONVOY_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 100
 NDefines.NProduction.RAILWAY_GUN_MAX_MIL_FACTORIES_PER_LINE = 30
-NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.0
-NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 4.0
+NDefines.NProduction.BASE_FACTORY_SPEED_MIL = 4.5
+NDefines.NProduction.BASE_FACTORY_SPEED_NAV = 3.0
 NDefines.NProduction.MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0.01
 NDefines.NProduction.CAPITULATE_STOCKPILES_RATIO = 0
 ---------
@@ -133,7 +133,7 @@ NDefines.NResistance.GARRISON_MANPOWER_LOST_BY_ATTACK = 0.005 	--WAS 0.018 Ratio
 
 NDefines.NPolitics.ARMY_LEADER_MAX_COST = 75				-- max cost BEFORE modifiers
 NDefines.NPolitics.NAVY_LEADER_MAX_COST = 75
-NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2.0 -- base pp gain per day	
+NDefines.NPolitics.BASE_POLITICAL_POWER_INCREASE = 2.5 -- base pp gain per (week)?		
 
 NDefines.NMilitary.SUPPLY_GRACE = 84 -- 72 3 days as they say and remain hungry for another 12
 

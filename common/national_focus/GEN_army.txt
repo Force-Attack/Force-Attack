@@ -1,0 +1,1214 @@
+#ARMY TREE
+
+shared_focus = {
+	id = GEN_ARMY_expand_the_general_staff
+	icon = GFX_goal_ITA_arditi
+	x = 10
+	y = 0
+	cost = 5
+	offset = {
+		x = 55
+		y = 0
+		trigger = {
+		  tag = ROM
+		}
+	  }
+	  offset = {
+		x = 30
+		y = 0
+		trigger = {
+		  tag = RAJ
+		}
+	  }
+	  offset = {
+		x = -2
+		y = 7
+		trigger = {
+		  tag = ven
+		}
+	  }
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = MON_expand_the_general_staff_idea
+	}
+}
+
+shared_focus = {
+	id = GEN_ARMY_organize_army_inspection
+	icon = GFX_goal_generic_army
+	x = -12
+	y = 0
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 5
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		army_experience = 25
+		
+	}
+	search_filters = {	FOCUS_FILTER_ARMY_XP }
+}
+
+shared_focus = {
+	id = GEN_ARMY_mobilize_the_reserves
+	icon = GFX_goal_generic_army_mobilization
+	prerequisite = { focus = GEN_ARMY_organize_army_inspection }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_organize_army_inspection
+	cost = 5
+
+	available = {
+		has_war_support > 0.5
+	}
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		army_experience = 30
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_field_hospital_initiative
+	icon = GFX_goal_medicine
+	prerequisite = { focus = GEN_ARMY_mobilize_the_reserves }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_mobilize_the_reserves
+	cost = 5
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = MON_field_hospital_initiative
+			bonus = 1
+			uses = 2
+			category = hospital_tech
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_desperate_measures
+	icon = GFX_goal_generic_recruitment
+	prerequisite = { focus = GEN_ARMY_mobilize_the_reserves }
+	x = 0
+	y = 2
+	relative_position_id = GEN_ARMY_mobilize_the_reserves
+	cost = 7.16
+
+	available = {
+		OR = {
+			surrender_progress > 0.20
+			AND = {
+				has_war = yes
+				
+			}
+		}
+	}
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = all_adults_serve
+		add_ideas = all_must_serve_young
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
+}
+
+shared_focus = {
+	id = GEN_ARMY_demids_legacy
+	icon = GFX_goal_mechanized_offensive
+	prerequisite = { focus = GEN_ARMY_organize_army_inspection }
+	x = 0
+	y = 4
+	relative_position_id = GEN_ARMY_organize_army_inspection
+	cost = 10
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = motorized_bonus
+			bonus = 1
+			uses = 1
+			category = motorized_equipment
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_improve_coordination_capabilities
+	icon = GFX_goal_generic_radio_development_2
+	prerequisite = { focus = GEN_ARMY_demids_legacy }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_demids_legacy
+	cost = 5
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = motorized_bonus
+			bonus = 1
+			uses = 1
+			category = signal_company_tech
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_lessons_from_1934_rebellion
+	icon = GFX_focus_SOV_penal_battalions
+	prerequisite = { focus = GEN_ARMY_demids_legacy }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_demids_legacy
+	cost = 10
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = motorized_bonus
+			bonus = 0.5
+			uses = 2
+			category = military_police_tech
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_foundation_for_special_task_battalion
+	icon = GFX_goal_generic_army_elite
+	prerequisite = { focus = GEN_ARMY_organize_army_inspection }
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	x = 2
+	y = 1
+	relative_position_id = GEN_ARMY_organize_army_inspection
+	cost = 10
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = ITA_expand_the_elite_forces
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_mountainous_specialization
+	icon = GFX_focus_GRE_a_land_of_mountains
+	prerequisite = { focus = GEN_ARMY_foundation_for_special_task_battalion }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_foundation_for_special_task_battalion
+	cost = 10
+
+	mutually_exclusive = { focus = GEN_ARMY_gobi_training_facilities }
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = special_bonus
+			bonus = 1.0
+			uses = 1
+			category = mountaineers_tech
+		}
+		custom_effect_tooltip = GRE_mountain_training_effect
+		hidden_effect = { set_technology = { mountain_warfare = 1 } }
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_equipment_recovery_teams
+	icon = GFX_goal_ammunitions
+	prerequisite = { focus = GEN_ARMY_mountainous_specialization focus = GEN_ARMY_gobi_training_facilities }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_mountainous_specialization
+	cost = 10
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = ETH_scavenging_tactics_idea
+		add_tech_bonus = {
+			name = maintenance_company_tech_name
+			bonus = 1
+			uses = 1
+			category = maintenance_company_tech
+		}
+	}
+	search_filters = {	FOCUS_FILTER_ARMY_XP FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_gobi_training_facilities
+	icon = GFX_focus_generic_camel_corps
+	prerequisite = { focus = GEN_ARMY_foundation_for_special_task_battalion }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_foundation_for_special_task_battalion
+	cost = 5
+
+	mutually_exclusive = { focus = GEN_ARMY_mountainous_specialization }
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = SAF_desert_equipment
+	}
+	search_filters = {	FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_ratify_battleplans
+	icon = GFX_goal_generic_secret_documents
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	prerequisite = { focus = GEN_ARMY_organize_army_inspection }
+	x = -7
+	y = 1
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 10
+	
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = GEN_Train_the_Troops
+	}
+}
+
+shared_focus = {
+	id = GEN_ARMY_old_heritage
+	icon = GFX_focus_generic_army_modernizations
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	x = -2
+	y = 1
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 10
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_soldier_devotion
+		focus = GEN_ARMY_legacy_of_tachanka
+	}
+
+	available = {
+
+	}
+	
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = infantry
+			bonus = 0.5
+			uses = 2
+			category = infantry_weapons
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_soldier_devotion
+	icon = GFX_goal_generic_combined_arms_artillery_antiair_antitank
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 10
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_old_heritage
+		focus = GEN_ARMY_legacy_of_tachanka
+	}
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	available = {
+
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = artillery
+			bonus = 0.5
+			uses = 2
+			category = artillery
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_legacy_of_tachanka
+	icon = GFX_focus_FIN_oy_alkoholiliike
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	x = 2
+	y = 1
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 10
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_old_heritage
+		focus = GEN_ARMY_soldier_devotion
+	}
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	available = {
+		
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = support_tech
+			bonus = 0.5
+			uses = 2
+			category = support_tech
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_support_old_officers_corps
+	icon = GFX_goal_infantry_flames
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	prerequisite = { focus = GEN_ARMY_organize_army_inspection }
+	x = -5
+	y = 2
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 10
+
+	mutually_exclusive = { focus = GEN_ARMY_favour_young_officers }
+
+	available = {
+
+	}
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = SAU_army_infantry
+			uses = 1
+			bonus = 1
+			category = infantry_weapons
+		}
+		unlock_decision_category_tooltip = GEN_Army_Modernization
+	}
+	search_filters = {	FOCUS_FILTER_POLITICAL }
+}
+
+shared_focus = {
+	id = GEN_ARMY_favour_young_officers
+	icon = GFX_focus_SOV_the_glory_of_the_red_army_alternative
+	prerequisite = { focus = GEN_ARMY_expand_the_general_staff }
+	x = 5
+	y = 2
+	relative_position_id = GEN_ARMY_expand_the_general_staff
+	cost = 10
+
+	mutually_exclusive = { focus = GEN_ARMY_support_old_officers_corps }
+
+	available = {
+
+	}
+
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = SAU_army_infantry
+			uses = 1
+			bonus = 1
+			category = armor
+		}
+		unlock_decision_category_tooltip = GEN_Support_the_Tank_Industry
+	}
+	search_filters = {	FOCUS_FILTER_ARMY_XP }
+}
+
+shared_focus = {
+	id = GEN_ARMY_revive_forgotten_doctrines
+	icon = GFX_goal_assymetric_doctrine
+	prerequisite = { focus = GEN_ARMY_support_old_officers_corps }
+	x = -3
+	y = 1
+	relative_position_id = GEN_ARMY_support_old_officers_corps
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_rely_on_soviet_tactics
+		focus = GEN_ARMY_the_grand_stratagem
+		focus = GEN_ARMY_adopt_tsogs_methods
+		focus = GEN_ARMY_experimental_mobility
+	}
+
+	completion_reward = {
+		army_experience = 75
+		add_doctrine_cost_reduction = {
+			name = land_doc_bonus
+			cost_reduction = 0.5
+			uses = 2
+			category = cat_r56_guerilla_warfare
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_bolster_national_awareness
+	icon = GFX_focus_SWE_education_reform
+	prerequisite = { focus = GEN_ARMY_revive_forgotten_doctrines }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_revive_forgotten_doctrines
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = MON_awoken_nation
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_expand_universal_military_act
+	icon = GFX_focus_ICE_embrace_the_workers_revolution
+	prerequisite = { focus = GEN_ARMY_bolster_national_awareness }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_bolster_national_awareness
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		swap_ideas = {
+			remove_idea = MON_awoken_nation
+			add_idea = MON_awoken_nation_with_conscription
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MANPOWER }
+}
+
+shared_focus = {
+	id = GEN_ARMY_improve_militia_formations
+	icon = GFX_focus_SOV_flying_clubs
+	prerequisite = { focus = GEN_ARMY_revive_forgotten_doctrines }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_revive_forgotten_doctrines
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = GEN_Anti_Air
+			uses = 1
+			bonus = 1
+			category = cat_anti_air
+		}
+		add_ideas = GEN_Red_Air_Thats_Fair
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_ideological_loyalty_of_the_masses
+	icon = GFX_goal_airplane_hunt
+	prerequisite = { focus = GEN_ARMY_improve_militia_formations }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_improve_militia_formations
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = GEN_Fighting_Back_the_Fallen_Skies
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_good_old_new_ways
+	icon = GFX_goal_ussr_revolt
+	prerequisite = { focus = GEN_ARMY_ideological_loyalty_of_the_masses }
+	prerequisite = { focus = GEN_ARMY_expand_universal_military_act }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_ideological_loyalty_of_the_masses
+	cost = 5
+	ai_will_do = {
+		factor = 10	
+	}
+	available = {
+		has_war = yes
+		surrender_progress < 0.90
+		
+	}
+	completion_reward = {
+		add_ideas = GEN_Get_Out
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_rely_on_soviet_tactics
+	icon = GFX_goal_mass_assault
+	prerequisite = { focus = GEN_ARMY_support_old_officers_corps }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_support_old_officers_corps
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_revive_forgotten_doctrines
+		focus = GEN_ARMY_the_grand_stratagem
+		focus = GEN_ARMY_adopt_tsogs_methods
+		focus = GEN_ARMY_experimental_mobility
+	}
+
+	completion_reward = {
+		army_experience = 50
+		add_doctrine_cost_reduction = {
+			name = land_doc_bonus
+			cost_reduction = 0.25
+			uses = 3
+			category = cat_mass_assault
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_weapon_prototype_development
+	icon = GFX_goal_tank_hunt
+	prerequisite = { focus = GEN_ARMY_rely_on_soviet_tactics }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_rely_on_soviet_tactics
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		set_technology = {
+			r56_anti_tank_kit = 2
+		}	
+		add_tech_bonus = {
+			name = SAU_army_infantry
+			uses = 1
+			bonus = 1
+			category = cat_anti_tank
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT FOCUS_FILTER_ARMY_XP }
+}
+
+shared_focus = {
+	id = GEN_ARMY_mass_firearm_production
+	icon = GFX_focus_generic_limited_social_mobilization
+	prerequisite = { focus = GEN_ARMY_weapon_prototype_development }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_weapon_prototype_development
+	cost = 5
+	ai_will_do = {
+		factor = 10	
+	}
+	available = {
+		has_tech = radio
+		}
+	completion_reward = {
+		add_ideas = GEN_reinforcements
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_focus_on_infantry
+	icon = GFX_goal_infantry_offensive
+	prerequisite = { focus = GEN_ARMY_rely_on_soviet_tactics }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_rely_on_soviet_tactics
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		army_experience = 25
+		if = {
+			limit = {
+				original_tag = ROM
+			}
+			ROM_gheorghe_manoliu = {
+				add_field_marshal_role = {
+					skill = 4
+					attack_skill = 3
+					defense_skill = 4
+					planning_skill = 2
+					logistics_skill = 3
+				}
+				add_unit_leader_trait = inflexible_strategist
+				add_unit_leader_trait = career_officer
+			}
+		}
+		if = {
+			limit = {
+				original_tag = RAJ
+			}
+			RAJ_frank_messervy = {
+				add_general_role = {
+					skill = 3
+					attack_skill = 2
+					defense_skill = 2
+					planning_skill = 3
+					logistics_skill = 3
+				}
+				add_unit_leader_trait = inflexible_strategist
+				add_unit_leader_trait = career_officer
+			}
+			RAJ_lakshmi_sahgal = {
+				add_general_role = {
+					skill = 3
+					attack_skill = 2
+					defense_skill = 4
+					planning_skill = 2
+					logistics_skill = 1
+				}
+				add_unit_leader_trait = inflexible_strategist
+				add_unit_leader_trait = career_officer
+			}
+		}
+
+		
+
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_the_inevitable_counterblow
+	icon = GFX_goal_defensive_position2
+	prerequisite = { focus = GEN_ARMY_focus_on_infantry }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_focus_on_infantry
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = MON_the_mongolian_infantry
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_suitable_high_command
+	icon = GFX_focus_SOV_mobilization_plan
+	prerequisite = { focus = GEN_ARMY_mass_firearm_production }
+	prerequisite = { focus = GEN_ARMY_the_inevitable_counterblow }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_mass_firearm_production
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		every_army_leader = {
+			add_logistics = 2
+		}
+		add_ideas = GEN_Encourage_Supply_Developement
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_the_grand_stratagem
+	icon = GFX_goal_grand_battleplan
+	prerequisite = { focus = GEN_ARMY_favour_young_officers focus = GEN_ARMY_support_old_officers_corps }
+	x = 5
+	y = 1
+	relative_position_id = GEN_ARMY_support_old_officers_corps
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_revive_forgotten_doctrines
+		focus = GEN_ARMY_rely_on_soviet_tactics
+		focus = GEN_ARMY_adopt_tsogs_methods
+		focus = GEN_ARMY_experimental_mobility
+	}
+
+	completion_reward = {
+		army_experience = 25
+		add_doctrine_cost_reduction = {
+			name = land_doc_bonus
+			cost_reduction = 0.75
+			uses = 1
+			category = cat_grand_battle_plan
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_favour_stronghold_defenses
+	icon = GFX_goal_generic_defence
+	prerequisite = { focus = GEN_ARMY_the_grand_stratagem }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_the_grand_stratagem
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		army_experience = 15
+		add_ideas = { superior_firepower_academy_spirit }
+		add_tech_bonus = {
+			name = SAU_army_infantry
+			uses = 1
+			bonus = 1
+			category = engineers_tech
+		}
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_advanced_fortification_studies
+	icon = GFX_focus_SWE_defense_act
+	prerequisite = { focus = GEN_ARMY_favour_stronghold_defenses }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_favour_stronghold_defenses
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = MON_grand_stratagem_favour_strongholds
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_support_tactical_decision_freedom
+	icon = GFX_goal_plan
+	prerequisite = { focus = GEN_ARMY_the_grand_stratagem }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_the_grand_stratagem
+	cost = 5
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = PRC_top_command
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_optimize_infantry_formations
+	icon = GFX_focus_FIN_weapon_caches
+	prerequisite = { focus = GEN_ARMY_support_tactical_decision_freedom }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_support_tactical_decision_freedom
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		every_army_leader = {
+			add_planning = 1
+			add_defense = 1
+		}
+		add_ideas = GEN_Promote_Our_Planning
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_unified_operational_command
+	icon = GFX_focus_generic_railway_gun
+	prerequisite = { focus = GEN_ARMY_optimize_infantry_formations }
+	prerequisite = { focus = GEN_ARMY_advanced_fortification_studies }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_optimize_infantry_formations
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		set_technology = {
+			railway_gun = 1
+		}
+		add_equipment_production = {
+			equipment = {
+				type = railway_gun_equipment_1
+			}
+			requested_factories = 1
+			progress = 0.9
+			amount = 1
+		}
+		add_equipment_production = {
+			equipment = {
+				type = railway_gun_equipment_1
+			}
+			requested_factories = 1
+			progress = 0.6
+			amount = 1
+		}
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_adopt_tsogs_methods
+	icon = GFX_goal_superior_firepower
+	prerequisite = { focus = GEN_ARMY_favour_young_officers }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_favour_young_officers
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_revive_forgotten_doctrines
+		focus = GEN_ARMY_rely_on_soviet_tactics
+		focus = GEN_ARMY_the_grand_stratagem
+		focus = GEN_ARMY_experimental_mobility
+	}
+
+	completion_reward = {
+		army_experience = 50
+		add_doctrine_cost_reduction = {
+			name = land_doc_bonus
+			cost_reduction = 0.25
+			uses = 3
+			category = cat_superior_firepower
+		}
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_investigate_improvement_opportunities
+	icon = GFX_goal_generic_artillery_improved
+	prerequisite = { focus = GEN_ARMY_adopt_tsogs_methods }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_adopt_tsogs_methods
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = GEN_Here_Comes_the_Boom
+		add_tech_bonus = {
+			name = SAU_army_infantry
+			uses = 2
+			bonus = 0.25
+			category = artillery
+		}
+	}
+	search_filters = {	FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP }
+}
+
+shared_focus = {
+	id = GEN_ARMY_feature_compact_mortar_designs
+	icon = GFX_goal_generic_army_artillery
+	prerequisite = { focus = GEN_ARMY_investigate_improvement_opportunities }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_investigate_improvement_opportunities
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = GEN_Support_Bigger_Shells
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_strengthen_air_land_links
+	icon = GFX_goal_generic_army_artillery2
+	prerequisite = { focus = GEN_ARMY_adopt_tsogs_methods }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_adopt_tsogs_methods
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = bold_attack_spirit
+		every_army_leader = {
+			add_attack = 1	
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_combined_arms_operations
+	icon = GFX_goal_CAN_land_mattress
+	prerequisite = { focus = GEN_ARMY_strengthen_air_land_links }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_strengthen_air_land_links
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		army_experience = 35
+		set_technology = {
+			rocket_artillery = 1
+		}
+		
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_the_ultimate_weapon
+	icon = GFX_goal_generic_combined_arms_artillery_antiair_antitank
+	prerequisite = { focus = GEN_ARMY_feature_compact_mortar_designs }
+	prerequisite = { focus = GEN_ARMY_combined_arms_operations }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_feature_compact_mortar_designs
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = MON_the_ultimate_weapon_idea
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_experimental_mobility
+	icon = GFX_goal_mobile_warfare
+	prerequisite = { focus = GEN_ARMY_favour_young_officers }
+	x = 3
+	y = 1
+	relative_position_id = GEN_ARMY_favour_young_officers
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	mutually_exclusive = {
+		focus = GEN_ARMY_revive_forgotten_doctrines
+		focus = GEN_ARMY_rely_on_soviet_tactics
+		focus = GEN_ARMY_the_grand_stratagem
+		focus = GEN_ARMY_adopt_tsogs_methods
+	}
+
+	completion_reward = {
+		army_experience = 75
+		add_doctrine_cost_reduction = {
+			name = land_doc_bonus
+			cost_reduction = 0.50
+			uses = 2
+			category = cat_mobile_warfare
+		}
+	}
+	search_filters = {	FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_study_motorized_equipment
+	icon = GFX_goal_generic_modernizing_the_cavalry
+	prerequisite = { focus = GEN_ARMY_experimental_mobility }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_experimental_mobility
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = r56_CAN_kangaroo
+			ahead_reduction = 1
+			bonus = 1.0
+			uses = 1
+			category = cat_mechanized_equipment
+		}
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+}
+
+shared_focus = {
+	id = GEN_ARMY_specialization_on_vehicle_production
+	icon = GFX_goal_generic_army_motorized
+	prerequisite = { focus = GEN_ARMY_study_motorized_equipment }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_study_motorized_equipment
+	cost = 5
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = MON_vehicle_production_specialization
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_acquire_foreign_tank_designs
+	icon = GFX_focus_generic_tank_production
+	prerequisite = { focus = GEN_ARMY_experimental_mobility }
+	x = 1
+	y = 1
+	relative_position_id = GEN_ARMY_experimental_mobility
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = {
+			tank_destroyer_board
+		}
+	}
+	search_filters = {	FOCUS_FILTER_ARMY_XP  }
+}
+
+shared_focus = {
+	id = GEN_ARMY_utilize_new_designs_strength
+	icon = GFX_goal_generic_heavy_armour_russian
+	prerequisite = { focus = GEN_ARMY_acquire_foreign_tank_designs }
+	x = 0
+	y = 1
+	relative_position_id = GEN_ARMY_acquire_foreign_tank_designs
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = GEN_Armor_Bonus
+			bonus = 1.0
+			uses = 2
+			category = armor
+		}
+	}
+	search_filters = {	FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}
+
+shared_focus = {
+	id = GEN_ARMY_train_specialized_crews
+	icon = GFX_focus_NZL_bob_semple_tank
+	prerequisite = { focus = GEN_ARMY_utilize_new_designs_strength }
+	prerequisite = { focus = GEN_ARMY_specialization_on_vehicle_production }
+	x = -1
+	y = 1
+	relative_position_id = GEN_ARMY_utilize_new_designs_strength
+	cost = 10
+	ai_will_do = {
+		factor = 10	
+	}
+
+	completion_reward = {
+		add_ideas = GEN_Tanks_for_Rivers
+	}
+	search_filters = { FOCUS_FILTER_MILITARY_IMPROVEMENT }
+}

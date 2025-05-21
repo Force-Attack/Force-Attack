@@ -2373,13 +2373,13 @@ focus_tree = {
 			OR = {
 				has_resources_in_country = {
 					resource = oil
-					amount > 149 #This needs to correspond to the Bypass values in the previous focuses
+					amount > 49 #This needs to correspond to the Bypass values in the previous focuses
 					extracted = yes
 				}
 				any_subject_country = {
 					has_resources_in_country = {
 						resource = oil
-						amount > 149 #This needs to correspond to the Bypass values in the previous focuses
+						amount > 49 #This needs to correspond to the Bypass values in the previous focuses
 						extracted = yes
 					}
 				}
@@ -3552,6 +3552,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_HISTORICAL FOCUS_FILTER_MILITARY_CHARACTER }
 
 		completion_reward = {
+			add_research_slot = 1
+
 			army_experience = 25
 			add_doctrine_cost_reduction = {
 				name = GER_instill_auftragstaktik
@@ -8811,37 +8813,6 @@ focus_tree = {
 		available = {
 			has_war = no
 			is_subject = no
-			IF = {
-				limit = { has_dlc = "Gotterdammerung" }
-
-				custom_trigger_tooltip = {
-					tooltip = GER_anschluss_army_trigger_tt
-					fighting_army_strength_ratio = {
-						tag = AUS
-						ratio > global.deployed_manpower_ratio_needed_for_anschluss
-					}
-				}
-			}
-
-			ELSE = {
-				has_army_manpower = { size > 499999 }
-				
-				custom_trigger_tooltip = {
-				 	tooltip = GER_anschluss_eq_trigger_tt
-				 	check_variable = { num_equipment_in_armies_k@infantry_equipment > 50 }
-				}
-			}
-			
-			NOT = { has_idea = rhineland_challenge_met }
-			if = {
-				limit = {
-					SWI = { has_completed_focus = SWI_gotthard_union }
-				}
-				NOT = { 
-					AUS = { has_idea = SWI_swiss_democratic_propaganda }
-				}
-			}
-
 		}
 
 		ai_will_do = {
@@ -9720,8 +9691,6 @@ focus_tree = {
 		}
 
 		available = {
-			is_subject = no
-			has_army_manpower = { size > 724999 } #80 div
 		}
 		
 		cancel = {
@@ -9743,47 +9712,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_HISTORICAL }
 
 		completion_reward = {
-			### CLAIMS
-			if = {
-				limit = {
-					69 = {
-						controller = {
-							NOT = {
-								tag = ROOT
-								is_subject_of = ROOT
-							}
-						}
-					}
-				}
-				add_state_claim = 69
-			}
-			if = {
-				limit = {
-					972 = {
-						controller = {
-							NOT = {
-								tag = ROOT
-								is_subject_of = ROOT
-							}
-						}
-					}
-				}
-				add_state_claim = 972
-			}
-			if = {
-				limit = {
-					74 = {
-						controller = {
-							NOT = {
-								tag = ROOT
-								is_subject_of = ROOT
-							}
-						}
-					}
-				}
-				add_state_claim = 74
-			}
-
 			### EVENT CHAIN - MUNICH CONFERENCE (CZE is always involved) ###
 			if = {
 				limit = {
@@ -10055,7 +9983,6 @@ focus_tree = {
 		
 		available = { 
 			is_subject = no
-			has_army_manpower = { size > 749999 }
 		}
 
 		search_filters = { FOCUS_FILTER_ANNEXATION FOCUS_FILTER_HISTORICAL }
@@ -10202,8 +10129,7 @@ focus_tree = {
 			custom_trigger_tooltip = { 
 				tooltip = GER_demonstration_of_military_achievements_trigger
 				OR = {
-					num_subjects > 2
-					check_variable = { GER_occupied_states_europe > 19 }
+					check_variable = { GER_occupied_states_europe > 5 }
 				}
 			}
 		}
@@ -10234,8 +10160,7 @@ focus_tree = {
 			custom_trigger_tooltip = {
 				tooltip = GER_an_invincible_army_trigger
 				OR = {
-					num_subjects > 5
-					check_variable = { GER_occupied_states_europe > 49 }
+					check_variable = { GER_occupied_states_europe > 10 }
 				}
 			}
 		}
@@ -10293,12 +10218,8 @@ focus_tree = {
 				tooltip = GER_an_invincible_army_trigger
 				OR = {
 					num_subjects > 5
-					check_variable = { GER_occupied_states_europe > 49 }
+					check_variable = { GER_occupied_states_europe > 10 }
 				}
-			}
-			custom_trigger_tooltip = { 
-				tooltip = GER_the_supreme_leader_trigger
-				check_variable = { GER_capitulated_major_countries > 2 }
 			}
 		}
 
@@ -11426,8 +11347,7 @@ focus_tree = {
 		continue_if_invalid = yes
 
 		available = {
-			is_subject = no
-			has_army_manpower = { size > 949999 } #100 div			
+			is_subject = no		
 			#Make custom trigger tooltip here
 			85 = {
 				owner = {
@@ -11437,26 +11357,8 @@ focus_tree = {
 					original_tag = POL
 				}
 			}
-			OR = {
-				POL = {
-					has_civil_war = no
-				}
-				#custom_trigger_tooltip = {
-					#tooltip = GER_danzig_trigger_polish_civil_war
-					AND = {
-						any_other_country = {
-							original_tag = POL
-							has_civil_war = yes
-							OR = {
-								is_in_faction_with = ROOT
-								has_volunteers_amount_from = {
-									tag = GER
-									count > 0
-								}
-							}
-						}
-					}
-				#}
+			POL = {
+				has_civil_war = no
 			}
 		}
 
@@ -11899,37 +11801,6 @@ focus_tree = {
 
 		available = {
 			is_subject = no
-			hidden_trigger = {
-				OR = {
-					AND = {
-						is_ai = yes
-						NOT = { has_country_flag = SWE_GER_avoid_dow_nordics }
-					}
-
-					is_ai = no
-				}
-			}
-
-			10 = {
-				controller = {
-					OR = {
-						is_in_faction_with = ROOT
-						original_tag = GER
-					}
-				}
-			}
-			85 = {
-				controller = {
-					OR = {
-						is_in_faction_with = ROOT
-						original_tag = GER
-					}
-				}
-			}
-			OR = { 
-				has_war_with = ENG
-				NOT = {country_exists = ENG}
-			}
 		}
 
 		ai_will_do = {
@@ -12177,7 +12048,7 @@ focus_tree = {
 		x = 4
 		y = 2
 		relative_position_id = GER_war_with_france
-		cost = 10
+		cost = 5
 
 		cancel_if_invalid = yes
 		
@@ -12499,11 +12370,6 @@ focus_tree = {
 
 		available = {
 			has_war_with = ENG
-			has_army_manpower = { size > 999999 }
-			custom_trigger_tooltip = {
-			 	tooltip = GER_sea_lion_eq_trigger_tt
-			 	check_variable = { num_equipment_in_armies_k@infantry_equipment > 90 }
-			}
 		}
 
 		bypass = {
@@ -14221,7 +14087,6 @@ focus_tree = {
 		
 		available = {
 			is_subject = no
-			has_army_manpower = { size > 849999 } #ca 90 div
 			SOU = {
 				has_government = communism
 			}
@@ -14453,7 +14318,6 @@ focus_tree = {
 		available = {
 			is_subject = no
 			has_government = fascism
-			has_army_manpower = { size > 849999 } #ca 90 div
 			SOV = {
 				NOT = { has_war_with = GER }
 				country_exists = SOV
