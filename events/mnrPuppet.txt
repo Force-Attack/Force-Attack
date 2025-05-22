@@ -1,0 +1,204 @@
+﻿###########################
+# Puppet Events
+###########################
+
+add_namespace = mnrpuppet
+
+# Puppet asks master for purpose
+country_event = {
+	id = mnrpuppet.1
+	title = mnrpuppet.1.t
+	desc = mnrpuppet.1.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = { # Military Vassal
+		name = mnrpuppet.1.a
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 0.5
+				FROM = {
+					any_owned_state = {
+						state_population > 1500000
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				set_country_flag = puppet_marshal
+			}
+		}
+	}
+	option = { # Economic Vassal
+		name = mnrpuppet.1.b
+		ai_chance = {
+			factor = 5
+		}
+		hidden_effect = {
+			FROM = {
+				set_country_flag = puppet_economic
+			}
+		}
+	}
+	option = { # Resource Vassal
+		name = mnrpuppet.1.c
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 100.0
+				FROM = {
+					any_owned_state = {
+						OR = {
+				    		has_resources_amount = {
+							    resource = steel
+							    amount > 30
+							}
+				    		has_resources_amount = {
+							    resource = aluminium
+							    amount > 12
+							}
+				    		has_resources_amount = {
+							    resource = tungsten
+							    amount > 12
+							}
+				    		has_resources_amount = {
+							    resource = chromium
+							    amount > 12
+							}
+				    		has_resources_amount = {
+							    resource = oil
+							    amount > 8
+							}
+				    		has_resources_amount = {
+							    resource = rubber
+							    amount > 1
+							}
+						}
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				set_country_flag = puppet_resources
+			}
+		}
+	}
+}
+
+# Declaration of independence
+country_event = {
+	id = mnrpuppet.2
+	title = mnrpuppet.2.t
+	desc = mnrpuppet.2.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = { # So be it
+		name = mnrpuppet.2.a
+		ai_chance = {
+			factor = 5
+			modifier = { # Increase it if we are at war
+				factor = 5
+				has_war = yes
+			}
+			modifier = { # Democratic governments will accept independence
+				factor = 2
+				has_government = democratic
+			}
+		}
+	}
+	option = { # Then it will be war and blood
+		name = mnrpuppet.2.b
+		ai_chance = {
+			factor = 5
+			modifier = { # Increase if is faction leader
+				factor = 2.0
+				is_faction_leader = yes
+			}
+			modifier = { # Increase if is in faction
+				factor = 1.2
+				is_in_faction = yes
+			}
+			modifier = { # Democratic governments will accept independence
+				factor = 0.5
+				has_government = democratic
+			}
+			modifier = { # Imperialist governments will cling hard
+				factor = 1.2
+				has_government = neutrality
+			}
+			modifier = { # Authoritarian governments will cling hardest
+				factor = 3.0
+				OR = {
+					has_government = fascism
+					has_government = communism
+				}
+			}
+		}
+		declare_war_on = {
+		    target = FROM
+		    type = puppet_wargoal_focus
+		}
+		hidden_effect = {
+			FROM = {
+				add_ideas = GEN_idea_independence_war
+			}
+		}
+	}
+}
+
+# Informed of raids
+country_event = {
+	id = mnrpuppet.3
+	title = mnrpuppet.3.t
+	desc = mnrpuppet.3.d
+	picture = GFX_report_event_french_resistance_01
+
+	is_triggered_only = yes
+
+	option = { # Damn It!
+		name = mnrpuppet.3.a
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+# Administration Assassination
+country_event = {
+	id = mnrpuppet.4
+	title = mnrpuppet.4.t
+	desc = mnrpuppet.4.d
+	picture = GFX_report_event_german_reichstag_bombed
+
+	is_triggered_only = yes
+
+	option = { # Find those responsible!
+		name = mnrpuppet.4.a
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+# The People are Rallying
+country_event = {
+	id = mnrpuppet.5
+	title = mnrpuppet.5.t
+	desc = mnrpuppet.5.d
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+
+	option = { # Things are getting out of hand!
+		name = mnrpuppet.5.a
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
