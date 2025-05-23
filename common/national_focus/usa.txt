@@ -1361,7 +1361,6 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_WAR_SUPPORT}
 		completion_reward = {
 			add_political_power = 100
-			set_war_support = 0
 			USA_congress_large_opposition = yes
 		}
 	}
@@ -1498,14 +1497,23 @@ focus = {
 
 	available = {
 		congress_medium_support_trigger = yes
+		OR = {
+			custom_trigger_tooltip = {
+				tooltip = "Controls Philippines"
+				controls_state = 623
+				controls_state = 327
+				controls_state = 624
+				controls_state = 625
+				controls_state = 628
+				controls_state = 627
+				controls_state = 626
+			}
+			has_subject = PHI
+		}
 	}
 	
 	bypass = {
 	}
-
-	
-	
-	
 
 	completion_reward = {
 		country_event = mtg_usa_civil_war_fascists.2
@@ -1516,7 +1524,7 @@ focus = {
 		if = {
 			limit = {
 				"PHI" = {
-					is_subject_of = ROOT
+					is_subject = yes
 				}
 			}
 			set_autonomy = { target = "PHI" autonomy_state = autonomy_free }
@@ -1526,6 +1534,16 @@ focus = {
 				is_faction_leader = yes
 			}
 			add_to_faction = "PHI"
+		}
+		if = {
+			limit = {
+				any_state = {
+					is_controlled_by = ROOT
+					is_core_of = PHI
+				}
+			}
+			release = PHI
+			set_autonomy = { target = PHI autonomy_state = autonomy_free }
 		}
 	}
 	search_filters = { FOCUS_FILTER_TFV_AUTONOMY }
@@ -6209,6 +6227,7 @@ focus = {
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_USA_CONGRESS}
 		completion_reward = {
 			USA_congress_medium_support = yes
+			set_war_support = 0.10
 			unlock_decision_tooltip = { decision = USA_beat_up_opposition show_effect_tooltip = yes }
 			if = {
 				limit = {
