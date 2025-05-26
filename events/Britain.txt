@@ -1,9 +1,6 @@
 ﻿add_namespace = britain 
-add_namespace = AAT_britain_narvik
 
 # Tizard mission event for USA
-
-
 country_event = {
 	id = britain.1
 	title = britain.1.t
@@ -14,7 +11,7 @@ country_event = {
 	
 	option = {
 		name = britain.1.a	#sounds good
-		ai_chance = { factor = 90 }
+		ai_chance = { base = 90 }
 		add_political_power = -10
 		ENG = {
 			country_event = { days = 1 id = britain.2 }
@@ -23,23 +20,37 @@ country_event = {
 				modifier = tizard_relations
 			}
 		}
+		add_breakthrough_progress = {
+			specialization = specialization_air
+			value = 0.75
+		}
 		add_tech_bonus = {
 			name = tizard_mission_focus
 			uses = 1
-			bonus = 1.0
+			bonus = 1
 			category = light_fighter
 		}
-		add_tech_bonus = {
-			name = tizard_mission_focus
-			bonus = 1.0
-			uses = 2
-			category = radar_tech
+		if = {
+			limit = { 
+				ROOT = {
+					has_character = USA_vannevar_bush
+				}
+			}
+			ROOT = { 
+				USA_vannevar_bush = {
+					add_scientist_xp = {
+						experience = 250
+						specialization = specialization_air 
+					}
+				}
+			}
 		}
+
 	}
 	
 	option = {
 		name = britain.1.b	#no way 
-		ai_chance = { factor = 10 }
+		ai_chance = { base = 10 }
 		#add_opinion_modifier = { target = ENG modifier = tizard_refused }
 		ENG = {
 			country_event = { days = 1 id = britain.3 }
@@ -48,8 +59,7 @@ country_event = {
 
 	option = {
 		name = britain.1.c	#tech_sharing
-		trigger = { has_dlc = "Together for Victory"}
-		ai_chance = { factor = 90 }
+		ai_chance = { base = 90 }
 		add_political_power = -10
 		ENG = {
 			country_event = { days = 1 id = britain.21 }
@@ -73,16 +83,37 @@ country_event = {
 	
 	option = {
 		name = britain.2.a
+		add_breakthrough_progress = {
+			specialization = specialization_air
+			value = 0.75
+		}
 		add_tech_bonus = {
 			name = tizard_mission_focus
-			bonus = 1.0
+			bonus = 0.5 # was 1
 			category = light_fighter
 		}
 		add_tech_bonus = {
 			name = tizard_mission_focus
-			bonus = 1.0
-			uses = 2
+			bonus = 0.5 # was 1
+			uses = 1 # was 2
 			category = radar_tech
+		}
+		if = {
+			limit = { 
+				ROOT = {
+					has_character = ENG_john_cockcroft
+				}
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			ROOT = { 
+				ENG_john_cockcroft = {
+					add_scientist_xp = {
+						experience = 250
+						specialization = specialization_nuclear
+					}
+				}
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
 		}
 		USA = {
 			add_opinion_modifier = { target = ENG modifier = tizard_relations }
@@ -139,17 +170,9 @@ country_event = {
 	title = britain.6.t
 	desc = britain.6.d
 	picture = GFX_report_event_ghandi_women
-
-	trigger = {
-		tag = ENG
-		has_global_flag = indian_independence_promised
-		NOT = { has_idea = indian_independence_promised_idea }
-		RAJ = { is_puppet_of = ENG }
-	}
 	
-	mean_time_to_happen = {
-		days = 30
-	}
+	is_triggered_only = yes
+	fire_only_once = yes
 	
 	option = {
 		name = britain.6.a
@@ -176,14 +199,15 @@ country_event = {
 	
 	option = {
 		name = britain.7.a
-		ai_chance = { factor = 60 }
+		ai_chance = { base = 60 }
 		GER = {
-				add_opinion_modifier = { target = ROOT modifier = embargo } 
-			}
+			send_embargo = ROOT
+			custom_effect_tooltip = embargo_relation_tt
+		}
 	}
 	option = {
 		name = britain.7.b
-		ai_chance = { factor = 40 }
+		ai_chance = { base = 40 }
 		ENG = {
 			country_event = britain.8
 		}
@@ -200,7 +224,7 @@ country_event = {
 	
 	option = {
 		name = britain.8.a
-		ai_chance = { factor = 70 }
+		ai_chance = { base = 70 }
 		create_wargoal = {
 				type = take_state
 				target = FROM
@@ -221,7 +245,7 @@ country_event = {
 	}
 	option = {
 		name = britain.8.b
-		ai_chance = { factor = 30 }
+		ai_chance = { base = 30 }
 	}
 }
 
@@ -274,7 +298,6 @@ country_event = {
 		retire_character = ENG_neville_chamberlain
 		add_stability = 0.1
 		add_war_support = 0.1
-
 	}
 }
 
@@ -287,52 +310,37 @@ country_event = {
 	picture = GFX_report_event_chamberlain
 
 	fire_only_once = yes
+	is_triggered_only = yes
 
 	trigger = {
-		tag = ENG
 		has_government = democratic
-		date > 1940.9.11
 		NOT = { has_country_flag = chamberlain_resigned }
 		has_country_leader = {
 			character = ENG_neville_chamberlain
 			ruling_only = yes
 		}
-	}	
-
-	mean_time_to_happen = {
-		days = 30
 	}
 	
 	immediate = { set_country_flag = chamberlain_died }
 
 	option = {
 		name = britain.10.a
-		kill_country_leader = yes
-		create_country_leader = {
-			name = "Winston Churchill"
-			desc = "POLITICS_WINSTON_CHURCHILL_DESC"
-			picture = GFX_portrait_Winston_Churchill
-			expire = "1965.1.1"
-			ideology = conservatism
-			traits = {
-				british_bulldog
-			}
-		}
+		ai_chance = { base = 80 }
+		promote_character = ENG_winston_churchill
+		retire_character = ENG_neville_chamberlain
 	}
 	option = {
 		name = britain.10.b
-		kill_country_leader = yes
-		create_country_leader = {
-			name = "Lord Edward Halifax"
-			desc = "POLITICS_EDWARD_HALIFAX_DESC"
-			picture = GFX_portrait_Lord_Edward_Halifax
-			expire = "1965.1.1"
-			ideology = conservatism
-			traits = {
-				viceroy_emeritus
-				cautious_arbiter
+		ai_chance = { 
+			base = 20
+			modifier = {						#do not promote him on historical, AI
+				is_historical_focus_on = yes
+				factor = 0
 			}
 		}
+		promote_character = ENG_lord_edward_halifax
+		retire_character = ENG_neville_chamberlain
+		
 	}
 }
 
@@ -352,28 +360,28 @@ country_event = {
 		name = britain.11.a
 		add_war_support = 0.1
 		every_other_country = {
-				limit = {
-					NOT = { has_war_with = ENG }
-					is_in_faction = no
-					has_government = democratic
-					is_puppet = no
-					OR = {
-						capital_scope = {
-								is_on_continent = europe
-						}
-						capital_scope = {
-								is_on_continent = asia
-						}
-						num_of_factories > 30
+			limit = {
+				NOT = { has_war_with = ENG }
+				is_in_faction = no
+				has_government = democratic
+				is_puppet = no
+				OR = {
+					capital_scope = {
+							is_on_continent = europe
 					}
+					capital_scope = {
+							is_on_continent = asia
+					}
+					num_of_factories > 30
 				}
-				country_event = britain.12
 			}
+			country_event = britain.12
+		}
 	}
 	
 	option = {
 		name = britain.11.b
-		ai_chance = { factor = 0 }
+		ai_chance = { base = 0 }
 	}
 }
 
@@ -401,7 +409,7 @@ country_event = {
 	
 	option = {
 		name = britain.12.b
-		ai_chance = { factor = 0 }
+		ai_chance = { base = 0 }
 	}
 }
 
@@ -432,7 +440,7 @@ country_event = {
 	
 	option = {
 		name = britain.13.b
-		ai_chance = { factor = 0 }
+		ai_chance = { base = 0 }
 		FROM = { 
 			add_opinion_modifier = {
 				target = ROOT
@@ -458,7 +466,7 @@ country_event = {
 	option = { # Abandon Yugoalvia
 		name = britain.14.a
 		ai_chance = { 
-			factor = 90 
+			base = 90 
 			modifier = {
 				has_war_with = GER
 				factor = 0
@@ -497,7 +505,7 @@ country_event = {
 				YUG = {
 					add_opinion_modifier = { target = FRA modifier = western_betrayal }
 					country_event = { id = yugoslavia.5 hours = 6 }
-				}			
+				}
 			}
 			if = {
 				limit = { 
@@ -515,7 +523,7 @@ country_event = {
 	option = { # Support Yugoslavia
 		name = britain.14.b
 		ai_chance = {
-			factor = 10
+			base = 10
 			modifier = {
 				factor = 0
 				is_in_faction_with = GER
@@ -543,7 +551,7 @@ country_event = {
 				create_wargoal = {
 					type = take_state_focus
 					target = YUG
-					generator = { 853 102 }
+					generator = { 102 956 853 }
 				}
 			}
 		}
@@ -567,7 +575,7 @@ country_event = {
 		YUG = {
 			add_opinion_modifier = { target = ENG modifier = offered_support }
 		}
-	}	
+	}
 }
 
 # France leaves the Allies
@@ -593,23 +601,16 @@ country_event = {
 	title = britain.16.t
 	desc = britain.16.d
 	picture = GFX_report_event_europe_funeral
-	
-	trigger = {
-		tag = ENG
-		date > 1936.1.19
-		has_start_date < 1936.01.02
-	}	
 
+	is_triggered_only = yes
 	fire_only_once = yes
-
-	mean_time_to_happen = { days = 7 }
 
 	immediate = {
 		hidden_effect = {
 			set_country_flag = ENG_king_died
 			remove_ideas = george_v
 			add_ideas = ENG_king_edward
-		}		
+		}
 	}
 	
 	option = {
@@ -629,15 +630,11 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty2
 	
 	trigger = {
-		tag = ENG
-		has_country_flag = ENG_king_died
-		date > 1936.12.1
 		NOT = { has_dlc = "Man the Guns" }
 	}
 	
+	is_triggered_only = yes
 	fire_only_once = yes
-
-	mean_time_to_happen = { days = 14 }
 	
 	immediate = {
 		hidden_effect = {
@@ -662,46 +659,31 @@ country_event = {
 	desc = britain.18.d
 	picture = GFX_report_event_fascist_gathering
 	
-	trigger = {
-		tag = ENG
-		has_idea = ENG_george_vi
-		has_government = fascism
-		NOT = { has_dlc = "Man the Guns" }
-	}
+	is_triggered_only = yes
 	
 	fire_only_once = yes
 
-	mean_time_to_happen = { days = 14 }
-	
-	immediate = {
-		hidden_effect = {
-			remove_ideas = ENG_george_vi		
-		}
-	}
-
 	option = {
 		name = britain.18.a
-		effect_tooltip = {
-			remove_ideas = ENG_george_vi	
-		}
+		remove_ideas = ENG_george_vi
 		create_country_leader = {
 			name = "Edward VIII"
-			desc = "POLITICS_EDWARD_EDWARD_DESC"
-			picture = GFX_portrait_Edward_VIII
+			picture = "Portrait_Britain_Edward_VIII.dds"
 			expire = "1965.1.1"
 			ideology = fascism_ideology
 			traits = {
-				inexperienced_imperialist				
+				inexperienced_imperialist
+				r56_trait_opposed_to_communism
 			}
 		}
 	}
 
 	option = {
 		name = britain.18.b	
-		effect_tooltip = {
-			remove_ideas = ENG_george_vi	
-		}
-		add_ideas = ENG_king_edward_fascism
+		swap_ideas = {
+			remove_idea = ENG_george_vi
+			add_idea = ENG_king_edward_fascism
+		} 
 	}
 }
 
@@ -718,7 +700,7 @@ country_event = {
 		name = britain.19.a
 		effect_tooltip = {
 			RAJ = {
-				add_ideas = RAJ_azad_hind
+				add_ideas = RAJ_subhas_chanda_bose
 			}
 		}
 		custom_effect_tooltip = ENG_RAJ_azad_hind_tooltip 
@@ -743,7 +725,7 @@ country_event = {
 			has_completed_focus = uk_free_india_focus
 		}
 		RAJ = {
-			is_puppet_of = ENG
+			is_subject_of = ENG
 			fascism > 0.3
 			has_civil_war = no
 		}
@@ -755,11 +737,11 @@ country_event = {
 			if = {
 				limit = {
 					RAJ = {
-						has_idea = RAJ_azad_hind
+						has_idea = RAJ_subhas_chanda_bose
 					}
 				}
 				RAJ = {
-					remove_ideas = RAJ_azad_hind
+					remove_ideas = RAJ_subhas_chanda_bose
 				}
 			}
 		}
@@ -775,7 +757,6 @@ country_event = {
 				country_event = { id = britain.23 }
 			}
 		}
-		
 		if = {
 			limit = {
 				RAJ = {
@@ -797,7 +778,6 @@ country_event = {
 			}
 		}
 	}
-
 }
 
 country_event = {
@@ -826,34 +806,19 @@ country_event = {
  
     fire_only_once = yes
  
+	is_triggered_only = yes
     trigger = {
-        original_tag = ENG
         has_government = democratic
         has_idea = ENG_george_vi
-        date > 1937.5.27
-        has_start_date < 1936.01.02
         NOT = { has_country_flag = baldwin_resigned }
     }
 
-    mean_time_to_happen = {
-        days = 7
-    }
-
-	option = {
+    option = {
         name = britain.22.a
         retire_country_leader = yes
-		create_country_leader = {
-        	name = "Neville Chamberlain"
-        	desc = "POLITICS_NEVILLE_CHAMBERLAIN_DESC"
-			picture = GFX_portrait_Neville_Chamberlain
-        	expire = "1965.1.1"
-        	ideology = conservatism
-        	traits = {
-        		chamberlain_appeaser rearmer
-        	}
-		}
+		promote_character = ENG_neville_chamberlain
         set_country_flag = baldwin_resigned
-	}
+      }
 }
 
 #RAJ gets to choose sides in Indian civil war
@@ -868,13 +833,16 @@ country_event = {
 	#side with government
 	option = {
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				has_government = fascism
 				factor = 0
 			}
 		}
 		name = britain.23.a
+		hidden_effect = {
+			civil_war_anti_exploiter_punitive_action_r56 = yes
+		}		
 		start_civil_war = {
 				ideology = fascism
 				size = 0.5
@@ -883,6 +851,9 @@ country_event = {
 	#side with fascists
 	option = {
 		name = britain.23.b
+		hidden_effect = {
+			civil_war_anti_exploiter_punitive_action_r56 = yes
+		}		
 		start_civil_war = {
 				ruling_party = fascism
 				ideology = neutrality
@@ -898,25 +869,16 @@ country_event = {
 		}
 	}
 }
-
 # Shadow Scheme Factories
 country_event = {
     id = britain.24
     title = britain.24.t
     desc = britain.24.d
     picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
  
     fire_only_once = yes
- 
-    trigger = {
-        original_tag = ENG
-        has_completed_focus = shadow_scheme_focus
-        has_war = yes
-    }
-
-    mean_time_to_happen = {
-        days = 7
-    }
 
     option = {
         name = britain.24.a
@@ -935,7 +897,6 @@ country_event = {
 				level = 2
 				instant_build = yes
 			}
-			set_state_flag = shadow_scheme_2AF
 		}
 		random_owned_controlled_state = {
 			limit = {
@@ -952,1719 +913,162 @@ country_event = {
 				level = 2
 				instant_build = yes
 			}
-			set_state_flag = shadow_scheme_2AF
 		}
     }
 }
 
-#Operation Fork ultimatum
+# 
 country_event = {
-    id = britain.25
-    title = britain.25.t
-    desc = britain.25.desc
-    picture = GFX_report_event_generic_sign_treaty2
- 
-    is_triggered_only = yes
-
-    immediate = {
-    	get_current_ideology_popularities = yes 
-    	get_current_ruling_party = yes 
-    }
-
-    #fold. join the allies
-    option = {
-        name = britain.25.a
-        trigger = {
-        	FROM = { is_faction_leader = yes }
-        }
-        FROM = { 
-        	add_to_faction = ROOT
-        	# This doesn't work here
-        	#country_event = { id = generic.6 days = 1 }  
-        }
-        IF = {
-        	limit = { 
-        		has_dlc = "Arms Against Tyranny"	
-        	}
-        	FROM = {
-        		puppet = ROOT
-        	}
-        	restore_ideology_popularities = yes 
-        	restore_ruling_party = yes 
-        }        
-
-        ai_chance = {
-        	base = 5
-        	modifier = {
-        		is_historical_focus_on = yes
-        		factor = 10
-        	}
-        }
-    }
-
-    #seek axis help
-    option = {
-        name = britain.25.b
-        trigger = {
-        	any_other_country = {
-        		is_faction_leader = yes
-    			has_war_with = ROOT.FROM
-        	}
-        }
-        if = {
-        	limit = {
-        		GER = { 
-    				has_war_with = FROM
-					is_faction_leader = yes
-        		}
-        	}
-        	GER = {	country_event = { id = britain.26 days = 1} }
-        }
-        else = {
-        	random_other_country = {
-        		limit = {
-        			has_war_with = FROM
-    				is_faction_leader = yes
-        		}
-    			country_event = { id = britain.26 days = 1} 
-        	}
-        }
-
-    	FROM = {
-    		create_wargoal = {
-				target = PREV
-				type = puppet_wargoal_focus
-			}
-    	}
-        set_country_flag = rejected_fork_demand 
-    	
-    	ai_chance = {
-    		base = 5
-    		modifier = {
-    			is_historical_focus_on = yes
-    			factor = 0
-    		}
-    	}
-    }
-
-    #go at it alone
-    option = {
-        name = britain.25.c
-
-        set_country_flag = rejected_fork_demand 
-		effect_tooltip = {
-        	FROM = {
-		        create_wargoal = {
-        			target = PREV
-        			type = puppet_wargoal_focus
-        		}
-        		country_event = { id = britain.27 }
-        	}
-    	}
-        FROM = { country_event = { id = britain.27 days = 1 } }
-
-        ai_chance = {
-        	base = 0.5
-        	modifier = {
-        		is_historical_focus_on = yes
-        		factor = 0
-        	}
-        }
-    }
-}
-
-#Iceland seeks protection
-country_event = {
-    id = britain.26
-    title = britain.26.t
-    desc = britain.26.desc
-    picture = GFX_report_event_generic_read_write
- 
-    is_triggered_only = yes
-
-
-    #accept
-    option = {
-        name = britain.26.a
-
-    	add_to_faction = FROM 
-    	FROM = { country_event = { id = generic.3 days = 1 } }
-    	ai_chance = {
-    		base = 3
-    		modifier = {
-    			is_historical_focus_on = yes
-    			add = -1
-    		}
-
-    		modifier = {
-    			FROM = {
-    				is_ai = no
-    			}
-    			add = 10
-    		}
-
-    		modifier = {
-    			FRA = {
-    				has_capitulated = no
-    			}
-    			POL = {
-    				has_capitulated = no
-    			}
-    			factor = 0
-    		}
-    	}
-    }
-
-    #deny
-    option = {
-		name = britain.26.b
-		FROM = { country_event = { id = generic.4 days = 1 } }
-		ai_chance = {
-			base = 1
-		}
-    }
-}
-
-#rejected fork
-country_event = {
-    id = britain.27
-    title = britain.27.t
-    desc = britain.27.desc
-    picture = GFX_report_event_generic_read_write
- 
-    is_triggered_only = yes
-
-
-    #accept
-    option = {
-        name = britain.27.a
-        create_wargoal = {
-        	target = FROM
-        	type = puppet_wargoal_focus
-        }
-    }
-}
-
-
-country_event = {
-	id = AAT_britain_narvik.1
-	title = AAT_britain_narvik.1.t
-	desc = AAT_britain_narvik.1.desc
+	id = britain.25
+	title = britain.25.t
+	desc = britain.25.d
 	picture = GFX_report_event_degaulle_churchill
-	
+
 	is_triggered_only = yes
-	immediate = {
+	
+	option = {
+		name = britain.25.a
+		FROM = {
+			add_to_faction = ROOT
+			add_ai_strategy = {
+				type = alliance
+				id = "FRA"
+				value = 200
+			}
+			country_event = { id = britain.26 }
+		}
 		hidden_effect = {
-			GER = {
-				set_variable = { GER_removing_narvik_offsite_civs = 0 }
-				subtract_from_variable = { GER_removing_narvik_offsite_civs =  GER_narvik_civs }
-			}
-		}
-	}
-	option = {
-		name = AAT_britain_narvik.1.a	#sounds good
-		ai_chance = { factor = 95 }
-		white_peace = { tag = SWE }
-
-		if = {
-			limit = {
-				ENG = { has_variable = ENG_narvik_controller }
-
-				var:ENG_narvik_controller = {
-					has_war_with = SWE 
-				}
-			}
-
-			var:ENG_narvik_controller = { white_peace = { tag = SWE } }
-		}
-
-		GER = {  
-			add_offsite_building = {
-				type = industrial_complex
-				level = var:GER_removing_narvik_offsite_civs
-			}
-
-			country_event = { id = AAT_britain_narvik.4 }
+			news_event = { id = news.175 }
 		}
 	}
 	
 	option = {
-		name = AAT_britain_narvik.1.b	#no way 
-		ai_chance = { factor = 5 }
-		add_political_power = -150
-		add_stability = -0.35
-		add_war_support = -0.35
-
-		GER = {  
-			add_offsite_building = {
-				type = industrial_complex
-				level = var:GER_removing_narvik_offsite_civs
+		name = britain.25.b
+		ai_chance = { base = 0 }
+		FROM = { 
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = FRA_go_with_britain_reject
 			}
+			country_event = { id = britain.27 }
+		}
+		hidden_effect = {
+			news_event = { id = news.176 }
 		}
 	}
 }
 
 country_event = {
-	id = AAT_britain_narvik.2
-	title = AAT_britain_narvik.2.t
-	desc = AAT_britain_narvik.2.desc
-	picture = GFX_report_event_soldiers_marching
-	
+	id = britain.26
+	title = britain.26.t
+	desc = britain.26.d
+	picture = GFX_report_event_generic_sign_treaty2
+
 	is_triggered_only = yes
-
-	option = {
-		name = AAT_britain_narvik.2.a
-		trigger = {
-			original_tag = SWE
-		}
-	}
 	
 	option = {
-		name = AAT_britain_narvik.2.b	
-		trigger = {
-			original_tag = GER
-		}
+		name = britain.26.a
+		
 	}
 }
 
 country_event = {
-	id = AAT_britain_narvik.3
-	title = AAT_britain_narvik.3.t
-	desc = AAT_britain_narvik.3.desc
-	picture = GFX_report_event_lithuania_army
-	
+	id = britain.27
+	title = britain.27.t
+	desc = britain.27.d
+	picture = GFX_report_event_french_british_officers
+
 	is_triggered_only = yes
-
-	option = {
-		name = AAT_britain_narvik.3.a
-	}
 	
-}
-
-country_event = {
-	id = AAT_britain_narvik.4
-	title = AAT_britain_narvik.4.t
-	desc = AAT_britain_narvik.4.desc
-	picture = GFX_report_event_king_speech
-	
-	is_triggered_only = yes
-
 	option = {
-		name = AAT_britain_narvik.4.a
-
-		if = {
-			limit = { original_tag = GER }
-			effect_tooltip = {
-				add_offsite_building = {
-					type = industrial_complex
-					level = var:GER_removing_narvik_offsite_civs
-				}
-			}
-
-			clear_variable = GER_removing_narvik_offsite_civs
-			clear_variable = GER_narvik_civs
-			clear_variable = GER_narvik_shipments
-		}
+		name = britain.27.a
+		
 	}
 }
 
-# Victory's March
 
-country_event = {
+#country_event = {
+#	id = britain.31
+#	title = britain.31.t
+#	desc = britain.31.d
+#	picture = GFX_report_event_soviet_german_soldier_handshake
+#
+#	is_triggered_only = yes
+#	
+#	option = {
+#		name = soviet.92.a
+#		ENG = { add_to_faction = ALB }
+#		ALB = {
+#			add_ai_strategy = {
+#				type = alliance
+#				id = "ENG"
+#				value = 200
+#			}
+#		}
+#		hidden_effect = {
+#			news_event = { hours = 6 id = news.335 }
+#		}
+#	}
+#	option = {
+#		name = soviet.92.b
+#		ai_chance = { factor = 0 }
+#		ALB = {
+#			add_opinion_modifier = {
+#				target = SOV
+#				modifier = medium_decrease
+#			}
+#		}
+#	}
+#}
+
+country_event = { # Britain seeks diplomatic reconciliation with the USSR
 	id = britain.28
 	title = britain.28.t
-	desc = britain.28.desc
-	picture = GFX_report_event_king_speech
-	
+	desc = britain.28.d
+	picture = GFX_report_event_french_british_officers
+
 	is_triggered_only = yes
-
-	option = {
-		name = britain.28.a
-
-		if = {
-				limit = {
-					has_full_control_of_state = 767
-					has_full_control_of_state = 551
-					has_full_control_of_state = 549
-					has_full_control_of_state = 883
-					has_full_control_of_state = 884
-					has_full_control_of_state = 885
-					has_full_control_of_state = 886
-					has_full_control_of_state = 887
-				}
-				release = SUD
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = SUD autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = SUD
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						SUD = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			# Kenya
-			if = {
-				limit = {
-					OR = {
-						has_full_control_of_state = 547
-						has_full_control_of_state = 903
-						has_full_control_of_state = 904
-						has_full_control_of_state = 905
-					}
-					KEN = { exists = no }
-				}
-				effect_tooltip = {
-					release = KEN 
-				}
-				hidden_effect = {
-					every_owned_state = {
-						limit = {
-							is_core_of = KEN 
-						}
-						KEN = { transfer_state = PREV }
-					}
-				}
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = KEN autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = KEN
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						KEN = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			
-			# Somalia
-			
-			if = {
-				limit = {
-					has_full_control_of_state = 269
-				}
-				release = SOM
-				if = {
-					limit = {
-						SOM = { is_subject = no }
-					}
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						set_autonomy = { target = SOM autonomy_state = autonomy_dominion }
-					}
-					if = {
-						limit = {
-							NOT = { has_dlc = "Together for Victory" }
-						}
-						puppet = SOM
-					}
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						SOM = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 548
-				}
-				release = UGA
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = UGA autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = UGA
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						UGA = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 546
-				}
-				release = TZN
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = TZN autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = TZN
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						TZN = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 771
-				}
-				release = ZAM
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = ZAM autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = ZAM
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						ZAM = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 770
-				}
-				release = MLW
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = MLW autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = MLW
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						MLW = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 545
-				}
-				release = ZIM
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = ZIM autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = ZIM
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						ZIM = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 542
-				}
-				release = BOT
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = BOT autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = BOT
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						BOT = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 558
-					has_full_control_of_state = 900
-					has_full_control_of_state = 901
-					has_full_control_of_state = 902
-				}
-				release = NGA
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = NGA autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = NGA
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						NGA = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 274
-				}
-				release = GHA
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = GHA autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = GHA
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						GHA = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 700
-				}
-				release = SIE
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = SIE autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = SIE
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						SIE = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 701
-				}
-				release = GAM
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = GAM autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = GAM
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						GAM = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-	}
 	
-	option = {
-		name = britain.28.b
-
-		# Egypt - Sudan
-		
-		every_controlled_state = {
-			limit = {
-				is_core_of = SUD
-			}
-						
-			add_core_of = EGY
+	option = { # Yes
+		name = britain.28.a
+		ENG = {
+			country_event = { id = britain.29 hours = 6 }
 		}
 		
-		EGY = { transfer_state = 767 transfer_state = 551 transfer_state = 883 transfer_state = 887 transfer_state = 549 transfer_state = 886 transfer_state = 885 transfer_state = 884 }
+	}
+	option = { # No
+		name = britain.28.b
+		ENG = {
+			country_event = { id = britain.30 hours = 6 }
+		}
 		
-		#British East Africa
-		
-		release_puppet = TZN
-		
-		TZN = { set_cosmetic_tag = BEA_UK transfer_state = 548 transfer_state = 904 transfer_state = 547 transfer_state = 905 transfer_state = 771 transfer_state = 770 }
-		
-		# South African Confederation
-		
-		SAF = { transfer_state = 545 transfer_state = 542 }
-		
-		if = {
-				limit = {
-					has_full_control_of_state = 558
-					has_full_control_of_state = 900
-					has_full_control_of_state = 901
-					has_full_control_of_state = 902
-				}
-				release = NGA
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = NGA autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = NGA
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						NGA = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 274
-				}
-				release = GHA
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = GHA autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = GHA
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						GHA = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 700
-				}
-				release = SIE
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = SIE autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = SIE
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						SIE = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_full_control_of_state = 701
-				}
-				release = GAM
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = { target = GAM autonomy_state = autonomy_dominion }
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Together for Victory" }
-					}
-					puppet = GAM
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						GAM = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
-			
-			if = {
-				limit = {
-					has_full_control_of_state = 269
-				}
-				release = SOM
-				if = {
-					limit = {
-						SOM = { is_subject = no }
-					}
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						set_autonomy = { target = SOM autonomy_state = autonomy_dominion }
-					}
-					if = {
-						limit = {
-							NOT = { has_dlc = "Together for Victory" }
-						}
-						puppet = SOM
-					}
-				}
-				hidden_effect = {
-					every_other_country = {
-						limit = {
-							has_war_with = ENG
-						}
-						SOM = {
-							add_to_war = { targeted_alliance = ENG enemy = PREV hostility_reason = asked_to_join }
-						}
-					}
-				}
-			}
 	}
 }
 
-# Angevin
-
-country_event = {
+country_event = { # 
 	id = britain.29
 	title = britain.29.t
-	desc = britain.29.desc
-	picture = GFX_event_angevin
+	desc = britain.29.d
+	picture = GFX_report_event_stalin_02
 
 	is_triggered_only = yes
 	
-	option = {
+	option = { #
 		name = britain.29.a
 		
-		set_cosmetic_tag = ANG_UK
-			
-		# France
-		custom_effect_tooltip = form_eu_france_coring_states_tt
-		hidden_effect = {
-			29 = { add_core_of = ROOT }
-			18 = { add_core_of = ROOT }
-			17 = { add_core_of = ROOT }
-			28 = { add_core_of = ROOT }
-			15 = { add_core_of = ROOT }
-			16 = { add_core_of = ROOT }
-			27 = { add_core_of = ROOT }
-			14 = { add_core_of = ROOT }
-			30 = { add_core_of = ROOT }
-			24 = { add_core_of = ROOT }
-			23 = { add_core_of = ROOT }
-			33 = { add_core_of = ROOT }
-			26 = { add_core_of = ROOT }
-			20 = { add_core_of = ROOT }
-			32 = { add_core_of = ROOT }
-			735 = { add_core_of = ROOT }
-			25 = { add_core_of = ROOT }
-			22 = { add_core_of = ROOT }
-			21 = { add_core_of = ROOT }
-			851 = { add_core_of = ROOT }
-			19 = { add_core_of = ROOT }
-			20 = { add_core_of = ROOT }
-			1 = { add_core_of = ROOT }
-			785 = { add_core_of = ROOT }
-			31 = { add_core_of = ROOT }
-		}
-		
-		country_event = { id = britain.32 hours = 6 }
 	}
 }
 
-# King of Britain and France
-
-country_event = {
+country_event = { # 
 	id = britain.30
 	title = britain.30.t
-	desc = britain.30.desc
-	picture = GFX_event_edward_vii
+	desc = britain.30.d
+	picture = GFX_report_event_stalin_01
 
 	is_triggered_only = yes
 	
 	option = {
 		name = britain.30.a
-
-		add_threat = 5
-			
-		create_wargoal = {
-			type = take_state_focus
-			target = FRA
-			generator = { 14 15 30 23 25 19 806 31 }
-			expire = 0
-		}
-
-		if = {
-				limit = {
-					has_country_leader = { ruling_only = yes name = "Edward VIII" }
-					has_country_leader_with_trait = inexperienced_imperialist
-				}
-				add_stability = 0.05
-				remove_country_leader_trait = inexperienced_imperialist
-				add_country_leader_trait = king_of_england
-		}
 		
-		if = {
-				limit = {
-					has_country_leader = { ruling_only = yes name = "Edward VIII" }
-					has_country_leader_with_trait = autocratic_imperialist
-				}
-				add_stability = 0.05
-				remove_country_leader_trait = autocratic_imperialist
-				add_country_leader_trait = king_of_england
-		}
-	}
-}
-
-country_event = {
-	id = britain.31
-	title = britain.31.t
-	desc = britain.31.desc
-	picture = GFX_event_patents_of_nobility
-
-	is_triggered_only = yes
-	
-	option = {
-		name = britain.31.a
-
-		add_stability = 0.1
-		add_war_support = 0.1
-	}
-}
-
-country_event = {
-	id = britain.32
-	title = britain.32.t
-	desc = britain.32.desc
-	picture = GFX_event_angevin
-
-	is_triggered_only = yes
-	
-	option = { # Keep London
-		name = britain.32.a
-
-		126 = { add_extra_state_shared_building_slots = 2 }
-
-		add_war_support = 0.1
-	}
-	
-	option = { # Switch to Anjou
-		name = britain.32.b
-
-		set_capital = {
-		  state = 30
-		  remember_old_capital = no
-		}
-		
-		30 = { add_extra_state_shared_building_slots = 4 }
-
-		add_war_support = 0.1
-	}
-}
-
-# brazil dominion
-country_event = {
-	id = britain.33
-	title = britain.33.t
-	desc = britain.33.desc
-	picture = GFX_event_brazil_map
-
-	is_triggered_only = no
-	
-	fire_only_once = yes
-	
-	trigger = { OR = { BRA = { is_subject_of = ENG } ENG = { owns_state = 500 } } }
-	
-	option = { # Brazil Colony
-		name = britain.33.a
-
-		hidden_effect = { release_puppet = BRA }
-
-		BRA = { set_cosmetic_tag = BRA_UK }
-		
-		set_autonomy = {
-			target = BRA
-			autonomous_state = autonomy_dominion
-		}
-	}
-}
-
-# Parliament?
-country_event = {
-	id = britain.34
-	title = britain.34.t
-	desc = britain.34.desc
-	picture = GFX_event_parliament
-
-	is_triggered_only = no
-	
-	fire_only_once = yes
-	
-	trigger = { ENG = { has_completed_focus = ENG_the_kings_party } }
-	
-	option = { 
-		name = britain.34.a
-
-		set_temp_variable = { temp_member = 4 }
-		set_temp_variable = { temp_seats = 300 }
-		modify_parliament_seat = yes
-		
-		custom_effect_tooltip = uk_parliament_gain_300_party_4_tooltip
-	}
-	
-	option = { 
-		name = britain.34.b
-
-		add_political_power = 25
-		add_stability = 0.20
-	}
-}
-
-# Family Ties
-# Belgium
-country_event = {
-	id = britain.35
-	title = britain.35.t
-	desc = britain.35.desc
-	picture = GFX_event_leopold_coronation
-
-	is_triggered_only = no
-	
-	fire_only_once = yes
-	
-	trigger = { ENG = { has_subject = BEL } }
-	
-	option = { 
-		name = britain.35.a
-
-		BEL = {
-		
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-		
-				add_popularity = {
-					ideology = neutrality
-					popularity = 0.50
-				}
-		
-				create_country_leader = {
-				name = "Leopold III"
-				desc = "POLITICS_LEOPOLD_III_DESC"
-				picture = GFX_portrait_leopold_III
-				expire = "1965.1.1"
-				ideology = despotism
-				traits = {
-					inexperienced_imperialist
-				}
-			}
-		}
-	}
-}
-# Portugal 
-country_event = {
-	id = britain.36
-	title = britain.36.t
-	desc = britain.36.desc
-	picture = GFX_event_dom_duarte_coronation
-
-	is_triggered_only = no
-	
-	fire_only_once = yes
-	
-	trigger = { ENG = { has_subject = POR } }
-	
-	option = { 
-		name = britain.36.a
-
-		POR = {
-			set_politics = {
-				ruling_party = neutrality
-				elections_allowed = no
-			}
-			
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.50
-			}
-
-			set_country_flag = KOP_kingdom_of_portugal_flag
-			set_cosmetic_tag = KOP_kingdom_portugal
-			create_country_leader = {
-				name = "Dom Duarte Nuno"
-				desc = "POLITICS_DOM_DUARTE_NUNO_DESC"
-				picture = GFX_portrait_Dom_Duarte_Nuno
-				expire = "1976.12.24"
-				ideology = despotism
-				traits = { 
-					inexperienced_imperialist
-				}
-			}
-		}
-	}
-}
-# Bulgaria
-country_event = {
-	id = britain.37
-	title = britain.37.t
-	desc = britain.37.desc
-	picture = GFX_event_ferdinand_coronation
-
-	is_triggered_only = no
-	
-	fire_only_once = yes
-	
-	trigger = { ENG = { has_subject = BUL } }
-	
-	option = { 
-		name = britain.37.a
-
-		BUL = {
-			set_country_flag = BUL_the_return_of_ferdinand_flag
-			set_party_name = {
-				ideology = neutrality
-				long_name = BUL_ferdinand_loyalists_party_long
-				name = BUL_ferdinand_loyalists_party
-			}
-			add_country_leader_role = {
-				character = BUL_ferdinand_i
-				country_leader = {
-					expire = "1965.1.1"
-					ideology = despotism
-					traits = {
-						dreams_of_a_new_byzantium
-					}
-				}
-				promote_leader = yes
-			}
-			if = {
-				limit = {
-					NOT = { has_government = neutrality }
-				}
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-			}
-			if = { 
-				limit = {
-					num_subjects > 0
-				}
-				every_other_country = {
-					limit = {
-						is_subject_of = ROOT
-					}
-					add_ideas = BUL_ferdinands_puppet
-				}
-			}
-		}
-	}
-}
-
-# Franco-British Union
-
-country_event = {
-	id = britain.38
-	title = britain.38.t
-	desc = britain.38.desc
-	picture = GFX_report_event_king_speech
-
-	is_triggered_only = no
-	
-	fire_only_once = yes
-	
-	trigger = { AND = { FRA = { exists = yes } GER = { owns_state = 16 } ENG = { has_government = democratic } } }
-	
-	option = { # Do it
-		name = britain.38.a
-		
-		ai_chance = { factor = 90 }
-		
-		add_timed_idea = {
-			idea = ENG_Reorganization_of_the_Country
-			days = 365
-		}
-		
-		#FRA = { all_core_state = { add_core_of = ENG }  }
-		
-		#annex_country = {
-		#	target = FRA
-		#	transfer_troops = yes
-		##}
-		
-		FRA = { country_event = france.12 }
-		
-		news_event = britain.news.1
-	}
-	
-	option = { # Don't Do It
-		name = britain.38.b
-
-		ai_chance = { factor = 10 }
-		
-		add_political_power = 50
-		add_war_support = 0.10
-		
-		FRA = { country_event = france.13 }
-	}
-}
-
-# Cairo Conference Invite
-
-country_event = {
-	id = britain.39
-	title = britain.39.t
-	desc = britain.39.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Invite China and USA
-		name = britain.39.a
-		
-		ai_chance = { factor = 90 }
-
-		CHI = { country_event = { id = britain.40 hours = 24 } }
-		USA = { country_event = { id = britain.40 hours = 12 } }
-		
-		country_event = { id = britain.45 hours = 96 }
-	}
-	
-	option = { # Invite USA only
-		name = britain.39.b
-
-		ai_chance = { factor = 10 }
-		
-		USA = { country_event = { id = britain.40 hours = 12 } }
-		
-		country_event = { id = britain.45 hours = 96 }
-	}
-}
-
-# Get Invite
-
-country_event = {
-	id = britain.40
-	title = britain.40.t
-	desc = britain.40.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Accept
-		name = britain.40.a
-		
-		ai_chance = { factor = 90 }
-		
-		if = { limit = { tag = CHI } ENG = { country_event = { id = britain.41 hours = 24 } } }
-		if = { limit = { tag = USA } ENG = { country_event = { id = britain.43 hours = 12 } } }
-		
-		set_country_flag = accepted_cairo_conference
-	}
-	
-	option = { # Decline
-		name = britain.40.a
-		
-		ai_chance = { factor = 10 }
-
-		if = { limit = { tag = CHI } ENG = { country_event = { id = britain.42 hours = 24 } } }
-		if = { limit = { tag = USA } ENG = { country_event = { id = britain.44 hours = 12 } } }
-	}
-}
-
-# CHI Accepted
-
-country_event = {
-	id = britain.41
-	title = britain.41.t
-	desc = britain.41.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.41.a
-		
-		ai_chance = { factor = 90 }
-
-		#FROM = { give_guarantee = USA give_military_access = USA give_guarantee = CHI give_military_access = CHI give_guarantee = ENG give_military_access = ENG }
-		
-		#give_guarantee = FROM
-		#give_military_access = FROM
-	}
-}
-
-# CHI Declined
-
-country_event = {
-	id = britain.42
-	title = britain.42.t
-	desc = britain.42.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.42.a
-		
-		ai_chance = { factor = 90 }
-
-		add_opinion_modifier = {
-			target = FROM
-			modifier = protest_action
-		}
-	}
-}
-
-# USA Accepted
-
-country_event = {
-	id = britain.43
-	title = britain.43.t
-	desc = britain.43.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.43.a
-		
-		ai_chance = { factor = 90 }
-
-		#FROM = { give_guarantee = USA give_military_access = USA give_guarantee = CHI give_military_access = CHI give_guarantee = ENG give_military_access = ENG }
-		
-		#give_guarantee = FROM
-		#give_military_access = FROM
-	}
-}
-
-# USA Declined
-
-country_event = {
-	id = britain.44
-	title = britain.44.t
-	desc = britain.44.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.44.a
-		
-		ai_chance = { factor = 90 }
-
-		add_opinion_modifier = {
-			target = FROM
-			modifier = protest_action
-		}
-	}
-}
-
-country_event = {
-	id = britain.45
-	title = britain.45.t
-	desc = britain.45.desc
-	picture = GFX_event_cairo
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.45.a
-		
-		ai_chance = { factor = 90 }
-
-		if = { limit = { AND = { CHI = { has_country_flag = accepted_cairo_conference }  USA = { has_country_flag = accepted_cairo_conference } } } CHI = { add_ideas = ENG_Cairo_Declaration give_guarantee = ENG give_military_access = ENG give_military_access = USA give_guarantee = USA } ENG = { add_ideas = ENG_Cairo_Declaration give_guarantee = CHI give_military_access = CHI give_guarantee = USA give_military_access = USA } USA = { add_ideas = ENG_Cairo_Declaration give_guarantee = ENG give_military_access = ENG give_guarantee = CHI give_military_access = CHI } }
-		else_if = { limit = { CHI = { has_country_flag = accepted_cairo_conference } } CHI = { add_ideas = ENG_Cairo_Declaration give_guarantee = ENG give_military_access = ENG } ENG = { add_ideas = ENG_Cairo_Declaration give_guarantee = CHI give_military_access = CHI } }
-		else_if = { limit = { USA = { has_country_flag = accepted_cairo_conference } } USA = { add_ideas = ENG_Cairo_Declaration give_guarantee = ENG give_military_access = ENG } ENG = { add_ideas = ENG_Cairo_Declaration give_guarantee = USA give_military_access = USA } }
-	}
-}
-
-# Operation OVERLORD
-
-country_event = {
-	id = britain.46
-	title = britain.46.t
-	desc = britain.46.desc
-	picture = GFX_event_overlord
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.46.a
-		
-		ai_chance = { factor = 90 }
-		
-		15 = {
-			add_dynamic_modifier = {
-				modifier = ENG_Operation_Overlord
-				scope = ENG
-				days = 365
-			}
-		}
-	}
-}
-
-# Operation HUSKY
-
-country_event = {
-	id = britain.47
-	title = britain.47.t
-	desc = britain.47.desc
-	picture = GFX_event_husky
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.47.a
-		
-		ai_chance = { factor = 90 }
-		
-		115 = {
-			add_dynamic_modifier = {
-				modifier = ENG_Operation_Husky
-				scope = ENG
-				days = 365
-			}
-		}
-	}
-}
-
-# Communist Leaders
-
-# Bill Alexander
-
-country_event = {
-	id = britain.48
-	title = britain.48.t
-	desc = britain.48.desc
-	picture = GFX_report_event_king_speech
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.48.a
-		
-		ai_chance = { factor = 90 }
-		
-		create_country_leader = {
-			name = "Bill Alexander"
-			desc = "POLITICS_BILL_ALEXANDER_DESC"
-			picture = GFX_portrait_bill_alexander
-			expire = "1965.1.1"
-			ideology = marxism
-			traits = {
-				veteran_of_spanish_civil_war
-				anti_fascist_agent
-			}
-		}
-	}
-}
-
-# Jock Hoston
-
-country_event = {
-	id = britain.49
-	title = britain.49.t
-	desc = britain.49.desc
-	picture = GFX_report_event_king_speech
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.49.a
-		
-		ai_chance = { factor = 90 }
-		
-		create_country_leader = {
-			name = "Jock Haston"
-			desc = "POLITICS_JOCK_HASTON_DESC"
-			picture = GFX_portrait_jock_hoston
-			expire = "1965.1.1"
-			ideology = leninism
-			traits = {
-				devoted_trotskyist
-			}
-		}
-	}
-}
-
-# Reg Birch
-
-country_event = {
-	id = britain.50
-	title = britain.50.t
-	desc = britain.50.desc
-	picture = GFX_report_event_king_speech
-
-	is_triggered_only = yes
-	
-	option = { # Results
-		name = britain.50.a
-		
-		ai_chance = { factor = 90 }
-		
-		create_country_leader = {
-			name = "Reg Birch"
-			desc = "POLITICS_REG_BIRCH_DESC"
-			picture = GFX_portrait_reg_birch
-			expire = "1965.1.1"
-			ideology = marxism
-			traits = {
-				veteran_trade_unionist
-			}
-		}
-	}
-}
-
-# Threaten Ireland
-
-country_event = {
-	id = britain.51
-	title = britain.51.t
-	desc = britain.51.desc
-	picture = GFX_event_ireland
-
-	is_triggered_only = yes
-	
-	option = { # Yes
-		name = britain.51.a
-		
-		ai_chance = { 
-			factor = 30 
-			modifier = {
-				ENG = { has_completed_focus = ENG_Regional_Development }
-				factor = 100
-			}
-		}
-		
-		country_event = { id = britain.52 hours = 12 }
-	}
-	
-	option = { # No
-		name = britain.51.a
-		
-		ai_chance = { factor = 70 }
-		
-		country_event = { id = britain.53 hours = 12 }
-	}
-}
-
-# Ireland Said Yes
-
-country_event = {
-	id = britain.52
-	title = britain.52.t
-	desc = britain.52.desc
-	picture = GFX_event_ireland
-
-	is_triggered_only = yes
-	
-	option = { 
-		name = britain.52.a
-		
-		ai_chance = { factor = 1 }
-		
-		annex_country = {
-			target = IRE
-			transfer_troops = yes
-		}
-	}
-}
-
-# Ireland Said No
-
-country_event = {
-	id = britain.53
-	title = britain.53.t
-	desc = britain.53.desc
-	picture = GFX_event_ireland
-
-	is_triggered_only = yes
-	
-	option = { 
-		name = britain.53.a
-		
-		ai_chance = { factor = 1 }
-		
-		add_war_support = 0.1
-		
-		create_wargoal = {
-			type = annex_country
-			target = IRE
-		}
-	}
-}
-
-add_namespace = britain.news
-
-news_event = {
-	id = britain.news.1
-	title = britain.news.1.t
-	desc = britain.news.1.desc
-	picture = GFX_news_event_churchill
-	
-	major = yes
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = britain.news.1.a
-		trigger = {
-			NOT = {
-				TAG = ENG
-				TAG = FRA
-				TAG = GER
-				TAG = ITA
-			}
-		}
-	}
-	option = {
-		name = britain.news.1.b
-		trigger = { TAG = ENG }
-	}
-	option = {
-		name = britain.news.1.c
-		trigger = { TAG = FRA }
-	}
-	option = {
-		name = britain.news.1.d
-		trigger = { OR = { TAG = GER TAG = ITA } }
 	}
 }

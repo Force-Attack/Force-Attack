@@ -9,15 +9,15 @@ country_event = {
 
 	trigger = {
 		tag = ENG
+		has_dlc = "Man the Guns"
 		has_country_flag = ENG_king_died
 		date > 1936.6.1
 		NOT = { has_country_flag = ENG_edward_abdicating }
-		has_dlc = "Man the Guns"
 	}
 	
 	fire_only_once = yes
 
-	mean_time_to_happen = { days = 14 }
+	mean_time_to_happen = { days = 2 }
 
 	# Reject
 	option = {
@@ -45,11 +45,9 @@ country_event = {
 		name = mtg_britain.1.b
 		trigger = {
 			NOT = {
-				OR = {
-					has_completed_focus = ENG_organize_the_blackshirts
-					has_completed_focus = ENG_concessions_to_the_trade_unions
-					has_completed_focus = ENG_steady_as_she_goes
-				}
+				has_completed_focus = ENG_organize_the_blackshirts
+				has_completed_focus = ENG_concessions_to_the_trade_unions
+				has_completed_focus = ENG_steady_as_she_goes
 			}
 		}
 		ai_chance = {
@@ -101,7 +99,7 @@ country_event = {
 		custom_effect_tooltip = mtg_britain.1_tt
 		activate_mission = ENG_abdication_crisis
 		hidden_effect = { 
-			country_event = { id = mtg_britain.2 days = 50 }
+			country_event = { id = mtg_britain.2 days = 15 }
 			country_event = { id = mtg_britain.6 days = 15 random_days = 10 }
 		}
 		set_country_flag = ENG_abdication_crisis_morganatic_marriage
@@ -112,6 +110,9 @@ country_event = {
 			RAJ = { country_event = { id = mtg_britain.15 } }
 			AST = { country_event = { id = mtg_britain.15 } }
 			NZL = { country_event = { id = mtg_britain.15 } }
+			OMA = { country_event = { id = mtg_britain.15 } }
+			BHU = { country_event = { id = mtg_britain.15 } }
+			NEP = { country_event = { id = mtg_britain.15 } }
 		}
 	}
 
@@ -120,11 +121,9 @@ country_event = {
 		name = mtg_britain.1.a
 		trigger = {
 			NOT = {
-				OR = {
-					has_completed_focus = ENG_organize_the_blackshirts
-					has_completed_focus = ENG_concessions_to_the_trade_unions
-					has_completed_focus = ENG_steady_as_she_goes
-				}
+				has_completed_focus = ENG_organize_the_blackshirts
+				has_completed_focus = ENG_concessions_to_the_trade_unions
+				has_completed_focus = ENG_steady_as_she_goes
 			}
 		}
 		ai_chance = {
@@ -177,7 +176,7 @@ country_event = {
 		custom_effect_tooltip = mtg_britain.1_tt
 		activate_mission = ENG_abdication_crisis
 		hidden_effect = { 
-			country_event = { id = mtg_britain.2 days = 50 }
+			country_event = { id = mtg_britain.2 days = 15 }
 			country_event = { id = mtg_britain.6 days = 15 random_days = 10 }
 		}
 		set_country_flag = ENG_abdication_crisis_normal_marriage
@@ -188,6 +187,9 @@ country_event = {
 			RAJ = { country_event = { id = mtg_britain.15 } }
 			AST = { country_event = { id = mtg_britain.15 } }
 			NZL = { country_event = { id = mtg_britain.15 } }
+			OMA = { country_event = { id = mtg_britain.15 } }
+			BHU = { country_event = { id = mtg_britain.15 } }
+			NEP = { country_event = { id = mtg_britain.15 } }
 		}
 	}
 }
@@ -208,7 +210,7 @@ country_event = {
 		add_political_power = 100
 		add_timed_idea = { idea = ENG_support_for_the_king_idea days = 150 }
 		custom_effect_tooltip = mtg_britain.2_tt
-		hidden_effect = { country_event = { id = mtg_britain.3 days = 50 } }
+		hidden_effect = { country_event = { id = mtg_britain.3 days = 15 } }
 	}
 
 	# On second thought, maybe we shouldn't
@@ -237,22 +239,20 @@ country_event = {
 	option = {
 		name = mtg_britain.3.a
 		add_stability = -0.15
-		add_political_power = -150
+		add_political_power = -50
 		create_country_leader = {
 			name = "Fallen Government"
-			desc = "POLITICS_FALLEN_GOVERNMENT_DESC"
-			picture = GFX_portrait_Fallen_Government
+			picture = "portrait_eng_fallen_government.dds"
 			expire = "1965.1.1"
 			ideology = conservatism
 			traits = {
 				cabinet_crisis
+				r56_trait_opposed_to_communism
 			}
 		}
 		custom_effect_tooltip = mtg_britain.2_tt
 		set_country_flag = ENG_abdication_crisis_government_fell
-		hidden_effect = { country_event = { id = mtg_britain.4 days = 50 } }
-		
-		set_country_flag = Parliament_Disabled_Flag
+		hidden_effect = { country_event = { id = mtg_britain.4 days = 15 } }
 	}
 
 	# On second thought, maybe we shouldn't
@@ -298,7 +298,7 @@ country_event = {
 			}
 			dismantle_faction = yes
 		}
-		remove_from_tech_sharing_group = commonwealth_research
+		#don't remove Britain from research group - they can still share tech with other countries who are aligned to them!
 		effect_tooltip = {
 			if = {
 				limit = {
@@ -317,11 +317,23 @@ country_event = {
 					RAJ = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
 				}
 				set_autonomy = { target = RAJ autonomy_state = autonomy_free }
+				#Tied to Raj
+				#set_autonomy = { target = BHU autonomy_state = autonomy_free }
+				#set_autonomy = { target = NEP autonomy_state = autonomy_free }
+				#Gave those tags a choice 
 				RAJ = {
 					drop_cosmetic_tag = yes
 					retire_country_leader = yes
 					remove_from_tech_sharing_group = commonwealth_research
 				}
+				if = {
+					limit = {
+						RAJ = {
+							owns_state = 659
+						}	
+					}
+					transfer_state = 659		
+				}				
 			}
 			if = {
 				limit = {
@@ -337,10 +349,28 @@ country_event = {
 			}
 			if = {
 				limit = {
+					OMA = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
+				}
+				set_autonomy = { target = OMA autonomy_state = autonomy_free }
+			}
+			if = {
+				limit = {
+					NEP = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
+				}
+				set_autonomy = { target = NEP autonomy_state = autonomy_free }
+			}
+			if = {
+				limit = {
+					BHU = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
+				}
+				set_autonomy = { target = BHU autonomy_state = autonomy_free }
+			}
+			if = {
+				limit = {
 					CAN = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
 				}
 				CAN = {
-					create_faction = "ENG_commonwealth_of_nations"
+					create_faction = ENG_commonwealth_of_nations
 					if = {
 						limit = {
 							SAF = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
@@ -359,6 +389,18 @@ country_event = {
 						}
 						add_to_faction = NZL
 					}
+					if = {
+						limit = {
+							OMA = { 
+								has_country_flag = ENG_abdication_crisis_dominion_will_leave 
+								NOT = {
+									has_government = fascism
+									has_government = communism
+								}
+							}
+						}
+						add_to_faction = OMA
+					}
 				}
 			}
 			else_if = {
@@ -366,7 +408,7 @@ country_event = {
 					SAF = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
 				}
 				SAF = {
-					create_faction = "ENG_commonwealth_of_nations"
+					create_faction = ENG_commonwealth_of_nations
 					if = {
 						limit = {
 							SAF = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
@@ -386,7 +428,7 @@ country_event = {
 					AST = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
 				}
 				AST = {
-					create_faction = "ENG_commonwealth_of_nations"
+					create_faction = ENG_commonwealth_of_nations
 					if = {
 						limit = {
 							NZL = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
@@ -463,6 +505,45 @@ country_event = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					OMA = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
+				}
+				OMA = {
+					country_event = { id = mtg_britain.16 }
+					add_ai_strategy = {
+						type = alliance
+						id = ENG
+						value = -200
+					}
+				}
+			}
+			if = {
+				limit = {
+					NEP = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
+				}
+				NEP = {
+					country_event = { id = mtg_britain.16 }
+					add_ai_strategy = {
+						type = alliance
+						id = ENG
+						value = -200
+					}
+				}
+			}
+			if = {
+				limit = {
+					BHU = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
+				}
+				BHU = {
+					country_event = { id = mtg_britain.16 }
+					add_ai_strategy = {
+						type = alliance
+						id = ENG
+						value = -200
+					}
+				}
+			}
 		}
 		hidden_effect = { news_event = { id = mtg_news.62 days = 1 } }
 	}
@@ -504,7 +585,7 @@ country_event = {
 
 	immediate = {
 		random_list = {
-			20 = { # Newspapers in favor of marriage
+			200 = { # Newspapers in favor of marriage
 				modifier = {
 					factor = 1.5
 					has_country_flag = ENG_abdication_crisis_morganatic_marriage
@@ -519,10 +600,10 @@ country_event = {
 				}
 				country_event = { id = mtg_britain.7 }
 			}
-			20 = { # Newspapers against marriage
+			1 = { # Newspapers against marriage
 				country_event = { id = mtg_britain.8 } 
 			}
-			20 = { # Prime Minister keeps King on tight leash
+			1 = { # Prime Minister keeps King on tight leash
 				modifier = {
 					factor = 0
 					has_country_flag = ENG_abdication_crisis_government_fell
@@ -541,7 +622,7 @@ country_event = {
 				}
 				country_event = { id = mtg_britain.9 } 
 			}
-			20 = { # Parliament Opposition
+			1 = { # Parliament Opposition
 				modifier = {
 					factor = 0.8
 					has_idea = ENG_support_for_the_king_idea 
@@ -556,21 +637,21 @@ country_event = {
 				}
 				country_event = { id = mtg_britain.10 } 
 			}
-			20 = { # Upper classes oppose marriage
+			1 = { # Upper classes oppose marriage
 				modifier = {
 					factor = 0
 					has_country_flag = ENG_upper_classes_oppose_marriage
 				}
 				country_event = { id = mtg_britain.11 } 
 			}
-			20 = { # Working class people support marriage
+			200 = { # Working class people support marriage
 				modifier = {
 					factor = 1.5
 					has_country_flag = ENG_abdication_crisis_morganatic_marriage
 				}
 				modifier = {
 					factor = 0
-					has_country_flag = ENG_upper_classes_support_marriage
+					has_country_flag = ENG_working_classes_support_marriage
 				}
 				country_event = { id = mtg_britain.12 } 
 			}
@@ -612,7 +693,8 @@ country_event = {
 		name = mtg_britain.7.a
 		add_popularity = { ideology = neutrality popularity = 0.02 }
 		add_stability = 0.05
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		add_political_power = 20
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 5 } }
 		clr_country_flag = ENG_newspapers_against
 		clr_country_flag = ENG_prime_minister_tight_leash
 		clr_country_flag = ENG_parliament_opposition
@@ -660,7 +742,7 @@ country_event = {
 		name = mtg_britain.8.a
 		add_popularity = { ideology = neutrality popularity = -0.02 }
 		add_stability = -0.05
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 6 } }
 		clr_country_flag = ENG_newspapers_in_favor
 		clr_country_flag = ENG_prime_minister_tight_leash
 		clr_country_flag = ENG_parliament_opposition
@@ -709,7 +791,7 @@ country_event = {
 		name = mtg_britain.9.a
 		add_political_power = -50
 		set_country_flag = { flag = ENG_abdication_crisis_tight_leash value = 1 days = 31 }
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 5 } }
 		clr_country_flag = ENG_newspapers_in_favor
 		clr_country_flag = ENG_newspapers_against
 		clr_country_flag = ENG_parliament_opposition
@@ -755,7 +837,7 @@ country_event = {
 	option = {
 		name = mtg_britain.10.a
 		add_political_power = -75
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 5 } }
 		clr_country_flag = ENG_newspapers_in_favor
 		clr_country_flag = ENG_newspapers_against
 		clr_country_flag = ENG_prime_minister_tight_leash
@@ -803,7 +885,7 @@ country_event = {
 		add_popularity = { ideology = neutrality popularity = -0.02 }
 		add_stability = -0.05
 		add_political_power = -25
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 5 } }
 		clr_country_flag = ENG_newspapers_in_favor
 		clr_country_flag = ENG_newspapers_against
 		clr_country_flag = ENG_prime_minister_tight_leash
@@ -850,7 +932,8 @@ country_event = {
 		name = mtg_britain.12.a
 		add_popularity = { ideology = neutrality popularity = 0.02 }
 		add_stability = 0.05
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		add_political_power = 20
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 5 } }
 		clr_country_flag = ENG_newspapers_in_favor
 		clr_country_flag = ENG_newspapers_against
 		clr_country_flag = ENG_prime_minister_tight_leash
@@ -898,9 +981,9 @@ country_event = {
 		name = mtg_britain.13.a
 		add_popularity = { ideology = neutrality popularity = 0.05 }
 		add_stability = 0.1
-		add_political_power = 50
+		add_political_power = 200
 		set_country_flag = ENG_abdication_crisis_held_radio_speech
-		hidden_effect = { country_event = { id = mtg_britain.6 days = 20 random_days = 10 } }
+		hidden_effect = { country_event = { id = mtg_britain.6 days = 10 random_days = 5 } }
 	}
 
 	# On second thought, maybe we shouldn't
@@ -935,8 +1018,7 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			remove_ideas = ENG_king_edward
-			add_ideas = ENG_george_vi
-			set_country_flag = ENG_edward_viii_abdicated
+			add_ideas = ENG_george_vi		
 		}
 	}
 
@@ -963,6 +1045,9 @@ country_event = {
 		name = mtg_britain.15.a
 		custom_effect_tooltip = mtg_britain.15_tt
 		set_country_flag = ENG_abdication_crisis_dominion_will_leave
+		ai_chance = {
+			factor = 10
+		}
 	}
 
 	# We will support him whatever he decides
@@ -973,6 +1058,13 @@ country_event = {
 		}
 		custom_effect_tooltip = mtg_britain.15_tt_2
 		set_country_flag = ENG_abdication_crisis_dominion_will_stay
+		if = {
+			limit = {
+				original_tag = AST
+			}
+			custom_effect_tooltip = ENG_staying_loyal_tt
+			AST_enforce_loyalty = yes
+		}
 		if = {
 			limit = {
 				has_dlc = "Together for Victory"
@@ -995,12 +1087,6 @@ country_event = {
 					tag = RAJ
 				}
 				RAJ_enforce_loyalty = yes
-			}
-			if = {
-				limit = {
-					tag = AST
-				}
-				AST_enforce_loyalty = yes
 			}
 			if = {
 				limit = {
@@ -1030,7 +1116,8 @@ country_event = {
 			}
 			FROM = { set_autonomy = { target = CAN autonomy_state = autonomy_free } }
 			drop_cosmetic_tag = yes
-			create_faction = "ENG_commonwealth_of_nations"
+			create_faction = ENG_commonwealth_of_nations
+			set_country_flag = r56_Can_leads_commonwealth_now
 			if = {
 				limit = {
 					SAF = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
@@ -1049,12 +1136,25 @@ country_event = {
 				}
 				add_to_faction = NZL
 			}
+			if = {
+				limit = {
+					OMA = { 
+						has_country_flag = ENG_abdication_crisis_dominion_will_leave 
+						NOT = {
+							has_government = fascism
+							has_government = communism
+						}
+					}
+				}
+				add_to_faction = OMA
+			}
 			hidden_effect = {
 				every_other_country = {
 					limit = {
 						NOT = { tag = SAF }
 						NOT = { tag = AST }
 						NOT = { tag = NZL }
+						NOT = { tag = OMA }
 					}
 					ROOT = {
 						add_ai_strategy = {
@@ -1076,17 +1176,30 @@ country_event = {
 					CAN = { NOT = { has_country_flag = ENG_abdication_crisis_dominion_will_leave } }
 					AST = { NOT = { has_country_flag = ENG_abdication_crisis_dominion_will_leave } }
 				}
-				create_faction = "ENG_commonwealth_of_nations"
+				create_faction = ENG_commonwealth_of_nations
 				if = {
 					limit = {
 						NZL = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
 					}
 					add_to_faction = NZL
 				}
+				if = {
+					limit = {
+						OMA = { 
+							has_country_flag = ENG_abdication_crisis_dominion_will_leave 
+							NOT = {
+								has_government = fascism
+								has_government = communism
+							}
+						}
+					}
+					add_to_faction = OMA
+				}
 				hidden_effect = {
 					every_other_country = {
 						limit = {
 							NOT = { tag = NZL }
+							NOT = { tag = OMA }
 						}
 						ROOT = {
 							add_ai_strategy = {
@@ -1101,18 +1214,6 @@ country_event = {
 		}
 		if = {
 			limit = {
-				tag = RAJ
-			}
-			FROM = { set_autonomy = { target = RAJ autonomy_state = autonomy_free } }
-			ENG = { remove_from_faction = RAJ }
-			RAJ = {
-				drop_cosmetic_tag = yes
-				retire_country_leader = yes
-				remove_from_tech_sharing_group = commonwealth_research
-			}
-		}
-		if = {
-			limit = {
 				tag = AST
 			}
 			FROM = { set_autonomy = { target = AST autonomy_state = autonomy_free } }
@@ -1120,7 +1221,7 @@ country_event = {
 				limit = {
 					CAN = { NOT = { has_country_flag = ENG_abdication_crisis_dominion_will_leave } }
 				}
-				create_faction = "ENG_commonwealth_of_nations"
+				create_faction = ENG_commonwealth_of_nations
 				if = {
 					limit = {
 						SAF = { has_country_flag = ENG_abdication_crisis_dominion_will_leave }
@@ -1133,11 +1234,24 @@ country_event = {
 					}
 					add_to_faction = NZL
 				}
+				if = {
+					limit = {
+						OMA = { 
+							has_country_flag = ENG_abdication_crisis_dominion_will_leave 
+							NOT = {
+								has_government = fascism
+								has_government = communism
+							}
+						}
+					}
+					add_to_faction = OMA
+				}
 				hidden_effect = {
 					every_other_country = {
 						limit = {
 							NOT = { tag = SAF }
 							NOT = { tag = NZL }
+							NOT = { tag = OMA }
 						}
 						ROOT = {
 							add_ai_strategy = {
@@ -1155,6 +1269,86 @@ country_event = {
 				tag = NZL
 			}
 			FROM = { set_autonomy = { target = NZL autonomy_state = autonomy_free } }
+		}
+		if = {
+			limit = {
+				tag = OMA
+			}
+			FROM = { set_autonomy = { target = OMA autonomy_state = autonomy_free } }
+		}
+		if = {
+			limit = {
+				tag = BHU
+			}
+			FROM = { set_autonomy = { target = BHU autonomy_state = autonomy_free } }
+		}
+		if = {
+			limit = {
+				tag = NEP
+			}
+			FROM = { set_autonomy = { target = NEP autonomy_state = autonomy_free } }
+		}
+		if = { #needs to go second to last
+			limit = {
+				tag = RAJ
+			}
+			FROM = { set_autonomy = { target = RAJ autonomy_state = autonomy_free } }
+			ENG = { remove_from_faction = RAJ }
+			RAJ = {
+				drop_cosmetic_tag = yes
+				remove_from_tech_sharing_group = commonwealth_research
+				give_guarantee = NEP #my sphere now
+				give_guarantee = BHU #my sphere now
+				set_country_flag = r56_Linlithgow_path_check_allowed
+				if = {
+					limit = {
+						NOT = {
+							AND = {
+								has_completed_focus = RAJ_Linlithgows_Reign
+								has_government = neutrality
+							}
+						}
+					}
+					retire_country_leader = yes #don't want to yeet Linlithgows if he's doubling down
+				}
+				if = {
+					limit = {
+						owns_state = 659
+					}
+					ENG = {
+						transfer_state = 659
+					}
+				}
+				if = {
+					limit = {
+						has_completed_focus = RAJ_Linlithgows_Reign
+						has_government = neutrality
+						CAN = {
+							has_country_flag = r56_Can_leads_commonwealth_now
+						}
+					}
+					effect_tooltip = {
+						CAN = {
+							add_to_faction = RAJ
+						}
+					}
+				}
+			}
+		}
+		if = { #needs to go last
+			limit = {
+				tag = CAN 
+				RAJ = {
+					has_completed_focus = RAJ_Linlithgows_Reign
+					has_country_flag = ENG_abdication_crisis_dominion_will_leave
+					has_country_flag = r56_Linlithgow_path_check_allowed
+					NOT = {
+						has_government = fascism
+						has_government = communism
+					}
+				}
+			}
+			add_to_faction = RAJ #We still want in on the commonwealth, just not this king backed one
 		}
 	}
 }
@@ -1318,24 +1512,6 @@ country_event = {
 		PAK = {
 			add_ideas = ENG_guided_by_britain_raj_1
 		}
-		if = {
-			limit = {
-				has_idea = RAJ_marginalized_muslim_community_angry
-			}
-			swap_ideas = {
-				add_idea = RAJ_marginalized_muslim_community_happy
-				remove_idea = RAJ_marginalized_muslim_community_angry
-			}
-		}
-		if = {
-			limit = {
-				has_idea = RAJ_marginalized_muslim_community
-			}
-			swap_ideas = {
-				add_idea = RAJ_marginalized_muslim_community_happy
-				remove_idea = RAJ_marginalized_muslim_community
-			}
-		}
 	}
 }
 
@@ -1401,16 +1577,7 @@ country_event = {
 	option = {
 		name = mtg_britain.22.a
 		retire_country_leader = yes
-		create_country_leader = {
-			name = "Winston Churchill"
-			desc = "POLITICS_WINSTON_CHURCHILL_DESC"
-			picture = GFX_portrait_Winston_Churchill
-			expire = "1965.1.1"
-			ideology = conservatism
-			traits = {
-				british_bulldog
-			}
-		}
+		promote_character = ENG_winston_churchill
 	}
 }
 
@@ -1935,7 +2102,8 @@ country_event = {
 		name = mtg_britain.33.a
 		custom_effect_tooltip = ENG_democratic_civil_war_tt
 		hidden_effect = {
-			RAJ = { retire_country_leader = yes }
+			# Base game create asian leader with British name, I suggest that letting an indian rule is essential to keep the appearances as Indian rule is shocked by the civil war
+			#RAJ = { retire_country_leader = yes }
 		}
 		hidden_effect = { news_event = { id = mtg_news.41 days = 1 } }
 		division_template = {
@@ -1984,6 +2152,32 @@ country_event = {
 				drop_cosmetic_tag = yes
 				retire_country_leader = yes
 			}
+			if = {
+				limit = {
+					NEP = {
+						is_in_faction_with = ROOT
+					}
+				}
+				NEP = {
+					leave_faction = yes
+				}
+
+			}
+			if = {
+				limit = {
+					BHU = {
+						is_in_faction_with = ROOT
+					}
+				}
+				BHU = {
+					leave_faction = yes
+				}
+			}			
+			RAJ = {
+				leave_faction = yes
+				drop_cosmetic_tag = yes
+				retire_country_leader = yes
+			}			
 			MAL = {
 				drop_cosmetic_tag = yes
 				retire_country_leader = yes
@@ -2046,20 +2240,6 @@ country_event = {
 	# Accept
 	option = {
 		name = mtg_britain.36.a
-
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 1
-				OR = {
-					ITA_is_historical_ai = yes #Historical ITA has 50%-50% chances of accepting
-					ITA_is_alt_fascist_balbo_ai = yes
-					ITA_is_alt_fascist_grandi_ai = yes
-					ITA_is_monarchist_ai = yes
-				}
-			}
-		}
-
 		FROM = {
 			if = {
 				limit = {
@@ -2087,12 +2267,6 @@ country_event = {
 				}
 			}
 		}
-		#Italian subjects join the faction
-		every_subject_country = {
-			FROM = {
-				add_to_faction = PREV
-			}
-		}
 		hidden_effect = {
 			add_ai_strategy = {
 				type = alliance
@@ -2115,19 +2289,9 @@ country_event = {
 	# Reject
 	option = {
 		name = mtg_britain.36.b
-
 		ai_chance = {
-			base = 1
-			modifier = {
-				factor = 0
-				OR = {
-					ITA_is_alt_fascist_balbo_ai = yes
-					ITA_is_alt_fascist_grandi_ai = yes
-					ITA_is_monarchist_ai = yes
-				}
-			}
+			factor = 0
 		}
-
 		FROM = { country_event = { id = mtg_britain.38 hours = 6 } }
 	}
 }
@@ -2296,13 +2460,107 @@ country_event = {
 		ai_chance = {
 			factor = 75
 		}
+		trigger = {
+
+		}
 		add_timed_idea = { idea = ENG_confiscated_royal_wealth days = 365 }
 		remove_ideas = ENG_george_vi
-		CAN = {
-			country_event = { id = mtg_britain.44 }
-			effect_tooltip = {
-				add_ideas = ENG_exiled_royal_family
+		if = {
+			limit = {
+				CAN = {
+					NOT = {
+						has_completed_focus = CAN_burn_the_royal_portraits
+						has_completed_focus = r56_CAN_communism
+						has_idea = internationalism
+						has_idea_with_trait = communist_revolutionary
+						has_government = communism
+					}
+				}
 			}
+			CAN = {
+				country_event = { id = mtg_britain.44 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_exiled_royal_family
+				}
+			}			
+		}
+		if = {
+			limit = {
+				AST = {
+					NOT = {
+						has_government = communism
+						has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+						has_idea = AST_abandon_the_westminster_system_communism
+						has_idea_with_trait = communist_revolutionary
+						has_civil_war = yes
+					}
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}
+			}
+			AST = {
+				country_event = { id = mtg_britain.44 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_exiled_royal_family
+				}
+			}			
+		}
+		if = {
+			limit = {
+				SAF = {
+					NOT = {
+						has_government = communism
+						has_idea = internationalism
+						NOT = {
+							has_completed_focus = SAF_policy_of_cooperation
+						}
+						has_idea_with_trait = communist_revolutionary
+						has_civil_war = yes
+					}	
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}				
+			}
+			SAF = {
+				country_event = { id = mtg_britain.44 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_exiled_royal_family
+				}
+			}			
+		}				
+		if = {
+			limit = {
+				NZL = {
+					NOT = {
+						has_government = communism
+						has_idea = internationalism
+						has_completed_focus = NZL_emerge_from_the_caves
+						has_idea_with_trait = communist_revolutionary
+						has_civil_war = yes	
+					}	
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}				
+			}
+			NZL = {
+				country_event = { id = mtg_britain.44 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_exiled_royal_family
+				}
+			}			
 		}
 	}
 
@@ -2316,6 +2574,116 @@ country_event = {
 		add_stability = -0.1
 		remove_ideas = ENG_george_vi
 		hidden_effect = { news_event = { id = mtg_news.35 days = 1 } }
+		if = {
+			limit = {
+				CAN = {
+					NOT = {
+						has_completed_focus = CAN_burn_the_royal_portraits
+						has_completed_focus = r56_CAN_communism
+						has_idea = internationalism
+						has_idea_with_trait = communist_revolutionary
+						has_government = communism
+					}
+					
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}				
+			}
+			CAN = {
+				country_event = { id = r56_eng.4 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_royal_family_remnants
+				}
+			}			
+		}
+		if = {
+			limit = {
+				AST = {
+					NOT = {
+						OR = {
+							has_government = communism
+							has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+							has_idea = AST_abandon_the_westminster_system_communism
+							has_idea_with_trait = communist_revolutionary
+							has_civil_war = yes
+						}
+					}
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}
+			}
+			AST = {
+				country_event = { id = r56_eng.4 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_royal_family_remnants
+				}
+			}
+						
+		}
+		if = {
+			limit = {
+				SAF = {
+					NOT = {
+						OR = {
+							has_government = communism
+							has_idea = internationalism
+							NOT = {
+								has_completed_focus = SAF_policy_of_cooperation
+							}
+							has_idea_with_trait = communist_revolutionary
+							has_civil_war = yes
+						}
+					}	
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}				
+			}
+			SAF = {
+				country_event = { id = r56_eng.4 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_royal_family_remnants
+				}
+			}			
+		}				
+		if = {
+			limit = {
+				NZL = {
+					NOT = {
+						OR = {
+							has_government = communism
+							has_idea = internationalism
+							has_completed_focus = NZL_emerge_from_the_caves
+							has_idea_with_trait = communist_revolutionary
+							has_civil_war = yes
+						}	
+					}	
+				}
+				NOT = {
+					any_other_country = {
+						has_country_flag = british_royal_family_destination
+					}
+				}				
+			}
+			NZL = {
+				country_event = { id = r56_eng.4 }
+				set_country_flag = british_royal_family_destination
+				effect_tooltip = {
+					add_ideas = ENG_royal_family_remnants
+				}
+			}			
+		}		
 	}
 }
 
@@ -2348,17 +2716,1517 @@ country_event = {
 	# Get rid of them all
 	option = {
 		name = mtg_britain.45.a
-		
-		retire_character = ENG_alan_brooke
-		retire_character = ENG_bernard_montgomery
-		retire_character = ENG_harold_alexander
-		retire_character = ENG_john_vereker
-		retire_character = ENG_oliver_leese
-		retire_character = ENG_archibald_wavell
-		retire_character = ENG_james_fownes_somerville
-		retire_character = ENG_henry_harwood
-		retire_character = ENG_john_tovey
-		retire_character = ENG_bernard_rawlings
+		custom_effect_tooltip = ENG_anti_communist_commanders_exile_tt
+		hidden_effect = {
+			random_list = {
+				10 = {
+					remove_unit_leader = 997
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 997
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+	
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 997
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 997
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 997
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+			
+	
+	
+	
+			random_list = {
+				10 = {
+					remove_unit_leader = 996
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 996
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 996
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 996
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 996
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}																		
+			}
+	
+	
+			random_list = {
+				10 = {
+					remove_unit_leader = 995
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 995
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 995
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 995
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 995
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+	
+			random_list = {
+				10 = {
+					remove_unit_leader = 994
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 994
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 994
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 994
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 994
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+	
+			random_list = {
+				10 = {
+					remove_unit_leader = 993
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 993
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 993
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 993
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 993
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+			random_list = {
+				10 = {
+					remove_unit_leader = 998
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 998
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 998
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 998
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 998
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+			random_list = {
+				10 = {
+					remove_unit_leader = 983
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 983
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 983
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 983
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 983
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}																		
+			}
+			random_list = {
+				10 = {
+					remove_unit_leader = 984
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 984
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 984
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 984
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 984
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}																		
+			}
+			random_list = {
+				10 = {
+					remove_unit_leader = 987
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							NOT = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 987
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 987
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 987
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 987
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+			random_list = {
+				10 = {
+					remove_unit_leader = 988
+				}
+				50 = {
+					modifier = {
+						factor = 0
+						CAN = {
+							OR = {
+								has_government = communism
+								has_idea = CAN_communist_ideals
+								has_idea = internationalism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+								has_capitulated = no
+							}
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 988
+						}
+						set_nationality = CAN	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}							
+					
+					if = {
+						limit = {
+							NOT = {
+								CAN = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						CAN = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}
+					
+				}
+				30 = {
+					modifier = {
+						factor = 0
+						AST = {
+							OR = {
+								has_government = communism
+								has_idea = AST_R56_appeal_to_the_labour_dissidents_idea
+								has_idea = AST_abandon_the_westminster_system_communism
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 988
+						}
+						set_nationality = AST
+						set_unit_leader_flag = ENG_british_exile_commander	
+					}
+					if = {
+						limit = {
+							NOT = {
+								AST = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						AST = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						NZL = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								has_completed_focus = NZL_emerge_from_the_caves
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 988
+						}
+						set_nationality = NZL	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								NZL = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						NZL = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}							
+				}
+				15 = {
+					modifier = {
+						factor = 0
+						SAF = {
+							OR = {
+								has_government = communism
+								has_idea = internationalism
+								NOT = {
+									has_completed_focus = SAF_policy_of_cooperation
+								}
+								has_idea_with_trait = communist_revolutionary
+								has_civil_war = yes
+							}	
+						}
+					}
+					every_unit_leader = {
+						limit = {
+							has_id = 988
+						}
+						set_nationality = SAF	
+						set_unit_leader_flag = ENG_british_exile_commander
+					}
+					if = {
+						limit = {
+							NOT = {
+								SAF = {
+									has_country_flag = has_british_exiled_commander
+								}	
+								
+							}
+						}
+						SAF = {
+							set_country_flag = has_british_exiled_commander
+							country_event = { id = r56_eng.3 }
+						}					
+					}						
+				}																		
+			}
+		}
+
 
 		random_owned_controlled_state = {
 			limit = {
@@ -2573,10 +4441,18 @@ country_event = {
 				has_full_control_of_state = 335
 				owns_state = 672
 				has_full_control_of_state = 672
+				owns_state = 974
+				has_full_control_of_state = 974
 				owns_state = 334
 				has_full_control_of_state = 334
+				owns_state = 977
+				has_full_control_of_state = 977
+				owns_state = 978
+				has_full_control_of_state = 978
 				owns_state = 673
 				has_full_control_of_state = 673
+				owns_state = 975
+				has_full_control_of_state = 975
 				owns_state = 667
 				has_full_control_of_state = 667
 				owns_state = 309
@@ -2593,18 +4469,18 @@ country_event = {
 		if = {
 			limit = {
 				NOT = { original_tag = COG }
-				owns_state = 295
-				has_full_control_of_state = 295
-				owns_state = 538
-				has_full_control_of_state = 538
+				owns_state = 295 
+				owns_state = 538 
 				owns_state = 718
-				has_full_control_of_state = 718
-				owns_state = 888
-				has_full_control_of_state = 888
-				owns_state = 889
-				has_full_control_of_state = 889
 				owns_state = 890
+				owns_state = 888
+				owns_state = 889
+				has_full_control_of_state = 295 
+				has_full_control_of_state = 538 
+				has_full_control_of_state = 718
 				has_full_control_of_state = 890
+				has_full_control_of_state = 888
+				has_full_control_of_state = 889
 			}
 			release = COG
 		}
@@ -2766,6 +4642,8 @@ country_event = {
 				has_full_control_of_state = 459
 				owns_state = 513
 				has_full_control_of_state = 513
+				owns_state = 933
+				has_full_control_of_state = 933
 				owns_state = 460
 				has_full_control_of_state = 460
 				owns_state = 514
@@ -3103,6 +4981,10 @@ country_event = {
 				has_full_control_of_state = 671
 				owns_state = 286
 				has_full_control_of_state = 286
+				owns_state = 927
+				has_full_control_of_state = 927
+				owns_state = 928
+				has_full_control_of_state = 928
 			}
 			release = VIN
 		}
@@ -3337,6 +5219,14 @@ country_event = {
 				has_full_control_of_state = 527
 				owns_state = 525
 				has_full_control_of_state = 525
+				owns_state = 917
+				has_full_control_of_state = 917
+				owns_state = 918
+				has_full_control_of_state = 918
+				owns_state = 919
+				has_full_control_of_state = 919
+				owns_state = 920
+				has_full_control_of_state = 920
 			}
 			release = KOR
 		}
@@ -3730,7 +5620,7 @@ country_event = {
 				create_country_leader = {
 					name = "Harry Pollitt"
 					desc = "POLITICS_HARRY_POLLITT_DESC"
-					picture = GFX_portrait_Harry_Pollitt
+					picture = "portrait_eng_harry_pollitt.dds"
 					expire = "1965.1.1"
 					ideology = leninism
 					traits = {
@@ -3745,7 +5635,7 @@ country_event = {
 				create_country_leader = {
 					name = "Rajani Palme Dutt"
 					desc = "POLITICS_PALME_DUTT_DESC"
-					picture = GFX_portrait_Rajani_Palme_Dutt
+					picture = "Portrait_Britain_Palme_Dutt.dds"
 					expire = "1965.1.1"
 					ideology = leninism
 					traits = {
@@ -4455,6 +6345,7 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty3
 
 	trigger = {
+		has_dlc = "Man the Guns"
 		OR = {
 			tag = CAN
 			tag = SAF
@@ -4470,13 +6361,10 @@ country_event = {
 		ENG = { has_civil_war = no }
 		NOT = { has_country_flag = ENG_cannot_leave_faction }
 		NOT = { ENG = { has_country_flag = ENG_switched_to_fascism_communism_dominions_timer_flag } }
-		has_dlc = "Man the Guns"
 		NOT = { has_country_flag = ENG_dominions_stayed_with_fascist_britain_flag }
 		NOT = { has_country_flag = britain_enforced_our_loyalty }
 		NOT = { has_country_flag = ENG_already_left_faction_flag }
 	}
-	
-	fire_only_once = no
 
 	mean_time_to_happen = { days = 30 }
 	
@@ -4484,7 +6372,15 @@ country_event = {
 	option = {
 		name = mtg_britain.66.a
 		ai_chance = {
-			factor = 0
+			base = 0
+			modifier = {
+				add = 100
+				original_tag = AST
+				OR = {
+					has_completed_focus = AST_R56_third_time_lucky
+					#has_completed_focus = AST_R56_royalist_propoganda
+				}
+			}
 		}
 		set_country_flag = ENG_dominions_stayed_with_fascist_britain_flag
 	}
@@ -4548,8 +6444,7 @@ country_event = {
 	
 	# Ok
 	option = {
-		name = mtg_britain.67.a
-		remove_from_tech_sharing_group = commonwealth_research
+		name = mtg_britain.67.a	#don't remove the British commonwealth research from them since they are the founders
 		effect_tooltip = {
 			FROM = {
 				leave_faction = yes
@@ -4733,873 +6628,6 @@ country_event = {
 	}
 }
 
-# Event for RAJ notifying of impending civil war
-country_event = {
-	id = mtg_britain.72
-	title = mtg_britain.72.t
-	desc = mtg_britain.72.d
-	picture = GFX_report_event_generic_riot
-
-	trigger = {
-		tag = RAJ
-		NOT = { country_exists = PAK }
-		NOT = { has_country_flag = RAJ_civil_war }
-		NOT = {
-			OR = {
-				ENG = { has_completed_focus = ENG_the_three_nation_solution }
-				AND = {
-					has_dlc = "Together for Victory"
-					has_completed_focus = RAJ_two_nation_theory
-				}
-			}
-		}
-		is_subject = no
-		has_dlc = "Man the Guns"
-	}
-
-	mean_time_to_happen = { days = 60 }
-	
-	# Ok
-	option = {
-		name = mtg_britain.72.a
-		set_country_flag = RAJ_civil_war
-		hidden_effect = {
-			country_event = { id = mtg_britain.73 days = 90 random_days = 180 }
-		}
-	}
-}
-
-# Event for RAJ starting civil war
-country_event = {
-	id = mtg_britain.73
-	title = mtg_britain.73.t
-	desc = mtg_britain.73.d
-	picture = GFX_report_event_ger_civil_war
-
-	is_triggered_only = yes
-	
-	# We won't back down!
-	option = {
-		name = mtg_britain.73.a
-		release = PAK
-		PAK = {
-			declare_war_on = {
-				target = ROOT
-				type = annex_everything
-			}
-		}
-		hidden_effect = {
-			PAK = {
-				add_equipment_to_stockpile = {
-				    type = infantry_equipment
-				    amount = 15000
-				    producer = RAJ
-				}
-				division_template = {
-					name = "Pakistani Liberation Army"
-					priority = 1
-					division_names_group = RAJ_INF_01
-					is_locked = yes
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 1 y = 0 }
-						infantry = { x = 1 y = 1 }
-						infantry = { x = 1 y = 2 }
-					}
-				}
-				# Sind
-				443 = {
-					create_unit = {
-						division = "name = \"1. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"2. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"3. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-				# Punjab
-				440 = {
-					create_unit = {
-						division = "name = \"4. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"5. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"6. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-				# Northern Kashmir
-				787 = {
-					create_unit = {
-						division = "name = \"7. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"8. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"9. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-				# Peshawar
-				442 = {
-					create_unit = {
-						division = "name = \"10. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"11. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-				# Baluchistan
-				444 = {
-					create_unit = {
-						division = "name = \"12. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"13. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-				# Quetta
-				445 = {
-					create_unit = {
-						division = "name = \"14. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"15. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"16. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"17. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"18. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"19. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-				# East Bengal (Bangladesh)
-				430 = {
-					create_unit = {
-						division = "name = \"20. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"21. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"22. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"23. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"24. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"25. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"26. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"27. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"28. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"29. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"30. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"31. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"32. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"33. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-					create_unit = {
-						division = "name = \"34. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-						owner = PAK
-					}
-				}
-			}
-			hidden_effect = {
-				division_template = {
-					name = "Hindu Militia"
-					priority = 1
-					division_names_group = RAJ_INF_01
-					is_locked = yes
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 1 y = 0 }
-						infantry = { x = 1 y = 1 }
-						infantry = { x = 1 y = 2 }
-					}
-				}
-				# Delhi
-				439 = {
-					create_unit = {
-						division = "name = \"1. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"2. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"3. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"4. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"5. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"6. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-				}
-				# Rajahsthan
-				433 = {
-					create_unit = {
-						division = "name = \"7. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"8. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"9. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"10. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"11. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"12. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-				}
-				# Gujarat
-				428 = {
-					create_unit = {
-						division = "name = \"13. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"14. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"15. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-				}
-				# Assam
-				432 = {
-					create_unit = {
-						division = "name = \"16. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"17. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"18. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"19. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-				}
-				# West bengal
-				431 = {
-					create_unit = {
-						division = "name = \"20. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"21. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"22. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-					create_unit = {
-						division = "name = \"23. Hindu Militia\" division_template = \"Hindu Militia\" start_experience_factor = 0.5" 
-						owner = RAJ
-					}
-				}
-			}
-			PAK = {
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"35. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"36. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"37. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"38. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"39. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"40. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"41. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"42. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"43. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"44. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"45. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"46. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"47. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"48. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"49. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"50. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"51. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"52. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"53. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"54. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"55. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"56. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-				if = {
-					limit = {
-						strength_ratio = {
-						    tag = RAJ
-						    ratio < 0.9
-						}
-					}
-					# East Bengal (Bangladesh)
-					430 = {
-						create_unit = {
-							division = "name = \"57. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-					# Punjab
-					440 = {
-						create_unit = {
-							division = "name = \"58. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-						create_unit = {
-							division = "name = \"59. Pakistani Liberation Army\" division_template = \"Pakistani Liberation Army\" start_experience_factor = 0.5" 
-							owner = PAK
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_idea = RAJ_marginalized_muslim_community_angry
-				}
-				swap_ideas = {
-					add_idea = RAJ_marginalized_muslim_community_happy
-					remove_idea = RAJ_marginalized_muslim_community_angry
-				}
-			}
-			if = {
-				limit = {
-					has_idea = RAJ_marginalized_muslim_community
-				}
-				swap_ideas = {
-					add_idea = RAJ_marginalized_muslim_community_happy
-					remove_idea = RAJ_marginalized_muslim_community
-				}
-			}
-			set_country_flag = RAJ_pakistani_civil_war_flag
-			hidden_effect = { country_event = { id = mtg_britain.109 days = 15 random_days = 75 } }
-		}
-	}
-	# Give them their independence
-	option = {
-		name = mtg_britain.73.b
-		ai_chance = {
-			factor = 0
-		}
-		release = PAK
-		hidden_effect = { country_event = { id = mtg_britain.109 days = 5 random_days = 5 } }
-	}
-}
-
-# Event for RAJ ending civil war if Pakistan hasn't been dealt with.
-country_event = {
-	id = mtg_britain.74
-	title = mtg_britain.74.t
-	desc = mtg_britain.74.d
-	picture = GFX_report_event_generic_sign_treaty2
-
-	trigger = {
-		has_war_with = PAK
-	}
-
-	trigger = {
-		tag = RAJ
-		has_war_with = PAK
-		has_country_flag = RAJ_pakistani_civil_war_flag
-	}
-	
-	fire_only_once = yes
-
-	mean_time_to_happen = {
-		days = 270
-		modifier = {
-			factor = 0.8
-			surrender_progress > 0.2
-		}
-		modifier = {
-			factor = 0.5
-			surrender_progress > 0.5
-		}
-		modifier = {
-			factor = 0.2
-			surrender_progress > 0.8
-		}
-		modifier = {
-			factor = 0.1
-			surrender_progress > 0.9
-		}
-	}
-	
-	# Let's make peace
-	option = {
-		name = mtg_britain.74.a
-		every_country = {
-			limit = {
-				is_in_faction_with = RAJ
-				has_war_with = PAK
-			}
-			white_peace = PAK
-		}
-		white_peace = PAK
-		PAK = { country_event = { id = mtg_britain.75 } }
-		effect_tooltip = {
-			delete_unit_template_and_units = {
-   				division_template = "Hindu Militia"
-			}
-		}
-		clr_country_flag = RAJ_pakistani_civil_war_flag
-	}
-
-	# All or nothing - no peace!
-	option = {
-		name = mtg_britain.74.b
-		ai_chance = {
-			factor = 0
-		}
-		add_war_support = -0.1
-	}
-}
-
-# Event for PAK notifying of white peace
-country_event = {
-	id = mtg_britain.75
-	title = mtg_britain.75.t
-	desc = mtg_britain.75.d
-	picture = GFX_report_event_generic_sign_treaty2
-
-	is_triggered_only = yes
-	
-	# Ok
-	option = {
-		name = mtg_britain.75.a
-		effect_tooltip = {
-			every_country = {
-				limit = {
-					is_in_faction_with = RAJ
-					has_war_with = PAK
-				}
-				white_peace = PAK
-			}
-			RAJ = { white_peace = PAK }
-		}
-		delete_unit_template_and_units = {
-   			division_template = "Pakistani Liberation Army"
-		}
-		hidden_effect = {
-			RAJ = {
-				delete_unit_template_and_units = {
-   					division_template = "Hindu Militia"
-				}
-			}
-		}
-	}
-}
-
-# Event for PAK starting civil war
-country_event = {
-	id = mtg_britain.76
-	title = mtg_britain.76.t
-	desc = mtg_britain.76.d
-	picture = GFX_report_event_ger_civil_war
-
-	trigger = {
-		tag = PAK
-		NOT = { country_exists = BAN }
-		NOT = { has_country_flag = PAK_civil_war }
-		NOT = { ENG = { has_completed_focus = ENG_the_three_nation_solution } }
-		is_subject = no
-		has_war = no
-		has_dlc = "Man the Guns"
-	}
-	
-	fire_only_once = yes
-
-	mean_time_to_happen = { days = 180 }
-	
-	# We won't back down!
-	option = {
-		name = mtg_britain.76.a
-		set_country_flag = PAK_civil_war
-		release = BAN
-		hidden_effect = {
-			BAN = {
-				division_template = {
-					name = "Bangladeshi Liberation Army"
-					priority = 1
-					division_names_group = RAJ_INF_01
-					is_locked = yes
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 1 y = 0 }
-						infantry = { x = 1 y = 1 }
-						infantry = { x = 1 y = 2 }
-					}
-				}
-				# East Bengal (Bangladesh)
-				430 = {
-					create_unit = {
-						division = "name = \"1. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"2. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"3. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"4. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"5. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"6. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"7. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"8. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"9. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"10. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"11. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"12. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"13. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"14. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-					create_unit = {
-						division = "name = \"15. Bangladeshi Liberation Army\" division_template = \"Bangladeshi Liberation Army\" start_experience_factor = 0.5" 
-						owner = BAN
-					}
-				}
-				declare_war_on = {
-					target = ROOT
-					type = annex_everything
-				}
-			}
-			hidden_effect = { country_event = { id = mtg_britain.77 days = 270 random_days = 95 } }
-		}
-	}
-	# Give them their independence
-	option = {
-		name = mtg_britain.76.b
-		ai_chance = {
-			factor = 0
-		}
-		release = BAN
-		set_country_flag = PAK_civil_war
-	}
-}
-
-# Event for PAK ending civil war if Bangladesh hasn't been dealt with.
-country_event = {
-	id = mtg_britain.77
-	title = mtg_britain.77.t
-	desc = mtg_britain.77.d
-	picture = GFX_report_event_generic_sign_treaty2
-
-	trigger = {
-		has_war_with = BAN
-	}
-
-	is_triggered_only = yes
-	
-	# Let's make peace
-	option = {
-		name = mtg_britain.77.a
-		white_peace = BAN
-		BAN = { country_event = { id = mtg_britain.78 } }
-	}
-
-	# All or nothing - no peace!
-	option = {
-		name = mtg_britain.77.b
-		ai_chance = {
-			factor = 0
-		}
-		add_war_support = -0.1
-	}
-}
-
-# Event for BAN notifying of white peace
-country_event = {
-	id = mtg_britain.78
-	title = mtg_britain.78.t
-	desc = mtg_britain.78.d
-	picture = GFX_report_event_generic_sign_treaty2
-
-	is_triggered_only = yes
-	
-	# Ok
-	option = {
-		name = mtg_britain.75.a
-		effect_tooltip = { BAN = { white_peace = PAK } }
-		delete_unit_template_and_units = {
-   			division_template = "Bangladeshi Liberation Army"
-		}
-	}
-}
-
 # Event for Iran/Afghanistan demanding puppet status
 country_event = {
 	id = mtg_britain.79
@@ -5655,7 +6683,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0.8
-				SOV = { has_completed_focus = SOV_liberation_of_the_european_proletariat }
+				SOV = { has_completed_focus = SOV_middle_east_diplomacy }
 			}
 			modifier = {
 				factor = 0
@@ -5770,7 +6798,6 @@ country_event = {
 					}
 				}
 			}
-			add_opinion_modifier = { target = ROOT modifier = ENG_imperial_conference_opinion }
 			custom_effect_tooltip = mtg_britain.82_tt
 		}
 	}
@@ -5781,7 +6808,6 @@ country_event = {
 		trigger = {
 			NOT = { tag = ENG }
 		}
-		effect_tooltip = { add_opinion_modifier = { target = FROM modifier = ENG_imperial_conference_opinion } }
 	}
 }
 
@@ -6998,12 +8024,7 @@ country_event = {
 			modifier = {
 				factor = 0
 				tag = RAJ
-				ENG = {
-					AND = {
-						NOT = { has_completed_focus = ENG_indian_autonomy } 
-						NOT = { has_country_leader_with_trait = viceroy_emeritus }
-					}
-				}
+				ENG = { NOT = { has_completed_focus = ENG_indian_autonomy } }
 			}
 		}
 		custom_effect_tooltip = mtg_britain.100_tt #"If all accept you will get:"
@@ -7036,35 +8057,20 @@ country_event = {
 			modifier = {
 				factor = 0
 				tag = RAJ
-				ENG = { 
-					OR = {
-						has_completed_focus = ENG_indian_autonomy 
-						has_country_leader_with_trait = viceroy_emeritus
-					}
-				}
+				ENG = { has_completed_focus = ENG_indian_autonomy }
 				has_opinion = { target = ENG value > 99 }
 			}
 			modifier = {
 				factor = 0
 				tag = RAJ
-				ENG = { 
-					OR = {
-						has_completed_focus = ENG_indian_autonomy 
-						has_country_leader_with_trait = viceroy_emeritus
-					}
-				}
+				ENG = { has_completed_focus = ENG_indian_autonomy }
 				has_opinion = { target = ENG value > 89 }
 				FROM = { has_country_flag = ENG_diplomatic_pressure_flag }
 			}
 			modifier = {
 				factor = 0
 				tag = RAJ
-				ENG = { 
-					OR = {
-						has_completed_focus = ENG_indian_autonomy 
-						has_country_leader_with_trait = viceroy_emeritus
-					}
-				}
+				ENG = { has_completed_focus = ENG_indian_autonomy }
 				has_opinion = { target = ENG value > 79 }
 				FROM = { has_country_flag = ENG_extensive_diplomatic_pressure_flag }
 			}
@@ -7518,6 +8524,11 @@ country_event = {
 	option = {
 		name = mtg_britain.109.a
 		release = BRM
+		hidden_effect = {
+			BRM = {
+				load_oob = BRM_Scripted
+			}
+		}
 	}
 }
 
@@ -7611,7 +8622,10 @@ country_event = {
 			}
 			if = {
 				limit = {
-					FROM = { original_tag = SAF }
+					FROM = { 
+						original_tag = SAF 
+						has_global_flag = saf_tfv_focus_tree
+					}
 				}
 				FROM = {
 					load_focus_tree = { tree = south_african_focus keep_completed = yes }
@@ -7623,7 +8637,15 @@ country_event = {
 					FROM = { original_tag = AST }
 				}
 				FROM = {
-					load_focus_tree = { tree = australian_focus keep_completed = yes }
+					if = {
+						limit = {
+							has_global_flag = ast_tfv_focus_tree
+						}
+						load_focus_tree = { tree = australian_focus keep_completed = yes }
+					}
+					else = {
+						load_focus_tree = { tree = r56_australian_focus keep_completed = yes }
+					}
 					AST_enforce_loyalty = yes
 				}
 			}
@@ -7656,26 +8678,25 @@ country_event = {
 		has_country_flag = edward_viii_married_wallis_simpson
 		126 = {
 			is_controlled_by = ENG
-			days_since_last_strategic_bombing < 8
+			date > 1937.5.5
 		}
 	}
 	
 	fire_only_once = yes
 
-	mean_time_to_happen = { days = 30 }
+	mean_time_to_happen = { days = 10 }
 	
 	option = {
 		name = mtg_britain.999.a
 		kill_country_leader = yes
-		create_country_leader = {
-			name = "George VI"
-			desc = "POLITICS_GEORGE_VI_DESC"
-			picture = GFX_portrait_George_VI
-			expire = "1965.1.1"
-			ideology = despotism
-			traits = {
-				popular_figurehead stammer humble
+		add_country_leader_role = {
+			character = ENG_george_vi
+			country_leader = {
+				ideology=absolute_monarchism
+				traits={ popular_figurehead stammer humble r56_trait_opposed_to_communism }
+				expire="1965.1.1"
 			}
+			promote_leader = yes
 		}
 		hidden_effect = { news_event = { id = mtg_news.55 days = 1 } }
 	}
@@ -7692,27 +8713,25 @@ country_event = {
 	trigger = {
 		original_tag = ENG
 		has_government = neutrality
-		date > 1941.1.1
-		has_country_leader = { ruling_only = yes name = "George VI" }
+		date > 1939.1.1
+		has_country_leader = { ruling_only = yes character = ENG_george_vi }
 	}
 
 	mean_time_to_happen = {
-		days = 1460
+		days = 10
 	}
 	
 	option = {
 		name = mtg_britain.1000.a
 		kill_country_leader = yes
-		create_country_leader = {
-			name = "Elizabeth II"
-			desc = "POLITICS_ELIZABETH_II_DESC"
-			picture = "GFX_portrait_eng_elizabeth_ii"
-			expire = "1965.1.1"
-			ideology = despotism
-			female = yes
-			traits = {
-				inexperienced_monarch headstrong popular_queen
+		add_country_leader_role = {
+			character = ENG_elizabeth_ii
+			country_leader = {
+				ideology=absolute_monarchism
+				traits={ inexperienced_monarch headstrong popular_queen r56_trait_opposed_to_communism }
+				expire="1965.1.1"
 			}
+			promote_leader = yes
 		}
 		set_party_name = { ideology = neutrality long_name = ENG_neutrality_party_queens_party_long name = ENG_neutrality_party_queens_party }
 		hidden_effect = { news_event = { id = mtg_news.59 days = 1 } }
