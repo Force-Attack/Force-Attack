@@ -1,0 +1,1204 @@
+﻿  
+add_namespace = indonesia
+
+#indonesia naval autonomy
+country_event = {
+	id = indonesia.4
+	title = indonesia.4.t
+	desc = indonesia.4.desc
+	picture = GFX_report_event_merchant_ship_01
+	
+	is_triggered_only = yes
+
+	fire_only_once = yes
+	
+	option = { #sure
+		name = indonesia.4.a
+		ai_chance = {
+			base = 75
+		}
+		custom_effect_tooltip = INS_naval_autonomy_ships
+		hidden_effect = {
+			INS = {
+				country_event = { id = indonesia.5 hours = 12 }
+			}
+		}
+	}
+
+	option = { #no
+		name = indonesia.4.b
+		ai_chance = {
+			base = 25
+		}
+		hidden_effect = {
+			INS = {
+				country_event = { id = indonesia.6 hours = 12 }
+			}
+		}
+	}
+
+}
+
+#OVERLORD agrees
+country_event = {
+	id = indonesia.5
+	title = indonesia.5.t
+	desc = indonesia.5.desc
+	picture = GFX_report_event_merchant_ship_01
+	
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	option = { #cool
+		name = indonesia.5.a
+		HOL = {
+			every_army_leader = {
+				limit = { has_id = 981 }
+				set_nationality = INS	
+			}
+			transfer_ship = {
+				prefer_name = "HrMs Java"
+				type = light_cruiser
+				target = INS
+			}
+			transfer_ship = {
+				prefer_name = "HrMs Sumatra"
+				type = light_cruiser
+				target = INS
+			}
+			transfer_ship = {
+				prefer_name = "HrMs Evertsen"
+				type = destroyer
+				target = INS
+			}
+			transfer_ship = {
+				prefer_name = "HrMs Van Ghent"
+				type = destroyer
+				target = INS
+			}
+		}
+	}
+}
+
+#OVERLORD refuses
+country_event = {
+	id = indonesia.6 
+	title = indonesia.6.t
+	desc = indonesia.6.desc
+	picture = GFX_report_event_merchant_ship_01
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.6.a
+	}
+}
+
+
+news_event = {
+	id = indonesia.7
+	title = indonesia.7.t
+	desc = indonesia.7.desc
+	picture = GFX_report_event_merchant_ship_01
+	major = yes 
+	is_triggered_only = yes 
+	fire_only_once = yes 
+
+	option = { 
+		name = indonesia.7.a
+		trigger = {
+			NOT = {
+				tag = INS
+				tag = JAP
+				tag = HOL
+			} 
+		} 
+	}
+    option = { 
+		name = indonesia.7.b
+		trigger = { tag = INS }
+	}
+	option = { 
+		name = indonesia.7.c
+		trigger = { tag = HOL }
+	}
+	option = { 
+		name = indonesia.7.d
+		trigger = { tag = JAP }
+	}
+}
+
+# indonesia limited autonomy
+country_event = {
+	id = indonesia.8
+	title = indonesia.8.t
+	desc = indonesia.8.desc
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+	
+	option = { #sure
+		name = indonesia.8.a
+		add_political_power = 100
+		if = {
+			limit = {
+				INS = {
+					has_completed_focus = INS_defensive_politics
+					has_government = neutrality
+				}
+			}
+			effect_tooltip = {
+				if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_integrated_puppet
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_puppet
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_puppet
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_colony
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_colony
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_dominion
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_dominion
+						}
+					}
+					end_puppet = INS
+				}
+			}
+		}
+		else = {
+			effect_tooltip = {
+				end_puppet = INS
+			}
+		}
+		INS = {
+			effect_tooltip = {
+				drop_cosmetic_tag = yes
+				add_stability = 0.1
+				add_opinion_modifier = {
+					target = FROM
+					modifier = huge_increase
+				}
+			}
+		}
+		hidden_effect = {
+			INS = { country_event = { id = indonesia.9 hours = 12 } }
+		}
+	}
+	option = { #no u
+		name = indonesia.8.b
+		effect_tooltip = {
+			INS = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_decrease
+				}
+			}
+		}
+		hidden_effect = {
+			INS = { country_event = { id = indonesia.54 hours = 12 } }
+		}
+	}
+}
+
+country_event = {
+	id = indonesia.54
+	title = indonesia.54.t
+	desc = indonesia.54.desc
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = indonesia.54.a
+		add_opinion_modifier = {
+			target = FROM
+			modifier = large_decrease
+		}
+	}
+
+	option = {
+		trigger = {
+			has_completed_focus = INS_demand_volksraad_elections
+			has_government = democratic
+		}
+		name = indonesia.54.b
+		start_civil_war = {
+			ruling_party = democratic
+			ideology = neutrality
+			size = 0.25
+			states = all
+			capital = 335
+			states_filter = {
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					state = 335
+					state = 672
+					state = 974
+				}
+			}
+			HOL = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_colony
+					end_wars = no
+					end_civil_wars = no
+					freedom_level = 0.5
+				}
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.47
+			}
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = yes
+				election_frequency = 48
+				last_election = 1936.1.1
+				long_name = "Volksraad - Governor General"
+				name = "Volksraad"
+			}
+			declare_war_on = {
+				target = INS
+				type = civil_war
+			}
+			every_country = { ### BREAKAWAY - NOT INS
+				limit = {
+					tag = INS
+					has_civil_war = yes
+				}
+				drop_cosmetic_tag = yes
+				if = {
+					limit = {
+						is_subject = yes
+					}
+					HOL = {
+						end_puppet = INS
+					}
+				}
+			}
+		}
+	}
+}
+
+#HOL agrees
+country_event = {
+	id = indonesia.9
+	title = indonesia.9.t
+	desc = indonesia.9.desc
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.9.a
+		HOL = {
+			add_political_power = 100
+			if = {
+				limit = {
+					INS = {
+						has_completed_focus = INS_defensive_politics
+					}
+				}
+				hidden_effect = {
+					INS = {
+						set_variable = { INS_communism_status_quo = party_popularity_100@communism }
+						set_variable = { INS_democratic_status_quo = party_popularity_100@democratic }
+						set_variable = { INS_fascist_status_quo = party_popularity_100@fascism }
+						set_variable = { INS_neutrality_status_quo = party_popularity_100@neutrality }
+					}
+				}
+				if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_integrated_puppet
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_puppet
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+					hidden_effect = {
+						INS = {
+							set_politics = { 
+								ruling_party = neutrality
+								elections_allowed = yes
+							}
+							set_popularities = {
+								neutrality = INS_neutrality_status_quo
+								communism = INS_communism_status_quo
+								democratic = INS_democratic_status_quo
+								fascism = INS_fascism_status_quo
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_puppet
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_colony
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+					hidden_effect = {
+						INS = {
+							set_politics = { 
+								ruling_party = neutrality
+								elections_allowed = yes
+							}
+							set_popularities = {
+								neutrality = INS_neutrality_status_quo
+								communism = INS_communism_status_quo
+								democratic = INS_democratic_status_quo
+								fascism = INS_fascism_status_quo
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_colony
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_dominion
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+					hidden_effect = {
+						INS = {
+							set_politics = { 
+								ruling_party = neutrality
+								elections_allowed = yes
+							}
+							set_popularities = {
+								neutrality = INS_neutrality_status_quo
+								communism = INS_communism_status_quo
+								democratic = INS_democratic_status_quo
+								fascism = INS_fascism_status_quo
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_dominion
+						}
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_protectorate
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+					hidden_effect = {
+						INS = {
+							set_politics = { 
+								ruling_party = neutrality
+								elections_allowed = yes
+							}
+							set_popularities = {
+								neutrality = INS_neutrality_status_quo
+								communism = INS_communism_status_quo
+								democratic = INS_democratic_status_quo
+								fascism = INS_fascism_status_quo
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_protectorate
+						}
+						has_dlc = "Man the Guns"
+					}
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_supervised_state
+						end_wars = no
+						end_civil_wars = no
+						freedom_level = 0.5
+					}
+					hidden_effect = {
+						INS = {
+							set_politics = { 
+								ruling_party = neutrality
+								elections_allowed = yes
+							}
+							set_popularities = {
+								neutrality = INS_neutrality_status_quo
+								communism = INS_communism_status_quo
+								democratic = INS_democratic_status_quo
+								fascism = INS_fascism_status_quo
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						INS = {
+							has_autonomy_state = autonomy_protectorate
+						}
+						NOT = {
+							has_dlc = "Man the Guns"
+						}
+					}
+					end_puppet = INS
+					ROOT = {
+						drop_cosmetic_tag = yes
+					}
+				}
+			}
+			else = {
+				end_puppet = INS
+				ROOT = {
+					drop_cosmetic_tag = yes
+				}
+			}
+		}
+		add_stability = 0.1
+		effect_tooltip = {
+			add_opinion_modifier = {
+				target = FROM
+				modifier = huge_increase
+			}
+		}
+	}
+}
+
+#######CLAIMS
+
+#event for AST
+country_event = {
+	id = indonesia.33
+	title = indonesia.33.t
+	desc = indonesia.33.desc
+	picture = GFX_report_event_chinese_soldiers_01
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.33.a
+		ai_chance = {
+			base = 40
+		}
+		effect_tooltip = {
+			if = {
+				limit = {
+					controls_state = 523
+				}
+				FROM = {
+					transfer_state = 523
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 737
+				}
+				FROM = {
+					transfer_state = 737
+				}
+			}
+		}
+		hidden_effect = {
+			INS = { country_event = { id = indonesia.34 } }
+		}
+	}
+	option = { #no
+		name = indonesia.33.b
+		ai_chance = {
+			base = 60
+		}
+		hidden_effect = {
+			INS = { country_event = { id = indonesia.35 } }
+		}
+	}
+}
+
+#AST agrees
+country_event = {
+	id = indonesia.34
+	title = indonesia.34.t
+	desc = indonesia.34.desc
+	picture = GFX_report_event_generic_read_write	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.34.a
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 523
+				}
+			}
+			transfer_state = 523
+		}
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 737
+				}
+			}
+			transfer_state = 737
+		}
+	}
+}
+
+#AST refuses
+country_event = {
+	id = indonesia.35
+	title = indonesia.35.t
+	desc = indonesia.35.desc
+	picture = GFX_report_event_chinese_soldiers_01
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.35.a
+		ai_chance = {
+			base = 60
+		}
+		remove_state_claim = 523
+		remove_state_claim = 737
+	}
+	option = { #not cool
+		name = indonesia.35.b
+		ai_chance = {
+			base = 40
+		}
+		declare_war_on = {
+			target = FROM
+			type = take_state_focus
+		}
+	}
+}
+
+#event for POR
+country_event = {
+	id = indonesia.36
+	title = indonesia.36.t
+	desc = indonesia.36.desc
+	picture = GFX_report_event_chinese_soldiers_01
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.36.a
+		ai_chance = {
+			base = 80
+		}
+		effect_tooltip = {
+			FROM = {
+				transfer_state = 721
+			}
+		}
+		hidden_effect = {
+			INS = { country_event = { id = indonesia.37 } }
+		}
+	}
+	option = { #no
+		name = indonesia.36.b
+		ai_chance = {
+			base = 20
+		}
+		hidden_effect = {
+			INS = { country_event = { id = indonesia.38 } }
+		}
+	}
+}
+
+#POR Agrees
+country_event = {
+	id = indonesia.37
+	title = indonesia.37.t
+	desc = indonesia.37.desc
+	picture = GFX_report_event_generic_read_write	
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.37.a
+		if = {
+			limit = {
+				FROM = {
+					controls_state = 721
+				}
+			}
+			transfer_state = 721
+		}
+	}
+}
+
+#POR Refuses
+country_event = {
+	id = indonesia.38
+	title = indonesia.38.t
+	desc = indonesia.38.desc
+	picture = GFX_report_event_chinese_soldiers_01
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.38.a
+		remove_state_claim = 723
+		ai_chance = {
+			base = 25
+		}
+	}
+	option = { #not cool
+		name = indonesia.38.b
+		ai_chance = {
+			base = 75
+		}
+		declare_war_on = {
+			target = FROM
+			type = take_state_focus
+			generator = { 721 } 
+		}
+	}
+}
+
+# Country asks freedom for colonies
+country_event = {
+	id = indonesia.40
+	title = indonesia.40.t
+	desc = indonesia.40.desc
+	picture = GFX_report_event_generic_conference
+	
+	is_triggered_only = yes
+	
+    option = { # Agree
+		name = indonesia.40.a
+		ai_chance = {
+			base = 75
+		}
+		every_subject_country = {
+			limit = {
+				has_capitulated = no
+				OR = {
+					original_tag = PHI
+					original_tag = INS
+					original_tag = MAL
+				}
+			}
+			effect_tooltip = {
+				add_stability = 0.15
+				if = {
+					limit = {
+						NOT = {
+							has_government = democratic
+						}
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.25
+					}
+					set_politics = {
+						ruling_party = democratic
+						elections_allowed = yes
+						election_frequency = 48
+					}
+				}
+				OVERLORD = {
+					end_puppet = PREV
+				}
+				leave_faction = yes
+				add_ai_strategy = {
+					type = alliance
+					id = FROM
+					value = 200
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = FROM
+					value = 200
+				}
+			}
+			hidden_effect = {
+				FROM = {
+					PREV = {
+						country_event = { id = indonesia.42 }
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			FROM = { country_event = { id = indonesia.41 } }
+		}
+	}
+
+	option = { # Disagree
+		name = indonesia.40.c
+		ai_chance = {
+			base = 25
+		}
+		effect_tooltip = {
+			FROM = {
+				create_wargoal = {
+					target = ROOT
+					type = liberate_wargoal
+					expire = 0
+				}
+			}
+		}
+		hidden_effect = {
+			FROM = { country_event = { id = indonesia.45 } }
+		}
+	}
+}
+
+# Country agrees
+country_event = {
+	id = indonesia.41
+	title = indonesia.41.t
+	desc = indonesia.41.desc
+	picture = GFX_report_event_generic_sign_treaty3
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.41.a
+		effect_tooltip = {
+			FROM = {
+				every_subject_country = {
+					limit = {
+						has_capitulated = no
+						OR = {
+							original_tag = PHI
+							original_tag = INS
+							original_tag = MAL
+						}
+					}
+					add_stability = 0.15
+					if = {
+						limit = {
+							NOT = {
+								has_government = democratic
+							}
+						}
+						add_popularity = {
+							ideology = democratic
+							popularity = 0.25
+						}
+						set_politics = {
+							ruling_party = democratic
+							elections_allowed = yes
+							election_frequency = 48
+						}
+					}
+					OVERLORD = {
+						end_puppet = PREV
+					}
+					leave_faction = yes
+					add_ai_strategy = {
+						type = alliance
+						id = FROM
+						value = 200
+					}
+					add_ai_strategy = {
+						type = befriend
+						id = FROM
+						value = 200
+					}
+				}
+			}
+		}
+	}
+}
+
+# Freedom
+country_event = {
+	id = indonesia.42
+	title = indonesia.42.t
+	desc = indonesia.42.desc
+	picture = GFX_report_event_generic_sign_treaty3
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = indonesia.42.a
+		add_stability = 0.15
+		if = {
+			limit = {
+				NOT = {
+					has_government = democratic
+				}
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.25
+			}
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
+				election_frequency = 48
+			}
+		}
+		OVERLORD = {
+			end_puppet = ROOT
+		}
+		leave_faction = yes
+		add_ai_strategy = {
+			type = alliance
+			id = FROM
+			value = 200
+		}
+		add_ai_strategy = {
+			type = befriend
+			id = FROM
+			value = 200
+		}
+	}
+}
+
+# Country refuses
+country_event = {
+	id = indonesia.45
+	title = indonesia.45.t
+	desc = indonesia.45.desc
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		ai_chance = {
+			base = 75
+		}
+		name = indonesia.45.a
+		add_ai_strategy = {
+			type = antagonize
+			id = FROM
+			value = 25
+		}
+	}
+
+	option = { #cool
+		ai_chance = {
+			base = 25
+		}
+		name = indonesia.45.b
+		add_ai_strategy = {
+			type = prepare_for_war
+			id = ROOT
+			value = 50
+		}
+		add_ai_strategy = {
+			type = declare_war
+			id = FROM
+			value = 50
+		}
+	}
+}
+
+country_event = { #Dr. Sutomo's passing
+	id = indonesia.46
+	title = indonesia.46.t
+	desc = indonesia.46.d
+	picture = GFX_report_event_sutomo
+
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = INS
+		date > 1938.3.31
+		has_start_date < 1936.01.02
+		NOT = {
+			has_country_flag = INS_sutomo_passed
+		}
+	}
+
+	mean_time_to_happen = { days = 60 }
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = INS_sutomo_passed
+			335 = {
+				add_manpower = -1
+			}
+		}
+	}
+
+	option = { #Thamrin
+		name = indonesia.46.a
+		if = {
+			limit = {
+				has_completed_focus = INS_demand_volksraad_elections
+				NOT = {
+					has_completed_focus = INS_implement_the_sharia
+				}
+			}
+			add_country_leader_role = {
+				character = INS_husni_thamrin
+				promote_leader = yes
+				country_leader = {
+					ideology = conservatism
+					expire = "1950.8.28.1"
+					traits = { cautious_japan devoted_corporatist }
+				}
+			}
+			retire_character = INS_sutomo
+		}
+		else_if = {
+			limit = {
+				OR = {
+					NOT = {
+						has_completed_focus = INS_demand_volksraad_elections
+					}
+					has_completed_focus = INS_implement_the_sharia
+				}
+			}
+			add_country_leader_role = {
+				character = INS_husni_thamrin
+				promote_leader = yes
+				country_leader = {
+					ideology = ultranationalism
+					expire = "1950.8.28.1"
+					traits = { cautious_japan devoted_corporatist }
+				}
+			}
+		}
+		ai_chance = {
+			base = 30
+		}
+	}
+}
+
+country_event = { #Van Dulm Retiring
+	id = indonesia.47
+	title = indonesia.47.t
+	desc = indonesia.47.desc
+
+	is_triggered_only = no
+	fire_only_once = yes
+
+	trigger = {
+		original_tag = INS
+		date > 1936.06.01
+		has_character = INS_maarten_van_dulm
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	option = { #if at war, we can extend his service with a bit of cost; if not, extending it would cost a few more
+		name = indonesia.47.a
+		trigger = {
+			NOT = {
+				has_country_flag = INS_van_dulm_extended_flag
+			}
+			has_war = yes
+		}
+		add_political_power = -5
+		add_command_power = -10
+		navy_experience = -5
+		hidden_effect = {
+			set_country_flag = INS_van_dulm_extended_flag
+			country_event = {
+				id = indonesia.47
+				days = 1096
+			}
+		}
+	}
+
+	option = { #War or not, if he's 60, he's retired. But he can be also retired early
+		name = indonesia.47.b
+		retire_character = INS_van_dulm
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = INS_van_dulm_extended_flag
+				}
+			}
+			add_command_power = 5
+			navy_experience = 10
+		}
+	}
+}
+
+#renaming dutch cities
+country_event = {
+	id = indonesia.100
+	title = indonesia.100.t
+	desc = indonesia.100.desc
+	picture = GFX_report_event_indonesia_handover
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		days = 20
+	}
+
+	trigger = {
+		tag = INS
+		NOT = {
+			has_government = neutrality
+		}
+		has_capitulated = no
+		is_subject = no
+		has_civil_war = no
+	}
+
+	option = { #a great idea!
+		name = indonesia.100.a
+		ai_chance = {
+			base = 100
+		}
+		add_stability = 0.05
+		if = {
+			limit = {
+				controls_state = 335
+			}
+			set_capital = {
+				state = 335
+			}
+		}
+		set_province_name = { id = 7381 name = "Jakarta" }
+		set_province_name = { id = 4608 name = "Surabaya" }
+		set_province_name = { id = 12371 name = "Jayapura" }
+		set_province_name = { id = 4361 name = "Bandar Lampung" }
+		set_province_name = { id = 1574 name = "Ambon" }
+	}
+
+	option = { #rather not
+		name = indonesia.100.b
+		ai_chance = {
+			base = 0
+		}
+		add_political_power = -10
+	}
+
+}
+
+country_event = {
+	id = indonesia.105
+	title = indonesia.105.t
+	desc = indonesia.105.desc
+	picture = GFX_report_event_polish_politics
+
+	is_triggered_only = yes
+	trigger = {
+		is_subject = yes
+		has_country_leader = { character = INS_bonifacious_cornelis_de_jonge }
+	}
+
+	fire_only_once = yes
+
+	option = { 
+		name = indonesia.105.a
+		promote_character = {
+			character = INS_tjarda_van_starkenborgh_stachouwer
+			ideology = colonial_government
+		}
+		hidden_effect = {
+			retire_character = INS_bonifacious_cornelis_de_jonge
+		}
+	}
+}
+
+#thefirstsila
+
+country_event = {
+	id = indonesia.107
+	title = indonesia.107.t
+	desc = indonesia.107.desc
+	picture = GFX_report_event_bpupki
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_cosmetic_tag = INS_HOL
+			}
+			drop_cosmetic_tag = yes
+		}
+	}
+
+	option = { #to follow Shariah
+		name = indonesia.107.a
+		ai_chance = {
+			base = 44
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.25
+		}
+		set_politics = {
+			ruling_party = democratic
+			election_frequency = 48
+			elections_allowed = yes
+			last_election = 1936.1.1
+			long_name = "Partai Sarekat Islam Indonesia" 
+			name = "PSII" 
+		}
+		promote_character = INS_abikusno_cokrosuyoso
+	}
+	
+	option = { #secularism
+		name = indonesia.107.d
+		ai_chance = {
+			base = 2
+		}
+		add_popularity = {
+			ideology = neutrality
+			popularity = 0.25
+		}
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = no
+			long_name = "Partai Nasional Indonesia" 
+			name = "PNI" 
+		}
+		promote_character = INS_sukarno
+	}
+}
+
