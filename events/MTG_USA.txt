@@ -379,7 +379,6 @@ country_event = {
 		hidden_effect = {
 			set_global_flag = second_acw
 			CSA = { inherit_technology = ROOT }
-
 			random_owned_state = {
 				limit = {
 					is_csa_state = yes
@@ -409,6 +408,7 @@ country_event = {
 	}
 	option = {
 		name = mtg_usa_civil_war_fascists.20.a
+		add_war_support = -0.45
 		effect_tooltip = {
 			event_target:CSAcapital = {
 				CSA = {
@@ -1039,7 +1039,7 @@ state_event = {
 		USA = {
 			add_manpower = 10000
 			add_equipment_to_stockpile = { type = infantry_equipment amount = 10000 }
-			add_war_support = 0.01
+			#add_war_support = 0.01
 		}
 	}
 }
@@ -1087,7 +1087,7 @@ country_event = {
 	option = {
 		add_timed_idea = {
 			idea = USA_civil_war_rebuild
-			days = 200
+			days = 210
 		}
 	}
 }
@@ -1119,7 +1119,11 @@ country_event = {
 	option = { # back down, for now
 		name = mtg_usa_civil_war_democrats.1.a
 		add_stability = -0.1
-		add_war_support = -0.1	
+		add_war_support = -0.1
+		country_event = {
+			id = mtg_usa_civil_war_democrats.2
+			days = 10
+		}
 	}
 }
 
@@ -1147,10 +1151,10 @@ country_event = {
 						has_completed_focus = USA_ally_with_the_silver_shirts
 					}
 				}
-				country_event = { id = mtg_usa_civil_war_democrats.20 days = 100 }
+				country_event = { id = mtg_usa_civil_war_democrats.20 days = 20 }
 			}
 			else = {
-				country_event = { id = mtg_usa_civil_war_democrats.20 days = 30 }	
+				country_event = { id = mtg_usa_civil_war_democrats.20 days = 10 }	
 			}
 		}
 		hidden_effect = {
@@ -1202,13 +1206,21 @@ country_event = {
 #hidden dispatch event - industrial
 country_event = {
 	id = mtg_usa_civil_war_democrats.4
-
+	trigger = {
+		original_tag = USA
+		check_variable = {
+			var = USA_industrialist_moved_var
+			value = 25
+			compare = less_than_or_equals
+		}
+	}
 	hidden = yes
 	is_triggered_only = yes
-	trigger = {
-		has_war = no
-	}
 	immediate = {
+		set_variable = {
+			var = USA_industrialist_moved_var
+			value = 0
+		}
 		random_list = {
 			55 = { country_event = mtg_usa_civil_war_democrats.15 } #military factory
 			45 = { country_event = mtg_usa_civil_war_democrats.16 } #civilian factory
@@ -1362,6 +1374,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
+		
 		name = mtg_usa_civil_war_democrats.15.a
 		random_owned_state = {
 			limit = {
@@ -1392,6 +1405,9 @@ country_event = {
 			}
 		}
 		hidden_effect = {
+			add_to_variable = {
+				USA_industrialist_moved_var = 1
+			}
 			country_event = {
 				id = mtg_usa_civil_war_democrats.4
 				days = 15
@@ -1408,7 +1424,6 @@ country_event = {
 	picture = GFX_report_event_generic_factory
 
 	is_triggered_only = yes
-
 	option = {
 		name = mtg_usa_civil_war_democrats.16.a
 		random_owned_state = {
@@ -1561,7 +1576,7 @@ country_event = {
 			USA_give_mafia_units = yes
 			if = {
 				limit = {
-					has_completed_focus = USA_recruit_the_free_corps
+					always = yes
 				}
 				set_country_flag = USA_free_corps_raised
 				division_template = {
@@ -1842,14 +1857,14 @@ country_event = {
 					value = 201
 				}
 			}
-			country_event = { id = mtg_usa_civil_war_democrats.21 days = 3}
+			country_event = { id = mtg_usa_civil_war_democrats.21 days = 1 }
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
 				amount = smuggled_weapons
 			}
 			if = {
 				limit = {
-					has_completed_focus = USA_work_with_the_bund
+					always = yes
 				}
 				country_event = mtg_usa_civil_war_democrats.22
 				every_owned_state = {
@@ -2029,7 +2044,7 @@ country_event = {
 				}
 			}
 		}
-		country_event = { id = mtg_usa_civil_war_democrats.23 days = 3}
+		country_event = { id = mtg_usa_civil_war_democrats.23 days = 1}
 	}
 }
 
@@ -2090,33 +2105,33 @@ country_event = {
 	immediate = {
 		#north west
 		random_list = {
-			70 = { country_event = { id = mtg_usa_civil_war_democrats.25 days = 6 random_days = 5 } }
-			30 = { country_event = { id = mtg_usa_civil_war_democrats.26 days = 6 random_days = 5 } }
+			100 = { country_event = { id = mtg_usa_civil_war_democrats.25 days = 6 random_days = 1 } }
+			0 = { country_event = { id = mtg_usa_civil_war_democrats.26 days = 6 random_days = 1 } }
 		}
 		#south west
 		random_list = {
-			70 = { country_event = { id = mtg_usa_civil_war_democrats.27 days = 6 random_days = 5 } }
-			30 = { country_event = { id = mtg_usa_civil_war_democrats.28 days = 6 random_days = 5 } }
+			0 = { country_event = { id = mtg_usa_civil_war_democrats.27 days = 6 random_days = 1 } }
+			100 = { country_event = { id = mtg_usa_civil_war_democrats.28 days = 6 random_days = 1 } }
 		}
 		#west midwest
 		random_list = {
-			70 = { country_event = { id = mtg_usa_civil_war_democrats.29 days = 6 random_days = 5 } }
-			30 = { country_event = { id = mtg_usa_civil_war_democrats.30 days = 6 random_days = 5 } }
+			0 = { country_event = { id = mtg_usa_civil_war_democrats.29 days = 6 random_days = 1 } }
+			100 = { country_event = { id = mtg_usa_civil_war_democrats.30 days = 6 random_days = 1 } }
 		}
-		if = {
-			limit = {
-				not = {
-					any_owned_state = {
-						has_state_flag = bund_midwest
-					}
-				}
-			}
-			#east midwest
-			random_list = {
-				70 = { country_event = { id = mtg_usa_civil_war_democrats.31 days = 3 } }
-				30 = { country_event = { id = mtg_usa_civil_war_democrats.22 days = 3 } }
-			}
-		}
+		#if = {
+		#	limit = {
+		#		not = {
+		#			any_owned_state = {
+		#				has_state_flag = bund_midwest
+		#			}
+		#		}
+		#	}
+		#	#east midwest
+		#	random_list = {
+		#		70 = { country_event = { id = mtg_usa_civil_war_democrats.31 days = 3 } }
+		#		30 = { country_event = { id = mtg_usa_civil_war_democrats.22 days = 3 } }
+		#	}
+		#}
 		country_event = { id = mtg_usa_civil_war_democrats.999 days = 15 }
 	}
 }
@@ -2516,6 +2531,12 @@ country_event = {
 	mean_time_to_happen = { days = 20 }
 	fire_only_once = yes
 	#accept
+	immediate = {
+		add_timed_idea = {
+			idea = USA_civil_war_rebuild
+			days = 210
+		}
+	}
 	option = {
 		name = mtg_usa_civil_war_democrats.41.a
 		ai_chance = {
