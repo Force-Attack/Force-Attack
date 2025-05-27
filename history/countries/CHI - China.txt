@@ -1,0 +1,239 @@
+﻿capital = 613 # Nanjing
+
+oob = "CHI_1936"
+if = {
+	limit = { has_dlc = "Man the Guns" }
+		set_naval_oob = "CHI_1936_naval_mtg"
+	else = {
+		set_naval_oob = "CHI_1936_naval_legacy"
+	}
+}
+if = {
+	limit = { has_dlc = "By Blood Alone" }
+		set_air_oob = "CHI_1936_air_bba"
+	else = {
+		set_air_oob = "CHI_1936_air_legacy"
+		set_technology = {
+			early_fighter = 1
+			early_bomber = 1
+		}
+	}
+}
+
+recruit_character = CHI_chiang_kaishek
+recruit_character = CHI_hu_shih
+recruit_character = CHI_wang_jingwei
+recruit_character = GXC_li_zongren
+recruit_character = YUN_long_yun
+recruit_character = SHX_yan_xishan
+#recruit_character = CHI_weng_wenhao
+recruit_character = CHI_tu_yuming
+recruit_character = CHI_hsueh_yueh
+recruit_character = CHI_tai_anlan
+recruit_character = CHI_wang_yaowu
+recruit_character = CHI_sun_li_jen
+recruit_character = CHI_hu_zongnan
+recruit_character = CHI_gu_zhutong
+recruit_character = CHI_wei_lihuang
+recruit_character = CHI_fu_zuoyi
+recruit_character = CHI_zhang_xueliang
+recruit_character = CHI_fang_zeyi
+recruit_character = CHI_zhu_de
+recruit_character = CHI_chen_cheng
+recruit_character = CHI_bo_yibo
+recruit_character = CHI_huang_shen
+recruit_character = CHI_chen_jitang
+recruit_character = CHI_wang_shuming
+recruit_character = CHI_bai_chongxi
+recruit_character = CHI_zhou_zhirou
+recruit_character = CHI_xiao_yisu
+recruit_character = CHI_chen_shaokuan
+recruit_character = CHI_xiao_jinguang
+recruit_character = CHI_yu_hanmou
+recruit_character = CHI_he_yingqin
+recruit_character = CHI_gao_zhihang
+recruit_character = CHI_h_h_kung
+recruit_character = CHI_chen_guofu
+recruit_character = CHI_chiang_ching_kuo
+recruit_character = CHI_chen_yi
+recruit_character = CHI_soong_mei_ling
+#recruit_character = CHI_random_prince_of_terror
+recruit_character = CHI_lin_sen
+recruit_character = CHI_mao_zedong
+recruit_character = CHI_kung_hsiang_si
+recruit_character = CHI_dai_li
+recruit_character = CHI_zhang_qun
+recruit_character = CHI_he_yuandang
+recruit_character = CHI_liu_shaoqi
+
+recruit_character = CHI_claire_lee_chennault
+recruit_character = CHI_kang_sheng
+recruit_character = CHI_luo_ruiqing
+recruit_character = CHI_t_v_soong
+recruit_character = CHI_deng_xiaoping
+recruit_character = CHI_kwong_jiang
+recruit_character = CHI_alexander_von_falkenhausen
+recruit_character = CHI_dmitry_lavrinenko
+recruit_character = CHI_micheal_wittman
+
+set_stability = 0.2
+set_war_support = 0.5
+# Starting tech
+set_technology = {
+	# Extended Technologies
+	
+	camo = 1
+	
+	r56_militia_tech = 1
+	
+	infantry_weapons = 1
+	gw_artillery = 1
+	interwar_antiair = 1
+	mass_assault = 1
+	fleet_in_being = 1
+	basic_train = 1
+	r56_militia_tech = 1
+	tech_trucks = 1
+}
+if = {
+	limit = {
+		has_dlc = "No Step Back"
+	}
+	set_technology = {
+		gwtank_chassis = 1
+	}
+	else = {
+		set_technology = {
+			gwtank = 1
+		}
+	}
+}
+if = {
+	limit = { not = { has_dlc = "Man the Guns" } }
+	set_technology = {
+		early_destroyer = 1
+		early_light_cruiser = 1
+	}
+}
+if = {
+	limit = { has_dlc = "Man the Guns" }
+	set_technology = {
+		basic_naval_mines = 1
+		early_ship_hull_light = 1
+		early_ship_hull_cruiser = 1
+		basic_battery = 1
+		basic_torpedo = 1
+		coastal_defense_ships = 1
+	}
+}
+
+
+	
+	add_ideas = {
+		free_trade
+		CHI_army_corruption_1_LS
+		chinese_corrupted_economy
+		CHI_warlord_integration_5
+		CHI_chinese_illiteracy_3
+		CHI_hyper_inflation_1
+		#CHI_legends_never_die
+	}
+
+save_global_event_target_as = WTT_current_china_leader
+
+set_convoys = 40
+
+set_politics = {
+	ruling_party = neutrality
+	last_election = "1936.1.1"
+	election_frequency = 48
+	elections_allowed = no
+}
+
+set_popularities = {
+	neutrality = 85
+	democratic = 5
+	communism = 10
+}
+
+add_opinion_modifier = { target = PRC modifier = hostile_status }
+
+### VARIANTS ###
+# 1936 Start #
+if = {
+	limit = { not = { has_dlc = "Man the Guns" } }
+}
+if = {
+	limit = { has_dlc = "Man the Guns" }
+	# Destroyers #
+	create_equipment_variant = {
+		name = "Jianwei Class"			
+		type = ship_hull_light_1
+		name_group = CHI_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_torpedo_slot = empty
+			mid_1_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+	}
+	# Light Cruisers #
+	create_equipment_variant = {
+		name = "Hairong Class"					# Hairong protected cruisers and Zhaohe, Yingrui training cruisers
+		type = ship_hull_cruiser_coastal_defense_ship
+		name_group = CHI_CL_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Haiqi Class"
+		type = ship_hull_cruiser_coastal_defense_ship
+		name_group = CHI_CL_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Ninghai Class"
+		type = ship_hull_cruiser_1
+		name_group = CHI_CL_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+	}
+}
