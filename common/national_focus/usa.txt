@@ -2977,20 +2977,20 @@ focus = {
 						has_country_flag = USA_the_giant_wakes_added_civ_eco
 					}
 				}
-				add_ideas = civilian_economy
+				add_ideas = partial_economic_mobilisation
 				set_country_flag = USA_the_giant_wakes_added_civ_eco
 			}
-			#if = { 
-			#	limit = {
-			#		ROOT = {
-			#			has_government = democratic
-			#		}
-			#	}
-			#	add_timed_idea = {
-			#		idea = rt56_the_gaint_wakes_idea
-			#		days = 175
-			#	}
-			#}
+			if = { 
+				limit = {
+					ROOT = {
+						has_government = democratic
+					}
+				}
+				add_timed_idea = {
+					idea = rt56_the_gaint_wakes_idea
+					days = 175
+				}
+			}
 			random_owned_controlled_state = {
 				prioritize = { 360 }
 				limit = {
@@ -3151,6 +3151,42 @@ focus = {
 			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+		focus = {
+		id = USA_war_eco
+		icon = GFX_Goal_USA_Global_Hegemony
+		x = 0
+		y = 2
+		prerequisite = { focus = USA_wartime_industry }
+		relative_position_id = USA_wartime_industry
+		cost = 10
+
+		available = {
+			date > 1939.6.1
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+						if = {
+				limit = {
+					NOT = { has_idea = war_economy }
+					NOT = { has_idea = tot_economic_mobilisation }
+				}
+				add_ideas = war_economy
+			}
+			else_if = {
+				limit = {
+					Or = {
+						has_idea = war_economy
+						has_idea = tot_economic_mobilisation
+					}
+				}
+				add_political_power = 100
+			}
+		}
 	}
 	
 
