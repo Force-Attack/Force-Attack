@@ -3168,7 +3168,7 @@ focus = {
 			factor = 1
 		}
 		completion_reward = {
-						if = {
+			if = {
 				limit = {
 					NOT = { has_idea = war_economy }
 					NOT = { has_idea = tot_economic_mobilisation }
@@ -3374,18 +3374,21 @@ focus = {
 		}
 	}
 	focus = {
-		id = r56_USA_the_alaskan_trap
-		icon = GFX_goal_generic_position_armies
+		id = USA_FA_the_last_bastion_of_democracy
+		icon = GFX_focus_generic_democratic_europe
 		prerequisite = { focus = USA_USACE_projects }
 		available = {
-			ROOT = {
-				has_full_control_of_state = 463
+			is_in_faction_with = ENG
+			is_in_faction_with = FRA
+			ENG = {
+				has_war_with = GER
+				has_war_with = ITA
+				has_capitulated = yes
 			}
-			OR = {
-				has_war_support > 0.5
-				has_war_with = SOV
-				has_war_with = JAP
-				has_war_with = CHI
+			FRA = {
+				has_war_with = GER
+				has_war_with = ITA
+				has_capitulated = yes
 			}
 		}
 
@@ -3394,107 +3397,13 @@ focus = {
 		x = 0
 		y = 4
 		relative_position_id = USA_military_construction
-		cost = 5
+		cost = 10
 		#ai_will_do = {
 		#	factor = 1
 		#}
 		completion_reward = {
-			#navy_experience = 10
-			463 = {
-				add_extra_state_shared_building_slots = 1
-				if = {
-					limit = {
-						free_building_slots = {
-							building = infrastructure
-							size > 1
-							include_locked = yes
-						}
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-				}
-				add_building_construction = { #the bait
-					type = supply_node
-					level = 1
-					province = 13090
-					instant_build = yes
-				}
-				add_building_construction = { #the bait
-					type = naval_base
-					level = 1
-					province = 13090
-					instant_build = yes
-				}
-				add_building_construction = { #the bait
-					type = naval_base
-					level = 1
-					province = 1135
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 13091
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 13090
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 10694
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 13090
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 1135
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 10694
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 12661
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 1830
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 7855
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					level = 1
-					province = 13091
-					instant_build = yes
-				}
-			}
+			add_ideas = last_bastion_of_democracy
+			add_ideas = tot_economic_mobilisation
 		}
 	}
 	focus = {
@@ -6189,7 +6098,7 @@ focus = {
 		y = 1
 		prerequisite = { focus = USA_america_first }
 		relative_position_id = USA_america_first
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
 			factor = 1
@@ -6239,7 +6148,7 @@ focus = {
 	focus = {
 		id = USA_national_prosperity_program
 		icon = GFX_goal_generic_consumer_goods
-		x = -2
+		x = 0
 		y = 1
 		prerequisite = { focus = USA_ally_with_the_silver_shirts }
 		relative_position_id = USA_ally_with_the_silver_shirts
@@ -6261,10 +6170,10 @@ focus = {
 	focus = {
 		id = USA_privatize_the_TVA
 		icon = GFX_focus_generic_industry_1
-		x = -3
-		y = 2
+		x = -1
+		y = 1
 		prerequisite = { focus = USA_national_prosperity_program }
-		relative_position_id = USA_ally_with_the_silver_shirts
+		relative_position_id = USA_national_prosperity_program
 		cost = 5
 
 		ai_will_do = {
@@ -6286,10 +6195,10 @@ focus = {
 	focus = {
 		id = USA_de_regulate_the_banking_sector
 		icon = GFX_goal_generic_banking
-		x = -1
-		y = 2
+		x = 1
+		y = 1
 		prerequisite = { focus = USA_national_prosperity_program }
-		relative_position_id = USA_ally_with_the_silver_shirts
+		relative_position_id = USA_national_prosperity_program
 		cost = 10
 
 		ai_will_do = {
@@ -6307,11 +6216,11 @@ focus = {
 	focus = {
 		id = USA_national_employment_strategy
 		icon = GFX_goal_italy_nationalize_the_banks
-		x = -2
-		y = 3
+		x = 0
+		y = 2
 		prerequisite = { focus = USA_privatize_the_TVA }
 		prerequisite = { focus = USA_de_regulate_the_banking_sector }
-		relative_position_id = USA_ally_with_the_silver_shirts
+		relative_position_id = USA_national_prosperity_program
 		cost = 10
 
 		ai_will_do = {
@@ -6399,68 +6308,12 @@ focus = {
 		}
 	}
 	focus = {
-		id = USA_invite_foreign_support
-		icon = GFX_goal_generic_military_deal
-		x = 3
-		y = 1
-		prerequisite = { focus = USA_ally_with_the_silver_shirts }
-		relative_position_id = USA_ally_with_the_silver_shirts
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		
-		
-		
-
-		completion_reward = {
-			unlock_decision_category_tooltip = USA_foreign_support
-			custom_effect_tooltip = USA_foreign_support_tt
-		}
-	}
-	focus = {
-		id = USA_work_with_the_bund
-		icon = GFX_goal_generic_dangerous_deal
-		x = -1
-		y = 1
-		prerequisite = { focus = USA_invite_foreign_support }
-		relative_position_id = USA_invite_foreign_support
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			not = {
-				has_war_with = GER
-			}
-		}
-		
-		bypass = {
-			has_civil_war = yes
-		}
-
-		
-		
-		
-		search_filters = {FOCUS_FILTER_STABILITY}
-		completion_reward = {
-			add_stability = 0.05
-			GER = { add_opinion_modifier = { target = ROOT modifier = USA_work_with_the_bund } }
-			set_country_flag = MTG_work_with_the_bund # to check if the focus was completed regularly or bypassed
-			custom_effect_tooltip = USA_work_with_the_bund_tt
-		}
-	}
-	focus = {
 		id = USA_recruit_the_free_corps
 		icon = GFX_focus_usa_recruit_the_free_corps
-		x = 0
-		y = 2
-		prerequisite = { focus = USA_invite_foreign_support}
-		relative_position_id = USA_invite_foreign_support
+		x = 2
+		y = 1
+		prerequisite = { focus = USA_ally_with_the_silver_shirts focus = USA_push_to_resegerate_the_army }
+		relative_position_id = USA_ally_with_the_silver_shirts
 		cost = 10
 
 		ai_will_do = {
@@ -6468,7 +6321,11 @@ focus = {
 		}
 
 		
-		
+		bypass = {
+			has_completed_focus = USA_honor_the_confederacy
+			has_completed_focus = USA_cult_of_washington
+			has_completed_focus = USA_an_american_reich
+		}
 		
 
 		completion_reward = {
@@ -6479,9 +6336,8 @@ focus = {
 	focus = {
 		id = USA_honor_the_confederacy
 		icon = GFX_focus_usa_honor_the_confederacy
-		x = 1
+		x = -1
 		y = 1
-		prerequisite = { focus = USA_work_with_the_bund }
 		prerequisite = { focus = USA_national_employment_strategy }
 		mutually_exclusive = { focus = USA_cult_of_washington }
 		relative_position_id = USA_national_employment_strategy
@@ -6524,18 +6380,8 @@ focus = {
 	focus = {
 		id = USA_cult_of_washington
 		icon = GFX_Goal_USA_washington
-		x = 3
+		x = 1
 		y = 1
-		offset = {
-			x = -1
-			y = 0
-			trigger = {
-				CSA = {
-					exists = yes
-				}
-			}
-		}
-		prerequisite = { focus = USA_work_with_the_bund }
 		prerequisite = { focus = USA_national_employment_strategy }
 		mutually_exclusive = { focus = USA_honor_the_confederacy }
 		relative_position_id = USA_national_employment_strategy
@@ -6564,70 +6410,52 @@ focus = {
 		}
 	}
 	focus = {
-		id = USA_heirs_of_lafayette
-		icon = GFX_focus_chi_reach_out_to_france
-		x = 1
+		id = USA_an_american_reich
+		icon = GFX_goal_tfv_saf_support_ossebrandwag
+		x = 4
 		y = 1
-		
-		prerequisite = { focus = USA_cult_of_washington focus = USA_honor_the_confederacy }
-		relative_position_id = USA_honor_the_confederacy
+		offset = {
+			x = -1
+			y = 0
+			trigger = {
+				CSA = {
+					exists = yes
+				}
+			}
+		}
+		prerequisite = { focus = USA_state_corporate_entitys }
+		mutually_exclusive = { focus = USA_honor_the_confederacy focus = USA_cult_of_washington }
+		relative_position_id = USA_national_employment_strategy
 		cost = 5
 
 		ai_will_do = {
-			factor = 50
+			factor = 7
+			modifier = {
+				factor = 50
+				has_government = neutrality
+				fascism > 0.5
+			}
 		}
 
+
 		available = {
-			has_government = fascism
-			FRA = {
+			OR = {
 				has_government = fascism
-				is_subject = no
-				OR = {
-					is_faction_leader = yes
-					is_in_faction = no
-				}
-				has_capitulated = no
+				has_government = neutrality
 			}
-			has_completed_focus = USA_war_powers_act
 		}
 
 		completion_reward = {
-			if = {
-				limit = {
-					FRA = {
-						is_faction_leader = yes
-					}
-					is_in_faction = no
-				}
-				FRA = {
-					country_event = generic.2
-				}
-			}
-			if = {
-				limit = {
-					FRA = {
-						is_in_faction = no
-					}
-					
-					is_faction_leader = yes	
-				}
-				FRA = {
-					country_event = generic.5
-				}				
-			}
-			else = {
-				FRA = {
-					country_event = r56_usa.10
-				}
-			}					
+			unlock_decision_category_tooltip = USA_cult_of_washington
+			custom_effect_tooltip = USA_honor_the_confederacy_tt
 		}
 	}
 	focus = {
 		id = USA_american_christian_identity
 		icon = GFX_goal_generic_friendship_with_church
-		x = 5
+		x = 1
 		y = 1
-		prerequisite = { focus = USA_honor_the_confederacy focus = USA_cult_of_washington focus = USA_the_impeachment_of_alf_landon }
+		prerequisite = { focus = USA_honor_the_confederacy focus = USA_cult_of_washington focus = USA_an_american_reich }
 		relative_position_id = USA_cult_of_washington
 		cost = 5
 
@@ -6654,7 +6482,7 @@ focus = {
 	focus = {
 		id = USA_war_powers_act
 		icon = GFX_goal_generic_forceful_treaty
-		x = 23
+		x = 16
 		y = 1
 		prerequisite = { focus = USA_america_first }
 		#prerequisite = { focus = USA_war_department }
@@ -7546,7 +7374,7 @@ focus = {
  	focus = {
 		id = USA_war_plans_division
 		icon = GFX_goal_CAN_scheme_no1
-		x = 60
+		x = 48
 		y = 0
 		offset = {
 			x = -30
@@ -7559,7 +7387,7 @@ focus = {
 			trigger = {
 				has_completed_focus = USA_continue_the_new_deal
 			}
-			x = -30
+			x = -22
 			y = 0
 		}
 		offset = {
@@ -8663,14 +8491,14 @@ focus = {
 	focus = {
 		id = USA_war_department
 		icon = GFX_Goal_USA_War_dep
-		x = 86 # 26 
+		x = 72 # 26 
 		y = 0
 		
 		offset = {
 			trigger = {
 				has_completed_focus = USA_continue_the_new_deal
 			}
-			x = -30
+			x = -22
 			y = 0
 		}
 		offset = {
@@ -11142,7 +10970,7 @@ focus = {
 		id = USA_push_to_resegerate_the_army
 		icon = GFX_focus_generic_fascist_troops
 		cost = 10
-		x = 15
+		x = 8
 		y = 1
 		available = {
 			fascism > 0.1
@@ -11158,10 +10986,18 @@ focus = {
 		relative_position_id = USA_america_first
 		completion_reward = { 
 			USA_congress_small_opposition = yes
-			add_stability = -0.20
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.075
+			if = {
+				limit = {
+					has_country_flag = mtg_usa_civil_war_democrats_1
+					not = { has_country_flag = mtg_usa_civil_war_democrats_2 }
+				}
+				country_event = mtg_usa_civil_war_democrats.2
+				custom_effect_tooltip = mtg_usa_civil_war_warning_tt
+			}
+			else_if = {
+				limit = { not = { has_country_flag = mtg_usa_civil_war_democrats_1 } }
+				country_event = mtg_usa_civil_war_democrats.1
+				custom_effect_tooltip = mtg_usa_civil_war_warning_tt
 			}
 			if = {
 				limit = {
@@ -11225,7 +11061,7 @@ focus = {
 		id = USA_legalize_the_german_american_bund
 		icon = GFX_goal_generic_forceful_treaty
 		cost = 5
-		x = -2
+		x = 0
 		y = 1
 		available = {
 			NOT = {
@@ -11269,11 +11105,8 @@ focus = {
 		icon = GFX_focus_generic_fascist_propaganda
 		cost = 10
 		x = 0
-		y = 1
+		y = 7
 		relative_position_id = USA_push_to_resegerate_the_army
-		prerequisite = {
-			focus = USA_push_to_resegerate_the_army
-		}
 		completion_reward = { 
 			add_popularity = {
 				ideology = fascism
@@ -11299,11 +11132,11 @@ focus = {
 			fascism > 0.35
 		}
 		prerequisite = {
-			focus = USA_push_to_resegerate_the_army
+			focus = USA_legalize_the_german_american_bund
 		}
-		x = 2
+		x = -1
 		y = 1
-		relative_position_id = USA_push_to_resegerate_the_army
+		relative_position_id = USA_legalize_the_german_american_bund
 		completion_reward = { 
 			swap_ideas = {
 				remove_idea = undisturbed_isolation
@@ -11324,12 +11157,6 @@ focus = {
 			congress_high_support_trigger = yes
 		}
 		
-		prerequisite = {
-			focus = USA_milatristic_propaganda
-		}
-		prerequisite = {
-			focus = USA_legalize_the_german_american_bund
-		}
 		completion_reward = { 
 			custom_effect_tooltip = USA_impeachment_below_50_stab_tt
 			country_event = {
@@ -11341,9 +11168,9 @@ focus = {
 	focus = {
 		id = USA_send_lindbergh_to_germany
 		icon = GFX_focus_chi_mission_to_germany
-		x = -4
-		y = 1
-		prerequisite = { focus = USA_invite_foreign_support focus = USA_legalize_the_german_american_bund  }
+		x = -2
+		y = 2
+		prerequisite = { focus = USA_legalize_the_german_american_bund focus = USA_national_prosperity_program }
 		relative_position_id = USA_legalize_the_german_american_bund
 		cost = 10
 
@@ -11363,14 +11190,14 @@ focus = {
 		id = USA_state_corporate_entitys
 		icon = GFX_focus_generic_industry_3
 		cost = 10
-		x = 0
-		y = 2
-		available = {
-			has_government = fascism
-		}
+		x = 1
+		y = 1
 		relative_position_id = USA_support_economic_privatization
 		prerequisite = {
 			focus = USA_support_economic_privatization
+		}
+		prerequisite = {
+			focus = USA_american_civillian_industry
 		}
 		completion_reward = { 
 			add_political_power = 120
@@ -11386,11 +11213,11 @@ focus = {
 		x = 1
 		y = 1
 		available = {
-			date > 1936.6.1
+
 		}
-		relative_position_id = USA_support_economic_privatization
+		relative_position_id = USA_legalize_the_german_american_bund
 		prerequisite = {
-			focus = USA_support_economic_privatization
+			focus = USA_legalize_the_german_american_bund
 		}
 		completion_reward = {
 			add_stability = -0.05
@@ -11426,35 +11253,16 @@ focus = {
 	}
 
 	focus = {
-		id = USA_build_the_bund_bases
-		icon = GFX_focus_chi_army_reform
-		cost = 5
-		relative_position_id = USA_the_impeachment_of_alf_landon
-		available = {
-			
-		}
-		prerequisite = {
-			focus = USA_the_impeachment_of_alf_landon
-		}
-		x = -3
-		y = 1
-		completion_reward = { 
-			add_ideas = USA_build_the_bund_bases_idea
-		}
-	}
-
-	focus = {
 		id = USA_german_american_identity
 		icon = GFX_focus_ger_revive_kaiserreich
 		cost = 10
 		x = -1
-		y = 1
+		y = 5
 		available = {
 			#has_government = fascism may change later idk 
 			has_civil_war = no 
 		}
 		prerequisite = {
-			focus = USA_legalize_the_german_american_bund
 		}
 		relative_position_id = USA_legalize_the_german_american_bund
 		completion_reward = { 
@@ -11488,12 +11296,14 @@ focus = {
 		id = USA_mixed_american_economy
 		icon = GFX_focus_spa_the_spanish_miracle
 		cost = 10
-		x = -1
+		x = 1
 		y = 1
-		relative_position_id = USA_state_corporate_entitys
+		relative_position_id = USA_an_american_reich
 		prerequisite = {
-			focus = USA_state_corporate_entitys 
-			focus = USA_one_party_congress
+			focus = USA_an_american_reich
+		}
+		available = {
+			has_government = fascism
 		}
 		completion_reward = { 
 			swap_ideas = {
@@ -11540,15 +11350,12 @@ focus = {
 		icon = GFX_focus_usa_voter_registration_act
 		cost = 10
 		x = 1
-		y = 1
+		y = 5
 		relative_position_id = USA_milatristic_propaganda
 		available = {
 			NOT = {
 				has_completed_focus = USA_purify_the_army
 			}
-		}
-		prerequisite = {
-			focus = USA_milatristic_propaganda
 		}
 		completion_reward = { 
 			swap_ideas = {
