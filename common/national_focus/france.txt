@@ -4429,177 +4429,7 @@ focus = {
 			}
 		}
 	}
-	focus = {
-		id = FRA_claim_the_andorran_throne
-		icon = GFX_goal_generic_attack_andorra
-		cost = 5
-		prerequisite = {
-			focus = FRA_secure_the_crown_of_spain
-		}
-		x = -1
-		y = 1
-		available = {
-			is_subject = no
-			has_government = neutrality
-			ADR = {
-				exists = yes
-				NOT = {
-					is_in_faction_with = ROOT
-					is_subject_of = ROOT
-				}
-			}
-		}
-		will_lead_to_war_with = ADR
-		relative_position_id = FRA_secure_the_crown_of_spain
-		
-		ai_will_do = {
-			factor = 20
-		}
-		completion_reward = {
-			every_state = {
-				limit = { is_core_of = ADR }
-				add_core_of = ROOT
-			}
-			create_wargoal = {
-				type = annex_everything
-				target = ADR
-				expire = 0
-			}
-		}
-	}
-	focus = {
-		id = FRA_proclaim_the_dual_monarchy
-		icon = GFX_goal_new_burgundy2
-		cost = 10
-		prerequisite = {
-			focus = FRA_secure_the_crown_of_spain
-		}
-		available = {
-			is_subject = no
-			has_government = neutrality
-			OR = {
-				SPB = {
-					exists = yes
-					has_capitulated = no
-					NOT = {
-						has_war_with = ROOT
-					}
-					has_government = neutrality
-				}
-				SPR = {
-					is_subject_of = ROOT
-				}
-				AND = {
-					SPR = {
-						exists = no
-					}
-					any_state = {
-						is_core_of = SPR
-						is_owned_by = ROOT
-					}
-				}
-			}
-		}
-		x = 1
-		y = 1
-		relative_position_id = FRA_secure_the_crown_of_spain
-		
-		ai_will_do = {
-			factor = 5
-		}
-		completion_reward = {
-			if = {
-				limit = {
-					SPB = {
-						exists = yes
-					}
-				}
-				SPB = {
-					every_unit_leader = {
-						set_nationality = ROOT
-					}
-				}
-				annex_country = { target = SPB transfer_troops = yes }
-				every_state = {
-					limit = {
-						is_core_of = SPB
-					}
-					add_core_of = ROOT
-				}
-				add_stability = -0.1
-				set_cosmetic_tag = FRANCO_SPAIN
-			}
-			else_if = {
-				limit = {
-					SPR = {
-						is_subject_of = ROOT
-					}
-				}
-				SPR = {
-					every_unit_leader = {
-						set_nationality = ROOT
-					}
-				}
-				annex_country = {
-					target = SPR
-					transfer_troops = yes
-				}
-				every_state = {
-					limit = {
-						is_core_of = SPR
-					}
-					add_core_of = ROOT
-				}
-				add_stability = -0.1
-				set_cosmetic_tag = FRANCO_SPAIN
-			}
-			else_if = {
-				limit = {
-					SPR = {
-						exists = no
-					}
-					any_state = {
-						is_core_of = SPR
-						is_owned_by = ROOT
-					}
-				}
-				every_state = {
-					limit = {
-						is_core_of = SPR
-					}
-					add_core_of = ROOT
-				}
-				add_stability = -0.1
-				set_cosmetic_tag = FRANCO_SPAIN
-			}
-			else = {
-				custom_effect_tooltip = FRA_proclaim_the_dual_monarchy_tt
-			}
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-	}
-	focus = {
-		id = FRA_pacify_the_spanish_countryside
-		icon = GFX_goal_MAN_confront_gorillas
-		cost = 5
-		prerequisite = {
-			focus = FRA_proclaim_the_dual_monarchy
-		}
-		available = {
-			has_cosmetic_tag = FRANCO_SPAIN
-		}
-		x = 0
-		y = 1
-		relative_position_id = FRA_proclaim_the_dual_monarchy
-		
-		ai_will_do = {
-			factor = 200
-		}
-		completion_reward = {
-			unlock_decision_category_tooltip = FRA_spanish_intervention_category
-		}
-		search_filters = { FOCUS_FILTER_ANNEXATION }
-	}	
+	
 	focus = {
 		id = FRA_support_the_spanish_nationalists
 		icon = GFX_focus_spa_unify_the_nationalist_front
@@ -7283,7 +7113,7 @@ focus = {
 	
 	focus = {
 		id = FRA_giraud_plan
-		icon = GFX_goal_FRA_giraud
+		icon = GFX_goal_generic_defence
 		cost = 10
 		#prerequisite = {
 		#	focus = FRA_CHEDN
@@ -7291,7 +7121,7 @@ focus = {
 		mutually_exclusive = {
 			focus = FRA_de_gaulle_strategy
 		}
-		x = 67
+		x = 56
 		y = 0
 		offset = {
 			x = -20
@@ -7395,7 +7225,7 @@ focus = {
 	
 	focus = {
 		id = FRA_heavy_armor_focus
-		icon = GFX_goal_generic_heavy_armour_french
+		icon = GFX_focus_generic_tank_assembly
 		prerequisite = { focus = FRA_commission_fortified_regions }
 		x = -1
 		y = 2
@@ -7458,7 +7288,7 @@ focus = {
 	
 	focus = {
 		id = FRA_de_gaulle_strategy
-		icon = GFX_goal_FRA_de_gaulle
+		icon = GFX_goal_generic_major_war
 		cost = 10
 		#prerequisite = {
 		#	focus = FRA_CHEDN
@@ -7528,7 +7358,11 @@ focus = {
 		}
 		
 		completion_reward = {
-			army_experience = 25
+			mio:FRA_mas_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.05
+				add_mio_research_bonus = 0.05
+			}
 			add_tech_bonus = {
 				name = FRA_the_mas38
 				bonus = 1
@@ -7541,7 +7375,7 @@ focus = {
 	
 	focus = {
 		id = FRA_infantry_focus
-		icon = GFX_focus_generic_army_modernizations
+		icon = GFX_focus_focus_fra_maquis
 		cost = 5
 		prerequisite = {
 			focus = FRA_the_mas38
@@ -7609,7 +7443,11 @@ focus = {
 		}
 		
 		completion_reward = {
-			army_experience = 25
+			mio:FRA_schneider_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.05
+				add_mio_research_bonus = 0.05
+			}
 			add_tech_bonus = {
 				name = FRA_artillery_focus
 				bonus = 1
@@ -7636,8 +7474,11 @@ focus = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = FRA_hotchkiss
+			mio:FRA_renault_organization = {
+				add_mio_size = 1
+				add_mio_funds_gain_factor = 0.05
+				add_mio_research_bonus = 0.05
+			}
 			add_tech_bonus = {
 				name = FRA_infantry_tanks
 				bonus = 1
@@ -7648,7 +7489,7 @@ focus = {
 	}
 	focus = {
 		id = FRA_the_somua_s35
-		icon = GFX_goal_FRA_somua
+		icon = GFX_focus_generic_tank_production
 		cost = 10
 		prerequisite = {
 			focus = FRA_infantry_tanks
@@ -7677,7 +7518,7 @@ focus = {
 	}
 	focus = {
 		id = FRA_army_reform
-		icon = GFX_goal_FRA_army_reform
+		icon = GFX_focus_chi_army_reform
 		cost = 10
 		prerequisite = {
 			focus = FRA_infantry_tanks
@@ -7822,7 +7663,7 @@ focus = {
 	}
 	focus = {
 		id = FRA_colonial_troops
-		icon = GFX_goal_indochina_troupes_coloniales
+		icon = GFX_SOV_barrier_troops_ccp_2d_sov_compatibility
 		cost = 10
 		prerequisite = {
 			focus = FRA_foreign_legion
@@ -7929,7 +7770,7 @@ focus = {
 	}
 	focus = {
 		id = FRA_mechanized_focus
-		icon = GFX_goal_mechanized_offensive
+		icon = GFX_focus_generic_mechanized
 		cost = 10
 		prerequisite = {
 			focus = FRA_motorized_focus
@@ -8007,7 +7848,7 @@ focus = {
 	#}
 	focus = {
 		id = FRA_light_medium_armor
-		icon = GFX_goal_generic_tank_map
+		icon = GFX_SOV_development_of_tankograd_ccp_2d_sov_compatibility
 		prerequisite = { focus = FRA_mechanized_focus }
 		x = 1
 		y = 2
@@ -8034,7 +7875,7 @@ focus = {
 		icon = GFX_goal_generic_naval_effort2
 		cost = 5
 		relative_position_id = FRA_giraud_plan
-		x = 11
+		x = 12
 		y = 0
 		
 		ai_will_do = {
