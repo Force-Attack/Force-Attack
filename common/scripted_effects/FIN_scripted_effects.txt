@@ -175,92 +175,149 @@ FIN_seize_weapon_caches = { #Used on the state scope
 
 FIN_pact_for_continuation_war_start = { #To be used on FIN's scope - Used immediately upon signing agreement
 	FIN = {
-		give_military_access = GER
+		if = {
+			limit = {
+				NOT = { gives_military_access_to = GER }
+			}
+			give_military_access = GER
+		}
 		diplomatic_relation = { 
 			country = GER
 			relation = docking_rights 
 			active = yes
 		}
-		diplomatic_relation = { 
-			country = GER
-			relation = non_aggression_pact 
-			active = yes
+		if = {
+			limit = {
+				NOT = { has_non_aggression_pact_with = GER }
+			}
+			diplomatic_relation = { 
+				country = GER
+				relation = non_aggression_pact 
+				active = yes
+			}
 		}
 	}
-	GER = { give_guarantee = FIN }
+	if = {
+		limit = {
+			GER = { NOT = { has_guaranteed = FIN } }
+		}
+		GER = { give_guarantee = FIN }
+	}
 }
 
 ### STATE CHANGES AND NAMES ###
 
 #Change name of States and VPs when appropriate. Expected to be used inside on_state_control_changed. FROM.FROM is state / ROOT is new controller / FROM is former controller
-FIN_change_name_of_state_or_vp = {
-	IF = { # Petrozavodsk / Äänislinna
-		limit = {
-			FROM.FROM = {
-				state = 216 #OLONETS
-			}
-		}
-		IF = { #FINLAND CONTROLLER
-			limit = {
-				OR = {
-					ROOT = { original_tag = FIN }
-					ROOT = { original_tag = KAR }
-				}
-			}
-			set_province_name = { id = 11159 name = VICTORY_POINTS_11159_FIN }
-		}
-		ELSE_IF = { #OTHER CONTROLLER
-			limit = {
-				OR = {
-					FROM = { original_tag = FIN }
-					FROM = { original_tag = KAR }
-				}
-				ROOT = {
-					NOT = {
-						original_tag = FIN
-						original_tag = KAR
-					}
-				}
-			}
-			reset_province_name = 11159
-		}
-	}
-	ELSE_IF = { # MURMANSK / KUOLAN NIEMIMAA // (Murmansk / Muurmanski) (Kandalaksha / Kantalahti)
-		limit = {
-			FROM.FROM = {
-				state = 213 #MURMANSK
-			}
-		}
-		IF = { #FINLAND CONTROLLER
-			limit = {
-				OR = {
-					ROOT = { original_tag = FIN }
-					ROOT = { original_tag = KAR }
-				}
-			}
-			FROM.FROM = { set_state_name = STATE_213_FIN }
-			set_province_name = { id = 3134 name = VICTORY_POINTS_3134_FIN } #Murmansk
-			set_province_name = { id = 6181 name = VICTORY_POINTS_6181_FIN } #Kandalaksha
-		}
-		ELSE_IF = { #OTHER CONTROLLER
-			limit = {
-				OR = {
-					FROM = { original_tag = FIN }
-					FROM = { original_tag = KAR }
-				}
-				ROOT = {
-					NOT = {
-						original_tag = FIN
-						original_tag = KAR
-					}
-				}
-			}
-			FROM.FROM = { reset_state_name = yes }
-			reset_province_name = 3134
-			reset_province_name = 6181
-		}
-	}
-}
+
+### CHANGED TO MORE ROBUST SYSTEM
+
+#FIN_change_name_of_state_or_vp = {
+#	IF = { # Petrozavodsk / Äänislinna
+#		limit = {
+#			FROM.FROM = {
+#				state = 216 #OLONETS
+#			}
+#		}
+#		IF = { #FINLAND CONTROLLER
+#			limit = {
+#				OR = {
+#					ROOT = { original_tag = FIN }
+#					ROOT = { original_tag = KAR }
+#				}
+#			}
+#			set_province_name = { id = 11159 name = VICTORY_POINTS_11159_FIN }
+#		}
+#		ELSE_IF = { #OTHER CONTROLLER
+#			limit = {
+#				OR = {
+#					FROM = { original_tag = FIN }
+#					FROM = { original_tag = KAR }
+#				}
+#				ROOT = {
+#					NOT = {
+#						OR = {
+#							original_tag = FIN
+#							original_tag = KAR
+#						}
+#					}
+#				}
+#			}
+#			reset_province_name = 11159
+#		}
+#	}
+#	ELSE_IF = { # MURMANSK / KUOLAN NIEMIMAA // (Murmansk / Muurmanski) (Kandalaksha / Kantalahti)
+#		limit = {
+#			FROM.FROM = {
+#				state = 213 #MURMANSK
+#			}
+#		}
+#		IF = { #FINLAND CONTROLLER
+#			limit = {
+#				OR = {
+#					ROOT = { original_tag = FIN }
+#					ROOT = { original_tag = KAR }
+#				}
+#			}
+#			FROM.FROM = { set_state_name = STATE_213_FIN }
+#			set_province_name = { id = 3134 name = VICTORY_POINTS_3134_FIN } #Murmansk
+#			set_province_name = { id = 6181 name = VICTORY_POINTS_6181_FIN } #Kandalaksha
+#		}
+#		ELSE_IF = { #OTHER CONTROLLER
+#			limit = {
+#				OR = {
+#					FROM = { original_tag = FIN }
+#					FROM = { original_tag = KAR }
+#				}
+#				ROOT = {
+#					NOT = {
+#						OR = {
+#							original_tag = FIN
+#							original_tag = KAR
+#						}
+#					}
+#				}
+#			}
+#			FROM.FROM = { reset_state_name = yes }
+#			reset_province_name = 3134
+#			reset_province_name = 6181
+#		}
+#	}
+#	ELSE_IF = { # LENINGRAD / PIETARI // (Leningrad / Pietari)
+#		limit = {
+#			FROM.FROM = {
+#				state = 195 #LENINGRAD
+#			}
+#		}
+#		IF = { #FINLAND CONTROLLER
+#			limit = {
+#				OR = {
+#					ROOT = { original_tag = FIN }
+#					ROOT = { original_tag = KAR }
+#				}
+#			}
+#			FROM.FROM = { set_state_name = STATE_195_FIN }
+#			set_province_name = { id = 3151 name = VICTORY_POINTS_3151_FIN } #Leningrad
+#		}
+#		ELSE_IF = { #OTHER CONTROLLER
+#			limit = {
+#				OR = {
+#					FROM = { original_tag = FIN }
+#					FROM = { original_tag = KAR }
+#				}
+#				ROOT = {
+#					NOT = {
+#						OR = {
+#							original_tag = FIN
+#							original_tag = KAR
+#						}
+#					}
+#				}
+#			}
+#			FROM.FROM = { reset_state_name = yes }
+#			reset_province_name = 3151
+#		}
+#	}
+#}
 
 ######## ##     ## ########    ########     ###    ######## ##     ##    ########  #######      ######   #######   ######  ####    ###    ##       ####  ######  ##     ## 
    ##    ##     ## ##          ##     ##   ## ##      ##    ##     ##       ##    ##     ##    ##    ## ##     ## ##    ##  ##    ## ##   ##        ##  ##    ## ###   ### 
@@ -300,7 +357,6 @@ FIN_purchase_soviet_equipment_for_cw = {
 			allow_without_tech = yes
 			model = "SOV_armored_car_0_entity"
 			icon = "GFX_SOV_armored_car1_medium"
-			#design_team = mio:my_mio_token # Optional. accepts mio:token, variable or keyword #TODO_Manu
 		}
 		add_equipment_to_stockpile = { 
 			type = gw_armored_car_equipment
@@ -485,7 +541,6 @@ FIN_purchase_german_equipment_for_cw = {
 			allow_without_tech = yes
 			model = "GER_armored_car_0_entity"
 			icon = "GFX_GER_armored_car1_medium"
-			#design_team = mio:my_mio_token # Optional. accepts mio:token, variable or keyword #TODO_Manu
 		}
 		add_equipment_to_stockpile = { 
 			type = gw_armored_car_equipment
@@ -525,7 +580,7 @@ FIN_purchase_german_equipment_for_cw = {
 				tank_nsb_armor_upgrade = 2
 			}
 			obsolete = yes
-			icon = "GFX_gwtank_medium"
+			icon = "GFX_GER_gwtank_medium"
 		}
 		add_equipment_to_stockpile = { 
 			type = light_tank_chassis_0
@@ -540,7 +595,7 @@ FIN_purchase_german_equipment_for_cw = {
 			type = gw_tank_equipment
 			allow_without_tech = yes
 			obsolete = yes
-			icon = "GFX_gwtank_medium"
+			icon = "GFX_GER_gwtank_medium"
 		}
 		add_equipment_to_stockpile = { 
 			type = gw_tank_equipment
@@ -707,20 +762,9 @@ FIN_reset_bop_for_new_leader = { #Reset BoP to 0 (only if lower than 0)
 
 FIN_kallio_becomes_country_leader = {
 	retire_country_leader = yes
-	#effect_tooltip = { #Kyosti Kallio will automatically be the next in line after Svinhufvud, so this is just for tooltip purposes - R56: disabled - its stupid to not at least use this as backup
-		#promote_character = FIN_kyosti_kallio	#disabled as R56 starts with him as exclusively neutrality
-	#}
-	add_country_leader_role = {
-		character = FIN_kyosti_kallio
-		promote_leader = yes
-		country_leader = {
-			ideology = liberalism
-			expire = "1965.1.1.1"
-			id = -1
-			traits = { anti_communist }
-		}
+	effect_tooltip = { #Kyosti Kallio will automatically be the next in line after Svinhufvud, so this is just for tooltip purposes
+		promote_character = FIN_kyosti_kallio
 	}
-
 	#Set Maalaisliitto (Agrarian League) as Non-Aligned party
 	set_party_name = {
 		ideology = neutrality
@@ -732,11 +776,9 @@ FIN_kallio_becomes_country_leader = {
 
 FIN_ryti_becomes_country_leader = {
 	retire_country_leader = yes
-	#effect_tooltip = { #Risto Ryti will automatically be the next in line after Kallio, so this is just for tooltip purposes - R56: disabled - its stupid to not at least use this as backup
-	FIN_risto_heikki_ryti = {
-		promote_character = liberalism
+	effect_tooltip = { #Risto Ryti will automatically be the next in line after Kallio, so this is just for tooltip purposes
+		promote_character = FIN_risto_ryti
 	}
-	#}
 	#Set National Progressive Party as Non-Aligned party
 	set_party_name = {
 		ideology = neutrality
@@ -751,7 +793,7 @@ FIN_paasikivi_becomes_country_leader = {
 		limit = {
 			has_country_leader = {
 				ruling_only = yes
-				character = FIN_risto_heikki_ryti
+				character = FIN_risto_ryti
 			}
 		}
 		retire_country_leader = yes
@@ -783,38 +825,7 @@ FIN_paasikivi_becomes_country_leader = {
 
 FIN_mannerheim_becomes_country_leader = {
 	#In this case we do want to keep the political leaders (Ryti or Paasikivi)
-
-	#promote_character = FIN_carl_mannerheim	#R56: removed role by default to allow easier tree segmentation
-
-	if = {
-		limit = {
-			has_government = neutrality
-		}
-		add_country_leader_role = {
-			character = FIN_carl_mannerheim
-			promote_leader = yes
-			country_leader = {	#r56 note: Ill try make this be added wherever DLC actually switches to him as leader
-				ideology = military_junta # no party - r56: changed from oligarchism
-				expire = "1965.1.1.1"
-				id = -1
-				traits = { sotamarsalkka personal_agenda_mannerheim }
-			}
-		}
-	}
-	else = {
-		add_country_leader_role = {
-			character = FIN_carl_mannerheim
-			promote_leader = yes
-			country_leader = {	#r56 note: Ill try make this be added wherever DLC actually switches to him as leader
-				ideology = centrism_democratic # no party - r56: changed from oligarchism
-				expire = "1965.1.1.1"
-				id = -1
-				traits = { sotamarsalkka personal_agenda_mannerheim }
-			}
-		}
-	}
-
-
+	promote_character = FIN_carl_mannerheim
 	#Set National Progressive Party as Non-Aligned party
 	set_party_name = {
 		ideology = neutrality
@@ -920,7 +931,7 @@ FIN_clean_all_obsolete_bop_modifiers_effect = {
 			NOT = {
 				has_country_leader = {
 					ruling_only = yes
-					character = FIN_risto_heikki_ryti
+					character = FIN_risto_ryti
 				}
 				has_country_leader = {
 					ruling_only = yes
@@ -1088,7 +1099,7 @@ FIN_clean_all_obsolete_bop_modifiers_effect = {
 				}
 				has_country_leader = {
 					ruling_only = yes
-					character = FIN_risto_heikki_ryti
+					character = FIN_risto_ryti
 				}
 				has_country_leader = {
 					ruling_only = yes
