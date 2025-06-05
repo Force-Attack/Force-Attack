@@ -2183,13 +2183,24 @@ political_actions = {
 		}
 
 		available = {
-			is_in_faction_with = BEL
-			BEL = { has_government = ROOT }
+			OR = {
+				AND = {
+					is_in_faction_with = BEL
+					
+				}
+				#remove when fully working with FLA and WLL
+				#AND = {
+				#	is_in_faction_with = fLA
+				#	FLA = { has_government = ROOT }
+				#	is_in_faction_with = WLL
+				#	WLL = { has_government = ROOT }
+				#}
+			}
 			is_in_faction_with = LUX
-			LUX = { has_government = ROOT }
+		
 		}
 
-		cost = 300
+		cost = 100
 
 		fire_only_once = yes
 
@@ -2199,6 +2210,9 @@ political_actions = {
 		}
 
 		complete_effect = {
+			puppet = {
+				target = COG
+			}
 			effect_tooltip = {
 				set_cosmetic_tag = HOL_benelux_unified
 				BEL = {
@@ -2210,39 +2224,24 @@ political_actions = {
 					every_unit_leader = {
 						set_nationality = ROOT
 					}
+					
+					
 				}
-				every_country = {
-					limit = {
-						is_subject_of = BEL
+				COG = {
+					every_unit_leader = {
+						set_nationality = ROOT
 					}
-					ROOT = {
-						set_autonomy = {
-							target = PREV
-							autonomy_state = autonomy_puppet
-							end_wars  = no
-							end_civil_wars = no
-						}
-					}
-				}
-				every_country = {
-					limit = {
-						is_subject_of = LUX
-					}
-					ROOT = {
-						set_autonomy = {
-							target = PREV
-							autonomy_state = autonomy_puppet
-							end_wars  = no
-							end_civil_wars = no
-						}
-					}
-				}
+				
 				annex_country = {
 				    target = BEL
 				    transfer_troops = yes
 				}
 				annex_country = {
 				    target = LUX
+				    transfer_troops = yes
+				}
+				annex_country = {
+				    target = COG
 				    transfer_troops = yes
 				}
 				every_state = {
@@ -2254,16 +2253,20 @@ political_actions = {
 					}
 					add_core_of = ROOT
 				}
+
+
 			}
+		}
 			custom_effect_tooltip = HOL_propose_benelux_unification_tt
 			BEL = {
-				country_event = { id = mtg_netherlands.77 days = 5 random_days = 3 }
+				country_event = { id = mtg_netherlands.77 days = 1 random_days = 3 }
 			}
 			LUX = {
 				country_event = { id = mtg_netherlands.77 days = 1 random_days = 3 }
 			}
-		}
+		
 	}
+}
 
 }
 
