@@ -1,0 +1,363 @@
+add_namespace = kor
+###EVENT TO SOVIETS FOR KIM IL SUNG
+country_event = {
+	id = kor.1
+	title = "Asking for Kim Il-Sung"
+	desc = kor.1.d
+	picture = GFX_report_event_japanese_reply
+	timeout_days = 14
+
+	is_triggered_only = yes
+
+option = { #
+name = kor.1.a
+ai_chance = { factor = 95 }
+SOV = {
+	add_political_power = 15
+	add_stability = 0.02
+}
+KOR = {
+	create_country_leader = {
+		name = "Kim Il-sung"
+		desc = ""
+		picture = "gfx/leaders/KOR/Portrait_Kim_Il_Sung.dds"
+		expire = "1965.1.1"
+		ideology = leninism
+		traits = {
+			supreme_leader
+			communist_revolutionary
+		}
+	}
+}
+}
+option = { #
+name = kor.1.b
+ai_chance = { factor = 95 }
+SOV = {
+	add_political_power = 15
+	add_stability = 0.02
+	send_equipment = {
+		target = KOR
+		equipment = infantry_equipment
+		amount = 2000
+		old_prioritised = yes
+	}
+	add_manpower = -10000
+}
+KOR = {
+	add_manpower = 10000
+	create_country_leader = {
+		name = "Kim Il-sung"
+		desc = ""
+		picture = "gfx/leaders/KOR/Portrait_Kim_Il_Sung.dds"
+		expire = "1965.1.1"
+		ideology = leninism
+		traits = {
+			supreme_leader
+			communist_revolutionary
+		}
+	}
+}
+}
+option = { #
+name = kor.1.c
+ai_chance = { factor = 5 }
+SOV = {
+	add_political_power = -50
+	add_stability = -0.02
+}
+}
+}
+
+###CHOOSE DEMO LEADER
+country_event = {
+	id = kor.2
+	title = "Our Election"
+	desc = kor.2.d
+	picture = GFX_report_event_japanese_reply
+	timeout_days = 14
+
+	is_triggered_only = yes
+
+option = { #
+name = kor.2.a
+ai_chance = { factor = 95 }
+effect_tooltip = {
+	create_country_leader = {
+		name = "Kim Gu"
+		desc = ""
+		picture = "gfx/leaders/KOR/r56_potrait_KOR_Kim_Gu.dds"
+		expire = "1965.1.1"
+		ideology = conservatism
+		traits = {
+			democratic_liberal
+		}
+	}
+}
+}
+option = { #
+name = kor.2.b
+ai_chance = { factor = 5 }
+create_country_leader = {
+	name = "Syngman Rhee"
+	desc = ""
+	picture = "gfx/leaders/KOR/r56_potrait_KOR_Syngman_Rhee.dds"
+	expire = "1965.1.1"
+	ideology = conservatism
+	traits = {
+		anti_communist
+		democratic_convsersative
+	}
+}
+
+}
+}
+####CHOOSE KING
+country_event = {
+	id = kor.6
+	title = "Ending the regency"
+	desc = kor.6.d
+	picture = GFX_report_event_japanese_reply
+	timeout_days = 14
+
+	is_triggered_only = yes
+
+	option = { #
+		name = kor.6.b
+		ai_chance = { factor = 15 }
+
+		create_country_leader = {
+			name = "Yi Un"
+			desc = ""
+			picture = "gfx/leaders/KOR/r56_portrait_KOR_Yi_Un.dds"
+			expire = "1965.1.1"
+			ideology = absolute_monarchism
+			traits = {
+				yi_dynasty
+				unpopular_monarch
+			}
+		}
+	}
+}
+####CHOOSE dictator
+country_event = {
+	id = kor.5
+	title = "Pro Japanese Dictatorship"
+	desc = kor.5.d
+	picture = GFX_report_event_japanese_reply
+	timeout_days = 14
+
+	is_triggered_only = yes
+
+	option = { #
+		name = kor.5.b
+		ai_chance = { factor = 15 }
+
+		create_country_leader = {
+			name = "Hong Sa-Ik"
+			desc = ""
+			picture = "gfx/leaders/KOR/r56_portrait_KOR_Hong_Sa-ik.dds"
+			expire = "1965.1.1"
+			ideology = rexism
+			traits = {
+				facist_dictator
+			}
+		}
+	}
+}
+#KOREAN Investment - The Koreans Deliver an Investment Portfolio
+####EVENT TO MAJOR/Investor
+country_event = {
+	id = kor.126
+	title = "Korean Investment Portfolio"
+	desc = kor.126.desc
+	picture = GFX_report_event_tur_industry
+
+	is_triggered_only = yes
+
+	
+	option = {####ROOT GETS RESOURCE RIGHTS OF 527 for investment
+		name = kor.126.a #We will invest in turn for resource rights
+		trigger = {
+			NOT = {
+				has_country_flag = KOR_pyeongan_taken
+			}
+		}
+		ROOT = {
+			set_country_flag = KOR_pyeongan_investor
+			add_timed_idea = {
+				idea = JAP_investment
+				days = 60
+			}
+		}
+		FROM = {####FROM gives resource rights to ROOT(investor)
+			set_country_flag = KOR_pyeongan_taken
+			random_core_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+			give_resource_rights = {
+				receiver = ROOT
+				state = 527
+			}
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 20
+				has_opinion = {
+					target = KOR
+					value > 25
+				}
+			}
+			modifier = {
+				add = 30
+				has_opinion = {
+					target = KOR
+					value > 75
+				}
+			}
+		}
+	}
+	option = {####ROOT GETS RESOURCE RIGHTS OF 918 for investment
+		name = kor.126.b #We will invest in turn for resource rights
+		trigger = {
+			FROM = {
+				NOT = {
+					has_country_flag = KOR_hamgyon_taken
+				}
+			}
+		}
+		ROOT = {
+			set_country_flag = KOR_hamgyon_investor
+			add_timed_idea = {
+				idea = JAP_investment
+				days = 60
+			}
+		}
+		FROM = {
+			set_country_flag = KOR_hamgyon_taken
+			random_core_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+				}
+			}
+			give_resource_rights = {
+				receiver = ROOT
+				state = 918
+			}
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				add = 20
+				has_opinion = {
+					target = KOR
+					value > 25
+				}
+			}
+			modifier = {
+				add = 30
+				has_opinion = {
+					target = KOR
+					value > 75
+				}
+			}
+		}
+	}
+	option = {####ROOT GETS RESOURCE RIGHTS OF 525 for investment
+	name = kor.126.c #We will invest in turn for resource rights
+	trigger = {
+		NOT = {
+			has_country_flag = KOR_gyeonggi_taken
+		}
+	}
+	ROOT = {
+		add_timed_idea = {
+			idea = JAP_investment
+			days = 60
+		}
+	}
+	FROM = {
+		set_country_flag = KOR_gyeonggi_taken
+		random_core_state = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 3
+			}
+		}
+		give_resource_rights = {
+			receiver = ROOT
+			state = 525
+		}
+	}
+	
+	ai_chance = {
+		base = 10
+		modifier = {
+			add = 20
+			has_opinion = {
+				target = KOR
+				value > 25
+			}
+		}
+		modifier = {
+			add = 30
+			has_opinion = {
+				target = KOR
+				value > 75
+			}
+		}
+	}
+}
+	option = {####ROOT REJECTS KOREAN INVESTMENT
+		name = kor.126.d #no
+		ai_chance = {
+			base = 5
+			modifier = {
+				add = 20
+				has_opinion = {
+					target = KOR
+					value < -10
+				}
+			}
+			modifier = {
+				add = 30
+				has_war = yes
+			}
+			modifier = {
+				add = 50
+				has_opinion = {
+					target = KOR
+					value < -75
+				}
+			}
+		}
+		KOR = { country_event = { id = kor.127 days = 1 } }
+		hidden_effect = {
+			set_country_flag = ROOT_rejecting_korean_overtures
+		}
+	}
+}
+
+#KOREAN INVESTMENT FROM INVESTOR IS RULED OUT
+country_event = {
+	id = kor.127
+	title = "Korean Investment has been ruled out"
+	desc = kor.127.desc
+	picture = GFX_report_event_tur_the_montreux_convention 
+
+	is_triggered_only = yes
+
+	option = {
+		name = kor.127.a #bah, we do not need them
+		add_political_power = 25
+	}
+}
