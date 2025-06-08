@@ -8787,228 +8787,6 @@ focus = {
 	}
 
 	focus = {
-		id = USA_mobilize_the_railways
-		icon = GFX_goal_CAN_railways
-		x = -14
-		y = 1
-		prerequisite = { focus = USA_war_department }
-		relative_position_id = USA_war_department
-		cost = 5
-
-		ai_will_do = {
-			factor = 0.9
-		}
-
-		available = {
-			OR = {
-				has_war = yes
-				threat > 0.25
-				has_war_support > 0.20
-			}
-			if = {
-				limit = {
-					threat < 0.25
-					has_war = no
-				}
-				congress_high_support_trigger = yes
-			}
-			else = {
-				congress_low_support_trigger = yes
-			}
-		}
-
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		search_filters = {FOCUS_FILTER_INDUSTRY}
-		completion_reward = {
-			add_equipment_to_stockpile = {
-				type = train_equipment
-				amount = 35
-			}
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = USA_lima_locomotive_works
-			add_timed_idea = {
-				idea = r56_USA_mobilize_the_railways_idea
-				days = 365
-			}
-			#Smaller Lines that existed irl are added here. As to not make the USA railnetwork OP as it was irl in 1936 lol - SpicyAlfredo
-			if = {
-				limit = {
-					360 = {
-						is_fully_controlled_by = ROOT
-					}
-				} #Small connect Erie Pitt->Erie
-				build_railway = { 
-					path = { 11800 6705 3687 }
-				}
-			}
-			if = {
-				limit = {
-					AND = {
-						360 = {
-							is_fully_controlled_by = ROOT
-						}
-						359 = {
-							is_fully_controlled_by = ROOT
-						}
-					}
-				} #NJ Coast->Philly
-				build_railway = { 
-					path = { 9801 9864 11740 11900 6845 }
-				}
-			}
-			if = {
-				limit = {
-					AND = {
-						367 = {
-							is_fully_controlled_by = ROOT
-						}
-						366 = {
-							is_fully_controlled_by = ROOT
-						}
-					}
-				} #Bama to Nofla connection
-				build_railway = { 
-					path = { 10520 10352 10407 12353 }
-				}
-			}
-			if = {
-				limit = {
-					OR = {
-						AND = {
-							has_war_support < 0.25
-							threat < 0.45
-						}
-						AND = {
-							has_war_support < 0.20
-							has_war = yes
-						}
-						AND = {
-							has_war_support < 0.50
-							has_war = no
-						}
-					}
-				}
-				USA_congress_small_opposition = yes
-			}
-		}
-	}
-
-	focus = {
-		id = USA_the_worlds_loco_works
-		icon = GFX_goal_generic_train
-		x = -1
-		y = 1
-		prerequisite = { focus = USA_mobilize_the_railways }
-		relative_position_id = USA_mobilize_the_railways
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			OR = {
-				has_war = yes
-				democratic > 0.95
-			}
-			if = {
-				limit = {
-					is_in_faction = no
-				}
-				congress_high_support_trigger = yes
-			}
-			else = {
-				congress_low_support_trigger = yes
-			}
-		}
-
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		search_filters = {FOCUS_FILTER_INDUSTRY}
-		completion_reward = {
-
-			
-			add_ideas = r56_USA_world_loco_motive_works
-			random_owned_controlled_state = {
-				prioritize = { 360 }
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = USA_support_rock_island_state_flag
-			}
-		}
-	}
-
-	focus = {
-		id = USA_continue_dieselisation
-		icon = GFX_goal_generic_light_industry
-		x = 1
-		y = 1
-		prerequisite = { focus = USA_mobilize_the_railways }
-		relative_position_id = USA_mobilize_the_railways
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			if = {
-				limit = {
-					has_war = yes
-				}
-				congress_high_support_trigger = yes
-			}
-			else = {
-				congress_low_support_trigger = yes
-			}
-		}
-
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY}
-		completion_reward = {
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = general_motor_electrco_motive_loco_works
-			
-			random_owned_controlled_state = {
-				prioritize = { 393 }
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = USA_support_rock_island_state_flag
-			}
-			
-		}
-	}
-
-	focus = {
 		id = USA_selective_training_act
 		icon = GFX_focus_generic_military_mission
 		x = -9
@@ -9530,91 +9308,19 @@ focus = {
 		
 		}
 	}
-	focus = {
-		id = USA_90_division_gamble
-		icon = GFX_focus_SOV_mobilization_plan
-		x = 0
-		y = 1
-		prerequisite = { focus = USA_build_the_pentagon }
-		mutually_exclusive = { focus = USA_victory_program }
-		relative_position_id = USA_build_the_pentagon
-		cost = 10
+	
 
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			if = {
-				limit = {
-					threat < 0.5
-					has_war = no
-				}
-				congress_high_support_trigger = yes
-			}
-			else = {
-				congress_low_support_trigger = yes
-			}
-		}
-
-		completion_reward = {
-			add_ideas = r56_USA_90_division_gamble
-			if = {
-				limit = {
-					has_war = no
-				}
-				custom_effect_tooltip = USA_victory_program_focus_tt
-				add_stability = -0.1
-			}
-		}
-	}
-	focus = {
-		id = USA_victory_program
-		icon = GFX_goal_polish_wartime_industry
-		x = 2
-		y = 1
-		prerequisite = { focus = USA_build_the_pentagon }
-		mutually_exclusive = { focus = USA_90_division_gamble }
-		relative_position_id = USA_build_the_pentagon
-		cost = 10
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			if = {
-				limit = {
-					threat < 0.5
-					has_war = no
-				}
-				congress_high_support_trigger = yes
-			}
-			else = {
-				congress_medium_support_trigger = yes
-			}
-		}
-
-		completion_reward = {
-			add_ideas = r56_USA_victory_program
-			
-			if = {
-				limit = {
-					has_war = no
-				}
-				custom_effect_tooltip = USA_victory_program_focus_tt
-				add_stability = -0.1
-			}
-		}
-	}
 	focus = {
 		id = USA_department_of_defense
 		icon = GFX_Goal_USA_department_of_defense
-		x = 1
+		x = 0
 		y = 1
-		prerequisite = { focus = USA_90_division_gamble focus = USA_victory_program }
-		relative_position_id = USA_90_division_gamble
+		relative_position_id = USA_build_the_pentagon
 		cost = 10
+
+		prerequisite = {
+			focus = USA_build_the_pentagon
+		}
 
 		ai_will_do = {
 			factor = 1
@@ -9918,9 +9624,8 @@ focus = {
 	focus = {
 		id = USA_enter_the_jet_age
 		icon = GFX_goal_generic_air_jet_new
-		x = -2
+		x = 2
 		y = 1
-		prerequisite = { focus = USA_department_of_defense }
 		prerequisite = { focus = USA_us_army_airforce focus = USA_us_air_force }
 		relative_position_id = USA_us_army_airforce
 		cost = 10
