@@ -1,0 +1,74 @@
+add_namespace = USA
+
+
+    
+# force attack dantee treee
+
+country_event = {
+	id = usa.65
+	title = usa.65.t
+	desc = usa.65.d
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	option = {
+		name = usa.65.a
+		country_event = {
+			id = usa.66
+			days = 30
+			random_days = 20
+		}
+	}
+}
+
+#midwest investment auto build
+country_event = {
+	id = usa.66
+	title = usa.66.t
+	desc = usa.66.d
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	option = {
+		name = usa.66.a
+		random_owned_controlled_state = {
+			prioritize = {
+				374 383 390 389 384 373 382 381 388 387 380 372
+			}
+			limit = {
+				is_core_of = USA
+				NOT = {
+					has_state_flag = USA_midwest_invested
+				}
+			}
+			add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_country_flag = USA_midwest_invesment_started
+					NOT = { has_country_flag = USA_midwest_invesment_stop }
+				}
+				country_event = {
+					id = usa.66
+					days = 28
+					random_days = 5
+				}
+			}
+		}
+	}
+}

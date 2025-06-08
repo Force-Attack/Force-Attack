@@ -1,0 +1,306 @@
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
+      ##  #######  #### ##    ## ########       ##  
+      ## ##     ##  ##  ###   ##    ##         ##   
+      ## ##     ##  ##  ####  ##    ##        ##    
+      ## ##     ##  ##  ## ## ##    ##       ##     
+##    ## ##     ##  ##  ##  ####    ##      ##      
+##    ## ##     ##  ##  ##   ###    ##     ##       
+ ######   #######  #### ##    ##    ##    ##        
+
+   ###    ##       ##       ####    ###    ##    ##  ######  ########
+  ## ##   ##       ##        ##    ## ##   ###   ## ##    ## ##      
+ ##   ##  ##       ##        ##   ##   ##  ####  ## ##       ##      
+##     ## ##       ##        ##  ##     ## ## ## ## ##       ######  
+######### ##       ##        ##  ######### ##  #### ##       ##      	
+##     ## ##       ##        ##  ##     ## ##   ### ##    ## ##      
+##     ## ######## ######## #### ##     ## ##    ##  ######  ########
+
+###################################################################################################
+###################################################################################################
+###################################################################################################
+
+Commonwealth_create_Commonwealth_alliance = {
+	set_variable = {global.Commonwealth_faction_creator = ROOT }
+	if = {
+		limit = { # Commonwealth Council 
+			#Commonwealth_has_started_democratic_focus_tree = yes
+			Commonwealth_is_democratic = yes 
+		}
+		set_global_flag = Commonwealth_democratic_alliance_formed
+		set_country_flag = Commonwealth_council_leader 
+		
+		set_faction_name = Commonwealth_alliance_democratic
+		
+		
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_research = 0 }
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_training_time = 0 }
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_prod_eff_start = 0 }
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_war_support = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_research = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_training_time = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_prod_eff_start = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_war_support = 0 }
+
+		add_dynamic_modifier = { modifier = Commonwealth_democratic_alliance_leader_dmod }
+		every_other_country = {
+			limit = {
+				Commonwealth_has_started_democratic_focus_tree = yes
+				is_in_faction_with = ROOT 
+				is_subject = no
+			}
+			Commonwealth_add_to_Commonwealth_alliance = yes 
+		}
+	}
+	else_if = {
+		limit = {
+			#Commonwealth_has_started_communist_focus_tree = yes 
+			Commonwealth_is_communist = yes 
+		}
+		set_global_flag = Commonwealth_communist_alliance_formed 
+		set_country_flag = Commonwealth_union_leader
+		set_faction_name = Commonwealth_alliance_communist
+		
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_max_eff = 0 }
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_max_planning = 0 }
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_research = 0 }
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_resource_penalty = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_max_eff = 0 }
+		set_variable = { Commonwealth_communist_alliance_member_dmod_max_planning = 0 }
+		set_variable = { Commonwealth_communist_alliance_member_dmod_research = 0 }
+		set_variable = { Commonwealth_communist_alliance_member_dmod_resource_penalty = 0 }
+
+		add_dynamic_modifier = { modifier = Commonwealth_communist_alliance_leader_dmod }
+
+		every_other_country = {
+			limit = {
+				Commonwealth_is_communist = yes
+				is_in_faction_with = ROOT 
+				is_subject = no 
+			}
+			Commonwealth_add_to_Commonwealth_alliance = yes 
+		}
+	}
+	else = {
+		set_global_flag = Commonwealth_monarchist_alliance_formed
+		set_country_flag = Commonwealth_league_leader  
+		set_faction_name = Commonwealth_alliance_monarchist
+
+		add_dynamic_modifier = { modifier = Commonwealth_monarchist_alliance_leader_dmod }
+
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_prod_eff_gain = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_construction = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_max_org = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_drift_defense = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_prod_eff_gain = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_construction = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_max_org = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_drift_defense = 0 }
+
+		every_other_country = {
+			limit = {
+				OR = {
+					Commonwealth_has_started_monarchist_focus_tree = yes 
+					Commonwealth_is_fascist = yes 					
+				}
+				is_in_faction_with = ROOT 
+				is_subject = no
+			}
+			Commonwealth_add_to_Commonwealth_alliance = yes 
+		}
+	}  
+	set_variable = { global.Commonwealth_alliance_leader = ROOT } # Setting the alliance leader regardless of ideology 
+}
+
+Commonwealth_add_to_Commonwealth_alliance = {  
+	if = {
+		limit = {
+			NOT = { has_completed_focus = Commonwealth_form_joint_alliance }
+		}
+		complete_national_focus = Commonwealth_form_joint_alliance
+	}
+	if = {
+		limit = {
+			has_global_flag = Commonwealth_democratic_alliance_formed
+		}
+
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_research = 0 }
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_training_time = 0 }
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_prod_eff_start = 0 }
+		set_variable = { Commonwealth_democratic_alliance_leader_dmod_war_support = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_research = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_training_time = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_prod_eff_start = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_war_support = 0 }
+
+		add_dynamic_modifier = { modifier = Commonwealth_democratic_alliance_member_dmod }
+
+	}
+	else_if = {
+		limit = {
+			has_global_flag = Commonwealth_communist_alliance_formed
+		}		
+
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_max_eff = 0 }
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_max_planning = 0 }
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_research = 0 }
+		set_variable = { Commonwealth_communist_alliance_leader_dmod_resource_penalty = 0 }
+		set_variable = { Commonwealth_democratic_alliance_member_dmod_max_eff = 0 }
+		set_variable = { Commonwealth_communist_alliance_member_dmod_max_planning = 0 }
+		set_variable = { Commonwealth_communist_alliance_member_dmod_research = 0 }
+		set_variable = { Commonwealth_communist_alliance_member_dmod_resource_penalty = 0 }
+
+		add_dynamic_modifier = { modifier = Commonwealth_communist_alliance_member_dmod }
+	}
+	else_if = {
+		limit = {
+			has_global_flag = Commonwealth_monarchist_alliance_formed
+		}		
+
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_prod_eff_gain = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_construction = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_max_org = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_leader_dmod_drift_defense = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_prod_eff_gain = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_construction = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_max_org = 0 }
+		set_variable = { Commonwealth_monarchist_alliance_member_dmod_drift_defense = 0 }
+
+		add_dynamic_modifier = { modifier = Commonwealth_monarchist_alliance_member_dmod }
+	}
+}
+
+Commonwealth_airforce_member_to_originator = { # Effect for upgrading the Airforce Member Dynamic Modifier to the Originator one (only after thye production ideas are added) 
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_airforces_member_dmod }
+		}
+		custom_effect_tooltip = Commonwealth_becomes_airforce_leader_tooltip
+		hidden_effect = {
+			remove_dynamic_modifier = { modifier = Commonwealth_airforces_member_dmod }
+			add_dynamic_modifier = { modifier = Commonwealth_airforces_originator_dmod }
+			swap_ideas = {
+				remove_idea = Commonwealth_hidden_airforces_member_dmod
+				add_idea = Commonwealth_hidden_airforces_originator_dmod
+			}
+			swap_ideas = {
+				remove_idea = Commonwealth_hidden_airforces_naval_member_dmod
+				add_idea = Commonwealth_hidden_airforces_naval_originator_dmod
+			}	
+		}
+	}
+}
+
+Commonwealth_airforce_originator_to_member = { # Effect for downgrading the Airforce Originator Dynamic Modifier to the Member one (only after thye production ideas are added)
+		if = {
+			limit = {
+				has_dynamic_modifier = { modifier = Commonwealth_airforces_originator_dmod }
+			}
+			custom_effect_tooltip = Commonwealth_becomes_airforce_member_tooltip
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = Commonwealth_airforces_originator_dmod }
+				add_dynamic_modifier = { modifier = Commonwealth_airforces_member_dmod }
+				swap_ideas = {
+					remove_idea = Commonwealth_hidden_airforces_originator_dmod
+					add_idea = Commonwealth_hidden_airforces_member_dmod
+				}
+				swap_ideas = {
+					remove_idea = Commonwealth_hidden_airforces_naval_originator_dmod
+					add_idea = Commonwealth_hidden_airforces_naval_member_dmod
+				}
+			}
+		}
+}
+
+Commonwealth_navy_member_to_originator = { # Effect for upgrading the Naval Member Dynamic Modifier to the Originator one  
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_navy_member_dmod }
+		}
+		custom_effect_tooltip = Commonwealth_becomes_navy_leader_tooltip
+		hidden_effect = {
+			remove_dynamic_modifier = { modifier = Commonwealth_navy_member_dmod }
+			add_dynamic_modifier = { modifier = Commonwealth_navy_originator_dmod }	
+		}
+	}
+}
+
+Commonwealth_navy_originator_to_member = { # Effect for downgrading the Navy Originator Dynamic Modifier to the Member one 
+		if = {
+			limit = {
+				has_dynamic_modifier = { modifier = Commonwealth_navy_originator_dmod }
+			}
+			custom_effect_tooltip = Commonwealth_becomes_navy_member_tooltip
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = Commonwealth_navy_originator_dmod }
+				add_dynamic_modifier = { modifier = Commonwealth_navy_member_dmod }
+			}
+		}
+}
+
+Commonwealth_mil_industry_member_to_originator = { # Effect for upgrading the Military Industry Member Dynamic Modifier to the Originator one  
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_mil_industry_member_dmod }
+		}
+		custom_effect_tooltip = Commonwealth_becomes_military_industry_leader_tooltip
+		hidden_effect = {
+			remove_dynamic_modifier = { modifier = Commonwealth_mil_industry_member_dmod }
+			add_dynamic_modifier = { modifier = Commonwealth_mil_industry_originator_dmod }	
+		}
+	}
+}
+
+Commonwealth_mil_industry_originator_to_member = { # Effect for downgrading the Military Industry Originator Dynamic Modifier to the Member one 
+		if = {
+			limit = {
+				has_dynamic_modifier = { modifier = Commonwealth_mil_industry_originator_dmod }
+			}
+			custom_effect_tooltip = Commonwealth_becomes_military_industry_member_tooltip
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = Commonwealth_mil_industry_originator_dmod }
+				add_dynamic_modifier = { modifier = Commonwealth_mil_industry_member_dmod }
+			}
+		}
+}
+
+Commonwealth_remove_all_mods = {
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_democratic_alliance_leader_dmod }
+		}
+		remove_dynamic_modifier = {	modifier = Commonwealth_democratic_alliance_leader_dmod }
+	}
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_democratic_alliance_member_dmod }
+		}
+		remove_dynamic_modifier = {	modifier = Commonwealth_democratic_alliance_member_dmod }
+	}
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_communist_alliance_leader_dmod }
+		}
+		remove_dynamic_modifier = {	modifier = Commonwealth_communist_alliance_leader_dmod }
+	}
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_communist_alliance_member_dmod }
+		}
+		remove_dynamic_modifier = {	modifier = Commonwealth_communist_alliance_member_dmod }
+	}
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_monarchist_alliance_leader_dmod }
+		}
+		remove_dynamic_modifier = {	modifier = Commonwealth_monarchist_alliance_leader_dmod	}
+	}
+	if = {
+		limit = {
+			has_dynamic_modifier = { modifier = Commonwealth_monarchist_alliance_member_dmod }
+		}
+		remove_dynamic_modifier = {	modifier = Commonwealth_monarchist_alliance_member_dmod	}
+	}
+}

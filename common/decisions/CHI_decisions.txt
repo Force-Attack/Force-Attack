@@ -1,0 +1,2288 @@
+CHI_chinese_civil_war = {
+	CHI_raid_communist_weapons_depo = {
+		icon = GFX_decision_generic_prepare_civil_war
+		cost = 10
+		days_remove = 20
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_cw_action_tt
+				NOT = {
+					has_country_flag = CHI_cw_action
+				}
+			}
+			check_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+				compare = greater_than_or_equals
+			}
+			has_equipment = {
+				infantry_equipment > 299
+			}
+		}
+		remove_effect = {
+			army_experience = 10
+			clr_country_flag = CHI_cw_action
+			subtract_from_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+				tooltip = CHI_ccp_loss_10
+			}
+			clamp_variable = {
+				var = global.CHI_prc_strength
+				min = 0
+				max = 100
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -300
+			}
+			set_country_flag = CHI_cw_action			
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	CHI_sabotage_communist_rail_transport = {
+		icon = GFX_decision_generic_train
+		cost = 10
+		days_remove = 30
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_cw_action_tt
+				NOT = {
+					has_country_flag = CHI_cw_action
+				}
+			}
+			check_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+				compare = greater_than_or_equals
+			}
+			has_equipment = {
+				infantry_equipment > 149
+			}
+		}
+		remove_effect = {
+			army_experience = 5
+			clr_country_flag = CHI_cw_action
+			subtract_from_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+				tooltip = CHI_ccp_loss_10
+			}
+			clamp_variable = {
+				var = global.CHI_prc_strength
+				min = 0
+				max = 100
+			}
+			622 = {
+				damage_building = {
+					type = infrastructure
+					damage = 0.5
+				}
+			}
+			
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -150
+			}	
+			set_country_flag = CHI_cw_action		
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	CHI_capture_communist_intel = {
+		icon = GFX_decision_eng_trade_unions_support
+		cost = 10
+		days_remove = 20
+		days_re_enable = 30
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_cw_action_tt
+				NOT = {
+					has_country_flag = CHI_cw_action
+				}
+			}
+			check_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+				compare = greater_than_or_equals
+			}
+			has_intelligence_agency = yes
+		}
+		remove_effect = {
+			clr_country_flag = CHI_cw_action
+			subtract_from_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+				tooltip = CHI_ccp_loss_10
+			}
+			clamp_variable = {
+				var = global.CHI_prc_strength
+				min = 0
+				max = 100
+			}
+		}
+		complete_effect = {
+			set_country_flag = CHI_cw_action
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	CHI_raid_communist_strongholds = {
+		icon = GFX_decision_generic_fortification
+		cost = 20
+		days_remove = 20
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_cw_action_tt
+				NOT = {
+					has_country_flag = CHI_cw_action
+				}
+			}
+			has_completed_focus = CHI_raid_communist_strongholds
+			check_variable = {
+				var = global.CHI_prc_strength
+				value = 20
+				compare = greater_than_or_equals
+			}
+			has_equipment = {
+				infantry_equipment > 499
+			}
+		}
+		remove_effect = {
+			army_experience = 15
+			clr_country_flag = CHI_cw_action
+			subtract_from_variable = {
+				var = global.CHI_prc_strength
+				value = 20
+				tooltip = CHI_ccp_loss_20
+			}
+			clamp_variable = {
+				var = global.CHI_prc_strength
+				min = 0
+				max = 100
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -500
+			}	
+			set_country_flag = CHI_cw_action		
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	CHI_finish_off_the_communist = {
+		icon = GFX_decision_generic_ignite_civil_war
+		cost = 30
+		days_remove = 30
+		fire_only_once = yes
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_cw_action_tt
+				NOT = {
+					has_country_flag = CHI_cw_action
+				}
+			}
+			check_variable = {
+				var = global.CHI_prc_strength
+				value = 0
+				compare = less_than_or_equals
+				tooltip = CHI_ccp_0_strengh
+			}
+			has_equipment = {
+				infantry_equipment > 999
+			}
+		}
+		remove_effect = {
+			clr_country_flag = CHI_cw_action
+			remove_ideas = CHI_ongoing_civil_war
+			622 = {
+				remove_dynamic_modifier = {
+					modifier = communist_stronhold
+				}
+			}
+			subtract_from_variable = {
+				var = global.CHI_prc_strength
+				value = 10
+			}
+			clamp_variable = {
+				var = global.CHI_prc_strength
+				min = 0
+				max = 100
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -1000
+			}		
+			set_country_flag = CHI_cw_action	
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
+
+
+CHI_warlord_skirmishes = {
+	CHI_skirmish_shanxi = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		available = {
+			NOT = {
+				has_country_flag = CHI_warlord_skirmish_ongoing
+			}
+			is_puppet = no
+			OR = {
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 615
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 621
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 746
+				}
+			}
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}
+		
+		days_remove = 60
+		cost = 30
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2000
+			}
+			army_experience = 20
+
+			every_state = {
+				limit = { OR = {state = 615 state = 621 state = 756 }}
+				remove_dynamic_modifier = { modifier = warlord_state }
+			}
+			
+			clr_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 615
+				state = 621
+				state = 746
+			}
+			highlight_color_while_active = 3
+			highlight_color_before_active = 2
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		cancel_if_not_visible = yes
+	}
+	CHI_skirmish_communist_china = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		available = {
+			NOT = {
+				has_country_flag = CHI_warlord_skirmish_ongoing
+			}
+			is_puppet = no
+			army_manpower_in_state = {
+				type = infantry
+				amount > 200000
+				state = 622
+			}
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}
+
+		days_remove = 60
+		cost = 30
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2000
+			}
+			army_experience = 20
+			622 = {
+				remove_dynamic_modifier = { modifier = communist_stronhold }
+			}
+			clr_country_flag = CHI_warlord_skirmish_ongoing
+		}
+
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 622
+			}
+			highlight_color_while_active = 3
+			highlight_color_before_active = 2
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		cancel_if_not_visible = yes
+	}
+	CHI_skirmish_ma_clique = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		available = {
+			NOT = {
+				has_country_flag = CHI_warlord_skirmish_ongoing
+			}
+			is_puppet = no
+			OR = {
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 754
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 753
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 283
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 616
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 756
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 755
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 604
+				}
+			}
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		days_remove = 60
+		cost = 30
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2000
+			}
+			army_experience = 20
+			every_state = {
+				limit = { OR = {
+				state = 754
+				state = 753
+				state = 283
+				state = 616
+				state = 756
+				state = 755
+				state = 604 }}
+				remove_dynamic_modifier = { modifier = warlord_state }
+			}
+			clr_country_flag = CHI_warlord_skirmish_ongoing
+		}
+
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 754
+				state = 753
+				state = 283
+				state = 616
+				state = 756
+				state = 755
+				state = 604
+
+			}
+			highlight_color_while_active = 3
+			highlight_color_before_active = 2
+		}
+
+		cancel_if_not_visible = yes
+	}
+	CHI_skirmish_xinjang = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		available = {
+			NOT = {
+				has_country_flag = CHI_warlord_skirmish_ongoing
+			}
+			is_puppet = no
+			OR = {
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 759
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 619
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 287
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 617
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 618
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 760
+				}
+			}
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		days_remove = 60
+		cost = 30
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2000
+			}
+			army_experience = 20
+			every_state = {
+				limit = { OR = {
+					state = 759
+					state = 619
+					state = 287
+					state = 617
+					state = 618
+					state = 760 }}
+				remove_dynamic_modifier = { modifier = warlord_state }
+			}
+			clr_country_flag = CHI_warlord_skirmish_ongoing
+		}
+
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 759
+				state = 619
+				state = 287
+				state = 617
+				state = 618
+				state = 760
+
+			}
+			highlight_color_while_active = 3
+			highlight_color_before_active = 2
+		}
+
+		cancel_if_not_visible = yes
+	}
+	CHI_skirmish_guangxi = {
+		icon = GFX_decision_generic_prepare_civil_war
+
+		available = {
+			NOT = {
+				has_country_flag = CHI_warlord_skirmish_ongoing
+			}
+			is_puppet = no
+			OR = {
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 594
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 599
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 593
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 591
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 592
+				}
+			}
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}
+
+		days_remove = 60
+		cost = 30
+		ai_will_do = {
+			factor = 1
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2000
+			}
+			army_experience = 20
+			every_state = {
+				limit = { OR = {
+					state = 594
+					state = 599
+					state = 593
+					state = 591
+					state = 592 }}
+				remove_dynamic_modifier = { modifier = warlord_state }
+			}
+			clr_country_flag = CHI_warlord_skirmish_ongoing
+		}
+
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 594
+				state = 599
+				state = 593
+				state = 591
+				state = 592
+			}
+			highlight_color_while_active = 3
+			highlight_color_before_active = 2
+		}
+
+		cancel_if_not_visible = yes
+	}
+	CHI_skirmish_yunnan = {
+		icon = GFX_decision_generic_prepare_civil_war
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			NOT = {
+				has_country_flag = CHI_warlord_skirmish_ongoing
+			}
+			is_puppet = no
+			OR = {
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 325
+				}
+				army_manpower_in_state = {
+					type = infantry
+					amount > 200000
+					state = 747
+				}
+			}
+			has_equipment = {
+				infantry_equipment > 1999
+			}
+		}
+
+		days_remove = 60
+		cost = 30
+
+		fire_only_once = yes
+
+		complete_effect = {
+			set_country_flag = CHI_warlord_skirmish_ongoing
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -2000
+			}
+			army_experience = 20
+			every_state = {
+				limit = { OR = {
+					state = 325
+					state = 747 }}
+				remove_dynamic_modifier = { modifier = warlord_state }
+			}
+			clr_country_flag = CHI_warlord_skirmish_ongoing
+		}
+
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 325
+				state = 747
+			}
+			highlight_color_while_active = 3
+			highlight_color_before_active = 2
+		}
+
+		cancel_if_not_visible = yes
+	}
+	
+}
+economy_decisions = {
+	CHI_forced_loans = {
+
+		icon = ger_mefo_bills
+
+		available = {
+			has_hyper_inflation = yes
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				OR = {
+					has_idea = CHI_hyper_inflation_none
+					has_idea = CHI_hyper_inflation_1
+				}
+				factor = 0
+			}
+			modifier = {
+				has_idea = CHI_hyper_inflation_3
+				factor = 2
+			}
+			modifier = {
+				has_idea = CHI_hyper_inflation_4
+				factor = 5
+			}
+			modifier = {
+				has_idea = CHI_hyper_inflation_5
+				factor = 10
+			}
+		}
+
+		visible = {
+			has_completed_focus = CHI_reform_the_national_bank
+			NOT = {
+				has_completed_focus = CHI_the_great_advance_foward
+			}
+		}
+
+		days_re_enable = 1
+
+		days_remove = 60
+		remove_effect = {
+			
+		}
+		
+		complete_effect = {
+			CHI_hyper_inflation_level_down = yes
+			add_stability = -0.03
+			add_war_support = -0.03
+			
+			if = {
+				limit = {
+					has_country_flag = CHI_HAS_FORCED_LOANS_COUNT
+				}
+				add_to_variable = {
+					var = CHI_HAS_FORCED_LOANS_COUNT
+					value = 1
+				}
+			}
+			else = {
+				set_country_flag = { flag = CHI_HAS_FORCED_LOANS_COUNT value = 1 }
+			}
+			
+		}
+
+	}
+}
+
+CHI_army_reform = {
+
+	CHI_army_reform = {
+
+		icon = generic_prepare_civil_war
+
+		available = {
+			has_army_experience > 99
+			has_completed_focus = CHI_army_reform
+		}
+
+		cost = 0
+		ai_will_do = {
+			factor = 500
+		}
+		days_remove = 90
+
+		visible = {
+			OR = {
+				has_idea = CHI_army_corruption_1_LS
+				has_idea = CHI_army_corruption_2_LS
+				has_idea = CHI_army_corruption_3_LS
+			}
+		}
+		remove_effect = {
+			if = {
+				limit = { has_idea = CHI_army_corruption_1_LS }
+				swap_ideas = {
+					remove_idea = CHI_army_corruption_1_LS
+					add_idea = CHI_army_corruption_2_LS
+				}
+			}
+			else_if = {
+				limit = { has_idea = CHI_army_corruption_2_LS }
+				swap_ideas = {
+					remove_idea = CHI_army_corruption_2_LS
+					add_idea = CHI_army_corruption_3_LS
+				}
+			}
+			else_if = {
+				limit = { has_idea = CHI_army_corruption_3_LS }
+				remove_ideas = CHI_army_corruption_3_LS
+			}
+		}
+		complete_effect = {
+			army_experience = -100						
+		}		
+	}
+
+	#Activates when the player picks CHI_60_divisions_plan decision
+	CHI_bolster_our_ranks = {
+
+		icon = generic_prepare_civil_war
+
+		available = {
+			num_divisions > 60
+			has_army_manpower = { size > 549999 }
+		}
+
+		fire_only_once = yes
+		
+		days_mission_timeout = 180
+
+		is_good = no
+
+		activation = {
+			always = no #Triggered from effect in CHI_60_divisions_plan
+		}
+
+		complete_effect = {
+			add_war_support = 0.1
+		}
+
+		timeout_effect = {
+
+		}
+	}
+
+	CHI_60_divisions_plan = {
+
+		icon = generic_operation
+
+		available = {
+			
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1
+		}
+		fire_only_once = yes
+
+		visible = {
+			has_completed_focus = CHI_60_divisions_plan
+		}
+
+		days_remove = 180
+
+		modifier = {
+			training_time_army_factor = -0.25
+		}
+
+		complete_effect = {
+			activate_mission = CHI_bolster_our_ranks
+		}		
+	}
+
+}
+
+CHI_democratization_reforms = {
+	CHI_invigorate_the_intelligentsia = {
+
+		icon = generic_operation
+
+		available = {
+			
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 1
+		}
+		fire_only_once = yes
+
+		visible = {
+			has_completed_focus = CHI_democritization
+		}
+
+		days_remove = 180
+
+		modifier = {
+		}
+
+		complete_effect = {
+			CHI_decreace_illiteracy = yes
+			CHI_increase_inflation = yes
+			set_country_flag = CHI_invigorated_education_flag
+		}		
+	}
+	CHI_promise_health_care_measures = {
+
+		icon = generic_operation
+
+		available = {
+			
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 10
+		}
+		fire_only_once = yes
+
+		visible = {
+			has_completed_focus = CHI_democritization
+		}
+
+		days_remove = 180
+
+		modifier = {
+		}
+
+		complete_effect = {
+			add_stability = 0.05
+			set_country_flag = CHI_promised_health_care_measures_flag
+		}		
+	}
+	CHI_give_speech_on_democracy = {
+
+		icon = generic_operation
+
+		available = {
+			
+		}
+
+		cost = 50
+		ai_will_do = {
+			factor = 10
+		}
+		fire_only_once = yes
+
+		visible = {
+			has_completed_focus = CHI_democritization
+		}
+
+		days_remove = 180
+
+		modifier = {
+		}
+
+		complete_effect = {
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+			}
+			set_country_flag = CHI_speech_on_democracy_flag
+		}		
+	}
+}
+prospect_for_resources = {
+	develop_southern_china_rubber_deposits = { #597
+		
+		icon = rubber
+
+		target_trigger = {
+			FROM = {
+				has_state_flag = CHI_develop_rubber_flag
+				is_fully_controlled_by = ROOT
+			}
+		}
+		target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+		state_target = yes
+		#on_map_mode = map_only
+		fire_only_once = yes # Only once per State
+		available = {
+			has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+		}
+
+		visible = {
+			has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+		}
+
+		cancel_trigger = {
+			NOT = { FROM = { is_fully_controlled_by = ROOT } }
+		}
+
+		cancel_effect = {
+			clr_country_flag = CHI_resource_investment_flag
+		}
+
+		days_remove = 90
+
+		cost = 25
+
+		modifier = {
+		}
+
+		complete_effect = {
+			set_country_flag = CHI_resource_investment_flag
+		}
+
+		remove_effect = {
+			add_resource = {
+				type = rubber
+				amount = 8
+				state = FROM
+			}
+		}
+	}
+	develop_eastern_china_oil_fields = { #597
+
+		icon = oil
+
+		target_trigger = {
+			FROM = {
+				has_state_flag = CHI_develop_oil_flag
+				is_fully_controlled_by = ROOT
+			}
+		}
+		target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+		state_target = yes
+		#on_map_mode = map_only
+		fire_only_once = yes # Only once per State
+		available = {
+			has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+		}
+
+		visible = {
+			has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+		}
+
+		cancel_trigger = {
+			NOT = { FROM = { is_fully_controlled_by = ROOT } }
+		}
+
+		cancel_effect = {
+			clr_country_flag = CHI_resource_investment_flag
+		}
+
+		days_remove = 90
+
+		cost = 25
+
+		modifier = {
+		}
+
+		complete_effect = {
+			set_country_flag = CHI_resource_investment_flag
+		}
+
+		remove_effect = {
+			add_resource = {
+				type = oil
+				amount = 8
+				state = FROM
+			}
+		}
+	}
+	develop_manchurian_oil_fields = { #597
+
+	icon = oil
+
+	target_trigger = {
+		FROM = {
+			has_state_flag = CHI_develop_oil_manchu_flag
+			is_fully_controlled_by = ROOT
+		}
+	}
+	target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+	state_target = yes
+	#on_map_mode = map_only
+	fire_only_once = yes # Only once per State
+	available = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	visible = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	cancel_trigger = {
+		NOT = { FROM = { is_fully_controlled_by = ROOT } }
+	}
+
+	cancel_effect = {
+		clr_country_flag = CHI_resource_investment_flag
+	}
+
+	days_remove = 90
+
+	cost = 25
+
+	modifier = {
+	}
+
+	complete_effect = {
+		set_country_flag = CHI_resource_investment_flag
+	}
+
+	remove_effect = {
+		add_resource = {
+			type = oil
+			amount = 24
+			state = FROM
+		}
+	}
+	}
+	develop_chromium_fields = { #597
+
+	icon = chromium
+
+	target_trigger = {
+		FROM = {
+			has_state_flag = CHI_develop_chromium_flag
+			is_fully_controlled_by = ROOT
+		}
+	}
+	target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+	state_target = yes
+	#on_map_mode = map_only
+	fire_only_once = yes # Only once per State
+	available = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	visible = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	cancel_trigger = {
+		NOT = { FROM = { is_fully_controlled_by = ROOT } }
+	}
+
+	cancel_effect = {
+		clr_country_flag = CHI_resource_investment_flag
+	}
+
+	days_remove = 90
+
+	cost = 25
+
+	modifier = {
+	}
+
+	complete_effect = {
+		set_country_flag = CHI_resource_investment_flag
+	}
+
+	remove_effect = {
+		add_resource = {
+			type = chromium
+			amount = 8
+			state = FROM
+		}
+	}
+	}
+	develop_tungeston_fields = { #597
+
+	icon = tungsten
+
+	target_trigger = {
+		FROM = {
+			has_state_flag = CHI_develop_tungeston_flag
+			is_fully_controlled_by = ROOT
+		}
+	}
+	target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+	state_target = yes
+	#on_map_mode = map_only
+	fire_only_once = yes # Only once per State
+	available = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	visible = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	cancel_trigger = {
+		NOT = { FROM = { is_fully_controlled_by = ROOT } }
+	}
+
+	cancel_effect = {
+		clr_country_flag = CHI_resource_investment_flag
+	}
+
+	days_remove = 90
+
+	cost = 25
+
+	modifier = {
+	}
+
+	complete_effect = {
+		set_country_flag = CHI_resource_investment_flag
+	}
+
+	remove_effect = {
+		add_resource = {
+			type = tungsten
+			amount = 8
+			state = FROM
+		}
+	}
+	}
+	develop_steel_fields = { #597
+
+	icon = steel
+
+	target_trigger = {
+		FROM = {
+			has_state_flag = CHI_develop_steel_flag
+			is_fully_controlled_by = ROOT
+		}
+	}
+	target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+	state_target = yes
+	#on_map_mode = map_only
+	fire_only_once = yes # Only once per State
+	available = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	visible = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	cancel_trigger = {
+		NOT = { FROM = { is_fully_controlled_by = ROOT } }
+	}
+
+	cancel_effect = {
+		clr_country_flag = CHI_resource_investment_flag
+	}
+
+	days_remove = 90
+
+	cost = 25
+
+	modifier = {
+	}
+
+	complete_effect = {
+		set_country_flag = CHI_resource_investment_flag
+	}
+
+	remove_effect = {
+		add_resource = {
+			type = steel
+			amount = 10
+			state = FROM
+		}
+	}
+	}
+	develop_aluminium_fields = { #597
+
+	icon = aluminium
+
+	target_trigger = {
+		FROM = {
+			has_state_flag = CHI_develop_aluminium_flag
+			is_fully_controlled_by = ROOT
+		}
+	}
+	target_root_trigger = { has_completed_focus = CHI_begin_excavation_of_our_natural_resources } # For now - change if making it generic
+	state_target = yes
+	#on_map_mode = map_only
+	fire_only_once = yes # Only once per State
+	available = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	visible = {
+		has_completed_focus = CHI_begin_excavation_of_our_natural_resources
+	}
+
+	cancel_trigger = {
+		NOT = { FROM = { is_fully_controlled_by = ROOT } }
+	}
+
+	cancel_effect = {
+		clr_country_flag = CHI_resource_investment_flag
+	}
+
+	days_remove = 90
+
+	cost = 25
+
+	modifier = {
+	}
+
+	complete_effect = {
+		set_country_flag = CHI_resource_investment_flag
+	}
+
+	remove_effect = {
+		add_resource = {
+			type = aluminium
+			amount = 10
+			state = FROM
+		}
+	}
+	}
+}
+political_actions = {
+	jewish_scientist_asylum = {
+
+			icon = GFX_decision_generic_research
+			fire_only_once = yes
+			available = {
+			}
+			
+			cost = 50
+			ai_will_do = {
+				factor = 500
+			}
+	
+			visible = {
+				has_completed_focus = CHI_expand_the_academica_sinica
+			}
+			remove_effect = {
+			}
+			complete_effect = {
+				add_ideas = CHI_jewish_asylum						
+			}	
+	}
+}
+CHI_industrial_evacuations = {
+
+	#Originally available for 283 591 592 593 594 595 596 597 598 599 600 602 606 607 608 613 614 616 620 743
+	CHI_industrial_evacuations_from_FROM = { 
+		icon = generic_scorched_earth
+		available = {
+			FROM = {
+				OR = {
+					arms_factory > 0
+					industrial_complex > 0
+				}
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 283
+				state = 591
+				state = 592
+				state = 593
+				state = 594
+				state = 595
+				state = 596
+				state = 597
+				state = 598
+				state = 599
+				state = 600
+				state = 602
+				state = 606
+				state = 607
+				state = 608
+				state = 613
+				state = 614
+				state = 616
+				state = 620
+				state = 743			
+			}
+		}
+		on_map_mode = map_and_decisions_view
+
+		state_target = yes
+		target_trigger = {	#originally were 283 591 592 593 594 595 596 597 598 599 600 602 606 607 608 613 614 616 620 743
+			FROM = {
+				OR = {
+					state = 283
+					state = 591
+					state = 592
+					state = 593
+					state = 594
+					state = 595
+					state = 596
+					state = 597
+					state = 598
+					state = 599
+					state = 600
+					state = 602
+					state = 606
+					state = 607
+					state = 608
+					state = 613
+					state = 614
+					state = 616
+					state = 620
+					state = 743
+				}
+				is_controlled_by = ROOT
+				OR ={
+					NOT ={
+						is_fully_controlled_by = ROOT
+					}
+					any_neighbor_state = {
+						controller = {
+							has_war_with = ROOT
+						}
+					}
+				}
+			}
+		}
+		visible = {
+			has_completed_focus = CHI_industrial_evacuations	
+		}
+
+		fire_only_once = yes
+		cost = 25
+
+		days_remove = 15
+
+		remove_effect = {
+			if = {
+				limit = {
+					controls_state = FROM
+				}
+				FROM = {
+					set_variable = {
+						var = af_level
+						value = arms_factory_level
+					}
+					set_variable = {
+						var = af_to_move
+						value = arms_factory_level
+					}
+					multiply_variable = {
+						var = af_to_move
+						value = global.CHI_industrial_evacuations_amount_factor
+					}
+	
+					set_variable = {
+						var = ic_level
+						value = industrial_complex_level
+					}
+					set_variable = {
+						var = ic_to_move
+						value = industrial_complex_level
+					}
+					multiply_variable = {
+						var = ic_to_move
+						value = global.CHI_industrial_evacuations_amount_factor
+					}
+	
+					custom_effect_tooltip = CHI_industrial_evacuations_remove_AF
+					custom_effect_tooltip = CHI_industrial_evacuations_remove_IC
+					hidden_effect = {				
+						remove_building = {
+							type = arms_factory
+							level = af_level
+						}
+						remove_building = {
+							type = industrial_complex
+							level = ic_level
+						}
+					}
+	
+					#Move AF
+					CONTROLLER = {
+						random_owned_controlled_state = {
+							prioritize = { 605 603 748 }
+							limit = {
+								is_fully_controlled_by = ROOT
+								any_neighbor_state = {
+									is_controlled_by = ROOT
+								}
+								free_building_slots = {
+									building = arms_factory
+									size > 2
+									include_locked = yes
+								}
+							}
+	
+							custom_effect_tooltip = CHI_industrial_evacuations_add_AF						
+							hidden_effect = {
+								add_extra_state_shared_building_slots = af_to_move
+								add_building_construction = {
+									type = arms_factory
+									level = af_to_move
+									instant_build = yes
+								}
+								CONTROLLER = { set_country_flag = CHI_industrial_evacuations_moved_AF }
+							}
+						}
+	
+						#If no states are really safe or all safe are filled
+						#Move to random controlled state
+						if = {
+							limit = {
+								NOT = { has_country_flag = CHI_industrial_evacuations_moved_AF }
+								NOT = {
+									any_controlled_state = {
+										is_fully_controlled_by = ROOT
+										any_neighbor_state = {
+											is_controlled_by = ROOT
+										}
+										free_building_slots = {
+											building = arms_factory
+											size > 2
+											include_locked = yes
+										}
+									}
+								}
+							}
+							random_owned_controlled_state = {
+								prioritize = { 605 603 748 }
+								limit = {
+									is_controlled_by = ROOT
+									free_building_slots = {
+										building = arms_factory
+										size > 2
+										include_locked = yes
+									}
+								}
+	
+								custom_effect_tooltip = CHI_industrial_evacuations_add_AF						
+								hidden_effect = {
+									add_extra_state_shared_building_slots = af_to_move
+									add_building_construction = {
+										type = arms_factory
+										level = af_to_move
+										instant_build = yes
+									}
+								}
+							}
+						}
+						clr_country_flag = CHI_industrial_evacuations_moved_AF
+	
+	
+						#Move IC
+						random_owned_controlled_state = {
+							prioritize = { 605 603 748 }
+							limit = {
+								is_fully_controlled_by = ROOT
+								any_neighbor_state = {
+									is_controlled_by = ROOT
+								}
+								free_building_slots = {
+									building = industrial_complex
+									size > 2
+									include_locked = yes
+								}
+							}
+							
+							custom_effect_tooltip = CHI_industrial_evacuations_add_IC
+							hidden_effect = {
+								add_extra_state_shared_building_slots = ic_to_move
+								add_building_construction = {
+									type = industrial_complex
+									level = ic_to_move
+									instant_build = yes
+								}
+								CONTROLLER = { set_country_flag = CHI_industrial_evacuations_moved_IC }
+							}
+						}
+	
+						#If no states are really safe or all safe are filled
+						#Move to random controlled state
+						if = {
+							limit = {
+								NOT = { has_country_flag = CHI_industrial_evacuations_moved_IC }
+								NOT = {
+									any_controlled_state = {
+										is_fully_controlled_by = ROOT
+										any_neighbor_state = {
+											is_controlled_by = ROOT
+										}
+										free_building_slots = {
+											building = industrial_complex
+											size > 2
+											include_locked = yes
+										}
+									}
+								}
+							}
+							random_owned_controlled_state = {
+								prioritize = { 605 603 748 }
+								limit = {
+									is_controlled_by = ROOT
+									free_building_slots = {
+										building = industrial_complex
+										size > 2
+										include_locked = yes
+									}
+								}
+	
+								custom_effect_tooltip = CHI_industrial_evacuations_add_IC
+								hidden_effect = {
+									add_extra_state_shared_building_slots = ic_to_move
+									add_building_construction = {
+										type = industrial_complex
+										level = ic_to_move
+										instant_build = yes
+									}
+								}
+							}
+						}
+						clr_country_flag = CHI_industrial_evacuations_moved_IC
+					}			
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
+
+CHI_war_of_resistance = {
+
+	CHI_prioritize_external_threat = {
+
+		icon = hol_exchange_intelligence_data
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		available = {
+			has_defensive_war_with = JAP
+			OR = {
+				has_war_with = PRC
+				has_war_with = GXC
+				has_war_with = SHX
+				has_war_with = XSM
+				has_war_with = YUN
+			}
+		}
+
+		visible = {
+			has_defensive_war_with = JAP
+			OR = {
+				has_war_with = PRC
+				has_war_with = GXC
+				has_war_with = SHX
+				has_war_with = XSM
+				has_war_with = YUN
+			}
+		}
+
+		cost = 0
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		days_remove = 14
+
+		modifier = {
+			political_power_gain = -0.25
+		}
+		complete_effect = {
+			add_stability = -0.05
+			add_war_support = 0.1
+		}
+
+		remove_effect = {
+			every_country = {
+				limit = {
+					has_war_with = CHI
+					OR = {
+						tag = PRC
+						tag = GXC
+						tag = SHX
+						tag = XSM
+						tag = YUN
+					}
+				}
+				country_event = { id = kmt.186 hours = 2 }
+			}
+		}
+	}
+
+	CHI_united_front_strategy = {
+
+		icon = hol_draw_up_staff_plans
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		available = {
+			has_defensive_war_with = JAP
+			has_completed_focus = CHI_form_a_united_front
+			NOT = { has_global_flag = CHI_unite }
+			NOT = { has_global_flag = CHI_no_national_front_flag }
+		}
+
+		cost = 0
+
+		fire_only_once = yes
+
+		days_remove = 10
+
+		ai_will_do = {
+			factor = 500 #do it cause we need it!
+		}
+
+		modifier = {
+			political_power_factor = -0.05
+		}
+		
+		remove_effect = {
+			if = {
+				limit = {
+					CHI = { is_in_faction = no }
+				}
+				CHI = {
+					set_rule = { can_create_factions = yes }
+					create_faction = chinese_united_front
+				}
+			}
+			#add_ideas = KMT_united_front
+			#load_oob = "CHI_united_front"
+			set_global_flag = CHI_unite
+			set_global_flag = CHI_unite_PRC
+			every_other_country = {
+				limit = {
+					is_subject_of = ROOT
+				}
+				add_to_faction = PREV
+			}
+		}
+	}
+
+	CHI_prepare_provisional_capital = {
+
+		icon = SOV_place_hq
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		visible = {
+			controls_state = 605
+		}
+
+		available = {
+			has_war = yes
+			owns_state = 605
+			has_full_control_of_state = 605
+			613 = {
+				OR ={
+					NOT ={
+						is_fully_controlled_by = ROOT
+					}
+					any_neighbor_state = {
+						NOT ={
+							is_controlled_by = ROOT
+						}
+					}
+				}
+			}
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		days_remove = 60
+
+		highlight_states = {
+ 			highlight_state_targets = { state = 605 }
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		modifier = {
+			consumer_goods_factor = 0.10
+			
+		}
+		complete_effect = {
+			605 = {
+				add_building_construction = {
+					type = supply_node
+					level = 1
+					province = 6999
+					instant_build = yes
+				}
+			}
+		}
+		remove_effect = {
+			# Chongqing - Xi'an
+			build_railway = {
+				path = { 6999 1893 11865 10144 7418 }
+			}
+			# Chongqing - Changsha
+			build_railway = {
+				path = { 6999 4431 1010 9939 1474 10006 7279 7101 10517 7097 }
+			}
+		}
+	}
+	
+	CHI_Huayuankou_embankment_breach_incident = { #CHI_breach_the_yellow_river, but lets use the name we gave it:D - Fantom
+		icon = GFX_decision_hol_inundate_water_lines
+		
+		available = {
+			has_war = yes
+			NOT = {
+				has_full_control_of_state = 607
+			}
+			OR = {
+				NOT = { controls_state = 608 }
+				NOT = { controls_state = 614 }
+				NOT = { controls_state = 597 }
+				NOT = { controls_state = 598 }
+				NOT = { controls_state = 606 }
+			}
+		}
+
+		highlight_states = {
+ 			highlight_state_targets = { state = 607 } 
+			highlight_provinces = {
+				7656
+				9958
+				1004
+			}
+		}
+		
+		visible = {
+			controls_state = 607
+			is_literally_china = yes
+			NOT = { has_global_flag = chi_yellow_river_blown } #So warlords don't do this too
+		}
+		
+		fire_only_once = yes
+		
+		cost = 50	#originally 20
+
+		ai_will_do = {
+			base = 0
+			#Pretty damn important
+			modifier = {
+				add = 25
+				NOT = { controls_state = 608 }
+			}
+			modifier = {
+				add = 25
+				NOT = { controls_state = 614 }
+			}
+			modifier = {
+				add = 25
+				NOT = { controls_state = 597 }
+			}
+			modifier = {
+				add = 25
+				NOT = { controls_state = 598 }
+			}
+			modifier = {
+				add = 25
+				NOT = { controls_state = 606 }
+			}
+		}
+
+		days_remove = 3
+		
+		complete_effect = {
+			add_war_support = -0.05
+		}
+
+		remove_effect = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 606
+						state = 607
+						state = 598
+						state = 597
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = yellow_river_blown
+					days = 730 
+				}
+				damage_building = {	#r56 effect - stuff get damaged too! - Fantom
+					type = infrastructure
+					damage = 4
+				}
+				damage_building = {
+					type = industrial_complex
+					damage = 1.5
+				}
+			}
+			hidden_effect = { 
+				news_event = { id = news.409 } 
+				set_global_flag = chi_yellow_river_blown
+			}
+			set_global_flag = huayuankou_destroyed
+		}
+	}
+
+	CHI_scorched_earth_policy = {
+
+		icon = generic_scorched_earth
+
+		on_map_mode = map_only
+
+		allowed = {
+			is_literally_china = yes
+		}
+
+		available = {
+			has_war = yes
+			OR = {
+				surrender_progress > 0.25
+				focus_progress = {
+					focus = CHI_lure_them_in_strategy
+					progress > 0
+				}
+			}
+		}
+
+		custom_cost_text = r56_10_command_power_cost	
+		custom_cost_trigger = {
+			command_power > 9.99			
+		}
+
+		fire_only_once = yes
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_owned_by = ROOT
+				controller = {
+					has_offensive_war_with = ROOT
+					NOT = {
+						has_full_control_of_state = FROM
+					}
+				}
+				NOT = {
+					has_state_flag = scorched
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		days_remove = 7
+
+		complete_effect = {
+			add_command_power = -10	
+			add_war_support = -0.01
+		}
+		remove_effect = {
+			FROM = {
+				damage_building = {
+					type = infrastructure
+					damage = 2
+				}
+				damage_building = {
+					type = rail_way
+					damage = 2
+				}
+				damage_building = {
+					type = industrial_complex
+					damage = 1
+				}
+				damage_building = {
+					type = arms_factory
+					damage = 1
+				}
+				set_state_flag = scorched
+				set_state_flag = scorched_tt
+			}
+		}
+	}
+
+	CHI_redirect_investments_for_burma_road = {
+
+		icon = generic_industry
+
+		allowed = {
+			is_literally_china = yes
+		}
+
+		available = {
+			has_war = yes
+			focus_progress = {
+				focus =  CHI_burma_road_LS
+				progress > 0.25
+			}
+			NOT = {
+				has_completed_focus = CHI_burma_road_LS
+			}
+		}
+
+		visible = {
+			#focus_progress = {
+			#	focus = KMT_improve_burma_road
+			#	progress > 0
+			#}
+		}
+
+		cost = 10
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		days_remove = 15
+
+		modifier = {
+			consumer_goods_factor = 0.02
+		}
+		complete_effect = {
+			set_country_flag = KMT_burma_rd_forts
+			custom_effect_tooltip = KMT_burma_rd_forts_tt
+		}
+
+		remove_effect = {
+			army_experience = 5
+			add_war_support = 0.03
+		}
+	}
+
+	CHI_strife_for_survival = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		available = {
+			has_defensive_war = yes
+			OR = {
+				surrender_progress > 0.29
+				AND = {
+					608 = {
+						controller = { has_war_with = ROOT }
+					}
+					613 = {
+						controller = { has_war_with = ROOT }
+					}
+				}
+			}
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		days_remove = 30
+
+		ai_will_do = {
+			factor = 500 #do it cause we need it!
+		}
+
+		modifier = {
+			political_power_factor = -0.1
+		}
+		
+		remove_effect = {
+			add_ideas = CHI_fight_for_survival
+		}
+	}
+
+	CHI_most_desperate_hours = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		visible = {
+			has_idea = CHI_fight_for_survival
+		}
+
+		available = {
+			has_defensive_war = yes
+			has_idea = CHI_fight_for_survival
+			surrender_progress > 0.49
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		days_remove = 30
+
+		ai_will_do = {
+			factor = 500	#Do it!
+		}
+
+		modifier = {
+			political_power_factor = -0.2
+		}
+		
+		remove_effect = {
+			swap_ideas = {
+				remove_idea = CHI_fight_for_survival
+				add_idea = CHI_fight_for_survival_2
+			}
+		}
+	}
+}
+CHI_martial_law = {
+	CHI_destroy_communist_cells = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			command_power > 100
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		days_remove = 50
+
+		ai_will_do = {
+			factor = 500	#Do it!
+		}
+
+		modifier = {
+			political_power_factor = -0.2
+			
+		}
+		complete_effect = {
+			add_command_power = -100
+		}
+		remove_effect = {
+			every_owned_state = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = communist_stronhold
+					}
+				}
+				remove = {
+					modifier = communist_stronghold
+					scope = ROOT
+				}
+			}
+			set_global_flag = CHI_destroyed_communist_cells
+		}
+	}
+	CHI_get_rid_of_dai_li = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			has_global_flag = CHI_destroyed_communist_cells
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		days_remove = 50
+
+		ai_will_do = {
+			factor = 500	#Do it!
+		}
+
+		modifier = {
+			political_power_factor = -0.2
+		}
+		
+		remove_effect = {
+			add_popularity = {
+				ideology = communism
+				popularity = -0.10
+			}
+			add_political_power = 75
+			CHI_dai_li = {
+				set_can_be_fired_in_advisor_role = {
+					value = yes
+				}
+			}
+		}
+	}
+	CHI_integrate_warlords_once_and_for_all = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		days_remove = 50
+
+		ai_will_do = {
+			factor = 500	#Do it!
+		}
+
+		modifier = {
+			political_power_factor = -0.2
+		}
+		
+		remove_effect = {
+			remove_ideas = CHI_allied_warlords
+			every_owned_state = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = warlord_state
+					}
+				}
+				remove = {
+					modifier = warlord_state
+					scope = ROOT
+				}
+			}
+		}
+	}
+	CHI_purge_education = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = CHI
+		}
+
+		visible = {
+			
+		}
+
+		available = {
+			
+		}
+
+		cost = 50
+
+		fire_only_once = yes
+
+		days_remove = 50
+
+		ai_will_do = {
+			factor = 500	#Do it!
+		}
+
+		modifier = {
+			political_power_factor = -0.2
+		}
+		complete_effect = {
+			add_ideas = CHI_education_purges
+		}
+		remove_effect = {
+			remove_ideas = CHI_education_purges
+			add_popularity = {
+				ideology = communism
+				popularity = -0.10
+			}
+			set_country_flag = CHI_education_purges_flag
+		}
+	}
+}

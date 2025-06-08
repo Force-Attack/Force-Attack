@@ -1,0 +1,262 @@
+#Add to scripted triggers if more levels of hyper inflation is added
+CHI_hyper_inflation_clear_all = {
+	remove_ideas = {
+		CHI_hyper_inflation_1
+		CHI_hyper_inflation_2
+		CHI_hyper_inflation_3
+		CHI_hyper_inflation_4
+		CHI_hyper_inflation_5
+	}
+}
+
+#Important to put HIGHEST first
+CHI_hyper_inflation_level_up = {
+	# level 5 not relevant. Cannot go above.
+	custom_effect_tooltip = CHI_inflation_up_tt
+	if = {
+		limit = { 
+            has_idea = CHI_hyper_inflation_4 
+            NOT = {
+                has_completed_focus = CHI_the_great_advance_foward
+            }
+        }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_4
+			add_idea = CHI_hyper_inflation_5
+		}
+	}
+	else_if = {
+		limit = { has_idea = CHI_hyper_inflation_3 
+            NOT = {
+                has_completed_focus = CHI_the_great_advance_foward
+            }
+        }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_3
+			add_idea = CHI_hyper_inflation_4
+		}
+	}
+	else_if = {
+		limit = { has_idea = CHI_hyper_inflation_2 
+            NOT = {
+                has_completed_focus = CHI_the_great_advance_foward
+            }
+        }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_2
+			add_idea = CHI_hyper_inflation_3
+		}
+	}
+	else_if = {
+		limit = { has_idea = CHI_hyper_inflation_1 
+            NOT = {
+                has_completed_focus = CHI_the_great_advance_foward
+            }    
+        }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_1
+			add_idea = CHI_hyper_inflation_2
+		}		
+	}
+	else_if = {
+		limit = { NOT = { has_idea = CHI_hyper_inflation_1 } 
+            NOT = {
+                has_completed_focus = CHI_the_great_advance_foward
+            }    
+        }
+		add_ideas = CHI_hyper_inflation_1
+	}
+}
+
+#Important to put LOWEST first
+CHI_hyper_inflation_level_down = {
+custom_effect_tooltip = CHI_inflation_down_tt
+	if = {
+		limit = { has_idea = CHI_hyper_inflation_1 }
+		#Makes the tooltip clearer if player looks at the effect early in the game
+		effect_tooltip = {
+			swap_ideas = {
+				remove_idea = CHI_hyper_inflation_1
+				add_idea = CHI_hyper_inflation_none
+			}
+		}
+		hidden_effect = { remove_ideas = CHI_hyper_inflation_1 }
+	}
+	if = {
+		limit = { has_idea = CHI_hyper_inflation_2 }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_2
+			add_idea = CHI_hyper_inflation_1
+		}
+	}
+	if = {
+		limit = { has_idea = CHI_hyper_inflation_3 }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_3
+			add_idea = CHI_hyper_inflation_2
+		}
+	}
+	if = {
+		limit = { has_idea = CHI_hyper_inflation_4 }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_4
+			add_idea = CHI_hyper_inflation_3
+		}
+	}
+	if = {
+		limit = { has_idea = CHI_hyper_inflation_5 }
+		swap_ideas = {
+			remove_idea = CHI_hyper_inflation_5
+			add_idea = CHI_hyper_inflation_4
+		}
+	}
+}
+
+CHI_start_cw_system = {
+    set_variable = {
+        var = global.CHI_prc_strength
+        value = 100
+    }
+    add_ideas = CHI_ongoing_civil_war
+}
+
+CHI_integrate_warlord = {
+    if = {
+        limit = {
+            has_idea = CHI_warlord_integration_1
+        }
+        remove_ideas = CHI_warlord_integration_1
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_warlord_integration_2
+        }
+        swap_ideas = {
+            remove_idea = CHI_warlord_integration_2
+            add_idea = CHI_warlord_integration_1
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_warlord_integration_3
+        }
+        swap_ideas = {
+            remove_idea = CHI_warlord_integration_3
+            add_idea = CHI_warlord_integration_2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_warlord_integration_4
+        }
+        swap_ideas = {
+            remove_idea = CHI_warlord_integration_4
+            add_idea = CHI_warlord_integration_3
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_warlord_integration_5
+        }
+        swap_ideas = {
+            remove_idea = CHI_warlord_integration_5
+            add_idea = CHI_warlord_integration_4
+        }
+    }
+}
+
+CHI_decreace_illiteracy = {
+    custom_effect_tooltip = CHI_decreace_illiteracy_tt
+    if = {
+        limit = {
+            has_idea = CHI_chinese_illiteracy_1
+        }
+        swap_ideas = {
+            remove_idea = CHI_chinese_illiteracy_1
+            add_idea = CHI_a_new_chinese_education
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_chinese_illiteracy_2
+        }
+        swap_ideas = {
+            remove_idea = CHI_chinese_illiteracy_2
+            add_idea = CHI_chinese_illiteracy_1
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = CHI_chinese_illiteracy_3
+        }
+        swap_ideas = {
+            remove_idea = CHI_chinese_illiteracy_3
+            add_idea = CHI_chinese_illiteracy_2
+        }
+    }
+}
+
+CHI_increase_corrupted_economy = {
+    #custom_effect_tooltip = CHI_increase_inflation_tt
+    if = {
+        limit = {
+            has_idea = chinese_corrupted_economy_3
+        }
+        swap_ideas = {
+            remove_idea = chinese_corrupted_economy_3
+            add_idea = chinese_corrupted_economy_2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = chinese_corrupted_economy_2
+        }
+        swap_ideas = {
+            remove_idea = chinese_corrupted_economy_2
+            add_idea = chinese_corrupted_economy
+        }
+    }
+}
+
+CHI_decrease_corrupted_economy = {
+    #custom_effect_tooltip = CHI_increase_inflation_tt
+    if = {
+        limit = {
+            has_idea = chinese_corrupted_economy
+        }
+        swap_ideas = {
+            remove_idea = chinese_corrupted_economy
+            add_idea = chinese_corrupted_economy_2
+        }
+    }
+    else_if = {
+        limit = {
+            has_idea = chinese_corrupted_economy_2
+        }
+        swap_ideas = {
+            remove_idea = chinese_corrupted_economy_2
+            add_idea = chinese_corrupted_economy_3
+        }
+    }
+}
+CHI_remove_corrupted_economy = {
+    #custom_effect_tooltip = CHI_increase_inflation_tt
+    if = {
+        limit = {
+            has_idea = chinese_corrupted_economy
+        }
+        remove_ideas = chinese_corrupted_economy
+    }
+    else_if = {
+        limit = {
+            has_idea = chinese_corrupted_economy_2
+        }
+        remove_ideas = chinese_corrupted_economy_2
+    }
+    else_if = {
+        limit = {
+            has_idea = chinese_corrupted_economy_3
+        }
+        remove_ideas = chinese_corrupted_economy_3
+    }
+}
