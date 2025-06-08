@@ -2972,7 +2972,7 @@ focus = {
 						has_country_flag = USA_the_giant_wakes_added_civ_eco
 					}
 				}
-				add_ideas = partial_economic_mobilisation
+				add_ideas = civilian_economy
 				set_country_flag = USA_the_giant_wakes_added_civ_eco
 			}
 			if = { 
@@ -3162,13 +3162,24 @@ focus = {
 				date > 1939.6.1
 				has_war_support > .70
 			}
+			congress_high_support_trigger = yes
 		}
 
 		ai_will_do = {
 			factor = 1
 		}
 		completion_reward = {
-						if = {
+			if = {
+					limit = { 
+						NOT = { OR = { has_war_with = GER has_war_with = JAP } }
+						NOT = { has_idea = war_economy }
+						NOT = { has_idea = tot_economic_mobilisation }
+					}
+					custom_effect_tooltip = SOV_war_economy_stability_tt
+					add_stability = -0.30
+					add_ideas = war_economy
+				}
+			else_if = {
 				limit = {
 					NOT = { has_idea = war_economy }
 					NOT = { has_idea = tot_economic_mobilisation }
