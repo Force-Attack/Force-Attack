@@ -440,6 +440,7 @@ focus_tree = {
 	focus = {
 		id = SPR_the_popular_front
 		available = {
+			is_ai = no
 			NOT = {
 				has_country_flag = SPR_spanish_elections_flag
 			}
@@ -449,19 +450,28 @@ focus_tree = {
 			has_global_flag = spanish_civil_war
 		}
 		mutually_exclusive = { focus = SPA_a_great_spain }
+		cancel_if_invalid = yes
 		allow_branch = {
-			OR = {
-				NOT = {
-					has_global_flag = spanish_civil_war
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
 				}
-				AND = {
-					NOT = { has_completed_focus = SPA_a_great_spain }
-					has_global_flag = spanish_civil_war
+				OR = {
+					NOT = {
+						has_global_flag = spanish_civil_war
+					}
+					AND = {
+						NOT = { has_completed_focus = SPA_a_great_spain }
+						has_global_flag = spanish_civil_war
+					}
 				}
 			}
 		}
 		
-		icon = GFX_goal_FRA_help_the_spanish_republicans
+		icon = GFX_goal_generic_national_unity
 		x = 33
 		y = 0
 		offset = {
@@ -470,6 +480,10 @@ focus_tree = {
 			trigger = {
 				has_completed_focus = SPR_the_popular_front
 				has_global_flag = spanish_civil_war
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
 			}
 		}
 		cost = 5
@@ -485,26 +499,6 @@ focus_tree = {
 			    ideology = neutrality
 			    popularity = 0.05
 			}
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = spr_fragmentation_status
-						option = SPR_EU4
-					}
-				}
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.45
-				}
-				add_popularity = {
-					ideology = communism
-					popularity = 0.05
-				}				
-				set_politics = {
-					ruling_party = democratic
-				}
-			}
-
 			hidden_effect = {
 				every_owned_state = {
 					limit = {
@@ -518,17 +512,13 @@ focus_tree = {
 					SPR_garrison_control_cost_calculation = yes
 				}
 			}
-			if = {
-				limit = {
-					is_ai = yes
-				}
-				set_global_flag = scw_is_ai_driven
-			}
 		}
 	}
 
 	focus = {
 		id = SPR_secure_the_guardia_de_asalto
+		available = {
+		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
@@ -544,6 +534,10 @@ focus_tree = {
 			trigger = {
 				has_completed_focus = SPR_the_popular_front
 				has_global_flag = spanish_civil_war
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
 			}
 		}
 		relative_position_id = SPR_the_popular_front
@@ -575,6 +569,10 @@ focus_tree = {
 
 	focus = {
 		id = SPR_secure_the_guardia_civil
+		available = {
+		}
+		bypass = {
+		}
 		prerequisite = { focus = SPR_the_popular_front }
 		mutually_exclusive = { focus = SPR_secure_the_guardia_de_asalto }
 		
@@ -587,6 +585,10 @@ focus_tree = {
 			trigger = {
 				has_completed_focus = SPR_the_popular_front
 				has_global_flag = spanish_civil_war
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
 			}
 		}
 		relative_position_id = SPR_the_popular_front
@@ -618,6 +620,8 @@ focus_tree = {
 
 	focus = {
 		id = SPR_train_the_union_youth
+		available = {
+		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
@@ -644,6 +648,8 @@ focus_tree = {
 
 	focus = {
 		id = SPR_enlarge_the_weapon_caches
+		available = {
+		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
@@ -666,6 +672,8 @@ focus_tree = {
 
 	focus = {
 		id = SPR_distribute_arms_to_the_people
+		available = {
+		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
@@ -693,6 +701,8 @@ focus_tree = {
 
 	focus = {
 		id = SPR_disband_the_army
+		available = {
+		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
@@ -707,11 +717,11 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = {FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR}
 		completion_reward = {
-			add_political_power = 200
 			add_timed_idea = { 
 				idea = SPA_anti_major_cuck_idea
 				days = 730
 			}
+			add_political_power = 200
 			set_country_flag = SPR_disband_the_army_flag
 			custom_effect_tooltip = SPR_disband_the_army_tt
 			hidden_effect = { country_event = lar_spain.2 }
