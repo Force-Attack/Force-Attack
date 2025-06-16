@@ -44,9 +44,6 @@ NDefines.NProject.RECRUIT_SCIENTIST_COST = {						-- Amount of pp to hire a scie
 
 ----------------------------------
 NDefines.NTechnology.MAX_SUBTECHS = 4						-- Max number of sub technologies a technology can have.
-NDefines.NTechnology.BASE_RESEARCH_POINTS_SAVED = 50.0 --#base game 30 changed to 50 and then why not 56?
-NDefines.NTechnology.BASE_YEAR_AHEAD_PENALTY_FACTOR = 3.0		-- Base year ahead penalty
-NDefines.NTechnology.BASE_TECH_COST = 80					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties
 ----------------------------------
 NDefines.NCountry.SPECIAL_FORCES_CAP_BASE = 0.0 -- prevent special forces exploit 
 NDefines.NCountry.SPECIAL_FORCES_CAP_MIN = 1000 -- 20 forty-width special forces divisions, plenty  
@@ -281,20 +278,6 @@ NDefines.NAir.MISSION_COMMAND_POWER_COSTS = { -- command power cost per plane to
 NDefines.NAir.NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 25.0
 
 NDefines.NAir.AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.12			-- 5x levels = 50% defense from bombing. Reduced since Technology would otherwise give you above 100% damage reduction.
---------------------------------------------------------------------------------------------------------------
--- RESEARCH
---------------------------------------------------------------------------------------------------------------
-NDefines.NAI.RESEARCH_DAYS_BETWEEN_WEIGHT_UPDATE = 1
-NDefines.NAI.RESEARCH_LAND_DOCTRINE_NEED_GAIN_FACTOR = 0	-- Multiplies value based on relative military industry size / country size.
-NDefines.NAI.RESEARCH_NAVAL_DOCTRINE_NEED_GAIN_FACTOR = 0	-- Multiplies value based on relative naval industry size / country size.
-NDefines.NAI.RESEARCH_AIR_DOCTRINE_NEED_GAIN_FACTOR = 0		-- Multiplies value based on relative number of air base / country size.
-
-NDefines.NAI.MAX_AHEAD_RESEARCH_PENALTY = 1.3
-NDefines.NAI.RESEARCH_NEW_WEIGHT_FACTOR = 0.5 			-- Impact of previously unexplored tech weights. Higher means more random exploration.
-NDefines.NAI.RESEARCH_BONUS_FACTOR = 3 				-- To which extent AI should care about bonuses to research
-NDefines.NAI.RESEARCH_AHEAD_OF_TIME_FACTOR = 2.0 		-- To which extent AI should care about ahead of time penalties to research
-NDefines.NAI.RESEARCH_BASE_DAYS = 30					-- Vanilla 60 AI adds a base number of days when weighting completion time for techs to ensure it doesn't only research quick techs	
-NDefines.NAI.XP_RATIO_REQUIRED_TO_RESEARCH_WITH_XP = 3.0
 
 --------------------------------------------------------------------------------------------------------------
 -- DESIGN
@@ -586,9 +569,6 @@ NDefines.NAI.AREA_DEFENSE_BASE_IMPORTANCE = 4					-- Area defense order base imp
 
 NDefines.NAI.ALLY_SUPPLY_RATIO_FOR_UNIT_PRODUCTION = 0.00		-- supply ratio of ally supply chunks will be added to our own supply chunks (since we will fight around allies as well) modified by produce_unit_for_ally_supply_chunks strat
 
-
-NDefines.NAI.XP_RATIO_REQUIRED_TO_RESEARCH_WITH_XP = 1.5		-- AI will at least need this amount of xp compared to cost of a tech to reserch it with XP #BASE WAS 2.0	
-
 NDefines.NAI.FRONT_EVAL_UNIT_ACCURACY = 0.95                          -- scale how stupid ai will act on fronts. 0 is potato #BASE WAS 0.7
 
 NDefines.NAI.MIN_NUM_CONQUERED_PROVINCES_TO_DEPRIO_NAVAL_INVADED_FRONTS = 35	-- if you conquer this amount of provinces after a naval invasion it will lose its prio status and will act as a regular front	
@@ -722,10 +702,6 @@ NDefines.NOperatives.DIPLOMATIC_PRESSURE_DAILY_XP_GAIN = 0.155 			-- Daily XP gi
 NDefines.NOperatives.COUNTER_INTELLIGENCE_DAILY_XP_GAIN = 0.115 		-- Daily XP given doing counter intelligence mission was 0.112
 NDefines.NOperatives.QUIET_INTEL_NETWORK_DAILY_XP_GAIN = 0.1  		-- Daily XP given doing quiet intel network mission was 0!
 NDefines.NOperatives.BUILD_INTEL_NETWORK_DAILY_XP_GAIN = 1.25  		-- was 1.0
-
-
-NDefines.NTechnology.BASE_TECH_COST = 80
-NDefines.NTechnology.BASE_YEAR_AHEAD_PENALTY_FACTOR = 2 -- Base year ahead penalty from 2
 
 
 -- Supply Abbus: It punish less compare to vanilla
