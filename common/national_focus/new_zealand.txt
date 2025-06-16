@@ -8,14 +8,18 @@ focus_tree = {
 		}
 	}
 	
+#################
+####NAVY TREE####
+#################
 
 focus = {
 	id = NZL_improve_the_radars
-	icon = GFX_goal_generic_radar
+	icon = GFX_goal_NZL_coa_navy
+
 	x = 0
 	y = 0
 	
-	cost = 2
+	cost = 10
 
 	ai_will_do = {
 		factor = 25
@@ -24,32 +28,152 @@ focus = {
 	search_filters = { FOCUS_FILTER_RESEARCH }
 
 	completion_reward = {
-		add_tech_bonus = {
-			name = NZL_improve_the_radars
-			bonus = 1
-			uses = 1
-			category = radar_tech
+		284 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
 		}
-		custom_effect_tooltip = generic_skip_one_line_tt
-		add_breakthrough_progress = {
-			specialization = specialization_air
-			value = 0.25
-		}
-		custom_effect_tooltip = generic_skip_one_line_tt
-		add_ideas = r56_generic_radar_idea
+		random_owned_controlled_state = {
+				limit = {
+					can_construct_building = air_facility
+				}
+				prioritize = { 284 }
+				construct_building_in_random_province = {
+					air_facility = 1
+				}
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_air
+				value = 1
+			}
 	}
 }
+
+focus = {
+	id = NZL_Increase_Naval_Production
+	icon = GFX_goal_navy_funding
+	relative_position_id = NZL_improve_the_radars
+	prerequisite = { focus = NZL_Pacific_Convoy_Defense focus = NZL_RNZN_Pacific_Command}
+	x = 0
+	y = 2
+	cost = 10
+
+	ai_will_do = {
+		factor = 25
+	}
 	
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		add_ideas = NZL_Davenport_Shipyards
+		random_owned_controlled_state = {
+                limit = {
+                    is_core_of = ROOT
+                    free_building_slots = {
+                        building = dockyard
+                        size > 0
+                    }
+                }
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    is_core_of = ROOT
+                    free_building_slots = {
+                        building = dockyard
+                        size > 0
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+	}
+}
+focus = {
+	id = NZL_Pacific_Convoy_Defense
+	icon = GFX_goal_generic_navy_anti_submarine
+	relative_position_id = NZL_improve_the_radars
+	prerequisite = { focus = NZL_improve_the_radars}
+	mutually_exclusive = { focus = NZL_RNZN_Pacific_Command }
+	x = -1
+	y = 1
+	cost = 5
+	ai_will_do = {
+		factor = 25
+	}
+	search_filters = { FOCUS_FILTER_RESEARCH }
+	completion_reward = {
+		284 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+		}
+		add_doctrine_cost_reduction = {
+				name = AST_R56_commerce_protection
+				cost_reduction = 0.5
+				uses = 3
+				category = fleet_in_being_tree
+			}
+	}
+}
+focus = {
+	id = NZL_RNZN_Pacific_Command
+	icon = GFX_goal_sea_navy
+	relative_position_id = NZL_improve_the_radars
+	prerequisite = { focus = NZL_improve_the_radars}
+	mutually_exclusive = { focus = NZL_Pacific_Convoy_Defense }
+	x = 1
+	y = 1
+	cost = 5
+
+	ai_will_do = {
+		factor = 25
+	}
+	
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		723 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+		}
+		add_doctrine_cost_reduction = {
+				name = AST_R56_commerce_protection
+				cost_reduction = 0.5
+				uses = 3
+				category = base_strike_main
+			}
+	}
+}
 focus = {
 	id = NZL_train_new_officers
 	icon = GFX_goal_generic_admirality
-	x = 4
+	x = 3
 	y = 1
 	relative_position_id = NZL_improve_the_radars
 	prerequisite = { focus = NZL_improve_the_radars}
-	mutually_exclusive = { focus = NZL_expand_our_tank_warfare }
 
-	cost = 3
+	cost = 5
 
 	ai_will_do = {
 		factor = 25
@@ -57,339 +181,191 @@ focus = {
 	search_filters = { FOCUS_FILTER_RESEARCH }
 
 	completion_reward = {
-		add_ideas = NZL_ftftftggg1_carriers2
-		navy_experience = 25
-		add_doctrine_cost_reduction = {
-			name = NZL_train_new_officers
-			cost_reduction = 0.5
-			uses = 2
-			category = naval_doctrine
+		every_navy_leader = {
+			add_attack = 1
+			add_defense = 1
+			add_logistics = 1
+			add_coordination = 1
 		}
+		unlock_decision_category_tooltip = NZL_Naval_Academy_decision_category
 	}
 }
 
 	
 focus = {
-		id = NZL_supply_the_new_zealand_navy_divsion
+		id = NZL_Invest_in_Saint_Marys_Shipbuilding
 		icon = GFX_goal_navy_schematics
-		x = 0
+		x = -1
 		y = 1
-		relative_position_id = NZL_improve_the_radars
-		prerequisite = { focus = NZL_improve_the_radars}
+		relative_position_id = NZL_Pacific_Convoy_Defense
+		prerequisite = { focus = NZL_Pacific_Convoy_Defense}
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 2
 		}
 
-		bypass = {
-			NOT = { is_subject_of = ENG }
-		}
-
-		
-		
-		
-
 		completion_reward = {
-			custom_effect_tooltip = NZL_transfer_ships_tt
-			ENG = {
-			    transfer_ship = {
-			        prefer_name = "HMS Achilles"
-			        type = light_cruiser
-			        target = NZL
-			    }
-			    transfer_ship = {
-			        prefer_name = "HMS Leander"
-			        type = light_cruiser
-			        target = NZL
-				}
+			navy_experience = 50
+			mio:NZL_st_mary_bay_ship_organization = {
+				add_mio_size = 3
+				add_mio_funds_gain_factor = 0.05
 			}
 		}
 }
-
+	
 focus = {
-		id = NZL_solidify_the_new_zealand_division
-		icon = GFX_goal_generic_navy_doctrines_tactics
-		x = 0
+		id = NZL_Prioritize_Capital_and_Carrier_Funding
+		icon = GFX_goal_generic_aircraft_carrier
+		x = 1
 		y = 1
 		relative_position_id = NZL_train_new_officers
-		prerequisite = { focus = NZL_train_new_officers}
+		prerequisite = { focus = NZL_RNZN_Pacific_Command}
+		prerequisite = { focus = NZL_train_new_officers }
 
 		cost = 10
 
 		ai_will_do = {
 			factor = 2
 		}
-		
-		search_filters = { FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			navy_experience = 15
-			add_doctrine_cost_reduction = {
-				name = NZL_solidify_the_new_zealand_division
-				cost_reduction = 0.5
-				uses = 2
-				category = naval_doctrine
-			}		
-		}
-	}
-
-	focus = { 
-		id = NZL_naval_profit
-		icon = GFX_goal_navy_funding
-		x= 0
-		y= 1
-		relative_position_id = NZL_supply_the_new_zealand_navy_divsion
-		prerequisite = { focus = NZL_supply_the_new_zealand_navy_divsion}
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 2
-		}
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 284 }
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
+			set_technology = { basic_ship_hull_carrier = 1 }
+			set_technology = { basic_ship_hull_heavy = 1}
+			create_equipment_variant = {
+						name = "HMS Samoa"				
+						type = ship_hull_carrier_1
+						name_group = NZL_CA_HISTORICAL
+						parent_version = 0
+						allow_without_tech = yes
+						modules = {
+							fixed_ship_deck_slot_1 = ship_deck_space
+							fixed_ship_deck_slot_2 = ship_deck_space
+							fixed_ship_anti_air_slot = ship_anti_air_2
+							fixed_ship_radar_slot = empty
+							fixed_ship_engine_slot = carrier_ship_engine_2
+							fixed_ship_secondaries_slot = ship_secondaries_2
+							front_1_custom_slot = ship_deck_space
+						}
+						obsolete = yes
+						design_team = mio:NZL_port_chalmers_shipbuilding_organization
 					}
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = dockyard
-					level = 3
-					instant_build = yes
-				}
-			}
-			284 = {
-				add_building_construction = {
-					type = naval_base
-					province = 4543
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-
-	focus = {
-		id = NZL_form_the_new_zealand_navy
-		icon = GFX_goal_NZL_coa_navy
-		x = 0
-		y = 1
-		relative_position_id = NZL_solidify_the_new_zealand_division
-		prerequisite = { focus = NZL_solidify_the_new_zealand_division}
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 2
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 284 }
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
+					add_equipment_production = {
+						equipment = {
+							type = ship_hull_carrier_1
+							creator = "NZL"
+							version_name = "HMS Samoa"
+						}
+						name = "Moa Class"
+						requested_factories = 1
+						progress = 0.50
+						amount = 1
+						industrial_manufacturer = mio:NZL_port_chalmers_shipbuilding_organization
 					}
-				}
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-					type = dockyard
-					level = 4
-					instant_build = yes
-				}
-			}
-		}
-	}
-	focus = {
-		id = NZL_naval_equipment
-		prerequisite = { focus = NZL_form_the_new_zealand_navy }
-		icon = GFX_goal_generic_admirality
-		x = 0
-		y = 1
-		relative_position_id = NZL_form_the_new_zealand_navy
-		cost = 10
-		ai_will_do = {
-			factor = 10
-		}
 
-		allow_branch = {
-			has_dlc = "Man the Guns"			
-		}		
-
-		available_if_capitulated = yes
-
-		completion_reward = {
+			create_equipment_variant = {
+						name = "HMS Tasman"				
+						type = ship_hull_heavy_2
+						name_group = NZL_BB_HISTORICAL
+						parent_version = 0
+						allow_without_tech = yes
+						modules = {
+							fixed_ship_battery_slot = ship_heavy_battery_3
+							fixed_ship_anti_air_slot = ship_anti_air_1
+							fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+							fixed_ship_radar_slot = ship_radar_1
+							fixed_ship_engine_slot = heavy_ship_engine_2
+							fixed_ship_secondaries_slot = ship_secondaries_1
+							fixed_ship_armor_slot = ship_armor_bb_3
+							front_1_custom_slot = ship_anti_air_1
+							mid_1_custom_slot = ship_airplane_launcher_1
+							mid_2_custom_slot = ship_secondaries_1
+							rear_1_custom_slot = ship_heavy_battery_3
+						}
+						obsolete = yes
+						design_team = mio:NZL_port_chalmers_shipbuilding_organization
+					}
+					add_equipment_production = {
+						equipment = {
+							type = ship_hull_heavy_2
+							creator = "NZL"
+							version_name = "HMS Tasman"
+						}
+						name = "Tasman Class"
+						requested_factories = 1
+						progress = 0.50
+						amount = 1
+						industrial_manufacturer = mio:NZL_port_chalmers_shipbuilding_organization
+					}
 			add_tech_bonus = {
-				name = SPR_navy_modernization
+				name = "New Zealand Battleship and Carriers"
 				bonus = 1
-				uses = 2
-				category = naval_gunnery_tech
-				category = naval_shell_tech
-			}
-			add_tech_bonus = {
-				name = SPR_navy_modernization
-				bonus = 1
-				uses = 2
-				category = asw_tech
-				category = torpedo_equipment
-			}
-			add_tech_bonus = {
-				name = SPR_navy_modernization
-				bonus = 1
-				uses = 2
-				category = naval_armor_tech
-				category = damage_control_tech
-				
-			}					
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = NZL_destroyer_production
-		icon = GFX_goal_generic_large_fleet
-		prerequisite = { focus = NZL_naval_profit }
-		mutually_exclusive = { focus = NZL_submarine_production }
-		x = -1
-		y = 1
-		relative_position_id = NZL_naval_profit
-		cost = 10
-
-		ai_will_do = {
-			factor = 20
-		}
-		
-		search_filters = { FOCUS_FILTER_RESEARCH }
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = NZL_destroyer_production
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 2
-				category = dd_tech
-			}
-			if = {
-				limit = {
-					has_dlc = "Man the Guns"
-				}
-				add_tech_bonus = {
-					name = SPR_navy_modernization
-					bonus = 2
-					uses = 1
-					category = asw_tech
-				}				
-			}			
-		}
-	}
-
-	focus = {
-		id = NZL_submarine_production
-		icon = GFX_goal_generic_navy_submarine
-		prerequisite = { focus = NZL_naval_profit }
-		mutually_exclusive = { focus = NZL_destroyer_production }
-		x = 2
-		y = 1
-		relative_position_id = NZL_naval_profit
-		cost = 10
-
-		ai_will_do = {
-			factor = 2
-		}
-		
-		search_filters = { FOCUS_FILTER_RESEARCH }
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = NZL_submarine_production
-				bonus = 1
-				ahead_reduction = 2
-				uses = 2
-				category = ss_tech
-			}
-			if = {
-				limit = {
-					has_dlc = "Man the Guns"
-				}
-
-				add_tech_bonus = {
-					name = SPR_navy_modernization
-					bonus = 1
-					uses = 1
-					category = torpedo_equipment
-					technology = basic_submarine_snorkel
-					technology = improved_submarine_snorkel						
-				}
-			}			
-		}
-	}
-
-	focus = {
-		id = NZL_support_ships
-		icon = GFX_goal_generic_navy_cruiser
-		prerequisite = { focus = NZL_destroyer_production focus = NZL_submarine_production }
-		x = -1
-		y = 2
-		relative_position_id = NZL_naval_profit
-		cost = 10
-
-		ai_will_do = {
-			factor = 25
-		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = NZL_support_ships
-				bonus = 1
-				ahead_reduction = 2
-				uses = 2
-				category = cl_tech
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-
-	focus = {
-		id = NZL_pride_of_the_fleet
-		icon = GFX_goal_generic_navy_battleship
-		prerequisite = { focus = NZL_destroyer_production focus = NZL_submarine_production }
-		x = 2
-		y = 2
-		relative_position_id = NZL_naval_profit
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 25
-		}
-		
-		search_filters = { FOCUS_FILTER_RESEARCH }
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = NZL_pride_of_the_fleet
-				bonus = 1
-				ahead_reduction = 2
+				ahead_reduction = 1
 				uses = 2
 				category = bb_tech
 				category = cv_tech
 			}
 		}
-	}
+}
+	
+focus = {
+	id = NZL_Light_Ship_Improvements
+	icon = GFX_goal_generic_destroyer
+	relative_position_id = NZL_RNZN_Pacific_Command
+	prerequisite = { focus = NZL_RNZN_Pacific_Command}
+	prerequisite = { focus = NZL_train_new_officers}
+	
+	x = 1
+	y = 1
+	cost = 5
 
+	ai_will_do = {
+		factor = 25
+	}
+	
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		navy_experience = 50
+		add_tech_bonus = {
+				name = "New Zealand Screens and Light Ships"
+				bonus = 0.75
+				uses = 4
+				category = mio_cat_tech_all_screen_ship_and_modules
+				
+			}
+	}
+}
+focus = {
+	id = NZL_Victory_Ships_of_the_South_Seas
+	icon = GFX_goal_generic_naval_academy
+	relative_position_id = NZL_Light_Ship_Improvements
+	prerequisite = { focus = NZL_Light_Ship_Improvements}
+	prerequisite = { focus = NZL_Prioritize_Capital_and_Carrier_Funding}
+	
+	x = 1
+	y = 1
+	cost = 10
+
+	ai_will_do = {
+		factor = 25
+	}
+	
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		add_ideas = NZL_Victory_Ships_of_the_South_Seas
+		mio:NZL_port_chalmers_shipbuilding_organization = {
+				add_mio_size = 2
+			}
+		custom_effect_tooltip = NZL_New_MIO_Traits_tt
+	}
+}
+
+#################
+####ARMY TREE####
+#################
 	focus = {
 		id = NZL_mution_companies_investments
 		icon = GFX_focus_manufacturers_cooperation
@@ -538,7 +514,6 @@ focus = {
 	id = NZL_expand_our_tank_warfare 
 	icon = GFX_focus_NZL_bob_semple_tank		 
 	prerequisite = { focus = NZL_mution_companies_investments}
-	mutually_exclusive = { focus = NZL_train_new_officers }
 	x = -2
 	y = 1
 	relative_position_id = NZL_mution_companies_investments
