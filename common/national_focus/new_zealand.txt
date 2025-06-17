@@ -13,10 +13,72 @@ focus_tree = {
 #################
 
 focus = {
+		id = NZL_supply_the_new_zealand_navy_divsion
+		icon = GFX_goal_ENG_pride_of_the_fleet
+		x = 2
+		y = 0
+		relative_position_id = NZL_improve_the_radars
+		
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			NOT = { is_subject_of = ENG }
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = NZL_transfer_ships_tt
+			ENG = {
+			    transfer_ship = {
+			        prefer_name = "A/B/C/D Class"
+			        type = destroyer
+			        target = NZL
+			    }
+				transfer_ship = {
+			        prefer_name = "A/B/C/D Class"
+			        type = destroyer
+			        target = NZL
+			    }
+				transfer_ship = {
+			        prefer_name = "A/B/C/D Class"
+			        type = destroyer
+			        target = NZL
+			    }
+				transfer_ship = {
+			        prefer_name = "A/B/C/D Class"
+			        type = destroyer
+			        target = NZL
+			    }
+				transfer_ship = {
+			        prefer_name = "A/B/C/D Class"
+			        type = destroyer
+			        target = NZL
+			    }
+			    transfer_ship = {
+			        prefer_name = "HMS Leander"
+			        type = light_cruiser
+			        target = NZL
+				}
+				transfer_ship = {
+			        prefer_name = "HMS Achilles"
+			        type = light_cruiser
+			        target = NZL
+				}
+			}
+		}
+}
+
+
+
+focus = {
 	id = NZL_improve_the_radars
 	icon = GFX_goal_NZL_coa_navy
 
-	x = 0
+	x = -1
 	y = 0
 	
 	cost = 10
@@ -136,7 +198,8 @@ focus = {
 	id = NZL_RNZN_Pacific_Command
 	icon = GFX_goal_sea_navy
 	relative_position_id = NZL_improve_the_radars
-	prerequisite = { focus = NZL_improve_the_radars}
+	prerequisite = { focus = NZL_supply_the_new_zealand_navy_divsion }
+	prerequisite = { focus = NZL_improve_the_radars }
 	mutually_exclusive = { focus = NZL_Pacific_Convoy_Defense }
 	x = 1
 	y = 1
@@ -171,7 +234,7 @@ focus = {
 	x = 3
 	y = 1
 	relative_position_id = NZL_improve_the_radars
-	prerequisite = { focus = NZL_improve_the_radars}
+	prerequisite = { focus = NZL_supply_the_new_zealand_navy_divsion }
 
 	cost = 5
 
@@ -221,11 +284,14 @@ focus = {
 		x = 1
 		y = 1
 		relative_position_id = NZL_train_new_officers
-		prerequisite = { focus = NZL_RNZN_Pacific_Command}
 		prerequisite = { focus = NZL_train_new_officers }
 
+		available = {
+				NOT = {
+					has_completed_focus = NZL_Pacific_Convoy_Defense
+				}		
+		}
 		cost = 10
-
 		ai_will_do = {
 			factor = 2
 		}
@@ -368,8 +434,8 @@ focus = {
 #################
 	focus = {
 		id = NZL_mution_companies_investments
-		icon = GFX_focus_manufacturers_cooperation
-		x = 9
+		icon = GFX_focus_eng_unite_the_anglosphere
+		x = 10
 		y = 0
 		cost = 10
 
@@ -378,13 +444,16 @@ focus = {
 		}
 
 		completion_reward = {
+			army_experience = 50
+			AST = {
+				army_experience = 50
+			}
 			random_owned_controlled_state = {
-				prioritize = { 284 723 }
+				prioritize = { 284 }
 				limit = {
 					free_building_slots = {
 						building = arms_factory
 						size > 1
-						include_locked = yes
 					}
 				}
 				add_extra_state_shared_building_slots = 2
@@ -394,30 +463,15 @@ focus = {
 					instant_build = yes
 				}
 			}
-			if = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
-				custom_effect_tooltip = available_mio_tt
-				show_mio_tooltip = NZL_colonial_amunitions_company_organization
-
-				mio:NZL_colonial_amunitions_company_organization = {
-					add_mio_funds = 1000
-				}
-			}
-			else = {
-				custom_effect_tooltip = available_designer
-				show_ideas_tooltip = NZL_colonial_amunitions_company
-			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
 focus = { 
 	id = NZL_remember_anzac
-	icon= GFX_goal_ENG_issue_gasmasks
+	icon= GFX_focus_TUR_the_montreux_convention
 	prerequisite = { focus = NZL_mution_companies_investments }
-	x = 2
+	x = 3
 	y = 1
 	relative_position_id = NZL_mution_companies_investments
 	cost = 10
@@ -427,17 +481,19 @@ focus = {
 	}
 
 	completion_reward = {
+		army_experience = 25
 		add_ideas = NZL_lessons_of_the_great_war 
 	}
 }
 
 	focus = {
 		id = NZL_ford_munition_plant
-		icon = GFX_goal_ammunitions
+		icon = GFX_focus_PER_desert_training
 		prerequisite = { focus = NZL_remember_anzac }
 		x = 1
 		y = 1
 		relative_position_id = NZL_remember_anzac
+		mutually_exclusive = { focus = NZL_new_charlton_automatic_rifles }
 
 		cost = 10
 
@@ -447,47 +503,54 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
-			IF = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
-				custom_effect_tooltip = available_mio_tt
-				show_mio_tooltip = NZL_ford_munitions_company_organization
-
-				mio:NZL_ford_munitions_company_organization = {
-					add_mio_funds = 1000
-				}
+			army_experience = 15
+			every_army_leader = {
+				add_logistics = 1
+				add_trait = {
+                    trait = desert_fox
+                }
 			}
-			else = {
-				custom_effect_tooltip = available_designer
-				show_ideas_tooltip = NZL_ford_munitions_company
-			}
-
-			random_owned_controlled_state = {
-				prioritize = { 284 723 }
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
+			set_technology = {
+				desert_training_tech = 1
 			}
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 
+	focus = {
+		id = NZL_Intensify_Armor_Training
+		icon = GFX_focus_generic_army_tanks2
+		prerequisite = { focus = NZL_ford_munition_plant }
+		x = 1
+		y = 1
+		relative_position_id = NZL_ford_munition_plant
+		
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 25
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 25
+			every_army_leader = {			
+				add_attack = 1
+				add_trait = {
+                    trait = panzer_leader
+                }
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+
 	focus = {	
 		id = NZL_new_charlton_automatic_rifles
-		icon = GFX_goal_NZL_new_charlton_automatic_rifles
+		icon = GFX_focus_usa_focus_on_asia
 		prerequisite = { focus = NZL_remember_anzac }
+		mutually_exclusive = { focus = NZL_ford_munition_plant }
 		x = -1
 		y = 1
 		relative_position_id = NZL_remember_anzac
@@ -501,20 +564,51 @@ focus = {
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = NZL_new_charlton_automatic_rifles
-				bonus = 1.0
-				uses = 2
-				category = infantry_weapons
+			army_experience = 15
+			every_army_leader = {
+				add_trait = {
+                    trait = hill_fighter
+                }
 			}
+			set_technology = {
+				hills_training_tech = 1
+			}
+		}
+	}
+
+	focus = {	
+		id = NZL_Establish_the_Maori_Infantry
+		icon = GFX_SOV_depoliticize_the_military_ccp_2d_sov_compatibility
+		prerequisite = { focus = NZL_new_charlton_automatic_rifles }
+		x = -1
+		y = 1
+		relative_position_id = NZL_new_charlton_automatic_rifles
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 25
+		}
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			army_experience = 25
+			every_army_leader = {			
+				add_defense = 1
+				add_trait = {
+                    trait = infantry_leader
+                }
+			}
+			
 		}
 	}
 
 focus = {
 	id = NZL_expand_our_tank_warfare 
-	icon = GFX_focus_NZL_bob_semple_tank		 
+	icon =  GFX_focus_generic_commonwealth_build_infantry	 
 	prerequisite = { focus = NZL_mution_companies_investments}
-	x = -2
+	x = -3
 	y = 1
 	relative_position_id = NZL_mution_companies_investments
 
@@ -526,16 +620,37 @@ focus = {
 	search_filters = { FOCUS_FILTER_RESEARCH }
 
 	completion_reward = {
-		add_war_support = 0.05
-		add_ideas = NZL_Light_Tank
 		add_tech_bonus = {
-			name = NZL_expand_our_tank_warfare
-			bonus = 1.0 
-			uses = 1
-			category = cat_light_armor
-		}
+				name = NZL_new_charlton_automatic_rifles
+				bonus = 1.0
+				uses = 2
+				category = infantry_weapons
+			}
 	}	
 }
+
+focus = {
+	id = NZL_SIB_Funding
+	icon = GFX_focus_NZL_bob_semple_tank		 
+	prerequisite = { focus = NZL_mution_companies_investments}
+	x = 0
+	y = 1
+	relative_position_id = NZL_mution_companies_investments
+
+	cost = 10
+
+	ai_will_do = {
+		
+	}
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		create_intelligence_agency = yes
+		add_ideas = NZL_Security_Intelligence_Bureau
+	}	
+}
+
 
 focus = {
 	id = NZL_foundations_of_an_aritllery_regiment
@@ -598,12 +713,484 @@ focus = {
 }
 
 focus = {
+	id = NZL_Merge_With_MI6
+	icon =  GFX_focus_generic_secret_service_agency
+	prerequisite = { focus = NZL_SIB_Funding }
+	relative_position_id = NZL_SIB_Funding
+	x = 0
+	y = 1
+
+	cost = 10
+
+	ai_will_do = {
+		
+	}
+	
+	available = {
+		is_in_faction_with = ENG
+	}
+
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		custom_effect_tooltip = NZL_Marriage_of_Intelligence_tt		
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_economy_civilian
+				}
+			}
+			upgrade_intelligence_agency = upgrade_economy_civilian 
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_army_department
+				}
+			}
+			upgrade_intelligence_agency = upgrade_army_department
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_naval_department
+				}
+			}
+			upgrade_intelligence_agency = upgrade_naval_department
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_airforce_department
+				}
+			}
+			upgrade_intelligence_agency = upgrade_airforce_department
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_passive_defense
+				}
+			}
+			upgrade_intelligence_agency = upgrade_passive_defense
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_anti_partisan
+				}
+			}
+			upgrade_intelligence_agency = upgrade_anti_partisan
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_blueprint_stealing
+				}
+			}
+			upgrade_intelligence_agency = upgrade_blueprint_stealing
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_portable_radios
+				}
+			}
+			upgrade_intelligence_agency = upgrade_portable_radios
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_invisible_ink
+				}
+			}
+			upgrade_intelligence_agency = upgrade_invisible_ink
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_plastic_explosives
+				}
+			}
+			upgrade_intelligence_agency = upgrade_plastic_explosives
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_suicide_pills
+				}
+			}
+			upgrade_intelligence_agency = upgrade_suicide_pills
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_training_centers
+				}
+			}
+			upgrade_intelligence_agency = upgrade_training_centers
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_commando_training
+				}
+			}
+			upgrade_intelligence_agency = upgrade_commando_training
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_interrogation_techniques
+				}
+			}
+			upgrade_intelligence_agency = upgrade_interrogation_techniques
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_diplo_training
+				}
+			}
+			upgrade_intelligence_agency = upgrade_diplo_training
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_psycho_warfare
+				}
+			}
+			upgrade_intelligence_agency = upgrade_psycho_warfare
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_form_department
+				}
+			}
+			upgrade_intelligence_agency = upgrade_form_department
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_crypto_strength
+				}
+			}
+			upgrade_intelligence_agency = upgrade_crypto_strength
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_crypto_strength_2
+				}
+			}
+			upgrade_intelligence_agency = upgrade_crypto_strength_2
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_decryption_boost
+				}
+			}
+			upgrade_intelligence_agency = upgrade_decryption_boost
+		}
+		IF = {
+			Limit = {
+				ENG = {
+					has_done_agency_upgrade = upgrade_decryption_boost_2
+				}
+			}
+			upgrade_intelligence_agency = upgrade_decryption_boost_2
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_economy_civilian
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_economy_civilian} 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_army_department
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_army_department} 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_naval_department
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_naval_department} 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_airforce_department
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_airforce_department} 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_passive_defense
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_passive_defense } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_anti_partisan
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_anti_partisan } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_blueprint_stealing
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_blueprint_stealing } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_portable_radios
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_portable_radios } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_invisible_ink
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_invisible_ink } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_plastic_explosives
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_plastic_explosives } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_suicide_pills
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_suicide_pills } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_training_centers
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_training_centers } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_commando_training
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_commando_training } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_interrogation_techniques
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_interrogation_techniques } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_diplo_training
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_diplo_training } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_psycho_warfare
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_psycho_warfare } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_form_department
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_form_department } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_crypto_strength
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_crypto_strength } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_crypto_strength_2
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_crypto_strength_2 } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_decryption_boost
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_decryption_boost } 
+		}
+		IF = {
+			Limit = {
+				NZL = {
+					has_done_agency_upgrade = upgrade_decryption_boost_2
+				}
+			}
+			ENG = {upgrade_intelligence_agency = upgrade_decryption_boost_2 } 
+		}
+	}
+}
+
+focus = {
+	id = NZL_Liason_with_British_Command
+	icon =  GFX_focus_SWE_varnplikt
+	prerequisite = { focus = NZL_Merge_With_MI6 }
+	prerequisite = { focus = NZL_engineer_and_supply_corp  }
+	relative_position_id = NZL_engineer_and_supply_corp
+	x = 1
+	y = 1
+
+	cost = 10
+
+	ai_will_do = {
+		
+	}
+	available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = "Liason with British Command"
+			bonus = 1.00
+			uses = 1
+			category = electronics
+		}
+		add_tech_bonus = {
+			name = "Liason with British Command"
+			bonus = 1.00
+			uses = 2
+			category = support_tech
+		}
+	}
+}
+
+focus = {
+	id = NZL_Standardize_the_Kiwi_Rifleman
+	icon = GFX_focus_NZL_bob_semple_tank
+	prerequisite = { focus = NZL_expand_our_tank_warfare }
+	prerequisite = { focus = NZL_foundations_of_an_aritllery_regiment focus = NZL_engineer_and_supply_corp }
+	relative_position_id = NZL_expand_our_tank_warfare
+	x = 0
+	y = 2
+
+	cost = 10
+
+	ai_will_do = {
+		
+	}available_if_capitulated = yes
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		add_war_support = 0.05
+		add_ideas = NZL_Light_Tank
+		add_tech_bonus = {
+			name = NZL_expand_our_tank_warfare
+			bonus = 1.0 
+			uses = 1
+			category = cat_light_armor
+		}
+	}
+}
+
+focus = {
+	id = NZL_Light_Tank_Destroyer_Program
+	icon =  GFX_focus_generic_tank_assembly
+	prerequisite = { focus = NZL_foundations_of_an_aritllery_regiment }
+	relative_position_id = NZL_foundations_of_an_aritllery_regiment
+	x = -1
+	y = 1
+
+	cost = 10
+
+	ai_will_do = {
+		
+	}
+	
+	available = {
+		has_tech = improved_light_tank_chassis
+	}
+
+
+
+	search_filters = { FOCUS_FILTER_RESEARCH }
+
+	completion_reward = {
+		create_equipment_variant = {
+				    name = "NZLAV"
+				    type = light_tank_destroyer_chassis_3
+				    parent_version = 1
+				    modules = {
+				        main_armament_slot = tank_high_velocity_cannon_2
+						turret_type_slot = tank_light_fixed_superstructure_turret
+						special_type_slot_1 = tank_radio_3
+						special_type_slot_2 = secondary_turret_small_cannon
+						special_type_slot_3 = extra_ammo_storage
+						special_type_slot_4 = extra_ammo_storage
+						suspension_type_slot = tank_interleaved_suspension
+						armor_type_slot = tank_riveted_armor
+						engine_type_slot = tank_gasoline_engine
+				    }
+				    upgrades = {
+				        tank_nsb_engine_upgrade = 15
+				        tank_nsb_armor_upgrade = 17
+				    }
+				}
+		set_technology = {
+			advanced_light_tank_chassis = 1
+		}
+	}
+}
+
+
+focus = {
 	id = NZL_a_sustainable_army
 	icon = GFX_goal_NZL_coa_army
-	prerequisite = { focus = NZL_foundations_of_an_aritllery_regiment focus = NZL_ford_munition_plant }
-	x = 3
+	prerequisite = { focus = NZL_ford_munition_plant focus = NZL_new_charlton_automatic_rifles    }
+	x = 1
 	y = 1
-	relative_position_id = NZL_foundations_of_an_aritllery_regiment
+	relative_position_id = NZL_new_charlton_automatic_rifles
 
 	cost = 10
 
@@ -612,15 +1199,18 @@ focus = {
 	}available_if_capitulated = yes
 
 	completion_reward = {
-		army_experience = 15 
+		army_experience = 25 
 		remove_ideas = NZL_a_poor_army
 	}
 }
 
+#########
+###AIR###
+#########
 focus = {
 	id = NZL_construct_the_whenuapai_base
 	icon = GFX_goal_generic_airport
-	x = 15
+	x = 17
 	y = 0
 
 	cost = 10
@@ -752,7 +1342,7 @@ focus = {
 focus = {
 		id = NZL_allocate_resources_to_the_rnzf
 		icon = GFX_goal_flying_tiger_neutral
-		x = 13
+		x = 15
 		y = 0
 
 		cost = 10
@@ -842,10 +1432,10 @@ focus = {
 focus = {
 	id = NZL_new_zealand_special_forces
 	icon = GFX_goal_generic_army_elite
-	prerequisite = { focus = NZL_form_the_new_zealand_air_force}
-	x = -1
+	prerequisite = { focus = NZL_a_sustainable_army }
+	x = 0
 	y = 1
-	relative_position_id = NZL_form_the_new_zealand_air_force
+	relative_position_id = NZL_a_sustainable_army
 
 	cost = 10
 
@@ -888,7 +1478,7 @@ focus = {
 focus = {
 		id = NZL_connect_the_nation
 		icon = GFX_goal_generic_road
-		x = 20
+		x = 22
 		y = 0
 
 		cost = 10
