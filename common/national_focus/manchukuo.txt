@@ -51,7 +51,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_stability = 0.2
+			#add_stability = 0.2
 			add_political_power = 120
 		}
 	}
@@ -188,7 +188,7 @@ focus_tree = {
 		y = 1
 		cost = 7
 		completion_reward = {
-			#activate_advisor = 
+			activate_advisor = yoshisuke_aikawa
 			set_country_flag = MAN_civilian
 			random_owned_controlled_state = {
 				limit = {
@@ -229,7 +229,7 @@ focus_tree = {
 		y = 1
 		cost = 7
 		completion_reward = {
-			#activate_advisor = 
+			activate_advisor = naoki_hoshino
 			set_country_flag = MAN_military
 			random_owned_controlled_state = {
 				limit = {
@@ -797,7 +797,7 @@ focus_tree = {
 		prerequisite = {
 			focus = MAN_request_zaibatsu_investment_on_military_industry
 		}
-		x = 1
+		x = 2
 		y = 2
 		relative_position_id = MAN_support_naoki_hoshino
 		cost = 10
@@ -1238,6 +1238,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
 			MAN_low_legitimacy_level_down = yes
+			unlock_decision_category_tooltip = MAN_espouse_legitimacy
 			####UNLOCKS DECSIONS TO RAPIDLY GAIN STAB AND WAR SUPPORT, to lower legitmiacy debuff
 		}
 	}
@@ -1517,7 +1518,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_stability = 0.2
+			#add_stability = 0.2
 			add_political_power = 120
 			MAN_low_legitimacy_level_down = yes
 			set_country_flag = MAN_assertiveness
@@ -2906,12 +2907,34 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			custom_effect_tooltip = MAN_if_aikawa
-			effect_tooltip = {
-				add_tech_bonus = {
-					bonus = 1
-					uses = 1
-					category = construction_tech
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_military
+					}
+				}
+				custom_effect_tooltip = MAN_if_naoki
+				effect_tooltip = {
+					add_tech_bonus = {
+						bonus = 1
+						uses = 1
+						category = cat_production
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_civilian
+					}
+				}
+				custom_effect_tooltip = MAN_if_aikawa
+				effect_tooltip = {
+					add_tech_bonus = {
+						bonus = 1
+						uses = 1
+						category = construction_tech
+					}
 				}
 			}
 			if = {
@@ -2922,14 +2945,6 @@ focus_tree = {
 					bonus = 1
 					uses = 1
 					category = construction_tech
-				}
-			}
-			custom_effect_tooltip = MAN_if_naoki
-			effect_tooltip = {
-				add_tech_bonus = {
-					bonus = 1
-					uses = 1
-					category = cat_production
 				}
 			}
 			if = {
@@ -3052,19 +3067,26 @@ focus_tree = {
 				}
 				set_state_flag = MAN_expand_the_textile_industry_IC
 			}
-			custom_effect_tooltip = MAN_if_aikawa
-			effect_tooltip = {
-				add_tech_bonus = {
-					bonus = 1
-					uses = 1
-					category = electronics
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_civilian
+					}
 				}
-				add_political_power = 50
-				random_owned_controlled_state = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
+				custom_effect_tooltip = MAN_if_aikawa
+				effect_tooltip = {
+					add_tech_bonus = {
+						bonus = 1
+						uses = 1
+						category = electronics
+					}
+					add_political_power = 50
+					random_owned_controlled_state = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+						}
 					}
 				}
 			}
@@ -3143,16 +3165,24 @@ focus_tree = {
 				}
 				set_state_flag = MAN_expand_the_textile_industry_IC
 			}
-			custom_effect_tooltip = MAN_if_aikawa
-			effect_tooltip = {
-				random_owned_controlled_state = {
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = industrial_complex
-						level = 1
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_civilian
+					}
+				}
+				custom_effect_tooltip = MAN_if_aikawa
+				effect_tooltip = {
+					random_owned_controlled_state = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+						}
 					}
 				}
 			}
+			
 			if = {
 				limit = {
 					has_country_flag = MAN_civilian
@@ -3222,24 +3252,31 @@ focus_tree = {
 				}
 				set_state_flag = MAN_expand_the_textile_industry_IC
 			}
-			custom_effect_tooltip = MAN_if_aikawa
-			effect_tooltip = {
-				random_owned_controlled_state = {
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = industrial_complex
-						level = 2
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_civilian
 					}
 				}
-				add_tech_bonus = {
-					name = MAN_civ
-					category = industry
-					bonus = 1
-					uses = 1
+				custom_effect_tooltip = MAN_if_aikawa
+				effect_tooltip = {
+					random_owned_controlled_state = {
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = industrial_complex
+							level = 2
+						}
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+						}
+					}
+					add_tech_bonus = {
+						name = MAN_civ
+						category = industry
+						bonus = 1
+						uses = 1
+					}
 				}
 			}
 			if = {
@@ -3321,9 +3358,16 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			custom_effect_tooltip = MAN_if_naoki
-			effect_tooltip = {
-				add_ideas = MAN_national_defence_industry
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_military
+					}
+				}
+				custom_effect_tooltip = MAN_if_naoki
+				effect_tooltip = {
+					add_ideas = MAN_national_defence_industry
+				}
 			}
 			if = {
 				limit = {
@@ -3421,37 +3465,45 @@ focus_tree = {
 				category = infantry_tech
 				category = support_tech
 			}
-			custom_effect_tooltip = MAN_if_naoki
-			effect_tooltip = {
-				random_owned_controlled_state = {
-					limit = {
-						is_fully_controlled_by = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 0
-							include_locked = yes
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_military
+					}
+				}
+				custom_effect_tooltip = MAN_if_naoki
+				effect_tooltip = {
+					random_owned_controlled_state = {
+						limit = {
+							is_fully_controlled_by = ROOT
+							free_building_slots = {
+								building = arms_factory
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = arms_factory
+							level = 1
+							instant_build = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
+					add_tech_bonus = {
+						name = manchurian_arms
+						bonus = 1
+						uses = 1
+						category = infantry_tech
+					}
+					add_tech_bonus = {
+						name = manchurian_arms
+						bonus = 1
+						uses = 1
+						category = armor
 					}
 				}
-				add_tech_bonus = {
-					name = manchurian_arms
-					bonus = 1
-					uses = 1
-					category = infantry_tech
-				}
-				add_tech_bonus = {
-					name = manchurian_arms
-					bonus = 1
-					uses = 1
-					category = armor
-				}
 			}
+			
 			if = {
 				limit = {
 					has_country_flag = MAN_military
@@ -3554,27 +3606,34 @@ focus_tree = {
 				uses = 1
 				bonus = 1
 			}
-			custom_effect_tooltip = MAN_if_naoki
-			effect_tooltip = {
-				random_owned_controlled_state = {
-					limit = {
-						is_fully_controlled_by = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 0
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_military
 					}
 				}
-				swap_ideas = {
-					remove_idea = MAN_national_defence_industry
-					add_idea = MAN_national_defence_industry_2
+				custom_effect_tooltip = MAN_if_naoki
+				effect_tooltip = {
+					random_owned_controlled_state = {
+						limit = {
+							is_fully_controlled_by = ROOT
+							free_building_slots = {
+								building = arms_factory
+								size > 0
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = arms_factory
+							level = 1
+							instant_build = yes
+						}
+					}
+					swap_ideas = {
+						remove_idea = MAN_national_defence_industry
+						add_idea = MAN_national_defence_industry_2
+					}
 				}
 			}
 			if = {
@@ -3653,6 +3712,7 @@ focus_tree = {
 		}
 
 		available = {
+			num_of_factories > 75
 		}
 
 		bypass = {
@@ -4277,7 +4337,7 @@ focus_tree = {
 				modifier = hostile_status
 			}
 			remove_ideas = MAN_kwantung_veto
-			country_event = japan.21
+			country_event = manchuria.1
 			hidden_effect = {
 				every_state = {
 					limit = {
@@ -4335,7 +4395,7 @@ focus_tree = {
 			add_field_marshal_role = {
 				character = MAN_shunroku_hata
 				skill = 4
-				traits = {JAP_samurai_lineage offensive_doctrine}
+				traits = {JAP_samurai_lineage offensive_doctrine }
 				attack_skill = 3
 				defense_skill = 4
 				planning_skill = 2
@@ -4362,14 +4422,14 @@ focus_tree = {
 				add_state_core = 524
 			}
 			if = { 
-					limit = { 
-						MEN = { 
+				limit = { 
+					MEN = { 
 						exists = yes 
 						NOT = { 
-						is_subject_of = MAN 
-				} 
-								} 
-							}
+							is_subject_of = MAN 
+						} 
+					} 
+				}
 				add_state_core = 611
 				add_state_core = 612
 				create_wargoal = {
@@ -4380,18 +4440,17 @@ focus_tree = {
 			if = { 
 				limit = { 
 					KOR = { 
-					exists = yes 
-					NOT = { 
-					is_subject_of = MAN 
-			} 
-							} 
-						}
-
-			create_wargoal = {
-				type = annex_everything
-				target = KOR
+						exists = yes 
+						NOT = { 
+						is_subject_of = MAN 
+						} 
+					} 
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = KOR
+				}
 			}
-		}
 		}
 	}
 
@@ -4764,7 +4823,7 @@ focus_tree = {
 		will_lead_to_war_with = SOV
 
 		completion_reward = {
-			country_event = manchukuo_events.9
+			country_event = manchuria.3
 			add_named_threat = { threat = 1 name = JAP_intervene_in_china }
 			add_ideas = JAP_intervene_in_china_5
 			unlock_decision_tooltip = JAP_china_step_up_war_effort
@@ -4799,7 +4858,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = JAP_imperial_ambitions_met
+			add_ideas = MAN_imperial_ambitions_met
 			every_state = {
 				limit = {
 					is_core_of = CHI
@@ -4862,7 +4921,7 @@ focus_tree = {
 		completion_reward = {
 			JAP = {
 			country_event = {
-				id = japan.22
+				id = manchuria.2
 			}
 		}
 		}
