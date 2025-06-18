@@ -7590,127 +7590,135 @@ country_event = {
     }
 	
 	#no
-	option = {
-		name = AAT_Sweden_nordic_defense_council.1.a
-		ai_chance = {
-			base = 5
-			modifier = {
-				is_subject = yes
-				add = 100
-			}
-		}
-
-		FROM = { country_event = { id = AAT_Sweden_nordic_defense_council.3 hours = 3 } }
-
-		#Lone Wolf Finland can't join any factions - Tooltip for player
-		if = {
-			limit = {	
-				FIN_is_lone_wolf_finland = yes
-			}
-			custom_effect_tooltip = FIN_the_lone_wolf_no_faction_tt
-		}
-		
-		FROM = {
-            create_wargoal = {
-                type = puppet_wargoal_focus
-                target = ROOT
-            }
-		}
-		clear_variable = ROOT.temp_opinion
-	}
+	#option = {
+	#	name = AAT_Sweden_nordic_defense_council.1.a
+	#	ai_chance = {
+	#		base = 5
+	#		modifier = {
+	#			is_subject = yes
+	#			add = 1
+	#		}
+	#	}
+#
+	#	available = {
+	#		NOT  = { is_ai = yes}
+	#	}
+#
+	#	FROM = { country_event = { id = AAT_Sweden_nordic_defense_council.3 hours = 3 } }
+#
+	#	#Lone Wolf Finland can't join any factions - Tooltip for player
+	#	if = {
+	#		limit = {	
+	#			FIN_is_lone_wolf_finland = yes
+	#		}
+	#		custom_effect_tooltip = FIN_the_lone_wolf_no_faction_tt
+	#	}
+	#	
+	#	FROM = {
+    #        create_wargoal = {
+    #            type = puppet_wargoal_focus
+    #            target = ROOT
+    #        }
+	#	}
+	#	clear_variable = ROOT.temp_opinion
+	#}
 
 	#yes, as a member
-	option = {
-		name = AAT_Sweden_nordic_defense_council.1.b
-		trigger = {
-			SWE = {
-				has_completed_focus = SWE_decentralized_nordic_army_command
-			}
-		}
-		ai_chance = {
-			base = 2
-			modifier = {
-				SWE = {
-					is_ai = no
-				}
-				factor = 1.5
-			}
-
-			modifier = {
-				is_in_faction = yes
-				factor = 0
-			}
-
-			modifier = {
-				is_subject = yes
-				factor = 0
-			}
-
-			modifier = {
-				OR = {
-					has_government = SWE
-					AND = {
-						original_tag = FIN
-						has_government = neutrality 
-						SWE = { has_government = democratic }
-					}
-				}
-				factor = 2
-			}
-			
-			modifier = {
-                always = yes 
-                add = ROOT.temp_opinion
-            }
-			
-			modifier = {
-				strength_ratio = {
-					tag = SWE
-					ratio < 0.8
-				}
-				add = 4
-			}
-
-			modifier = {
-				strength_ratio = {
-					tag = SWE
-					ratio < 0.4
-				}
-				add = 20
-			}
-		}
-
-		trigger = {
-			#Lone Wolf Finland can't join any factions
-			FIN_is_lone_wolf_finland = no
-		}
-
-		hidden_effect = {
-			if = {
-				limit = {
-					SWE = { 
-						is_in_faction = yes 
-						is_faction_leader = no
-					}
-				}
-				SWE = { leave_faction = yes }
-			}
-
-			set_country_flag = rejected_nordic_defense_council
-		}
-
-		SWE = {
-			add_to_faction = PREV 
-
-			add_to_array = {
-				array = SWE_nordic_defense_council_members
-				value = PREV #optional, if not defined adds scope
-			}
-		}
-		clear_variable = ROOT.temp_opinion
-		FROM = { country_event = { id = AAT_Sweden_nordic_defense_council.2 hours = 3 } }
-
-	}
+	#option = {
+	#	name = AAT_Sweden_nordic_defense_council.1.b
+	#	trigger = {
+	#		SWE = {
+	#			has_completed_focus = SWE_decentralized_nordic_army_command
+	#		}
+	#	}
+	#	ai_chance = {
+	#		base = 2
+	#		modifier = {
+	#			SWE = {
+	#				is_ai = no
+	#			}
+	#			factor = 1.5
+	#		}
+#
+	#		modifier = {
+	#			is_in_faction = yes
+	#			factor = 0
+	#		}
+#
+	#		modifier = {
+	#			is_subject = yes
+	#			factor = 0
+	#		}
+#
+	#		modifier = {
+	#			OR = {
+	#				has_government = SWE
+	#				AND = {
+	#					original_tag = FIN
+	#					has_government = neutrality 
+	#					SWE = { has_government = democratic }
+	#				}
+	#			}
+	#			factor = 2
+	#		}
+	#		
+	#		modifier = {
+    #            always = yes 
+    #            add = ROOT.temp_opinion
+    #        }
+	#		
+	#		modifier = {
+	#			strength_ratio = {
+	#				tag = SWE
+	#				ratio < 0.8
+	#			}
+	#			add = 4
+	#		}
+#
+	#		modifier = {
+	#			strength_ratio = {
+	#				tag = SWE
+	#				ratio < 0.4
+	#			}
+	#			add = 20
+	#		}
+	#	}
+#
+	#	available = {
+	#		NOT  = { is_ai = yes}
+	#	}
+#
+	#	trigger = {
+	#		#Lone Wolf Finland can't join any factions
+	#		FIN_is_lone_wolf_finland = no
+	#	}
+#
+	#	hidden_effect = {
+	#		if = {
+	#			limit = {
+	#				SWE = { 
+	#					is_in_faction = yes 
+	#					is_faction_leader = no
+	#				}
+	#			}
+	#			SWE = { leave_faction = yes }
+	#		}
+#
+	#		set_country_flag = rejected_nordic_defense_council
+	#	}
+#
+	#	SWE = {
+	#		add_to_faction = PREV 
+#
+	#		add_to_array = {
+	#			array = SWE_nordic_defense_council_members
+	#			value = PREV #optional, if not defined adds scope
+	#		}
+	#	}
+	#	clear_variable = ROOT.temp_opinion
+	#	FROM = { country_event = { id = AAT_Sweden_nordic_defense_council.2 hours = 3 } }
+#
+	#}
 
 	#yes, as a puppet
 	option = {
@@ -7726,7 +7734,7 @@ country_event = {
 				SWE = {
 					is_ai = yes
 				}
-				factor = 1.2
+				factor = 100
 			}
 
 			modifier = {
