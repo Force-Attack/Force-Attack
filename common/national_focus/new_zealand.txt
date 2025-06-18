@@ -403,31 +403,6 @@ focus = {
 			}
 	}
 }
-focus = {
-	id = NZL_Victory_Ships_of_the_South_Seas
-	icon = GFX_goal_generic_naval_academy
-	relative_position_id = NZL_Light_Ship_Improvements
-	prerequisite = { focus = NZL_Light_Ship_Improvements}
-	prerequisite = { focus = NZL_Prioritize_Capital_and_Carrier_Funding}
-	
-	x = 1
-	y = 1
-	cost = 10
-
-	ai_will_do = {
-		factor = 25
-	}
-	
-	search_filters = { FOCUS_FILTER_RESEARCH }
-
-	completion_reward = {
-		add_ideas = NZL_Victory_Ships_of_the_South_Seas
-		mio:NZL_port_chalmers_shipbuilding_organization = {
-				add_mio_size = 2
-			}
-		custom_effect_tooltip = NZL_New_MIO_Traits_tt
-	}
-}
 
 #################
 ####ARMY TREE####
@@ -435,7 +410,7 @@ focus = {
 	focus = {
 		id = NZL_mution_companies_investments
 		icon = GFX_focus_eng_unite_the_anglosphere
-		x = 10
+		x = 16
 		y = 0
 		cost = 10
 
@@ -1201,7 +1176,11 @@ focus = {
 
 	ai_will_do = {
 		factor = 25
-	}available_if_capitulated = yes
+	}
+
+	available = {
+		date > 1937.1.1
+	}
 
 	completion_reward = {
 		army_experience = 25 
@@ -1215,7 +1194,7 @@ focus = {
 focus = {
 	id = NZL_construct_the_whenuapai_base
 	icon = GFX_goal_generic_airport
-	x = 17
+	x = 8
 	y = 0
 
 	cost = 10
@@ -1252,53 +1231,14 @@ focus = {
 	}
 
 
-	focus = {
-		id = NZL_fighter_productions
-		icon = GFX_goal_generic_air_production
-		prerequisite = { focus =  NZL_construct_the_whenuapai_base }
-		prerequisite = { focus = NZL_allocate_resources_to_the_rnzf }
-		x = -1
-		y = 1
-		relative_position_id = NZL_construct_the_whenuapai_base
-
-		cost = 10
-
-		ai_will_do = {
-			factor = 25
-		}
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_RESEARCH }
-
-		completion_reward = {
-			if = {
-				limit = {
-					has_dlc = "By Blood Alone"
-				}
-				add_tech_bonus = {
-					name = NZL_fighter_productions
-					bonus = 1.0
-					uses = 1
-					category = light_air
-				}
-			}
-			else = {
-				add_tech_bonus = {
-					name = NZL_fighter_productions
-					bonus = 1.0
-					uses = 1
-					category = light_fighter
-				}
-			}
-			
-		}
-	}
+	
 
 focus = {
 		id = NZL_bomber_production
 		icon = GFX_goal_generic_occupy_start_war
 		prerequisite = { focus = NZL_construct_the_whenuapai_base }
 		prerequisite = { focus = NZL_allocate_resources_to_the_rnzf }
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = NZL_construct_the_whenuapai_base
 
@@ -1310,44 +1250,22 @@ focus = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
-		completion_reward = {
-			if = {
-				limit = {
-					has_dlc = "By Blood Alone"
-				}
-				add_tech_bonus = {
-					name = NZL_bomber_production
-					technology = basic_medium_airframe
-					technology = improved_medium_airframe
-					technology  = advanced_medium_airframe
-					bonus = 1.00
-					uses = 1
-				}
-				add_tech_bonus = {
-					name = NZL_bomber_production
-					technology = basic_large_airframe
-					technology = improved_large_airframe
-					technology  = advanced_large_airframe
-					bonus = 1.00
-					uses = 1
-				}
-			}
-			else = {
-				add_tech_bonus = {
-					name = NZL_bomber_production
-					bonus = 1.00
-					uses = 1
-					category = cat_strategic_bomber
-					category = tactical_bomber
-				}
+		completion_reward = {	
+			add_tech_bonus = {
+				name = NZL_bomber_production
+				bonus = 1.00
+				uses = 2
+				category = light_air
+				category = medium_air
+				category = heavy_air
 			}
 		}
 	}
 
 focus = {
 		id = NZL_allocate_resources_to_the_rnzf
-		icon = GFX_goal_flying_tiger_neutral
-		x = 15
+		icon = GFX_focus_chi_british_cooperation
+		x = 6
 		y = 0
 
 		cost = 10
@@ -1358,56 +1276,9 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_equipment_to_stockpile = {
-				type = nav_bomber_equipment_1
-				amount = 56
-				producer = ENG
-			}
-			if = {
-				limit = { has_dlc = "By Blood Alone" }
-				create_equipment_variant = {
-					name = "Bristol Blenheim"
-					type = medium_plane_airframe_1
-					modules = {
-						fixed_main_weapon_slot = medium_bomb_bay
-						fixed_auxiliary_weapon_slot_1 = torpedo_mounting
-						fixed_auxiliary_weapon_slot_2 = bomb_locks
-						engine_type_slot = engine_3_2x
-						special_type_slot_1 = empty
-					}
-					icon = "GFX_ENG_tactical_bomber1_medium"
-				}
-				add_equipment_to_stockpile = {
-					type = medium_plane_airframe_1
-					producer = ENG
-					amount = 116
-					variant_name = "Bristol Blenheim"
-				}
-			}
-			else = {
-				add_equipment_to_stockpile = {
-					type = nav_bomber_equipment_1
-					amount = 56
-					producer = ENG
-				}
-				
-				if = {
-					limit = {
-						ENG = { has_tech = tactical_bomber1 }
-					}
-					add_equipment_to_stockpile = {
-						type = tac_bomber_equipment_1
-						amount = 30
-						producer = ENG
-					}
-					else = {
-						add_equipment_to_stockpile = {
-							type = tac_bomber_equipment_0
-							amount = 30
-							producer = ENG
-						}	
-					}
-				}
+			air_experience = 25
+			ENG = {
+				country_event = new_zealand.13
 			}
 		}
 		search_filters = { FOCUS_FILTER_MILITARY_EQUIPMENT }
@@ -1417,9 +1288,8 @@ focus = {
 	id = NZL_form_the_new_zealand_air_force
 	icon = GFX_goal_NZL_coa_air_force
 	prerequisite = { focus = NZL_bomber_production}
-	prerequisite = { focus = NZL_fighter_productions}
 	relative_position_id = NZL_bomber_production
-	x = -1
+	x = 0
 	y = 1
 
 	cost = 10
@@ -1431,6 +1301,47 @@ focus = {
 
 	completion_reward = {
 		add_ideas = NZL_form_the_new_zealand_air_force
+	}
+}
+
+focus = {
+	id = NZL_Mass_Produce_Maritime_Aircraft
+	icon = GFX_SOV_increase_aircraft_production_ccp_2d_sov_compatibility
+	prerequisite = { focus = NZL_Naval_Aircraft_Technology_Exchange  }
+	prerequisite = { focus = NZL_Prioritize_Capital_and_Carrier_Funding }
+	x = -3
+	y = 1
+	relative_position_id = NZL_form_the_new_zealand_air_force
+	cost = 10
+		ai_will_do = {		
+		}
+	completion_reward = {
+		add_ideas = NZL_Guardians_of_the_Pacific_Sky
+	}
+}
+
+focus = {
+	id = NZL_Aviation_Resarch_Initiative
+	icon = GFX_focus_generic_air_research_boost
+	prerequisite = { focus = NZL_bomber_production }
+	relative_position_id = NZL_bomber_production
+	x = 2
+	y = 1
+
+	cost = 10
+
+		ai_will_do = {
+			
+		}
+		
+
+	completion_reward = {
+			add_tech_bonus = {
+				name = "Aviation Initiative"
+				bonus = 0.75
+				uses = 2
+				category = air_equipment
+			}
 	}
 }
 
@@ -1459,11 +1370,65 @@ focus = {
 	}
 }
 
+
+
+focus = {
+	id = NZL_Naval_Aircraft_Technology_Exchange
+	icon = GFX_focus_eng_chiefs_of_staff_committee
+	prerequisite = { focus = NZL_bomber_production}
+    relative_position_id = NZL_bomber_production
+    x = -2
+    y = 1 
+
+	cost = 10
+
+	ai_will_do = {
+		
+	}
+
+	available = {
+	OR = {
+		ENG = {
+			has_tech = air_torpedoe_2
+			has_tech = improved_small_airframe
+		}
+		NZL = {
+			has_tech = air_torpedoe_2
+			has_tech = improved_small_airframe
+		}
+	}
+}
+
+
+	completion_reward = {
+			air_experience = 25
+			navy_experience = 25
+			create_equipment_variant = {
+						name = "Grumman TBF Avenger"
+						type = cv_small_plane_naval_bomber_airframe_3
+						allow_without_tech = yes
+						modules = {
+							fixed_main_weapon_slot = torpedo_mounting_2
+							engine_type_slot = engine_3_1x
+							special_type_slot_1 = self_sealing_fuel_tanks_small
+							special_type_slot_2 = armor_plate_small
+							special_type_slot_3 = armor_plate_small
+						}					
+					}
+				add_equipment_to_stockpile = {
+					type = cv_small_plane_naval_bomber_airframe_3
+					producer = NZL
+					amount = 200
+					variant_name = "Grumman TBF Avenger"
+				}
+	}
+}
+
 focus = {
 	id = NZL_piolt_recuitment_drive
 	icon = GFX_goal_italy_further_pilots_training
 	prerequisite = { focus = NZL_form_the_new_zealand_air_force }
-	x = 1
+	x = -1
 	y = 1
 	relative_position_id = NZL_form_the_new_zealand_air_force
 
@@ -1479,11 +1444,45 @@ focus = {
 
 	}
 }
+focus = {
+		id = NZL_Australasian_Radar_Cooperation
+		icon = GFX_goal_generic_radar
+		prerequisite = { focus = NZL_form_the_new_zealand_air_force }
+		x = -1
+		y = 1
+		relative_position_id = NZL_Aviation_Resarch_Initiative
+
+		cost = 10
+
+		ai_will_do = {
+		
+		}
+		available = {
+			AST = {
+				has_opinion = {
+					target = NZL
+					value > 49
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			air_experience = 15
+			AST = {
+				air_experience = 15
+				country_event = new_zealand.11
+			}		
+		}
+	}
+##############
+###Industry###
+##############
 
 focus = {
 		id = NZL_connect_the_nation
 		icon = GFX_goal_generic_road
-		x = 22
+		x = 31
 		y = 0
 
 		cost = 10
@@ -1904,7 +1903,7 @@ focus = {
 	mutually_exclusive = {focus = NZL_national_party_triumphant}
 	mutually_exclusive = {focus = NZL_unite_communist_movements}
 	mutually_exclusive = { focus = NZL_legion_ideals}
-	x = 33
+	x = 42
 	y = 0
 
 
@@ -2758,7 +2757,7 @@ focus = {
 	mutually_exclusive = { focus = NZL_the_labour_partys_reform}
 	mutually_exclusive = {focus = NZL_unite_communist_movements}
 	mutually_exclusive = { focus = NZL_legion_ideals}
-	x = 45
+	x = 54
 	y = 0
 
 	cost = 10
@@ -3081,7 +3080,7 @@ focus = {
 	mutually_exclusive = { focus = NZL_the_labour_partys_reform}
 	mutually_exclusive = { focus = NZL_national_party_triumphant}
 	mutually_exclusive = { focus = NZL_legion_ideals}
-	x = 51
+	x = 60
 	y = 0
 
 	cost = 5
@@ -3489,7 +3488,7 @@ focus = {
 	mutually_exclusive = { focus = NZL_the_labour_partys_reform}
 	mutually_exclusive = { focus = NZL_national_party_triumphant}
 	mutually_exclusive = { focus = NZL_unite_communist_movements}
-	x = 56
+	x = 65
 	y = 0
 
 	cost = 5

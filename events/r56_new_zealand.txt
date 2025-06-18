@@ -177,3 +177,116 @@ country_event = {
 		}
 	}
 }
+#Radar Cooperation
+country_event = {
+	id = new_zealand.11
+	title = new_zealand.11.t
+	desc = new_zealand.11.d
+	picture = GFX_report_event_radar_01
+
+	is_triggered_only = yes
+
+	option = {
+		set_technology = {
+			cavity_magnatron = 1
+		}
+		name = new_zealand.11.a  # Accept radar cooperation
+		522 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = radar_station
+					level = 2
+					instant_build = yes
+				}
+		}
+		FROM = {
+			country_event = new_zealand.12 
+		}
+	}
+}
+country_event = {
+	id = new_zealand.12
+	title = new_zealand.12.t
+	desc = new_zealand.12.d
+	picture = GFX_report_event_radar_01
+
+	is_triggered_only = yes
+
+	option = {
+		set_technology = {
+			cavity_magnatron = 1
+		}
+		name = new_zealand.12.a  # Confirm cooperation
+		284 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = radar_station
+					level = 2
+					instant_build = yes
+				}
+		}
+	}
+}
+
+#Ask for Manufacturing Permits from UK
+country_event = {
+	id = new_zealand.13
+	title = new_zealand.13.t
+	desc = new_zealand.13.d
+	picture = GFX_report_event_SOV_purge_aircraft_2
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_zealand.13.a  # Supermarine
+			NZL = {
+				set_country_flag = NZL_has_supermarine_mio_access
+				country_event = { id = new_zealand.14 days = 1 }
+			}
+		
+	}
+
+	option = {
+		name = new_zealand.13.b  # Fairey	
+			NZL = {
+				set_country_flag = NZL_has_fairey_mio_access
+				country_event = { id = new_zealand.14 days = 1 }
+			}
+	}
+}
+
+country_event = {
+    id = new_zealand.14
+    title = new_zealand.14.t
+    picture = GFX_report_event_SOV_purge_aircraft_2
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { has_country_flag = NZL_has_supermarine_mio_access }
+            set_variable = { name = aircraft_choice_text value = 1 }
+        }
+        else_if = {
+            limit = { has_country_flag = NZL_has_fairey_mio_access }
+            set_variable = { name = aircraft_choice_text value = 2 }
+        }
+    }
+
+    option = {
+    name = new_zealand.14.a
+
+   		if = {
+			limit = {
+				check_variable = { name = aircraft_choice_text value = 1 }
+			}
+			custom_effect_tooltip = new_zealand.14.tt_supermarine
+		}
+		else_if = {
+			limit = {
+				check_variable = { name = aircraft_choice_text value = 2 }
+			}
+			custom_effect_tooltip = new_zealand.14.tt_fairey
+		}	
+	
+}
+}
