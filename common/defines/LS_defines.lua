@@ -60,8 +60,6 @@ NDefines.NMilitary.TRAINING_MAX_LEVEL = 2
 NDefines.NMilitary.DEPLOY_TRAINING_MAX_LEVEL = 1
 NDefines.NMilitary.ARMY_EXP_BASE_LEVEL = 1
 NDefines.NMilitary.UNIT_EXP_LEVELS = {0.1, 0.3, 0.5, 0.75}
-NDefines.NMilitary.UNIT_EXPERIENCE_PER_TRAINING_DAY = 0.0015
-NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.25
 NDefines.NMilitary.NUKE_MIN_DAMAGE_PERCENT = 0.9
 NDefines.NMilitary.NUKE_MAX_DAMAGE_PERCENT = 1.2
 NDefines.NMilitary.RETREAT_SPEED_FACTOR = 0.15
@@ -150,7 +148,6 @@ NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 2000 -- Max army experience a country c
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 2000 -- Max navy experience a country can store
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 2000  -- Max air experience a country can store
 
-NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.25
 NDefines.NMilitary.FIELD_MARSHAL_DIVISIONS_CAP = 50
 NDefines.NMilitary.FIELD_MARSHAL_ARMIES_CAP = 10
 NDefines.NMilitary.RECON_SKILL_IMPACT = 6
@@ -159,15 +156,12 @@ NDefines.NMilitary.BASE_DIVISION_BRIGADE_CHANGE_COST = 0 -- Base cost to change 
 NDefines.NMilitary.BASE_DIVISION_SUPPORT_SLOT_COST = 0
 
 NDefines.NMilitary.BASE_LEADER_TRAIT_GAIN_XP = 0.45
-NDefines.NMilitary.UNIT_EXPERIENCE_PER_COMBAT_HOUR = 0.0001
-NDefines.NMilitary.FIELD_EXPERIENCE_MAX_PER_DAY = 1.2
 NDefines.NMilitary.ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.1
 NDefines.NMilitary.PLAYER_ORDER_PLANNING_DECAY = 0.03
 NDefines.NMilitary.DISBAND_MANPOWER_LOSS = 0.0
 NDefines.NMilitary.PLAN_SPREAD_ATTACK_WEIGHT = 4.1 --AI should concentrate forces more a bit experimental. Increased from 4.0 to combat issues with AI death stacks - SpicyAlfredo
 
 NDefines.NMilitary.FIELD_MARSHAL_XP_RATIO = 0.3
-NDefines.NMilitary.COMMANDER_LEVEL_UP_STAT_WEIGHTS = {5, 5, 3, 4}
 NDefines.NMilitary.NEW_COMMANDER_RANDOM_PERSONALITY_TRAIT_CHANCES = { -- Chances to gain a personality trait for new generals
     0.80, --50% for first trait
     0.40, --15% for second trait after that
