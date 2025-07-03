@@ -2457,215 +2457,33 @@ country_event = {
 #Cultural Revolution begins
 country_event = {
 	id = prc.7
-	title = prc.7.t
-	desc = prc.7.d
+	title = "Mao's Assassination"
+	desc = "Mao's Assassination!"
 	picture = GFX_report_event_soviet_purge_speech
 	
 	is_triggered_only = yes
 
 	fire_only_once = yes
-
-	option = {
-		name = prc.7.a
-		set_country_flag = cultural_revolution
-		add_ideas = PRC_cultural_revolution
-		set_global_flag = PRC_cr_started
-	}
-}
-
-#Lin biao's fate
-country_event = {
-	id = prc.8
-	title = prc.8.t
-	desc = prc.8.d
-	picture = GFX_report_event_airplane_crash
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = {
-		name = prc.8.a
-		set_global_flag = lin_biao_dead
-		remove_unit_leader = 1065
-		add_stability = -0.075
-	}
-}
-
-#Lin biao's fate
-country_event = {
-	id = prc.9
-	hidden = yes
-
-	trigger = {
-		tag = PRC
-		has_global_flag = mao_assassin_event_fired
-		NOT = {
-			has_global_flag = mao_dead
-		}
-	}
-
-	mean_time_to_happen = { days = 10 }
-
-	fire_only_once = yes
-
 	immediate = {
-		set_global_flag = lin_biao_fate_fired
-		if = {
-			limit = {
-				SOV = {
-					exists = yes
-					NOT = {
-						is_puppet_of = ROOT
-					}
-				}
-			}
-			SOV = {
-				save_event_target_as = PRC_linbiao_flee_target
-			}
-			else = {
-				random_other_country = {
-					limit = {
-						exists = yes
-						NOT = {
-							is_puppet_of = ROOT
-						}
-					}
-					save_event_target_as = PRC_linbiao_flee_target
-				}
-			}
-		}
-		if = {
-			limit = {
-				is_historical_focus_on = yes
-			}
-			random_list = {
-				85 = {
-					country_event = {
-						id = prc.8
-					}
-				}
-				15 = {
-					country_event = {
-						id = prc.10
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				is_historical_focus_on = no
-			}
-			random_list = {
-				60 = {
-					country_event = {
-						id = prc.8
-					}
-				}
-				40 = {
-					country_event = {
-						id = prc.10
-					}
-				}
-			}
-		}
-	}
-	option = {}
-}
-
-#Lin biao's fate
-country_event = {
-	id = prc.10
-	title = prc.10.t
-	desc = prc.10.d
-	picture = GFX_report_event_journalists_speech
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = {
-		name = prc.10.a
-		set_global_flag = lin_biao_fled_to_soviet
-		add_stability = -0.075
-		remove_unit_leader = 1065
-	}
-}
-
-#death of Zhou en lai
-country_event = {
-	id = prc.11
-	title = prc.11.t
-	desc = prc.11.d
-	picture = GFX_report_event_europe_funeral
-
-	trigger = {
-		tag = PRC
-		has_war = no
-		has_global_flag = PRC_cr_started
-	}
-
-	mean_time_to_happen = { days = 111 }
-
-	fire_only_once = yes
-
-	option = {
-		name = prc.11.a
-		set_country_flag = death_of_zel
-		add_stability = -0.075
-	}
-}
-
-#death of mao ze dong
-country_event = {
-	id = prc.12
-	title = prc.12.t
-	desc = prc.12.d
-	picture = GFX_report_event_europe_funeral
-
-	trigger = {
-		tag = PRC
-		has_global_flag = lin_biao_fate_fired
-		NOT = {
-			has_country_flag = mao_assassinated
-		}
-	}
-
-	mean_time_to_happen = { days = 80 }
-
-	fire_only_once = yes
-
-	option = {
-		name = prc.12.a
-		remove_unit_leader = 1064
 		kill_country_leader = yes
-		if = {
-			limit = {
-				OR = {
-					has_global_flag = lin_biao_dead
-					has_global_flag = lin_biao_fled_to_soviet
-				}
+	}
+	option = {
+		name = "Deng Xiaoping"
+		kill_country_leader = yes
+		create_country_leader = {
+			name = "Deng Xiaoping"
+			desc = " "
+			picture = "gfx/leaders/Asia/Portrait_Asia_Generic_communism.dds"
+			expire = "1965.1.1"
+			ideology = marxism
+			traits = {
+				socialist_revolutionary
 			}
-			create_country_leader = {
-				name = "Hua Guofeng"
-				desc = " "
-				picture = "gfx/leaders/Asia/Portrait_Asia_Generic_communism.dds"
-				expire = "1965.1.1"
-				ideology = marxism
-				traits = {
-					revolutionary_figure
-				}
-			}
-			set_country_flag = huaguofeng
 		}
-		if = {
-			limit = {
-				NOT = {
-					has_global_flag = lin_biao_dead
-					has_global_flag = lin_biao_fled_to_soviet
-				}
-			}
-			create_country_leader = {
+	}
+	option = {
+		name = "Generalismo Lin shall lead us"
+		create_country_leader = {
 				name = "Lin Biao"
 				desc = " "
 				picture = "gfx/leaders/Asia/Portrait_Asia_Generic_warlord1.dds"
@@ -2680,49 +2498,11 @@ country_event = {
 				promote_leader = yes
 			}				
 			set_country_flag = lin_biao
-			add_political_power = 500
-			add_manpower = -575000
-			remove_ideas = PRC_cultural_revolution
-			add_timed_idea = {
-				idea = PRC_cultural_revolution_aftermath
-				days = 600
-			}
 			set_global_flag = CR_ended
-		}
-		add_stability = -0.075
-		set_global_flag = mao_dead
-		hidden_effect = { 
-			country_event = {
-				id = prc.13 
-				days = 45
-			}
-		}
+			complete_national_focus = CHI_generalissimo_lin
 	}
 }
 
-#Gang of Four Crushed
-country_event = {
-	id = prc.13
-	title = prc.13.t
-	desc = prc.13.d
-	picture = GFX_report_event_crowd_in_prague
-
-	is_triggered_only = yes
-
-	fire_only_once = yes
-
-	option = {
-		name = prc.13.a
-		add_political_power = 500
-		add_manpower = -175000
-		remove_ideas = PRC_cultural_revolution
-		add_timed_idea = {
-			idea = PRC_cultural_revolution_aftermath
-			days = 1400
-		}
-		set_global_flag = CR_ended
-	}
-}
 ###########################
 # Chinese Events
 ##########################
