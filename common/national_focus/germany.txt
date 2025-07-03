@@ -20841,7 +20841,7 @@ focus_tree = {
 		y = 0
 		relative_position_id = GER_prioritize_economic_growth
 
-		cost = 10
+		cost = 5
 
 		available = {
 			is_subject = no
@@ -20899,12 +20899,12 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER FOCUS_FILTER_MILITARY_CHARACTER }
 
-		select_effect = {
-			country_event = {
-			    id = wuw_GER_civil_war.7
-			    days = 7
-			}
-		}
+		#select_effect = {
+		#	country_event = {
+		#	    id = wuw_GER_civil_war.7
+		#	    days = 7
+		#	}
+		#}
 
 		completion_reward = {
 			hidden_effect = { #offset from fascist reasons on 00_on_actions
@@ -20928,16 +20928,37 @@ focus_tree = {
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
-			add_political_power = 120
+			add_political_power = 25
+			add_ideas = tot_economic_mobilisation
+			add_ideas = extensive_conscription
+
+
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
 			add_named_threat = { threat = 3 name = GER_oppose_hitler }
 
-			country_event = { 
-				id = wtt_germany.1 
+			#country_event = { 
+			#	id = wtt_germany.1 
+			#}
+			add_popularity = { ideology = neutrality popularity = 0.25 }
+			set_politics = {
+				ruling_party = neutrality
 			}
-			custom_effect_tooltip = GER_oppose_hitler_civil_war
+			GER_august_von_mackensen = {
+				add_country_leader_role = {
+					country_leader = {
+						expire = "1965.1.1"
+						ideology = military_junta
+						traits = {
+							great_war_hero
+						}
+					}
+					promote_leader = yes
+				}
+			}	
+			hidden_effect = { set_cosmetic_tag = GER_provisional_gvt }
+			#custom_effect_tooltip = GER_oppose_hitler_civil_war
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
@@ -20956,38 +20977,11 @@ focus_tree = {
 				}
 			}
 
-		}
-	}
-	focus = {
-		id = GER_rally_the_nation
-		icon = GFX_focus_spr_the_anti_fascist_workers_revolution
-		prerequisite = { focus = GER_oppose_hitler_ww }
-
-		x = -2
-		y = 1
-		relative_position_id = GER_oppose_hitler_ww
-		cost = 5
-		available = {
-			has_civil_war = yes
-		}
-
-		bypass = {
-			has_civil_war = no
-			NOT = {
-				has_government = fascism
-			}
-		}
-
-		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
-
-		completion_reward = {
-
+			
 			add_popularity = {
 				ideology = fascism
 				popularity = -0.05
 			}
-
-			add_war_support = 0.05
 
 			custom_effect_tooltip = generic_skip_one_line_tt
 
@@ -21003,20 +20997,67 @@ focus_tree = {
 			}
 			custom_effect_tooltip = GER_rally_the_nation_tt
 
+
 		}
-	} 
+	}
+#	focus = {
+#		id = GER_rally_the_nation
+#		icon = GFX_focus_spr_the_anti_fascist_workers_revolution
+#		prerequisite = { focus = GER_oppose_hitler_ww }
+#
+#		x = -2
+#		y = 1
+#		relative_position_id = GER_oppose_hitler_ww
+#		cost = 5
+#		available = {
+#			has_civil_war = yes
+#		}
+#
+#		bypass = {
+#			has_civil_war = no
+#			NOT = {
+#				has_government = fascism
+#			}
+#		}
+#
+#		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_WAR_SUPPORT }
+#
+#		completion_reward = {
+#
+#			add_popularity = {
+#				ideology = fascism
+#				popularity = -0.05
+#			}
+#
+#			add_war_support = 0.05
+#
+#			custom_effect_tooltip = generic_skip_one_line_tt
+#
+#			add_timed_idea = {
+#				idea = GER_rally_the_nation_ns
+#				days = 365
+#			}
+#
+#			custom_effect_tooltip = generic_skip_one_line_tt
+#
+#			country_event = { 
+#				id = wuw_GER_civil_war.3
+#			}
+#			custom_effect_tooltip = GER_rally_the_nation_tt
+#
+#		}
+#	} 
 
 	focus = {
 		id = GER_denazification_campaigns
 		icon = GFX_focus_generic_anti_fascist_diplomacy
-		prerequisite = { focus = GER_rally_the_nation }
+		prerequisite = { focus = GER_oppose_hitler_ww }
 
 		x = -1
 		y = 1
-		relative_position_id = GER_rally_the_nation
+		relative_position_id = GER_oppose_hitler_ww
 		cost = 5
 		available = {
-			fascism > 0.05
 		}
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
@@ -21039,11 +21080,11 @@ focus_tree = {
 	focus = {
 		id = GER_rebuild_the_nation_ww
 		icon = GFX_goal_generic_construction2
-		prerequisite = { focus = GER_rally_the_nation }
+		prerequisite = { focus = GER_oppose_hitler_ww }
 
 		x = 1
 		y = 1
-		relative_position_id = GER_rally_the_nation
+		relative_position_id = GER_oppose_hitler_ww
 		cost = 5
 		available = {
 		}
@@ -21061,10 +21102,10 @@ focus_tree = {
 	focus = {
 		id = GER_revitalize_the_nation
 		icon = GFX_focus_generic_public_works
-		prerequisite = { focus = GER_denazification_campaigns focus = GER_rebuild_the_nation_ww }
+		prerequisite = { focus = GER_oppose_hitler_ww }
 
-		x = 1
-		y = 1
+		x = 4
+		y = 0
 		relative_position_id = GER_denazification_campaigns
 		
 		cost = 5
@@ -21073,11 +21114,9 @@ focus_tree = {
 			has_civil_war = no
 		}
 
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-
-			add_stability = 0.05
 
 			custom_effect_tooltip = GER_rebuild_the_nation_ww_tt
 
@@ -21119,7 +21158,6 @@ focus_tree = {
 			}
 		}
 	}
-
 	focus = {
 		id = GER_tend_to_the_future_of_germany
 		icon = GFX_focus_GER_tend_to_the_future
