@@ -1,5 +1,5 @@
 focus_tree = {
-	id = MAN_focus
+	id = manchukuo_focus
 	country = {
 		factor = 0
 		modifier = {
@@ -9,13 +9,13 @@ focus_tree = {
 	}
 	default = no
 	continuous_focus_position = {
-		x = 0
+		x = 700
 		y = 1500
 	}
 ####POLITICAL TREE
 	focus = {
 		id = MAN_pacify_the_countryside
-		icon = GFX_goal_MAN_confront_gorillas
+		icon = GFX_goal_generic_major_war
 		x = 14
 		y = 0
 
@@ -70,9 +70,6 @@ focus_tree = {
 		}
 
 		available = {
-			943 = {
-				is_fully_controlled_by = ROOT
-			}
 		}
 
 		search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -82,7 +79,7 @@ focus_tree = {
 	}
 	focus = {
 		id = MAN_winter_training
-		icon = GFX_goal_generic_cold_war
+		icon = GFX_focus_generic_winter_warfare
 		cost = 10
 		prerequisite = {
 			focus = MAN_national_martyr_shrine
@@ -584,16 +581,18 @@ focus_tree = {
 			if = {
 				limit = {
 					NOT = {
-						has_tech = aluminum_production_1
+						has_tech = resource_expansion_tech_1
 					}
 				}
-				set_technology = { aluminum_production_1 = 1 }
+				set_technology = { resource_expansion_tech_1 = 1 }
 				else = {
 					add_tech_bonus = {
 						name = construction_tech_bonus
 						bonus = 1
 						uses = 1
-						category = aluminium_tech
+						technology = resource_expansion_tech_1
+						technology = resource_expansion_tech_2
+						technology = resource_expansion_tech_3
 					}					
 				}
 			}			
@@ -648,7 +647,7 @@ focus_tree = {
 	}
 	focus = {
 		id = MAN_total_economic_coherence
-		icon = GFX_goal_MAN_economic_coherence
+		icon = GFX_focus_AFG_a_modern_economy
 		prerequisite = { focus = MAN_invite_japanese_investors }
 		x = 0
 		y = 1
@@ -849,7 +848,7 @@ focus_tree = {
 	}
 	focus = {
 		id = MAN_for_the_emperor
-		icon = GFX_goal_man_for_the_emperor
+		icon = GFX_focus_generic_total_war
 		prerequisite = {
 			focus = MAN_prepare_for_war
 		}
@@ -934,7 +933,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = MAN_national_defense_state1
+		id = MAN_national_defense_state
 		icon = GFX_focus_generic_military_industry
 		
 		prerequisite = { focus = MAN_second_five_year_plan }
@@ -1011,9 +1010,14 @@ focus_tree = {
 ###ALLIANCE WITH KWANTUNG ARMY PATH
 	focus = {
 		id = MAN_alliance_with_the_kwantung_army
-		icon = GFX_goal_CHI_support_pro_japanese_faction
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = MAN_obedience }
 		available = {
+			NOT = {
+				has_completed_focus = MAN_exile_takeover
+			}
+		}
+		allow_branch = {
 			NOT = {
 				has_completed_focus = MAN_exile_takeover
 			}
@@ -1032,6 +1036,7 @@ focus_tree = {
 
 		search_filters = { FOCUS_FILTER_RESEARCH }
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			remove_ideas = MAN_kwantung_veto
 			add_doctrine_cost_reduction = {
 				name = MAN_alliance_with_the_kwantung_army
@@ -1043,7 +1048,7 @@ focus_tree = {
 	}
 	focus = {
 		id = MAN_national_conscription
-		icon = GFX_goal_manpower
+		icon = GFX_SOV_barrier_troops_ccp_2d_sov_compatibility
 		prerequisite = {
 			focus = MAN_alliance_with_the_kwantung_army
 		}
@@ -1070,7 +1075,7 @@ focus_tree = {
 		id = MAN_labour_service_corps
 		icon = GFX_focus_generic_public_works
 		prerequisite = {
-			focus = MAN_national_conscription focus = MAN_establish_hoankyoku
+			focus = MAN_national_conscription focus = MAN_hoankyoku
 		}
 		available = {
 			NOT = {
@@ -1087,8 +1092,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 	focus = {
-		id = MAN_establish_hoankyoku
-		icon = GFX_goal_generic_secret_police_2
+		id = MAN_hoankyoku
+		icon = GFX_focus_generic_secret_service_agency
 		prerequisite = {
 			focus = MAN_alliance_with_the_kwantung_army
 		}
@@ -1100,7 +1105,7 @@ focus_tree = {
 		relative_position_id = MAN_alliance_with_the_kwantung_army
 		x = -1
 		y = 1
-		cost = 5
+		cost = 10
 		completion_reward = {
 			add_stability = 0.1
 			add_tech_bonus = {
@@ -1123,12 +1128,12 @@ focus_tree = {
 		id = MAN_river_force
 		icon = GFX_focus_generic_naval_invasion
 		prerequisite = {
-			focus = MAN_national_conscription focus = MAN_establish_hoankyoku
+			focus = MAN_national_conscription focus = MAN_hoankyoku
 		}
 		relative_position_id = MAN_alliance_with_the_kwantung_army
 		x = -1
 		y = 2
-		cost = 7
+		cost = 10
 		available = {
 			NOT = {
 				has_completed_focus = MAN_exile_takeover
@@ -1183,7 +1188,7 @@ focus_tree = {
 	}
 	focus = {
 		id = MAN_send_cadets_to_japan
-		icon = GFX_goal_CHI_support_pro_japanese_faction
+		icon = GFX_focus_generic_advanced_military_studies
 		prerequisite = {
 			focus = MAN_labour_service_corps focus = MAN_river_force
 		}
@@ -1250,7 +1255,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MAN_chinese_leadership
 
-		cost = 7
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -1326,7 +1331,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MAN_chinese_leadership
 
-		cost = 7
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -1391,7 +1396,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = MAN_national_cooperation_government1
+		id = MAN_national_cooperation_government
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = MAN_reinforce_east_hebei focus = MAN_reinforce_the_heilongjiang }
 		x = 0
@@ -1441,10 +1446,10 @@ focus_tree = {
 	focus = {
 		id = MAN_the_two_emperors
 		icon = GFX_goal_anschluss
-		prerequisite = { focus = MAN_national_cooperation_government1 }
+		prerequisite = { focus = MAN_national_cooperation_government }
 		x = 0
 		y = 1
-		relative_position_id = MAN_national_cooperation_government1
+		relative_position_id = MAN_national_cooperation_government
 
 		cost = 10
 		ai_will_do = {
@@ -1628,7 +1633,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MAN_request_control_of_the_railways
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -1660,7 +1665,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MAN_staff_the_court_with_manchus
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 3
@@ -1850,7 +1855,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MAN_request_control_of_the_railways
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -1884,7 +1889,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = MAN_five_equal_peoples
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 4
@@ -2364,7 +2369,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_revive_zongli_yamen
-		icon = GFX_goal_research_silver
+		icon = GFX_focus_research2
 		prerequisite = {
 			focus = MAN_claim_the_mandate_of_heaven
 		}
@@ -2377,12 +2382,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = MAN_zongli_yamen
-			if = {
-				limit = {
-					amount_research_slots < 6
-				}
-				add_research_slot = 1
-			}
+			add_research_slot = 1
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
@@ -2397,7 +2397,6 @@ focus_tree = {
 		y = 2
 		cost = 10
 		available = {
-			r56_script_i_am_sane = yes
 			any_country = {
 				exists = yes
 				is_puppet = no
@@ -2622,11 +2621,14 @@ focus_tree = {
 ###ECO TREE BEGINS
 	focus = {
 		id = MAN_destroy_opium_plantations
-		icon = GFX_goal_MAN_destroy_opium
+		icon = GFX_SOV_the_rightful_heir_to_the_empire_ccp_2d_sov_compatibility
 		x = 24
 		y = 0
 		cost = 5
 		available = {
+			NOT = {
+				has_completed_focus = MAN_increase_opium_production
+			}
 			OR = {
 				NOT = {
 					is_puppet_of = JAP
@@ -2961,66 +2963,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 	}
 	focus = {
-		id = MAN_manchuria_petroleum_company
-		icon = GFX_goal_generic_oil_refinery
-		prerequisite = { focus = MAN_expand_the_textile_industry }
-		x = -2
-		y = 1
-		relative_position_id = MAN_expand_the_textile_industry
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 2
-		}
-
-		available = {
-			has_full_control_of_state = 716
-			716 = {
-				oil > 3
-			}	
-			NOT = {
-				JAP = {
-					focus_progress = {
-						focus = JAP_manchu_oil
-						progress > 0
-					}
-				}
-			}		
-		}
-		bypass = {
-			any_other_country = {
-				has_completed_focus = JAP_manchu_oil
-			}
-		}
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 716 }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = fuel_silo
-					level = 1
-					instant_build = yes
-				}
-			}			
-			
-			add_tech_bonus = {
-				name = industrial_bonus
-				bonus = 1
-				uses = 1
-				category = refining_tech
-			}
-			add_tech_bonus = {
-				name = excavation_tech_bonus_name
-				bonus = 0.5
-				uses = 1
-				category = excavation_tech
-			}			
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_OIL}
-	}
-	focus = {
 		id = MAN_expand_the_textile_industry
 		icon = GFX_focus_CHL_enlarge_the_textile_industries
 		prerequisite = { focus = MAN_infrastructure_effort  }
@@ -3118,6 +3060,66 @@ focus_tree = {
 			}
 			}
 		}
+	}
+	focus = {
+		id = MAN_manchuria_petroleum_company
+		icon = GFX_goal_generic_oil_refinery
+		prerequisite = { focus = MAN_expand_the_textile_industry }
+		x = -2
+		y = 1
+		relative_position_id = MAN_expand_the_textile_industry
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+			has_full_control_of_state = 716
+			716 = {
+				oil > 3
+			}	
+			NOT = {
+				JAP = {
+					focus_progress = {
+						focus = JAP_manchu_oil
+						progress > 0
+					}
+				}
+			}		
+		}
+		bypass = {
+			any_other_country = {
+				has_completed_focus = JAP_manchu_oil
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = { 716 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = fuel_silo
+					level = 1
+					instant_build = yes
+				}
+			}			
+			
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1
+				uses = 1
+				category = synth_resources
+			}
+			add_tech_bonus = {
+				name = excavation_tech_bonus_name
+				bonus = 0.5
+				uses = 1
+				category = excavation_tech
+			}			
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_OIL}
 	}
 	focus = {
 		id = MAN_civilian_industries
@@ -3751,6 +3753,14 @@ focus_tree = {
 		completion_reward = {
 			navy_experience = 25
 			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = dockyard
@@ -3759,6 +3769,14 @@ focus_tree = {
 				}
 			}
 			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = dockyard
@@ -3845,9 +3863,9 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_tech_bonus = {
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
 				name = sub_op_bonus
-				bonus = 1
 				uses = 2
 				category = submarine_doctrine
 			}
@@ -3881,9 +3899,9 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				name = fleet_in_being_bonus
-				bonus = 1
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = sub_op_bonus
 				uses = 2
 				category = fleet_in_being_tree
 			}
@@ -4039,7 +4057,7 @@ focus_tree = {
 		x = 32
 		y = 0
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -4116,7 +4134,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = air_plane_models
 				bonus = 1
-				uses = 2
+				uses = 1
 				category = light_air
 			}
 		}
@@ -4259,7 +4277,7 @@ focus_tree = {
 				name = air_plane_models
 				bonus = 1
 				uses = 1
-				category = light_air
+				category = air_equipment
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -4283,7 +4301,7 @@ focus_tree = {
 				name = air_plane_models
 				bonus = 1
 				uses = 1
-				category = medium_air
+				category = air_equipment
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -4291,9 +4309,21 @@ focus_tree = {
 ###EXILE TAKEOVER TREE
 	focus = {
 		id = MAN_exile_takeover
-		icon = GFX_goal_MAN_kwantung_takeover
+		icon = GFX_focus_MAN_exile_takeover
 		prerequisite = {
 			focus = MAN_obedience
+		}
+		allow_branch = {
+			NOT = {
+				has_completed_focus = MAN_alliance_with_the_kwantung_army
+			}
+		}
+		offset = {
+			x = 14
+			y = 0
+			trigger = {
+				has_completed_focus = MAN_exile_takeover
+			}
 		}
 		x = -14
 		y = 1	
@@ -4323,6 +4353,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			add_political_power = 50
 			add_opinion_modifier = {
 				target = SOV
@@ -4456,7 +4487,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_dockyard_conversion
-		icon = GFX_goal_MAN_kwantung_dock_focus
+		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = MAN_exile_takeover}
 		x = 1
 		y = 1
@@ -4523,7 +4554,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_prepare_for_the_strike
-		icon = GFX_goal_MAN_kwantung_factory
+		icon = GFX_SOV_swap_to_political_advisors_ccp_2d_sov_compatibility
 		prerequisite = { focus = MAN_a_bleak_outlook }
 		x = -1
 		y = 3
@@ -4544,7 +4575,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_a_bleak_outlook
-		icon = GFX_goal_MAN_kwantung_burden_focus
+		icon = GFX_focus_MAN_kwantung_burden
 		prerequisite = { focus = MAN_dockyard_conversion}
 		prerequisite = { focus = MAN_reorganize_the_nation}
 		x = 0
@@ -4768,7 +4799,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_kwantung_military_advisors
-		icon = GFX_goal_CHI_support_pro_japanese_faction
+		icon = GFX_SOV_expand_aviation_institutes_ccp_2d_sov_compatibility
 		prerequisite = { focus = MAN_embracing_the_kodoha focus = MAN_supply_our_air_force }
 		x = -1
 		y = 1
@@ -4801,7 +4832,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_begin_the_nanshin_ron
-		icon = GFX_goal_MAN_china_or_soviet
+		icon = GFX_focus_MAN_russia_or_china
 		prerequisite = { focus = MAN_embracing_the_kodoha focus = MAN_supply_our_air_force }
 		x = 3
 		y = 1
@@ -4832,7 +4863,7 @@ focus_tree = {
 
 	focus = {
 		id = MAN_consolidate_the_chinese_holdings
-		icon = GFX_goal_MAN_the_empire_returns
+		icon = GFX_SOV_annex_tannu_tuva_ccp_2d_sov_compatibility
 		prerequisite = { focus = MAN_supply_our_air_force }
 		prerequisite = { focus = MAN_embracing_the_kodoha}
 		x = 1
@@ -4928,7 +4959,7 @@ focus_tree = {
 	}
 	focus = {
 		id = MAN_get_japan_tree
-		icon = GFX_goal_manpower
+		icon = GFX_focus_jap_pacific_guardian
 		prerequisite = { focus = MAN_retake_japan}
 		x = 1
 		y = 3
