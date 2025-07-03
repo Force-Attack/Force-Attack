@@ -1,0 +1,53 @@
+on_actions = {
+	on_send_volunteers = {
+		effect = {
+			if = {
+				limit = {
+					ROOT = {
+						not = {
+							has_military_access_to = FROM
+						}
+					}
+				}
+				ROOT = {
+					set_country_flag = Automatical_access_volunteer_sender
+				}
+				FROM = {
+					give_military_access = ROOT
+				}
+				FROM = {
+					set_country_flag = Automatical_access_volunteer_recipient
+				}
+			}
+		}
+	}
+	on_weekly = {
+		effect  = {
+			every_country = {
+				limit = {
+					is_ai = yes
+					has_country_flag = {
+						flag = Automatical_access_volunteer_recipient
+						days > 20
+					}
+				}
+				every_other_country = {
+					limit = {
+						has_country_flag = Automatical_access_volunteer_sender
+						PREV = {
+							has_volunteers_amount_from = {
+								tag = PREV
+								count < 1
+							}
+						}
+					}
+					diplomatic_relation = {
+						country = PREV
+						relation = military_access
+						active = no
+					}
+				}
+			}
+		}
+	}
+}
