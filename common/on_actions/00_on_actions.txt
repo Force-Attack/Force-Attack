@@ -2343,59 +2343,6 @@ on_actions = {
 			}
 		}
 	}
-
-
-
-	on_monthly_GER = {
-		effect = {
-			if = {
-				limit = {
-					144 = { is_fully_controlled_by = GER }
-					check_variable = { GER_narvik_civs < 8 }
-					
-					666 = {
-						NOT = {
-							has_dynamic_modifier = {
-								modifier = SWE_blown_up_mines
-							}
-						}
-					}
-				}
-
-				add_to_variable = { GER_narvik_shipments = 1 }
-				if = {
-					limit = {
-						check_variable = { GER_narvik_shipments > 5 }
-					}
-
-					add_offsite_building = {
-						type = industrial_complex
-						level = 1
-					}
-
-					set_variable = { GER_narvik_shipments = 0 }
-					add_to_variable = { GER_narvik_civs = 1 }
-				}
-			}
-			#MEFO BILLS and ECONOMY OF CONQUEST increasing CG
-			if = {
-				limit = {
-					OR = {
-						has_dynamic_modifier = { modifier = GER_mefo_bills_modifier }
-						has_dynamic_modifier = { modifier = GER_economy_of_conquest_modifier }
-					}
-				}
-				if = {
-					limit = {
-						check_variable = { GER_industrial_consumer_goods_factor < 1 }
-					}
-					add_to_variable = { GER_industrial_consumer_goods_factor = GER_monthly_consumer_goods_increase }
-					GER_add_mefo_bills_penalty = yes #Clamps CGFF too 100% and adds penalties
-				}
-				GER_reduce_mefo_bills_penalty = yes #This is a fail-safe, in case it wasn't lowered elsewhere but should have been
-			}
-		}
-	}
 }
 
 	on_startup = {
@@ -2479,3 +2426,55 @@ on_weekly = {
 			}
 		}
 	}
+
+on_monthly_GER = {
+		effect = {
+			if = {
+				limit = {
+					144 = { is_fully_controlled_by = GER }
+					check_variable = { GER_narvik_civs < 8 }
+					
+					666 = {
+						NOT = {
+							has_dynamic_modifier = {
+								modifier = SWE_blown_up_mines
+							}
+						}
+					}
+				}
+
+				add_to_variable = { GER_narvik_shipments = 1 }
+				if = {
+					limit = {
+						check_variable = { GER_narvik_shipments > 5 }
+					}
+
+					add_offsite_building = {
+						type = industrial_complex
+						level = 1
+					}
+
+					set_variable = { GER_narvik_shipments = 0 }
+					add_to_variable = { GER_narvik_civs = 1 }
+				}
+			}
+			#MEFO BILLS and ECONOMY OF CONQUEST increasing CG
+			if = {
+				limit = {
+					OR = {
+						has_dynamic_modifier = { modifier = GER_mefo_bills_modifier }
+						has_dynamic_modifier = { modifier = GER_economy_of_conquest_modifier }
+					}
+				}
+				if = {
+					limit = {
+						check_variable = { GER_industrial_consumer_goods_factor < 1 }
+					}
+					add_to_variable = { GER_industrial_consumer_goods_factor = GER_monthly_consumer_goods_increase }
+					GER_add_mefo_bills_penalty = yes #Clamps CGFF too 100% and adds penalties
+				}
+				GER_reduce_mefo_bills_penalty = yes #This is a fail-safe, in case it wasn't lowered elsewhere but should have been
+			}
+		}
+	}
+}
