@@ -41,6 +41,8 @@ NDefines.NProject.RECRUIT_SCIENTIST_COST = {						-- Amount of pp to hire a scie
 		0			-- pp cost if more than 2 available scientist
 	}
 
+NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 15
+NDefines.NProject.BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 10
 ----------------------------------
 NDefines.NTechnology.MAX_SUBTECHS = 4						-- Max number of sub technologies a technology can have.
 ----------------------------------
