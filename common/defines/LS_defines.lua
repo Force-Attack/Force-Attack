@@ -54,7 +54,7 @@ NDefines.NMilitary.FIELD_MARSHAL_ARMIES_CAP = 10
 NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 5000
-NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = false -- yeah lets keep this true, or else EVERYONE and their mother has cracked out generals
+NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = true -- yeah lets keep this true, or else EVERYONE and their mother has cracked out generals
 ----------------------------------
 NDefines.NFocus.MAX_SAVED_FOCUS_PROGRESS = 25		-- This much progress can be saved while not having a focus selected
 ----------------------------------
