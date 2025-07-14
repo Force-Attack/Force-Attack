@@ -620,8 +620,582 @@
 		}
 	}
 
-	##################################
-	######## POLITICAL DIRECTION #####
-	##################################
+	#ARMY
+		####ARMY TREE
+	focus = {
+		id = CZE_army_start
+		icon = GFX_focus_CZE_oppose_hitler
+		x = 16
+		y = 0
+		cost = 5
+		completion_reward = {
+			hidden_effect = {
+				if = {
+					limit = {
+						date < 1936.01.17
+					}
+					country_event = {
+						#id = cuba.10
+					}
+					
+				}
+			}
+			country_event = {
+				id = germany.131
+			}
+			army_experience = 25
+		}
+	}
+	####GDP GENERAL/WW1
+	focus = {
+		id = CZE_grand_battle_general
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = CZE_army_start }
+		mutually_exclusive = {
+			focus = CZE_mobile_tank_general
+			focus = CZE_mobile_arty_general
+		}
+		
+		available = {
+		}
+		relative_position_id = CZE_army_start
+		x = -3
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = CZE_schwerepunkt_tactics
+				cost_reduction = 0.5
+				uses = 3
+				category = land_doctrine
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_general_arty_bonus
+		icon = GFX_goal_generic_artillery_improved
+		prerequisite = { focus = CZE_grand_battle_general }
+		relative_position_id = CZE_grand_battle_general
+		x = -1
+		y = 1
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+
+			add_tech_bonus = {
+				name = CZE_arty_plz
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				name = CZE_arty_plz
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_grand_railway_guns
+		icon = GFX_goal_generic_railway_artillery
+		prerequisite = { focus = CZE_grand_battle_general }
+		relative_position_id = CZE_grand_battle_general
+		x = -3
+		y = 1
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_tech = railway_gun }
+				}
+				set_technology = { railway_gun = 1 }
+			}
+			create_railway_gun = {
+				equipment = railway_gun_equipment_1
+				name = "SCHWERER-GUSTAV"
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_grand_battle_bonus
+		icon = GFX_goal_ammunitions_shine
+		prerequisite = { focus = CZE_grand_railway_guns }
+		relative_position_id = CZE_grand_railway_guns
+		x = 0
+		y = 1
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 10000
+			}
+			#add_ideas = CZE_methodical_battle_idea
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_general_infantry_bonus
+		icon = GFX_focus_secret_rearmament
+		prerequisite = { focus = CZE_grand_battle_general focus = CZE_mobile_arty_general focus = CZE_mobile_tank_general }
+		relative_position_id = CZE_grand_battle_general
+		x = 1
+		y = 1
+		cost = 5
+		available = {
+			
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = CZE_counter_sloped_armor
+				bonus = 1
+				uses = 2
+				category = support_tech
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_grand_battle_tanks_bonus
+		icon = GFX_focus_generic_study_foreign_tanks
+		prerequisite = { focus = CZE_general_arty_bonus }
+		prerequisite = { focus = CZE_general_infantry_bonus }
+		relative_position_id = CZE_grand_battle_general
+		x = 0
+		y = 2
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = CZE_build_panzer_army
+				bonus = 0.5
+				uses = 1
+				category = armor
+			}
+			add_tech_bonus = {
+				name = CZE_build_panzer_army
+				bonus = 0.5
+				uses = 1
+				category = cat_armored_cars
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_general_antitank_bonus
+		icon = GFX_goal_tank_hunt
+		prerequisite = { focus = CZE_grand_battle_general focus = CZE_mobile_tank_general focus = CZE_mobile_arty_general }
+		relative_position_id = CZE_grand_battle_general
+		x = 2
+		y = 2
+		cost = 5
+		available = {
+			
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = CZE_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_tank
+			}
+			add_tech_bonus = {
+				name = CZE_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_air
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_train_planning_to_generals
+		icon = GFX_goal_CZEman_salute
+		prerequisite = { focus = CZE_grand_battle_tanks_bonus }
+		relative_position_id = CZE_grand_battle_tanks_bonus
+		x = 0
+		y = 1
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = CZE_schwerepunkt_tactics
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+			every_army_leader = {
+				add_planning = 1
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	###Regular CZEmany BLITZ
+	focus = {
+		id = CZE_mobile_tank_general
+		icon = GFX_goal_blitzkrieg
+		prerequisite = { focus = CZE_army_start}
+		mutually_exclusive = {
+			focus = CZE_mobile_arty_general
+			focus = CZE_grand_battle_general
+		}
+		relative_position_id = CZE_army_start
+		x = 0
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = CZE_schwerepunkt_tactics
+				cost_reduction = 0.5
+				uses = 3
+				category = land_doctrine
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_mobile_tanks_bonus
+		icon = GFX_goal_CZE_panzers
+		prerequisite = {  focus = CZE_mobile_arty_general focus = CZE_mobile_tank_general }
+		relative_position_id = CZE_grand_battle_general
+		x = 3
+		y = 1
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_completed_focus = CZE_mobile_tank_general
+				}
+
+				add_tech_bonus = {
+					bonus = 0.5
+					uses = 2
+					technology = armor_tech_1
+					technology = armor_tech_2
+					technology = armor_tech_3
+					technology = armor_tech_4
+				}
+				add_tech_bonus = {
+					name = CZE_build_panzer_army
+					bonus = 1.0
+					ahead_reduction = 1
+					uses = 1
+					category = armor
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = CZE_build_panzer_army
+					bonus = 1
+					ahead_reduction = 0.5
+					uses = 1
+					category = armor
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_mobile_train_attack
+		icon = GFX_goal_CZEman_salute
+		prerequisite = { focus = CZE_mobile_tanks_bonus }
+		prerequisite = {
+			focus = CZE_mobile_mechanize_bonus focus = CZE_general_antitank_bonus
+		}
+		relative_position_id = CZE_mobile_tanks_bonus
+		mutually_exclusive = {
+			focus = CZE_mobile_arty_training_breakthrough
+		}
+		x = 0
+		y = 2
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = CZE_schwerepunkt_tactics
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+			every_army_leader = {
+				add_attack = 1
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_mobile_mechanize_bonus
+		icon = GFX_goal_mechanized_army_2
+		prerequisite = { focus = CZE_mobile_arty_general focus = CZE_mobile_tank_general }
+		relative_position_id = CZE_grand_battle_general
+		x = 4
+		y = 2
+		cost = 5
+		available = {
+			
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					has_completed_focus = CZE_mobile_arty_general
+				}
+
+				add_tech_bonus = {
+					name = CZE_arty_plz
+					ahead_reduction = 1
+					bonus = 1
+					uses = 2
+					category = cat_mechanized_equipment
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = CZE_arty_plz
+					ahead_reduction = 1
+					bonus = 1
+					uses = 1
+					category = cat_mechanized_equipment
+				}
+			}
+			####CONNECTED TO GENERAL THREE
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	###MOBILE ARTY GENERAL
+	focus = {
+		id = CZE_mobile_arty_general
+		icon = GFX_goal_mechanized_army
+		prerequisite = { focus = CZE_army_start}
+		mutually_exclusive = {
+			focus = CZE_mobile_tank_general
+			focus = CZE_grand_battle_general
+		}
+		relative_position_id = CZE_army_start
+		x = 3
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = CZE_schwerepunkt_tactics
+				cost_reduction = 0.5
+				uses = 3
+				category = land_doctrine
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_mobile_arty
+		icon = GFX_goal_CAN_land_mattress
+		prerequisite = { focus = CZE_mobile_arty_general focus = CZE_mobile_tank_general }
+		relative_position_id = CZE_mobile_arty_general
+		x = -1
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = CZE_arty_plz
+				bonus = 1
+				uses = 2
+				category = Artillery
+			}
+			
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_mobile_arty_training_breakthrough
+		icon = GFX_goal_CZEman_salute
+		prerequisite = { focus = CZE_mobile_arty focus = CZE_mobile_mechanize_bonus }
+		relative_position_id = CZE_mobile_arty_general
+		mutually_exclusive = {
+			focus = CZE_mobile_train_attack
+		}
+		x = 0
+		y = 3
+		cost = 5
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = CZE_schwerepunkt_tactics
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+			every_army_leader = {
+				add_defense = 1
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_arty
+		icon = GFX_goal_nebelwerfer_focus
+		prerequisite = { focus = CZE_mobile_arty_general }
+		relative_position_id = CZE_mobile_arty_general
+		x = 1
+		y = 1
+		cost = 10
+		completion_reward = {
+			add_tech_bonus = {
+				name = CZE_arty_plz
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+			add_tech_bonus = {
+				name = CZE_arty_plz
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+
+		focus = {
+		id = CZE_arty_2
+		icon = GFX_goal_nebelwerfer_focus
+		prerequisite = { focus = CZE_mobile_arty_general }
+		relative_position_id = CZE_mobile_arty_general
+		x = 3
+		y = 1
+		cost = 10
+		completion_reward = {
+
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+
+		focus = {
+		id = CZE_arty_3
+		icon = GFX_goal_nebelwerfer_focus
+		prerequisite = { focus = CZE_arty focus = CZE_arty_2 }
+		relative_position_id = CZE_arty
+		x = 1
+		y = 1
+		cost = 10
+		completion_reward = {
+
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+
+
+	focus = {
+		id = CZE_consoldiate_general_position
+		icon = GFX_goal_CAN_WCMC
+		prerequisite = { focus = CZE_mobile_arty_training_breakthrough focus = CZE_mobile_train_attack focus = CZE_train_planning_to_generals }
+		relative_position_id = CZE_army_start
+		x = 0
+		y = 5
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = CZE_various_rewards_army_tt
+			if = {
+				limit = {
+					has_idea = general_staff_planning
+				}
+				swap_ideas = {
+					remove_idea = general_staff_planning
+					add_idea = general_staff_planning_2
+				}
+			}
+			if = {
+				limit = {
+					has_idea = general_staff_blitzkreig
+				}
+				swap_ideas = {
+					remove_idea = general_staff_blitzkreig
+					add_idea = general_staff_blitzkreig_2
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_completed_focus = CZE_mobile_arty_general
+						has_idea = general_staff_blitzkreig
+					}
+				}
+				swap_ideas = {
+					remove_idea = general_staff_blitzkreig
+					add_idea = general_staff_blitzkreig_3
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	focus = {
+		id = CZE_pervitin
+		icon = GFX_goal_supremacy_of_will
+		prerequisite = { focus = CZE_consoldiate_general_position }
+		relative_position_id = CZE_consoldiate_general_position
+		x = 0
+		y = 1
+		cost = 5
+		available = {
+		}
+		completion_reward = {
+
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_EQUIPMENT
+		}
+	}
+	####START OF LATE ARMY TREE
 
 }
