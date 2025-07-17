@@ -15,13 +15,10 @@ country_event = {
 	
 	option = { # Accept demands
 		name = romania.1.a
-		save_event_target_as = bessarabia_ultimatum_victim
-		set_country_flag = bessarabia_ultimatum_victim		
 		ai_chance = {
 			factor = 90
 			modifier = { # Don't accept if in a faction that can protect them
 				factor = 0
-				NOT = { is_in_faction_with = FROM }
 				OR = {
 					any_other_country = {
 						is_major = yes
@@ -33,37 +30,32 @@ country_event = {
 					}
 					has_idea = anti_soviet_pact
 				}
-			}
-			modifier = {
-				factor = 0.1
 				is_historical_focus_on = no #Romania will still cede on historical
 			}
 		}
-		FROM = {
-			country_event = { days = 1 id = soviet.4 }	
+		SOV = {
+			country_event = { days = 1 id = soviet.4 }
 		}
 		set_country_flag = bessarabia_ceded
+		set_country_flag = bessarabia_finished
 	}
 
 	option = { # Refuse
 		name = romania.1.b
+		trigger = { NOT = { is_in_faction_with = GER } }
 		ai_chance = {
 			base = 0
 			modifier = {
 				add = 10
 				is_in_faction = yes
-				NOT = { is_in_faction_with = FROM }
+				NOT = { is_in_faction_with = SOV }
 			}
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
 			}
-			modifier = {
-				factor = 0
-				is_in_faction_with = FROM
-			}
 		}
-		FROM = {
+		SOV = {
 			country_event = { days = 1 id = soviet.5 }
 			effect_tooltip = {
 				create_wargoal = {
@@ -73,6 +65,8 @@ country_event = {
 				}
 			}
 		}
+		add_timed_idea = { idea = ROM_national_struggle days = 365 }
+		custom_effect_tooltip = fight_for_bessarabia
 	}
 }
 
@@ -155,28 +149,6 @@ country_event = {
 			country_event = { days = 1 id = hungary.3 }
 		}
 		set_country_flag = second_vienna_accepted_all
-	}
-	option = { # Refuse
-		name = romania.2.b
-		ai_chance = { factor = 50 }
-		HUN = {
-			country_event = { days = 1 id = hungary.5 }
-			effect_tooltip = {
-				add_state_claim = 76
-				add_state_claim = 83
-				add_state_claim = 84
-			}
-		}
-		GER = {
-			country_event = { days = 1 id = germany.21 }
-			effect_tooltip = {
-				create_wargoal = {
-					type = take_state
-					target = ROM
-					generator = { 76 }
-				}
-			}
-		}
 	}
 }
 
@@ -302,93 +274,100 @@ country_event = {
 		
 	}
 }
-country_event = {
-	id = romania.7
-	title = romania.7.t
-	desc = romania.7.d
-	picture = GFX_report_event_hitler_croatia_handshake
+
+#Surrender when Soviet has taken too much land
+# country_event = {
+# 	id = romania.7
+# 	title = romania.7.t
+# 	desc = romania.7.d
+# 	picture = GFX_report_event_soviet_tanks_snow
 	
-	is_triggered_only = yes
+# 	trigger = {
+# 		tag = ROM
+# 		has_war_with = SOV
+# 		has_civil_war = no
+# 		is_in_faction = no
+# 		OR = {
+# 			casualties > 50000
+# 			surrender_progress > 0.20
+# 			NOT = {
+# 				78 = {
+# 					CONTROLLER = {
+# 						OR = {
+# 							tag = ROM
+# 							is_subject_of = ROM
+# 						}
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
 
-	fire_only_once = yes
+# 	mean_time_to_happen = { days = 5 }
 
-	option = { #Sell all transylvania
-		name = romania.7.a
-		set_global_flag = ROM_all_land
-		46 = {
-			add_extra_state_shared_building_slots = 4
-		}
-		79 = {
-			add_extra_state_shared_building_slots = 4
-		}
-		ROM = {
-			remove_state_core = 78
-			remove_state_core = 766
-			remove_state_core = 76
-			remove_state_core = 83
-			remove_state_core = 82
-			remove_state_core = 80
-			remove_state_core = 77
-		}
-		SOV = {
-			transfer_state = 78
-			transfer_state = 766
-			add_state_core = 78
-			add_state_core = 766
-		}
-		HUN = {
-			transfer_state = 76
-			transfer_state = 84
-			transfer_state = 83
-			transfer_state = 82
-			add_state_core = 76
-			add_state_core = 84
-			add_state_core = 83
-			add_state_core = 82
-		}
-		POL = {
-			transfer_state = 80
-			add_state_core = 80
-		}
-		BUL = {
-			transfer_state = 77
-			add_state_core = 77
-		}
-	}
-	option = { # Sell Northern Transylvania
-		name = romania.7.b
-		46 = {
-			add_extra_state_shared_building_slots = 4
-		}
-		79 = {
-			add_extra_state_shared_building_slots = 4
-		}
-		ROM = {
-			remove_state_core = 78
-			remove_state_core = 766
-			remove_state_core = 76
-			remove_state_core = 83
-			remove_state_core = 82
-			remove_state_core = 80
-			remove_state_core = 77
-		}
-		SOV = {
-			transfer_state = 78
-			transfer_state = 766
-			add_state_core = 78
-			add_state_core = 766
-		}
-		HUN = {
-			transfer_state = 76
-			add_state_core = 76
-		}
-		POL = {
-			transfer_state = 80
-			add_state_core = 80
-		}
-		BUL = {
-			transfer_state = 77
-			add_state_core = 77
-		}
-	}
-}
+# 	fire_only_once = yes
+
+# 	#Surrender and offer territory
+# 	option = {
+# 		name = romania.7.a
+# 		ai_chance = {
+# 			base = 8
+# 		}
+# 		diplomatic_relation = {
+# 			country = SOV
+# 			relation = non_aggression_pact
+# 		}
+# 		SOV = {
+# 			white_peace = ROM
+# 			transfer_state = 78
+# 			transfer_state = 80
+# 			transfer_state = 766
+# 		}
+# 	}
+
+# }
+
+# country_event = {
+# 	id = romania.8
+# 	title = romania.8.t
+# 	desc = romania.8.d
+# 	picture = GFX_report_event_soviet_tanks_snow
+	
+# 	trigger = {
+# 		tag = SOV
+# 		has_war_with = ROM
+# 		NOT = { has_war_with = GER }
+# 		OR = {
+# 			SOV = {
+# 				casualties > 250000
+# 			}
+# 			surrender_progress > 0.10
+# 			202 = {
+# 				CONTROLLER = {
+# 					OR = {
+# 						tag = ROM
+# 						is_subject_of = ROM
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
+
+# 	mean_time_to_happen = { days = 5 }
+
+# 	fire_only_once = yes
+
+# 	#Surrender
+# 	option = {
+# 		name = romania.8.a
+# 		ai_chance = {
+# 			base = 8
+# 		}
+# 		white_peace = ROM
+# 		diplomatic_relation = {
+# 			country = ROM
+# 			relation = non_aggression_pact
+# 		}
+# 	}
+
+# }
