@@ -154,159 +154,159 @@ operations = {
 		}
 	}
 	
-	ROM_michaels_coup = {
-
-		icon = generic_tank
-
-		available = {
-			GER = { divisions_in_state = { state = 46 size > 3 } }
-		}
-
-		days_mission_timeout = 7
-		fire_only_once = yes
-
-		activation = {
-			always = no
-		}
-
-		complete_effect = {
-			set_autonomy = {
-				target = ROM
-				autonomy_state = autonomy_reichsprotectorate
-			}
-		}
-
-		is_good = no
-
-		timeout_effect = {
-			SOV = {
-				custom_effect_tooltip = needs_approval
-				country_event = DOD_romania.501
-			}
-			effect_tooltip = {
-				ROM = {
-					white_peace = SOV
-					every_country = {
-						limit = {
-							has_war_with = ROM
-							is_in_faction_with = ENG
-						}
-						white_peace = ROM
-					}
-					leave_faction = yes
-				}
-				SOV = { 
-					add_to_faction = ROM
-					transfer_state = 78
-					transfer_state = 766
-					transfer_state = 80
-				}
-				create_wargoal = {
-					type = puppet_wargoal_focus
-					target = ROM
-				}
-			}
-		}
-	}
+	#ROM_michaels_coup = {
+#
+	#	icon = generic_tank
+#
+	#	available = {
+	#		GER = { divisions_in_state = { state = 46 size > 3 } }
+	#	}
+#
+	#	days_mission_timeout = 7
+	#	fire_only_once = yes
+#
+	#	activation = {
+	#		always = no
+	#	}
+#
+	#	complete_effect = {
+	#		set_autonomy = {
+	#			target = ROM
+	#			autonomy_state = autonomy_reichsprotectorate
+	#		}
+	#	}
+#
+	#	is_good = no
+#
+	#	timeout_effect = {
+	#		SOV = {
+	#			custom_effect_tooltip = needs_approval
+	#			country_event = DOD_romania.501
+	#		}
+	#		effect_tooltip = {
+	#			ROM = {
+	#				white_peace = SOV
+	#				every_country = {
+	#					limit = {
+	#						has_war_with = ROM
+	#						is_in_faction_with = ENG
+	#					}
+	#					white_peace = ROM
+	#				}
+	#				leave_faction = yes
+	#			}
+	#			SOV = { 
+	#				add_to_faction = ROM
+	#				transfer_state = 78
+	#				transfer_state = 766
+	#				transfer_state = 80
+	#			}
+	#			create_wargoal = {
+	#				type = puppet_wargoal_focus
+	#				target = ROM
+	#			}
+	#		}
+	#	}
+	#}
 	
-	ROM_surrender_soviets = {
-		icon = generic_nationalism
-
-		allowed ={
-			original_tag = ROM
-		}
-
-		fire_only_once = yes
-		
-		visible = {
-			has_war_with = SOV
-			NOT = { has_country_flag = bessarabia_finished  }
-		}
-
-		days_remove = 7
-
-		available = {
-			has_war_with = SOV
-			has_civil_war = no
-			is_in_faction = no
-			OR = {
-				casualties > 50000
-				surrender_progress > 0.20
-				NOT = {
-					78 = {
-						CONTROLLER = {
-							OR = {
-								tag = ROM
-								is_subject_of = ROM
-							}
-						}
-					}
-				}
-			}
-		}
-
-		remove_effect = {
-			SOV = {
-				white_peace = ROM
- 				transfer_state = 78
-				transfer_state = 80
- 				transfer_state = 766
-			}
-			ROM = { set_country_flag = bessarabia_finished }
-			diplomatic_relation = {
-				country = SOV
-				relation = non_aggression_pact
-			}
-		}
-		ai_will_do = {
-			factor = 20
-		}
-	}
+	#ROM_surrender_soviets = {
+	#	icon = generic_nationalism
+#
+	#	allowed ={
+	#		original_tag = ROM
+	#	}
+#
+	#	fire_only_once = yes
+	#	
+	#	visible = {
+	#		has_war_with = SOV
+	#		NOT = { has_country_flag = bessarabia_finished  }
+	#	}
+#
+	#	days_remove = 7
+#
+	#	available = {
+	#		has_war_with = SOV
+	#		has_civil_war = no
+	#		is_in_faction = no
+	#		OR = {
+	#			casualties > 50000
+	#			surrender_progress > 0.20
+	#			NOT = {
+	#				78 = {
+	#					CONTROLLER = {
+	#						OR = {
+	#							tag = ROM
+	#							is_subject_of = ROM
+	#						}
+	#					}
+	#				}
+	#			}
+	#		}
+	#	}
+#
+	#	remove_effect = {
+	#		SOV = {
+	#			white_peace = ROM
+ 	#			transfer_state = 78
+	#			transfer_state = 80
+ 	#			transfer_state = 766
+	#		}
+	#		ROM = { set_country_flag = bessarabia_finished }
+	#		diplomatic_relation = {
+	#			country = SOV
+	#			relation = non_aggression_pact
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 20
+	#	}
+	#}
 	
-	ROM_victory_soviets = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = ROM
-		}
-		fire_only_once = yes
-		visible = {
-			has_war_with = SOV
-			NOT = { has_country_flag = bessarabia_finished  }
-		}
-		fire_only_once = yes
-
-		available = {
-			has_war_with = SOV
-			NOT = { has_war_with = GER }
-			OR = {
-				SOV = {
-					casualties > 250000
-				}
-				202 = {
-					CONTROLLER = {
-						OR = {
-							tag = ROM
-							is_subject_of = ROM
-						}
-					}
-				}
-			}
-		}
-		days_remove = 7
-		remove_effect = {
-			SOV = {
-				white_peace = ROM
-			}
-			ROM = { set_country_flag = bessarabia_finished }
-			diplomatic_relation = {
-				country = SOV
-				relation = non_aggression_pact
-			}
-		}
-		ai_will_do = {
-			factor = 200
-		}
-	}
+	#ROM_victory_soviets = {
+	#	icon = generic_nationalism
+	#	allowed = {
+	#		original_tag = ROM
+	#	}
+	#	fire_only_once = yes
+	#	visible = {
+	#		has_war_with = SOV
+	#		NOT = { has_country_flag = bessarabia_finished  }
+	#	}
+	#	fire_only_once = yes
+#
+	#	available = {
+	#		has_war_with = SOV
+	#		NOT = { has_war_with = GER }
+	#		OR = {
+	#			SOV = {
+	#				casualties > 250000
+	#			}
+	#			202 = {
+	#				CONTROLLER = {
+	#					OR = {
+	#						tag = ROM
+	#						is_subject_of = ROM
+	#					}
+	#				}
+	#			}
+	#		}
+	#	}
+	#	days_remove = 7
+	#	remove_effect = {
+	#		SOV = {
+	#			white_peace = ROM
+	#		}
+	#		ROM = { set_country_flag = bessarabia_finished }
+	#		diplomatic_relation = {
+	#			country = SOV
+	#			relation = non_aggression_pact
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 200
+	#	}
+	#}
 }
 
 	
