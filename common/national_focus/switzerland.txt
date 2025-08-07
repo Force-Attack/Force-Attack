@@ -714,12 +714,41 @@ focus_tree = {
 		}
 		relative_position_id = SWI_german_claiment
 		completion_reward = {
-			add_ideas = war_economy
+			if = {
+				limit = {
+					has_idea = civilian_economy
+				}
+				add_ideas = low_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = low_economic_mobilisation
+				}
+				add_ideas = partial_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+					has_idea = partial_economic_mobilisation
+				}
+				add_ideas = war_economy
+			}
+			else_if = {
+				limit = {
+				has_idea = war_economy
+			}
+			add_ideas = tot_economic_mobilisation
+			}
+			else_if = {
+				limit = {
+				has_idea = tot_economic_mobilisation
+			}
+				add_political_power = 150
+			}
 			random_owned_state = {
-			add_extra_state_shared_building_slots=1
+			add_extra_state_shared_building_slots=2
 			add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -1169,18 +1198,7 @@ if = {
 		relative_position_id = SWI_unite_the_cantons
 
 			completion_reward = {
-				if = {
-					limit = { GER = {has_government = fascism} }
-					add_ideas = SWI_pig
-				}
-				if = {
-					limit = { ITA = {has_government = fascism} }
-					add_ideas = SWI_pig2
-				}
-				if = {
-					limit = { FRA = {has_government = fascism} }
-					add_ideas = SWI_pig3
-				}
+				add_ideas = SWI_pig
 			}
 		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 	}
