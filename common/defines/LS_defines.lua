@@ -54,7 +54,7 @@ NDefines.NMilitary.FIELD_MARSHAL_ARMIES_CAP = 10
 NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 5000
-NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = false -- yeah lets keep this true, or else EVERYONE and their mother has cracked out generals
+NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = true -- yeah lets keep this true, or else EVERYONE and their mother has cracked out generals
 ----------------------------------
 NDefines.NFocus.MAX_SAVED_FOCUS_PROGRESS = 25		-- This much progress can be saved while not having a focus selected
 ----------------------------------
@@ -78,14 +78,11 @@ NDefines.NMilitary.BASE_DIVISION_BRIGADE_CHANGE_COST = 0 -- Base cost to change 
 NDefines.NMilitary.BASE_DIVISION_SUPPORT_SLOT_COST = 0
 NDefines.NMilitary. LAND_EQUIPMENT_RAMP_COST = 0
 
-NDefines.NMilitary.EXPERIENCE_COMBAT_FACTOR = 0.10
-
 --LICENSE
 NDefines.NProduction.LICENSE_EQUIPMENT_SPEED_NOT_FACTION = 0
 NDefines.NProduction.LICENSE_EQUIPMENT_TECH_SPEED_PER_YEAR = 0
 NDefines.NProduction.LICENSE_EQUIPMENT_BASE_SPEED = -0.1
 NDefines.NProduction.BASE_LICENSE_IC_COST = 0	
-NDefines.NProduction.LICENSE_IC_COST_YEAR_INCREASE = 0		
 
 -- FUEL CONVOY REQUIREMENT
 NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.00007
