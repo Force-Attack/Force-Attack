@@ -1894,13 +1894,6 @@
 		}
 
 		available = {
-			any_state = {
-				OR = {
-					is_core_of = SYR
-					is_core_of = LEB
-				}
-				is_owned_or_subject_trigger = yes
-			}
 		}
 		
 		bypass = {
@@ -1928,32 +1921,6 @@
 				}
 				add_extra_state_shared_building_slots = 2
 				set_state_flag = FRA_colonial_industry_target
-			}
-			IF = {
-				limit = {
-					SYR = {
-						is_subject_of = ROOT
-					}
-				}
-				SYR = {
-					add_autonomy_score = { 
-						value = -150
-						localization = FRA_invest_in_syria
-					}	
-				}
-			}
-			IF = {
-				limit = {
-					LEB = {
-						is_subject_of = ROOT
-					}
-				}
-				LEB = {
-					add_autonomy_score = { 
-						value = -150
-						localization = FRA_invest_in_syria
-					}	
-				}
 			}
 		}
 	}
@@ -5861,7 +5828,85 @@
 			add_stability = communism_temp
 			remove_ideas = FRA_political_violence
 		}
-	}	
+	}
+		focus = {
+		id = FRA_the_council_of_rambouillet
+		icon = GFX_goal_generic_major_alliance
+		x = 14
+		y = 1
+		
+		offset = {
+			x = -14
+			y = 0
+			trigger = {
+				has_dlc = "La Resistance"
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = FRA_the_council_of_rambouillet
+			}
+		}
+
+		relative_position_id = FRA_utilize_the_leagues
+
+		allow_branch = {
+			has_dlc = "La Resistance"
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {	has_completed_focus = FRA_form_the_popular_front }
+				NOT = { has_completed_focus = FRA_review_foreign_policy }
+				NOT = {	has_completed_focus = FRA_national_regeneration }
+			}
+		}
+
+		prerequisite = {
+			focus = FRA_utilize_the_leagues
+		}
+		mutually_exclusive = { focus = FRA_national_regeneration }
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			is_subject = no
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.1
+			}
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = obsolete_focus_branches_visibility
+							option = HIDE
+						}
+					}
+					mark_focus_tree_layout_dirty = yes
+				}
+			}
+		}
+	}
+	
 
 	focus = {
 		id = FRA_utilize_the_leagues
