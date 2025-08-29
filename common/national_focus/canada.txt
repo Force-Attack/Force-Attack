@@ -1972,7 +1972,10 @@ focus_tree = {
 			factor = 5
 		}
 		completion_reward = {
+			r56_CAN_nonindependent_airforce_effect = yes
 			air_experience = 25
+			custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = r56_CAN_gm_croil
 			add_doctrine_cost_reduction = {
 				name = air_doc_bonus
 				cost_reduction = 0.5
@@ -1981,60 +1984,12 @@ focus_tree = {
 			}
 		}
 	}
-		
-	focus = {
-		id = r56_CAN_appoint_air_chief
-		icon = GFX_goal_CAN_air_chief
-		x = 4
-		y = 1
-		relative_position_id = r56_CAN_start_the_expansion_of_the_rcaf
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_POLITICAL }
 
-		cost = 10
-		
-		prerequisite = {
-			focus = r56_CAN_start_the_expansion_of_the_rcaf
-		}
-
-		ai_will_do = {
-			factor = 7
-		}
-		completion_reward = {
-			r56_CAN_nonindependent_airforce_effect = yes
-			air_experience = 25
-			custom_effect_tooltip = available_theorist
-			show_ideas_tooltip = r56_CAN_gm_croil
-		}
-	}
-		
-	focus = {
-		id = r56_CAN_complete_separation_from_army
-		icon = GFX_goal_CAN_airforce_separation
-		relative_position_id = r56_CAN_appoint_air_chief
-		x = 0
-		y = 1
-		
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_POLITICAL }
-
-		cost = 10
-		
-		prerequisite = {
-			focus = r56_CAN_appoint_air_chief
-		}
-
-		ai_will_do = {
-			factor = 7
-		}
-		completion_reward = {
-			r56_CAN_nonindependent_airforce_effect = yes
-			air_experience = 25
-		}
-	}
 
 	focus = {
 		id = r56_CAN_western_air_command
 		icon = GFX_goal_generic_build_airforce
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = r56_CAN_start_the_expansion_of_the_rcaf
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -2062,7 +2017,8 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			air_experience = 15
+			r56_CAN_nonindependent_airforce_effect = yes
+			air_experience = 25
 			if = {
 				limit = {
 					473 = {
@@ -2103,7 +2059,7 @@ focus_tree = {
 	focus = {
 		id = r56_CAN_hurricane
 		icon = GFX_goal_generic_air_fighter2
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = r56_CAN_western_air_command
 		search_filters = { FOCUS_FILTER_RESEARCH }
@@ -2126,9 +2082,8 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = r56_CAN_hurricane
-					technology = basic_small_airframe
-					technology = improved_small_airframe
-					technology = advanced_small_airframe
+					category = air_equipment
+					ahead_reduction = 0.5
 					bonus = 1.0
 					uses = 1
 				}
@@ -2143,59 +2098,17 @@ focus_tree = {
 			}
 		}
 	}
-
-	focus = {
-		id = r56_CAN_toronto_island_airport
-		icon = GFX_goal_CAN_toronto_island_airport
-		relative_position_id = r56_CAN_start_the_expansion_of_the_rcaf
-		x = 2
-		y = 1
-		
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-
-		cost = 5
-		
-		prerequisite = {
-			focus = r56_CAN_start_the_expansion_of_the_rcaf
-		}
-
-		ai_will_do = {
-			factor = 5
-		}
-		
-		available = {
-			owns_state = 276
-		}
-		
-		bypass = {
-			276 = {			
-				free_building_slots = {
-					building = air_base
-					size < 1
-				}
-			}
-		}
-		completion_reward = {
-			276 = {
-				add_building_construction = {
-					type = air_base
-					level = 4
-					instant_build = yes
-				}	
-			}
-		}
-	}
 		
 	focus = {
 		id = r56_CAN_eastern_air_command
 		icon = GFX_goal_generic_air_doctrine
 		relative_position_id = r56_CAN_start_the_expansion_of_the_rcaf
-		x = 0
+		x = 1
 		y = 1
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
-		cost = 5
+		cost = 10
 		
 		prerequisite = {
 			focus = r56_CAN_start_the_expansion_of_the_rcaf
@@ -2219,40 +2132,12 @@ focus_tree = {
 		}
 		completion_reward = {
 			air_experience = 15
-			if = {
-				limit = {
-					464 = {
-						free_building_slots = {
-							building = air_base
-							size > 1
-						}
-					}
+				add_tech_bonus = {
+					name = r56_CAN_hurricane
+					category = air_equipment
+					bonus = 0.75
+					uses = 2
 				}
-				464 = {
-					add_building_construction = {
-						type = air_base
-						level = 4
-						instant_build = yes
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					464 = {
-						free_building_slots = {
-							building = air_base
-							size < 2
-						}
-					}
-				}
-				464 = {
-					add_building_construction = {
-						type = air_base
-						level = 1
-						instant_build = yes
-					}
-				}
-			}
 		}
 	}
 	
@@ -2278,11 +2163,6 @@ focus_tree = {
 		}
 		
 		available = {
-			OR = {
-			#	has_war = yes
-				has_government = fascism
-				has_government = communism
-			}
 		}
 		
 
@@ -2293,6 +2173,13 @@ focus_tree = {
 		completion_reward = {
 			set_rule = {
 				can_generate_female_aces = yes
+			}
+						air_experience = 10
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
 			}
 		}
 	}
@@ -2310,7 +2197,6 @@ focus_tree = {
 		
 		prerequisite = {
 			focus = r56_CAN_rcaf_womens_division
-			focus = r56_CAN_toronto_air_command
 		}
 
 		ai_will_do = {
@@ -2367,43 +2253,12 @@ focus_tree = {
 			}
 		}
 	}
-	
-	focus = {
-		id = r56_CAN_toronto_air_command
-		icon = GFX_focus_generic_military_academy
-		relative_position_id = r56_CAN_toronto_island_airport
-		x = 0
-		y = 1
-
-		cost = 5
-		
-		prerequisite = {
-			focus = r56_CAN_toronto_island_airport
-		}
-
-		ai_will_do = {
-			factor = 5
-		}
-		
-		available = {
-			owns_state = 276
-		}
-		completion_reward = {
-			air_experience = 10
-			add_doctrine_cost_reduction = {
-				name = air_doc_bonus
-				cost_reduction = 0.5
-				uses = 2
-				category = air_doctrine
-			}
-		}
-	}
 		
 	focus = {
 		id = r56_CAN_canadian_car_and_foundry
 		icon = GFX_goal_generic_air_fighter
 		relative_position_id = r56_CAN_hurricane
-		x = 0
+		x = -1
 		y = 1
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -2479,9 +2334,9 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = naval_bomber
-					bonus = 1.0
+					bonus = 0.75
 					uses = 1
-					category = cat_torpedoes
+					category = air_equipment
 				}
 			}
 			else = {
@@ -2568,10 +2423,13 @@ focus_tree = {
 		
 	focus = {
 		id = r56_CAN_bomber_group_no_6
-		icon = GFX_goal_generic_air_production
-		x = 1
+		icon = GFX_focus_generic_long_range_aircraft
+		x = 2
 		y = 1
 		relative_position_id = r56_CAN_fairchild_aircraft_company
+				mutually_exclusive = {
+			focus =r56_CAN_air_training
+		}
 		
 		search_filters = { FOCUS_FILTER_RESEARCH }
 
@@ -2599,6 +2457,37 @@ focus_tree = {
 				technology = strategic_destruction
 				technology = infiltration_bombing
 			}
+		}
+	}
+
+		focus = {
+		id = r56_CAN_air_training
+		icon = GFX_focus_fra_regiment_normandie
+		x = 0
+		y = 1
+		relative_position_id = r56_CAN_fairchild_aircraft_company
+		mutually_exclusive = {
+			focus =r56_CAN_bomber_group_no_6
+		}
+		
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		cost = 10
+		
+		prerequisite = {
+			focus = r56_CAN_fairchild_aircraft_company
+			focus = r56_CAN_victory_aircraft_company
+		}
+		
+		ai_will_do = {
+			factor = 5
+		}
+
+		available_if_capitulated = yes
+
+
+		completion_reward = {
+			add_ideas = SAF_national_air_training
 		}
 	}
 		
