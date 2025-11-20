@@ -1,0 +1,99 @@
+on_actions = {
+    on_monthly_NZL = {
+		effect = {
+			if = {
+				limit = {
+					has_completed_focus = NZL_island_industry_3
+					any_core_state = {
+						NOT = { 
+							OR = {
+								has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_building_slots_bonus }
+								has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_resource_bonus } 
+							}
+						}
+					}
+				}
+
+				if = {
+					limit = {
+						check_variable = { NZL_Urban_Developement_cooldown > 0 }
+					}
+					set_variable = { NZL_Urban_Developement_cooldown = 0 }
+
+					if = {
+						limit = {
+							any_core_state = {
+								OR = {
+									is_island_state = yes
+									has_state_category = small_island
+									has_state_category = tiny_island
+								}
+							}
+						}
+
+						random_core_state = {
+							limit = {
+								OR = {
+									is_island_state = yes
+									has_state_category = small_island
+									has_state_category = tiny_island
+								}
+								NOT = {
+									has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_building_slots_bonus }
+								}
+							}
+							add_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_building_slots_bonus }
+
+						}
+					}
+
+					random_core_state = {
+						limit = {
+							OR = {
+								has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_building_slots_bonus }
+								has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_resource_bonus } 
+							}
+
+							NOT = {
+								OR = {
+									is_island_state = yes
+									has_state_category = small_island
+									has_state_category = tiny_island
+								}
+							}
+						}
+						random_neighbor_state = {
+							limit = {
+								NOT = {
+									has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_building_slots_bonus }
+									has_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_resource_bonus } 
+								}
+								is_core_of = ROOT
+							}
+							if = { 
+								limit = {
+									OR = {
+										check_variable = { resource@steel > 16 }
+										check_variable = { resource@aluminium > 16 }
+										check_variable = { resource@oil > 16 }
+										#check_variable = {resource@rubber > 7 } Not u
+										check_variable = { resource@chromium > 16 }
+										check_variable = { resource@tungsten > 16 }
+									}
+								}
+								add_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_resource_bonus }
+							}
+							else = {
+								add_dynamic_modifier = { modifier = NZL_Urban_Developement_Board_building_slots_bonus }
+							}
+						}
+					}
+
+				}
+				else = {
+					add_to_variable = { NZL_Urban_Developement_cooldown = 1 }
+				}	
+			}
+		}		
+	}
+}

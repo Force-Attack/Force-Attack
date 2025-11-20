@@ -1,0 +1,636 @@
+add_namespace = new_zealand
+
+# Death of Michael Joseph Savage
+country_event = {
+	id = new_zealand.2
+	title = new_zealand.2.t
+	desc = new_zealand.2.d
+	picture = GFX_report_event_europe_funeral
+
+	fire_only_once = yes
+
+	trigger = {
+		has_completed_focus = NZL_The_Peoples_Prime_Minister
+	}
+
+	option = { #Historical
+		name = new_zealand.2.a
+			set_country_flag = NZL_savage_dead
+			create_country_leader = {
+				name = "Peter Fraser"
+				picture = "gfx/leaders/NZL/r56_portrait_NZL_Peter_Fraser.dds"
+				expire = "1965.1.1"
+				ideology = socialism
+			}		
+	}
+	option = { #Communist
+		name = new_zealand.2.a
+			set_country_flag = NZL_savage_dead
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
+
+			add_popularity = { 
+				ideology = communism
+				popularity = 0.40
+			}
+
+			remove_ideas = NZL_john_a_lee
+
+			promote_character = NZL_john_a_lee
+		
+	}
+}
+
+country_event = {
+	id = new_zealand.3
+	title = new_zealand.3.t
+	desc = new_zealand.3.d
+	picture = GFX_report_event_europe_funeral
+
+	fire_only_once = yes
+
+	trigger = {
+		date > 1937.01.01
+		date < 1937.02.01
+		NOT = {
+			has_completed_focus = NZL_The_Peoples_Prime_Minister
+		}
+		tag = NZL
+	}
+
+	option = { #Non-Aligned
+		name = new_zealand.3.a
+			set_country_flag = NZL_savage_assasinated
+			add_stability = -0.05
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
+
+			add_popularity = { 
+				ideology = neutrality
+				popularity = 0.40
+			}			
+	}
+
+	option = { #Fascist
+		name = new_zealand.3.b
+			set_country_flag = NZL_savage_assasinated
+			add_stability = -0.05
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = no
+			}
+
+			add_popularity = { 
+				ideology = fascism
+				popularity = 0.40
+			}		
+	}
+	
+	option = { # Savage Lives
+		name = new_zealand.3.c
+				add_stability = 0.05
+	}
+}
+
+
+
+#Radar Cooperation
+country_event = {
+	id = new_zealand.11
+	title = new_zealand.11.t
+	desc = new_zealand.11.d
+	picture = GFX_report_event_radar_01
+
+	is_triggered_only = yes
+
+	option = {
+		set_technology = {
+			cavity_magnatron = 1
+		}
+		name = new_zealand.11.a  # Accept radar cooperation
+		522 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = radar_station
+					level = 2
+					instant_build = yes
+				}
+		}
+		FROM = {
+			country_event = new_zealand.12 
+		}
+	}
+}
+country_event = {
+	id = new_zealand.12
+	title = new_zealand.12.t
+	desc = new_zealand.12.d
+	picture = GFX_report_event_radar_01
+
+	is_triggered_only = yes
+
+	option = {
+		set_technology = {
+			cavity_magnatron = 1
+		}
+		name = new_zealand.12.a  # Confirm cooperation
+		284 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = radar_station
+					level = 2
+					instant_build = yes
+				}
+		}
+	}
+}
+
+#Ask for Manufacturing Permits from UK
+country_event = {
+	id = new_zealand.13
+	title = new_zealand.13.t
+	desc = new_zealand.13.d
+	picture = GFX_report_event_SOV_purge_aircraft_2
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_zealand.13.a  # Supermarine
+			NZL = {
+				set_country_flag = NZL_has_supermarine_mio_access
+				country_event = { id = new_zealand.14 days = 1 }
+			}
+		
+	}
+
+	option = {
+		name = new_zealand.13.b  # Fairey	
+			NZL = {
+				set_country_flag = NZL_has_fairey_mio_access
+				country_event = { id = new_zealand.14 days = 1 }
+			}
+	}
+}
+
+country_event = {
+    id = new_zealand.14
+    title = new_zealand.14.t
+    picture = GFX_report_event_SOV_purge_aircraft_2
+    is_triggered_only = yes
+
+    immediate = {
+        if = {
+            limit = { has_country_flag = NZL_has_supermarine_mio_access }
+            set_variable = { name = aircraft_choice_text value = 1 }
+        }
+        else_if = {
+            limit = { has_country_flag = NZL_has_fairey_mio_access }
+            set_variable = { name = aircraft_choice_text value = 2 }
+        }
+    }
+
+    option = {
+    name = new_zealand.14.a
+
+   		if = {
+			limit = {
+				check_variable = { name = aircraft_choice_text value = 1 }
+			}
+			custom_effect_tooltip = new_zealand.14.tt_supermarine
+		}
+		else_if = {
+			limit = {
+				check_variable = { name = aircraft_choice_text value = 2 }
+			}
+			custom_effect_tooltip = new_zealand.14.tt_fairey
+		}	
+	
+}
+}
+
+country_event = {
+    id = new_zealand.15
+    title = new_zealand.15.t
+    picture = GFX_report_event_generic_usa_treaty
+    is_triggered_only = yes
+
+    option = { #UK Gives Up Islands
+
+	ai_chance = {
+		base = 99
+	}
+
+    name = new_zealand.15.a
+			add_political_power = 75
+			NZL = {
+				transfer_state = 636
+				transfer_state = 643
+				transfer_state = 639
+				transfer_state = 725
+			}	
+
+			hidden_effect = {
+				636 = { add_core_of = NZL }
+        		643 = { add_core_of = NZL }
+        		639 = { add_core_of = NZL }
+				725 = { add_core_of = NZL }
+			}	
+
+	}
+	option = {
+        name = NZL_event.15.b  # Decline - Keep the states but trigger unrest
+        
+		636 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+        643 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		639 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		725 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+    }
+}
+
+country_event = {
+    id = new_zealand.16
+    title = new_zealand.16.t
+    picture = GFX_report_event_generic_usa_treaty
+    is_triggered_only = yes
+
+    option = { #FRANCE Gives Up Islands
+
+		ai_chance = {
+			base = 99
+		}
+
+    name = new_zealand.16.a
+			add_political_power = 75
+			NZL = {
+				transfer_state = 635
+				transfer_state = 734
+				transfer_state = 641
+			}
+			hidden_effect = {
+				635 = { add_core_of = NZL }
+        		734 = { add_core_of = NZL }
+        		641 = { add_core_of = NZL }
+			}	
+	}
+	option = {
+        name = NZL_event.16.b  # Decline - Keep the states but trigger unrest     
+		635 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+        734 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		641 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+    }
+}
+
+country_event = {
+    id = new_zealand.17
+    title = new_zealand.17.t
+    picture = GFX_report_event_generic_usa_treaty
+    is_triggered_only = yes
+
+    option = { #USA Gives Up Islands
+
+	ai_chance = {
+			base = 99
+		}
+
+    name = new_zealand.17.a
+			add_political_power = 75
+			NZL = {
+				transfer_state = 642
+				transfer_state = 727
+				transfer_state = 629
+				transfer_state = 630
+				transfer_state = 631
+				transfer_state = 632
+				transfer_state = 638
+			}	
+
+			hidden_effect = {
+				642 = { add_core_of = NZL }
+    			727 = { add_core_of = NZL }
+    			629 = { add_core_of = NZL }
+    			630 = { add_core_of = NZL }
+    			631 = { add_core_of = NZL }
+    			632 = { add_core_of = NZL }
+    			638 = { add_core_of = NZL }
+			}
+	}
+	option = {
+        name = NZL_event.17.b  # Decline - Keep the states but trigger unrest     
+		642 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+        727 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		629 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		630 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		631 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		632 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+		638 = {
+			add_dynamic_modifier = {
+				modifier = NZL_island_resistance
+			}
+		}
+    }
+}
+
+country_event = {
+    id = new_zealand.18
+    title = new_zealand.18.t
+    picture = GFX_report_event_generic_construction_site
+    is_triggered_only = yes
+
+    option = { #Invest
+    name = new_zealand.18.a
+			add_political_power = -25
+			add_timed_idea = {
+				idea = NZL_ANZAC_Industrial_Investment days = 30
+			}	
+			random_core_state = {
+				limit = {
+					can_construct_building = land_facility
+				}
+				
+				construct_building_in_random_province = {
+					land_facility = 1
+				}
+			}
+	}
+	option = { #Don't Invest
+        name = NZL_event.18.b     
+
+    }
+}
+
+country_event = {
+    id = new_zealand.19
+    title = new_zealand.19.t
+    picture = GFX_report_event_generic_construction_site
+    is_triggered_only = yes
+
+    option = { #Invest
+    name = new_zealand.19.a
+			add_political_power = -100
+			add_timed_idea = {
+				idea = NZL_ANZAC_Industrial_Investment days = 45
+			}
+			add_ideas = partial_economic_mobilisation
+			random_core_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}	
+			
+	}
+	option = { #Don't Invest
+        name = NZL_event.19.b     
+
+    }
+}
+
+country_event = {
+    id = new_zealand.20
+    title = new_zealand.20.t
+    picture = GFX_report_event_generic_construction_site
+    is_triggered_only = yes
+
+    option = { #Small Investment
+        name = new_zealand.20.a
+        add_political_power = -50
+        add_timed_idea = {
+            idea = NZL_ANZAC_Industrial_Investment days = 30
+        }
+        add_ideas = NZL_ANZAC_Military_Investment_small
+
+        NZL = {
+            country_event = { id = new_zealand.21 }  # triggers follow-up event in NZ
+        }
+    }
+
+    option = { #Large Investment
+        name = NZL_event.20.b
+        add_political_power = -75
+        add_timed_idea = {
+            idea = NZL_ANZAC_Industrial_Investment days = 60
+        }
+        add_ideas = NZL_ANZAC_Military_Investment_large
+
+        NZL = {
+            country_event = { id = new_zealand.22 }  # triggers a different follow-up event
+        }
+    }
+	option = { #No Investment
+        name = NZL_event.20.c  
+    }
+}
+
+country_event = {
+    id = new_zealand.21
+    title = new_zealand.21.t
+    desc = new_zealand.21.d
+    picture = GFX_report_event_generic_construction_site
+    is_triggered_only = yes
+
+    option = {
+        name = new_zealand.21.a
+        add_ideas = NZL_ANZAC_Military_Investment_small
+    }
+}
+
+country_event = {
+    id = new_zealand.22
+    title = new_zealand.22.t
+    desc = new_zealand.22.d
+    picture = GFX_report_event_generic_construction_site
+    is_triggered_only = yes
+
+    option = {
+        name = new_zealand.21.b
+        add_ideas = NZL_ANZAC_Military_Investment_large
+    }
+}
+
+country_event = { #ANZAC Total Mob
+    id = new_zealand.23
+    title = new_zealand.23.t
+    desc = new_zealand.23.d
+    picture = GFX_report_event_generic_construction_site
+    is_triggered_only = yes
+
+    option = { #Accept
+        name = new_zealand.23.a
+		add_ideas = tot_economic_mobilisation
+    }
+
+	option = { #Decline
+        name = new_zealand.23.b
+    }
+}
+
+country_event = { #ANZAC Defense/Attack
+    id = new_zealand.24
+    title = new_zealand.24.t
+    picture = GFX_report_event_ast_army
+    is_triggered_only = yes
+
+    option = { #Defense
+    	name = new_zealand.24.a
+			army_experience = 25
+		add_to_variable = {	NZL_ANZAC_army_max_dig_in_factor = 0.05	}
+		add_to_variable = {	NZL_ANZAC_army_dig_in_speed_factor = 0.10 }
+		add_to_variable = {	NZL_ANZAC_army_defense_factor = 0.10 }
+		custom_effect_tooltip = NZL_ANZAC_arsenal_defense_tt
+	}
+	option = { #Attack
+        name = NZL_event.24.b  
+		
+			army_experience = 15
+		add_to_variable = {	NZL_ANZAC_army_attack_factor = 0.05 }
+		add_to_variable = {	NZL_ANZAC_army_initiative_factor = 0.02 }
+		custom_effect_tooltip = NZL_ANZAC_arsenal_offense_tt
+    }
+}
+
+country_event = { #ANZAC Fortify/Push
+    id = new_zealand.25
+    title = new_zealand.25.t
+    picture = GFX_report_event_ast_army
+    is_triggered_only = yes
+
+    option = { # Fortify
+    	name = new_zealand.25.a
+			army_experience = 25
+			add_to_variable = {	NZL_ANZAC_army_coastal_bunker_effectiveness_factor = 0.1 }
+			add_to_variable = {	NZL_ANZAC_army_land_bunker_effectiveness_factor = 0.1 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_fortify_tt
+	}
+	option = { # Push
+        name = NZL_event.25.b  
+		
+			army_experience = 10
+			add_to_variable = {	NZL_ANZAC_army_breakthrough_factor = 0.1 }
+			add_to_variable = {	NZL_ANZAC_army_max_planning_factor = 0.1 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_push_tt
+    }
+}
+
+country_event = { #ANZAC Production/Naval
+    id = new_zealand.26
+    title = new_zealand.26.t
+    picture = GFX_report_event_ast_army
+    is_triggered_only = yes
+
+    option = { # Prodcution
+    	name = new_zealand.26.a
+			army_experience = 25
+			add_to_variable = {	NZL_ANZAC_army_production_lack_of_resource_penalty_factor = -0.1 }
+			add_to_variable = {	NZL_ANZAC_army_equipment_conversion_speed = 0.1 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_production_tt
+	}
+	option = { # Naval
+        name = NZL_event.26.b  
+		
+			army_experience = 10
+			add_to_variable = {	NZL_ANZAC_army_naval_invasion_capacity = 10 }
+			add_to_variable = {	NZL_ANZAC_army_naval_invasion_penalty = -0.15 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_naval_tt
+    }
+}
+
+country_event = { #ANZAC Organization/Mobilization
+    id = new_zealand.27
+    title = new_zealand.27.t
+    picture = GFX_report_event_ast_army
+    is_triggered_only = yes
+
+    option = { # Organization
+    	name = new_zealand.27.a
+			army_experience = 15
+			add_to_variable = {	NZL_ANZAC_army_org_factor = 0.05 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_organization_tt
+	}
+	option = { # Mobilization
+        name = NZL_event.27.b  
+		
+			army_experience = 15
+			add_to_variable = {	NZL_ANZAC_army_conscription_factor = 0.1 }
+			add_to_variable = {	NZL_ANZAC_army_mobilization_speed = 0.15 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_mobilization_tt
+    }
+}
+
+country_event = { #ANZAC Supply/CAS Reduction
+    id = new_zealand.28
+    title = new_zealand.28.t
+    picture = GFX_report_event_ast_army
+    is_triggered_only = yes
+
+    option = { # Supply
+    	name = new_zealand.28.a
+			army_experience = 15
+			add_to_variable = {	NZL_ANZAC_army_supply_combat_penalties_on_core_factor = -0.15 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_supply_tt
+	}
+	option = { # Cas Reduction
+        name = NZL_event.28.b  
+		
+			army_experience = 15
+			add_to_variable = {	NZL_ANZAC_army_cas_damage_reduction = 0.1 }
+			custom_effect_tooltip = NZL_ANZAC_arsenal_cas_reduction_tt
+    }
+}
