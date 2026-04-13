@@ -92,3 +92,6 @@ NDefines.NProduction.LICENSE_IC_COST_YEAR_INCREASE = 0
 
 -- FUEL CONVOY REQUIREMENT
 NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.00007
+NDefines.NCountry.BASE_FUEL_GAIN_PER_OIL = 4
+NDefines.NCountry.BASE_FUEL_GAIN = 4.0						-- base amount of fuel gained hourly, independent of excess oil
+NDefines.NCountry.BASE_FUEL_CAPACITY = 50000						-- base amount of fuel capacity
