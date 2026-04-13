@@ -55,6 +55,9 @@ NDefines.NMilitary.MAX_ARMY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_NAVY_EXPERIENCE = 5000
 NDefines.NMilitary.MAX_AIR_EXPERIENCE = 5000
 NDefines.NMilitary.UNIT_LEADER_USE_NONLINEAR_XP_GAIN = true -- yeah lets keep this true, or else EVERYONE and their mother has cracked out generals
+NDefines.NNavy.NAVAL_INVASION_PREPARE_DAYS = 10            -- base days needed to prepare a naval invasion
+NDefines.NNavy.NAVAL_INVASION_PLAN_CAP = 50                  -- base cap of naval invasions can be planned at the same time
+NDefines.NNavy.BASE_NAVAL_INVASION_DIVISION_CAP = 10 -- base cap of divisions that can be assigned in a naval invasion
 ----------------------------------
 NDefines.NFocus.MAX_SAVED_FOCUS_PROGRESS = 25		-- This much progress can be saved while not having a focus selected
 ----------------------------------
@@ -92,3 +95,10 @@ NDefines.NProduction.LICENSE_IC_COST_YEAR_INCREASE = 0
 
 -- FUEL CONVOY REQUIREMENT
 NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.00007
+
+-- QOL
+NDefines.NMilitary.PROMOTE_LEADER_CP_COST = 0.1
+NDefines.NMilitary.BATALION_CHANGED_EXPERIENCE_DROP = 0 -- TFB Style Converts
+NDefines.NMilitary.DEPLOY_TRAINING_MAX_LEVEL = 2 -- WAS 1 aka TRAINED | Since the above was changed there is no point to not allowing divs to be trained to regular considering that its only 10% stats now.
+NDefines.NMilitary.UNIT_LEADER_ASSIGN_TRAIT_COST = 0.1
+NDefines.NMilitary.COHESION_IMMOBILE_PLANNING_SPEED_MULTIPLIER = 1.0	-- If using the 'immobile' cohesion setting, factor ALL planning speed growth by this
