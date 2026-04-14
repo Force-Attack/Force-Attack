@@ -15,157 +15,6 @@ focus_tree = {
 	default = no
 	reset_on_civilwar = no
 
-	focus = {
-		id = SWI_wahlen
-		icon = GFX_goal_generic_construction2
-		cost = 7.00
-	
-		prerequisite = {
-			focus = SWI_restart_the_factories
-		}
-		prerequisite = { focus = SWI_infrascruture_devlopment }
-
-
-		relative_position_id = SWI_no_more_gold_standard
-		
-		available = {
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = -3
-		y = 4
-		
-		completion_reward = {
-			845 = {
-				set_state_category = large_city
-			}
-			847 = {
-				set_state_category = large_city
-			}
-			3 = {
-				set_state_category = megalopolis
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-	}
-	focus = {
-		id = SWI_agri
-		icon = GFX_focus_research
-		cost = 7.00
-		ai_will_do = {
-			factor = 14
-		}
-		prerequisite = {
-			focus = SWI_wahlen
-		}
-		relative_position_id = SWI_wahlen
-		available_if_capitulated = yes
-		
-		x = -1
-		y = 1
-		
-		completion_reward = {
-			add_research_slot = 1
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH }
-	}
-	focus = {
-		id = SWI_chemical
-		icon = GFX_goal_generic_oil_refinery
-		cost = 5
-
-		prerequisite = {
-			focus = SWI_agri
-		}
-		prerequisite = {
-			focus = SWI_fuel_ration
-		}
-		
-		available = {
-			controls_state = 151
-		}
-		
-		bypass = {
-
-		}		
-		
-		relative_position_id = SWI_agri
-		
-		x = 1
-		y = 1
-		
-		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = { 151 }
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = synthetic_refinery
-				level = 2
-				instant_build = yes
-				}
-			}			
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_OIL}
-	}
-	focus = {
-		id = SWI_fuel_ration
-		icon = GFX_focus_generic_stockpile_fuel
-		cost = 5
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 7
-				threat > 0.75
-			}
-		}
-		
-		prerequisite = {
-			focus = SWI_wahlen
-		}
-
-		relative_position_id = SWI_wahlen
-		
-		available = {
-			controls_state = 3
-			controls_state = 151
-		}
-		
-		x = 1
-		y = 1
-		
-		completion_reward = {
-			add_tech_bonus = {
-				name = SWI_fuel_ration
-				bonus = 1
-				uses = 1
-				category = synth_resources
-			}
-				
-			3 = {
-				add_resource = {
-					type = oil
-					amount = 20
-				}
-				add_resource = {
-					type = rubber
-					amount = 5
-				}
-			}
-			151 = {
-				add_resource = {
-					type = oil
-					amount = 20
-				}
-				add_resource = {
-					type = rubber
-					amount = 5
-				}
-			}
-		}
-		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY FOCUS_FILTER_OIL FOCUS_FILTER_RUBBER}
-	}
-
 
 
 	focus = {
@@ -344,7 +193,7 @@ focus_tree = {
 
 	focus = {
 		id = SWI_nationalist_goverment
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		icon = GFX_focus_SWI_dissolve_the_federal_council
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_end_the_neutrality }
@@ -362,11 +211,11 @@ focus_tree = {
 
 	focus = {
 		id = SWI_monachist_seize_burn
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		icon = GFX_focus_generic_monarchist_sentiment
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_nationalist_goverment }
-		
+		mutually_exclusive = { focus = SWI_fascist_seize_bern }
 		
 		x = 7
 		y = 2
@@ -379,14 +228,33 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SWI_sway_army_leaders
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		id = SWI_fascist_seize_bern
+		icon = GFX_focus_generic_monarchist_sentiment
 
 		relative_position_id = SWI_end_the_neutrality
-		prerequisite = { focus = SWI_monachist_seize_burn }
+		prerequisite = { focus = SWI_nationalist_goverment }
+		mutually_exclusive = { focus = SWI_monachist_seize_burn }
+		
+		x = 14
+		y = 2
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_sway_army_leaders
+		icon = GFX_focus_NORDIC_mon_selector_army
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_monachist_seize_burn
+		focus = SWI_fascist_seize_bern }
 		
 		
-		x = 8
+		x = 9
 		y = 3
 		cost = 7
 
@@ -398,13 +266,14 @@ focus_tree = {
 
 	focus = {
 		id = SWI_ban_trade_unions
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		icon = GFX_goal_anti_comintern_pact
 
 		relative_position_id = SWI_end_the_neutrality
-		prerequisite = { focus = SWI_monachist_seize_burn }
+		prerequisite = { focus = SWI_monachist_seize_burn
+		focus = SWI_fascist_seize_bern }
 		
 		
-		x = 10
+		x = 12
 		y = 3
 		cost = 7
 
@@ -416,7 +285,7 @@ focus_tree = {
 
 	focus = {
 		id = SWI_ban_fascist
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		icon = GFX_focus_generic_anti_fascist_diplomacy
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_monachist_seize_burn }
@@ -434,7 +303,7 @@ focus_tree = {
 
 	focus = {
 		id = SWI_a_empty_thrown
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		icon = GFX_focus_generic_monarchy_2
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_monachist_seize_burn }
@@ -453,13 +322,15 @@ focus_tree = {
 
 	focus = {
 		id = SWI_french_king
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		icon = GFX_focus_chi_reach_out_to_france
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_a_empty_thrown }
+		mutually_exclusive = { focus = SWI_german_king }
+		mutually_exclusive = { focus = SWI_italian_king }
 		
 		
-		x = 4
+		x = 1
 		y = 6
 		cost = 7
 
@@ -469,14 +340,209 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = SWI_time_of_helvetic_republic
+		icon = GFX_focus_SWI_establish_pro_helvetia
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_french_king }
+		
+		
+		x = 2
+		y = 7
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
 	
 	focus = {
-		id = SWI_german_king
-		icon = GFX_focus_mex_restore_the_army_of_christ
+		id = SWI_napolonic_code
+		icon = GFX_focus_BRA_rio_protocol
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_french_king }
+		prerequisite = { focus = SWI_time_of_helvetic_republic }
+		
+		x = 1
+		y = 9
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_glory_of_napoleon
+		icon = GFX_focus_ETH_the-italo_ethiopian_empire
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_napolonic_code }
+		
+		x = -1
+		y = 10
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_form_the_old_guard
+		icon = GFX_focus_AFG_royal_guard
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_napolonic_code }
+		
+		x = 3
+		y = 10
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_blessing_of_the_church
+		icon = GFX_focus_por_concordat
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_form_the_old_guard }
+		prerequisite = { focus = SWI_glory_of_napoleon }
+
+		x = 1
+		y = 12
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_italian_king
+		icon = GFX_focus_befriend_italy
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_a_empty_thrown }
+		mutually_exclusive = { focus = SWI_german_king }
+		mutually_exclusive = { focus = SWI_italian_king }
+		
+		x = 11
+		y = 6
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_roman_helvetia
+		icon = GFX_focus_SWI_helvetic_junta
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_a_empty_thrown }
 		
+		x = 11
+		y = 8
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_italian_trade_pack
+		icon = GFX_focus_ETH_invite_italian_settlers
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_roman_helvetia }
+		
+		x = 10
+		y = 10
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_print_new_roman_coins
+		icon = GFX_focus_RAJ_trickle_down_economics
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_roman_helvetia }
+		prerequisite = { focus = SWI_italian_trade_pack }
+		
+		x = 11
+		y = 11
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_leigons_of_caeser
+		icon = GFX_focus_NORDIC_com_army
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_print_new_roman_coins }
+		mutually_exclusive = { focus = SWI_leigons_of_augstis }
+
+		x = 10
+		y = 12
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_leigons_of_augstis
+		icon = GFX_focus_NORDIC_dem_army
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_print_new_roman_coins }
+		mutually_exclusive = { focus = SWI_leigons_of_caeser }
+
+		x = 12
+		y = 12
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_german_king
+		icon = GFX_focus_chi_mission_to_germany
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_a_empty_thrown }
+		mutually_exclusive = { focus = SWI_french_king }
+		mutually_exclusive = { focus = SWI_italian_king }
 		
 		x = 6
 		y = 6
@@ -487,6 +553,111 @@ focus_tree = {
 			
 		}
 	}
+
+	focus = {
+		id = SWI_new_prussian_kingdom
+		icon = GFX_focus_GER_prussian_legacy
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_german_king }
+		
+		x = 6
+		y = 7
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_elimante_eniemes
+		icon = GFX_focus_generic_conspiracy
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_new_prussian_kingdom }
+		
+		x = 5
+		y = 9
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_a_new_guards_corps
+		icon = GFX_SOV_barrier_troops_ccp_2d_sov_compatibility
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_new_prussian_kingdom }
+		
+		x = 7
+		y = 9
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_german_brother_union
+		icon = GFX_focus_SWI_closer_ties_with_germany
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_elimante_eniemes }
+		prerequisite = { focus = SWI_a_new_guards_corps }
+		
+		x = 6
+		y = 12
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_mittelafrika_dream
+		icon = GFX_focus_generic_annex_country_2
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_german_brother_union }
+		
+		x = 4
+		y = 13
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_german_east_africa_company
+		icon = GFX_focus_CONGO_gold_and_diamonds
+
+		relative_position_id = SWI_end_the_neutrality
+		prerequisite = { focus = SWI_german_brother_union }
+		
+		x = 8
+		y = 13
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	
 
 	focus = {
 		id = SWI_ban_comunism
@@ -1463,6 +1634,94 @@ focus_tree = {
 		
 		x = -11
 		y = 1
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_exspand_eastern_land
+		icon = GFX_SOV_increase_state_reserves_ccp_2d_sov_compatibility
+
+		relative_position_id = SWI_no_more_gold_standard
+		prerequisite = { focus = SWI_infrascruture_devlopment }
+		prerequisite = { focus = SWI_restart_the_factories }
+		
+		x = -4
+		y = 3
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_exspand_western_land
+		icon = GFX_SOV_restoration_and_development_ccp_2d_sov_compatibility
+
+		relative_position_id = SWI_no_more_gold_standard
+		prerequisite = { focus = SWI_infrascruture_devlopment }
+		prerequisite = { focus = SWI_restart_the_factories }
+		
+		x = -8
+		y = 3
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_tech_advancments
+		icon = GFX_SOV_leningrad_polytechnical_institute_ccp_2d_sov_compatibility
+
+		relative_position_id = SWI_no_more_gold_standard
+		prerequisite = { focus = SWI_exspand_western_land }
+		prerequisite = { focus = SWI_exspand_eastern_land }
+		
+		x = -6
+		y = 4
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_western_mines
+		icon = GFX_focus_generic_coal_mining
+
+		relative_position_id = SWI_no_more_gold_standard
+		prerequisite = { focus = SWI_exspand_western_land }
+		
+		x = -9
+		y = 5
+		cost = 7
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_eastern_refineries
+		icon = GFX_goal_generic_oil_refinery
+
+		relative_position_id = SWI_no_more_gold_standard
+		prerequisite = { focus = SWI_exspand_western_land }
+		
+		x = -3
+		y = 5
 		cost = 7
 
 		
