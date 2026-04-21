@@ -626,22 +626,6 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = SWI_infantry_devlopment
-		icon = GFX_focus_GER_demonstration_of_military_achievements
-
-		relative_position_id = SWI_end_the_neutrality
-		prerequisite = { focus = SWI_kick_out_the_old_officers }
-
-		x = 6
-		y = 5
-		cost = 7
-
-		
-		completion_reward = {
-			
-		}
-	}
 
 	focus = {
 		id = SWI_expand_the_ss
@@ -737,11 +721,14 @@ focus_tree = {
 		
 		x = 5
 		y = 8
-		cost = 7
+		cost = 6
 
 		
 		completion_reward = {
-			
+			add_equipment_to_stockpile = {
+    			type = infantry_equipment
+   		 		amount = 2500
+}
 		}
 	}
 
@@ -754,28 +741,33 @@ focus_tree = {
 		
 		x = 5
 		y = 9
-		cost = 7
+		cost = 5
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_capture_guns
 		}
 	}
 
 	focus = {
 		id = SWI_wonder_wepons
-		icon = GFX_focus_PER_donate_oil_fields
+		icon = GFX_focus_GER_wunderwaffe
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_elite_training }
 		
 		x = 11
 		y = 8
-		cost = 7
+		cost = 8
 
 		
 		completion_reward = {
-			
+			3={
+				add_building_construction = {
+					type = land_facility
+					level = 1
+				}
+			}
 		}
 	}
 
@@ -792,24 +784,38 @@ focus_tree = {
 
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				ahead_reduction = 1
+				uses = 2
+				category = rocketry
+			}	
 		}
 	}
 
 	focus = {
 		id = SWI_heavy_water
-		icon = GFX_focus_generic_nuclear_development
+		icon = GFX_focus_GER_wunderwaffe_inner_circle
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_wonder_wepons }
 		
 		x = 13
 		y = 9
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			3={
+				add_building_construction = {
+					type = nuclear_facility
+					level = 1
+				}
+			}
+			add_tech_bonus = {
+				ahead_reduction = 1
+				uses = 1
+				category = nuclear
+			}	
 		}
 	}
 
@@ -866,7 +872,7 @@ focus_tree = {
 
 	focus = {
 		id = SWI_german_advisors
-		icon = GFX_focus_AFG_education_reform
+		icon = GFX_focus_GER_appease_the_wehrmacht
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_establish_camps
@@ -888,17 +894,23 @@ focus_tree = {
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_mech_devlopment }
-		prerequisite = { focus = SWI_infantry_devlopment }
 		prerequisite = { focus = SWI_tank_training }
 
 
 		x = 8
 		y = 7
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SWI_german_tanks
+				add_idea = SWI_german_tanks_1
+			}
+			swap_ideas = {
+				remove_idea = SWI_german_mech
+				add_idea = SWI_german_mech_1
+			}
 		}
 	}
 
@@ -911,11 +923,17 @@ focus_tree = {
 
 		x = 10
 		y = 5
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_german_mech
+			SWI_erwin_von_witzleben = {
+					add_trait = { trait = cavalry_leader }
+				}
+			SWI_ewald_von_kleist = {
+					add_trait = { trait = cavalry_leader }
+				}
 		}
 	}
 
@@ -926,13 +944,19 @@ focus_tree = {
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_kick_out_the_old_officers }
 
-		x = 8
+		x = 6
 		y = 5
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			add_ideas = SWI_german_tank
+			add_ideas = SWI_german_tanks
+			SWI_erwin_von_witzleben = {
+					add_trait = { trait = panzer_leader }
+				}
+			SWI_ewald_von_kleist = {
+					add_trait = { trait = panzer_leader }
+				}
 		}
 	}
 
@@ -2613,27 +2637,42 @@ focus_tree = {
 
 		x = -11
 		y = 1
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
 			151 = {
 				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_building_construction = {
 					type = infrastructure
 					level = 1
 				}
+				add_extra_state_shared_building_slots = 1
 			}
 			847 = {
 				add_building_construction = {
-					type = infrastructure
+					type = industrial_complex
 					level = 1
 				}
-			}
-			846 = {
 				add_building_construction = {
 					type = infrastructure
 					level = 1
 				}
+				add_extra_state_shared_building_slots = 1
+			}
+			846 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
 			}
 		}
 	}
@@ -2905,38 +2944,10 @@ focus_tree = {
 
 		
 		completion_reward = {
-
 			add_offsite_building = {
 				type = industrial_complex
 				level = 2
 			}
-
-			448 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-				}
-			}
-
-			459 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-				}
-			}
-
-			681 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					add_extra_state_shared_building_slots = 2
-				}
-			}
-
 		}
 	}
 
