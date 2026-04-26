@@ -15,175 +15,6 @@ focus_tree = {
 	default = no
 	reset_on_civilwar = no
 
-
-
-	focus = {
-		id = SWI_imigration_issue
-		icon = GFX_focus_generic_population_growth
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_HISTORICAL }
-		
-		
-		x = -37
-		y = 0
-		cost = 6
-
-		
-		completion_reward = {
-			add_political_power = 150
-		}
-	}
-
-	focus = {
-		id = SWI_ban_imigration
-		icon = GFX_focus_ITA_banda_carita
-
-		relative_position_id = SWI_imigration_issue
-		prerequisite = { focus = SWI_imigration_issue }
-		mutually_exclusive = { focus = SWI_limit_imigration }		
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_HISTORICAL }
-
-		x = -2
-		y = 1
-		cost = 7
-
-		
-		completion_reward = {
-			remove_ideas = SWI_refugee_crisis
-		}
-	}
-
-	focus = {
-		id = SWI_birth_rate
-		icon = GFX_focus_PER_embrace_opulence
-
-		relative_position_id = SWI_ban_imigration
-		prerequisite = { focus = SWI_ban_imigration }
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_HISTORICAL }
-		x = -1
-		y = 2
-		cost = 7
-
-		
-		completion_reward = {
-			add_ideas = SWI_encourage_population_growth
-		}
-	}
-
-	focus = {
-		id = SWI_fire_imigrants
-		icon = GFX_focus_CONGO_chefs_coutumiers
-
-		relative_position_id = SWI_ban_imigration
-		prerequisite = { focus = SWI_birth_rate }
-		prerequisite = { focus = SWI_create_jobs }
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
-		x = -4
-		y = 4
-		cost = 6
-
-		
-		completion_reward = {
-			add_stability = 0.05
-			add_political_power = 50
-			3 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = SWI_arabic_imigrants
-		icon = GFX_focus_PER_islamic_solidarity
-
-		relative_position_id = SWI_limit_imigration
-		prerequisite = { focus = SWI_limit_imigration }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		x = 1
-		y = 2
-		cost = 6
-
-		
-		completion_reward = {
-			custom_effect_tooltip = reward_tt
-			if = {
-				limit = {
-					has_idea = SWI_limmited_imigration
-				}
-				swap_ideas = {
-					remove_idea = SWI_limmited_imigration
-					add_idea = SWI_limmited_imigration_2
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_limmited_imigration_2
-				}
-				swap_ideas = {
-					remove_idea = SWI_limmited_imigration_2
-					add_idea = SWI_limmited_imigration_3
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = SWI_indian_imigrants
-		icon = GFX_focus_RAJ_all_india_forward_bloc
-
-		relative_position_id = SWI_limit_imigration
-		prerequisite = { focus = SWI_limit_imigration }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		x = -1
-		y = 2
-		cost = 6
-
-		
-		completion_reward = {
-			custom_effect_tooltip = reward_tt
-			if = {
-				limit = {
-					has_idea = SWI_limmited_imigration
-				}
-				swap_ideas = {
-					remove_idea = SWI_limmited_imigration
-					add_idea = SWI_limmited_imigration_2
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_limmited_imigration_2
-				}
-				swap_ideas = {
-					remove_idea = SWI_limmited_imigration_2
-					add_idea = SWI_limmited_imigration_3
-				}
-			}
-		}
-	}
-
-	focus = {
-		id = SWI_limit_imigration
-		icon = GFX_focus_BRA_repeale_national_security_law
-
-		relative_position_id = SWI_imigration_issue
-		prerequisite = { focus = SWI_imigration_issue }
-		mutually_exclusive = { focus = SWI_ban_imigration }		
-		search_filters = { FOCUS_FILTER_POLITICAL }
-		x = 2
-		y = 1
-		cost = 7
-
-		
-		completion_reward = {
-		remove_ideas = SWI_refugee_crisis
-		add_ideas = SWI_limmited_imigration
-		}
-	}
-
 	focus = {
 		id = SWI_the_future_of_the_country
 		icon = GFX_focus_SWI_new_eidgenossenschaft
@@ -1812,9 +1643,7 @@ focus_tree = {
 
 		
 		completion_reward = {
-			custom_effect_tooltip = GER_rebuild_the_nation_ww_tt
-
-			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = SWI_rebuild_the_nation_cat
 		}
 	}
 
@@ -2545,53 +2374,18 @@ focus_tree = {
 	
 		
 		
-		x = -50
+		x = -90
 		y = 0
 		cost = 10
 
 		
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = SWI_great_depresion
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
 				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion
-					add_idea = SWI_great_depresion_2
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_2
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_2
-					add_idea = SWI_great_depresion_3
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_3
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_3
-					add_idea = SWI_great_depresion_4
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_4
-			}
-			swap_ideas = {
-					remove_idea = SWI_great_depresion_4
-					add_idea = SWI_great_depresion_5
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_5
-			}
-			remove_ideas = SWI_great_depresion_5
 			}
 		}
 	}
@@ -2604,53 +2398,18 @@ focus_tree = {
 		prerequisite = { focus = SWI_no_more_gold_standard }
 		search_filters = {  FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
 		
-		x = 3
+		x = 2
 		y = 1
 		cost = 8
 
 		
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = SWI_great_depresion
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
 				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion
-					add_idea = SWI_great_depresion_2
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_2
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_2
-					add_idea = SWI_great_depresion_3
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_3
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_3
-					add_idea = SWI_great_depresion_4
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_4
-			}
-			swap_ideas = {
-					remove_idea = SWI_great_depresion_4
-					add_idea = SWI_great_depresion_5
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_5
-			}
-			remove_ideas = SWI_great_depresion_5
 			}
 		}
 	}
@@ -2659,58 +2418,17 @@ focus_tree = {
 		id = SWI_create_jobs
 		icon = GFX_focus_generic_full_employment
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_devalue_swi_franc
 		prerequisite = { focus = SWI_devalue_swi_franc }
 		search_filters = {  FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
 
-		x = 6
-		y = 2
+		x = -1
+		y = 1
 		cost = 8
 
 		
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = SWI_great_depresion
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion
-					add_idea = SWI_great_depresion_2
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_2
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_2
-					add_idea = SWI_great_depresion_3
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_3
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_3
-					add_idea = SWI_great_depresion_4
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_4
-			}
-			swap_ideas = {
-					remove_idea = SWI_great_depresion_4
-					add_idea = SWI_great_depresion_5
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_5
-			}
-			remove_ideas = SWI_great_depresion_5
-			}
+			
 		}
 	}
 
@@ -2718,13 +2436,13 @@ focus_tree = {
 		id = SWI_high_quality_production
 		icon = GFX_focus_generic_mass_production
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_restart_the_factories
 		prerequisite = { focus = SWI_devalue_swi_franc }
 		prerequisite = { focus = SWI_restart_the_factories }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
-		x = 0
-		y = 2
+		x = 1
+		y = 1
 		cost = 9
 
 		
@@ -2743,13 +2461,13 @@ focus_tree = {
 		id = SWI_new_factories
 		icon = GFX_goal_generic_construct_civ_factory
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_high_quality_production
 		prerequisite = { focus = SWI_high_quality_production }
 		prerequisite = { focus = SWI_create_jobs }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
-		x = 1
-		y = 3
+		x = -1
+		y = 1
 		cost = 6
 
 		
@@ -2775,12 +2493,12 @@ focus_tree = {
 		id = SWI_fort_line
 		icon = GFX_goal_fortify_the_westwall
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_create_jobs
 		prerequisite = { focus = SWI_high_quality_production }
 		prerequisite = { focus = SWI_create_jobs }
 
-		x = 5
-		y = 3
+		x = 1
+		y = 1
 		cost = 5
 
 		
@@ -2820,13 +2538,13 @@ focus_tree = {
 		id = SWI_plan_the_new_eco
 		icon = GFX_focus_AFG_a_modern_economy
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_new_factories
 		prerequisite = { focus = SWI_new_factories }
 		prerequisite = { focus = SWI_fort_line }
 		search_filters = {  FOCUS_FILTER_INDUSTRY }
 
-		x = 3
-		y = 4
+		x = 2
+		y = 1
 		cost = 10
 
 		
@@ -2839,12 +2557,12 @@ focus_tree = {
 		id = SWI_prepare_for_war
 		icon = GFX_focus_SWI_issue_war_bonds
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_plan_the_new_eco
 		prerequisite = { focus = SWI_plan_the_new_eco }
 		search_filters = {  FOCUS_FILTER_INDUSTRY }
 
-		x = 1
-		y = 5
+		x = -2
+		y = 1
 		cost = 9
 
 		
@@ -2886,12 +2604,12 @@ focus_tree = {
 		id = SWI_make_new_cities
 		icon = GFX_focus_PER_shiraz_university
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_plan_the_new_eco
 		prerequisite = { focus = SWI_plan_the_new_eco }
 		search_filters = {  FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL }
 
-		x = 3
-		y = 5
+		x = 0
+		y = 1
 		cost = 8
 
 		
@@ -2922,12 +2640,12 @@ focus_tree = {
 		id = SWI_create_new_railways
 		icon = GFX_focus_generic_railroad
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_plan_the_new_eco
 		prerequisite = { focus = SWI_plan_the_new_eco }
 		search_filters = {  FOCUS_FILTER_INDUSTRY }
 
-		x = 5
-		y = 5
+		x = 2
+		y = 1
 		cost = 7
 
 		
@@ -2950,47 +2668,19 @@ focus_tree = {
 
 		
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = SWI_great_depresion
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion
-					add_idea = SWI_great_depresion_2
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
 				}
 			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_2
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
 				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_2
-					add_idea = SWI_great_depresion_3
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_3
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_3
-					add_idea = SWI_great_depresion_4
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_4
-			}
-			swap_ideas = {
-					remove_idea = SWI_great_depresion_4
-					add_idea = SWI_great_depresion_5
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_5
-			}
-			remove_ideas = SWI_great_depresion_5
 			}
 		}
 	}
@@ -2999,11 +2689,11 @@ focus_tree = {
 		id = SWI_infrascruture_devlopment
 		icon = GFX_goal_generic_construct_infrastructure
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_protectionism
 		prerequisite = { focus = SWI_protectionism }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
-		x = -11
+		x = 4
 		y = 1
 		cost = 10
 
@@ -3049,13 +2739,13 @@ focus_tree = {
 		id = SWI_exspand_eastern_land
 		icon = GFX_SOV_increase_state_reserves_ccp_2d_sov_compatibility
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_infrascruture_devlopment
 		prerequisite = { focus = SWI_infrascruture_devlopment }
 		prerequisite = { focus = SWI_restart_the_factories }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
-		x = -4
-		y = 3
+		x = 4
+		y = 1
 		cost = 10
 
 		
@@ -3076,13 +2766,13 @@ focus_tree = {
 		id = SWI_exspand_western_land
 		icon = GFX_SOV_restoration_and_development_ccp_2d_sov_compatibility
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_infrascruture_devlopment
 		prerequisite = { focus = SWI_infrascruture_devlopment }
 		prerequisite = { focus = SWI_restart_the_factories }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
-		x = -8
-		y = 3
+		x = 2
+		y = 1
 		cost = 10
 
 		
@@ -3100,35 +2790,15 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SWI_technocrats
-		icon = GFX_focus_SWE_institute_of_technology
-
-		relative_position_id = SWI_no_more_gold_standard
-		prerequisite = { focus = SWI_exspand_western_land }
-		prerequisite = { focus = SWI_exspand_eastern_land }
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-
-		x = -6
-		y = 4
-		cost = 7
-
-		
-		completion_reward = {
-			
-		}
-	}
-
-
-	focus = {
 		id = SWI_western_mines
 		icon = GFX_focus_generic_coal_mining
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_exspand_western_land
 		prerequisite = { focus = SWI_exspand_western_land }
 		search_filters = { FOCUS_FILTER_RESOURCES FOCUS_FILTER_RESEARCH }
 
-		x = -9
-		y = 5
+		x = 0
+		y = 1
 		cost = 8
 
 		
@@ -3155,12 +2825,12 @@ focus_tree = {
 		id = SWI_eastern_refineries
 		icon = GFX_goal_generic_oil_refinery
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_exspand_eastern_land
 		prerequisite = { focus = SWI_exspand_eastern_land }
 		search_filters = { FOCUS_FILTER_RESOURCES FOCUS_FILTER_RESEARCH }
 
-		x = -3
-		y = 5
+		x = 0
+		y = 1
 		cost = 7
 
 		
@@ -3190,55 +2860,13 @@ focus_tree = {
 		relative_position_id = SWI_no_more_gold_standard
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INTERNATIONAL_TRADE }
 		
-		x = -16
+		x = -12
 		y = 0
 		cost = 10
 
 		
 		completion_reward = {
 			add_ideas = SWI_protectionism_idea
-			if = {
-				limit = {
-					has_idea = SWI_great_depresion
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion
-					add_idea = SWI_great_depresion_2
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_2
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_2
-					add_idea = SWI_great_depresion_3
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = SWI_great_depresion_3
-				}
-				swap_ideas = {
-					remove_idea = SWI_great_depresion_3
-					add_idea = SWI_great_depresion_4
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_4
-			}
-			swap_ideas = {
-					remove_idea = SWI_great_depresion_4
-					add_idea = SWI_great_depresion_5
-				}
-			}
-			else_if = {
-				limit = {
-				has_idea = SWI_great_depresion_5
-			}
-			remove_ideas = SWI_great_depresion_5
-			}
 		}
 	}
 
@@ -3246,12 +2874,12 @@ focus_tree = {
 		id = SWI_exspand_tarif
 		icon = GFX_goal_generic_positive_trade_relations
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_protectionism
 		prerequisite = { focus = SWI_protectionism }
 		mutually_exclusive = { focus = SWI_free_trade }
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_INTERNATIONAL_TRADE }
 		
-		x = -18
+		x = -2
 		y = 1
 		cost = 10
 
@@ -3268,13 +2896,13 @@ focus_tree = {
 		id = SWI_free_trade
 		icon = GFX_focus_generic_trade_interdiction
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_protectionism
 		prerequisite = { focus = SWI_protectionism }
 		mutually_exclusive = { focus = SWI_exspand_tarif }
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INTERNATIONAL_TRADE }
 		
 		
-		x = -14
+		x = 2
 		y = 1
 		cost = 10
 
@@ -3291,13 +2919,13 @@ focus_tree = {
 		id = SWI_foreign_investment
 		icon = GFX_focus_generic_american_investments
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_free_trade
 		prerequisite = { focus = SWI_free_trade }
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL FOCUS_FILTER_INTERNATIONAL_TRADE }
 		
 		
-		x = -13
-		y = 3
+		x = 1
+		y = 1
 		cost = 8
 
 		
@@ -3317,13 +2945,13 @@ focus_tree = {
 		id = SWI_invest_in_africia
 		icon = GFX_focus_generic_africa_factory
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_free_trade
 		prerequisite = { focus = SWI_free_trade }
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL FOCUS_FILTER_INTERNATIONAL_TRADE }
 		
 		
-		x = -15
-		y = 3
+		x = -1
+		y = 1
 		cost = 7
 
 		
@@ -3339,30 +2967,28 @@ focus_tree = {
 		id = SWI_domestic_invesments
 		icon = GFX_focus_generic_road_investment
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_exspand_tarif
 		prerequisite = { focus = SWI_exspand_tarif }
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_INTERNATIONAL_TRADE }
 		
-		x = -19
-		y = 3
-		cost = 9
+		x = -1
+		y = 1
+		cost = 10
 
 		
 		completion_reward = {
-			3={
+			random_owned_state ={
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
-					add_extra_state_shared_building_slots = 2
 				}
 			}
-			847={
+			random_owned_state ={
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
-					add_extra_state_shared_building_slots = 2
 				}
 			}
 		}
@@ -3372,14 +2998,14 @@ focus_tree = {
 		id = SWI_science_advancments
 		icon = GFX_focus_NORDIC_dem_capstone_research
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_ban_rothschilds
 		prerequisite = { focus = SWI_domestic_invesments
 		focus = SWI_ban_rothschilds focus = SWI_invest_in_africia
 		focus = SWI_foreign_investment }
 		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL }
 		
-		x = -16
-		y = 5
+		x = 1
+		y = 1
 		cost = 10
 
 		
@@ -3392,12 +3018,12 @@ focus_tree = {
 		id = SWI_ban_rothschilds
 		icon = GFX_SOV_aristocratic_investments_ccp_2d_sov_compatibility
 
-		relative_position_id = SWI_no_more_gold_standard
+		relative_position_id = SWI_exspand_tarif
 		prerequisite = { focus = SWI_exspand_tarif }
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_INTERNATIONAL_TRADE FOCUS_FILTER_POLITICAL }
 		
-		x = -17
-		y = 3
+		x = 1
+		y = 1
 		cost = 7
 
 		
