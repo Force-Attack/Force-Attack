@@ -7851,17 +7851,20 @@ SOV_start_civil_war = {
 
 		keep_political_leader = yes
 		keep_unit_leaders_trigger = {
-			IF = {
-				limit = { SOV_is_left_opposition = yes }
-				has_trait = trait_SOV_trotskyist
-			}
-			ELSE_IF = {
-				limit = { SOV_is_right_opposition = yes }
-				has_trait = trait_SOV_bukharinist
-			}
-			ELSE_IF = {
-				limit = { SOV_is_exiles = yes }
-				has_trait = trait_SOV_monarchist_sympathizer
+			OR = {
+				AND = {
+					SOV_is_left_opposition = yes
+					has_trait = trait_SOV_trotskyist
+				}
+				AND = {
+					SOV_is_right_opposition = yes
+					has_trait = trait_SOV_bukharinist
+				}
+				AND = {
+					SOV_is_exiles = yes
+					has_trait = trait_SOV_monarchist_sympathizer
+				}
+				has_trait = no_grind
 			}
 		}
 	}
@@ -8219,6 +8222,8 @@ SOV_start_civil_war = {
 				limit = {
 					NOT = { has_trait = trait_SOV_monarchist_sympathizer}
 					NOT = { has_character_flag = SOV_exiled_army_leader }
+					NOT = { is_character = SOV_vasily_kuznetsov }
+					NOT = { is_character = SOV_markian_popov }
 				}
 				set_nationality = SOS
 			}
