@@ -1,4 +1,4 @@
-#!gfx:interface\replace\r56_goals.gfx
+﻿#!gfx:interface\replace\r56_goals.gfx
 focus_tree = {
 	id = swiss_r56_focus
 	
@@ -108,6 +108,7 @@ focus_tree = {
 
 		
 		completion_reward = {
+			custom_effect_tooltip = reward_tt
 			if = {
 				limit = {
 					has_idea = SWI_limmited_imigration
@@ -142,6 +143,7 @@ focus_tree = {
 
 		
 		completion_reward = {
+			custom_effect_tooltip = reward_tt
 			if = {
 				limit = {
 					has_idea = SWI_limmited_imigration
@@ -606,23 +608,30 @@ focus_tree = {
 		prerequisite = { focus = SWI_ss_take_power }
 		x = 20
 		y = 4
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+		add_ideas = SWI_bern_ss
+		create_intelligence_agency = {
+    		name = "SS"
+    		icon = GFX_intelligence_agency_logo_usa
+		}
+		upgrade_intelligence_agency = upgrade_passive_defense
+		upgrade_intelligence_agency = upgrade_training_centers
+		upgrade_intelligence_agency = upgrade_anti_partisan
 		}
 	}
 
 	focus = {
 		id = SWI_import_ss_officers
-		icon = GFX_focus_GER_expand_ss_security_duties
+		icon = GFX_focus_GER_strengthen_the_waffen_ss
 
 		relative_position_id = SWI_establish_bern_ss
 		prerequisite = { focus = SWI_establish_bern_ss }
 		x = -2
 		y = 1
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
@@ -638,87 +647,127 @@ focus_tree = {
 			recruit_character = SWI_Otto_Skorzeny
 			recruit_character = SWI_Fritz_Klingenberg
 			recruit_character = SWI_Leon_Degrelle
+			add_ideas = SWI_aryan_army_idea
 		}
 	}
 
 	focus = {
 		id = SWI_aryan_army
-		icon = GFX_focus_GER_expand_ss_security_duties
+		icon = GFX_focus_GER_glory_to_the_imperial_army
 
 		relative_position_id = SWI_import_ss_officers
 		prerequisite = { focus = SWI_import_ss_officers }
 		x = -1
 		y = 1
-		cost = 7
+		cost = 8
 
 		
 		completion_reward = {
-			
+			custom_effect_tooltip = reward_tt
+			if = {
+				limit = {
+					has_idea = SWI_aryan_army_idea
+				}
+				swap_ideas = {
+					remove_idea = SWI_aryan_army_idea
+					add_idea = SWI_aryan_army_idea_1
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SWI_aryan_army_idea_1
+				}
+				swap_ideas = {
+					remove_idea = SWI_aryan_army_idea_1
+					add_idea = SWI_aryan_army_idea_2
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = SWI_swiss_aryan_school_for_young_soliders_and_officers
-		icon = GFX_focus_GER_expand_ss_security_duties
+		icon = GFX_focus_chi_army_reform
 
 		relative_position_id = SWI_recruit_in_german_comunities
 		prerequisite = { focus = SWI_recruit_in_german_comunities }
 		prerequisite = { focus = SWI_aryan_army }
 		x = -1
 		y = 1
-		cost = 7
+		cost = 12
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_talented_new_officers
 		}
 	}
 
 	focus = {
 		id = SWI_recruit_in_german_comunities
-		icon = GFX_focus_GER_expand_ss_security_duties
+		icon = GFX_focus_chi_mission_to_germany
 
 		relative_position_id = SWI_import_ss_officers
 		prerequisite = { focus = SWI_import_ss_officers }
 		x = 1
 		y = 1
-		cost = 7
+		cost = 8
 
 		
 		completion_reward = {
-			
+			custom_effect_tooltip = reward_tt
+			if = {
+				limit = {
+					has_idea = SWI_aryan_army_idea
+				}
+				swap_ideas = {
+					remove_idea = SWI_aryan_army_idea
+					add_idea = SWI_aryan_army_idea_1
+				}
+			}
+			else_if = {
+				limit = {
+					has_idea = SWI_aryan_army_idea_1
+				}
+				swap_ideas = {
+					remove_idea = SWI_aryan_army_idea_1
+					add_idea = SWI_aryan_army_idea_2
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = SWI_import_ss_films
-		icon = GFX_focus_GER_expand_ss_security_duties
+		icon = GFX_focus_GER_fund_the_film_department
 
 		relative_position_id = SWI_establish_bern_ss
 		prerequisite = { focus = SWI_establish_bern_ss }
 		x = -6
 		y = 1
-		cost = 7
+		cost = 8
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_film_of_war
 		}
 	}
 
 	focus = {
 		id = SWI_move_to_swiss_movie
-		icon = GFX_focus_GER_expand_ss_security_duties
+		icon = GFX_focus_SWI_federal_police
 
 		relative_position_id = SWI_import_ss_films
 		prerequisite = { focus = SWI_import_ss_films }
 		x = 0
 		y = 1
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SWI_film_of_war
+				add_idea = SWI_film_of_war_1
+			}
 		}
 	}
 
@@ -730,27 +779,46 @@ focus_tree = {
 		prerequisite = { focus = SWI_german_minorities_take_power }
 		x = 22
 		y = 6
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			3 = {
+				add_manpower = -200000
+				add_extra_state_shared_building_slots = 5
+			}
+			845 = {
+				add_manpower = -1500000
+				add_extra_state_shared_building_slots = 10
+			}
+			847 = {
+				add_manpower = -70000
+				add_extra_state_shared_building_slots = 5
+			}
+			846 = {
+				add_manpower = -100000
+				add_extra_state_shared_building_slots = 5
+			}
+			151 = {
+				add_manpower = -100000
+				add_extra_state_shared_building_slots = 5
+			}
 		}
 	}
 
 	focus = {
 		id = SWI_german_minorities_take_power
-		icon = GFX_SWI_a_pure_race
+		icon = GFX_focus_ARG_march_to_la_casa_rosada
 		prerequisite = { focus = SWI_establish_bern_ss }
 		relative_position_id = SWI_end_the_neutrality
 		
 		x = 22
 		y = 5
-		cost = 7
+		cost = 8
 
 		
 		completion_reward = {
-			
+			add_political_power = 150
 		}
 	}
 
@@ -764,11 +832,18 @@ focus_tree = {
 		
 		x = 20
 		y = 8
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			swap_ideas = {
+				remove_idea = SWI_bern_ss
+				add_idea = SWI_bern_ss_1
+			}
+			upgrade_intelligence_agency = upgrade_suicide_pills
+			upgrade_intelligence_agency = upgrade_crypto_strength_2
+			upgrade_intelligence_agency = upgrade_decryption_boost_2
+			upgrade_intelligence_agency = upgrade_form_department
 		}
 	}
 
@@ -905,11 +980,11 @@ focus_tree = {
 		
 		x = 22
 		y = 7
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_camps
 		}
 	}
 
@@ -922,11 +997,11 @@ focus_tree = {
 		
 		x = 22
 		y = 9
-		cost = 7
+		cost = 10
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_repopulation_program_idea
 		}
 	}
 
@@ -998,7 +1073,7 @@ focus_tree = {
 
 	focus = {
 		id = SWI_tank_training
-		icon = GFX_focus_ger_achtung_panzer
+		icon = GFX_focus_generic_heavy_tank
 
 		relative_position_id = SWI_end_the_neutrality
 		prerequisite = { focus = SWI_kick_out_the_old_officers }
@@ -3134,8 +3209,7 @@ focus_tree = {
 
 		relative_position_id = SWI_no_more_gold_standard
 		prerequisite = { focus = SWI_domestic_invesments
-		focus = SWI_ban_rothschilds }
-		prerequisite = { focus = SWI_invest_in_africia
+		focus = SWI_ban_rothschilds focus = SWI_invest_in_africia
 		focus = SWI_foreign_investment }
 		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL }
 		
