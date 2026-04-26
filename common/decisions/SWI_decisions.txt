@@ -193,3 +193,207 @@ SWI_rebuild_the_nation_cat = {
     }
 
 }
+
+SWI_immigration_cat = {
+
+    # ============================================================
+    # MISSION - fires every 50 days and adds immigrants
+    # ============================================================
+    SWI_immigration_wave = {
+        priority = 100
+        icon = GFX_decision_generic_political_discourse
+        is_good = yes
+
+        allowed = { tag = SWI }
+
+        visible = {
+            always = yes
+        }
+
+        available = {
+            always = yes
+        }
+
+        fire_only_once = no
+        days_mission_timeout = 50
+
+        activation = {
+            tag = SWI
+            NOT = { has_country_flag = SWI_immigration_closed }
+        }
+
+        timeout_effect = {
+
+            # Base immigrants
+            set_variable = { SWI_wave_size = 5 }
+
+            # Germany expands — more refugees flee into Switzerland
+            if = {
+                limit = {
+                    GER = { has_capitulated = no }
+                    GER = { owns_state = 4 }   # Austria
+                }
+                add_to_variable = { SWI_wave_size = 8 }
+            }
+            if = {
+                limit = {
+                    GER = { owns_state = 73 }  # Czechoslovakia
+                }
+                add_to_variable = { SWI_wave_size = 6 }
+            }
+            if = {
+                limit = {
+                    GER = { owns_state = 8 }   # France (Alsace)
+                }
+                add_to_variable = { SWI_wave_size = 5 }
+            }
+            if = {
+                limit = {
+                    GER = { owns_state = 6 }   # Poland
+                }
+                add_to_variable = { SWI_wave_size = 4 }
+            }
+            if = {
+                limit = {
+                    GER = { owns_state = 140 } # Netherlands
+                }
+                add_to_variable = { SWI_wave_size = 3 }
+            }
+            if = {
+                limit = {
+                    GER = { owns_state = 35 }  # Belgium
+                }
+                add_to_variable = { SWI_wave_size = 3 }
+            }
+
+            # Player has restricted immigration — halve the wave
+            if = {
+                limit = { has_country_flag = SWI_immigration_restricted }
+                multiply_variable = { SWI_wave_size = 0.5 }
+            }
+
+            # Add this wave to the running total
+            add_to_variable = { SWI_total_immigrants = SWI_wave_size }
+
+            # Update the immigration idea based on total
+            SWI_update_immigration_idea = yes
+
+            # Log a news message
+            country_event = { id = SWI_immigration.1 days = 1 }
+        }
+    }
+
+    # ============================================================
+    # LIMIT IMMIGRATION — player choice
+    # ============================================================
+    SWI_limit_immigration = {
+        priority = 1
+        icon = GFX_decision_generic_political_discourse
+
+        allowed = { tag = SWI }
+
+        visible = {
+            NOT = { has_country_flag = SWI_immigration_restricted }
+            NOT = { has_country_flag = SWI_immigration_closed }
+        }
+
+        available = {
+            has_political_power > 25
+        }
+
+        cost = 25
+        fire_only_once = no
+
+        complete_effect = {
+            set_country_flag = SWI_immigration_restricted
+            add_stability = 0.02
+            add_popularity = { ideology = neutrality popularity = 0.02 }
+            country_event = { id = SWI_immigration.2 days = 1 }
+        }
+    }
+
+    # ============================================================
+    # CLOSE THE BORDER — player choice
+    # ============================================================
+    SWI_close_borders = {
+        priority = 1
+        icon = GFX_decision_generic_political_discourse
+
+        allowed = { tag = SWI }
+
+        visible = {
+            NOT = { has_country_flag = SWI_immigration_closed }
+        }
+
+        available = {
+            has_political_power > 50
+        }
+
+        cost = 50
+        fire_only_once = no
+
+        complete_effect = {
+            set_country_flag = SWI_immigration_closed
+            clr_country_flag = SWI_immigration_restricted
+            add_stability = 0.04
+            add_popularity = { ideology = fascism popularity = 0.03 }
+            add_popularity = { ideology = neutrality popularity = 0.02 }
+            country_event = { id = SWI_immigration.3 days = 1 }
+        }
+    }
+
+    # ============================================================
+    # OPEN THE BORDER — reverse close
+    # ============================================================
+    SWI_open_borders = {
+        priority = 1
+        icon = GFX_decision_generic_political_discourse
+
+        allowed = { tag = SWI }
+
+        visible = {
+            has_country_flag = SWI_immigration_closed
+        }
+
+        available = {
+            has_political_power > 25
+        }
+
+        cost = 25
+        fire_only_once = no
+
+        complete_effect = {
+            clr_country_flag = SWI_immigration_closed
+            clr_country_flag = SWI_immigration_restricted
+            add_stability = -0.02
+            country_event = { id = SWI_immigration.4 days = 1 }
+        }
+    }
+
+    # ============================================================
+    # LIFT RESTRICTIONS — reverse restrict
+    # ============================================================
+    SWI_lift_restrictions = {
+        priority = 1
+        icon = GFX_decision_generic_political_discourse
+
+        allowed = { tag = SWI }
+
+        visible = {
+            has_country_flag = SWI_immigration_restricted
+            NOT = { has_country_flag = SWI_immigration_closed }
+        }
+
+        available = {
+            has_political_power > 15
+        }
+
+        cost = 15
+        fire_only_once = no
+
+        complete_effect = {
+            clr_country_flag = SWI_immigration_restricted
+            country_event = { id = SWI_immigration.5 days = 1 }
+        }
+    }
+}
