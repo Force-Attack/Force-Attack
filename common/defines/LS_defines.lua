@@ -7,6 +7,7 @@ NDefines.NDiplomacy.DECAY_RATE_OF_NEGATIVE_OPINION_AFTER_BEING_KICKED = 1			-- W
 NDefines.NDiplomacy.BASE_SEND_ATTACHE_COST = 50				-- Political power cost to send attache
 NDefines.NDiplomacy.BASE_SEND_ATTACHE_CP_COST = 50.0				-- Command Power sent attache usage cost
 NDefines.NDiplomacy.PEACE_SCORE_PER_PASS = 100.0
+NDefines.NDiplomacy.PEACE_COST_FACTOR_STACK_WAR_REPARATION = 999999
 NDefines.NDiplomacy.IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0
 NDefines.NDiplomacy.VOLUNTEERS_TRANSFER_SPEED = 5 
 ----------------------------------
