@@ -2088,6 +2088,445 @@ focus_tree = {
 		}
 	}
 	
+	focus = {
+		id = SWI_army_of_swiss
+		icon = GFX_focus_SWI_spirit_of_resistance
+		
+	
+		
+		
+		x = -79
+		y = 0
+		cost = 6
+
+		
+		completion_reward = {
+			army_experience = 75
+		}
+	}
+
+	focus = {
+		id = SWI_defense_plan
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = SWI_army_of_swiss }
+		relative_position_id = SWI_army_of_swiss
+		
+		
+		x = -5
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			add_ideas = SWI_army_of_swiss_defense
+		}
+	}
+
+	focus = {
+		id = SWI_study_defense_operations
+		icon = GFX_focus_SWE_hedgehog_defense
+		prerequisite = { focus = SWI_defense_plan }
+		relative_position_id = SWI_defense_plan
+		
+		
+		x = -1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_anti_tank_defense_advanments
+		icon = GFX_focus_generic_anti_tank_guns
+		prerequisite = { focus = SWI_defense_plan }
+		relative_position_id = SWI_defense_plan
+		
+		
+		x = 1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_engineer_corps
+		icon = GFX_focus_SMB_a_land_of_mountains
+		prerequisite = { focus = SWI_study_defense_operations }
+		prerequisite = { focus = SWI_anti_tank_defense_advanments }
+		relative_position_id = SWI_study_defense_operations
+		
+		
+		x = 1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SWI_army_of_swiss_defense
+				add_idea = SWI_army_of_swiss_defense_1
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_super_heavy_howitzers_defense
+		icon = GFX_focus_PER_construct_air_defenses
+		prerequisite = { focus = SWI_engineer_corps }
+		relative_position_id = SWI_engineer_corps
+		
+		
+		x = -2
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_infantry_defense
+		icon = GFX_focus_prc_infiltration
+		prerequisite = { focus = SWI_engineer_corps }
+		relative_position_id = SWI_engineer_corps
+		
+		
+		x = 2
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SWI_army_of_swiss_defense_1
+				add_idea = SWI_army_of_swiss_defense_2
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_armour_defense
+		icon = GFX_focus_GER_german_army_invincible
+		prerequisite = { focus = SWI_engineer_corps }
+		relative_position_id = SWI_engineer_corps
+		
+		
+		x = 0
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_end_defense
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_armour_defense }
+		prerequisite = { focus = SWI_infantry_defense }
+		prerequisite = { focus = SWI_super_heavy_howitzers_defense }
+		relative_position_id = SWI_armour_defense
+		
+		
+		x = 0
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_re_organize_army
+		icon = GFX_focus_SWI_patriotic_shooting_clubs
+		prerequisite = { focus = SWI_end_defense }
+		prerequisite = { focus = SWI_end_offense_plan_of_the_army }
+		relative_position_id = SWI_end_defense
+		
+		
+		x = 5
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_officer_devlopment
+		icon = GFX_focus_SWI_promote_guisan
+		prerequisite = { focus = SWI_mandatory_army_time }
+		prerequisite = { focus = SWI_logistics_focus }
+		relative_position_id = SWI_mandatory_army_time
+		
+		
+		x = -1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			add_ideas = SWI_officer_devlopment_idea
+		}
+	}
+
+	focus = {
+		id = SWI_gun_advanments
+		icon = GFX_focus_NOR_broken_gun_policies
+		prerequisite = { focus = SWI_army_of_swiss }
+		relative_position_id = SWI_army_of_swiss
+		
+		
+		x = 0
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 2
+				category = infantry_weapons
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_mandatory_army_time
+		icon = GFX_focus_SWI_continuous_support_active_militias
+		prerequisite = { focus = SWI_gun_advanments }
+		relative_position_id = SWI_gun_advanments
+		
+		
+		x = 1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			add_ideas = SWI_mandatory_army_service
+			if = {
+				limit = {
+					has_idea = disarmed_nation
+				}
+				add_ideas = volunteer_only
+			}
+			else_if = {
+				limit = {
+					has_idea = volunteer_only
+				}
+				add_ideas = limited_conscription
+			}
+			else_if = {
+				limit = {
+					has_idea = limited_conscription
+				}
+				add_ideas = extensive_conscription
+			}
+			else_if = {
+				limit = {
+				has_idea = extensive_conscription
+			}
+			add_ideas = service_by_requirement
+			}
+			else_if = {
+				limit = {
+				has_idea = service_by_requirement
+			}
+				add_ideas = all_adults_serve
+			}
+			else_if = {
+				limit = {
+				has_idea = all_adults_serve
+			}
+				add_ideas = scraping_the_barrel
+			}
+			else_if = {
+				limit = {
+				has_idea = scraping_the_barrel
+			}
+				add_political_power = 150
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_logistics_focus
+		icon = GFX_focus_SWI_federal_police
+		prerequisite = { focus = SWI_gun_advanments }
+		relative_position_id = SWI_gun_advanments
+		
+		
+		x = -1
+		y = 1
+		cost = 6
+
+		
+		completion_reward = {
+			army_experience = 50
+			
+			add_tech_bonus = {
+				bonus = 1
+				uses = 1
+				category = signal_company_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_offense_plan
+		icon = GFX_SOV_fascist_youth_union_ccp_2d_sov_compatibility
+		prerequisite = { focus = SWI_army_of_swiss }
+		relative_position_id = SWI_army_of_swiss
+		
+		
+		x = 5
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_study_new_offense_plans
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_offense_plan }
+		relative_position_id = SWI_offense_plan
+		
+		
+		x = 1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_doctrine_advancments_offense
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_offense_plan }
+		relative_position_id = SWI_offense_plan
+		
+		
+		x = -1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_ready_army_offense
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_doctrine_advancments_offense }
+		prerequisite = { focus = SWI_study_new_offense_plans }
+		relative_position_id = SWI_doctrine_advancments_offense
+		
+		
+		x = -1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_war_logistics_offense
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_doctrine_advancments_offense }
+		prerequisite = { focus = SWI_study_new_offense_plans }
+		relative_position_id = SWI_doctrine_advancments_offense
+		
+		
+		x = 1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+		focus = {
+		id = SWI_tank_offense
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_war_logistics_offense }
+		relative_position_id = SWI_war_logistics_offense
+		
+		
+		x = 1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_special_forces_offense
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_war_logistics_offense }
+		relative_position_id = SWI_war_logistics_offense
+		
+		
+		x = -1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_end_offense_plan_of_the_army
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		prerequisite = { focus = SWI_special_forces_offense }
+		prerequisite = { focus = SWI_tank_offense }
+		relative_position_id = SWI_tank_offense
+		
+		
+		x = -1
+		y = 1
+		cost = 10
+
+		
+		completion_reward = {
+			
+		}
+	}
 
 	focus = {
 		id = SWI_no_more_gold_standard
