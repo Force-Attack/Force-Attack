@@ -350,7 +350,8 @@ focus_tree = {
 			GER = {
    	 		set_autonomy = {
         	target = SWI
-        	autonomy_state = autonomy_reichsprotectorate
+			autonomous_state = autonomy_dominion
+			freedom_level = 0.4
     		}
 			}
 			puppet = {
@@ -2121,11 +2122,21 @@ focus_tree = {
 		
 		x = -5
 		y = 1
-		cost = 10
-
+		cost = 7
+		available = {
+        OR = {
+            NOT = { has_completed_focus = SWI_offense_plan }
+            has_completed_focus = SWI_end_offense_plan_of_the_army
+        }
+   		}
 		
 		completion_reward = {
-			add_ideas = SWI_army_of_swiss_defense
+			army_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2181,13 +2192,14 @@ focus_tree = {
 		
 		x = 1
 		y = 1
-		cost = 10
+		cost = 7
 
 		
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = SWI_army_of_swiss_defense
-				add_idea = SWI_army_of_swiss_defense_1
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = mountaineers_tech
 			}
 		}
 	}
@@ -2227,13 +2239,14 @@ focus_tree = {
 		
 		x = 2
 		y = 1
-		cost = 10
+		cost = 8
 
 		
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = SWI_army_of_swiss_defense_1
-				add_idea = SWI_army_of_swiss_defense_2
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = engineers_tech
 			}
 		}
 	}
@@ -2251,7 +2264,11 @@ focus_tree = {
 
 		
 		completion_reward = {
-			add_ideas = SWI_armour_defense_idea
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = armor
+			}
 		}
 	}
 
@@ -2270,7 +2287,7 @@ focus_tree = {
 
 		
 		completion_reward = {
-			army_experience = 100
+			army_experience = 75
 			add_doctrine_cost_reduction = {
 				cost_reduction = 0.75
 				uses = 2
@@ -2293,7 +2310,7 @@ focus_tree = {
 
 		
 		completion_reward = {
-			
+			add_ideas = SWI_swiss_army
 		}
 	}
 
@@ -2409,7 +2426,6 @@ focus_tree = {
 		
 		completion_reward = {
 			army_experience = 50
-			
 			add_tech_bonus = {
 				bonus = 1
 				uses = 1
@@ -2427,11 +2443,20 @@ focus_tree = {
 		
 		x = 5
 		y = 1
-		cost = 10
-
-		
+		cost = 7
+		available = {
+        	OR = {
+            NOT = { has_completed_focus = SWI_defense_plan }
+            has_completed_focus = SWI_end_defense
+        }
+	}
 		completion_reward = {
-			
+			army_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2444,11 +2469,15 @@ focus_tree = {
 		
 		x = 1
 		y = 1
-		cost = 10
+		cost = 7
 
 		
 		completion_reward = {
-			
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2461,11 +2490,15 @@ focus_tree = {
 		
 		x = -1
 		y = 1
-		cost = 10
+		cost = 8
 
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = artillery
+			}
 		}
 	}
 
@@ -2483,7 +2516,7 @@ focus_tree = {
 
 		
 		completion_reward = {
-			
+			army_experience = 100
 		}
 	}
 
@@ -2501,7 +2534,11 @@ focus_tree = {
 
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = motorized_equipment
+			}
 		}
 	}
 
@@ -2518,7 +2555,11 @@ focus_tree = {
 
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 1
+				uses = 1
+				category = cat_medium_armor
+			}
 		}
 	}
 
@@ -2531,11 +2572,15 @@ focus_tree = {
 		
 		x = -1
 		y = 1
-		cost = 10
+		cost = 7
 
 		
 		completion_reward = {
-			
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = mountaineers_tech
+			}
 		}
 	}
 
@@ -2549,11 +2594,16 @@ focus_tree = {
 		
 		x = -1
 		y = 1
-		cost = 10
+		cost = 5
 
 		
 		completion_reward = {
-			
+			army_experience = 75
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.75
+				uses = 2
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2594,31 +2644,10 @@ focus_tree = {
 
 		
 		completion_reward = {
-			random_owned_state = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-				}
+			add_timed_idea = {
+				idea = SWI_devalue_franc_idea
+				days = 365
 			}
-		}
-	}
-
-	focus = {
-		id = SWI_create_jobs
-		icon = GFX_focus_generic_full_employment
-
-		relative_position_id = SWI_devalue_swi_franc
-		prerequisite = { focus = SWI_devalue_swi_franc }
-		search_filters = {  FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
-
-		x = -1
-		y = 1
-		cost = 8
-
-		
-		completion_reward = {
-			
 		}
 	}
 
@@ -2673,6 +2702,37 @@ focus_tree = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
+					level = 1
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_create_jobs
+		icon = GFX_focus_generic_full_employment
+
+		relative_position_id = SWI_devalue_swi_franc
+		prerequisite = { focus = SWI_devalue_swi_franc }
+		search_filters = {  FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
+
+		x = -1
+		y = 1
+		cost = 8
+
+		
+		completion_reward = {
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
 					level = 1
 				}
 			}
@@ -2995,11 +3055,16 @@ focus_tree = {
 		completion_reward = {
 			add_resource = {
 				type = steel
-				amount = 15
+				amount = 10
 				state = 845
 			}
 			add_resource = {
 				type = aluminium
+				amount = 10
+				state = 845
+			}
+			add_resource = {
+				type = coal
 				amount = 10
 				state = 845
 			}
