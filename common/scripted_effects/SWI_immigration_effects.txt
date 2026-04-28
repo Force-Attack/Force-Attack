@@ -1,0 +1,43 @@
+SWI_update_immigration_idea = {
+
+    # Remove all immigration ideas first
+    remove_ideas = SWI_small_influx
+    remove_ideas = SWI_growing_refugee_population
+    remove_ideas = SWI_refugee_crisis
+    remove_ideas = SWI_overwhelmed_nation
+
+    # Small influx — 1 to 29
+    if = {
+        limit = {
+            check_variable = { SWI_total_immigrants > 0 }
+            NOT = { check_variable = { SWI_total_immigrants > 29 } }
+        }
+        add_idea = SWI_small_influx
+    }
+
+    # Growing population — 30 to 74
+    if = {
+        limit = {
+            check_variable = { SWI_total_immigrants > 29 }
+            NOT = { check_variable = { SWI_total_immigrants > 74 } }
+        }
+        add_idea = SWI_growing_refugee_population
+    }
+
+    # Refugee crisis — 75 to 149
+    if = {
+        limit = {
+            check_variable = { SWI_total_immigrants > 74 }
+            NOT = { check_variable = { SWI_total_immigrants > 149 } }
+        }
+        add_idea = SWI_refugee_crisis
+    }
+
+    # Overwhelmed — 150+
+    if = {
+        limit = {
+            check_variable = { SWI_total_immigrants > 149 }
+        }
+        add_idea = SWI_overwhelmed_nation
+    }
+}
