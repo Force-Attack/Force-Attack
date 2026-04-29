@@ -1937,12 +1937,108 @@ focus_tree = {
 	}
 
 	focus = {
+		id = SWI_foreign_air
+		icon = GFX_focus_PHI_aircraft_requisition
+		mutually_exclusive = { focus = SWI_airforce }
+		
+		
+		x = -69
+		y = 0
+		cost = 7
+
+		completion_reward = {
+			air_experience = 15
+			add_doctrine_cost_reduction = {
+				cost_reduction = 1	
+				uses = 2
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_import_air
+		icon = GFX_focus_SMB_purchase_aircraft
+		prerequisite = { focus = SWI_foreign_air }
+		relative_position_id = SWI_foreign_air
+		
+		x = -2
+		y = 1
+		cost = 10
+
+		completion_reward = {
+			add_equipment_subsidy = {
+					cic = 1000
+					equipment_type = small_plane_airframe
+					seller_tags = { USA ENG FRA ITA GER SOV HOL POL } 
+				}
+				add_equipment_subsidy = {
+					cic = 1000
+					equipment_type = large_plane_airframe
+					seller_tags = { USA ENG FRA ITA GER SOV HOL POL } 
+				}
+				add_equipment_subsidy = {
+					cic = 1000
+					equipment_type = medium_plane_airframe
+					seller_tags = { USA ENG FRA ITA GER SOV HOL POL } 
+				}
+		}
+	}
+
+	focus = {
+		id = SWI_inovation_with_foreign_ideas
+		icon = GFX_focus_PRC_establish_pla_air_force
+		prerequisite = { focus = SWI_foreign_air }
+		relative_position_id = SWI_foreign_air
+		
+		x = 0
+		y = 2
+		cost = 10
+
+		completion_reward = {
+			air_experience = 50
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 2
+				category = light_fighter
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_plan_of_new_air
+		icon = GFX_goal_continuous_air_production
+		prerequisite = { focus = SWI_inovation_with_foreign_ideas }
+		relative_position_id = SWI_inovation_with_foreign_ideas
+		
+		x = 0
+		y = 1
+		cost = 10
+
+		completion_reward = {
+			air_experience = 50
+			random_owned_state ={
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+				}
+			}
+			add_tech_bonus = {
+				bonus = 0.25
+				uses = 1
+				category = light_fighter
+			}
+		}
+	}
+
+	focus = {
 		id = SWI_airforce
 		icon = GFX_SOV_modernize_aircraft_facilities_ccp_2d_sov_compatibility
 
 		
 		
-		x = -10
+		x = -62
 		y = 0
 		cost = 7
 
@@ -1973,8 +2069,30 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				bonus = 1
-				uses = 2
+				uses = 1
 				category = light_fighter
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_gun_devlopment
+		icon = GFX_focus_generic_tank_air_support
+
+		relative_position_id = SWI_fighter_devlopment
+		prerequisite = { focus = SWI_fighter_devlopment }
+		
+		
+		x = 0
+		y = 1
+		cost = 9
+
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = cat_air_guns
 			}
 		}
 	}
@@ -1993,6 +2111,7 @@ focus_tree = {
 
 		
 		completion_reward = {
+			air_experience = 50
 			3 = {
 				add_building_construction = {
 					type = air_base
@@ -2003,15 +2122,38 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SWI_bomber_creation
-		icon = GFX_focus_generic_long_range_aircraft
+		id = SWI_doctrine_studies
+		icon = GFX_focus_generic_air_partners
 
-		relative_position_id = SWI_airforce
+		relative_position_id = SWI_airbase_creation
 		prerequisite = { focus = SWI_airbase_creation }
 		
 		
-		x = -1
-		y = 3
+		x = 1
+		y = 1
+		cost = 7
+
+		
+		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5	
+				uses = 2
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = SWI_bomber_creation
+		icon = GFX_focus_generic_long_range_aircraft
+
+		relative_position_id = SWI_doctrine_studies
+		prerequisite = { focus = SWI_doctrine_studies }
+		
+		
+		x = 0
+		y = 1
 		cost = 9
 
 		
@@ -2025,21 +2167,57 @@ focus_tree = {
 	}
 
 	focus = {
+		id = SWI_strat_bombers
+		icon = GFX_SOV_long_range_aircraft_ccp_2d_sov_compatibility
+
+		relative_position_id = SWI_bomber_creation
+		prerequisite = { focus = SWI_bomber_creation }
+		mutually_exclusive = { focus = SWI_tac_bombers }
+		
+		x = 1
+		y = 1
+		cost = 9
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
+		id = SWI_tac_bombers
+		icon = GFX_focus_generic_multi_role_aircraft
+
+		relative_position_id = SWI_bomber_creation
+		prerequisite = { focus = SWI_bomber_creation }
+		mutually_exclusive = { focus = SWI_strat_bombers }
+		
+		x = -1
+		y = 1
+		cost = 9
+
+		
+		completion_reward = {
+			
+		}
+	}
+
+	focus = {
 		id = SWI_cas_effort
 		icon = GFX_focus_generic_cas_aircraft
 
-		relative_position_id = SWI_airforce
-		prerequisite = { focus = SWI_fighter_devlopment }
+		relative_position_id = SWI_gun_devlopment
+		prerequisite = { focus = SWI_gun_devlopment }
 		
 		
-		x = 4
-		y = 3
+		x = 1
+		y = 1
 		cost = 8
 
 		
 		completion_reward = {
 			add_tech_bonus = {
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				category = cat_air_bombs
 			}
@@ -2050,26 +2228,22 @@ focus_tree = {
 		id = SWI_escort_effort
 		icon = GFX_focus_NORDIC_dem_selector_airforce
 
-		relative_position_id = SWI_airforce
-		prerequisite = { focus = SWI_fighter_devlopment }
+		relative_position_id = SWI_gun_devlopment
+		prerequisite = { focus = SWI_gun_devlopment }
 		
 		
-		x = 1
-		y = 3
+		x = -1
+		y = 1
 		cost = 10
 
 		
 		completion_reward = {
 			add_tech_bonus = {
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				category = cat_air_engine
 			}
-			add_tech_bonus = {
-				ahead_reduction = 1
-				uses = 1
-				category = cat_air_engine
-			}
+
 		}
 	}
 
@@ -2077,12 +2251,13 @@ focus_tree = {
 		id = SWI_foreign_training
 		icon = GFX_SOV_intensify_pilot_training_program_ccp_2d_sov_compatibility
 
-		relative_position_id = SWI_airforce
-		prerequisite = { focus = SWI_airbase_creation }
+		relative_position_id = SWI_airbase_creation
+		prerequisite = { focus = SWI_airbase_creation
+		focus = SWI_foreign_air }
 		
 		
 		x = -3
-		y = 2
+		y = 1
 		cost = 8
 
 		
@@ -2292,6 +2467,13 @@ focus_tree = {
 				cost_reduction = 0.75
 				uses = 2
 				category = land_doctrine
+			}
+			random_owned_state ={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
 			}
 		}
 	}
@@ -2603,6 +2785,13 @@ focus_tree = {
 				cost_reduction = 0.75
 				uses = 2
 				category = land_doctrine
+			}
+			random_owned_state ={
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
 			}
 		}
 	}
