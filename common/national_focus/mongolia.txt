@@ -8,6 +8,11 @@ focus_tree = {
 		}
 	}
 	default = no
+
+    ###############################################################
+	# Economy
+	###############################################################
+
 	focus = {
         id = MON_modernize_the_economy
         icon = GFX_focus_CHI_planned_economy
@@ -486,4 +491,544 @@ focus_tree = {
             }
         }
     }
+
+    ###############################################################
+	# ARMY
+	###############################################################
+
+    	focus = {
+		id = MON_forge_the_mongol_army
+		icon = GFX_focus_PRC_army_doctrines
+		x = 25   
+		y = 0
+		cost = 10
+ 
+		completion_reward = {
+			add_political_power = 50
+			army_experience = 25
+			add_ideas = MON_military_reorganization
+		}
+ 
+		ai_will_do = {
+			factor = 10
+		}
+	}
+ 
+	###############################################################
+	# BRANCH SPLITTER - Left (Traditional) and Right (Modern)
+	###############################################################
+ 
+	focus = {
+		id = MON_sons_of_the_steppe
+		icon = GFX_focus_generic_infantry
+		relative_position_id = MON_forge_the_mongol_army
+		x = -5
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_forge_the_mongol_army }
+		mutually_exclusive = { focus = MON_iron_horde }
+ 
+		completion_reward = {
+			add_political_power = 25
+			add_ideas = MON_traditional_warrior_spirit
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	focus = {
+		id = MON_iron_horde
+		icon = GFX_focus_generic_tank_manufacturer_2
+		relative_position_id = MON_forge_the_mongol_army
+		x = 5
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_forge_the_mongol_army }
+		mutually_exclusive = { focus = MON_sons_of_the_steppe }
+ 
+		completion_reward = {
+			add_political_power = 25
+			add_ideas = MON_modern_warfare_doctrine
+		}
+ 
+		ai_will_do = {
+			factor = 4
+		}
+	}
+ 
+	###############################################################
+	# LEFT BRANCH - Traditional Army (Infantry / Cavalry)
+	###############################################################
+ 
+	# --- ROW 2: Sub-branches off Sons of the Steppe ---
+ 
+	focus = {
+		id = MON_mongol_infantry_training
+		icon = GFX_focus_generic_army_artillery
+		relative_position_id = MON_sons_of_the_steppe
+		x = -2
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_sons_of_the_steppe }
+ 
+		completion_reward = {
+			army_experience = 20
+			add_tech_bonus = {
+				name = MON_infantry_tech_bonus
+				bonus = 0.5
+				uses = 2
+				technology = infantry_weapons1
+				technology = infantry_weapons2
+				technology = infantry_weapons3
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 8
+		}
+	}
+ 
+	focus = {
+		id = MON_riders_of_the_plains
+		icon = GFX_focus_generic_cavalry
+		relative_position_id = MON_sons_of_the_steppe
+		x = 2
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_sons_of_the_steppe }
+ 
+		completion_reward = {
+			army_experience = 20
+			add_tech_bonus = {
+				name = MON_cavalry_tech_bonus
+				bonus = 0.75
+				uses = 1
+				category = cat_horse
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 5
+		}
+	}
+ 
+	# --- ROW 3: Children of Mongol Infantry Training ---
+ 
+	focus = {
+		id = MON_hardened_footsoldiers
+		icon = GFX_focus_generic_army_doctrines
+		relative_position_id = MON_mongol_infantry_training
+		x = -1
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_mongol_infantry_training }
+ 
+		completion_reward = {
+			add_ideas = MON_hardened_infantry_spirit
+			add_tech_bonus = {
+				name = MON_support_tech_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_support_tech
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 7
+		}
+	}
+ 
+	focus = {
+		id = MON_mountain_warfare
+		icon = GFX_focus_generic_army_motorized
+		relative_position_id = MON_mongol_infantry_training
+		x = 1
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_mongol_infantry_training }
+ 
+		completion_reward = {
+			add_tech_bonus = {
+				name = MON_mountain_tech_bonus
+				bonus = 0.5
+				uses = 1
+				technology = tech_mountaineers
+			}
+			army_experience = 15
+		}
+ 
+		ai_will_do = {
+			factor = 5
+		}
+	}
+ 
+	# --- ROW 3: Child of Riders of the Plains ---
+ 
+	focus = {
+		id = MON_cavalry_doctrine
+		icon = GFX_focus_generic_army_war_college
+		relative_position_id = MON_riders_of_the_plains
+		x = 0
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_riders_of_the_plains }
+ 
+		completion_reward = {
+			army_experience = 25
+			add_ideas = MON_cavalry_masters
+		}
+ 
+		ai_will_do = {
+			factor = 5
+		}
+	}
+ 
+	# --- ROW 4: Children of Hardened Footsoldiers & Mountain Warfare ---
+ 
+	focus = {
+		id = MON_art_of_the_siege
+		icon = GFX_focus_generic_artillery
+		relative_position_id = MON_hardened_footsoldiers
+		x = 0
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_hardened_footsoldiers }
+ 
+		completion_reward = {
+			add_tech_bonus = {
+				name = MON_artillery_tech_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_artillery
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	focus = {
+		id = MON_elite_infantry_corps
+		icon = GFX_focus_generic_special_forces
+		relative_position_id = MON_mountain_warfare
+		x = 0
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_hardened_footsoldiers }
+		prerequisite = { focus = MON_mountain_warfare }
+ 
+		completion_reward = {
+			add_ideas = MON_elite_corps_idea
+			army_experience = 30
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	# --- ROW 4: Child of Cavalry Doctrine ---
+ 
+	focus = {
+		id = MON_great_ride
+		icon = GFX_focus_generic_cavalry
+		relative_position_id = MON_cavalry_doctrine
+		x = 0
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_cavalry_doctrine }
+ 
+		completion_reward = {
+			add_ideas = MON_great_ride_spirit
+			add_tech_bonus = {
+				name = MON_recon_tech_bonus
+				bonus = 0.5
+				uses = 1
+				category = cat_recon
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 4
+		}
+	}
+ 
+	# --- ROW 5: Capstone - Traditional ---
+ 
+	focus = {
+		id = MON_legacy_of_genghis
+		icon = GFX_focus_generic_army_war_college
+		relative_position_id = MON_elite_infantry_corps
+		x = 0
+		y = 1
+		cost = 15
+ 
+		prerequisite = { focus = MON_art_of_the_siege }
+		prerequisite = { focus = MON_elite_infantry_corps }
+ 
+		completion_reward = {
+			add_ideas = MON_legacy_of_genghis_idea
+			add_political_power = 100
+			army_experience = 50
+			custom_effect_tooltip = MON_legacy_capstone_tt
+		}
+ 
+		ai_will_do = {
+			factor = 5
+		}
+	}
+ 
+	###############################################################
+	# RIGHT BRANCH - Modern Army (Motorized / Tanks / Mechanized)
+	###############################################################
+ 
+	# --- ROW 2: Sub-branches off Iron Horde ---
+ 
+	focus = {
+		id = MON_motorized_divisions
+		icon = GFX_focus_generic_army_motorized
+		relative_position_id = MON_iron_horde
+		x = -2
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_iron_horde }
+ 
+		completion_reward = {
+			army_experience = 20
+			add_tech_bonus = {
+				name = MON_motorized_tech_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_motorized_mechanized
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 7
+		}
+	}
+ 
+	focus = {
+		id = MON_armored_vanguard
+		icon = GFX_focus_generic_tank_manufacturer_3
+		relative_position_id = MON_iron_horde
+		x = 2
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_iron_horde }
+ 
+		completion_reward = {
+			army_experience = 20
+			add_tech_bonus = {
+				name = MON_armor_tech_bonus
+				bonus = 0.5
+				uses = 2
+				category = cat_armor
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 7
+		}
+	}
+ 
+	# --- ROW 3: Children of Motorized Divisions ---
+ 
+	focus = {
+		id = MON_soviet_trucks
+		icon = GFX_focus_generic_military_mission
+		relative_position_id = MON_motorized_divisions
+		x = -1
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_motorized_divisions }
+ 
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 500
+				producer = SOV
+			}
+			add_tech_bonus = {
+				name = MON_truck_tech_bonus
+				bonus = 0.5
+				uses = 1
+				technology = motorized_infantry_weapons
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	focus = {
+		id = MON_mechanized_infantry
+		icon = GFX_focus_generic_army_artillery
+		relative_position_id = MON_motorized_divisions
+		x = 1
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_motorized_divisions }
+ 
+		completion_reward = {
+			army_experience = 25
+			add_tech_bonus = {
+				name = MON_mech_tech_bonus
+				bonus = 0.75
+				uses = 1
+				category = cat_motorized_mechanized
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	# --- ROW 3: Children of Armored Vanguard ---
+ 
+	focus = {
+		id = MON_light_armor_brigades
+		icon = GFX_focus_generic_tank_manufacturer_2
+		relative_position_id = MON_armored_vanguard
+		x = -1
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_armored_vanguard }
+ 
+		completion_reward = {
+			add_tech_bonus = {
+				name = MON_light_tank_tech_bonus
+				bonus = 0.75
+				uses = 2
+				technology = gwtank
+				technology = gwtank_chassis
+				technology = basic_light_tank
+				technology = basic_light_tank_chassis
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 7
+		}
+	}
+ 
+	focus = {
+		id = MON_medium_armor_push
+		icon = GFX_focus_generic_tank_manufacturer_3
+		relative_position_id = MON_armored_vanguard
+		x = 1
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_armored_vanguard }
+ 
+		completion_reward = {
+			add_tech_bonus = {
+				name = MON_medium_tank_tech_bonus
+				bonus = 0.5
+				uses = 2
+				technology = basic_medium_tank
+				technology = basic_medium_tank_chassis
+				technology = improved_medium_tank
+				technology = improved_medium_tank_chassis
+			}
+		}
+ 
+		ai_will_do = {
+			factor = 5
+		}
+	}
+ 
+	# --- ROW 4: Steppe Blitzkrieg (merges Soviet Trucks + Mechanized Infantry) ---
+ 
+	focus = {
+		id = MON_steppe_blitzkrieg
+		icon = GFX_focus_generic_army_war_college
+		relative_position_id = MON_mechanized_infantry
+		x = 0
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_soviet_trucks }
+		prerequisite = { focus = MON_mechanized_infantry }
+ 
+		completion_reward = {
+			add_ideas = MON_steppe_blitz_idea
+			army_experience = 30
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	# --- ROW 4: Armored Spearhead (merges Light + Medium Armor) ---
+ 
+	focus = {
+		id = MON_armored_spearhead
+		icon = GFX_focus_generic_tank_manufacturer_3
+		relative_position_id = MON_light_armor_brigades
+		x = 0
+		y = 1
+		cost = 10
+ 
+		prerequisite = { focus = MON_light_armor_brigades }
+		prerequisite = { focus = MON_medium_armor_push }
+ 
+		completion_reward = {
+			add_ideas = MON_armored_spearhead_idea
+			army_experience = 30
+		}
+ 
+		ai_will_do = {
+			factor = 6
+		}
+	}
+ 
+	# --- ROW 5: Capstone - Modern ---
+ 
+	focus = {
+		id = MON_iron_horde_reborn
+		icon = GFX_focus_generic_tank_manufacturer_3
+		relative_position_id = MON_iron_horde
+		x = 0
+		y = 5
+		cost = 15
+ 
+		prerequisite = { focus = MON_steppe_blitzkrieg }
+		prerequisite = { focus = MON_armored_spearhead }
+ 
+		completion_reward = {
+			add_ideas = MON_iron_horde_reborn_idea
+			add_political_power = 100
+			army_experience = 50
+			custom_effect_tooltip = MON_iron_horde_capstone_tt
+		}
+ 
+		ai_will_do = {
+			factor = 5
+		}
+	}
+
+
 }
