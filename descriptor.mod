@@ -1,11 +1,11 @@
-version="1.0"
+version="1.18.*"
 tags={
 	"Alternative History"
 	"Balance"
 	"Fixes"
 	"Gameplay"
 }
-name="Force Attack-dev"
+name="Fire and Armor"
 picture="thumbnail.png"
-supported_version="1.17.*"
-remote_file_id="3238511544"
+supported_version="1.18.*"
+remote_file_id="3734045224"
